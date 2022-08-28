@@ -8,7 +8,7 @@
 
 namespace cydui::events {
   void start();
-  
+
   enum CEventType {
     EVENT_GRAPHICS,
     EVENT_LAYOUT,
@@ -16,22 +16,22 @@ namespace cydui::events {
   };
   struct CEvent {
     const CEventType type;
-    bool consumed = false;
+    bool consumed   = false;
     void* raw_event = nullptr;
     void* data;
   };
-  
+
   class CEventListener {
   public:
     virtual void on_event(CEvent* ev) = 0;
   };
-  
+
   void subscribe(CEventListener* listener);
   void unsubscribe(CEventListener* listener);
-  
+
   // Must be thread safe
   void emit(CEvent* ev);
-  
+
   namespace layout {
     enum CLayoutEventType {
       LYT_EV_REDRAW,
@@ -71,8 +71,8 @@ namespace cydui::events {
       CLayoutData data;
       void* win = nullptr;
     };
-  }
-  
+  }// namespace layout
+
   namespace graphics {
     enum CGraphicEventType {
       GPH_EV_RESIZE,
@@ -88,8 +88,8 @@ namespace cydui::events {
       CGraphicEventData data;
       void* win = nullptr;
     };
-  }
-}
+  }// namespace graphics
+}// namespace cydui::events
 
 
-#endif //CYD_UI_EVENTS_H
+#endif//CYD_UI_EVENTS_H

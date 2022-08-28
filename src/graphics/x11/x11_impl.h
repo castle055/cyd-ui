@@ -5,8 +5,8 @@
 #ifndef CYD_UI_X11_IMPL_H
 #define CYD_UI_X11_IMPL_H
 
-#include "../graphics.h"
 #include "../../threading/threading.h"
+#include "../graphics.h"
 
 #include <deque>
 #include <mutex>
@@ -27,4 +27,4 @@ struct cydui::graphics::window_t {
   threading::thread_t* render_thd;
 };
 
-#endif //CYD_UI_X11_IMPL_H
+#endif//CYD_UI_X11_IMPL_H

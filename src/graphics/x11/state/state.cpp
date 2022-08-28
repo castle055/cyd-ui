@@ -5,13 +5,14 @@
 #include "state.h"
 #include "../../../logging/logging.h"
 
-const logging::logger log_task = { .name = "X11_IMPL::state"};
+const logging::logger log_task = {.name = "X11_IMPL::state"};
 
 static Display* dpy = nullptr;
-static int screen = -1;
+static int screen   = -1;
 
 Display* state::get_dpy() {
-  if (dpy) return dpy;
+  if (dpy)
+    return dpy;
   if ((dpy = XOpenDisplay(nullptr))) {
     log_task.info("dpy = %X", dpy);
     return dpy;
@@ -21,7 +22,8 @@ Display* state::get_dpy() {
 }
 
 int state::get_screen() {
-  if (screen != -1) return screen;
+  if (screen != -1)
+    return screen;
   screen = DefaultScreen(get_dpy());
   log_task.info("screen = %d", screen);
   return screen;

@@ -1,14 +1,13 @@
 #ifndef CYD_UI_CYDUI_H
 #define CYD_UI_CYDUI_H
 
-namespace cydui {
-}
+namespace cydui {}
 
-#include "layout.h"
 #include "components.h"
-#include "primitives.h"
 #include "containers.h"
+#include "layout.h"
+#include "primitives.h"
 #include "window.h"
 
 
-#endif //CYD_UI_CYDUI_H
+#endif//CYD_UI_CYDUI_H

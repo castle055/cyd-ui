@@ -9,10 +9,9 @@
 namespace cydui::layout::fonts {
   class Font {
   public:
-  
   };
 
-}
+}// namespace cydui::layout::fonts
 
 
-#endif //CYD_UI_FONTS_H
+#endif//CYD_UI_FONTS_H

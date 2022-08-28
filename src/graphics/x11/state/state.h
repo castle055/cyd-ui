@@ -12,7 +12,7 @@ namespace state {
   Display* get_dpy();
   int get_screen();
   Window get_root();
-}
+}// namespace state
 
 
-#endif //CYD_UI_STATE_H
+#endif//CYD_UI_STATE_H

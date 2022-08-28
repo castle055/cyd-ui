@@ -12,16 +12,17 @@
 namespace cydui::layout {
   class Layout {
     const window::CWindow* win = nullptr;
-    
+
     components::Component* root;
+
   public:
     explicit Layout(components::Component* root);
     void bind_window(window::CWindow* win);
-    
+
     void on_event(events::layout::CLayoutEvent* ev);
   };
 
-}
+}// namespace cydui::layout
 
 
-#endif //CYD_UI_LAYOUT_H
+#endif//CYD_UI_LAYOUT_H

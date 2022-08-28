@@ -6,24 +6,22 @@
 #define CYD_UI_WINDOW_H
 
 
-#include "../src/graphics/graphics.h"
 #include "../src/events/events.h"
+#include "../src/graphics/graphics.h"
 #include "layout.h"
 #include "window_types.h"
 
 namespace cydui::window {
-  CWindow* create(
-      layout::Layout* layout,
-      char* title = "CydUI",
+  CWindow* create(layout::Layout* layout,
+      char* title  = "CydUI",
       char* wclass = "cydui",
-      int x = 0,
-      int y = 0,
-      int w = 640,
-      int h = 480
-  );
-  
+      int x        = 0,
+      int y        = 0,
+      int w        = 640,
+      int h        = 480);
+
   bool process_event(CWindow win);
-}
+}// namespace cydui::window
 
 
-#endif //CYD_UI_WINDOW_H
+#endif//CYD_UI_WINDOW_H
