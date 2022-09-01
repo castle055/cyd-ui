@@ -8,7 +8,7 @@
 
 namespace cydui::events {
   void start();
-
+  
   enum CEventType {
     EVENT_GRAPHICS,
     EVENT_LAYOUT,
@@ -16,22 +16,23 @@ namespace cydui::events {
   };
   struct CEvent {
     const CEventType type;
-    bool consumed   = false;
+    bool             consumed = false;
     void* raw_event = nullptr;
     void* data;
   };
-
+  
   class CEventListener {
   public:
     virtual void on_event(CEvent* ev) = 0;
   };
-
+  
   void subscribe(CEventListener* listener);
+  
   void unsubscribe(CEventListener* listener);
-
+  
   // Must be thread safe
   void emit(CEvent* ev);
-
+  
   namespace layout {
     enum CLayoutEventType {
       LYT_EV_REDRAW,
@@ -51,28 +52,31 @@ namespace cydui::events {
     };
     struct CButtonEvent {
       const unsigned int button;
-      const int x, y;
+      const int          x, y;
     };
     struct CMotionEvent {
-      const int x, y;
+      int  x, y;
+      bool enter = false;
+      bool exit  = false;
     };
     struct CResizeEvent {
       const int w, h;
     };
     union CLayoutData {
       CRedrawEvent redraw_ev;
-      CKeyEvent key_ev;
+      CKeyEvent    key_ev;
       CButtonEvent button_ev;
       CMotionEvent motion_ev;
       CResizeEvent resize_ev;
     };
     struct CLayoutEvent {
       const CLayoutEventType type;
-      CLayoutData data;
+      CLayoutData            data;
       void* win = nullptr;
+      bool consumed = false;
     };
   }// namespace layout
-
+  
   namespace graphics {
     enum CGraphicEventType {
       GPH_EV_RESIZE,
@@ -85,7 +89,7 @@ namespace cydui::events {
     };
     struct CGraphicsEvent {
       const CGraphicEventType type;
-      CGraphicEventData data;
+      CGraphicEventData       data;
       void* win = nullptr;
     };
   }// namespace graphics

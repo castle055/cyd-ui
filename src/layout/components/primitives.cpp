@@ -12,84 +12,118 @@ const logging::logger log = {.name = "COMP::PRIM::LINE", .on = false};
 
 Line::Line(Color* color, int x1, int y1, int x2, int y2)
     : Component(std::vector<Component*>()) {
-  this->x1    = x1;
-  this->y1    = y1;
-  this->x2    = x2;
-  this->y2    = y2;
-  this->color = color;
-  state->w    = x2;
-  state->h    = y2;
+  state->geom.x = x1;
+  state->geom.y = y1;
+  state->geom.w = x2 - x1;
+  state->geom.h = y2 - y1;
+  this->color   = color;
   log.info("LINE -> props, pos(x=%d,y=%d) size(w=%d,h=%d)", x1, y1, x2, y2);
 }
 
 void Line::on_redraw(CLayoutEvent* ev) {
   auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-  auto* state   = this->state;
-
-  log.info("props, pos(x=%d,y=%d) size(w=%d,h=%d)", x1, y1, x2, y2);
-  log.info("state, pos(x=%d,y=%d)", state->x, state->y);
-  drw_line(win_ref,
+  
+  //log.info("props, pos(x=%d,y=%d) size(w=%d,h=%d)", x1, y1, x2, y2);
+  //log.info("state, pos(x=%d,y=%d)", state->geom.abs_x(), state->geom.abs_y());
+  graphics::drw_line(
+      win_ref,
       color,
-      state->x + x1,
-      state->y + y1,
-      state->x + x2,
-      state->y + y2);
+      state->geom.content_x(),
+      state->geom.content_y(),
+      state->geom.content_x() + state->geom.w,
+      state->geom.content_y() + state->geom.h
+  );
 }
 
 Rectangle::Rectangle(Color* color, int x, int y, int w, int h, bool filled)
     : Component(std::vector<Component*>()) {
-  this->x      = x;
-  this->y      = y;
-  this->w      = w;
-  this->h      = h;
-  this->color  = color;
-  this->filled = filled;
-  state->w     = x + w;
-  state->h     = y + h;
+  state->geom.x = x;
+  state->geom.y = y;
+  state->geom.w = w;
+  state->geom.h = h;
+  this->color   = color;
+  this->filled  = filled;
 }
 
 void Rectangle::on_redraw(CLayoutEvent* ev) {
   auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-  auto* state   = this->state;
-  graphics::drw_rect(win_ref, color, state->x + x, state->y + y, w, h, filled);
+  graphics::drw_rect(
+      win_ref,
+      color,
+      state->geom.content_x(),
+      state->geom.content_y(),
+      state->geom.w,
+      state->geom.h,
+      filled
+  );
 }
 
 Arc::Arc(Color* color, int x, int y, int w, int h, int a0, int a1, bool filled)
     : Component(std::vector<Component*>()) {
-  this->x      = x;
-  this->y      = y;
-  this->w      = w;
-  this->h      = h;
-  this->a0     = a0;
-  this->a1     = a1;
-  this->color  = color;
-  this->filled = filled;
-  state->w     = x + w;
-  state->h     = y + h;
+  state->geom.x = x;
+  state->geom.y = y;
+  state->geom.w = w;
+  state->geom.h = h;
+  this->a0      = a0;
+  this->a1      = a1;
+  this->color   = color;
+  this->filled  = filled;
 }
 
 void Arc::on_redraw(CLayoutEvent* ev) {
   auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
   auto* state   = this->state;
   graphics::drw_arc(
-      win_ref, color, state->x + x, state->y + y, w, h, a0, a1, filled);
+      win_ref,
+      color,
+      state->geom.content_x(),
+      state->geom.content_y(),
+      state->geom.w,
+      state->geom.h,
+      a0, a1, filled
+  );
 }
 
 Circle::Circle(Color* color, int x, int y, int w, int h, bool filled)
     : Component(std::vector<Component*>()) {
-  this->x      = x;
-  this->y      = y;
-  this->w      = w;
-  this->h      = h;
-  this->color  = color;
-  this->filled = filled;
-  state->w     = x + w;
-  state->h     = y + h;
+  state->geom.x = x;
+  state->geom.y = y;
+  state->geom.w = w;
+  state->geom.h = h;
+  this->color   = color;
+  this->filled  = filled;
 }
 
 void Circle::on_redraw(CLayoutEvent* ev) {
   auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-  auto* state   = this->state;
   graphics::drw_arc(
-      win_ref, color, state->x + x, state->y + y, w, h, 0, 360, filled);
+      win_ref, color,
+      state->geom.content_x(),
+      state->geom.content_y(),
+      state->geom.w,
+      state->geom.h,
+      0, 360, filled
+  );
+}
+
+Text::Text(Color* color, layout::fonts::Font* font, int x, int y, std::string text)
+    : Component(std::vector<Component*>()) {
+  state->geom.x = x;
+  state->geom.y = y;
+  state->geom.w = 125;
+  state->geom.h = font->size;
+  this->color   = color;
+  this->font    = font;
+  this->text    = text;
+  //state->w    = x + 125;
+  //state->h    = y;
+}
+
+void Text::on_redraw(CLayoutEvent* ev) {
+  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
+  graphics::drw_text(
+      win_ref, font, color, text,
+      state->geom.content_x(),
+      state->geom.content_y() + font->size
+  );
 }

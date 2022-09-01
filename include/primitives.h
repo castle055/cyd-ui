@@ -7,6 +7,7 @@
 
 
 #include "../src/layout/color/colors.h"
+#include "../src/layout/fonts/fonts.h"
 #include "components.h"
 
 namespace primitives {
@@ -14,64 +15,80 @@ namespace primitives {
   using namespace cydui::components;
   using namespace cydui::layout::color;
   using namespace cydui::events::layout;
-
+  
   class Line: public Component {
-    ;
     int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
     Color* color;
-
+    
     void on_redraw(CLayoutEvent* ev) override;
-
+  
   public:
     explicit Line(Color* color, int x1, int y1, int x2, int y2);
   };
-
+  
   class Rectangle: public Component {
-    ;
-    int x = 0, y = 0, w = 0, h = 0;
+    int  x = 0, y = 0, w = 0, h = 0;
     bool filled;
     Color* color;
-
+    
     void on_redraw(CLayoutEvent* ev) override;
-
+  
   public:
     explicit Rectangle(
-        Color* color, int x, int y, int w, int h, bool filled = false);
+        Color* color, int x, int y, int w, int h, bool filled = false
+    );
   };
-
+  
   class Arc: public Component {
-    ;
-    int x = 0, y = 0, w = 0, h = 0;
-    int a0, a1;
+    int  x = 0, y = 0, w = 0, h = 0;
+    int  a0, a1;
     bool filled;
     Color* color;
-
+    
     void on_redraw(CLayoutEvent* ev) override;
-
+  
   public:
-    explicit Arc(Color* color,
+    explicit Arc(
+        Color* color,
         int x,
         int y,
         int w,
         int h,
         int a0,
         int a1,
-        bool filled = false);
+        bool filled = false
+    );
   };
-
+  
   class Circle: public Component {
-    ;
-    int x = 0, y = 0, w = 0, h = 0;
+    int  x = 0, y = 0, w = 0, h = 0;
     bool filled;
     Color* color;
-
+    
     void on_redraw(CLayoutEvent* ev) override;
-
+  
   public:
     explicit Circle(
-        Color* color, int x, int y, int w, int h, bool filled = false);
+        Color* color, int x, int y, int w, int h, bool filled = false
+    );
   };
-
+  
+  class Text: public Component {
+    
+    
+    int x = 0, y = 0;
+    Color              * color;
+    layout::fonts::Font* font;
+    std::string text;
+    
+    void on_redraw(CLayoutEvent* ev) override;
+  
+  public:
+    Text(
+        Color* color, layout::fonts::Font* font, int x, int y, std::string text
+    );
+  };
+  
 }// namespace primitives
 
 

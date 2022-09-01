@@ -8,7 +8,7 @@
 const logging::logger log_task = {.name = "X11_IMPL::state"};
 
 static Display* dpy = nullptr;
-static int screen   = -1;
+static int screen = -1;
 
 Display* state::get_dpy() {
   if (dpy)
@@ -30,7 +30,7 @@ int state::get_screen() {
 }
 
 Window state::get_root() {
-  Window root = RootWindow(get_dpy(), get_screen());
+  Window root = XRootWindow(get_dpy(), get_screen());
   log_task.info("root = %d", root);
   return root;
 }
