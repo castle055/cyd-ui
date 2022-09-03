@@ -86,6 +86,9 @@ namespace cydui::components {
     //     h       = 0;
     bool focused        = false;
     
+    // TODO - maybe init with 'true'? so it renders right away
+    bool _dirty = false;
+    
     void dirty();
     
     ComponentGeometry geom;

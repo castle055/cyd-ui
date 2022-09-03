@@ -159,6 +159,8 @@ void Component::redraw(cydui::events::layout::CLayoutEvent* ev, bool clr) {
     graphics::flush(win_ref);
     ev->consumed = true;
   }
+  
+  state->_dirty = false;
 }
 
 void Component::on_redraw(events::layout::CLayoutEvent* ev) {

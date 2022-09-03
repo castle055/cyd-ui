@@ -10,7 +10,7 @@
 #include "banner.h"
 #include "../components/button.h"
 #include "../components/flexbox.h"
-#include "../../src/events/properties.h"
+#include "../../src/events/properties/properties.h"
 
 static const logging::logger log = {.name = "MAIN", .on = true};
 
@@ -23,16 +23,19 @@ public:
   ButtonState                       button_state;
   ButtonState                       button2_state;
   
-  bool button2      = false;
+  bool button2 = false;
   
   IntProperty prop1;
-  IntProperty prop2 = prop1 + 1 + 2;
+  
+  explicit TestState(): cydui::components::ComponentState() {
+    prop1.bindComponentRender(this);
+  }
 };
 
 class TestComponent: public cydui::components::Component {
 public:
-  explicit TestComponent(TestState* _state)
-      : cydui::components::Component(_state) {
+  explicit TestComponent(TestState* state)
+      : cydui::components::Component(state) {
   }
   
   void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
@@ -40,6 +43,8 @@ public:
     
     //int val = state->prop2;
     
+    auto* prop2 = state->prop1 * state->prop1 + 1 / 2;
+    prop2 + 1;
     add(
         {
             (new FlexBox(

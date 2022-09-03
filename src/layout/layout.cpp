@@ -4,6 +4,7 @@
 
 #include "../../include/layout.h"
 #include "../logging/logging.h"
+#include "../events/properties/properties.h"
 
 logging::logger log = {.name = "LAYOUT", .on = true};
 
@@ -12,6 +13,30 @@ cydui::layout::Layout::Layout(cydui::components::Component* root): root(root) {
 
 void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
+}
+
+static void render_if_dirty(cydui::components::Component* c) {
+  if (c->state->_dirty) {
+    cydui::events::emit(
+        new cydui::events::CEvent {
+            .type      = cydui::events::EVENT_LAYOUT,
+            .raw_event = nullptr,
+            .data      = new cydui::events::layout::CLayoutEvent {
+                .type = cydui::events::layout::LYT_EV_REDRAW,
+                .data = cydui::events::layout::CLayoutData {
+                    .redraw_ev = cydui::events::layout::CRedrawEvent {
+                        .x = 0,
+                        .y = 0,
+                        .component = c,
+                    }
+                },
+            }
+        }
+    );
+  } else {
+    for (auto &item: c->children)
+      render_if_dirty(c);
+  }
 }
 
 void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
@@ -71,6 +96,11 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
           "RESIZE w=%d, h=%d", ev->data.resize_ev.w, ev->data.resize_ev.h
       );
       root->on_event(ev);
+      break;
+    case events::layout::LYT_EV_UPDATE_PROP:
+      ((Property*)ev->data.update_prop_ev.target_property)
+          ->set_raw_value(const_cast<void*>(ev->data.update_prop_ev.new_value));
+      render_if_dirty(root);
       break;
     default: break;
   }

@@ -42,6 +42,7 @@ namespace cydui::events {
       LYT_EV_BUTTONRELEASE,
       LYT_EV_MOUSEMOTION,
       LYT_EV_RESIZE,
+      LYT_EV_UPDATE_PROP,
     };
     struct CRedrawEvent {
       const int x, y;
@@ -62,12 +63,17 @@ namespace cydui::events {
     struct CResizeEvent {
       const int w, h;
     };
+    struct CUpdatePropEvent {
+      const void* target_property = nullptr;
+      const void* new_value       = nullptr;
+    };
     union CLayoutData {
-      CRedrawEvent redraw_ev;
-      CKeyEvent    key_ev;
-      CButtonEvent button_ev;
-      CMotionEvent motion_ev;
-      CResizeEvent resize_ev;
+      CRedrawEvent     redraw_ev;
+      CKeyEvent        key_ev;
+      CButtonEvent     button_ev;
+      CMotionEvent     motion_ev;
+      CResizeEvent     resize_ev;
+      CUpdatePropEvent update_prop_ev;
     };
     struct CLayoutEvent {
       const CLayoutEventType type;
