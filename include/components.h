@@ -8,6 +8,8 @@
 #include "../src/events/events.h"
 #include "../src/layout/color/colors.h"
 #include <vector>
+#include <unordered_set>
+#include <functional>
 
 
 #define PROPS(P, A)                                                            \
@@ -77,11 +79,12 @@ namespace cydui::components {
   class ComponentState {
   public:
     Component* component_instance;
+    bool stateless_comp = false;
     //int  x       = 0,
     //     y       = 0,
     //     w       = 0,
     //     h       = 0;
-    bool focused = false;
+    bool focused        = false;
     
     void dirty();
     
@@ -91,7 +94,9 @@ namespace cydui::components {
   
   class Component {
     
-    Component* parent;
+    Component                       * parent;
+    
+    std::function<void(Component*)> inner_redraw = nullptr;
     
     void redraw(cydui::events::layout::CLayoutEvent* ev, bool clr);
     
@@ -108,15 +113,21 @@ namespace cydui::components {
     virtual void on_key_press(events::layout::CLayoutEvent* ev);
     
     virtual void on_key_release(events::layout::CLayoutEvent* ev);
-    
-    void addParamChildren(std::vector<Component*> children);
   
   protected:
     // Private size operations
   public:
-    explicit Component(std::vector<Component*> children);
+    //explicit Component(std::unordered_set<Component*> children);
     
-    explicit Component(ComponentState* state, std::vector<Component*> children);
+    //explicit Component(ComponentState* state, std::unordered_set<Component*> children);
+    
+    Component();
+    
+    Component(std::function<void(Component*)> inner);
+    
+    Component(ComponentState* state);
+    
+    Component(ComponentState* state, std::function<void(Component*)> inner);
     
     virtual ~Component();
     
@@ -125,8 +136,6 @@ namespace cydui::components {
     void add(std::vector<Component*> children);
     
     std::vector<Component*> children;
-    std::vector<Component*> orig_param_children;
-    std::vector<Component*> param_children;
     
     void on_event(events::layout::CLayoutEvent* ev);
     
@@ -144,6 +153,7 @@ namespace cydui::components {
     
     Component* set_border_enable(bool enabled);
   };
+  
 }// namespace cydui::components
 
 #endif//CYD_UI_COMPONENTS_H

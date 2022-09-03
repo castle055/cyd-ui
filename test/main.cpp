@@ -14,8 +14,10 @@ int main() {
   
   // Instantiate window with layout
   auto* test_state = new TestState();
-  auto layout = new cydui::layout::Layout(new TestComponent(test_state));
-  cydui::window::CWindow   * win = cydui::window::create(
+  auto* tc         = new TestComponent(test_state);
+  
+  auto                     * layout = new cydui::layout::Layout(tc);
+  cydui::window::CWindow   * win    = cydui::window::create(
       layout,
       "test_window",
       "scratch",
@@ -26,7 +28,7 @@ int main() {
       500,
       250
   );
-  cydui::graphics::window_t* w   = win->win_ref;
+  cydui::graphics::window_t* w      = win->win_ref;
   
   // Interact with window through window pointer
   

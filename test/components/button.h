@@ -30,20 +30,24 @@ public:
   Action on_action;
   
   explicit Button(ButtonState* _state, std::string text, Action on_action)
-      : cydui::components::Component(
-      _state, std::vector<cydui::components::Component*>()) {
+      : cydui::components::Component(_state) {
     this->text      = text;
     this->on_action = on_action;
   }
   
   void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
     auto state = (ButtonState*)this->state;
-    auto* c  = new cydui::layout::color::Color("#FCAE1E");
-    auto* c1 = new cydui::layout::color::Color("#000000");
+    auto* c     = new cydui::layout::color::Color("#FCAE1E");
+    auto* c_dim = new cydui::layout::color::Color("#2d2310");
+    auto* c1    = new cydui::layout::color::Color("#000000");
     
     add(
         {
-            new primitives::Rectangle(c, 0, 0, state->geom.content_w(), state->geom.content_h(), state->hovering),
+            new primitives::Rectangle(
+                state->hovering? c : c_dim, 0, 0,
+                state->geom.content_w(), state->geom.content_h(),
+                true
+            ),
             (new primitives::Text(state->hovering? c1 : c, &state->font, 0, 0, text))
                 ->set_margin(5, 5, 5, 5),
         }

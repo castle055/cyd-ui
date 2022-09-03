@@ -11,7 +11,7 @@ using namespace primitives;
 const logging::logger log = {.name = "COMP::PRIM::LINE", .on = false};
 
 Line::Line(Color* color, int x1, int y1, int x2, int y2)
-    : Component(std::vector<Component*>()) {
+    : Component() {
   state->geom.x = x1;
   state->geom.y = y1;
   state->geom.w = x2 - x1;
@@ -36,7 +36,7 @@ void Line::on_redraw(CLayoutEvent* ev) {
 }
 
 Rectangle::Rectangle(Color* color, int x, int y, int w, int h, bool filled)
-    : Component(std::vector<Component*>()) {
+    : Component() {
   state->geom.x = x;
   state->geom.y = y;
   state->geom.w = w;
@@ -59,7 +59,7 @@ void Rectangle::on_redraw(CLayoutEvent* ev) {
 }
 
 Arc::Arc(Color* color, int x, int y, int w, int h, int a0, int a1, bool filled)
-    : Component(std::vector<Component*>()) {
+    : Component() {
   state->geom.x = x;
   state->geom.y = y;
   state->geom.w = w;
@@ -85,7 +85,7 @@ void Arc::on_redraw(CLayoutEvent* ev) {
 }
 
 Circle::Circle(Color* color, int x, int y, int w, int h, bool filled)
-    : Component(std::vector<Component*>()) {
+    : Component() {
   state->geom.x = x;
   state->geom.y = y;
   state->geom.w = w;
@@ -107,7 +107,7 @@ void Circle::on_redraw(CLayoutEvent* ev) {
 }
 
 Text::Text(Color* color, layout::fonts::Font* font, int x, int y, std::string text)
-    : Component(std::vector<Component*>()) {
+    : Component() {
   state->geom.x = x;
   state->geom.y = y;
   state->geom.w = 125;

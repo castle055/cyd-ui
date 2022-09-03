@@ -17,7 +17,7 @@ class Banner: public cydui::components::Component {
 public:
   logging::logger log = {.name = "WIFI:Banner", .on = true};
   
-  Banner(BannerState* _state): cydui::components::Component(_state, std::vector<cydui::components::Component*>()) {
+  Banner(BannerState* _state): cydui::components::Component(_state) {
   }
   
   void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
@@ -29,22 +29,25 @@ public:
         {
             (new containers::HBox(
                 &(state->hboxState),
-                false,
                 10,
-                {
-                    new primitives::Rectangle(c, 0, 0, 32, 32, true),
-                    new primitives::Text(
-                        c,
-                        new cydui::layout::fonts::Font {
-                            .name = "Fira Code Retina",
-                            .size = 14
-                        },
-                        0, 0, "[ WIFI ]"
-                    ),
-                    new primitives::Rectangle(c, 0, 10, 24, 12, true),
-                    new primitives::Rectangle(c, 0, 10, 24, 12, true),
-                    new primitives::Rectangle(c, 0, 10, 24, 12, true),
-                    new primitives::Rectangle(c, 0, 10, 24, 12, true),
+                [c, c1, state](cydui::components::Component* hbox) {
+                  hbox->add(
+                      {
+                          new primitives::Rectangle(c, 0, 0, 32, 32, true),
+                          new primitives::Text(
+                              c,
+                              new cydui::layout::fonts::Font {
+                                  .name = "Fira Code Retina",
+                                  .size = 14
+                              },
+                              0, 0, "[ WIFI ]"
+                          ),
+                          new primitives::Rectangle(c, 0, 10, 24, 12, true),
+                          new primitives::Rectangle(c, 0, 10, 24, 12, true),
+                          new primitives::Rectangle(c, 0, 10, 24, 12, true),
+                          new primitives::Rectangle(c, 0, 10, 24, 12, true),
+                      }
+                  );
                 }
             ))
                 ->set_border_enable(true),

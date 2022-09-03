@@ -18,18 +18,19 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
   //  log.debug("Event %d", ev->type);
   
   ev->win = (void*)win;
-  components::Component* target = nullptr;
+  components::Component     * target       = nullptr;
+  components::ComponentState* target_state = nullptr;
   switch (ev->type) {
     case events::layout::LYT_EV_REDRAW:
       if (ev->data.redraw_ev.component) {
-        target = ((components::ComponentState*)ev->data.redraw_ev.component)->component_instance;
+        target_state = ((components::ComponentState*)ev->data.redraw_ev.component);
+        if (target_state)
+          target     = target_state->component_instance;
         if (target)
           target->on_event(ev);
       } else {
         root->on_event(ev);
       }
-      
-      graphics::flush(win->win_ref);
       break;
     case events::layout::LYT_EV_KEYPRESS: break;
     case events::layout::LYT_EV_KEYRELEASE: break;
@@ -58,11 +59,11 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
         ev->data.motion_ev.enter = true;
         focused = target->state;
       }
-      if (ev->data.motion_ev.enter) {
-        log.debug(
-            "MOTION w=%d, h=%d", ev->data.motion_ev.x, ev->data.motion_ev.y
-        );
-      }
+      //if (ev->data.motion_ev.enter) {
+      //  log.debug(
+      //      "MOTION w=%d, h=%d", ev->data.motion_ev.x, ev->data.motion_ev.y
+      //  );
+      //}
       target->on_event(ev);
       break;
     case events::layout::LYT_EV_RESIZE:
@@ -80,36 +81,30 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
 #pragma ide diagnostic ignored "modernize-loop-convert"
 
 cydui::components::Component* cydui::layout::Layout::find_by_coords(components::Component* c, int x, int y) {
+  components::Component* target = nullptr;
   for (auto i = c->children.rbegin(); i != c->children.rend(); ++i) {
     auto* item = *i;
-    //for (auto &item: c->children) {
     if (x >= item->state->geom.border_x()
         && x < (item->state->geom.border_x() + item->state->geom.border_w())
         && y >= item->state->geom.border_y()
         && y < (item->state->geom.border_y() + item->state->geom.border_h())
         ) {
-      return find_by_coords(item, x, y);
+      target = find_by_coords(item, x, y);
+      if (target)
+        break;
     }
   }
-  for (auto i = c->param_children.rbegin(); i != c->param_children.rend(); ++i) {
-    auto* item = *i;
-    //for (auto &item: c->children) {
-    if (x >= item->state->geom.border_x()
-        && x < (item->state->geom.border_x() + item->state->geom.border_w())
-        && y >= item->state->geom.border_y()
-        && y < (item->state->geom.border_y() + item->state->geom.border_h())
-        ) {
-      return find_by_coords(item, x, y);
-    }
-  }
-  if (x >= c->state->geom.border_x()
+  if (target)
+    return target;
+  
+  if (!c->state->stateless_comp && x >= c->state->geom.border_x()
       && x < (c->state->geom.border_x() + c->state->geom.border_w())
       && y >= c->state->geom.border_y()
       && y < (c->state->geom.border_y() + c->state->geom.border_h())
       ) {
-    return c;
+    target = c;
   }
-  return nullptr;
+  return target;
 }
 
 #pragma clang diagnostic pop

@@ -4,6 +4,8 @@
 
 #include "../../../include/components.h"
 
+#include <utility>
+
 #include "../../../include/window_types.h"
 #include "../../graphics/graphics.h"
 
@@ -30,16 +32,35 @@ void ComponentState::dirty() {
 
 //===== COMPONENTS
 //== Constructors
-Component::Component(std::vector<Component*> children)
-    : Component(new ComponentState(), children) {
+//Component::Component(std::unordered_set<Component*> children)
+//    : Component(new ComponentState(), children) {
+//  state->stateless_comp = true;
+//}
+
+//Component::Component(ComponentState* state, std::unordered_set<Component*> children)
+//    : state(state) {
+//  state->component_instance = this;
+//  addParamChildren(children);
+//  parent = nullptr;
+//}
+
+Component::Component()
+    : Component([](Component*) { }) {
 }
 
-Component::Component(ComponentState* state, std::vector<Component*> children)
+Component::Component(std::function<void(Component*)> inner)
+    : Component(new ComponentState(), inner) {
+  state->stateless_comp = true;
+}
+
+Component::Component(ComponentState* state)
+    : Component(state, [](Component*) { }) {
+}
+
+Component::Component(ComponentState* state, std::function<void(Component*)> inner)
     : state(state) {
   state->component_instance = this;
-  //for (const auto &item: children)
-  //  orig_param_children.push_back(item);
-  addParamChildren(children);
+  this->inner_redraw        = inner;
   parent = nullptr;
 }
 
@@ -48,9 +69,9 @@ Component::~Component() {
   for (auto &child: children)
     delete child;
   children.clear();
-  for (auto &child: param_children)
-    delete child;
-  param_children.clear();
+  //for (auto &child: param_children)
+  //  delete child;
+  //param_children.clear();
   state->component_instance = nullptr;
 }
 
@@ -60,32 +81,10 @@ void Component::add(std::vector<Component*> children) {
     item->parent = this;
     this->children.push_back(item);
     
-    if (item->state->geom.abs_w() > this->state->geom.content_w())
-      this->state->geom.w = item->state->geom.abs_w();
-    if (item->state->geom.abs_h() > this->state->geom.content_h())
-      this->state->geom.h = item->state->geom.abs_h();
-    
     if (!item->state->geom.custom_offset) {
       item->state->geom.x_off       = state->geom.content_x();
       item->state->geom.y_off       = state->geom.content_y();
       item->state->geom.relative_to = this;
-    }
-  }
-}
-
-void Component::addParamChildren(std::vector<Component*> children) {
-  for (auto &item: children) {
-    item->parent = this;
-    this->param_children.push_back(item);
-    
-    if (item->state->geom.abs_w() > this->state->geom.abs_w())
-      this->state->geom.w = item->state->geom.abs_w();
-    if (item->state->geom.abs_h() > this->state->geom.abs_h())
-      this->state->geom.h = item->state->geom.abs_h();
-    
-    if (!item->state->geom.custom_offset) {
-      item->state->geom.x_off = state->geom.content_x();
-      item->state->geom.y_off = state->geom.content_y();
     }
   }
 }
@@ -127,54 +126,39 @@ void Component::on_event(events::layout::CLayoutEvent* ev) {
 }
 
 void Component::redraw(cydui::events::layout::CLayoutEvent* ev, bool clr) {
-  bool sizes_dirty;
-  do {
-    sizes_dirty = false;
-    if (clr) {
-      // Clear window region
-      auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-      graphics::clr_rect(win_ref, state->geom.abs_x(), state->geom.abs_y(), state->geom.abs_w(), state->geom.abs_h());
-    }
+  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
+  
+  if (clr) {
+    // Clear window region
+    graphics::clr_rect(win_ref, state->geom.abs_x(), state->geom.abs_y(), state->geom.abs_w(), state->geom.abs_h());
+  }
+  for (auto &child: children)
+    delete child;
+  children.clear();
+  
+  if (state->border.enabled) {
+    graphics::drw_rect(
+        win_ref,
+        state->border.color,
+        state->geom.border_x(),
+        state->geom.border_y(),
+        state->geom.border_w(),
+        state->geom.border_h(),
+        false
+    );
+  }
+  
+  inner_redraw(this);
+  on_redraw(ev);
+  
+  for (auto &child: children) {
+    child->redraw(ev, false);
+  }
+  
+  if (clr) {
+    graphics::flush(win_ref);
     ev->consumed = true;
-    
-    for (auto &child: children)
-      delete child;
-    children.clear();
-    
-    if (state->border.enabled) {
-      auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-      graphics::drw_rect(
-          win_ref,
-          state->border.color,
-          state->geom.border_x(),
-          state->geom.border_y(),
-          state->geom.border_w(),
-          state->geom.border_h(),
-          false
-      );
-    }
-    
-    on_redraw(ev);
-    
-    for (auto &child: children) {
-      int prev_w = child->state->geom.abs_w();
-      int prev_h = child->state->geom.abs_h();
-      child->redraw(ev, false);
-      int new_w = child->state->geom.abs_w();
-      int new_h = child->state->geom.abs_h();
-      if (prev_w != new_w && prev_h != new_h)
-        sizes_dirty = true;
-    }
-    for (auto &child: param_children) {
-      int prev_w = child->state->geom.abs_w();
-      int prev_h = child->state->geom.abs_h();
-      child->redraw(ev, false);
-      int new_w     = child->state->geom.abs_w();
-      int new_h     = child->state->geom.abs_h();
-      if (prev_w != new_w && prev_h != new_h)
-        sizes_dirty = true;
-    }
-  } while (sizes_dirty);
+  }
 }
 
 void Component::on_redraw(events::layout::CLayoutEvent* ev) {
