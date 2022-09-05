@@ -1,4 +1,4 @@
 {
     "hyde-src-root" : ".",
-    "hyde-yaml-dir" : "./docs/doc"
+    "hyde-yaml-dir" : "./docs/libraries"
 }

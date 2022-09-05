@@ -1,6 +1,6 @@
 ---
 layout: library
-title: src/graphics/x11/render/render.cpp
+title: src/events/properties/properties.cpp
 owner: __MISSING__
 brief: __MISSING__
 tags:

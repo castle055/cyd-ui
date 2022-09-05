@@ -1,6 +1,6 @@
 ---
 layout: library
-title: src/graphics/x11/render/render.cpp
+title: src/layout/components/geometry/component_geometry.cpp
 owner: __MISSING__
 brief: __MISSING__
 tags:

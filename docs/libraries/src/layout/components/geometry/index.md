@@ -1,4 +1,4 @@
 ---
 layout: directory
-title: window
+title: geometry
 ---

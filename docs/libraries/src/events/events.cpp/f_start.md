@@ -1,14 +1,14 @@
 ---
 layout: function
-title: evpredicate
+title: start
 owner: __MISSING__
 brief: __MISSING__
 tags:
   - function
-defined_in_file: src/graphics/x11/events/events.cpp
+defined_in_file: src/events/events.cpp
 overloads:
-  int evpredicate():
+  void start():
     description: __OPTIONAL__
     return: __OPTIONAL__
-    signature_with_names: int evpredicate()
+    signature_with_names: void start()
 ---

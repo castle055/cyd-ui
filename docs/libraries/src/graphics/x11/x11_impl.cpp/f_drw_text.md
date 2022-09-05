@@ -5,19 +5,19 @@ owner: __MISSING__
 brief: __MISSING__
 tags:
   - function
-defined_in_file: src/graphics/x11/render/render.cpp
+defined_in_file: src/graphics/x11/x11_impl.cpp
 overloads:
-  void drw_text(cydui::graphics::window_t *, window_font, cydui::layout::color::Color *, std::string, int, int):
+  void drw_text(cydui::graphics::window_t *, layout::fonts::Font *, layout::color::Color *, std::string, int, int):
     arguments:
       - description: __OPTIONAL__
         name: win
         type: cydui::graphics::window_t *
       - description: __OPTIONAL__
         name: font
-        type: window_font
+        type: layout::fonts::Font *
       - description: __OPTIONAL__
         name: color
-        type: cydui::layout::color::Color *
+        type: layout::color::Color *
       - description: __OPTIONAL__
         name: text
         type: std::string
@@ -29,5 +29,5 @@ overloads:
         type: int
     description: __OPTIONAL__
     return: __OPTIONAL__
-    signature_with_names: void drw_text(cydui::graphics::window_t * win, window_font font, cydui::layout::color::Color * color, std::string text, int x, int y)
+    signature_with_names: void drw_text(cydui::graphics::window_t * win, layout::fonts::Font * font, layout::color::Color * color, std::string text, int x, int y)
 ---

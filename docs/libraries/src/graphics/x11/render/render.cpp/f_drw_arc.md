@@ -36,7 +36,7 @@ overloads:
       - description: __OPTIONAL__
         name: filled
         type: bool
-    description: __MISSING__
+    description: __OPTIONAL__
     return: __OPTIONAL__
     signature_with_names: void drw_arc(cydui::graphics::window_t * win, cydui::layout::color::Color * color, int x, int y, int w, int h, int a0, int a1, bool filled)
 ---

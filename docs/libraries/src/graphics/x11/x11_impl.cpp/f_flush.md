@@ -5,7 +5,7 @@ owner: __MISSING__
 brief: __MISSING__
 tags:
   - function
-defined_in_file: src/graphics/x11/render/render.cpp
+defined_in_file: src/graphics/x11/x11_impl.cpp
 overloads:
   void flush(cydui::graphics::window_t *):
     arguments:
