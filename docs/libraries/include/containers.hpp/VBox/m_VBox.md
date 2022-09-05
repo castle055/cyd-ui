@@ -1,0 +1,43 @@
+---
+layout: method
+title: VBox
+owner: __MISSING__
+brief: __MISSING__
+tags:
+  - method
+defined_in_file: include/containers.hpp
+is_ctor: true
+overloads:
+  VBox(const containers::VBox &):
+    arguments:
+      - description: __OPTIONAL__
+        name: unnamed-0
+        type: const containers::VBox &
+        unnamed: true
+    description: __MISSING__
+    return: __OPTIONAL__
+    signature_with_names: VBox(const containers::VBox &)
+  VBox(containers::VBox &&):
+    arguments:
+      - description: __OPTIONAL__
+        name: unnamed-0
+        type: containers::VBox &&
+        unnamed: true
+    description: __MISSING__
+    return: __OPTIONAL__
+    signature_with_names: VBox(containers::VBox &&)
+  explicit VBox(containers::VBoxState *, int, std::function<void (cydui::components::Component *)>):
+    arguments:
+      - description: __OPTIONAL__
+        name: _state
+        type: containers::VBoxState *
+      - description: __OPTIONAL__
+        name: spacing
+        type: int
+      - description: __OPTIONAL__
+        name: inner
+        type: std::function<void (cydui::components::Component *)>
+    description: __MISSING__
+    return: __OPTIONAL__
+    signature_with_names: explicit VBox(containers::VBoxState * _state, int spacing, std::function<void (cydui::components::Component *)> inner)
+---
