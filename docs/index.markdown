@@ -1,6 +1,9 @@
 ---
-# Feel free to add content and custom Front Matter to this file.
-# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+layout: library title: CYD-UI owner: Castle brief: __MISSING__
+tags:
 
-layout: home
+- library library-type: library icon: __MISSING__
+  short_title: __OPTIONAL__
+  tab: __MISSING__
+
 ---
