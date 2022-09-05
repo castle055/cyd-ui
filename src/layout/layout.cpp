@@ -2,9 +2,9 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../../include/layout.h"
-#include "../logging/logging.h"
-#include "../events/properties/properties.h"
+#include "../../include/layout.hpp"
+#include "../logging/logging.hpp"
+#include "../events/properties/properties.hpp"
 
 logging::logger log = {.name = "LAYOUT", .on = false};
 

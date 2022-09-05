@@ -2,8 +2,8 @@
 // Created by castle on 8/22/22.
 //
 
-#include "threading.h"
-#include "../logging/logging.h"
+#include "threading.hpp"
+#include "../logging/logging.hpp"
 #include <thread>
 
 using namespace cydui::threading;

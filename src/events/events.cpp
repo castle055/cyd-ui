@@ -2,9 +2,9 @@
 // Created by castle on 8/21/22.
 //
 
-#include "events.h"
-#include "../logging/logging.h"
-#include "../threading/threading.h"
+#include "events.hpp"
+#include "../logging/logging.hpp"
+#include "../threading/threading.hpp"
 
 #include <deque>
 #include <list>

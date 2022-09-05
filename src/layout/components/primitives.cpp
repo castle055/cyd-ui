@@ -2,9 +2,9 @@
 // Created by castle on 8/22/22.
 //
 
-#include "../../../include/primitives.h"
-#include "../../../include/window_types.h"
-#include "../../logging/logging.h"
+#include "../../../include/primitives.hpp"
+#include "../../../include/window_types.hpp"
+#include "../../logging/logging.hpp"
 
 using namespace primitives;
 

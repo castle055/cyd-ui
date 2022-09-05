@@ -2,12 +2,12 @@
 // Created by castle on 8/22/22.
 //
 
-#include "../../../include/components.h"
+#include "../../../include/components.hpp"
 
 #include <utility>
 
-#include "../../../include/window_types.h"
-#include "../../graphics/graphics.h"
+#include "../../../include/window_types.hpp"
+#include "../../graphics/graphics.hpp"
 
 using namespace cydui::components;
 

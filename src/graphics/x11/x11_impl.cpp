@@ -2,12 +2,12 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../graphics.h"
-#include "x11_impl.h"
-#include "../../logging/logging.h"
-#include "../events.h"
-#include "render/render.h"
-#include "state/state.h"
+#include "../graphics.hpp"
+#include "x11_impl.hpp"
+#include "../../logging/logging.hpp"
+#include "../events.hpp"
+#include "render/render.hpp"
+#include "state/state.hpp"
 #include <X11/Xft/Xft.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

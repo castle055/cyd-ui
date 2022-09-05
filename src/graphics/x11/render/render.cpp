@@ -2,10 +2,10 @@
 // Created by castle on 8/23/22.
 //
 
-#include "render.h"
-#include "../../../logging/logging.h"
-#include "../state/state.h"
-#include "../x11_impl.h"
+#include "render.hpp"
+#include "../../../logging/logging.hpp"
+#include "../state/state.hpp"
+#include "../x11_impl.hpp"
 
 #include <X11/Xlib.h>
 

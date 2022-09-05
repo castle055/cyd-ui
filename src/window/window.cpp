@@ -2,7 +2,7 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../../include/window.h"
+#include "../../include/window.hpp"
 #include <vector>
 
 using namespace cydui::window;

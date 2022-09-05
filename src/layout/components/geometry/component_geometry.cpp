@@ -2,7 +2,7 @@
 // Created by castle on 9/3/22.
 //
 
-#include "component_geometry.h"
+#include "component_geometry.hpp"
 
 IntProperty::IntBinding ComponentGeometry::abs_x() {
   return x + x_off;

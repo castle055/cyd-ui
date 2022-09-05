@@ -2,8 +2,8 @@
 // Created by castle on 8/21/22.
 //
 
-#include "state.h"
-#include "../../../logging/logging.h"
+#include "state.hpp"
+#include "../../../logging/logging.hpp"
 
 const logging::logger log_task = {.name = "X11_IMPL::state"};
 

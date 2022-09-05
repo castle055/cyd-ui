@@ -2,8 +2,8 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../include/cydui.h"
-#include "wifi/wifi.h"
+#include "../include/cydui.hpp"
+#include "wifi/wifi.hpp"
 
 #include <mcheck.h>
 #include <thread>

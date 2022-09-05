@@ -2,11 +2,11 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../../events.h"
-#include "../../../events/events.h"
-#include "../../../logging/logging.h"
-#include "../../../threading/threading.h"
-#include "../state/state.h"
+#include "../../events.hpp"
+#include "../../../events/events.hpp"
+#include "../../../logging/logging.hpp"
+#include "../../../threading/threading.hpp"
+#include "../state/state.hpp"
 #include <X11/Xlib.h>
 
 cydui::threading::thread_t* x11_thread;
