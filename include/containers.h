@@ -15,18 +15,29 @@ namespace containers {
   using namespace cydui::layout::color;
   using namespace cydui::events::layout;
   
+  
+  class VBoxState: public ComponentState {
+  public:
+    IntProperty spacing;
+    IntProperty offset;
+  };
+  
   class VBox: public Component { ;
     
     void on_redraw(CLayoutEvent* ev) override;
   
   public:
-    int spacing;
-    
     explicit VBox(
-        cydui::components::ComponentState* state,
+        containers::VBoxState* _state,
         int spacing,
         std::function<void(cydui::components::Component*)> inner
     );
+  };
+  
+  class HBoxState: public ComponentState {
+  public:
+    IntProperty spacing;
+    IntProperty offset;
   };
   
   class HBox: public Component { ;
@@ -34,10 +45,9 @@ namespace containers {
     void on_redraw(CLayoutEvent* ev) override;
   
   public:
-    int spacing;
     
     explicit HBox(
-        cydui::components::ComponentState* state,
+        HBoxState* _state,
         int spacing,
         std::function<void(cydui::components::Component*)> inner
     );

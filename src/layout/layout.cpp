@@ -6,9 +6,10 @@
 #include "../logging/logging.h"
 #include "../events/properties/properties.h"
 
-logging::logger log = {.name = "LAYOUT", .on = true};
+logging::logger log = {.name = "LAYOUT", .on = false};
 
 cydui::layout::Layout::Layout(cydui::components::Component* root): root(root) {
+  events::start();
 }
 
 void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
@@ -27,7 +28,7 @@ static void render_if_dirty(cydui::components::Component* c) {
                     .redraw_ev = cydui::events::layout::CRedrawEvent {
                         .x = 0,
                         .y = 0,
-                        .component = c,
+                        .component = c->state,
                     }
                 },
             }
@@ -35,7 +36,7 @@ static void render_if_dirty(cydui::components::Component* c) {
     );
   } else {
     for (auto &item: c->children)
-      render_if_dirty(c);
+      render_if_dirty(item);
   }
 }
 
@@ -47,6 +48,9 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
   components::ComponentState* target_state = nullptr;
   switch (ev->type) {
     case events::layout::LYT_EV_REDRAW:
+      log.debug(
+          "REDRAW"
+      );
       if (ev->data.redraw_ev.component) {
         target_state = ((components::ComponentState*)ev->data.redraw_ev.component);
         if (target_state)
@@ -56,15 +60,18 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
       } else {
         root->on_event(ev);
       }
+      render_if_dirty(root);
+      graphics::flush(win->win_ref);
       break;
     case events::layout::LYT_EV_KEYPRESS: break;
     case events::layout::LYT_EV_KEYRELEASE: break;
     case events::layout::LYT_EV_BUTTONPRESS:target = find_by_coords(root, ev->data.button_ev.x, ev->data.button_ev.y);
       if (!target)
         break;
-      ev->data.motion_ev.x -= target->state->geom.border_x();
-      ev->data.motion_ev.y -= target->state->geom.border_y();
+      ev->data.motion_ev.x -= target->state->geom.border_x().compute();
+      ev->data.motion_ev.y -= target->state->geom.border_y().compute();
       target->on_event(ev);
+      render_if_dirty(root);
       break;
     case events::layout::LYT_EV_BUTTONRELEASE: break;
     case events::layout::LYT_EV_MOUSEMOTION:
@@ -72,8 +79,8 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
       target = find_by_coords(root, ev->data.motion_ev.x, ev->data.motion_ev.y);
       if (!target)
         break;
-      ev->data.motion_ev.x -= target->state->geom.border_x();
-      ev->data.motion_ev.y -= target->state->geom.border_y();
+      ev->data.motion_ev.x -= target->state->geom.border_x().compute();
+      ev->data.motion_ev.y -= target->state->geom.border_y().compute();
       if (focused != target->state) {
         if (focused && focused->component_instance) {
           ev->data.motion_ev.exit = true;
@@ -90,16 +97,18 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
       //  );
       //}
       target->on_event(ev);
+      render_if_dirty(root);
       break;
     case events::layout::LYT_EV_RESIZE:
       log.debug(
           "RESIZE w=%d, h=%d", ev->data.resize_ev.w, ev->data.resize_ev.h
       );
       root->on_event(ev);
+      render_if_dirty(root);
       break;
     case events::layout::LYT_EV_UPDATE_PROP:
       ((Property*)ev->data.update_prop_ev.target_property)
-          ->set_raw_value(const_cast<void*>(ev->data.update_prop_ev.new_value));
+          ->set_raw_value((void*)(ev->data.update_prop_ev.new_value));
       render_if_dirty(root);
       break;
     default: break;
@@ -114,10 +123,10 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(components::
   components::Component* target = nullptr;
   for (auto i = c->children.rbegin(); i != c->children.rend(); ++i) {
     auto* item = *i;
-    if (x >= item->state->geom.border_x()
-        && x < (item->state->geom.border_x() + item->state->geom.border_w())
-        && y >= item->state->geom.border_y()
-        && y < (item->state->geom.border_y() + item->state->geom.border_h())
+    if (x >= item->state->geom.border_x().compute()
+        && x < (item->state->geom.border_x().compute() + item->state->geom.border_w().compute())
+        && y >= item->state->geom.border_y().compute()
+        && y < (item->state->geom.border_y().compute() + item->state->geom.border_h().compute())
         ) {
       target = find_by_coords(item, x, y);
       if (target)
@@ -127,10 +136,10 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(components::
   if (target)
     return target;
   
-  if (!c->state->stateless_comp && x >= c->state->geom.border_x()
-      && x < (c->state->geom.border_x() + c->state->geom.border_w())
-      && y >= c->state->geom.border_y()
-      && y < (c->state->geom.border_y() + c->state->geom.border_h())
+  if (!c->state->stateless_comp && x >= c->state->geom.border_x().compute()
+      && x < (c->state->geom.border_x().compute() + c->state->geom.border_w().compute())
+      && y >= c->state->geom.border_y().compute()
+      && y < (c->state->geom.border_y().compute() + c->state->geom.border_h().compute())
       ) {
     target = c;
   }

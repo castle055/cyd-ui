@@ -9,25 +9,28 @@ using namespace cydui::window;
 
 static std::vector<CWindow*> windows;
 
-CWindow* cydui::window::create(layout::Layout* layout,
+CWindow* cydui::window::create(
+    layout::Layout* layout,
     char* title,
     char* wclass,
     int x,
     int y,
     int w,
-    int h) {
+    int h
+) {
   events::start();
-
-  auto* win_ref = graphics::create_window(title, wclass, x, y, w, h);
-  graphics::set_background(win_ref);
-
+  
   auto win = new CWindow();
   windows.push_back(win);
-  win->win_ref  = win_ref;
   win->listener = new CWindowListener(win);
   events::subscribe(win->listener);
   win->layout = layout;
   layout->bind_window(win);
+  
+  auto* win_ref = graphics::create_window(title, wclass, x, y, w, h);
+  win->win_ref = win_ref;
+  graphics::set_background(win_ref);
+  
   return win;
 }
 
@@ -41,8 +44,7 @@ void CWindowListener::on_event(cydui::events::CEvent* ev) {
       graphics::on_event(
           win->win_ref, (events::graphics::CGraphicsEvent*)(ev->data));
       break;
-    case events::EVENT_LAYOUT:
-      win->layout->on_event((events::layout::CLayoutEvent*)(ev->data));
+    case events::EVENT_LAYOUT:win->layout->on_event((events::layout::CLayoutEvent*)(ev->data));
       break;
     default: break;
   }

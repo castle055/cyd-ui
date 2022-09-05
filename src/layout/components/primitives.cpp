@@ -28,21 +28,23 @@ void Line::on_redraw(CLayoutEvent* ev) {
   graphics::drw_line(
       win_ref,
       color,
-      state->geom.content_x(),
-      state->geom.content_y(),
-      state->geom.content_x() + state->geom.w,
-      state->geom.content_y() + state->geom.h
+      state->geom.content_x().val(),
+      state->geom.content_y().val(),
+      (state->geom.content_x() + state->geom.w).val(),
+      (state->geom.content_y() + state->geom.h).val()
   );
 }
 
 Rectangle::Rectangle(Color* color, int x, int y, int w, int h, bool filled)
     : Component() {
-  state->geom.x = x;
-  state->geom.y = y;
-  state->geom.w = w;
-  state->geom.h = h;
-  this->color   = color;
-  this->filled  = filled;
+  state->geom.x           = x;
+  state->geom.y           = y;
+  state->geom.w           = w;
+  state->geom.h           = h;
+  //state->geom.custom_offset = true;
+  state->geom.custom_size = true;
+  this->color             = color;
+  this->filled            = filled;
 }
 
 void Rectangle::on_redraw(CLayoutEvent* ev) {
@@ -50,10 +52,10 @@ void Rectangle::on_redraw(CLayoutEvent* ev) {
   graphics::drw_rect(
       win_ref,
       color,
-      state->geom.content_x(),
-      state->geom.content_y(),
-      state->geom.w,
-      state->geom.h,
+      state->geom.content_x().val(),
+      state->geom.content_y().val(),
+      state->geom.w.val(),
+      state->geom.h.val(),
       filled
   );
 }
@@ -76,10 +78,10 @@ void Arc::on_redraw(CLayoutEvent* ev) {
   graphics::drw_arc(
       win_ref,
       color,
-      state->geom.content_x(),
-      state->geom.content_y(),
-      state->geom.w,
-      state->geom.h,
+      state->geom.content_x().val(),
+      state->geom.content_y().val(),
+      state->geom.w.val(),
+      state->geom.h.val(),
       a0, a1, filled
   );
 }
@@ -98,10 +100,10 @@ void Circle::on_redraw(CLayoutEvent* ev) {
   auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
   graphics::drw_arc(
       win_ref, color,
-      state->geom.content_x(),
-      state->geom.content_y(),
-      state->geom.w,
-      state->geom.h,
+      state->geom.content_x().val(),
+      state->geom.content_y().val(),
+      state->geom.w.val(),
+      state->geom.h.val(),
       0, 360, filled
   );
 }
@@ -123,7 +125,7 @@ void Text::on_redraw(CLayoutEvent* ev) {
   auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
   graphics::drw_text(
       win_ref, font, color, text,
-      state->geom.content_x(),
-      state->geom.content_y() + font->size
+      state->geom.content_x().val(),
+      (state->geom.content_y() + font->size).val()
   );
 }

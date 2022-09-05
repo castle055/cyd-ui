@@ -19,6 +19,9 @@ public:
       .size = 14
   };
   
+  cydui::layout::color::Color* c     = new cydui::layout::color::Color("#FCAE1E");
+  cydui::layout::color::Color* c_dim = new cydui::layout::color::Color("#2d2310");
+  cydui::layout::color::Color* c1    = new cydui::layout::color::Color("#000000");
 };
 
 typedef std::function<void()> Action;
@@ -37,18 +40,15 @@ public:
   
   void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
     auto state = (ButtonState*)this->state;
-    auto* c     = new cydui::layout::color::Color("#FCAE1E");
-    auto* c_dim = new cydui::layout::color::Color("#2d2310");
-    auto* c1    = new cydui::layout::color::Color("#000000");
     
     add(
         {
             new primitives::Rectangle(
-                state->hovering? c : c_dim, 0, 0,
-                state->geom.content_w(), state->geom.content_h(),
+                state->hovering? state->c : state->c_dim, 0, 0,
+                state->geom.content_w().val(), state->geom.content_h().val(),
                 true
             ),
-            (new primitives::Text(state->hovering? c1 : c, &state->font, 0, 0, text))
+            (new primitives::Text(state->hovering? state->c1 : state->c, &state->font, 0, 0, text))
                 ->set_margin(5, 5, 5, 5),
         }
     );

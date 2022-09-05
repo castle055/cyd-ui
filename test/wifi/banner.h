@@ -10,7 +10,7 @@
 
 class BannerState: public cydui::components::ComponentState {
 public:
-  cydui::components::ComponentState hboxState;
+  containers::HBoxState hboxState;
 };
 
 class Banner: public cydui::components::Component {
@@ -50,7 +50,7 @@ public:
                   );
                 }
             ))
-                ->set_border_enable(true),
+            //->set_border_enable(true),
         }
     );
     
@@ -67,7 +67,7 @@ public:
     //        ),
     //    }
     //);
-    set_border_enable(true);
+    //set_border_enable(true);
   }
 };
 

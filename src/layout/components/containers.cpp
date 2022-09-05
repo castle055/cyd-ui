@@ -11,43 +11,41 @@
 logging::logger cont_log = {.name = "CONT"};
 
 containers::VBox::VBox(
-    cydui::components::ComponentState* state,
-    int spacing,
-    std::function<void(cydui::components::Component*)> inner
-)
-    : Component(state, inner) {
-  this->spacing = spacing;
-}
-
-void containers::VBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
-  int       max_w = 0;
-  int       cur_h = 0;
-  for (auto &ch: children) {
-    ch->set_pos(this, 1, cur_h + 1);
-    cur_h += ch->state->geom.abs_h() + spacing;
-    if (ch->state->geom.abs_w() > max_w)
-      max_w = ch->state->geom.abs_w();
-  }
-  set_min_size(max_w + 2, cur_h - spacing);
-}
-
-containers::HBox::HBox(
-    cydui::components::ComponentState* _state,
+    containers::VBoxState* _state,
     int spacing,
     std::function<void(cydui::components::Component*)> inner
 )
     : Component(_state, inner) {
-  this->spacing = spacing;
+  _state->spacing = spacing;
+}
+
+void containers::VBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
+  auto* state = (VBoxState*)this->state;
+  
+  IntProperty::IntBinding cur_h = {.property = &state->offset};
+  for (auto               &ch: children) {
+    ch->set_pos(this, 1, cur_h.val());
+    cur_h.property = (ch->state->geom.abs_h() + state->spacing + cur_h).unwrap();
+  }
+  cur_h.compute();
+}
+
+containers::HBox::HBox(
+    containers::HBoxState* _state,
+    int spacing,
+    std::function<void(cydui::components::Component*)> inner
+)
+    : Component(_state, inner) {
+  _state->spacing = spacing;
 }
 
 void containers::HBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
-  int       max_h = 0;
-  int       cur_w = 0;
-  for (auto &ch: children) {
-    ch->set_pos(this, cur_w, 1);
-    cur_w += ch->state->geom.abs_w() + spacing;
-    if (ch->state->geom.abs_h() > max_h)
-      max_h = ch->state->geom.abs_h();
+  auto* state = (HBoxState*)this->state;
+  
+  IntProperty::IntBinding cur_w = {.property = &state->offset};
+  for (auto               &ch: children) {
+    ch->set_pos(this, cur_w.val(), 1);
+    cur_w.property = (ch->state->geom.abs_w() + state->spacing + cur_w).unwrap();
   }
-  set_min_size(cur_w - spacing, max_h + 2);
+  cur_w.compute();
 }

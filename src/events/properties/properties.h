@@ -5,28 +5,50 @@
 #ifndef CYD_UI_PROPERTIES_H
 #define CYD_UI_PROPERTIES_H
 
+#include <functional>
+#include "../events.h"
+#include "../../logging/logging.h"
+#include <unordered_set>
 
-#include "../../../include/components.h"
+#define bind(state) on_change([state](){ state->_dirty = true; })
 
 class Property {
   
-  std::vector<Property*>                          listeners;
-  std::vector<cydui::components::ComponentState*> renderListeners;
+  std::unordered_set<Property*>* dependencies;
+  std::unordered_set<Property*>* listeners;
+  
+  bool dead      = false;
+  bool _updating = false;
 protected:
   void* value = nullptr;
   std::function<void()> binding = []() { };
-
+  
+  virtual bool is_equal(void* new_val) = 0;
+  
+  virtual bool changed_value() = 0;
+  
+  void clearDependencies();
+  
+  void clearListeners();
 
 public:
+  bool persistent = true; // Persistent after all listeners have unsubscribed
+  explicit Property();
+  
   virtual ~Property();
   
-  virtual void set_raw_value(void* val) = 0;
+  void set_raw_value(void* val);
   
-  void bindComponentRender(cydui::components::ComponentState* component_state);
+  void on_change(std::function<void()> function_listener);
   
   void addListener(Property* prop);
   
+  void removeListener(Property* prop);
+  
   void update();
+
+private:
+  std::vector<std::function<void()>>* function_listeners;
 };
 
 #include "int_properties.h"

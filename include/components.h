@@ -7,6 +7,8 @@
 
 #include "../src/events/events.h"
 #include "../src/layout/color/colors.h"
+#include "../src/events/properties/properties.h"
+#include "../src/layout/components/geometry/component_geometry.h"
 #include <vector>
 #include <unordered_set>
 #include <functional>
@@ -20,56 +22,6 @@
 namespace cydui::components {
   class Component;
   
-  class ComponentGeometry {
-  public:
-    int x     = 0,
-        y     = 0,
-        x_off = 0,
-        y_off = 0,
-        min_w = 0,
-        min_h = 0,
-        w     = 0,
-        h     = 0;
-    
-    unsigned int padding_top    = 0,
-                 padding_right  = 0,
-                 padding_bottom = 0,
-                 padding_left   = 0;
-    
-    unsigned int margin_top    = 0,
-                 margin_right  = 0,
-                 margin_bottom = 0,
-                 margin_left   = 0;
-    
-    Component* relative_to = nullptr;
-    bool custom_offset   = false;
-    bool is_min_size_set = false;
-    
-    [[nodiscard]] int abs_x() const;
-    
-    [[nodiscard]] int abs_y() const;
-    
-    [[nodiscard]] int border_x() const;
-    
-    [[nodiscard]] int border_y() const;
-    
-    [[nodiscard]] int content_x() const;
-    
-    [[nodiscard]] int content_y() const;
-    
-    [[nodiscard]] int abs_w() const;
-    
-    [[nodiscard]] int abs_h() const;
-    
-    [[nodiscard]] int border_w() const;
-    
-    [[nodiscard]] int border_h() const;
-    
-    [[nodiscard]] int content_w() const;
-    
-    [[nodiscard]] int content_h() const;
-  };
-  
   class ComponentBorder {
   public:
     bool enabled = false;
@@ -78,6 +30,8 @@ namespace cydui::components {
   
   class ComponentState {
   public:
+    ComponentState();
+    
     Component* component_instance;
     bool stateless_comp = false;
     //int  x       = 0,
@@ -144,11 +98,17 @@ namespace cydui::components {
     
     Component* get_parent();
     
-    Component* set_min_size(int w, int h);
+    Component* set_size(int w, int h);
     
-    Component* set_pref_size(int w, int h);
+    Component* set_size(IntProperty* w, IntProperty* h);
+    
+    Component* set_size(IntProperty::IntBinding w, IntProperty::IntBinding h);
     
     Component* set_pos(Component* relative, int x, int y);
+    
+    Component* set_pos(Component* relative, IntProperty* x, IntProperty* y);
+    
+    Component* set_pos(Component* relative, IntProperty::IntBinding x, IntProperty::IntBinding y);
     
     Component* set_padding(unsigned int top, unsigned int right, unsigned int bottom, unsigned int left);
     
