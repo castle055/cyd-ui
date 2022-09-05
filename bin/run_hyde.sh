@@ -5,7 +5,7 @@ cd "$(dirname "$0")" || exit 1
 export LD_LIBRARY_PATH="$(pwd)/lib"
 echo "Looking for LLVM library in $LD_LIBRARY_PATH"
 
-find "$(pwd)"/../{include,src}/ \( -name "*.cpp" -o -name "*.h" \) -exec \
+find "$(pwd)"/../{include,src}/ \( -name "*.cpp" -o -name "*.hpp" \) -exec \
   ./hyde "{}" \
          -hyde-update                      \
          -p "../cmake-build-debug" \
