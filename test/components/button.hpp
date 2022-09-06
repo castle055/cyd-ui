@@ -11,7 +11,6 @@
 
 class ButtonState: public cydui::components::ComponentState {
 public:
-  //=== CHILDREN STATE DECLARATIONS
   bool hovering = false;
   
   cydui::layout::fonts::Font font {
@@ -24,15 +23,15 @@ public:
   cydui::layout::color::Color* c1    = new cydui::layout::color::Color("#000000");
 };
 
-typedef std::function<void()> Action;
+typedef std::function<void()> ButtonAction;
 
 class Button: public cydui::components::Component {
 public:
   std::string text;
   
-  Action on_action;
+  ButtonAction on_action;
   
-  explicit Button(ButtonState* _state, std::string text, Action on_action)
+  explicit Button(ButtonState* _state, std::string text, ButtonAction on_action)
       : cydui::components::Component(_state) {
     this->text      = text;
     this->on_action = on_action;

@@ -27,15 +27,14 @@ void render_sbr(cydui::graphics::window_t* win) {
   //win->x_mtx.lock();
   XCopyArea(
       state::get_dpy(),
-      win->drawable,
+      win->staging_drawable,
       win->xwin,
       win->gc,
       0, 0,
-      win->w, win->h,
+      win->staging_w, win->staging_h,
       0, 0
   );
   //win->x_mtx.unlock();
-  
   XFlush(state::get_dpy());
 }
 
@@ -61,7 +60,8 @@ void render::start(cydui::graphics::window_t* win) {
   render_data = new RenderThreadData {
       .win = win,
   };
-  win->render_thd = cydui::threading::new_thread(render_task, render_data);
+  win->render_thd = cydui::threading::new_thread(render_task, render_data)
+      ->set_name("X11_RENDER_THD");
 }
 
 static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
@@ -79,8 +79,23 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   //    req.h
   //);
   win->render_mtx.lock();
+  win->x_mtx.lock();
   //win->render_reqs.push_back(req);
   win->dirty = true;
+  //win->staging_drawable = win->drawable;
+  //win->staging_gc       = win->gc;
+  //win->drawable         = XCreatePixmap(
+  //    state::get_dpy(),
+  //    win->xwin,
+  //    w,
+  //    h,
+  //    DefaultDepth(state::get_dpy(), state::get_screen()));
+  //win->gc               = XCreateGC(state::get_dpy(), win->drawable, 0, NULL);
+  XCopyArea(state::get_dpy(), win->drawable, win->staging_drawable, win->gc, 0, 0, win->w, win->h, 0, 0);
+  win->staging_w = win->w;
+  win->staging_h = win->h;
+  
+  win->x_mtx.unlock();
   win->render_mtx.unlock();
 }
 
@@ -110,32 +125,46 @@ XftColor* color_to_xftcolor(cydui::layout::color::Color* color) {
 }
 
 void render::resize(cydui::graphics::window_t* win, int w, int h) {
-  if (w > win->w || h > win->h) {
+  if (w != win->w || h != win->h) {
     
     win->x_mtx.lock();
     
-    Drawable new_drw = XCreatePixmap(
+    Drawable new_drw         = XCreatePixmap(
+        state::get_dpy(),
+        win->xwin,
+        w,
+        h,
+        DefaultDepth(state::get_dpy(), state::get_screen()));
+    Drawable new_staging_drw = XCreatePixmap(
         state::get_dpy(),
         win->xwin,
         w,
         h,
         DefaultDepth(state::get_dpy(), state::get_screen()));
     XCopyArea(state::get_dpy(), win->drawable, new_drw, win->gc, 0, 0, win->w, win->h, 0, 0);
-    XFlush(state::get_dpy());
+    //XCopyArea(state::get_dpy(), win->drawable, new_staging_drw, win->gc, 0, 0, win->w, win->h, 0, 0);
+    //XFlush(state::get_dpy());
     
     XFreePixmap(state::get_dpy(), win->drawable);
     win->drawable = new_drw;
     
+    win->render_mtx.lock();
+    XFreePixmap(state::get_dpy(), win->staging_drawable);
+    win->staging_drawable = new_staging_drw;
+    
+    win->render_mtx.unlock();
+    
     XFreeGC(state::get_dpy(), win->gc);
     win->gc = XCreateGC(state::get_dpy(), win->drawable, 0, NULL);
     
+    win->x_mtx.unlock();
+    
     XFlush(state::get_dpy());
     
-    win->x_mtx.unlock();
+    win->w = w;
+    win->h = h;
     req(win, 0, 0, 0, 0);
   }
-  win->w = w;
-  win->h = h;
 }
 
 void render::clr_rect(

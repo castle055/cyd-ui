@@ -19,14 +19,10 @@ int main() {
   auto                     * layout = new cydui::layout::Layout(tc);
   cydui::window::CWindow   * win    = cydui::window::create(
       layout,
-      "test_window",
-      "scratch",
-      -1,
-      -1,
-      //1,
-      //13,
-      500,
-      250
+      "test_window", "scratch",
+      -1, -1,
+      //1, 13,
+      500, 250
   );
   cydui::graphics::window_t* w      = win->win_ref;
   
@@ -34,7 +30,7 @@ int main() {
   
   using namespace std::chrono_literals;
   while (1) {
-    std::this_thread::sleep_for(100s);
+    std::this_thread::sleep_for(10000s);
   }
   return 0;
 }

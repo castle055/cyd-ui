@@ -6,6 +6,8 @@
 #define CYD_UI_EVENTS_HPP
 
 
+#include <string>
+
 namespace cydui::events {
   void start();
   
@@ -14,9 +16,15 @@ namespace cydui::events {
     EVENT_LAYOUT,
     EVENT_CUSTOM,
   };
+  enum CEventMode {
+    EV_MODE_QUEUE,
+    EV_MODE_STATE,
+  };
   struct CEvent {
-    const CEventType type;
-    bool             consumed = false;
+    const CEventType  type;
+    const CEventMode  mode     = EV_MODE_QUEUE;
+    const std::string event_id;
+    bool              consumed = false;
     void* raw_event = nullptr;
     void* data;
   };

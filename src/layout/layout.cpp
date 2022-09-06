@@ -16,27 +16,43 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
 }
 
-static void render_if_dirty(cydui::components::Component* c) {
+bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {
   if (c->state->_dirty) {
-    cydui::events::emit(
-        new cydui::events::CEvent {
-            .type      = cydui::events::EVENT_LAYOUT,
-            .raw_event = nullptr,
-            .data      = new cydui::events::layout::CLayoutEvent {
-                .type = cydui::events::layout::LYT_EV_REDRAW,
-                .data = cydui::events::layout::CLayoutData {
-                    .redraw_ev = cydui::events::layout::CRedrawEvent {
-                        .x = 0,
-                        .y = 0,
-                        .component = c->state,
-                    }
-                },
-            }
+    c->on_event(
+        new cydui::events::layout::CLayoutEvent {
+            .type = cydui::events::layout::LYT_EV_REDRAW,
+            .data = cydui::events::layout::CLayoutData {
+                .redraw_ev = cydui::events::layout::CRedrawEvent {
+                    .x = 0,
+                    .y = 0,
+                    .component = c->state,
+                }
+            },
+            .win = (void*)this->win,
         }
     );
+    return true;
+    //cydui::events::emit(
+    //    new cydui::events::CEvent {
+    //        .type      = cydui::events::EVENT_LAYOUT,
+    //        .raw_event = nullptr,
+    //        .data      = new cydui::events::layout::CLayoutEvent {
+    //            .type = cydui::events::layout::LYT_EV_REDRAW,
+    //            .data = cydui::events::layout::CLayoutData {
+    //                .redraw_ev = cydui::events::layout::CRedrawEvent {
+    //                    .x = 0,
+    //                    .y = 0,
+    //                    .component = c->state,
+    //                }
+    //            },
+    //        }
+    //    }
+    //);
   } else {
+    bool      any = false;
     for (auto &item: c->children)
-      render_if_dirty(item);
+      any = any || render_if_dirty(item);
+    return any;
   }
 }
 
@@ -60,8 +76,8 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
       } else {
         root->on_event(ev);
       }
-      render_if_dirty(root);
-      graphics::flush(win->win_ref);
+      if (render_if_dirty(root))
+        graphics::flush(win->win_ref);
       break;
     case events::layout::LYT_EV_KEYPRESS: break;
     case events::layout::LYT_EV_KEYRELEASE: break;
@@ -71,7 +87,8 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
       ev->data.motion_ev.x -= target->state->geom.border_x().compute();
       ev->data.motion_ev.y -= target->state->geom.border_y().compute();
       target->on_event(ev);
-      render_if_dirty(root);
+      if (render_if_dirty(root))
+        graphics::flush(win->win_ref);
       break;
     case events::layout::LYT_EV_BUTTONRELEASE: break;
     case events::layout::LYT_EV_MOUSEMOTION:
@@ -97,19 +114,22 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
       //  );
       //}
       target->on_event(ev);
-      render_if_dirty(root);
+      if (render_if_dirty(root))
+        graphics::flush(win->win_ref);
       break;
     case events::layout::LYT_EV_RESIZE:
       log.debug(
           "RESIZE w=%d, h=%d", ev->data.resize_ev.w, ev->data.resize_ev.h
       );
       root->on_event(ev);
-      render_if_dirty(root);
+      if (render_if_dirty(root))
+        graphics::flush(win->win_ref);
       break;
     case events::layout::LYT_EV_UPDATE_PROP:
       ((Property*)ev->data.update_prop_ev.target_property)
           ->set_raw_value((void*)(ev->data.update_prop_ev.new_value));
-      render_if_dirty(root);
+      if (render_if_dirty(root))
+        graphics::flush(win->win_ref);
       break;
     default: break;
   }

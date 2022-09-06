@@ -25,6 +25,9 @@ typedef std::unordered_map<std::string, window_font> loaded_font_map_t;
 struct window_t {
   Window                        xwin;
   Drawable                      drawable;
+  Drawable                      staging_drawable;
+  int                           staging_w;
+  int                           staging_h;
   GC                            gc;
   int                           w;
   int                           h;

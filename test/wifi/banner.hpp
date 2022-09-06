@@ -17,7 +17,7 @@ class Banner: public cydui::components::Component {
 public:
   logging::logger log = {.name = "WIFI:Banner", .on = true};
   
-  Banner(BannerState* _state): cydui::components::Component(_state) {
+  explicit Banner(BannerState* _state): cydui::components::Component(_state) {
   }
   
   void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
@@ -53,21 +53,6 @@ public:
             //->set_border_enable(true),
         }
     );
-    
-    //log.info("state->x=%d, state->y=%d", state->geom.abs_x(), state->geom.abs_y());
-    //log.info("state->w=%d, state->h=%d", state->geom.abs_w(), state->geom.abs_h());
-    //add(
-    //    {
-    //        new primitives::Line(
-    //            c1,
-    //            0,
-    //            state->geom.content_h(),
-    //            state->geom.content_w(),
-    //            state->geom.content_h()
-    //        ),
-    //    }
-    //);
-    //set_border_enable(true);
   }
 };
 

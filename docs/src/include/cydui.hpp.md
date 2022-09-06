@@ -1,0 +1,13 @@
+#ifndef CYD_UI_CYDUI_HPP
+#define CYD_UI_CYDUI_HPP
+
+namespace cydui { }
+
+#include "components.hpp"
+#include "containers.hpp"
+#include "layout.hpp"
+#include "primitives.hpp"
+#include "window.hpp"
+
+
+#endif//CYD_UI_CYDUI_HPP

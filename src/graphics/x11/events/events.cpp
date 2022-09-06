@@ -9,6 +9,8 @@
 #include "../state/state.hpp"
 #include <X11/Xlib.h>
 
+#include <utility>
+
 cydui::threading::thread_t* x11_thread;
 
 logging::logger x11_evlog = {.name = "X11::EV"};
@@ -21,6 +23,25 @@ static void emit_lyt(
   cydui::events::emit(
       new cydui::events::CEvent {
           .type      = cydui::events::EVENT_LAYOUT,
+          .raw_event = new XEvent(ev),
+          .data      = new cydui::events::layout::CLayoutEvent {
+              .type = type, .data = data
+          }
+      }
+  );
+}
+
+static void emit_lyt_state(
+    std::string id,
+    XEvent ev,
+    cydui::events::layout::CLayoutEventType type,
+    cydui::events::layout::CLayoutData data
+) {
+  cydui::events::emit(
+      new cydui::events::CEvent {
+          .type      = cydui::events::EVENT_LAYOUT,
+          .mode = cydui::events::EV_MODE_STATE,
+          .event_id = std::move(id),
           .raw_event = new XEvent(ev),
           .data      = new cydui::events::layout::CLayoutEvent {
               .type = type, .data = data
@@ -45,9 +66,26 @@ static void emit_gph(
   );
 }
 
+static void emit_gph_state(
+    std::string id,
+    XEvent ev,
+    cydui::events::graphics::CGraphicEventType type,
+    cydui::events::graphics::CGraphicEventData data
+) {
+  cydui::events::emit(
+      new cydui::events::CEvent {
+          .type      = cydui::events::EVENT_GRAPHICS,
+          .mode = cydui::events::EV_MODE_STATE,
+          .event_id = std::move(id),
+          .raw_event = new XEvent(ev),
+          .data      = new cydui::events::graphics::CGraphicsEvent {
+              .type = type, .data = data
+          }
+      }
+  );
+}
+
 using namespace std::chrono_literals;
-static auto conf_notif_timeout   = 100ms;
-static auto conf_notif_last_time = std::chrono::system_clock::now().time_since_epoch();
 
 Bool evpredicate() {
   return True;
@@ -132,7 +170,8 @@ void run() {
         );
         break;
       case ConfigureNotify:
-        emit_gph(
+        emit_gph_state(
+            "gph_resize",
             ev,
             cydui::events::graphics::GPH_EV_RESIZE,
             cydui::events::graphics::CGraphicEventData {
@@ -141,7 +180,8 @@ void run() {
                 }
             }
         );
-        emit_lyt(
+        emit_lyt_state(
+            "lyt_resize",
             ev,
             cydui::events::layout::LYT_EV_RESIZE,
             cydui::events::layout::CLayoutData {
@@ -189,7 +229,7 @@ using namespace std::chrono_literals;
 void x11_event_emitter_task(cydui::threading::thread_t* this_thread) {
   while (this_thread->running) {
     run();
-    std::this_thread::sleep_for(10ms);
+    std::this_thread::sleep_for(20ms);
   }
 }
 
@@ -197,5 +237,6 @@ void cydui::graphics::events::start() {
   if (x11_thread && x11_thread->native_thread != nullptr)
     return;
   x11_evlog.debug("starting x11_thread");
-  x11_thread = threading::new_thread(&x11_event_emitter_task);
+  x11_thread = threading::new_thread(&x11_event_emitter_task)
+      ->set_name("X11_EV_THD");
 }

@@ -181,8 +181,8 @@ public:
     for (auto &d: deps)
       d->addListener(this);
     
-    //if (prev != _new)
-    //  update();
+    if (prev != _new)
+      update();
   }
   
   int val() {

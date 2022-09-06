@@ -39,9 +39,6 @@ public:
   void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
     auto* state = (TestState*)this->state;
     
-    //int val = state->prop2;
-    auto* c = new cydui::layout::color::Color("#FCAE1E");
-    
     add(
         {
             (new FlexBox(
@@ -63,19 +60,22 @@ public:
                                         (new Button(
                                             &(state->button_state), "TEST 1", [state]() {
                                               state->button = 2;
-                                              log.error("CLICK 1");
+                                              log.info("CLICK 1");
                                             }
                                         )) :
                                         (new Button(
                                             &(state->button2_state), "TEST 2", [state]() {
                                               state->button = 1;
-                                              log.error("CLICK 2");
+                                              log.info("CLICK 2");
                                             }
                                         )),
                                     }
                                 );
                               }
                           )),
+                          new primitives::Rectangle(c, 0, 0, 32, 32, true),
+                          new primitives::Rectangle(c, 0, 0, 32, 32, true),
+                          new primitives::Rectangle(c, 0, 0, 32, 32, true),
                           new primitives::Rectangle(c, 0, 0, 32, 32, true),
                       }
                   );

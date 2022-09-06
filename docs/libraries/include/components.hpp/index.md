@@ -7,3 +7,5 @@ tags:
   - sourcefile
 library-type: sourcefile
 ---
+
+[source](/src/{{ page.title }})

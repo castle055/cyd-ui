@@ -129,6 +129,13 @@ cydui::graphics::window_t* cydui::graphics::create_window(
       DefaultDepth(state::get_dpy(), state::get_screen()));
   win->gc       = XCreateGC(state::get_dpy(), win->drawable, 0, NULL);
   
+  win->staging_drawable = XCreatePixmap(
+      state::get_dpy(),
+      xwin,
+      w,
+      h,
+      DefaultDepth(state::get_dpy(), state::get_screen()));
+  
   XSetLineAttributes(
       state::get_dpy(), win->gc, 1, LineSolid, CapButt, JoinMiter
   );

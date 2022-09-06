@@ -31,22 +31,7 @@ ComponentState::ComponentState() {
 }
 
 void ComponentState::dirty() {
-  events::emit(
-      new cydui::events::CEvent {
-          .type      = cydui::events::EVENT_LAYOUT,
-          .raw_event = nullptr,
-          .data      = new events::layout::CLayoutEvent {
-              .type = events::layout::LYT_EV_REDRAW,
-              .data = events::layout::CLayoutData {
-                  .redraw_ev = events::layout::CRedrawEvent {
-                      .x = 0,
-                      .y = 0,
-                      .component = this,
-                  }
-              },
-          }
-      }
-  );
+  _dirty = true;
 }
 
 //===== COMPONENTS
@@ -177,6 +162,9 @@ void Component::on_event(events::layout::CLayoutEvent* ev) {
   
   if (parent && !ev->consumed) {
     parent->on_event(ev);
+  }
+  if (!parent) {
+    ev->consumed = true;
   }
 }
 
