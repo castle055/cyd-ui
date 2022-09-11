@@ -13,7 +13,7 @@ fields:
   custom_offset:
     description: __MISSING__
     type: bool
-  custom_size:
+  custom_width:
     description: __MISSING__
     type: bool
   h:

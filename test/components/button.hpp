@@ -9,13 +9,12 @@
 #include "../../include/cydui.hpp"
 #include "../../src/logging/logging.hpp"
 
-class ButtonState: public cydui::components::ComponentState {
-public:
+STATE(Button)
   bool hovering = false;
   
   cydui::layout::fonts::Font font {
-      .name = "Fira Code Retina",
-      .size = 14
+    .name = "Fira Code Retina",
+    .size = 14
   };
   
   cydui::layout::color::Color* c     = new cydui::layout::color::Color("#FCAE1E");
@@ -24,33 +23,30 @@ public:
 };
 
 typedef std::function<void()> ButtonAction;
+#define action [state]
 
-class Button: public cydui::components::Component {
-public:
-  std::string text;
+COMPONENT(Button)
+  PROPS({
+    std::string  text;
+    ButtonAction on_action;
+  })
   
-  ButtonAction on_action;
-  
-  explicit Button(ButtonState* _state, std::string text, ButtonAction on_action)
-      : cydui::components::Component(_state) {
-    this->text      = text;
-    this->on_action = on_action;
+  INIT(Button) {
+    this->props = props;
   }
   
-  void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
-    auto state = (ButtonState*)this->state;
+  REDRAW(ev) {
+    WITH_STATE(Button)
     
-    add(
-        {
-            new primitives::Rectangle(
-                state->hovering? state->c : state->c_dim, 0, 0,
-                state->geom.content_w().val(), state->geom.content_h().val(),
-                true
-            ),
-            (new primitives::Text(state->hovering? state->c1 : state->c, &state->font, 0, 0, text))
-                ->set_margin(5, 5, 5, 5),
-        }
-    );
+    ADD_TO(this, ({
+      new primitives::Rectangle(
+        state->hovering? state->c : state->c_dim, 0, 0,
+        state->geom.content_w().val(), state->geom.content_h().val(),
+        true
+      ),
+        (new primitives::Text(state->hovering? state->c1 : state->c, &state->font, 0, 0, props.text))
+          ->set_margin(5, 5, 5, 5),
+    }))
   }
   
   void on_mouse_enter(cydui::events::layout::CLayoutEvent* ev) override {
@@ -72,7 +68,7 @@ public:
     state->hovering = false;
     state->dirty();
     ev->consumed = true;
-    this->on_action();
+    props.on_action();
   }
 };
 

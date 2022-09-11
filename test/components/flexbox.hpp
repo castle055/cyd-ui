@@ -21,80 +21,114 @@ public:
 
 class FlexBox: public cydui::components::Component {
 public:
-  //std::unordered_set<cydui::components::Component*>         inner_children;
-  bool vertical = false;
+  PROPS({
+    bool vertical = false;
+  })
   
   explicit FlexBox(
-      FlexBoxState* _state,
-      bool vertical,
-      std::function<void(cydui::components::Component*)> inner
+    FlexBoxState* _state,
+    Props props,
+    std::function<void(cydui::components::Component*)> inner
   )
-      : cydui::components::Component(_state) {
-    this->vertical = vertical;
-    _state->inner  = std::move(inner);
-    //for (const auto &item: children) {
-    //inner_children.insert(item);
-    //}
+    : cydui::components::Component(_state) {
+    this->props   = props;
+    _state->inner = std::move(inner);
   }
   
   void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
     auto* state = (FlexBoxState*)this->state;
     
-    if (vertical) {
+    if (props.vertical) {
       add(
-          {
-              (new containers::VBox(
-                  &(state->vboxState),
-                  10,
-                  [state](cydui::components::Component* _vbox) {
-                    auto* vbox       = (containers::VBox*)_vbox;
-                    auto* vbox_state = (containers::VBoxState*)_vbox->state;
-                    
-                    state->inner(vbox);
-                    
-                    int             c     = -1;
-                    int             sum_w = 0;
-                    for (const auto &item: vbox->children) {
-                      c++;
-                      sum_w += item->state->geom.abs_w().compute();
-                    }
-                    
-                    vbox_state->spacing =
-                        (state->geom.content_w() - sum_w) / c - 1;
-                    vbox_state->spacing.bind(state);
+        {
+          (new containers::VBox(
+            &(state->vboxState),
+            0,
+            [state](cydui::components::Component* _vbox) {
+              auto* vbox       = (containers::VBox*)_vbox;
+              auto* vbox_state = (containers::VBoxState*)_vbox->state;
+              
+              state->inner(vbox);
+              
+              std::vector<Property*> deps = {vbox_state->geom.content_h().unwrap()};
+              for (auto              &item: vbox->children) {
+                deps.push_back(item->state->geom.abs_h().unwrap());
+              }
+              
+              vbox_state->spacing.set_binding(
+                [vbox]() {
+                  int             c     = -1;
+                  int             sum_h = 0;
+                  for (const auto &item: vbox->children) {
+                    c++;
+                    sum_h += item->state->geom.abs_h().compute();
                   }
-              ))
-                  //->set_border_enable(true)
-                  ->set_size(state->geom.content_w(), state->geom.content_h())
-          }
+                  
+                  int spc = 0;
+                  if (c > 0)
+                    spc = (vbox->state->geom.content_h().compute() - sum_h) / c - 1;
+                  if (spc < 0)
+                    spc = 0;
+                  return spc;
+                }, deps
+              );
+              
+              //if (state->geom.custom_width) {
+              //  vbox->set_width(state->geom.content_w().compute());
+              //}
+              //if (state->geom.custom_height) {
+              //  vbox->set_height(state->geom.content_h().compute());
+              //}
+            }
+          ))
+          //->set_border_enable(true)
+        }
       );
     } else {
       add(
-          {
-              (new containers::HBox(
-                  &(state->hboxState),
-                  0,
-                  [state](cydui::components::Component* _hbox) {
-                    auto* hbox       = (containers::HBox*)_hbox;
-                    auto* hbox_state = (containers::HBoxState*)_hbox->state;
-                    
-                    state->inner(hbox);
-                    
-                    int             c     = -1;
-                    int             sum_w = 0;
-                    for (const auto &item: hbox->children) {
-                      c++;
-                      sum_w += item->state->geom.abs_w().compute();
-                    }
-                    
-                    hbox_state->spacing =
-                        (state->geom.content_w() - sum_w) / c - 1;
-                    hbox_state->spacing.bind(state);
+        {
+          (new containers::HBox(
+            &(state->hboxState),
+            0,
+            [state](cydui::components::Component* _hbox) {
+              auto* hbox       = (containers::HBox*)_hbox;
+              auto* hbox_state = (containers::HBoxState*)_hbox->state;
+              
+              state->inner(hbox);
+              
+              std::vector<Property*> deps = {hbox_state->geom.content_w().unwrap()};
+              for (auto              &item: hbox->children) {
+                deps.push_back(item->state->geom.abs_w().unwrap());
+              }
+              
+              hbox_state->spacing.set_binding(
+                [hbox]() {
+                  int             c     = -1;
+                  int             sum_w = 0;
+                  for (const auto &item: hbox->children) {
+                    c++;
+                    sum_w += item->state->geom.abs_w().compute();
                   }
-              ))
-                  //->set_border_enable(true)
-                  ->set_size(state->geom.content_w(), state->geom.content_h())
-          }
+                  
+                  int spc = 0;
+                  if (c > 0)
+                    spc = (hbox->state->geom.content_w().compute() - sum_w) / c - 1;
+                  if (spc < 0)
+                    spc = 0;
+                  return spc;
+                }, deps
+              );
+              
+              //if (state->geom.custom_width) {
+              //  hbox->set_width(state->geom.content_w().compute());
+              //}
+              //if (state->geom.custom_height) {
+              //  hbox->set_height(state->geom.content_h().compute());
+              //}
+            }
+          ))
+          //->set_border_enable(true)
+        }
       );
     }
   }

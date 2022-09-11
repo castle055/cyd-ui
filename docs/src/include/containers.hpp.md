@@ -30,7 +30,7 @@ namespace containers {
     explicit VBox(
         containers::VBoxState* _state,
         int spacing,
-        std::function<void(cydui::components::Component*)> inner
+        std::function<void(cydui::components::Component*)> IN
     );
   };
   
@@ -49,7 +49,7 @@ namespace containers {
     explicit HBox(
         HBoxState* _state,
         int spacing,
-        std::function<void(cydui::components::Component*)> inner
+        std::function<void(cydui::components::Component*)> IN
     );
   };
   

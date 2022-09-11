@@ -42,7 +42,7 @@ Rectangle::Rectangle(Color* color, int x, int y, int w, int h, bool filled)
   state->geom.w           = w;
   state->geom.h           = h;
   //state->geom.custom_offset = true;
-  state->geom.custom_size = true;
+  state->geom.custom_width = true;
   this->color             = color;
   this->filled            = filled;
 }

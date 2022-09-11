@@ -101,5 +101,5 @@ void ComponentGeometry::set_size(IntProperty* w, IntProperty* h) {
 void ComponentGeometry::set_size(IntProperty::IntBinding w, IntProperty::IntBinding h) {
   this->w = w - padding_left - padding_right - margin_left - margin_right;
   this->h = h - padding_top - padding_bottom - margin_top - margin_bottom;
-  custom_size = true;
+  custom_width = true;
 }

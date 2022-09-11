@@ -12,81 +12,72 @@
 #include "../components/flexbox.hpp"
 #include "../../src/events/properties/properties.hpp"
 
+using namespace primitives;
+
 static const logging::logger log = {.name = "MAIN", .on = true};
 
-class TestState: public cydui::components::ComponentState {
-public:
-  //=== CHILDREN STATE DECLARATIONS
-  containers::VBoxState vboxState;
-  FlexBoxState          flex_box_state;
-  BannerState           banner_state;
-  ButtonState           button_state;
-  ButtonState           button2_state;
-  
+STATE(Test)
   IntProperty button {1};
   
-  explicit TestState(): cydui::components::ComponentState() {
+  FlexBoxState* main_fbox = nullptr;
+  
+  cydui::layout::color::Color* c = new cydui::layout::color::Color("#FCAE1E");
+  
+  INIT_STATE(Test) {
     button.bind(this);
   }
 };
 
-class TestComponent: public cydui::components::Component {
-public:
-  explicit TestComponent(TestState* state)
-      : cydui::components::Component(state) {
+COMPONENT(Test)
+  NO_PROPS
+  
+  INIT(Test) {
+  
   }
   
-  void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
-    auto* state = (TestState*)this->state;
+  REDRAW(ev) {
+    WITH_STATE(Test)
     
-    add(
-        {
-            (new FlexBox(
-                &(state->flex_box_state),
-                false,
-                [state](cydui::components::Component* fbox) {
-                  auto* c  = new cydui::layout::color::Color("#FCAE1E");
-                  auto* c1 = new cydui::layout::color::Color("#0000FF");
-                  fbox->add(
-                      {
-                          (new containers::VBox(
-                              &(state->vboxState),
-                              8,
-                              [state](cydui::components::Component* vbox) {
-                                vbox->add(
-                                    {
-                                        (new Banner(&(state->banner_state))),
-                                        state->button.val() == 1?
-                                        (new Button(
-                                            &(state->button_state), "TEST 1", [state]() {
-                                              state->button = 2;
-                                              log.info("CLICK 1");
-                                            }
-                                        )) :
-                                        (new Button(
-                                            &(state->button2_state), "TEST 2", [state]() {
-                                              state->button = 1;
-                                              log.info("CLICK 2");
-                                            }
-                                        )),
-                                    }
-                                );
-                              }
-                          )),
-                          new primitives::Rectangle(c, 0, 0, 32, 32, true),
-                          new primitives::Rectangle(c, 0, 0, 32, 32, true),
-                          new primitives::Rectangle(c, 0, 0, 32, 32, true),
-                          new primitives::Rectangle(c, 0, 0, 32, 32, true),
-                      }
-                  );
-                }
-            ))
-                ->set_padding(5, 5, 5, 5)
-                ->set_margin(5, 5, 5, 5)
-                ->set_border_enable(true)
-                ->set_size(state->geom.content_w(), state->geom.content_h()),
-        }
-    );
+    ADD_TO(this, {
+      N(FlexBox, ({ .vertical = false }), ({
+        N(FlexBox, ({ .vertical = true }), ({
+          N(Banner),
+            (state->button.val() == 1)?
+            N(Button, ({
+              .text = "TEST 1",
+              .on_action = action {
+                state->button = 2;
+                log.info("CLICK 1");
+              }
+            })) :
+            N(Button, ({
+              .text = "TEST 2",
+              .on_action = action {
+                state->button = 1;
+                log.info("CLICK 2");
+              }
+            })),
+            rectangle(state->c, 32, 32, true),
+            rectangle(state->c, 32, 32, true),
+            rectangle(state->c, 32, 32, true),
+        }), {
+          thisFlexBox->set_border_enable(true);
+          if (state->main_fbox) {
+            thisFlexBox->set_height(state->main_fbox->geom.content_h());
+          }
+        }),
+          rectangle(state->c, 32, 32, true),
+          rectangle(state->c, 32, 32, true),
+          rectangle(state->c, 32, 32, true),
+          rectangle(state->c, 32, 32, true),
+      }), {
+        state->main_fbox = (FlexBoxState*)thisFlexBox->state;
+        thisFlexBox->set_padding(5, 5, 5, 5);
+        thisFlexBox->set_margin(5, 5, 5, 5);
+        thisFlexBox->set_border_enable(true);
+        thisFlexBox->set_size(state->geom.content_w(), state->geom.content_h());
+      })
+    })
   }
 };
 

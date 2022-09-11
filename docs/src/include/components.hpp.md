@@ -80,11 +80,11 @@ namespace cydui::components {
     
     Component();
     
-    Component(std::function<void(Component*)> inner);
+    Component(std::function<void(Component*)> IN);
     
     Component(ComponentState* state);
     
-    Component(ComponentState* state, std::function<void(Component*)> inner);
+    Component(ComponentState* state, std::function<void(Component*)> IN);
     
     virtual ~Component();
     

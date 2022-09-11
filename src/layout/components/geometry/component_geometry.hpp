@@ -30,7 +30,8 @@ public:
   
   ComponentGeometry* relative_to = nullptr;
   bool custom_offset = false;
-  bool custom_size   = false;
+  bool custom_width  = false;
+  bool custom_height = false;
   
   IntProperty::IntBinding abs_x();
   
@@ -59,16 +60,30 @@ public:
   
   void set_pos(ComponentGeometry* relative, int x, int y);
   
-  void set_pos(ComponentGeometry* relative, IntProperty* x, IntProperty* y);
+  //void set_pos(ComponentGeometry* relative, IntProperty* x, IntProperty* y);
   
   void set_pos(ComponentGeometry* relative, IntProperty::IntBinding x, IntProperty::IntBinding y);
   
   
   void set_size(int w, int h);
   
-  void set_size(IntProperty* w, IntProperty* h);
+  //void set_size(IntProperty* w, IntProperty* h);
   
   void set_size(IntProperty::IntBinding w, IntProperty::IntBinding h);
+  
+  
+  void set_width(int w);
+  
+  //void set_width(IntProperty* w);
+  
+  void set_width(IntProperty::IntBinding w);
+  
+  
+  void set_height(int h);
+  
+  //void set_height(IntProperty* h);
+  
+  void set_height(IntProperty::IntBinding h);
 };
 
 

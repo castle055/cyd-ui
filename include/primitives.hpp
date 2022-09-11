@@ -35,7 +35,7 @@ namespace primitives {
   
   public:
     explicit Rectangle(
-        Color* color, int x, int y, int w, int h, bool filled = false
+      Color* color, int x, int y, int w, int h, bool filled = false
     );
   };
   
@@ -49,14 +49,14 @@ namespace primitives {
   
   public:
     explicit Arc(
-        Color* color,
-        int x,
-        int y,
-        int w,
-        int h,
-        int a0,
-        int a1,
-        bool filled = false
+      Color* color,
+      int x,
+      int y,
+      int w,
+      int h,
+      int a0,
+      int a1,
+      bool filled = false
     );
   };
   
@@ -69,7 +69,7 @@ namespace primitives {
   
   public:
     explicit Circle(
-        Color* color, int x, int y, int w, int h, bool filled = false
+      Color* color, int x, int y, int w, int h, bool filled = false
     );
   };
   
@@ -85,11 +85,13 @@ namespace primitives {
   
   public:
     Text(
-        Color* color, layout::fonts::Font* font, int x, int y, std::string text
+      Color* color, layout::fonts::Font* font, int x, int y, std::string text
     );
   };
   
 }// namespace primitives
 
+#define rectangle(CLR, W, H, FILLED) \
+new primitives::Rectangle(CLR,0,0,W,H,FILLED)
 
 #endif//CYD_UI_PRIMITIVES_HPP

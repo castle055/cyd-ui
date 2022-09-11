@@ -9,15 +9,10 @@
 #include "../src/layout/color/colors.hpp"
 #include "../src/events/properties/properties.hpp"
 #include "../src/layout/components/geometry/component_geometry.hpp"
+#include "../src/layout/components/state/children_state_collection.h"
 #include <vector>
 #include <unordered_set>
 #include <functional>
-
-
-#define PROPS(P, A)                                                            \
-  this, new P##Props(this, [](Component* parent, P##Props* p) { A })
-
-#define STATE(COMP) ((COMP##State*)parent->state)
 
 namespace cydui::components {
   class Component;
@@ -45,8 +40,9 @@ namespace cydui::components {
     
     void dirty();
     
-    ComponentGeometry geom;
-    ComponentBorder   border;
+    ComponentGeometry       geom;
+    ComponentBorder         border;
+    ChildrenStateCollection children;
   };
   
   class Component {
@@ -104,9 +100,24 @@ namespace cydui::components {
     
     Component* set_size(IntProperty::IntBinding w, IntProperty::IntBinding h);
     
+    
+    Component* set_width(int w);
+    
+    //Component* set_width(IntProperty* w);
+    
+    Component* set_width(IntProperty::IntBinding w);
+    
+    
+    Component* set_height(int h);
+    
+    //Component* set_height(IntProperty* h);
+    
+    Component* set_height(IntProperty::IntBinding h);
+    
+    
     Component* set_pos(Component* relative, int x, int y);
     
-    Component* set_pos(Component* relative, IntProperty* x, IntProperty* y);
+    //Component* set_pos(Component* relative, IntProperty* x, IntProperty* y);
     
     Component* set_pos(Component* relative, IntProperty::IntBinding x, IntProperty::IntBinding y);
     
@@ -118,5 +129,76 @@ namespace cydui::components {
   };
   
 }// namespace cydui::components
+
+
+#define STATE(NAME) \
+class NAME##State: public cydui::components::ComponentState { \
+public:
+
+#define INIT_STATE(NAME) \
+explicit NAME##State(): cydui::components::ComponentState()
+
+
+#define COMPONENT(NAME) \
+class NAME: public cydui::components::Component { \
+public:
+
+#define PROPS(block) \
+struct Props         \
+block;               \
+Props props;
+
+#define NO_PROPS PROPS({})
+
+#define INIT_W_STATE(NAME, STATE_CLASS) \
+explicit NAME##Component(STATE_CLASS* state) \
+  : cydui::components::Component(state)
+
+#define INIT(NAME) \
+explicit NAME(NAME##State* state, Props props, const std::function<void(cydui::components::Component*)>& inner) \
+  : cydui::components::Component(state)
+
+#define REDRAW(EV) \
+void on_redraw(cydui::events::layout::CLayoutEvent* (EV)) override
+
+
+#define WITH_STATE(NAME) auto* state = (NAME##State*)this->state;
+
+#define ADD_TO(COMPONENT, VECTOR) COMPONENT->add(std::vector<cydui::components::Component*>VECTOR);
+
+#define COMMA ,
+
+#define in(NAME, LOCAL_NAME, VECTOR) \
+[state](cydui::components::Component* __raw_##LOCAL_NAME) { \
+auto* LOCAL_NAME = (NAME*)__raw_##LOCAL_NAME; \
+LOCAL_NAME->add(VECTOR);                    \
+}
+
+#define C_NEW_ALL(ID, NAME, _PROPS, IN, INIT) \
+(new NAME( \
+state->children.contains(ID)? \
+  ((NAME##State*)state->children[ID]) \
+  : ((NAME##State*)state->children.add(ID, new NAME##State())), \
+NAME::Props _PROPS,                                   \
+[state](cydui::components::Component* __raw_local_##NAME) { \
+auto* this##NAME = (NAME*)__raw_local_##NAME; \
+this##NAME->add(std::vector<cydui::components::Component*>IN);                         \
+                                             \
+std::function<void(NAME* this##NAME)> init = [state](NAME* this##NAME)INIT;              \
+init(this##NAME);                            \
+                                             \
+}))
+
+#define C_NEW_INNER(ID, NAME, PROPS, IN) \
+C_NEW_ALL(ID, NAME, PROPS, IN, {})
+
+#define C_NEW_PROPS(ID, NAME, PROPS) \
+C_NEW_INNER(ID, NAME, PROPS, {})
+
+#define C_NEW(ID, NAME) \
+C_NEW_PROPS(ID, NAME, ({}))
+
+#define C_GET_NEW_MACRO(_1, _2, _3, _4, NAME, ...) NAME
+#define N(...) C_GET_NEW_MACRO(__VA_ARGS__, C_NEW_ALL, C_NEW_INNER, C_NEW_PROPS, C_NEW)(__COUNTER__, __VA_ARGS__)
 
 #endif//CYD_UI_COMPONENTS_HPP

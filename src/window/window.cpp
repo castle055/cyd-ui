@@ -25,12 +25,12 @@ CWindow* cydui::window::create(
   win->listener = new CWindowListener(win);
   events::subscribe(win->listener);
   win->layout = layout;
-  layout->bind_window(win);
   
   auto* win_ref = graphics::create_window(title, wclass, x, y, w, h);
   win->win_ref = win_ref;
   graphics::set_background(win_ref);
   
+  layout->bind_window(win);
   return win;
 }
 

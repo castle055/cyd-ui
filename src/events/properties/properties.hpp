@@ -31,6 +31,8 @@ protected:
   void clearDependencies();
   
   void clearListeners();
+  
+  void _update_deps();
 
 public:
   bool persistent = true; // Persistent after all listeners have unsubscribed

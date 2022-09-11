@@ -38,15 +38,11 @@ IntProperty::IntBinding ComponentGeometry::abs_h() {
 }
 
 IntProperty::IntBinding ComponentGeometry::content_w() {
-  return {
-      .property = &w
-  };
+  return &w;
 }
 
 IntProperty::IntBinding ComponentGeometry::content_h() {
-  return {
-      .property = &h
-  };
+  return &h;
 }
 
 IntProperty::IntBinding ComponentGeometry::border_w() {
@@ -63,13 +59,13 @@ void ComponentGeometry::set_pos(ComponentGeometry* relative, int x, int y) {
   auto* yp = new IntProperty(y);
   xp->persistent = false;
   yp->persistent = false;
-  set_pos(relative, {.property = xp}, {.property = yp});
+  set_pos(relative, xp, yp);
 }
 
-void ComponentGeometry::set_pos(ComponentGeometry* relative, IntProperty* x, IntProperty* y) {
-  set_pos(relative, {.property = x}, {.property = y});
-}
-
+//void ComponentGeometry::set_pos(ComponentGeometry* relative, IntProperty* x, IntProperty* y) {
+//  set_pos(relative, x, x);
+//}
+//
 void ComponentGeometry::set_pos(ComponentGeometry* relative, IntProperty::IntBinding x, IntProperty::IntBinding y) {
   if (relative) {
     x_off = relative->content_x();
@@ -91,15 +87,46 @@ void ComponentGeometry::set_size(int w, int h) {
   auto* hp = new IntProperty(h);
   wp->persistent = false;
   hp->persistent = false;
-  set_size({.property = wp}, {.property = hp});
+  set_size(wp, hp);
 }
 
-void ComponentGeometry::set_size(IntProperty* w, IntProperty* h) {
-  set_size({.property = w}, {.property = h});
-}
+//void ComponentGeometry::set_size(IntProperty* w, IntProperty* h) {
+//  set_size(w, h);
+//}
 
 void ComponentGeometry::set_size(IntProperty::IntBinding w, IntProperty::IntBinding h) {
   this->w = w - padding_left - padding_right - margin_left - margin_right;
   this->h = h - padding_top - padding_bottom - margin_top - margin_bottom;
-  custom_size = true;
+  custom_width  = true;
+  custom_height = true;
+}
+
+void ComponentGeometry::set_width(int w) {
+  auto* wp = new IntProperty(w);
+  wp->persistent = false;
+  set_width(wp);
+}
+
+//void ComponentGeometry::set_width(IntProperty* w) {
+//  set_width(IntProperty::IntBinding(w));
+//}
+//
+void ComponentGeometry::set_width(IntProperty::IntBinding w) {
+  this->w = w - padding_left - padding_right - margin_left - margin_right;
+  custom_width = true;
+}
+
+void ComponentGeometry::set_height(int h) {
+  auto* hp = new IntProperty(h);
+  hp->persistent = false;
+  set_height(hp);
+}
+
+//void ComponentGeometry::set_height(IntProperty* h) {
+//  set_height(IntProperty::IntBinding(h));
+//}
+//
+void ComponentGeometry::set_height(IntProperty::IntBinding h) {
+  this->h = h - padding_top - padding_bottom - margin_top - margin_bottom;
+  custom_height = true;
 }

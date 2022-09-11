@@ -31,17 +31,20 @@ void Property::removeListener(Property* prop) {
   }
 }
 
-void Property::update() {
+void Property::_update_deps() {
+  for (auto &item: *function_listeners) {
+    item();
+  }
+  
   if (_updating)
     return;
   _updating = true;
   
-  binding();
   
   std::vector<Property*> l_dead;
   for (auto              &p: *listeners) {
     if (p->changed_value())
-      p->update();
+      p->_update_deps();
     if (p->dead)
       l_dead.push_back(p);
   }
@@ -50,10 +53,13 @@ void Property::update() {
     delete item;
   }
   
-  for (auto &item: *function_listeners) {
-    item();
-  }
   _updating = false;
+}
+
+void Property::update() {
+  binding();
+  
+  _update_deps();
 }
 
 void Property::set_raw_value(void* val) {

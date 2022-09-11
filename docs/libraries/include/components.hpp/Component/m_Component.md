@@ -35,17 +35,17 @@ overloads:
         name: state
         type: cydui::components::ComponentState *
       - description: __OPTIONAL__
-        name: inner
+        name: IN
         type: std::function<void (Component *)>
     description: __MISSING__
     return: __OPTIONAL__
-    signature_with_names: Component(cydui::components::ComponentState * state, std::function<void (Component *)> inner)
+    signature_with_names: Component(cydui::components::ComponentState * state, std::function<void (Component *)> IN)
   Component(std::function<void (Component *)>):
     arguments:
       - description: __OPTIONAL__
-        name: inner
+        name: IN
         type: std::function<void (Component *)>
     description: __MISSING__
     return: __OPTIONAL__
-    signature_with_names: Component(std::function<void (Component *)> inner)
+    signature_with_names: Component(std::function<void (Component *)> IN)
 ---

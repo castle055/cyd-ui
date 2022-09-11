@@ -13,9 +13,9 @@ logging::logger cont_log = {.name = "CONT"};
 containers::VBox::VBox(
     containers::VBoxState* _state,
     int spacing,
-    std::function<void(cydui::components::Component*)> inner
+    std::function<void(cydui::components::Component*)> IN
 )
-    : Component(_state, inner) {
+    : Component(_state, IN) {
   _state->spacing = spacing;
 }
 
@@ -33,9 +33,9 @@ void containers::VBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
 containers::HBox::HBox(
     containers::HBoxState* _state,
     int spacing,
-    std::function<void(cydui::components::Component*)> inner
+    std::function<void(cydui::components::Component*)> IN
 )
-    : Component(_state, inner) {
+    : Component(_state, IN) {
   _state->spacing = spacing;
 }
 

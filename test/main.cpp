@@ -13,16 +13,16 @@ int main() {
   // Create layout tree
   
   // Instantiate window with layout
-  auto* test_state = new TestState();
-  auto* tc         = new TestComponent(test_state);
+  auto* state = new TestState();
+  auto* tc    = new Test(state, { }, in(Test, t, { }));
   
   auto                     * layout = new cydui::layout::Layout(tc);
   cydui::window::CWindow   * win    = cydui::window::create(
-      layout,
-      "test_window", "scratch",
-      -1, -1,
-      //1, 13,
-      500, 250
+    layout,
+    "test_window", "scratch",
+    -1, -1,
+    //1, 13,
+    500, 250
   );
   cydui::graphics::window_t* w      = win->win_ref;
   

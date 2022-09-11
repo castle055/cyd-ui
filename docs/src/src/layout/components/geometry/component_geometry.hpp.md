@@ -30,7 +30,7 @@ public:
   
   ComponentGeometry* relative_to = nullptr;
   bool custom_offset = false;
-  bool custom_size   = false;
+  bool custom_width   = false;
   
   IntProperty::IntBinding abs_x();
   

@@ -11,41 +11,41 @@
 logging::logger cont_log = {.name = "CONT"};
 
 containers::VBox::VBox(
-    containers::VBoxState* _state,
-    int spacing,
-    std::function<void(cydui::components::Component*)> inner
+  containers::VBoxState* _state,
+  int spacing,
+  std::function<void(cydui::components::Component*)> inner
 )
-    : Component(_state, inner) {
+  : Component(_state, inner) {
   _state->spacing = spacing;
+  _state->spacing.bind(_state);
 }
 
 void containers::VBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
   auto* state = (VBoxState*)this->state;
   
-  IntProperty::IntBinding cur_h = {.property = &state->offset};
-  for (auto               &ch: children) {
-    ch->set_pos(this, 1, cur_h.val());
-    cur_h.property = (ch->state->geom.abs_h() + state->spacing + cur_h).unwrap();
+  int       cur_h = state->offset.val();
+  for (auto &ch: children) {
+    ch->set_pos(this, 1, cur_h);
+    cur_h += (state->spacing.val() + ch->state->geom.abs_h().compute());
   }
-  cur_h.compute();
 }
 
 containers::HBox::HBox(
-    containers::HBoxState* _state,
-    int spacing,
-    std::function<void(cydui::components::Component*)> inner
+  containers::HBoxState* _state,
+  int spacing,
+  std::function<void(cydui::components::Component*)> inner
 )
-    : Component(_state, inner) {
+  : Component(_state, inner) {
   _state->spacing = spacing;
+  _state->spacing.bind(_state);
 }
 
 void containers::HBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
   auto* state = (HBoxState*)this->state;
   
-  IntProperty::IntBinding cur_w = {.property = &state->offset};
-  for (auto               &ch: children) {
-    ch->set_pos(this, cur_w.val(), 1);
-    cur_w.property = (ch->state->geom.abs_w() + state->spacing + cur_w).unwrap();
+  int       cur_w = state->offset.val();
+  for (auto &ch: children) {
+    ch->set_pos(this, cur_w, 1);
+    cur_w += (state->spacing.val() + ch->state->geom.abs_w().compute());
   }
-  cur_w.compute();
 }

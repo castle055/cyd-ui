@@ -19,35 +19,19 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
 bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {
   if (c->state->_dirty) {
     c->on_event(
-        new cydui::events::layout::CLayoutEvent {
-            .type = cydui::events::layout::LYT_EV_REDRAW,
-            .data = cydui::events::layout::CLayoutData {
-                .redraw_ev = cydui::events::layout::CRedrawEvent {
-                    .x = 0,
-                    .y = 0,
-                    .component = c->state,
-                }
-            },
-            .win = (void*)this->win,
-        }
+      new cydui::events::layout::CLayoutEvent {
+        .type = cydui::events::layout::LYT_EV_REDRAW,
+        .data = cydui::events::layout::CLayoutData {
+          .redraw_ev = cydui::events::layout::CRedrawEvent {
+            .x = 0,
+            .y = 0,
+            .component = c->state,
+          }
+        },
+        .win = (void*)this->win,
+      }
     );
     return true;
-    //cydui::events::emit(
-    //    new cydui::events::CEvent {
-    //        .type      = cydui::events::EVENT_LAYOUT,
-    //        .raw_event = nullptr,
-    //        .data      = new cydui::events::layout::CLayoutEvent {
-    //            .type = cydui::events::layout::LYT_EV_REDRAW,
-    //            .data = cydui::events::layout::CLayoutData {
-    //                .redraw_ev = cydui::events::layout::CRedrawEvent {
-    //                    .x = 0,
-    //                    .y = 0,
-    //                    .component = c->state,
-    //                }
-    //            },
-    //        }
-    //    }
-    //);
   } else {
     bool      any = false;
     for (auto &item: c->children)
@@ -65,7 +49,7 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
   switch (ev->type) {
     case events::layout::LYT_EV_REDRAW:
       log.debug(
-          "REDRAW"
+        "REDRAW"
       );
       if (ev->data.redraw_ev.component) {
         target_state = ((components::ComponentState*)ev->data.redraw_ev.component);
@@ -119,7 +103,7 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
       break;
     case events::layout::LYT_EV_RESIZE:
       log.debug(
-          "RESIZE w=%d, h=%d", ev->data.resize_ev.w, ev->data.resize_ev.h
+        "RESIZE w=%d, h=%d", ev->data.resize_ev.w, ev->data.resize_ev.h
       );
       root->on_event(ev);
       if (render_if_dirty(root))
@@ -127,7 +111,7 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
       break;
     case events::layout::LYT_EV_UPDATE_PROP:
       ((Property*)ev->data.update_prop_ev.target_property)
-          ->set_raw_value((void*)(ev->data.update_prop_ev.new_value));
+        ->set_raw_value((void*)(ev->data.update_prop_ev.new_value));
       if (render_if_dirty(root))
         graphics::flush(win->win_ref);
       break;
@@ -144,10 +128,10 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(components::
   for (auto i = c->children.rbegin(); i != c->children.rend(); ++i) {
     auto* item = *i;
     if (x >= item->state->geom.border_x().compute()
-        && x < (item->state->geom.border_x().compute() + item->state->geom.border_w().compute())
-        && y >= item->state->geom.border_y().compute()
-        && y < (item->state->geom.border_y().compute() + item->state->geom.border_h().compute())
-        ) {
+      && x < (item->state->geom.border_x().compute() + item->state->geom.border_w().compute())
+      && y >= item->state->geom.border_y().compute()
+      && y < (item->state->geom.border_y().compute() + item->state->geom.border_h().compute())
+      ) {
       target = find_by_coords(item, x, y);
       if (target)
         break;
@@ -157,10 +141,10 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(components::
     return target;
   
   if (!c->state->stateless_comp && x >= c->state->geom.border_x().compute()
-      && x < (c->state->geom.border_x().compute() + c->state->geom.border_w().compute())
-      && y >= c->state->geom.border_y().compute()
-      && y < (c->state->geom.border_y().compute() + c->state->geom.border_h().compute())
-      ) {
+    && x < (c->state->geom.border_x().compute() + c->state->geom.border_w().compute())
+    && y >= c->state->geom.border_y().compute()
+    && y < (c->state->geom.border_y().compute() + c->state->geom.border_h().compute())
+    ) {
     target = c;
   }
   return target;

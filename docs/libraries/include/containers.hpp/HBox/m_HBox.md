@@ -35,9 +35,9 @@ overloads:
         name: spacing
         type: int
       - description: __OPTIONAL__
-        name: inner
+        name: IN
         type: std::function<void (cydui::components::Component *)>
     description: __MISSING__
     return: __OPTIONAL__
-    signature_with_names: explicit HBox(containers::HBoxState * _state, int spacing, std::function<void (cydui::components::Component *)> inner)
+    signature_with_names: explicit HBox(containers::HBoxState * _state, int spacing, std::function<void (cydui::components::Component *)> IN)
 ---

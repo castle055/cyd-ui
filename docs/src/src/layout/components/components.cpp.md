@@ -67,8 +67,8 @@ Component::Component()
     : Component([](Component*) { }) {
 }
 
-Component::Component(std::function<void(Component*)> inner)
-    : Component(new ComponentState(), inner) {
+Component::Component(std::function<void(Component*)> IN)
+    : Component(new ComponentState(), IN) {
   state->stateless_comp = true;
 }
 
@@ -76,10 +76,10 @@ Component::Component(ComponentState* state)
     : Component(state, [](Component*) { }) {
 }
 
-Component::Component(ComponentState* state, std::function<void(Component*)> inner)
+Component::Component(ComponentState* state, std::function<void(Component*)> IN)
     : state(state) {
   state->component_instance = this;
-  this->inner_redraw        = inner;
+  this->inner_redraw        = IN;
   parent = nullptr;
   
 }
@@ -114,7 +114,7 @@ void Component::add(std::vector<Component*> children) {
     }
   }
   
-  if (!state->geom.custom_size) {
+  if (!state->geom.custom_width) {
     std::vector<Property*> w_deps = { };
     std::vector<Property*> h_deps = { };
     for (const auto        &item: this->children) {

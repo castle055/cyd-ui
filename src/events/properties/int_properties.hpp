@@ -7,8 +7,12 @@
 
 class IntProperty: public Property {
 public:
-  struct IntBinding {
+  class IntBinding {
     IntProperty* property;
+    bool is_computed = false;
+  public:
+    IntBinding(IntProperty* p): property(p) {
+    }
     
     int val() {
       return property->val();
@@ -17,7 +21,6 @@ public:
     // Similar to `val()`
     // For inline values like `if (c->state->geom.border_x().compute())`
     // Prevents memory leaks
-    bool is_computed = false;
     
     int compute() {
       int computed_val = property->val();
@@ -225,7 +228,7 @@ protected:
   }
 
 private:
-  IntBinding do_operation(std::function<int()> op) {
+  IntBinding do_operation(Property* other_dep, std::function<int()> op) {
     auto* prop = new IntProperty(0);
     prop->persistent = false;
     
@@ -235,9 +238,13 @@ private:
     prop->binding();
     
     addListener(prop);
-    return {
-        .property = prop
-    };
+    if (other_dep)
+      other_dep->addListener(prop);
+    return prop;
+  }
+  
+  IntBinding do_operation(std::function<int()> op) {
+    return do_operation(nullptr, op);
   }
 
 public:
@@ -248,15 +255,13 @@ public:
   }
   
   IntBinding operator+(IntProperty &i) {
-    auto b = do_operation([this, &i]() { return this->val() + i.val(); });
-    i.addListener(b.property);
+    auto b = do_operation(&i, [this, &i]() { return this->val() + i.val(); });
     return b;
   }
   
   IntBinding operator+(IntBinding i) {
     auto* prop = i.unwrap();
-    auto b = do_operation([this, prop]() { return this->val() + prop->val(); });
-    prop->addListener(b.property);
+    auto b = do_operation(prop, [this, prop]() { return this->val() + prop->val(); });
     return b;
   }
   
@@ -266,15 +271,13 @@ public:
   }
   
   IntBinding operator-(IntProperty &i) {
-    auto b = do_operation([this, &i]() { return this->val() - i.val(); });
-    i.addListener(b.property);
+    auto b = do_operation(&i, [this, &i]() { return this->val() - i.val(); });
     return b;
   }
   
   IntBinding operator-(IntBinding i) {
     auto* prop = i.unwrap();
-    auto b = do_operation([this, prop]() { return this->val() - prop->val(); });
-    prop->addListener(b.property);
+    auto b = do_operation(prop, [this, prop]() { return this->val() - prop->val(); });
     return b;
   }
   
@@ -284,15 +287,13 @@ public:
   }
   
   IntBinding operator*(IntProperty &i) {
-    auto b = do_operation([this, &i]() { return this->val() * i.val(); });
-    i.addListener(b.property);
+    auto b = do_operation(&i, [this, &i]() { return this->val() * i.val(); });
     return b;
   }
   
   IntBinding operator*(IntBinding i) {
     auto* prop = i.unwrap();
-    auto b = do_operation([this, prop]() { return this->val() * prop->val(); });
-    prop->addListener(b.property);
+    auto b = do_operation(prop, [this, prop]() { return this->val() * prop->val(); });
     return b;
   }
   
@@ -302,15 +303,13 @@ public:
   }
   
   IntBinding operator/(IntProperty &i) {
-    auto b = do_operation([this, &i]() { return i.val() == 0? 0 : this->val() / i.val(); });
-    i.addListener(b.property);
+    auto b = do_operation(&i, [this, &i]() { return i.val() == 0? 0 : this->val() / i.val(); });
     return b;
   }
   
   IntBinding operator/(IntBinding i) {
     auto* prop = i.unwrap();
-    auto b = do_operation([this, prop]() { return prop->val() == 0? 0 : this->val() / prop->val(); });
-    prop->addListener(b.property);
+    auto b = do_operation(prop, [this, prop]() { return prop->val() == 0? 0 : this->val() / prop->val(); });
     return b;
   }
 };

@@ -12,11 +12,13 @@ const logging::logger log = {.name = "COMP::PRIM::LINE", .on = false};
 
 Line::Line(Color* color, int x1, int y1, int x2, int y2)
     : Component() {
-  state->geom.x = x1;
-  state->geom.y = y1;
-  state->geom.w = x2 - x1;
-  state->geom.h = y2 - y1;
-  this->color   = color;
+  state->geom.x             = x1;
+  state->geom.y             = y1;
+  state->geom.w             = x2 - x1;
+  state->geom.h             = y2 - y1;
+  state->geom.custom_width  = true;
+  state->geom.custom_height = true;
+  this->color               = color;
   log.info("LINE -> props, pos(x=%d,y=%d) size(w=%d,h=%d)", x1, y1, x2, y2);
 }
 
@@ -37,14 +39,15 @@ void Line::on_redraw(CLayoutEvent* ev) {
 
 Rectangle::Rectangle(Color* color, int x, int y, int w, int h, bool filled)
     : Component() {
-  state->geom.x           = x;
-  state->geom.y           = y;
-  state->geom.w           = w;
-  state->geom.h           = h;
+  state->geom.x             = x;
+  state->geom.y             = y;
+  state->geom.w             = w;
+  state->geom.h             = h;
   //state->geom.custom_offset = true;
-  state->geom.custom_size = true;
-  this->color             = color;
-  this->filled            = filled;
+  state->geom.custom_width  = true;
+  state->geom.custom_height = true;
+  this->color               = color;
+  this->filled              = filled;
 }
 
 void Rectangle::on_redraw(CLayoutEvent* ev) {
@@ -62,14 +65,16 @@ void Rectangle::on_redraw(CLayoutEvent* ev) {
 
 Arc::Arc(Color* color, int x, int y, int w, int h, int a0, int a1, bool filled)
     : Component() {
-  state->geom.x = x;
-  state->geom.y = y;
-  state->geom.w = w;
-  state->geom.h = h;
-  this->a0      = a0;
-  this->a1      = a1;
-  this->color   = color;
-  this->filled  = filled;
+  state->geom.x             = x;
+  state->geom.y             = y;
+  state->geom.w             = w;
+  state->geom.h             = h;
+  state->geom.custom_width  = true;
+  state->geom.custom_height = true;
+  this->a0                  = a0;
+  this->a1                  = a1;
+  this->color               = color;
+  this->filled              = filled;
 }
 
 void Arc::on_redraw(CLayoutEvent* ev) {
@@ -88,12 +93,14 @@ void Arc::on_redraw(CLayoutEvent* ev) {
 
 Circle::Circle(Color* color, int x, int y, int w, int h, bool filled)
     : Component() {
-  state->geom.x = x;
-  state->geom.y = y;
-  state->geom.w = w;
-  state->geom.h = h;
-  this->color   = color;
-  this->filled  = filled;
+  state->geom.x             = x;
+  state->geom.y             = y;
+  state->geom.w             = w;
+  state->geom.h             = h;
+  state->geom.custom_width  = true;
+  state->geom.custom_height = true;
+  this->color               = color;
+  this->filled              = filled;
 }
 
 void Circle::on_redraw(CLayoutEvent* ev) {
@@ -110,13 +117,15 @@ void Circle::on_redraw(CLayoutEvent* ev) {
 
 Text::Text(Color* color, layout::fonts::Font* font, int x, int y, std::string text)
     : Component() {
-  state->geom.x = x;
-  state->geom.y = y;
-  state->geom.w = 125;
-  state->geom.h = font->size;
-  this->color   = color;
-  this->font    = font;
-  this->text    = text;
+  state->geom.x             = x;
+  state->geom.y             = y;
+  state->geom.w             = 125;
+  state->geom.h             = font->size;
+  state->geom.custom_width  = true;
+  state->geom.custom_height = true;
+  this->color               = color;
+  this->font                = font;
+  this->text                = text;
   //state->w    = x + 125;
   //state->h    = y;
 }
