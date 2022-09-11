@@ -48,6 +48,7 @@ public:
               auto* vbox       = (containers::VBox*)_vbox;
               auto* vbox_state = (containers::VBoxState*)_vbox->state;
               
+              _vbox->parent = state->component_instance->parent;
               state->inner(vbox);
               
               std::vector<Property*> deps = {vbox_state->geom.content_h().unwrap()};
@@ -72,13 +73,6 @@ public:
                   return spc;
                 }, deps
               );
-              
-              //if (state->geom.custom_width) {
-              //  vbox->set_width(state->geom.content_w().compute());
-              //}
-              //if (state->geom.custom_height) {
-              //  vbox->set_height(state->geom.content_h().compute());
-              //}
             }
           ))
           //->set_border_enable(true)
@@ -94,6 +88,7 @@ public:
               auto* hbox       = (containers::HBox*)_hbox;
               auto* hbox_state = (containers::HBoxState*)_hbox->state;
               
+              _hbox->parent = state->component_instance->parent;
               state->inner(hbox);
               
               std::vector<Property*> deps = {hbox_state->geom.content_w().unwrap()};
@@ -118,13 +113,6 @@ public:
                   return spc;
                 }, deps
               );
-              
-              //if (state->geom.custom_width) {
-              //  hbox->set_width(state->geom.content_w().compute());
-              //}
-              //if (state->geom.custom_height) {
-              //  hbox->set_height(state->geom.content_h().compute());
-              //}
             }
           ))
           //->set_border_enable(true)

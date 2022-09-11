@@ -23,7 +23,7 @@ STATE(Button)
 };
 
 typedef std::function<void()> ButtonAction;
-#define action [state]
+#define action [state, this]
 
 COMPONENT(Button)
   PROPS({
@@ -31,9 +31,7 @@ COMPONENT(Button)
     ButtonAction on_action;
   })
   
-  INIT(Button) {
-    this->props = props;
-  }
+  INIT(Button) }
   
   REDRAW(ev) {
     WITH_STATE(Button)

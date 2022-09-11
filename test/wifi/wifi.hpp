@@ -14,12 +14,9 @@
 
 using namespace primitives;
 
-static const logging::logger log = {.name = "MAIN", .on = true};
 
 STATE(Test)
   IntProperty button {1};
-  
-  FlexBoxState* main_fbox = nullptr;
   
   cydui::layout::color::Color* c = new cydui::layout::color::Color("#FCAE1E");
   
@@ -31,47 +28,52 @@ STATE(Test)
 COMPONENT(Test)
   NO_PROPS
   
-  INIT(Test) {
-  
+  INIT(Test)
+    DISABLE_LOG
   }
   
   REDRAW(ev) {
     WITH_STATE(Test)
     
+    std::vector<Component*> v({
+      N(Banner),
+      N(Banner),
+      N(Banner),
+    });
     ADD_TO(this, {
       N(FlexBox, ({ .vertical = false }), ({
         N(FlexBox, ({ .vertical = true }), ({
-          N(Banner),
-            (state->button.val() == 1)?
-            N(Button, ({
-              .text = "TEST 1",
-              .on_action = action {
-                state->button = 2;
-                log.info("CLICK 1");
-              }
-            })) :
-            N(Button, ({
-              .text = "TEST 2",
-              .on_action = action {
-                state->button = 1;
-                log.info("CLICK 2");
-              }
-            })),
+          (state->button.val() == 1)?
+          N(Button, ({
+            .text = "TEST 1",
+            .on_action = action {
+              state->button = 2;
+              log.info("CLICK 1");
+            }
+          })) :
+          N(Button, ({
+            .text = "TEST 2",
+            .on_action = action {
+              state->button = 1;
+              log.info("CLICK 2");
+            }
+          })),
+            N(Banner),
+            N(Banner),
+            N(Banner),
+            N(Banner),
             rectangle(state->c, 32, 32, true),
             rectangle(state->c, 32, 32, true),
             rectangle(state->c, 32, 32, true),
         }), {
           thisFlexBox->set_border_enable(true);
-          if (state->main_fbox) {
-            thisFlexBox->set_height(state->main_fbox->geom.content_h());
-          }
+          thisFlexBox->set_height(thisFlexBox->parent->state->geom.content_h());
         }),
           rectangle(state->c, 32, 32, true),
           rectangle(state->c, 32, 32, true),
           rectangle(state->c, 32, 32, true),
           rectangle(state->c, 32, 32, true),
       }), {
-        state->main_fbox = (FlexBoxState*)thisFlexBox->state;
         thisFlexBox->set_padding(5, 5, 5, 5);
         thisFlexBox->set_margin(5, 5, 5, 5);
         thisFlexBox->set_border_enable(true);
