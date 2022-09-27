@@ -93,7 +93,8 @@ void cydui::events::start() {
   
   delete th_data;
   th_data      = new thread_data;
-  event_thread = threading::new_thread(&event_task, th_data)
+  event_thread =
+      threading::new_thread(&event_task, th_data)
       ->set_name("EV_THD");
 }
 

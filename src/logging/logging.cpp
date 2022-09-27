@@ -4,8 +4,8 @@
 
 #include "logging.hpp"
 #include <cstdarg>
+#include <ctime>
 #include <string>
-
 
 void logging::logger::debug(const char* format, ...) const {
   if (!this->on)

@@ -11,7 +11,7 @@ using namespace cydui::threading;
 logging::logger thlog = {.name = "THREADS"};
 
 thread_t* cydui::threading::new_thread(void(task)(thread_t* this_thread)) {
-  new_thread(task, nullptr);
+  return new_thread(task, nullptr);
 }
 
 thread_t* cydui::threading::new_thread(
@@ -26,7 +26,7 @@ thread_t* cydui::threading::new_thread(
 }
 
 
-thread_t* cydui::threading::thread_t::set_name(std::string name) {
+thread_t* cydui::threading::thread_t::set_name(const std::string& name) {
   pthread_t pt = ((std::thread*)native_thread)->native_handle();
   pthread_setname_np(pt, name.c_str());
   return this;

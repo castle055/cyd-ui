@@ -20,9 +20,9 @@ int main() {
   cydui::window::CWindow   * win    = cydui::window::create(
     layout,
     "test_window", "scratch",
-    -1, -1,
+    1, 29,
     //1, 13,
-    500, 250
+    1920, 30
   );
   cydui::graphics::window_t* w      = win->win_ref;
   

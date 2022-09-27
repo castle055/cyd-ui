@@ -24,6 +24,19 @@ static Bool evpredicate() {
   return True;
 }
 
+static int geom_mask_to_gravity(int mask) {
+  switch (mask & (XNegative|YNegative)) {
+    case 0:
+      return NorthWestGravity;
+    case XNegative:
+      return NorthEastGravity;
+    case YNegative:
+      return SouthWestGravity;
+  }
+
+  return SouthEastGravity;
+}
+
 cydui::graphics::window_t* cydui::graphics::create_window(
     char* title, char* wclass, int x, int y, int w, int h
 ) {
@@ -54,7 +67,13 @@ cydui::graphics::window_t* cydui::graphics::create_window(
     geom += "+";
   geom += std::to_string(y);
   
-  XParseGeometry(geom.c_str(), &x_o, &y_o, &w_o, &h_o);
+  int gm_mask = XParseGeometry(geom.c_str(), &x_o, &y_o, &w_o, &h_o);
+
+  if (gm_mask & XNegative)
+    x_o += DisplayWidth(state::get_dpy(), state::get_screen()) - w; // - 2;
+  if (gm_mask & YNegative)
+    y_o += DisplayHeight(state::get_dpy(), state::get_screen()) - h; // - 2;
+
   Window xwin = XCreateWindow(
       state::get_dpy(),
       state::get_root(),
@@ -64,7 +83,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
       h,
       0,
       CopyFromParent,
-      CopyFromParent,
+      InputOutput,
       CopyFromParent,
       CWBorderPixel | CWBitGravity | CWColormap | CWBackPixmap | CWEventMask,
       &wa
@@ -72,7 +91,6 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   XSetClassHint(state::get_dpy(), xwin, &ch);
   XStoreName(state::get_dpy(), xwin, title);
   XSync(state::get_dpy(), False);
-  
   
   log_task.info("Created window %X at (%s) x: %d, y: %d", xwin, geom.c_str(), x, y);
   
@@ -93,12 +111,12 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   ////    sizeh->min_width = sizeh->max_width = w;
   ////    sizeh->min_height = sizeh->max_height = h;
   ////  }
-  ////  if (xw.gm & (XValue|YValue)) {
-  sizeh->flags |= USPosition | PWinGravity;
-  sizeh->x           = x;
-  sizeh->y           = y;
-  sizeh->win_gravity = NorthWestGravity;
-  ////  }
+  if (gm_mask & (XValue|YValue)) {
+    sizeh->flags |= USPosition | PWinGravity;
+    sizeh->x           = x_o;
+    sizeh->y           = y_o;
+    sizeh->win_gravity = geom_mask_to_gravity(gm_mask);
+  }
   //
   XSetWMProperties(
       state::get_dpy(), xwin, NULL, NULL, NULL, 0, sizeh, &wm,
@@ -109,7 +127,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   //  log_task.info("set hints");
   
   //  XDefineCursor(state::get_dpy(), xwin, state::cursor[CurNormal]->cursor);
-  if (x != 0 || y != 0) {
+  if (x_o != 0 || y_o != 0) {
     log_task.info("Mapping RAISED window %X", xwin);
     XMapRaised(state::get_dpy(), xwin);
   } else {

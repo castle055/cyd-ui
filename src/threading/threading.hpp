@@ -12,10 +12,10 @@ namespace cydui::threading {
     void* native_thread = nullptr;
     bool running = false;
     void* data = nullptr;
-    
-    thread_t* set_name(std::string name);
+
+    thread_t* set_name(const std::string& name);
   };
-  
+
   thread_t* new_thread(void(task)(thread_t* this_thread));
   
   thread_t* new_thread(void(task)(thread_t* this_thread), void* data);

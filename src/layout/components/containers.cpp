@@ -18,6 +18,7 @@ containers::VBox::VBox(
   : Component(_state, inner) {
   _state->spacing = spacing;
   _state->spacing.bind(_state);
+  _state->offset = 1;
 }
 
 void containers::VBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
@@ -38,6 +39,7 @@ containers::HBox::HBox(
   : Component(_state, inner) {
   _state->spacing = spacing;
   _state->spacing.bind(_state);
+  _state->offset = 1;
 }
 
 void containers::HBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {

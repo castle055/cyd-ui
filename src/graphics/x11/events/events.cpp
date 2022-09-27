@@ -237,6 +237,6 @@ void cydui::graphics::events::start() {
   if (x11_thread && x11_thread->native_thread != nullptr)
     return;
   x11_evlog.debug("starting x11_thread");
-  x11_thread = threading::new_thread(&x11_event_emitter_task)
+  x11_thread = threading::new_thread(x11_event_emitter_task)
       ->set_name("X11_EV_THD");
 }

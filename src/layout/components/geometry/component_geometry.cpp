@@ -46,11 +46,11 @@ IntProperty::IntBinding ComponentGeometry::content_h() {
 }
 
 IntProperty::IntBinding ComponentGeometry::border_w() {
-  return w + padding_left + padding_right;
+  return w + padding_left + padding_right -1;
 }
 
 IntProperty::IntBinding ComponentGeometry::border_h() {
-  return h + padding_top + padding_bottom;
+  return h + padding_top + padding_bottom -1;
 }
 
 

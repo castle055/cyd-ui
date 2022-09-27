@@ -74,8 +74,6 @@ COMPONENT(Test)
           rectangle(state->c, 32, 32, true),
           rectangle(state->c, 32, 32, true),
       }), {
-        thisFlexBox->set_padding(5, 5, 5, 5);
-        thisFlexBox->set_margin(5, 5, 5, 5);
         thisFlexBox->set_border_enable(true);
         thisFlexBox->set_size(state->geom.content_w(), state->geom.content_h());
       })
