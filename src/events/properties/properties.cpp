@@ -2,9 +2,9 @@
 // Created by castle on 9/3/22.
 //
 
-#include "properties.hpp"
+#include "../../../include/properties.hpp"
 
-static logging::logger log = {.name = "PROPS"};
+static logging::logger log_lay = {.name = "PROPS"};
 
 void Property::on_change(std::function<void()> function_listener) {
   this->function_listeners->push_back(function_listener);
@@ -15,7 +15,7 @@ void Property::addListener(Property* prop) {
   prop->dependencies->insert(this);
   
   //if (listeners->size() > 1000)
-  //log.debug("PROP(%X) %d LISTENERS", this, listeners->size());
+  //log_lay.debug("PROP(%X) %d LISTENERS", this, listeners->size());
   
 }
 

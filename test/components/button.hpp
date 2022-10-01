@@ -23,7 +23,7 @@ STATE(Button)
 };
 
 typedef std::function<void()> ButtonAction;
-#define action [state, this]
+#define action [&,state, this]
 
 COMPONENT(Button)
   PROPS({
@@ -35,6 +35,7 @@ COMPONENT(Button)
   
   REDRAW(ev) {
     WITH_STATE(Button)
+    log.debug("w: %d", state->geom.content_h().val());
     
     ADD_TO(this, ({
       new primitives::Rectangle(
@@ -43,8 +44,11 @@ COMPONENT(Button)
         true
       ),
         (new primitives::Text(state->hovering? state->c1 : state->c, &state->font, 0, 0, props.text))
-          ->set_margin(5, 5, 5, 5),
+          ->set_margin(5, 5, 5, 5)
+          ->set_width(state->geom.custom_width? state->geom.content_w().val() : 125)
+      //->set_height(state->geom.content_h().val())
     }))
+    log.debug("h: %d", state->geom.content_h().val());
   }
   
   void on_mouse_enter(cydui::events::layout::CLayoutEvent* ev) override {

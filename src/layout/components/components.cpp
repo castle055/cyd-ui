@@ -181,8 +181,8 @@ void Component::redraw(cydui::events::layout::CLayoutEvent* ev, bool clr) {
     delete child;
   children.clear();
   
-  inner_redraw(this);
   on_redraw(ev);
+  inner_redraw(this);
   
   for (auto &child: children) {
     child->redraw(ev, false);
@@ -199,7 +199,6 @@ void Component::redraw(cydui::events::layout::CLayoutEvent* ev, bool clr) {
       false
     );
   }
-  
   
   if (clr) {
     ev->consumed = true;

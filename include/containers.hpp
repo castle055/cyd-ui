@@ -22,15 +22,15 @@ namespace containers {
     IntProperty offset;
   };
   
-  class VBox: public Component { ;
+  class VBox: public Component {
     
     void on_redraw(CLayoutEvent* ev) override;
   
   public:
     explicit VBox(
-        containers::VBoxState* _state,
-        int spacing,
-        std::function<void(cydui::components::Component*)> inner
+      containers::VBoxState* _state,
+      int spacing,
+      std::function<void(cydui::components::Component*)> inner
     );
   };
   
@@ -40,16 +40,16 @@ namespace containers {
     IntProperty offset;
   };
   
-  class HBox: public Component { ;
+  class HBox: public Component {
     
     void on_redraw(CLayoutEvent* ev) override;
   
   public:
     
     explicit HBox(
-        HBoxState* _state,
-        int spacing,
-        std::function<void(cydui::components::Component*)> inner
+      HBoxState* _state,
+      int spacing,
+      std::function<void(cydui::components::Component*)> inner
     );
   };
   

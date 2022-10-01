@@ -10,13 +10,13 @@ using namespace cydui::window;
 static std::vector<CWindow*> windows;
 
 CWindow* cydui::window::create(
-    layout::Layout* layout,
-    char* title,
-    char* wclass,
-    int x,
-    int y,
-    int w,
-    int h
+  layout::Layout* layout,
+  const char* title,
+  const char* wclass,
+  int x,
+  int y,
+  int w,
+  int h
 ) {
   events::start();
   
@@ -42,7 +42,7 @@ void CWindowListener::on_event(cydui::events::CEvent* ev) {
   switch (ev->type) {
     case events::EVENT_GRAPHICS:
       graphics::on_event(
-          win->win_ref, (events::graphics::CGraphicsEvent*)(ev->data));
+        win->win_ref, (events::graphics::CGraphicsEvent*)(ev->data));
       break;
     case events::EVENT_LAYOUT:win->layout->on_event((events::layout::CLayoutEvent*)(ev->data));
       break;

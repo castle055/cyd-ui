@@ -8,7 +8,7 @@
 
 using namespace primitives;
 
-const logging::logger log = {.name = "COMP::PRIM::LINE", .on = false};
+const logging::logger log_lay = {.name = "COMP::PRIM::LINE", .on = false};
 
 Line::Line(Color* color, int x1, int y1, int x2, int y2)
     : Component() {
@@ -17,14 +17,14 @@ Line::Line(Color* color, int x1, int y1, int x2, int y2)
   state->geom.w = x2 - x1;
   state->geom.h = y2 - y1;
   this->color   = color;
-  log.info("LINE -> props, pos(x=%d,y=%d) size(w=%d,h=%d)", x1, y1, x2, y2);
+  log_lay.info("LINE -> props, pos(x=%d,y=%d) size(w=%d,h=%d)", x1, y1, x2, y2);
 }
 
 void Line::on_redraw(CLayoutEvent* ev) {
   auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
   
-  //log.info("props, pos(x=%d,y=%d) size(w=%d,h=%d)", x1, y1, x2, y2);
-  //log.info("state, pos(x=%d,y=%d)", state->geom.abs_x(), state->geom.abs_y());
+  //log_lay.info("props, pos(x=%d,y=%d) size(w=%d,h=%d)", x1, y1, x2, y2);
+  //log_lay.info("state, pos(x=%d,y=%d)", state->geom.abs_x(), state->geom.abs_y());
   graphics::drw_line(
       win_ref,
       color,

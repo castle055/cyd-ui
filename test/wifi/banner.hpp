@@ -6,6 +6,7 @@
 #define CYD_UI_BANNER_HPP
 
 #include "../../include/cydui.hpp"
+#include "../components/terminal_button.hpp"
 
 
 class BannerState: public cydui::components::ComponentState {
@@ -36,7 +37,7 @@ public:
         (new containers::HBox(
           &(state->hboxState),
           10,
-          [c, c1, state](cydui::components::Component* hbox) {
+          [c, c1, state, this](cydui::components::Component* hbox) {
             hbox->add(
               {
                 new primitives::Rectangle(c, 0, 0, 32, 32, true),
@@ -48,10 +49,9 @@ public:
                   },
                   0, 0, "[ WIFI ]"
                 ),
-                new primitives::Rectangle(c, 0, 10, 24, 12, true),
-                new primitives::Rectangle(c, 0, 10, 24, 12, true),
-                new primitives::Rectangle(c, 0, 10, 24, 12, true),
-                new primitives::Rectangle(c, 0, 10, 24, 12, true),
+                N(TerminalButton, ({
+                  .cmd = "iwctl"
+                })),
               }
             );
           }

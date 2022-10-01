@@ -4,9 +4,9 @@
 
 #include "../../include/layout.hpp"
 #include "../logging/logging.hpp"
-#include "../events/properties/properties.hpp"
+#include "../../include/properties.hpp"
 
-logging::logger log = {.name = "LAYOUT", .on = false};
+logging::logger log_lay = {.name = "LAYOUT", .on = false};
 
 cydui::layout::Layout::Layout(cydui::components::Component* root): root(root) {
   events::start();
@@ -41,14 +41,14 @@ bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {
 }
 
 void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
-  //  log.debug("Event %d", ev->type);
+  //  log_lay.debug("Event %d", ev->type);
   
   ev->win = (void*)win;
   components::Component     * target       = nullptr;
   components::ComponentState* target_state = nullptr;
   switch (ev->type) {
     case events::layout::LYT_EV_REDRAW:
-      log.debug(
+      log_lay.debug(
         "REDRAW"
       );
       if (ev->data.redraw_ev.component) {
@@ -76,7 +76,7 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
       break;
     case events::layout::LYT_EV_BUTTONRELEASE: break;
     case events::layout::LYT_EV_MOUSEMOTION:
-      //      log.debug("MOTION x=%d, y=%d", ev->data.motion_ev.x, ev->data.motion_ev.y);
+      //      log_lay.debug("MOTION x=%d, y=%d", ev->data.motion_ev.x, ev->data.motion_ev.y);
       target = find_by_coords(root, ev->data.motion_ev.x, ev->data.motion_ev.y);
       if (!target)
         break;
@@ -93,7 +93,7 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
         focused = target->state;
       }
       //if (ev->data.motion_ev.enter) {
-      //  log.debug(
+      //  log_lay.debug(
       //      "MOTION w=%d, h=%d", ev->data.motion_ev.x, ev->data.motion_ev.y
       //  );
       //}
@@ -102,7 +102,7 @@ void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
         graphics::flush(win->win_ref);
       break;
     case events::layout::LYT_EV_RESIZE:
-      log.debug(
+      log_lay.debug(
         "RESIZE w=%d, h=%d", ev->data.resize_ev.w, ev->data.resize_ev.h
       );
       root->on_event(ev);

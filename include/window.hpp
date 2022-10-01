@@ -13,13 +13,13 @@
 
 namespace cydui::window {
   CWindow* create(
-      layout::Layout* layout,
-      char* title = "CydUI",
-      char* wclass = "cydui",
-      int x = 0,
-      int y = 0,
-      int w = 640,
-      int h = 480
+    layout::Layout* layout,
+    const char* title = "CydUI",
+    const char* wclass = "cydui",
+    int x = 0,
+    int y = 0,
+    int w = 640,
+    int h = 480
   );
   
   bool process_event(CWindow win);

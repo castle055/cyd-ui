@@ -4,6 +4,7 @@
 
 #include "../include/cydui.hpp"
 #include "wifi/wifi.hpp"
+#include "status_bar/workspaces.hpp"
 
 #include <mcheck.h>
 #include <thread>
@@ -13,8 +14,8 @@ int main() {
   // Create layout tree
   
   // Instantiate window with layout
-  auto* state = new TestState();
-  auto* tc    = new Test(state, { }, in(Test, t, { }));
+  auto* state = new WorkspacesState();
+  auto* tc    = new Workspaces(state, { }, in(Workspaces, t, { }));
   
   auto                     * layout = new cydui::layout::Layout(tc);
   cydui::window::CWindow   * win    = cydui::window::create(

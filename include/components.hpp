@@ -7,7 +7,7 @@
 
 #include "../src/events/events.hpp"
 #include "../src/layout/color/colors.hpp"
-#include "../src/events/properties/properties.hpp"
+#include "properties.hpp"
 #include "../src/layout/components/geometry/component_geometry.hpp"
 #include "../src/layout/components/state/children_state_collection.h"
 #include <vector>
@@ -157,7 +157,7 @@ explicit NAME##Component(STATE_CLASS* state) \
 
 #define INIT(NAME) \
 explicit NAME(NAME##State* state, Props props, const std::function<void(cydui::components::Component*)>& inner) \
-  : cydui::components::Component(state) {                                                                       \
+  : cydui::components::Component(state, inner) {                                                                       \
     this->props = std::move(props);
 
 #define REDRAW(EV) \
@@ -168,32 +168,38 @@ void on_redraw(cydui::events::layout::CLayoutEvent* (EV)) override
 
 #define ADD_TO(COMPONENT, VECTOR) COMPONENT->add(std::vector<cydui::components::Component*>VECTOR);
 
+/// Using lambda captures in statements prevents IDE from showing 'unused-lambda-capture' error
+
 // FIXME - REMOVE MACRO
 #define in(NAME, LOCAL_NAME, VECTOR) \
 [state](cydui::components::Component* __raw_##LOCAL_NAME) { \
+state;                                     \
 auto* LOCAL_NAME = (NAME*)__raw_##LOCAL_NAME; \
 LOCAL_NAME->add(VECTOR);                    \
 }
 
 #define C_NEW_ALL(ID, NAME, _PROPS, IN, INIT) \
-new NAME(state->children.contains(ID)? \
-  ((NAME##State*)state->children[ID]) \
-  : ((NAME##State*)state->children.add(ID, new NAME##State())), \
-NAME::Props _PROPS,                                   \
-[this, state](cydui::components::Component* __raw_local_##NAME) { \
-auto* this##NAME = (NAME*)__raw_local_##NAME; \
-std::vector<cydui::components::Component*> v IN; \
-this##NAME->add(v);                         \
-                                             \
-std::function<void(NAME* this##NAME)> init = \
-  [state](NAME* this##NAME)INIT;             \
-init(this##NAME);                            \
-                                             \
-}\
+new NAME(                                     \
+  state->children.contains(ID)?               \
+      ((NAME##State*)state->children[ID])     \
+    : ((NAME##State*)state->children.add(ID, new NAME##State())), \
+  NAME::Props _PROPS,                         \
+  [this, state](cydui::components::Component* __raw_local_##NAME) { \
+    this; state;                                          \
+    auto* this##NAME = (NAME*)__raw_local_##NAME;                 \
+                                              \
+    std::vector<cydui::components::Component*> v IN;              \
+    this##NAME->add(v);                       \
+                                              \
+    std::function<void(NAME* this##NAME)> init =                  \
+    [state](NAME* this##NAME){state; INIT};            \
+    init(this##NAME);                         \
+                                              \
+  }\
 )
 
 #define C_NEW_INNER(ID, NAME, PROPS, IN) \
-C_NEW_ALL(ID, NAME, PROPS, IN, { })
+C_NEW_ALL(ID, NAME, PROPS, IN, { state; })
 
 #define C_NEW_PROPS(ID, NAME, PROPS) \
 C_NEW_INNER(ID, NAME, PROPS, ({ }))

@@ -10,7 +10,7 @@
 #include "banner.hpp"
 #include "../components/button.hpp"
 #include "../components/flexbox.hpp"
-#include "../../src/events/properties/properties.hpp"
+#include "../../include/properties.hpp"
 
 using namespace primitives;
 
@@ -35,44 +35,29 @@ COMPONENT(Test)
   REDRAW(ev) {
     WITH_STATE(Test)
     
-    std::vector<Component*> v({
-      N(Banner),
-      N(Banner),
-      N(Banner),
-    });
     ADD_TO(this, {
       N(FlexBox, ({ .vertical = false }), ({
         N(FlexBox, ({ .vertical = true }), ({
-          (state->button.val() == 1)?
-          N(Button, ({
-            .text = "TEST 1",
-            .on_action = action {
-              state->button = 2;
-              log.info("CLICK 1");
-            }
-          })) :
-          N(Button, ({
-            .text = "TEST 2",
-            .on_action = action {
-              state->button = 1;
-              log.info("CLICK 2");
-            }
-          })),
-            N(Banner),
-            N(Banner),
-            N(Banner),
-            N(Banner),
-            rectangle(state->c, 32, 32, true),
-            rectangle(state->c, 32, 32, true),
-            rectangle(state->c, 32, 32, true),
+          N(Banner),
+            (state->button.val() == 1)?
+            N(Button, ({
+              .text = "TEST 1",
+              .on_action = action {
+                state->button = 2;
+                log.info("CLICK 1");
+              }
+            })) :
+            N(Button, ({
+              .text = "TEST 2",
+              .on_action = action {
+                state->button = 1;
+                log.info("CLICK 2");
+              }
+            })),
         }), {
           thisFlexBox->set_border_enable(true);
           thisFlexBox->set_height(thisFlexBox->parent->state->geom.content_h());
         }),
-          rectangle(state->c, 32, 32, true),
-          rectangle(state->c, 32, 32, true),
-          rectangle(state->c, 32, 32, true),
-          rectangle(state->c, 32, 32, true),
       }), {
         thisFlexBox->set_border_enable(true);
         thisFlexBox->set_size(state->geom.content_w(), state->geom.content_h());

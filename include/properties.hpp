@@ -6,8 +6,8 @@
 #define CYD_UI_PROPERTIES_HPP
 
 #include <functional>
-#include "../events.hpp"
-#include "../../logging/logging.hpp"
+#include "../src/events/events.hpp"
+#include "../src/logging/logging.hpp"
 #include <unordered_set>
 #include <vector>
 
@@ -54,7 +54,7 @@ private:
   std::vector<std::function<void()>>* function_listeners;
 };
 
-#include "int_properties.hpp"
+#include "../src/events/properties/int_properties.hpp"
 
 namespace cydui::properties {
 

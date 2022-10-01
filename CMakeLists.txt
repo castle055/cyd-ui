@@ -4,15 +4,92 @@ project(cyd_ui)
 
 set(CMAKE_CXX_STANDARD 23)
 
+include(CheckCXXCompilerFlag)
+
+function(enable_cxx_compiler_flag_if_supported flag)
+    string(FIND "${CMAKE_CXX_FLAGS}" "${flag}" flag_already_set)
+    if (flag_already_set EQUAL -1)
+        check_cxx_compiler_flag("${flag}" flag_supported)
+        if (flag_supported)
+            set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${flag}" PARENT_SCOPE)
+        endif ()
+        unset(flag_supported CACHE)
+    endif ()
+endfunction()
+
+enable_cxx_compiler_flag_if_supported("-Wall")
+enable_cxx_compiler_flag_if_supported("-Wextra")
+enable_cxx_compiler_flag_if_supported("-pedantic")
+enable_cxx_compiler_flag_if_supported("-Werror")
+
+enable_cxx_compiler_flag_if_supported("-Wno-unused-function")
+enable_cxx_compiler_flag_if_supported("-Wno-unused-parameter")
+enable_cxx_compiler_flag_if_supported("-Wno-unused-variable")
+enable_cxx_compiler_flag_if_supported("-Wno-unused-value")
+enable_cxx_compiler_flag_if_supported("-Wno-unused-but-set-variable")
+enable_cxx_compiler_flag_if_supported("-Wno-missing-field-initializers")
+#enable_cxx_compiler_flag_if_supported("-Wno-error=unused")
+
+enable_cxx_compiler_flag_if_supported("-Wno-unknown-pragmas")
+
 include_directories(/usr/include/freetype2)
 
 include(cppcheck.cmake)
 include(clang-format.cmake)
 
-add_library(cyd_ui SHARED src/cydui.cpp src/layout/layout.cpp include/layout.hpp src/window/window.cpp include/window.hpp src/graphics/graphics.hpp src/graphics/x11/x11_impl.cpp src/graphics/x11/state/state.cpp src/graphics/x11/state/state.hpp src/logging/logging.cpp src/logging/logging.hpp src/events/events.cpp src/events/events.hpp src/graphics/x11/events/events.cpp src/graphics/events.hpp include/components.hpp src/layout/components/components.cpp src/layout/components/primitives.cpp include/primitives.hpp src/threading/threading.cpp src/threading/threading.hpp include/window_types.hpp src/graphics/x11/render/render.cpp src/graphics/x11/render/render.hpp src/graphics/x11/x11_impl.hpp src/layout/color/colors.hpp src/layout/color/colors.cpp include/containers.hpp src/layout/components/containers.cpp src/layout/fonts/fonts.cpp src/layout/fonts/fonts.hpp test/wifi/banner.hpp test/components/button.hpp test/components/flexbox.hpp src/events/properties/properties.cpp src/events/properties/properties.hpp src/events/properties/int_properties.hpp src/layout/components/geometry/component_geometry.cpp src/layout/components/geometry/component_geometry.hpp src/layout/components/state/children_state_collection.cpp src/layout/components/state/children_state_collection.h test/status_bar/workspaces.hpp)
+add_library(cyd_ui SHARED
+        src/cydui.cpp
+        src/layout/layout.cpp
+        include/layout.hpp
+        src/window/window.cpp
+        include/window.hpp
+        src/graphics/graphics.hpp
+        src/graphics/x11/x11_impl.cpp
+        src/graphics/x11/state/state.cpp
+        src/graphics/x11/state/state.hpp
+        src/logging/logging.cpp
+        src/logging/logging.hpp
+        src/events/events.cpp
+        src/events/events.hpp
+        src/graphics/x11/events/events.cpp
+        src/graphics/events.hpp
+        include/components.hpp
+        src/layout/components/components.cpp
+        src/layout/components/primitives.cpp
+        include/primitives.hpp
+        src/threading/threading.cpp
+        src/threading/threading.hpp
+        include/window_types.hpp
+        src/graphics/x11/render/render.cpp
+        src/graphics/x11/render/render.hpp
+        src/graphics/x11/x11_impl.hpp
+        src/layout/color/colors.hpp
+        src/layout/color/colors.cpp
+        include/containers.hpp
+        src/layout/components/containers.cpp
+        src/layout/fonts/fonts.cpp
+        src/layout/fonts/fonts.hpp
+        src/events/properties/properties.cpp
+        include/properties.hpp
+        src/events/properties/int_properties.hpp
+        src/layout/components/geometry/component_geometry.cpp
+        src/layout/components/geometry/component_geometry.hpp
+        src/layout/components/state/children_state_collection.cpp
+        src/layout/components/state/children_state_collection.h
+        )
 target_link_libraries(cyd_ui PRIVATE X11 Xft)
 
-add_executable(cyd_ui_test test/main.cpp test/wifi/wifi.hpp)
+add_executable(cyd_ui_test
+        test/main.cpp
+        test/wifi/wifi.hpp
+        test/status_bar/workspaces.hpp
+        test/components/terminal_button.hpp
+        test/tasks/open_terminal_task.hpp
+        test/tasks/run_command_task.h
+        test/wifi/banner.hpp
+        test/components/button.hpp
+        test/components/flexbox.hpp
+        )
 target_link_libraries(cyd_ui_test PRIVATE cyd_ui)
 #add_dependencies(cppcheck clang-format)
 #add_dependencies(cyd_ui_test cppcheck)

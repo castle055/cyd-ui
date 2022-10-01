@@ -16,7 +16,7 @@ namespace cydui::graphics {
   typedef window_t window_t;
   
   window_t* create_window(
-      char* title, char* wclass, int x, int y, int w, int h
+    const char* title, const char* wclass, int x, int y, int w, int h
   );
   
   void set_background(window_t* win);
@@ -28,38 +28,38 @@ namespace cydui::graphics {
   void clr_rect(window_t* win, int x, int y, unsigned int w, unsigned int h);
   
   void drw_line(
-      window_t* win, layout::color::Color* color, int x, int y, int x1, int y1
+    window_t* win, layout::color::Color* color, int x, int y, int x1, int y1
   );
   
   void drw_rect(
-      window_t* win,
-      layout::color::Color* color,
-      int x,
-      int y,
-      int w,
-      int h,
-      bool filled
+    window_t* win,
+    layout::color::Color* color,
+    int x,
+    int y,
+    int w,
+    int h,
+    bool filled
   );
   
   void drw_arc(
-      window_t* win,
-      layout::color::Color* color,
-      int x,
-      int y,
-      int w,
-      int h,
-      int a0,
-      int a1,
-      bool filled
+    window_t* win,
+    layout::color::Color* color,
+    int x,
+    int y,
+    int w,
+    int h,
+    int a0,
+    int a1,
+    bool filled
   );
   
   void drw_text(
-      window_t* win,
-      layout::fonts::Font* font,
-      layout::color::Color* color,
-      std::string text,
-      int x,
-      int y
+    window_t* win,
+    layout::fonts::Font* font,
+    layout::color::Color* color,
+    std::string text,
+    int x,
+    int y
   );
 }// namespace cydui::graphics
 

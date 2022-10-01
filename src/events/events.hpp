@@ -21,9 +21,9 @@ namespace cydui::events {
     EV_MODE_STATE,
   };
   struct CEvent {
-    const CEventType  type;
+    const CEventType  type     = EVENT_CUSTOM;
     const CEventMode  mode     = EV_MODE_QUEUE;
-    const std::string event_id;
+    const std::string event_id = "";
     bool              consumed = false;
     void* raw_event = nullptr;
     void* data;
