@@ -6,8 +6,8 @@
 #define CYD_UI_WINDOW_HPP
 
 
-#include "../src/events/events.hpp"
-#include "../src/graphics/graphics.hpp"
+#include "events.hpp"
+#include "graphics.hpp"
 #include "layout.hpp"
 #include "window_types.hpp"
 

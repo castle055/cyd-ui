@@ -5,7 +5,7 @@
 #ifndef CYD_UI_RENDER_HPP
 #define CYD_UI_RENDER_HPP
 
-#include "../../graphics.hpp"
+#include "../../../../include/graphics.hpp"
 #include "../x11_impl.hpp"
 
 namespace render {
@@ -20,51 +20,51 @@ namespace render {
   void flush(cydui::graphics::window_t* win);
   
   void clr_rect(
-      cydui::graphics::window_t* win,
-      int x,
-      int y,
-      unsigned int w,
-      unsigned int h
+    cydui::graphics::window_t* win,
+    int x,
+    int y,
+    unsigned int w,
+    unsigned int h
   );
   
   void drw_line(
-      cydui::graphics::window_t* win,
-      cydui::layout::color::Color* color,
-      int x,
-      int y,
-      int x1,
-      int y1
+    cydui::graphics::window_t* win,
+    cydui::layout::color::Color* color,
+    int x,
+    int y,
+    int x1,
+    int y1
   );
   
   void drw_rect(
-      cydui::graphics::window_t* win,
-      cydui::layout::color::Color* color,
-      int x,
-      int y,
-      int w,
-      int h,
-      bool filled
+    cydui::graphics::window_t* win,
+    cydui::layout::color::Color* color,
+    int x,
+    int y,
+    int w,
+    int h,
+    bool filled
   );
   
   void drw_arc(
-      cydui::graphics::window_t* win,
-      cydui::layout::color::Color* color,
-      int x,
-      int y,
-      int w,
-      int h,
-      int a0,
-      int a1,
-      bool filled
+    cydui::graphics::window_t* win,
+    cydui::layout::color::Color* color,
+    int x,
+    int y,
+    int w,
+    int h,
+    int a0,
+    int a1,
+    bool filled
   );
   
   void drw_text(
-      cydui::graphics::window_t* win,
-      window_font font,
-      cydui::layout::color::Color* color,
-      std::string text,
-      int x,
-      int y
+    cydui::graphics::window_t* win,
+    window_font font,
+    cydui::layout::color::Color* color,
+    std::string text,
+    int x,
+    int y
   );
   
 }// namespace render

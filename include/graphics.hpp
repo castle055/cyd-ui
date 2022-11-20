@@ -6,11 +6,11 @@
 #define CYD_UI_GRAPHICS_HPP
 
 
-#include "../events/events.hpp"
-#include "../layout/color/colors.hpp"
-#include "../layout/fonts/fonts.hpp"
+#include "events.hpp"
+#include "colors.hpp"
+#include "fonts.hpp"
 
-#include "x11/x11_impl.hpp"
+#include "../src/graphics/x11/x11_impl.hpp"
 
 namespace cydui::graphics {
   typedef window_t window_t;

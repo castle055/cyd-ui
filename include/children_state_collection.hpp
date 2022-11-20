@@ -2,8 +2,8 @@
 // Created by castle on 9/11/22.
 //
 
-#ifndef CYD_UI_CHILDREN_STATE_COLLECTION_H
-#define CYD_UI_CHILDREN_STATE_COLLECTION_H
+#ifndef CYD_UI_CHILDREN_STATE_COLLECTION_HPP
+#define CYD_UI_CHILDREN_STATE_COLLECTION_HPP
 
 #include <unordered_map>
 
@@ -19,4 +19,4 @@ public:
 };
 
 
-#endif //CYD_UI_CHILDREN_STATE_COLLECTION_H
+#endif //CYD_UI_CHILDREN_STATE_COLLECTION_HPP

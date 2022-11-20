@@ -39,6 +39,7 @@ CWindowListener::CWindowListener(CWindow* win) {
 }
 
 void CWindowListener::on_event(cydui::events::CEvent* ev) {
+  if (ev->win && this->win->win_ref->xwin != ev->win) return;
   switch (ev->type) {
     case events::EVENT_GRAPHICS:
       graphics::on_event(

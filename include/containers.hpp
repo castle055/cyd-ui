@@ -6,7 +6,7 @@
 #define CYD_UI_CONTAINERS_HPP
 
 
-#include "../src/layout/color/colors.hpp"
+#include "colors.hpp"
 #include "components.hpp"
 
 namespace containers {

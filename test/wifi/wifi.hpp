@@ -6,7 +6,7 @@
 #define CYD_UI_WIFI_HPP
 
 #include "../../include/cydui.hpp"
-#include "../../src/logging/logging.hpp"
+#include "../../include/logging.hpp"
 #include "banner.hpp"
 #include "../components/button.hpp"
 #include "../components/flexbox.hpp"
@@ -39,6 +39,11 @@ COMPONENT(Test)
       N(FlexBox, ({ .vertical = false }), ({
         N(FlexBox, ({ .vertical = true }), ({
           N(Banner),
+            N(Banner),
+            N(Banner),
+            N(Banner),
+            N(Banner),
+            N(Banner),
             (state->button.val() == 1)?
             N(Button, ({
               .text = "TEST 1",

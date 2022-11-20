@@ -3,7 +3,7 @@
 //
 
 #include "render.hpp"
-#include "../../../logging/logging.hpp"
+#include "../../../../include/logging.hpp"
 #include "../state/state.hpp"
 #include "../x11_impl.hpp"
 
@@ -26,13 +26,13 @@ void render_sbr(cydui::graphics::window_t* win) {
   
   //win->x_mtx.lock();
   XCopyArea(
-      state::get_dpy(),
-      win->staging_drawable,
-      win->xwin,
-      win->gc,
-      0, 0,
-      win->staging_w, win->staging_h,
-      0, 0
+    state::get_dpy(),
+    win->staging_drawable,
+    win->xwin,
+    win->gc,
+    0, 0,
+    win->staging_w, win->staging_h,
+    0, 0
   );
   //win->x_mtx.unlock();
   XFlush(state::get_dpy());
@@ -49,19 +49,16 @@ void render_task(cydui::threading::thread_t* this_thread) {
   }
 }
 
-static render::RenderThreadData* render_data = nullptr;
-
 void render::start(cydui::graphics::window_t* win) {
   if (win->render_thd && win->render_thd->running)
     return;
   xlog_ctrl.debug("Starting render thread");
   
-  delete render_data;
-  render_data = new RenderThreadData {
-      .win = win,
+  win->render_data = new RenderThreadData {
+    .win = win,
   };
-  win->render_thd = cydui::threading::new_thread(render_task, render_data)
-      ->set_name("X11_RENDER_THD");
+  win->render_thd  = cydui::threading::new_thread(render_task, win->render_data)
+    ->set_name("X11_RENDER_THD");
 }
 
 static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
@@ -112,11 +109,11 @@ XftColor* color_to_xftcolor(cydui::layout::color::Color* color) {
   auto* c = new XftColor;
   
   if (!XftColorAllocName(
-      state::get_dpy(),
-      DefaultVisual(state::get_dpy(), state::get_screen()),
-      DefaultColormap(state::get_dpy(), state::get_screen()),
-      color->to_string().c_str(),
-      c
+    state::get_dpy(),
+    DefaultVisual(state::get_dpy(), state::get_screen()),
+    DefaultColormap(state::get_dpy(), state::get_screen()),
+    color->to_string().c_str(),
+    c
   )) {
     xlog_ctrl.error("Cannot allocate color %s", color->to_string().c_str());
   }
@@ -130,17 +127,17 @@ void render::resize(cydui::graphics::window_t* win, int w, int h) {
     win->x_mtx.lock();
     
     Drawable new_drw         = XCreatePixmap(
-        state::get_dpy(),
-        win->xwin,
-        w,
-        h,
-        DefaultDepth(state::get_dpy(), state::get_screen()));
+      state::get_dpy(),
+      win->xwin,
+      w,
+      h,
+      DefaultDepth(state::get_dpy(), state::get_screen()));
     Drawable new_staging_drw = XCreatePixmap(
-        state::get_dpy(),
-        win->xwin,
-        w,
-        h,
-        DefaultDepth(state::get_dpy(), state::get_screen()));
+      state::get_dpy(),
+      win->xwin,
+      w,
+      h,
+      DefaultDepth(state::get_dpy(), state::get_screen()));
     XCopyArea(state::get_dpy(), win->drawable, new_drw, win->gc, 0, 0, win->w, win->h, 0, 0);
     //XCopyArea(state::get_dpy(), win->drawable, new_staging_drw, win->gc, 0, 0, win->w, win->h, 0, 0);
     //XFlush(state::get_dpy());
@@ -168,18 +165,18 @@ void render::resize(cydui::graphics::window_t* win, int w, int h) {
 }
 
 void render::clr_rect(
-    cydui::graphics::window_t* win,
-    int x,
-    int y,
-    unsigned int w,
-    unsigned int h
+  cydui::graphics::window_t* win,
+  int x,
+  int y,
+  unsigned int w,
+  unsigned int h
 ) {
   win->x_mtx.lock();
   
   XSetForeground(
-      state::get_dpy(),
-      win->gc,
-      BlackPixel(state::get_dpy(), state::get_screen()));
+    state::get_dpy(),
+    win->gc,
+    BlackPixel(state::get_dpy(), state::get_screen()));
   XFillRectangle(state::get_dpy(), win->drawable, win->gc, x, y, w, h);
   
   win->x_mtx.unlock();
@@ -188,18 +185,18 @@ void render::clr_rect(
 }
 
 void render::flush(
-    cydui::graphics::window_t* win
+  cydui::graphics::window_t* win
 ) {
   req(win, 0, 0, 0, 0);
 }
 
 void render::drw_line(
-    cydui::graphics::window_t* win,
-    cydui::layout::color::Color* color,
-    int x,
-    int y,
-    int x1,
-    int y1
+  cydui::graphics::window_t* win,
+  cydui::layout::color::Color* color,
+  int x,
+  int y,
+  int x1,
+  int y1
 ) {
   win->x_mtx.lock();
   
@@ -207,9 +204,9 @@ void render::drw_line(
     XSetForeground(state::get_dpy(), win->gc, color_to_xcolor(color).pixel);
   }
   XSetBackground(
-      state::get_dpy(),
-      win->gc,
-      BlackPixel(state::get_dpy(), state::get_screen()));
+    state::get_dpy(),
+    win->gc,
+    BlackPixel(state::get_dpy(), state::get_screen()));
   XDrawLine(state::get_dpy(), win->drawable, win->gc, x, y, x1, y1);
   
   win->x_mtx.unlock();
@@ -218,13 +215,13 @@ void render::drw_line(
 }
 
 void render::drw_rect(
-    cydui::graphics::window_t* win,
-    cydui::layout::color::Color* color,
-    int x,
-    int y,
-    int w,
-    int h,
-    bool filled
+  cydui::graphics::window_t* win,
+  cydui::layout::color::Color* color,
+  int x,
+  int y,
+  int w,
+  int h,
+  bool filled
 ) {
   win->x_mtx.lock();
   
@@ -232,9 +229,9 @@ void render::drw_rect(
     XSetForeground(state::get_dpy(), win->gc, color_to_xcolor(color).pixel);
   }
   XSetBackground(
-      state::get_dpy(),
-      win->gc,
-      BlackPixel(state::get_dpy(), state::get_screen()));
+    state::get_dpy(),
+    win->gc,
+    BlackPixel(state::get_dpy(), state::get_screen()));
   if (filled) {
     XFillRectangle(state::get_dpy(), win->drawable, win->gc, x, y, w, h);
   } else {
@@ -247,24 +244,24 @@ void render::drw_rect(
 }
 
 void render::drw_arc(
-    cydui::graphics::window_t* win,
-    cydui::layout::color::Color* color,
-    int x,
-    int y,
-    int w,
-    int h,
-    int a0,
-    int a1,
-    bool filled
+  cydui::graphics::window_t* win,
+  cydui::layout::color::Color* color,
+  int x,
+  int y,
+  int w,
+  int h,
+  int a0,
+  int a1,
+  bool filled
 ) {
   win->x_mtx.lock();
   if (color) {
     XSetForeground(state::get_dpy(), win->gc, color_to_xcolor(color).pixel);
   }
   XSetBackground(
-      state::get_dpy(),
-      win->gc,
-      BlackPixel(state::get_dpy(), state::get_screen()));
+    state::get_dpy(),
+    win->gc,
+    BlackPixel(state::get_dpy(), state::get_screen()));
   if (filled) {
     XFillArc(state::get_dpy(), win->drawable, win->gc, x, y, w, h, a0, a1);
   } else {
@@ -275,12 +272,12 @@ void render::drw_arc(
 }
 
 void render::drw_text(
-    cydui::graphics::window_t* win,
-    window_font font,
-    cydui::layout::color::Color* color,
-    std::string text,
-    int x,
-    int y
+  cydui::graphics::window_t* win,
+  window_font font,
+  cydui::layout::color::Color* color,
+  std::string text,
+  int x,
+  int y
 ) {
   if (!color)
     color = new cydui::layout::color::Color("#FCAE1E");
@@ -288,8 +285,8 @@ void render::drw_text(
   XColor c = color_to_xcolor(color);
   XftColor* xft_c    = color_to_xftcolor(color);
   XftDraw * xft_draw = XftDrawCreate(
-      state::get_dpy(), win->drawable, DefaultVisual(state::get_dpy(), state::get_screen()),
-      DefaultColormap(state::get_dpy(), state::get_screen()));
+    state::get_dpy(), win->drawable, DefaultVisual(state::get_dpy(), state::get_screen()),
+    DefaultColormap(state::get_dpy(), state::get_screen()));
   XGlyphInfo x_glyph_info;
   int        w, h;
   
@@ -297,12 +294,12 @@ void render::drw_text(
   
   XSetForeground(state::get_dpy(), win->gc, c.pixel);
   XSetBackground(
-      state::get_dpy(),
-      win->gc,
-      BlackPixel(state::get_dpy(), state::get_screen()));
+    state::get_dpy(),
+    win->gc,
+    BlackPixel(state::get_dpy(), state::get_screen()));
   
   XftDrawStringUtf8(
-      xft_draw, xft_c, font.xfont, x, y, (FcChar8*)text.c_str(), text.size());
+    xft_draw, xft_c, font.xfont, x, y, (FcChar8*)text.c_str(), text.size());
   XftTextExtentsUtf8(state::get_dpy(), font.xfont, (XftChar8*)text.c_str(), text.size(), &x_glyph_info);
   w = x_glyph_info.xOff;
   h = x_glyph_info.yOff;

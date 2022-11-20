@@ -14,6 +14,9 @@ public:
     IntBinding(IntProperty* p): property(p) {
     }
     
+    IntBinding(int p): property(new IntProperty(p)) {
+    }
+    
     int val() {
       return property->val();
     }
@@ -104,7 +107,7 @@ public:
     value = new int(0);
   }
   
-  explicit IntProperty(int v): Property() {
+  IntProperty(int v): Property() {
     value = new int(0);
     this->binding = [this, v]() {
       this->set_val(v);
@@ -199,18 +202,18 @@ public:
   void set(int i) {
     if (val() != i) {
       cydui::events::emit(
-          new cydui::events::CEvent {
-              .type = cydui::events::EVENT_LAYOUT,
-              .data = new cydui::events::layout::CLayoutEvent {
-                  .type = cydui::events::layout::LYT_EV_UPDATE_PROP,
-                  .data = cydui::events::layout::CLayoutData {
-                      .update_prop_ev = cydui::events::layout::CUpdatePropEvent {
-                          .target_property = this,
-                          .new_value = new int(i)
-                      }
-                  }
+        new cydui::events::CEvent {
+          .type = cydui::events::EVENT_LAYOUT,
+          .data = new cydui::events::layout::CLayoutEvent {
+            .type = cydui::events::layout::LYT_EV_UPDATE_PROP,
+            .data = cydui::events::layout::CLayoutData {
+              .update_prop_ev = cydui::events::layout::CUpdatePropEvent {
+                .target_property = this,
+                .new_value = new int(i)
               }
+            }
           }
+        }
       );
     }
   }

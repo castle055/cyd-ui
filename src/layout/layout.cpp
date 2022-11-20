@@ -3,7 +3,7 @@
 //
 
 #include "../../include/layout.hpp"
-#include "../logging/logging.hpp"
+#include "../../include/logging.hpp"
 #include "../../include/properties.hpp"
 
 logging::logger log_lay = {.name = "LAYOUT", .on = false};

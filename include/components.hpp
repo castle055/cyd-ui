@@ -5,11 +5,11 @@
 #ifndef CYD_UI_COMPONENTS_HPP
 #define CYD_UI_COMPONENTS_HPP
 
-#include "../src/events/events.hpp"
-#include "../src/layout/color/colors.hpp"
+#include "events.hpp"
+#include "colors.hpp"
 #include "properties.hpp"
-#include "../src/layout/components/geometry/component_geometry.hpp"
-#include "../src/layout/components/state/children_state_collection.h"
+#include "component_geometry.hpp"
+#include "children_state_collection.hpp"
 #include <vector>
 #include <unordered_set>
 #include <functional>
@@ -50,6 +50,10 @@ namespace cydui::components {
     std::function<void(Component*)> inner_redraw = nullptr;
     
     void redraw(cydui::events::layout::CLayoutEvent* ev, bool clr);
+    
+    void render(cydui::events::layout::CLayoutEvent* ev);
+    
+    virtual void on_render(events::layout::CLayoutEvent* ev);
     
     virtual void on_redraw(events::layout::CLayoutEvent* ev);
     
@@ -163,6 +167,9 @@ explicit NAME(NAME##State* state, Props props, const std::function<void(cydui::c
 #define REDRAW(EV) \
 void on_redraw(cydui::events::layout::CLayoutEvent* (EV)) override
 
+#define RENDER(EV) \
+void on_render(cydui::events::layout::CLayoutEvent* (EV)) override
+
 
 #define WITH_STATE(NAME) auto* state = (NAME##State*)this->state;
 
@@ -192,20 +199,17 @@ new NAME(                                     \
     this##NAME->add(v);                       \
                                               \
     std::function<void(NAME* this##NAME)> init =                  \
-    [state](NAME* this##NAME){state; INIT};            \
+    [this,state](NAME* this##NAME){this;state; INIT};            \
     init(this##NAME);                         \
                                               \
   }\
 )
 
-#define C_NEW_INNER(ID, NAME, PROPS, IN) \
-C_NEW_ALL(ID, NAME, PROPS, IN, { state; })
+#define C_NEW_INNER(ID, NAME, PROPS, IN) C_NEW_ALL(ID, NAME, PROPS, IN, { state; })
 
-#define C_NEW_PROPS(ID, NAME, PROPS) \
-C_NEW_INNER(ID, NAME, PROPS, ({ }))
+#define C_NEW_PROPS(ID, NAME, PROPS) C_NEW_INNER(ID, NAME, PROPS, ({ }))
 
-#define C_NEW(ID, NAME) \
-C_NEW_PROPS(ID, NAME, ({ }))
+#define C_NEW(ID, NAME) C_NEW_PROPS(ID, NAME, ({ }))
 
 #define C_GET_NEW_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define N(...) C_GET_NEW_MACRO(__VA_ARGS__, C_NEW_ALL, C_NEW_INNER, C_NEW_PROPS, C_NEW)(__COUNTER__, __VA_ARGS__)

@@ -40,15 +40,15 @@ public:
           [c, c1, state, this](cydui::components::Component* hbox) {
             hbox->add(
               {
-                new primitives::Rectangle(c, 0, 0, 32, 32, true),
-                new primitives::Text(
-                  c,
-                  new cydui::layout::fonts::Font {
-                    .name = "Fira Code Retina",
-                    .size = 14
-                  },
-                  0, 0, "[ WIFI ]"
-                ),
+                //new primitives::Rectangle(c, 0, 0, 32, 32, true),
+                //new primitives::Text(
+                //  c,
+                //  new cydui::layout::fonts::Font {
+                //    .name = "Fira Code Retina",
+                //    .size = 14
+                //  },
+                //  0, 0, "[ WIFI ]"
+                //),
                 N(TerminalButton, ({
                   .cmd = "iwctl"
                 })),

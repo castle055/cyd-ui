@@ -2,9 +2,9 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../graphics.hpp"
+#include "../../../include/graphics.hpp"
 #include "x11_impl.hpp"
-#include "../../logging/logging.hpp"
+#include "../../../include/logging.hpp"
 #include "../events.hpp"
 #include "render/render.hpp"
 #include "state/state.hpp"
@@ -37,7 +37,7 @@ static int geom_mask_to_gravity(int mask) {
 cydui::graphics::window_t* cydui::graphics::create_window(
   const char* title, const char* wclass, int x, int y, int w, int h
 ) {
-  XInitThreads();
+  static int _ig = XInitThreads();
   
   XSetWindowAttributes wa         = {
     .background_pixmap =
@@ -47,7 +47,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
       | VisibilityChangeMask | StructureNotifyMask | ButtonMotionMask
       | ButtonPressMask | ButtonReleaseMask | ExposureMask
       | PointerMotionMask,
-    //      .override_redirect = True // This makes it immutable across workspaces
+    //.override_redirect = true // This makes it immutable across workspaces
   };
   std::string          title_str  = title;
   std::string          wclass_str = wclass;
@@ -127,13 +127,13 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   //  log_task.info("set hints");
   
   //  XDefineCursor(state::get_dpy(), xwin, state::cursor[CurNormal]->cursor);
-  if (x_o != 0 || y_o != 0) {
-    log_task.info("Mapping RAISED window %X", xwin);
-    XMapRaised(state::get_dpy(), xwin);
-  } else {
-    log_task.info("Mapping window %X", xwin);
-    XMapWindow(state::get_dpy(), xwin);
-  }
+  //if (x_o != 0 || y_o != 0) {
+  //  log_task.info("Mapping RAISED window %X", xwin);
+  //  XMapRaised(state::get_dpy(), xwin);
+  //} else {
+  log_task.info("Mapping window %X", xwin);
+  XMapWindow(state::get_dpy(), xwin);
+  //}
   
   XSync(state::get_dpy(), False);
   

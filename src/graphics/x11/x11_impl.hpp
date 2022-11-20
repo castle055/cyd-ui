@@ -32,10 +32,11 @@ struct window_t {
   int                           w;
   int                           h;
   std::deque<window_render_req> render_reqs;
-  bool                          dirty = true;
+  bool                          dirty     = true;
   std::mutex                    render_mtx;
   std::mutex                    x_mtx;
   cydui::threading::thread_t* render_thd;
+  void                      * render_data = nullptr;
   loaded_font_map_t loaded_fonts;
 };
 

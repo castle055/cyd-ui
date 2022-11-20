@@ -6,7 +6,7 @@
 
 #include <utility>
 #include "../../../include/primitives.hpp"
-#include "../../logging/logging.hpp"
+#include "../../../include/logging.hpp"
 
 logging::logger cont_log = {.name = "CONT"};
 

@@ -27,6 +27,7 @@ namespace cydui::events {
     bool              consumed = false;
     void* raw_event = nullptr;
     void* data;
+    unsigned long win = 0L;
   };
   
   class CEventListener {

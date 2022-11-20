@@ -2,8 +2,8 @@
 // Created by castle on 8/21/22.
 //
 
-#include "events.hpp"
-#include "../logging/logging.hpp"
+#include "../../include/events.hpp"
+#include "../../include/logging.hpp"
 #include "../threading/threading.hpp"
 
 #include <deque>
@@ -18,12 +18,12 @@ std::mutex listeners_mutex;
 cydui::threading::thread_t* event_thread;
 struct thread_data {
   std::deque<cydui::events::CEvent*>       * event_queue     =
-                                               new std::deque<cydui::events::CEvent*>;
+                                             new std::deque<cydui::events::CEvent*>;
   std::list<cydui::events::CEventListener*>* event_listeners =
-                                               new std::list<cydui::events::CEventListener*>;
+                                             new std::list<cydui::events::CEventListener*>;
   
   std::unordered_map<std::string, cydui::events::CEvent*>* state_events =
-                                                             new std::unordered_map<std::string, cydui::events::CEvent*>;
+                                                           new std::unordered_map<std::string, cydui::events::CEvent*>;
 };
 
 thread_data* th_data = nullptr;
@@ -57,9 +57,14 @@ void process_event(thread_data* data) {
     data->event_queue = new std::deque<cydui::events::CEvent*>;
     log_task.debug("POP Event");
   }
-  for (auto &item: *data->state_events) {
-    evs.push_back(item.second);
+  // TODO - This is a very inefficient implementation
+  static unsigned int lap = 0;
+  if (lap++ == 0) {
+    for (auto &item: *data->state_events) {
+      evs.push_back(item.second);
+    }
   }
+  if (lap > 20) lap = 0;
   //data->state_events->clear();
   event_mutex.unlock();
   
@@ -92,9 +97,9 @@ void cydui::events::start() {
   log_ctrl.debug("Starting event_thread");
   
   delete th_data;
-  th_data      = new thread_data;
+  th_data = new thread_data;
   event_thread =
-      threading::new_thread(&event_task, th_data)
+    threading::new_thread(&event_task, th_data)
       ->set_name("EV_THD");
 }
 

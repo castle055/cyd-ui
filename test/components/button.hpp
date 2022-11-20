@@ -7,14 +7,14 @@
 
 #include <functional>
 #include "../../include/cydui.hpp"
-#include "../../src/logging/logging.hpp"
+#include "../../include/logging.hpp"
 
 STATE(Button)
   bool hovering = false;
   
   cydui::layout::fonts::Font font {
     .name = "Fira Code Retina",
-    .size = 14
+    .size = 10
   };
   
   cydui::layout::color::Color* c     = new cydui::layout::color::Color("#FCAE1E");
@@ -27,28 +27,42 @@ typedef std::function<void()> ButtonAction;
 
 COMPONENT(Button)
   PROPS({
-    std::string  text;
-    ButtonAction on_action;
+    std::string text = "Text";
+    cydui::layout::fonts::Font* font;
+    ButtonAction on_action = []() { };
+    cydui::layout::color::Color* c     = nullptr;
+    cydui::layout::color::Color* c_dim = nullptr;
+    cydui::layout::color::Color* c1    = nullptr;
   })
   
-  INIT(Button) }
+  INIT(Button)
+    if (!this->props.font) this->props.font   = &state->font;
+    if (!this->props.c) this->props.c         = state->c;
+    if (!this->props.c_dim) this->props.c_dim = state->c_dim;
+    if (!this->props.c1) this->props.c1       = state->c1;
+  }
   
   REDRAW(ev) {
     WITH_STATE(Button)
-    log.debug("w: %d", state->geom.content_h().val());
     
+    using namespace primitives;
     ADD_TO(this, ({
-      new primitives::Rectangle(
-        state->hovering? state->c : state->c_dim, 0, 0,
-        state->geom.content_w().val(), state->geom.content_h().val(),
-        true
-      ),
-        (new primitives::Text(state->hovering? state->c1 : state->c, &state->font, 0, 0, props.text))
-          ->set_margin(5, 5, 5, 5)
-          ->set_width(state->geom.custom_width? state->geom.content_w().val() : 125)
-      //->set_height(state->geom.content_h().val())
+      N(Rectangle, ({
+        .color = state->hovering? props.c : props.c_dim,
+        .filled = true
+      }), ({ }), {
+        thisRectangle->set_pos(this, 0, 0);
+        thisRectangle->set_size(state->geom.content_w(), state->geom.content_h());
+      }),
+        N(Text, ({
+          .color = state->hovering? props.c1 : props.c,
+          .font = props.font,
+          .text = props.text,
+        }), ({ }), {
+          thisText->set_margin(5, 5, 5, 5);
+          thisText->set_width(state->geom.custom_width? state->geom.content_w() : 125);
+        })
     }))
-    log.debug("h: %d", state->geom.content_h().val());
   }
   
   void on_mouse_enter(cydui::events::layout::CLayoutEvent* ev) override {

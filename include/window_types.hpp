@@ -5,8 +5,8 @@
 #ifndef CYD_UI_WINDOW_TYPES_HPP
 #define CYD_UI_WINDOW_TYPES_HPP
 
-#include "../src/events/events.hpp"
-#include "../src/graphics/graphics.hpp"
+#include "events.hpp"
+#include "graphics.hpp"
 
 namespace cydui::layout {
   class Layout;

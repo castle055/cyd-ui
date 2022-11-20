@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "../../../include/window_types.hpp"
-#include "../../graphics/graphics.hpp"
+#include "../../../include/graphics.hpp"
 
 using namespace cydui::components;
 
@@ -181,11 +181,27 @@ void Component::redraw(cydui::events::layout::CLayoutEvent* ev, bool clr) {
     delete child;
   children.clear();
   
-  on_redraw(ev);
   inner_redraw(this);
+  on_redraw(ev);
   
   for (auto &child: children) {
     child->redraw(ev, false);
+  }
+  
+  if (clr) {
+    render(ev);
+    
+    ev->consumed = true;
+  }
+  
+  state->_dirty = false;
+}
+
+void Component::render(cydui::events::layout::CLayoutEvent* ev) {
+  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
+  
+  for (auto &child: children) {
+    child->render(ev);
   }
   
   if (state->border.enabled) {
@@ -200,11 +216,10 @@ void Component::redraw(cydui::events::layout::CLayoutEvent* ev, bool clr) {
     );
   }
   
-  if (clr) {
-    ev->consumed = true;
-  }
-  
-  state->_dirty = false;
+  on_render(ev);
+}
+
+void Component::on_render(events::layout::CLayoutEvent* ev) {
 }
 
 void Component::on_redraw(events::layout::CLayoutEvent* ev) {

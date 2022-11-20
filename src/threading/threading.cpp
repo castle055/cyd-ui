@@ -3,7 +3,7 @@
 //
 
 #include "threading.hpp"
-#include "../logging/logging.hpp"
+#include "../../include/logging.hpp"
 #include <thread>
 
 using namespace cydui::threading;
@@ -15,7 +15,7 @@ thread_t* cydui::threading::new_thread(void(task)(thread_t* this_thread)) {
 }
 
 thread_t* cydui::threading::new_thread(
-    void(task)(thread_t* this_thread), void* data
+  void(task)(thread_t* this_thread), void* data
 ) {
   auto* arg = new thread_t();
   arg->running = true;
@@ -26,7 +26,7 @@ thread_t* cydui::threading::new_thread(
 }
 
 
-thread_t* cydui::threading::thread_t::set_name(const std::string& name) {
+thread_t* cydui::threading::thread_t::set_name(const std::string &name) {
   pthread_t pt = ((std::thread*)native_thread)->native_handle();
   pthread_setname_np(pt, name.c_str());
   return this;
