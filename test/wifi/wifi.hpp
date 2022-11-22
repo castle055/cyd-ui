@@ -32,43 +32,39 @@ COMPONENT(Test)
     DISABLE_LOG
   }
   
-  REDRAW(ev) {
-    WITH_STATE(Test)
-    
-    ADD_TO(this, {
-      N(FlexBox, ({ .vertical = false }), ({
-        N(FlexBox, ({ .vertical = true }), ({
+  REDRAWw(ev, Test, {
+    N(FlexBox, ({ .vertical = false }), ({
+      N(FlexBox, ({ .vertical = true }), ({
+        N(Banner),
           N(Banner),
-            N(Banner),
-            N(Banner),
-            N(Banner),
-            N(Banner),
-            N(Banner),
-            (state->button.val() == 1)?
-            N(Button, ({
-              .text = "TEST 1",
-              .on_action = action {
-                state->button = 2;
-                log.info("CLICK 1");
-              }
-            })) :
-            N(Button, ({
-              .text = "TEST 2",
-              .on_action = action {
-                state->button = 1;
-                log.info("CLICK 2");
-              }
-            })),
-        }), {
-          thisFlexBox->set_border_enable(true);
-          thisFlexBox->set_height(thisFlexBox->parent->state->geom.content_h());
-        }),
+          N(Banner),
+          N(Banner),
+          N(Banner),
+          N(Banner),
+          (state->button.val() == 1)?
+          N(Button, ({
+            .text = "TEST 1",
+            .on_action = action {
+              state->button = 2;
+              log.info("CLICK 1");
+            }
+          })) :
+          N(Button, ({
+            .text = "TEST 2",
+            .on_action = action {
+              state->button = 1;
+              log.info("CLICK 2");
+            }
+          })),
       }), {
         thisFlexBox->set_border_enable(true);
-        thisFlexBox->set_size(state->geom.content_w(), state->geom.content_h());
-      })
+        thisFlexBox->set_height(thisFlexBox->parent->state->geom.content_h());
+      }),
+    }), {
+      thisFlexBox->set_border_enable(true);
+      thisFlexBox->set_size(state->geom.content_w(), state->geom.content_h());
     })
-  }
+  })
 };
 
 #endif //CYD_UI_WIFI_HPP

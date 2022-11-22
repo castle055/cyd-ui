@@ -88,6 +88,7 @@ add_executable(cyd_ui_test
         test/wifi/banner.hpp
         test/components/button.hpp
         test/components/flexbox.hpp
+        test/components/clock_module.hpp
         )
 target_link_libraries(cyd_ui_test PRIVATE cyd_ui)
 #add_dependencies(cppcheck clang-format)

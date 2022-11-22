@@ -175,6 +175,12 @@ void on_render(cydui::events::layout::CLayoutEvent* (EV)) override
 
 #define ADD_TO(COMPONENT, VECTOR) COMPONENT->add(std::vector<cydui::components::Component*>VECTOR);
 
+#define REDRAWw(EV, NAME, VECTOR) \
+void on_redraw(cydui::events::layout::CLayoutEvent* (EV)) override { \
+WITH_STATE(NAME)         \
+ADD_TO(this, VECTOR);    \
+}
+
 /// Using lambda captures in statements prevents IDE from showing 'unused-lambda-capture' error
 
 // FIXME - REMOVE MACRO

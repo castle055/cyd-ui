@@ -8,6 +8,7 @@
 #include "../../include/cydui.hpp"
 #include "../components/button.hpp"
 #include "../components/flexbox.hpp"
+#include "../components/clock_module.hpp"
 #include "workspace_selector.hpp"
 
 STATE(Workspaces)
@@ -37,13 +38,14 @@ COMPONENT(Workspaces)
     
     ADD_TO(this, {
       N(FlexBox, ({ .vertical = false }), ({
-        N(WorkspaceSelector, ({
-          .text = "1",
-          .font = &state->font,
-          .occupied = (state->occupied_workspaces.val() & (1 << 0)) > 0,
-          .selected = (state->selected_workspaces.val() & (1 << 0)) > 0,
-          .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 0);}
-        })),
+        N(ClockModule),
+          N(WorkspaceSelector, ({
+            .text = "1",
+            .font = &state->font,
+            .occupied = (state->occupied_workspaces.val() & (1 << 0)) > 0,
+            .selected = (state->selected_workspaces.val() & (1 << 0)) > 0,
+            .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 0);}
+          })),
           N(WorkspaceSelector, ({
             .text = "2",
             .font = &state->font,
