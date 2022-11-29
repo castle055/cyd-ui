@@ -155,12 +155,12 @@ void cydui::graphics::set_background(window_t* win) {
 }
 
 void cydui::graphics::on_event(
-    window_t* win, cydui::events::graphics::CGraphicsEvent* ev
+    window_t* win, cydui::events::graphics::CGraphicsEvent* data
 ) {
-  switch (ev->type) {
+  switch (data->type) {
     case cydui::events::graphics::GPH_EV_RESIZE:
-      if (ev->data.resize_ev.w != win->w || ev->data.resize_ev.h != win->h) {
-        render::resize(win, ev->data.resize_ev.w, ev->data.resize_ev.h);
+      if (data->data.resize_ev.w != win->w || data->data.resize_ev.h != win->h) {
+        render::resize(win, data->data.resize_ev.w, data->data.resize_ev.h);
         //cydui::events::emit(
         //    new cydui::events::CEvent {
         //        .type      = cydui::events::EVENT_LAYOUT,
@@ -181,8 +181,8 @@ void cydui::graphics::on_event(
         //            .type = cydui::events::layout::LYT_EV_RESIZE,
         //            .data = cydui::events::layout::CLayoutData {
         //                .resize_ev = cydui::events::layout::CResizeEvent {
-        //                    .w = ev->data.resize_ev.w,
-        //                    .h = ev->data.resize_ev.h
+        //                    .w = data->data.resize_ev.w,
+        //                    .h = data->data.resize_ev.h
         //                }}}
         //    }
         //);

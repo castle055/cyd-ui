@@ -12,9 +12,9 @@ overloads:
       - private
     arguments:
       - description: __OPTIONAL__
-        name: ev
+        name: data
         type: events::CEvent *
     description: __OPTIONAL__
     return: __OPTIONAL__
-    signature_with_names: void on_event(events::CEvent * ev)
+    signature_with_names: void on_event(events::CEvent * data)
 ---

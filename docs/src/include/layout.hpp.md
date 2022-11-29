@@ -23,7 +23,7 @@ namespace cydui::layout {
     
     void bind_window(window::CWindow* _win);
     
-    void on_event(events::layout::CLayoutEvent* ev);
+    void on_event(events::layout::CLayoutEvent* data);
   };
   
 }// namespace cydui::layout

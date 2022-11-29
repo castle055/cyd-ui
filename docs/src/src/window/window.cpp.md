@@ -38,13 +38,13 @@ CWindowListener::CWindowListener(CWindow* win) {
   this->win = win;
 }
 
-void CWindowListener::on_event(cydui::events::CEvent* ev) {
-  switch (ev->type) {
+void CWindowListener::on_event(cydui::events::CEvent* data) {
+  switch (data->type) {
     case events::EVENT_GRAPHICS:
       graphics::on_event(
-          win->win_ref, (events::graphics::CGraphicsEvent*)(ev->data));
+          win->win_ref, (events::graphics::CGraphicsEvent*)(data->data));
       break;
-    case events::EVENT_LAYOUT:win->layout->on_event((events::layout::CLayoutEvent*)(ev->data));
+    case events::EVENT_LAYOUT:win->layout->on_event((events::layout::CLayoutEvent*)(data->data));
       break;
     default: break;
   }

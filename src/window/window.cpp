@@ -32,6 +32,7 @@ CWindow* cydui::window::create(
   
   layout->bind_window(win);
   return win;
+  test();
 }
 
 CWindowListener::CWindowListener(CWindow* win) {

@@ -28,8 +28,10 @@ struct thread_data {
 
 thread_data* th_data = nullptr;
 
-logging::logger log_task = {.name = "EV_TASK", .on = false};
-logging::logger log_ctrl = {.name = "EV_CTRL", .on = false};
+logging::logger                                                                        log_task =
+                                                                                         {.name = "EV_TASK", .on = false};
+logging::logger                                                                        log_ctrl =
+                                                                                         {.name = "EV_CTRL", .on = false};
 
 static void run_event(thread_data* data, cydui::events::CEvent* ev) {
   listeners_mutex.lock();
@@ -103,27 +105,18 @@ void cydui::events::start() {
       ->set_name("EV_THD");
 }
 
-void cydui::events::emit(cydui::events::CEvent* ev) {
-  log_ctrl.debug("Emitting event. type=%d", ev->type);
-  event_mutex.lock();
-  switch (ev->mode) {
-    case EV_MODE_QUEUE:th_data->event_queue->push_back(ev);
-      break;
-    case EV_MODE_STATE:(*th_data->state_events)[ev->event_id] = ev;
-      break;
-    default:break;
-  }
-  event_mutex.unlock();
+void cydui::events::emit(std::string event_type, void* data) {
+  new cydui::events::Event {
+    .type = event_type,
+    .ev = data,
+  };
 }
 
-void cydui::events::subscribe(CEventListener* listener) {
-  listeners_mutex.lock();
-  th_data->event_listeners->push_back(listener);
-  listeners_mutex.unlock();
+std::unordered_map<std::string, std::deque<std::function<void(cydui::events::Event)>>> l;
+
+void cydui::events::on_event(std::string event_type, std::function<void(Event)> c) {
+  if (!l.contains(event_type)) l[event_type] = { };
+  l[event_type].push_back(c);
 }
 
-void cydui::events::unsubscribe(CEventListener* listener) {
-  listeners_mutex.lock();
-  th_data->event_listeners->remove(listener);
-  listeners_mutex.unlock();
-}
+

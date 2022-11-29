@@ -20,7 +20,7 @@ namespace primitives {
     int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
     Color* color;
     
-    void on_redraw(CLayoutEvent* ev) override;
+    void on_redraw(CLayoutEvent* data) override;
   
   public:
     explicit Line(Color* color, int x1, int y1, int x2, int y2);
@@ -31,7 +31,7 @@ namespace primitives {
     bool filled;
     Color* color;
     
-    void on_redraw(CLayoutEvent* ev) override;
+    void on_redraw(CLayoutEvent* data) override;
   
   public:
     explicit Rectangle(
@@ -45,7 +45,7 @@ namespace primitives {
     bool filled;
     Color* color;
     
-    void on_redraw(CLayoutEvent* ev) override;
+    void on_redraw(CLayoutEvent* data) override;
   
   public:
     explicit Arc(
@@ -65,7 +65,7 @@ namespace primitives {
     bool filled;
     Color* color;
     
-    void on_redraw(CLayoutEvent* ev) override;
+    void on_redraw(CLayoutEvent* data) override;
   
   public:
     explicit Circle(
@@ -81,7 +81,7 @@ namespace primitives {
     layout::fonts::Font* font;
     std::string text;
     
-    void on_redraw(CLayoutEvent* ev) override;
+    void on_redraw(CLayoutEvent* data) override;
   
   public:
     Text(

@@ -10,11 +10,11 @@ overloads:
   void emit(cydui::events::CEvent *):
     arguments:
       - description: __OPTIONAL__
-        name: ev
+        name: data
         type: cydui::events::CEvent *
     description: __OPTIONAL__
     return: __OPTIONAL__
-    signature_with_names: void emit(cydui::events::CEvent * ev)
+    signature_with_names: void emit(cydui::events::CEvent * data)
 namespace:
   - cydui
   - events

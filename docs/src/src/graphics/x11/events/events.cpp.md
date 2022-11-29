@@ -14,14 +14,14 @@ cydui::threading::thread_t* x11_thread;
 logging::logger x11_evlog = {.name = "X11::EV"};
 
 static void emit_lyt(
-    XEvent ev,
+    XEvent data,
     cydui::events::layout::CLayoutEventType type,
     cydui::events::layout::CLayoutData data
 ) {
   cydui::events::emit(
       new cydui::events::CEvent {
           .type      = cydui::events::EVENT_LAYOUT,
-          .raw_event = new XEvent(ev),
+          .raw_event = new XEvent(data),
           .data      = new cydui::events::layout::CLayoutEvent {
               .type = type, .data = data
           }
@@ -30,14 +30,14 @@ static void emit_lyt(
 }
 
 static void emit_gph(
-    XEvent ev,
+    XEvent data,
     cydui::events::graphics::CGraphicEventType type,
     cydui::events::graphics::CGraphicEventData data
 ) {
   cydui::events::emit(
       new cydui::events::CEvent {
           .type      = cydui::events::EVENT_GRAPHICS,
-          .raw_event = new XEvent(ev),
+          .raw_event = new XEvent(data),
           .data      = new cydui::events::graphics::CGraphicsEvent {
               .type = type, .data = data
           }
@@ -54,22 +54,22 @@ Bool evpredicate() {
 }
 
 void run() {
-  XEvent ev;
+  XEvent data;
   
   int      queued = XEventsQueued(state::get_dpy(), QueuedAlready);
   for (int i      = 0; i < queued; ++i) {
     XNextEvent(
         state::get_dpy(),
-        &ev
+        &data
     );
-    //    x11_evlog.debug("event = %d", ev.type);
-    switch (ev.type) {
+    //    x11_evlog.debug("event = %d", data.type);
+    switch (data.type) {
       case Expose:
         //        cydui::events::emit(new cydui::events::CEvent {
         //            .type = cydui::events::EVENT_GRAPHICS
         //        });
         emit_lyt(
-            ev,
+            data,
             cydui::events::layout::LYT_EV_REDRAW,
             cydui::events::layout::CLayoutData {
                 .redraw_ev =
@@ -79,74 +79,74 @@ void run() {
         break;
       case KeyPress:
         emit_lyt(
-            ev,
+            data,
             cydui::events::layout::LYT_EV_KEYPRESS,
             cydui::events::layout::CLayoutData {
                 .key_ev =
-                cydui::events::layout::CKeyEvent {.key = ev.xkey.keycode}}
+                cydui::events::layout::CKeyEvent {.key = data.xkey.keycode}}
         );
         break;
       case KeyRelease:
         emit_lyt(
-            ev,
+            data,
             cydui::events::layout::LYT_EV_KEYRELEASE,
             cydui::events::layout::CLayoutData {
                 .key_ev =
-                cydui::events::layout::CKeyEvent {.key = ev.xkey.keycode}}
+                cydui::events::layout::CKeyEvent {.key = data.xkey.keycode}}
         );
         break;
       case ButtonPress:
         emit_lyt(
-            ev,
+            data,
             cydui::events::layout::LYT_EV_BUTTONPRESS,
             cydui::events::layout::CLayoutData {
                 .button_ev = cydui::events::layout::CButtonEvent {
-                    .button = ev.xbutton.button,
-                    .x      = ev.xbutton.x,
-                    .y      = ev.xbutton.y
+                    .button = data.xbutton.button,
+                    .x      = data.xbutton.x,
+                    .y      = data.xbutton.y
                 }}
         );
         break;
       case ButtonRelease:
         emit_lyt(
-            ev,
+            data,
             cydui::events::layout::LYT_EV_BUTTONRELEASE,
             cydui::events::layout::CLayoutData {
                 .button_ev = cydui::events::layout::CButtonEvent {
-                    .button = ev.xbutton.button,
-                    .x      = ev.xbutton.x,
-                    .y      = ev.xbutton.y
+                    .button = data.xbutton.button,
+                    .x      = data.xbutton.x,
+                    .y      = data.xbutton.y
                 }
             }
         );
         break;
-      case MotionNotify://x11_evlog.info("%d-%d", ev.xmotion.x, ev.xmotion.y);
+      case MotionNotify://x11_evlog.info("%d-%d", data.xmotion.x, data.xmotion.y);
         emit_lyt(
-            ev,
+            data,
             cydui::events::layout::LYT_EV_MOUSEMOTION,
             cydui::events::layout::CLayoutData {
                 .motion_ev = cydui::events::layout::CMotionEvent {
-                    .x = ev.xmotion.x, .y = ev.xmotion.y
+                    .x = data.xmotion.x, .y = data.xmotion.y
                 }
             }
         );
         break;
       case ConfigureNotify:
         emit_gph(
-            ev,
+            data,
             cydui::events::graphics::GPH_EV_RESIZE,
             cydui::events::graphics::CGraphicEventData {
                 .resize_ev = cydui::events::graphics::CResizeEvent {
-                    .w = ev.xconfigure.width, .h = ev.xconfigure.height
+                    .w = data.xconfigure.width, .h = data.xconfigure.height
                 }
             }
         );
         emit_lyt(
-            ev,
+            data,
             cydui::events::layout::LYT_EV_RESIZE,
             cydui::events::layout::CLayoutData {
                 .resize_ev = cydui::events::layout::CResizeEvent {
-                    .w = ev.xconfigure.width, .h = ev.xconfigure.height
+                    .w = data.xconfigure.width, .h = data.xconfigure.height
                 }
             }
         );

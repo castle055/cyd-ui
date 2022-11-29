@@ -19,7 +19,7 @@ containers::VBox::VBox(
   _state->spacing = spacing;
 }
 
-void containers::VBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
+void containers::VBox::on_redraw(cydui::events::layout::CLayoutEvent* data) {
   auto* state = (VBoxState*)this->state;
   
   IntProperty::IntBinding cur_h = {.property = &state->offset};
@@ -39,7 +39,7 @@ containers::HBox::HBox(
   _state->spacing = spacing;
 }
 
-void containers::HBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
+void containers::HBox::on_redraw(cydui::events::layout::CLayoutEvent* data) {
   auto* state = (HBoxState*)this->state;
   
   IntProperty::IntBinding cur_w = {.property = &state->offset};

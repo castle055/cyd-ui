@@ -10,7 +10,7 @@ overloads:
   static void emit_gph(XEvent, cydui::events::graphics::CGraphicEventType, cydui::events::graphics::CGraphicEventData):
     arguments:
       - description: __OPTIONAL__
-        name: ev
+        name: data
         type: XEvent
       - description: __OPTIONAL__
         name: type
@@ -20,5 +20,5 @@ overloads:
         type: cydui::events::graphics::CGraphicEventData
     description: __OPTIONAL__
     return: __OPTIONAL__
-    signature_with_names: static void emit_gph(XEvent ev, cydui::events::graphics::CGraphicEventType type, cydui::events::graphics::CGraphicEventData data)
+    signature_with_names: static void emit_gph(XEvent data, cydui::events::graphics::CGraphicEventType type, cydui::events::graphics::CGraphicEventData data)
 ---
