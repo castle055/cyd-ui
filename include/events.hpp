@@ -25,6 +25,7 @@ namespace cydui::events {
   
   struct Event {
     std::string type;
+    bool consumed = false;
     void* ev;
     
     template<typename T>
@@ -45,18 +46,18 @@ namespace cydui::events {
     }
   };
   
-  void emit(std::string event_type, void* data);
+  void emit_raw(std::string event_type, void* data);
   
   template<typename T>
   requires EventType<T>
   inline void emit(typename T::DataType data) {
-    emit(T::type, new T({.data = data}));
+    emit_raw(T::type, new T({.data = data}));
   }
   
   template<typename T> requires EventType<T>
-  class Consumer: public std::function<void(T)> {
+  class Consumer: public std::function<void(ParsedEvent<T>)> {
   public:
-    Consumer(std::function<void(T)> c): std::function<void(T)>(c) { }
+    Consumer(std::function<void(ParsedEvent<T>)> c): std::function<void(ParsedEvent<T>)>(c) { }
   };
 
 #define consumer [=](it)->void
@@ -69,7 +70,7 @@ namespace cydui::events {
     on_event(T::type, [c](Event ev) {
       auto parsed = ev.parse<T>();
       if (parsed.data) {
-        c(parsed.data);
+        c(parsed);
       }
     });
   }

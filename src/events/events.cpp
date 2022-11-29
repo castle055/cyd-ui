@@ -105,7 +105,7 @@ void cydui::events::start() {
       ->set_name("EV_THD");
 }
 
-void cydui::events::emit(std::string event_type, void* data) {
+void cydui::events::emit_raw(std::string event_type, void* data) {
   new cydui::events::Event {
     .type = event_type,
     .ev = data,
