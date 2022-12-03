@@ -3,6 +3,7 @@
 //
 
 #include "../../include/window.hpp"
+#include "../graphics/events.hpp"
 #include <vector>
 
 using namespace cydui::window;
@@ -22,8 +23,9 @@ CWindow* cydui::window::create(
   
   auto win = new CWindow();
   windows.push_back(win);
-  win->listener = new CWindowListener(win);
-  events::subscribe(win->listener);
+  listen(ResizeEvent, {
+    graphics::resize(win->win_ref, it.data->w, it.data->h);
+  })
   win->layout = layout;
   
   auto* win_ref = graphics::create_window(title, wclass, x, y, w, h);
@@ -32,7 +34,6 @@ CWindow* cydui::window::create(
   
   layout->bind_window(win);
   return win;
-  test();
 }
 
 CWindowListener::CWindowListener(CWindow* win) {

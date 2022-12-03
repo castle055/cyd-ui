@@ -21,7 +21,7 @@ namespace cydui::graphics {
   
   void set_background(window_t* win);
   
-  void on_event(window_t* win, events::graphics::CGraphicsEvent* ev);
+  void resize(window_t* win, int w, int h);
   
   void flush(window_t* win);
   

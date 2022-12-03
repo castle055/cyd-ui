@@ -13,6 +13,11 @@
 
 #define bind(state) on_change([state](){ state->_dirty = true; })
 
+EVENT(UpdatePropEvent, {
+  const void* target_property = nullptr;
+  const void* new_value       = nullptr;
+})
+
 class Property {
   
   std::unordered_set<Property*>* dependencies;

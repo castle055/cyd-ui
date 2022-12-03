@@ -23,9 +23,16 @@ namespace cydui::events {
     const typename T::DataType* data;
   };
   
+  enum EventStatus {
+    PENDING,
+    PROCESSING,
+    CONSUMED,
+  };
+  
   struct Event {
     std::string type;
-    bool consumed = false;
+    bool        consumed = false;
+    EventStatus status   = PENDING;
     void* ev;
     
     template<typename T>
@@ -46,7 +53,7 @@ namespace cydui::events {
     }
   };
   
-  void emit_raw(std::string event_type, void* data);
+  void emit_raw(const std::string &event_type, void* data);
   
   template<typename T>
   requires EventType<T>
@@ -55,19 +62,21 @@ namespace cydui::events {
   }
   
   template<typename T> requires EventType<T>
-  class Consumer: public std::function<void(ParsedEvent<T>)> {
+  class Consumer: public std::function<void(const ParsedEvent<T> &)> {
   public:
-    Consumer(std::function<void(ParsedEvent<T>)> c): std::function<void(ParsedEvent<T>)>(c) { }
+    Consumer(std::function<void(const ParsedEvent<T> &)> c): std::function<void(const ParsedEvent<T> &)>(c) { }
   };
 
-#define consumer [=](it)->void
+#define consumer [=](it)
   
-  void on_event(std::string event_type, std::function<void(Event)> c);
+  typedef std::function<void(Event*)> Listener;
+  
+  void on_event_raw(const std::string &event_type, const Listener &l);
   
   template<typename T>
   requires EventType<T>
   inline void on_event(Consumer<T> c) {
-    on_event(T::type, [c](Event ev) {
+    on_event_raw(T::type, [c](Event ev) {
       auto parsed = ev.parse<T>();
       if (parsed.data) {
         c(parsed);
@@ -75,7 +84,7 @@ namespace cydui::events {
     });
   }
 
-#define listen(EVENT, block) cydui::events::onEvent<EVENT>(Consumer<EVENT>([](EVENT it)->void block));
+#define listen(EVENT, block) cydui::events::on_event<EVENT>(cydui::events::Consumer<EVENT>([=](const cydui::events::ParsedEvent<EVENT>& it) block));
 
 
 #define EVENT(NAME, DATA) \

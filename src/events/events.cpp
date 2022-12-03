@@ -17,69 +17,70 @@ std::mutex listeners_mutex;
 
 cydui::threading::thread_t* event_thread;
 struct thread_data {
-  std::deque<cydui::events::CEvent*>       * event_queue     =
-                                             new std::deque<cydui::events::CEvent*>;
-  std::list<cydui::events::CEventListener*>* event_listeners =
-                                             new std::list<cydui::events::CEventListener*>;
+  std::deque<cydui::events::Event*>* event_queue =
+                                     new std::deque<cydui::events::Event*>;
+  std::unordered_map<
+    std::string,
+    std::deque<cydui::events::Listener>
+  >* event_listeners =
+     new std::unordered_map<std::string, std::deque<cydui::events::Listener>>;
   
-  std::unordered_map<std::string, cydui::events::CEvent*>* state_events =
-                                                           new std::unordered_map<std::string, cydui::events::CEvent*>;
+  std::unordered_map<std::string, cydui::events::Event*>* state_events =
+                                                          new std::unordered_map<std::string, cydui::events::Event*>;
 };
 
 thread_data* th_data = nullptr;
 
-logging::logger                                                                        log_task =
-                                                                                         {.name = "EV_TASK", .on = false};
-logging::logger                                                                        log_ctrl =
-                                                                                         {.name = "EV_CTRL", .on = false};
+logging::logger log_task =
+                  {.name = "EV_TASK", .on = false};
+logging::logger log_ctrl =
+                  {.name = "EV_CTRL", .on = false};
 
-static void run_event(thread_data* data, cydui::events::CEvent* ev) {
+static void run_event(thread_data* data, cydui::events::Event* ev) {
+  ev->status = cydui::events::PROCESSING;
   listeners_mutex.lock();
-  for (const auto &listener: *data->event_listeners) {
-    listener->on_event(ev);
+  if (data->event_listeners->contains(ev->type)) {
+    for (const auto &listener: (*data->event_listeners)[ev->type]) {
+      listener(ev);
+    }
   }
   listeners_mutex.unlock();
+  ev->status = cydui::events::CONSUMED;
+}
+
+void push_event(thread_data* data, cydui::events::Event* ev) {
+  if (!event_mutex.try_lock()) return;
+  data->event_queue->push_back(ev);
+  event_mutex.unlock();
+}
+
+cydui::events::Event* get_next_event(thread_data* data) {
+  cydui::events::Event* ev = nullptr;
   
-  if (ev->consumed)
-    delete ev;
+  if (!event_mutex.try_lock()) return nullptr;
+  if (!data->event_queue->empty()) {
+    ev = data->event_queue->front();
+  }
+  event_mutex.unlock();
+  
+  return ev;
+}
+
+void clean_up_event(thread_data* data, cydui::events::Event* ev) {
+  if (!event_mutex.try_lock()) return;
+  data->event_queue->pop_front();
+  delete ev;
+  event_mutex.unlock();
 }
 
 void process_event(thread_data* data) {
-  //  log_task.debug("Processing next event");
-  //cydui::events::CEvent* ev = nullptr;
-  std::vector<cydui::events::CEvent*> evs;
-  std::deque<cydui::events::CEvent*>  * queue = nullptr;
+  log_task.debug("Processing next event");
   
-  if (!event_mutex.try_lock())
-    return;
-  //  log_task.debug("Event queue len: %d", data->event_queue->size());
-  if (!data->event_queue->empty()) {
-    //  log_task.debug("Event queue not empty");
-    queue = data->event_queue;
-    data->event_queue = new std::deque<cydui::events::CEvent*>;
-    log_task.debug("POP Event");
-  }
-  // TODO - This is a very inefficient implementation
-  static unsigned int lap = 0;
-  if (lap++ == 0) {
-    for (auto &item: *data->state_events) {
-      evs.push_back(item.second);
-    }
-  }
-  if (lap > 20) lap = 0;
-  //data->state_events->clear();
-  event_mutex.unlock();
+  cydui::events::Event* ev = get_next_event(data);
   
-  if (queue) {
-    for (auto &e: *queue) {
-      run_event(data, e);
-    }
-    delete queue;
-  }
-  
-  for (auto &e: evs) {
-    if (!e->consumed)
-      run_event(data, e);
+  if (ev != nullptr) {
+    run_event(data, ev);
+    clean_up_event(data, ev);
   }
 }
 
@@ -105,18 +106,20 @@ void cydui::events::start() {
       ->set_name("EV_THD");
 }
 
-void cydui::events::emit_raw(std::string event_type, void* data) {
-  new cydui::events::Event {
+void cydui::events::emit_raw(const std::string &event_type, void* data) {
+  auto ev = new cydui::events::Event {
     .type = event_type,
     .ev = data,
   };
+  
+  push_event(th_data, ev);
 }
 
-std::unordered_map<std::string, std::deque<std::function<void(cydui::events::Event)>>> l;
 
-void cydui::events::on_event(std::string event_type, std::function<void(Event)> c) {
-  if (!l.contains(event_type)) l[event_type] = { };
-  l[event_type].push_back(c);
+void cydui::events::on_event_raw(const std::string &event_type, const Listener &c) {
+  if (!th_data->event_listeners->contains(event_type))
+    (*th_data->event_listeners)[event_type] = { };
+  (*th_data->event_listeners)[event_type].push_back(c);
 }
 
 

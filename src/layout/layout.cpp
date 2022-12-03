@@ -5,6 +5,7 @@
 #include "../../include/layout.hpp"
 #include "../../include/logging.hpp"
 #include "../../include/properties.hpp"
+#include "../graphics/events.hpp"
 
 logging::logger log_lay = {.name = "LAYOUT", .on = false};
 
@@ -14,6 +15,39 @@ cydui::layout::Layout::Layout(cydui::components::Component* root): root(root) {
 
 void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
+  
+  listen(RedrawEvent, {
+    log_lay.debug(
+      "REDRAW"
+    );
+    if (it.data->component) {
+      target_state = ((components::ComponentState*)it.data->component);
+      if (target_state)
+        target     = target_state->component_instance;
+      if (target)
+        target->on_event(ev);
+    } else {
+      root->on_event(ev);
+    }
+    if (render_if_dirty(root))
+      graphics::flush(win->win_ref);
+    break;
+  })
+  listen(KeyEvent, {
+  
+  })
+  listen(ButtonEvent, {
+  
+  })
+  listen(MotionEvent, {
+  
+  })
+  listen(ResizeEvent, {
+  
+  })
+  listen(UpdatePropEvent, {
+  
+  })
 }
 
 bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {

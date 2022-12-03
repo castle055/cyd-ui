@@ -179,41 +179,9 @@ void cydui::graphics::set_background(window_t* win) {
     BlackPixel(state::get_dpy(), state::get_screen()));
 }
 
-void cydui::graphics::on_event(
-  window_t* win, cydui::events::graphics::CGraphicsEvent* ev
-) {
-  switch (ev->type) {
-    case cydui::events::graphics::GPH_EV_RESIZE:
-      if (ev->data.resize_ev.w != win->w || ev->data.resize_ev.h != win->h) {
-        render::resize(win, ev->data.resize_ev.w, ev->data.resize_ev.h);
-        //cydui::events::emit(
-        //    new cydui::events::CEvent {
-        //        .type      = cydui::events::EVENT_LAYOUT,
-        //        .raw_event = nullptr,
-        //        .data      = new cydui::events::layout::CLayoutEvent {
-        //            .type = cydui::events::layout::LYT_EV_REDRAW,
-        //            .data = cydui::events::layout::CLayoutData {
-        //                .redraw_ev = cydui::events::layout::CRedrawEvent {
-        //                    .x = 0, .y = 0
-        //                }}}
-        //    }
-        //);
-        //cydui::events::emit(
-        //    new cydui::events::CEvent {
-        //        .type      = cydui::events::EVENT_LAYOUT,
-        //        .raw_event = nullptr,
-        //        .data      = new cydui::events::layout::CLayoutEvent {
-        //            .type = cydui::events::layout::LYT_EV_RESIZE,
-        //            .data = cydui::events::layout::CLayoutData {
-        //                .resize_ev = cydui::events::layout::CResizeEvent {
-        //                    .w = ev->data.resize_ev.w,
-        //                    .h = ev->data.resize_ev.h
-        //                }}}
-        //    }
-        //);
-      }
-      break;
-    default: break;
+void cydui::graphics::resize(window_t* win, int w, int h) {
+  if (w != win->w || h != win->h) {
+    render::resize(win, w, h);
   }
 }
 

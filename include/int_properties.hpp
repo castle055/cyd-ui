@@ -201,20 +201,10 @@ public:
   
   void set(int i) {
     if (val() != i) {
-      cydui::events::emit(
-        new cydui::events::CEvent {
-          .type = cydui::events::EVENT_LAYOUT,
-          .data = new cydui::events::layout::CLayoutEvent {
-            .type = cydui::events::layout::LYT_EV_UPDATE_PROP,
-            .data = cydui::events::layout::CLayoutData {
-              .update_prop_ev = cydui::events::layout::CUpdatePropEvent {
-                .target_property = this,
-                .new_value = new int(i)
-              }
-            }
-          }
-        }
-      );
+      cydui::events::emit<UpdatePropEvent>({
+        .target_property = this,
+        .new_value = new int(i),
+      });
     }
   }
 
