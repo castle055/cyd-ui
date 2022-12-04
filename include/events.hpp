@@ -76,8 +76,8 @@ namespace cydui::events {
   template<typename T>
   requires EventType<T>
   inline void on_event(Consumer<T> c) {
-    on_event_raw(T::type, [c](Event ev) {
-      auto parsed = ev.parse<T>();
+    cydui::events::on_event_raw(T::type, [c](Event* ev) {
+      auto parsed = ev->parse<T>();
       if (parsed.data) {
         c(parsed);
       }

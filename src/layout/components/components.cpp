@@ -6,7 +6,6 @@
 
 #include <utility>
 
-#include "../../../include/window_types.hpp"
 #include "../../../include/graphics.hpp"
 
 using namespace cydui::components;
@@ -165,43 +164,21 @@ void Component::on_event(events::layout::CLayoutEvent* ev) {
   }
 }
 
-void Component::redraw(cydui::events::layout::CLayoutEvent* ev, bool clr) {
-  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-  
-  if (clr) {
-    // Clear window region
-    graphics::clr_rect(
-      win_ref,
-      state->geom.abs_x().compute(),
-      state->geom.abs_y().compute(),
-      state->geom.abs_w().compute(),
-      state->geom.abs_h().compute());
-  }
-  for (auto &child: children)
-    delete child;
-  children.clear();
-  
+void Component::redraw() {
   inner_redraw(this);
-  on_redraw(ev);
+  on_redraw();
   
   for (auto &child: children) {
-    child->redraw(ev, false);
+    child->redraw();
   }
-  
-  if (clr) {
-    render(ev);
-    
-    ev->consumed = true;
-  }
-  
   state->_dirty = false;
 }
 
-void Component::render(cydui::events::layout::CLayoutEvent* ev) {
-  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
+void Component::render(const cydui::window::CWindow* win) {
+  auto* win_ref = win->win_ref;
   
   for (auto &child: children) {
-    child->render(ev);
+    child->render(win);
   }
   
   if (state->border.enabled) {
@@ -216,7 +193,7 @@ void Component::render(cydui::events::layout::CLayoutEvent* ev) {
     );
   }
   
-  on_render(ev);
+  on_render(win);
 }
 
 void Component::on_render(events::layout::CLayoutEvent* ev) {

@@ -10,6 +10,7 @@
 #include "properties.hpp"
 #include "component_geometry.hpp"
 #include "children_state_collection.hpp"
+#include "window_types.hpp"
 #include <vector>
 #include <unordered_set>
 #include <functional>
@@ -48,10 +49,6 @@ namespace cydui::components {
   class Component {
     
     std::function<void(Component*)> inner_redraw = nullptr;
-    
-    void redraw(cydui::events::layout::CLayoutEvent* ev, bool clr);
-    
-    void render(cydui::events::layout::CLayoutEvent* ev);
     
     virtual void on_render(events::layout::CLayoutEvent* ev);
     
@@ -94,7 +91,11 @@ namespace cydui::components {
     std::vector<Component*> children;
     
     void on_event(events::layout::CLayoutEvent* ev);
-    
+
+    void redraw();
+
+    void render(const cydui::window::CWindow* win);
+
     Component* get_parent();
     
     Component* set_size(int w, int h);
