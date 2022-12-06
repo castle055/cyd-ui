@@ -17,36 +17,34 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
   
   listen(RedrawEvent, {
-    log_lay.debug(
-      "REDRAW"
-    );
+    log_lay.debug("REDRAW");
     cydui::components::Component* target = root;
     if (it.data->component) {
-      cydui::components::ComponentState* target_state = ((components::ComponentState*)it.data->component);
-      cydui::components::Component* specified_target     = target_state->component_instance;
+      cydui::components::ComponentState* target_state     = ((components::ComponentState*)it.data->component);
+      cydui::components::Component     * specified_target = target_state->component_instance;
       if (specified_target)
         target = specified_target;
     }
-
+    
     // Clear render area of component instances
     for (auto &child: target->children)
       delete child;
     target->children.clear();
-
+    
     // Recreate those instances with redraw(), this set all size hints relationships
     target->redraw();
-
+    
     // Clear screen area
     graphics::clr_rect(
-        win->win_ref,
-        target->state->geom.abs_x().compute(),
-        target->state->geom.abs_y().compute(),
-        target->state->geom.abs_w().compute(),
-        target->state->geom.abs_h().compute());
-
+      win->win_ref,
+      target->state->geom.abs_x().compute(),
+      target->state->geom.abs_y().compute(),
+      target->state->geom.abs_w().compute(),
+      target->state->geom.abs_h().compute());
+    
     // Render screen area & flush graphics
     target->render(win);
-
+    
     if (render_if_dirty(root))
       graphics::flush(win->win_ref);
   })
