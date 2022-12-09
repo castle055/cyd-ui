@@ -130,40 +130,6 @@ void Component::add(std::vector<Component*> children) {
   }
 }
 
-//== Events
-void Component::on_event(events::layout::CLayoutEvent* ev) {
-  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-  switch (ev->type) {
-    case events::layout::LYT_EV_REDRAW: redraw(ev, true);
-      break;
-    case events::layout::LYT_EV_KEYPRESS: break;
-    case events::layout::LYT_EV_KEYRELEASE: break;
-    case events::layout::LYT_EV_BUTTONPRESS:on_mouse_click(ev);
-      break;
-    case events::layout::LYT_EV_BUTTONRELEASE: break;
-    case events::layout::LYT_EV_RESIZE:state->geom.w = win_ref->w;
-      state->geom.h                                  = win_ref->h;
-      ev->consumed                                   = true;
-      
-      break;
-    case events::layout::LYT_EV_MOUSEMOTION:
-      if (ev->data.motion_ev.enter) {
-        on_mouse_enter(ev);
-      } else if (ev->data.motion_ev.exit) {
-        on_mouse_exit(ev);
-      }
-      break;
-    default: break;
-  }
-  
-  if (parent && !ev->consumed) {
-    parent->on_event(ev);
-  }
-  if (!parent) {
-    ev->consumed = true;
-  }
-}
-
 void Component::redraw() {
   inner_redraw(this);
   on_redraw();
@@ -208,13 +174,13 @@ void Component::on_key_press(events::layout::CLayoutEvent* ev) {
 void Component::on_key_release(events::layout::CLayoutEvent* ev) {
 }
 
-void Component::on_mouse_enter(events::layout::CLayoutEvent* ev) {
+void Component::on_mouse_enter(int x, int y) {
 }
 
-void Component::on_mouse_click(events::layout::CLayoutEvent* ev) {
+void Component::on_mouse_click(int x, int y) {
 }
 
-void Component::on_mouse_exit(events::layout::CLayoutEvent* ev) {
+void Component::on_mouse_exit(int x, int y) {
 }
 
 void Component::on_scroll(events::layout::CLayoutEvent* ev) {

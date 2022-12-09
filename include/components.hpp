@@ -47,91 +47,90 @@ namespace cydui::components {
   };
   
   class Component {
-    
-    std::function<void(Component*)> inner_redraw = nullptr;
-    
-    virtual void on_render(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_redraw(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_mouse_enter(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_mouse_exit(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_mouse_click(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_scroll(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_key_press(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_key_release(events::layout::CLayoutEvent* ev);
-  
+
+      std::function<void(Component*)> inner_redraw = nullptr;
+
   protected:
-    // Private size operations
+      // Private size operations
   public:
-    //explicit Component(std::unordered_set<Component*> children);
-    
-    //explicit Component(ComponentState* state, std::unordered_set<Component*> children);
-    
-    Component();
-    
-    Component(std::function<void(Component*)> inner);
-    
-    Component(ComponentState* state);
-    
-    Component(ComponentState* state, std::function<void(Component*)> inner);
-    
-    virtual ~Component();
-    
-    Component     * parent;
-    ComponentState* state;
-    
-    void add(std::vector<Component*> children);
-    
-    std::vector<Component*> children;
-    
-    void on_event(events::layout::CLayoutEvent* ev);
+      //explicit Component(std::unordered_set<Component*> children);
 
-    void redraw();
+      //explicit Component(ComponentState* state, std::unordered_set<Component*> children);
 
-    void render(const cydui::window::CWindow* win);
+      Component();
 
-    Component* get_parent();
-    
-    Component* set_size(int w, int h);
-    
-    Component* set_size(IntProperty* w, IntProperty* h);
-    
-    Component* set_size(IntProperty::IntBinding w, IntProperty::IntBinding h);
-    
-    
-    Component* set_width(int w);
-    
-    //Component* set_width(IntProperty* w);
-    
-    Component* set_width(IntProperty::IntBinding w);
-    
-    
-    Component* set_height(int h);
-    
-    //Component* set_height(IntProperty* h);
-    
-    Component* set_height(IntProperty::IntBinding h);
-    
-    
-    Component* set_pos(Component* relative, int x, int y);
-    
-    //Component* set_pos(Component* relative, IntProperty* x, IntProperty* y);
-    
-    Component* set_pos(Component* relative, IntProperty::IntBinding x, IntProperty::IntBinding y);
-    
-    Component* set_padding(unsigned int top, unsigned int right, unsigned int bottom, unsigned int left);
-    
-    Component* set_margin(unsigned int top, unsigned int right, unsigned int bottom, unsigned int left);
-    
-    Component* set_border_enable(bool enabled);
+      Component(std::function<void(Component*)> inner);
+
+      Component(ComponentState* state);
+
+      Component(ComponentState* state, std::function<void(Component*)> inner);
+
+      virtual ~Component();
+
+      Component     * parent;
+      ComponentState* state;
+
+      void add(std::vector<Component*> children);
+
+      std::vector<Component*> children;
+
+      void redraw();
+
+      void render(const cydui::window::CWindow* win);
+
+      Component* get_parent();
+
+      Component* set_size(int w, int h);
+
+      Component* set_size(IntProperty* w, IntProperty* h);
+
+      Component* set_size(IntProperty::IntBinding w, IntProperty::IntBinding h);
+
+
+      Component* set_width(int w);
+
+      //Component* set_width(IntProperty* w);
+
+      Component* set_width(IntProperty::IntBinding w);
+
+
+      Component* set_height(int h);
+
+      //Component* set_height(IntProperty* h);
+
+      Component* set_height(IntProperty::IntBinding h);
+
+
+      Component* set_pos(Component* relative, int x, int y);
+
+      //Component* set_pos(Component* relative, IntProperty* x, IntProperty* y);
+
+      Component* set_pos(Component* relative, IntProperty::IntBinding x, IntProperty::IntBinding y);
+
+      Component* set_padding(unsigned int top, unsigned int right, unsigned int bottom, unsigned int left);
+
+      Component* set_margin(unsigned int top, unsigned int right, unsigned int bottom, unsigned int left);
+
+      Component* set_border_enable(bool enabled);
+
+      virtual void on_render(events::layout::CLayoutEvent* ev);
+
+      virtual void on_redraw(events::layout::CLayoutEvent* ev);
+
+      virtual void on_mouse_enter(int x, int y);
+
+      virtual void on_mouse_exit(int x, int y);
+
+      virtual void on_mouse_click(int x, int y);
+
+      virtual void on_scroll(events::layout::CLayoutEvent* ev);
+
+      virtual void on_key_press(events::layout::CLayoutEvent* ev);
+
+      virtual void on_key_release(events::layout::CLayoutEvent* ev);
+
   };
-  
+
 }// namespace cydui::components
 
 

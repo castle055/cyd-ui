@@ -17,7 +17,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
   
   listen(RedrawEvent, {
-    log_lay.debug("REDRAW");
+//    log_lay.debug("REDRAW");
     cydui::components::Component* target = root;
     if (it.data->component) {
       cydui::components::ComponentState* target_state     = ((components::ComponentState*)it.data->component);
@@ -27,7 +27,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     }
     
     // Clear render area of component instances
-    for (auto &child: target->children)
+    for (auto child: target->children)
       delete child;
     target->children.clear();
     
@@ -52,120 +52,71 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   
   })
   listen(ButtonEvent, {
-  
+      if (it.data->pressed) {
+          cydui::components::Component* target = root;
+          cydui::components::Component* specified_target = find_by_coords(root, it.data->x, it.data->y);
+          if (specified_target)
+              target = specified_target;
+
+          int rel_x = it.data->x - target->state->geom.border_x().compute();
+          int rel_y = it.data->y - target->state->geom.border_y().compute();
+
+          target->on_mouse_click(rel_x, rel_y);
+          if (render_if_dirty(root))
+              graphics::flush(win->win_ref);
+      }
   })
   listen(MotionEvent, {
-  
+      cydui::components::Component* target = root;
+      cydui::components::Component* specified_target = find_by_coords(root, it.data->x, it.data->y);
+      if (specified_target)
+          target = specified_target;
+
+      if (focused != target->state) {
+          if (focused && focused->component_instance) {
+              int exit_rel_x = it.data->x - focused->geom.border_x().compute();
+              int exit_rel_y = it.data->y - focused->geom.border_y().compute();
+              focused->component_instance->on_mouse_exit(exit_rel_x, exit_rel_y);
+          }
+          focused = target->state;
+      }
+
+      int rel_x = it.data->x - target->state->geom.border_x().compute();
+      int rel_y = it.data->y - target->state->geom.border_y().compute();
+      target->on_mouse_enter(rel_x, rel_y);
+
+      if (render_if_dirty(root))
+          graphics::flush(win->win_ref);
   })
   listen(ResizeEvent, {
-  
+      log_lay.debug(
+              "RESIZE w=%d, h=%d", it.data->w, it.data->h
+      );
+
+      root->state->geom.w = win->win_ref->w;
+      root->state->geom.h = win->win_ref->h;
+
+      if (render_if_dirty(root))
+          graphics::flush(win->win_ref);
   })
   listen(UpdatePropEvent, {
-  
+      ((Property*)it.data->target_property)
+              ->set_raw_value((void*)(it.data->new_value));
+      if (render_if_dirty(root))
+          graphics::flush(win->win_ref);
   })
 }
 
 bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {
-  if (c->state->_dirty) {
-    c->on_event(
-      new cydui::events::layout::CLayoutEvent {
-        .type = cydui::events::layout::LYT_EV_REDRAW,
-        .data = cydui::events::layout::CLayoutData {
-          .redraw_ev = cydui::events::layout::CRedrawEvent {
-            .x = 0,
-            .y = 0,
-            .component = c->state,
-          }
-        },
-        .win = (void*)this->win,
-      }
-    );
-    return true;
-  } else {
-    bool      any = false;
-    for (auto &item: c->children)
-      any = any || render_if_dirty(item);
-    return any;
-  }
-}
-
-void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
-  //  log_lay.debug("Event %d", ev->type);
-  
-  ev->win = (void*)win;
-  components::Component     * target       = nullptr;
-  components::ComponentState* target_state = nullptr;
-  switch (ev->type) {
-    case events::layout::LYT_EV_REDRAW:
-      log_lay.debug(
-        "REDRAW"
-      );
-      if (ev->data.redraw_ev.component) {
-        target_state = ((components::ComponentState*)ev->data.redraw_ev.component);
-        if (target_state)
-          target     = target_state->component_instance;
-        if (target)
-          target->on_event(ev);
-      } else {
-        root->on_event(ev);
-      }
-      if (render_if_dirty(root))
-        graphics::flush(win->win_ref);
-      break;
-    case events::layout::LYT_EV_KEYPRESS: break;
-    case events::layout::LYT_EV_KEYRELEASE: break;
-    case events::layout::LYT_EV_BUTTONPRESS:target = find_by_coords(root, ev->data.button_ev.x, ev->data.button_ev.y);
-      if (!target)
-        break;
-      ev->data.motion_ev.x -= target->state->geom.border_x().compute();
-      ev->data.motion_ev.y -= target->state->geom.border_y().compute();
-      target->on_event(ev);
-      if (render_if_dirty(root))
-        graphics::flush(win->win_ref);
-      break;
-    case events::layout::LYT_EV_BUTTONRELEASE: break;
-    case events::layout::LYT_EV_MOUSEMOTION:
-      //      log_lay.debug("MOTION x=%d, y=%d", ev->data.motion_ev.x, ev->data.motion_ev.y);
-      target = find_by_coords(root, ev->data.motion_ev.x, ev->data.motion_ev.y);
-      if (!target)
-        break;
-      ev->data.motion_ev.x -= target->state->geom.border_x().compute();
-      ev->data.motion_ev.y -= target->state->geom.border_y().compute();
-      if (focused != target->state) {
-        if (focused && focused->component_instance) {
-          ev->data.motion_ev.exit = true;
-          focused->component_instance->on_event(ev);
-          ev->consumed            = false;
-          ev->data.motion_ev.exit = false;
-        }
-        ev->data.motion_ev.enter = true;
-        focused = target->state;
-      }
-      //if (ev->data.motion_ev.enter) {
-      //  log_lay.debug(
-      //      "MOTION w=%d, h=%d", ev->data.motion_ev.x, ev->data.motion_ev.y
-      //  );
-      //}
-      target->on_event(ev);
-      if (render_if_dirty(root))
-        graphics::flush(win->win_ref);
-      break;
-    case events::layout::LYT_EV_RESIZE:
-      log_lay.debug(
-        "RESIZE w=%d, h=%d", ev->data.resize_ev.w, ev->data.resize_ev.h
-      );
-      root->on_event(ev);
-      if (render_if_dirty(root))
-        graphics::flush(win->win_ref);
-      break;
-    case events::layout::LYT_EV_UPDATE_PROP:
-      ((Property*)ev->data.update_prop_ev.target_property)
-        ->set_raw_value((void*)(ev->data.update_prop_ev.new_value));
-      if (render_if_dirty(root))
-        graphics::flush(win->win_ref);
-      break;
-    default: break;
-  }
+    if (c->state->_dirty) {
+        cydui::events::emit<RedrawEvent>({ .component = c->state });
+        return true;
+    } else {
+        bool      any = false;
+        for (auto &item: c->children)
+            any = render_if_dirty(item) || any; // FUCK, order here matters
+        return any;
+    }
 }
 
 #pragma clang diagnostic push
