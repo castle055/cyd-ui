@@ -113,9 +113,9 @@ namespace cydui::components {
 
       Component* set_border_enable(bool enabled);
 
-      virtual void on_render(events::layout::CLayoutEvent* ev);
+      virtual void on_render(const cydui::window::CWindow* win);
 
-      virtual void on_redraw(events::layout::CLayoutEvent* ev);
+      virtual void on_redraw();
 
       virtual void on_mouse_enter(int x, int y);
 
@@ -123,11 +123,11 @@ namespace cydui::components {
 
       virtual void on_mouse_click(int x, int y);
 
-      virtual void on_scroll(events::layout::CLayoutEvent* ev);
+      virtual void on_scroll();
 
-      virtual void on_key_press(events::layout::CLayoutEvent* ev);
+      virtual void on_key_press();
 
-      virtual void on_key_release(events::layout::CLayoutEvent* ev);
+      virtual void on_key_release();
 
   };
 
@@ -164,19 +164,19 @@ explicit NAME(NAME##State* state, Props props, const std::function<void(cydui::c
   : cydui::components::Component(state, inner) {                                                                       \
     this->props = std::move(props);
 
-#define REDRAW(EV) \
-void on_redraw(cydui::events::layout::CLayoutEvent* (EV)) override
+#define REDRAW \
+void on_redraw() override
 
-#define RENDER(EV) \
-void on_render(cydui::events::layout::CLayoutEvent* (EV)) override
+#define RENDER(WIN) \
+void on_render(const cydui::window::CWindow* (WIN)) override
 
 
 #define WITH_STATE(NAME) auto* state = (NAME##State*)this->state;
 
 #define ADD_TO(COMPONENT, VECTOR) COMPONENT->add(std::vector<cydui::components::Component*>VECTOR);
 
-#define REDRAWw(EV, NAME, VECTOR) \
-void on_redraw(cydui::events::layout::CLayoutEvent* (EV)) override { \
+#define REDRAWw(NAME, VECTOR) \
+void on_redraw() override { \
 WITH_STATE(NAME)         \
 ADD_TO(this, VECTOR);    \
 }

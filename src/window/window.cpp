@@ -36,19 +36,3 @@ CWindow* cydui::window::create(
   return win;
 }
 
-CWindowListener::CWindowListener(CWindow* win) {
-  this->win = win;
-}
-
-void CWindowListener::on_event(cydui::events::CEvent* ev) {
-  if (ev->win && this->win->win_ref->xwin != ev->win) return;
-  switch (ev->type) {
-    case events::EVENT_GRAPHICS:
-      graphics::on_event(
-        win->win_ref, (events::graphics::CGraphicsEvent*)(ev->data));
-      break;
-    case events::EVENT_LAYOUT:win->layout->on_event((events::layout::CLayoutEvent*)(ev->data));
-      break;
-    default: break;
-  }
-}

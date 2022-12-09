@@ -32,7 +32,7 @@ COMPONENT(Test)
     DISABLE_LOG
   }
   
-  REDRAWw(Test, {
+  REDRAWw(ev, Test, {
     N(FlexBox, ({ .vertical = false }), ({
       N(FlexBox, ({ .vertical = true }), ({
         N(Banner),

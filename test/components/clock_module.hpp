@@ -30,7 +30,7 @@ COMPONENT(ClockModule)
   INIT(ClockModule)
   }
   
-  REDRAW(ev) {
+  REDRAW {
     WITH_STATE(ClockModule)
     
     std::time_t t = std::time(0);

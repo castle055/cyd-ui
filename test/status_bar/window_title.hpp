@@ -27,7 +27,7 @@ COMPONENT(WinTitle)
   
   }
   
-  REDRAW(ev) {
+  REDRAW {
     WITH_STATE(WinTitle)
     
     ADD_TO(this, {

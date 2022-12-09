@@ -42,7 +42,7 @@ COMPONENT(Button)
     if (!this->props.c1) this->props.c1       = state->c1;
   }
   
-  REDRAW(ev) {
+  REDRAW {
     WITH_STATE(Button)
     
     using namespace primitives;
@@ -65,25 +65,22 @@ COMPONENT(Button)
     }))
   }
   
-  void on_mouse_enter(cydui::events::layout::CLayoutEvent* ev) override {
+  void on_mouse_enter(int x, int y) override {
     auto state = (ButtonState*)this->state;
     state->hovering = true;
     state->dirty();
-    ev->consumed = true;
   }
   
-  void on_mouse_exit(cydui::events::layout::CLayoutEvent* ev) override {
+  void on_mouse_exit(int x, int y) override {
     auto state = (ButtonState*)this->state;
     state->hovering = false;
     state->dirty();
-    ev->consumed = true;
   }
   
-  void on_mouse_click(cydui::events::layout::CLayoutEvent* ev) override {
+  void on_mouse_click(int x, int y) override {
     auto state = (ButtonState*)this->state;
     state->hovering = false;
     state->dirty();
-    ev->consumed = true;
     props.on_action();
   }
 };

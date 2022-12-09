@@ -16,8 +16,7 @@ namespace primitives {
   using namespace cydui;
   using namespace cydui::components;
   using namespace cydui::layout::color;
-  using namespace cydui::events::layout;
-  
+
   
   STATE(Line) };
   
@@ -28,11 +27,9 @@ namespace primitives {
     
     INIT(Line) DISABLE_LOG }
     
-    RENDER(ev) {
-      auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-      
+    RENDER(win) {
       graphics::drw_line(
-        win_ref,
+        win->win_ref,
         props.color,
         state->geom.content_x().val(),
         state->geom.content_y().val(),
@@ -53,10 +50,9 @@ namespace primitives {
     
     INIT(Rectangle) DISABLE_LOG }
     
-    RENDER(ev) {
-      auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
+    RENDER(win) {
       graphics::drw_rect(
-        win_ref,
+        win->win_ref,
         props.color,
         state->geom.content_x().val(),
         state->geom.content_y().val(),
@@ -80,11 +76,9 @@ namespace primitives {
     
     INIT(Arc) DISABLE_LOG }
     
-    RENDER(ev) {
-      auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-      
+    RENDER(win) {
       graphics::drw_arc(
-        win_ref,
+        win->win_ref,
         props.color,
         state->geom.content_x().val(),
         state->geom.content_y().val(),
@@ -106,11 +100,9 @@ namespace primitives {
     
     INIT(Circle) DISABLE_LOG }
     
-    RENDER(ev) {
-      auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-      
+    RENDER(win) {
       graphics::drw_arc(
-        win_ref, props.color,
+        win->win_ref, props.color,
         state->geom.content_x().val(),
         state->geom.content_y().val(),
         state->geom.w.val(),
@@ -137,11 +129,9 @@ namespace primitives {
       state->geom.custom_height = true;
     }
     
-    RENDER(ev) {
-      auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-      
+    RENDER(win) {
       graphics::drw_text(
-        win_ref, props.font, props.color, props.text,
+        win->win_ref, props.font, props.color, props.text,
         state->geom.content_x().val(),
         (state->geom.content_y() + props.font->size).val()
       );

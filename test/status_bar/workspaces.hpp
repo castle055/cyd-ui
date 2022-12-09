@@ -33,7 +33,7 @@ COMPONENT(Workspaces)
     DISABLE_LOG
   }
   
-  REDRAW(ev) {
+  REDRAW {
     WITH_STATE(Workspaces)
     
     ADD_TO(this, {

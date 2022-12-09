@@ -35,7 +35,7 @@ public:
     _state->inner = std::move(inner);
   }
   
-  void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
+  void on_redraw() override {
     auto* state = (FlexBoxState*)this->state;
     
     if (props.vertical) {

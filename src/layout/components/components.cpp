@@ -83,8 +83,8 @@ Component::~Component() {
 }
 
 //== API for subclasses
-void Component::add(std::vector<Component*> children) {
-  for (auto &item: children) {
+void Component::add(std::vector<Component*> ichildren) {
+  for (auto &item: ichildren) {
     item->parent = this;
     this->children.push_back(item);
     
@@ -162,16 +162,16 @@ void Component::render(const cydui::window::CWindow* win) {
   on_render(win);
 }
 
-void Component::on_render(events::layout::CLayoutEvent* ev) {
+void Component::on_render(const cydui::window::CWindow* win) {
 }
 
-void Component::on_redraw(events::layout::CLayoutEvent* ev) {
+void Component::on_redraw() {
 }
 
-void Component::on_key_press(events::layout::CLayoutEvent* ev) {
+void Component::on_key_press() {
 }
 
-void Component::on_key_release(events::layout::CLayoutEvent* ev) {
+void Component::on_key_release() {
 }
 
 void Component::on_mouse_enter(int x, int y) {
@@ -183,7 +183,7 @@ void Component::on_mouse_click(int x, int y) {
 void Component::on_mouse_exit(int x, int y) {
 }
 
-void Component::on_scroll(events::layout::CLayoutEvent* ev) {
+void Component::on_scroll() {
 }
 
 Component* Component::set_size(int w, int h) {

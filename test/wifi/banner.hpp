@@ -27,7 +27,7 @@ public:
   ): cydui::components::Component(_state) {
   }
   
-  void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
+  void on_redraw() override {
     auto* state = (BannerState*)this->state;
     auto* c     = new cydui::layout::color::Color("#FCAE1E");
     auto* c1    = new cydui::layout::color::Color("#0000FF");

@@ -31,7 +31,7 @@ COMPONENT(WorkspaceSelector)
   
   }
   
-  REDRAW(ev) {
+  REDRAW {
     WITH_STATE(WorkspaceSelector)
     
     ADD_TO(this, {

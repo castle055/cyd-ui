@@ -7,7 +7,7 @@
 #include "../../include/properties.hpp"
 #include "../graphics/events.hpp"
 
-logging::logger log_lay = {.name = "LAYOUT", .on = false};
+logging::logger log_lay = {.name = "LAYOUT", .on = true};
 
 cydui::layout::Layout::Layout(cydui::components::Component* root): root(root) {
   events::start();
@@ -45,7 +45,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     // Render screen area & flush graphics
     target->render(win);
     
-    if (render_if_dirty(root))
+//    if (render_if_dirty(root))
       graphics::flush(win->win_ref);
   })
   listen(KeyEvent, {

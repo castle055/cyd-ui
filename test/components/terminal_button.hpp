@@ -33,7 +33,7 @@ COMPONENT(TerminalButton)
     full_cmd = get_full_cmd();
   }
   
-  REDRAW(ev) {
+  REDRAW {
     WITH_STATE(TerminalButton)
     
     ADD_TO(this, ({
