@@ -12,20 +12,14 @@
 #include <ctime>
 
 STATE(ClockModule)
-  OpenTerminalTask open_terminal_task;
-  
   INIT_STATE(ClockModule) {
     
   }
-
-private:
 };
 
 COMPONENT(ClockModule)
   PROPS({
   })
-  
-  std::string full_cmd;
   
   INIT(ClockModule)
   }
@@ -60,9 +54,6 @@ COMPONENT(ClockModule)
       }),
     }))
   }
-
-private:
-  
 };
 
 #endif //CYD_UI_CLOCK_MODULE_HPP
