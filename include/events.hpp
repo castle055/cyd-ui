@@ -12,9 +12,9 @@
 namespace cydui::events {
   template<class T>
   concept EventType = requires {
-    T::type;
+      { T::type } -> std::convertible_to<std::string>;
     typename T::DataType;
-    T::data;
+      { T::data } -> std::convertible_to<typename T::DataType>;
   };
   
   template<typename T> requires EventType<T>
@@ -67,8 +67,7 @@ namespace cydui::events {
     Consumer(std::function<void(const ParsedEvent<T> &)> c): std::function<void(const ParsedEvent<T> &)>(c) { }
   };
 
-#define consumer [=](it)
-  
+
   typedef std::function<void(Event*)> Listener;
   
   void on_event_raw(const std::string &event_type, const Listener &l);
@@ -84,6 +83,13 @@ namespace cydui::events {
     });
   }
 
+
+  void start();
+  
+}// namespace cydui::events
+
+// MACROS
+#define consumer [=](it)
 #define listen(EVENT, block) cydui::events::on_event<EVENT>(cydui::events::Consumer<EVENT>([&](const cydui::events::ParsedEvent<EVENT>& it) block));
 
 #define EVENT(NAME, DATA) \
@@ -92,9 +98,6 @@ constexpr static const char* type = #NAME; \
 struct DataType DATA data; \
 }; \
 
-  
-  void start();
-  
-}// namespace cydui::events
+
 
 #endif//CYD_UI_EVENTS_HPP
