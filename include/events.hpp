@@ -90,7 +90,7 @@ namespace cydui::events {
 
 // MACROS
 #define consumer [=](it)
-#define listen(EVENT, block) cydui::events::on_event<EVENT>(cydui::events::Consumer<EVENT>([&](const cydui::events::ParsedEvent<EVENT>& it) block));
+#define listen(EVENT, block) cydui::events::on_event<EVENT>(cydui::events::Consumer<EVENT>([=,this](const cydui::events::ParsedEvent<EVENT>& it) block));
 
 #define EVENT(NAME, DATA) \
 struct NAME { \

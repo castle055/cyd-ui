@@ -67,6 +67,8 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       }
   })
   listen(MotionEvent, {
+      // TODO - Must propagate upwards, otherwise it is rectangles and lines handling events
+      //  and that makes no sense
       cydui::components::Component* target = root;
       cydui::components::Component* specified_target = find_by_coords(root, it.data->x, it.data->y);
       if (specified_target)

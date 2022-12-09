@@ -15,7 +15,7 @@
 // EVENT THREAD IMPLEMENTATION
 
 logging::logger log_task =
-        {.name = "EV_TASK", .on = false};
+        {.name = "EV_TASK", .on = true};
 logging::logger log_ctrl =
         {.name = "EV_CTRL", .on = false};
 
@@ -62,6 +62,7 @@ cydui::events::Event* get_next_event(thread_data* data) {
 
     if (!event_mutex.try_lock()) return nullptr;
     if (!data->event_queue->empty()) {
+        log_task.info("EV QUEUE: %d", data->event_queue->size());
         ev = data->event_queue->front();
     }
     event_mutex.unlock();
@@ -77,7 +78,7 @@ void clean_up_event(thread_data* data, cydui::events::Event* ev) {
 }
 
 void process_event(thread_data* data) {
-    log_task.debug("Processing next event");
+//    log_task.debug("Processing next event");
 
     cydui::events::Event* ev = get_next_event(data);
 

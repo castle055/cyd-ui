@@ -133,10 +133,14 @@ void run() {
         });
         break;
       case ConfigureNotify://x11_evlog.info("%d-%d", ev.xconfigure.width, ev.xconfigure.height);
-        // TODO - IMPLEMENT STATE-BASED EVENTS
-        //emit_gph_state(
-        //  std::string("gph_resize_").append(std::to_string(ev.xany.window)),
-        //  ev,
+          // TODO - IMPLEMENT STATE-BASED EVENTS
+          emit<ResizeEvent>({
+                                    .w = ev.xconfigure.width,
+                                    .h = ev.xconfigure.height,
+                            });
+            //emit_gph_state(
+            //  std::string("gph_resize_").append(std::to_string(ev.xany.window)),
+            //  ev,
         //  cydui::events::graphics::GPH_EV_RESIZE,
         //  cydui::events::graphics::CGraphicEventData {
         //    .resize_ev = cydui::events::graphics::CResizeEvent {
