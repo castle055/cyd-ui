@@ -34,7 +34,7 @@ namespace cydui::events {
     bool        consumed = false;
     EventStatus status   = PENDING;
     void* ev;
-    
+  
     template<typename T>
     requires EventType<T>
     ParsedEvent<T> parse() {
@@ -64,7 +64,10 @@ namespace cydui::events {
   template<typename T> requires EventType<T>
   class Consumer: public std::function<void(const ParsedEvent<T> &)> {
   public:
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "google-explicit-constructor"
     Consumer(std::function<void(const ParsedEvent<T> &)> c): std::function<void(const ParsedEvent<T> &)>(c) { }
+#pragma clang diagnostic pop
   };
 
 
