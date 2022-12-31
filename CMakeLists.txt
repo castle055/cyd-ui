@@ -75,7 +75,7 @@ add_library(cyd_ui SHARED
         include/component_geometry.hpp
         src/layout/components/state/children_state_collection.cpp
         include/children_state_collection.hpp
-        test/status_bar/workspace_selector.hpp test/status_bar/window_title.hpp include/change_events.h)
+        include/change_events.h)
 target_link_libraries(cyd_ui PRIVATE X11 Xft)
 
 add_executable(cyd_ui_test
@@ -89,6 +89,8 @@ add_executable(cyd_ui_test
         test/components/button.hpp
         test/components/flexbox.hpp
         test/components/clock_module.hpp
+        test/status_bar/workspace_selector.hpp
+        test/status_bar/window_title.hpp
         )
 target_link_libraries(cyd_ui_test PRIVATE cyd_ui)
 #add_dependencies(cppcheck clang-format)

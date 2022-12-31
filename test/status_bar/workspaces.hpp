@@ -103,7 +103,7 @@ COMPONENT(Workspaces)
             .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 8);}
           })),
       }), {
-        thisFlexBox->set_width(210);
+        thisFlexBox->set_width(270);
         thisFlexBox->set_pos(this, 10, 1);
       })
     })

@@ -18,6 +18,9 @@ int main() {
   
   // Instantiate window with layout
   auto* state  = new WorkspacesState();
+  state->selected_workspaces.on_change([state](){
+      state->selected_workspaces.set(state->selected_workspaces.val() ^ 1);
+  });
 //  auto* state1 = new WinTitleState();
 //  auto* state2 = new WinTitleState();
   auto* tc     = new Workspaces(state, { }, in(Workspaces, t, { }));
@@ -33,7 +36,7 @@ int main() {
     "workspaces", "scratch",
     1, 26,
     //1, 13,
-    250, 25
+    280, 25
   );
 //  cydui::window::CWindow* win1 = cydui::window::create(
 //    layout1,

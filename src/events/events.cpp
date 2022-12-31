@@ -10,7 +10,6 @@
 #include <list>
 #include <mutex>
 #include <unordered_map>
-#include <vector>
 
 // EVENT THREAD IMPLEMENTATION
 

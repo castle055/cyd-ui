@@ -95,9 +95,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
           graphics::flush(win->win_ref);
   })
   listen(ResizeEvent, {
-      log_lay.debug(
-              "RESIZE w=%d, h=%d", it.data->w, it.data->h
-      );
+      log_lay.debug("RESIZE w=%d, h=%d", it.data->w, it.data->h);
 
       root->state->geom.w = win->win_ref->w;
       root->state->geom.h = win->win_ref->h;
