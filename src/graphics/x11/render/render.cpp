@@ -138,10 +138,10 @@ void render::resize(cydui::graphics::window_t* win, int w, int h) {
       w,
       h,
       DefaultDepth(state::get_dpy(), state::get_screen()));
+    XSetForeground(state::get_dpy(), win->gc, BlackPixel(state::get_dpy(), state::get_screen()));
+    XFillRectangle(state::get_dpy(), new_drw, win->gc, 0, 0, w, h);
     XCopyArea(state::get_dpy(), win->drawable, new_drw, win->gc, 0, 0, win->w, win->h, 0, 0);
-    //XCopyArea(state::get_dpy(), win->drawable, new_staging_drw, win->gc, 0, 0, win->w, win->h, 0, 0);
-    //XFlush(state::get_dpy());
-    
+
     XFreePixmap(state::get_dpy(), win->drawable);
     win->drawable = new_drw;
     
