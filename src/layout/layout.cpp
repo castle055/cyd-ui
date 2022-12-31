@@ -7,49 +7,53 @@
 #include "../../include/properties.hpp"
 #include "../graphics/events.hpp"
 
-logging::logger log_lay = {.name = "LAYOUT", .on = true};
+logging::logger log_lay = {.name = "LAYOUT", .on = true, .min_level = logging::INFO};
 
 cydui::layout::Layout::Layout(cydui::components::Component* root): root(root) {
   events::start();
+}
+
+static void redraw_component(const cydui::window::CWindow* win, cydui::components::Component* target) {
+    log_lay.debug("REDRAW");
+    // Clear render area of component instances
+    for (auto child: target->children)
+        delete child;
+    target->children.clear();
+
+    // Recreate those instances with redraw(), this set all size hints relationships
+    target->redraw();
+
+    // Clear screen area
+    cydui::graphics::clr_rect(
+            win->win_ref,
+            target->state->geom.abs_x().compute(),
+            target->state->geom.abs_y().compute(),
+            target->state->geom.abs_w().compute(),
+            target->state->geom.abs_h().compute());
+
+    // Render screen area & flush graphics
+    target->render(win);
+
+//    if (render_if_dirty(root))
+    cydui::graphics::flush(win->win_ref);
 }
 
 void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
   
   listen(RedrawEvent, {
-//    log_lay.debug("REDRAW");
-    cydui::components::Component* target = root;
-    if (it.data->component) {
-      cydui::components::ComponentState* target_state     = ((components::ComponentState*)it.data->component);
-      cydui::components::Component     * specified_target = target_state->component_instance;
-      if (specified_target)
-        target = specified_target;
-    }
-    
-    // Clear render area of component instances
-    for (auto child: target->children)
-      delete child;
-    target->children.clear();
-    
-    // Recreate those instances with redraw(), this set all size hints relationships
-    target->redraw();
-    
-    // Clear screen area
-    graphics::clr_rect(
-      win->win_ref,
-      target->state->geom.abs_x().compute(),
-      target->state->geom.abs_y().compute(),
-      target->state->geom.abs_w().compute(),
-      target->state->geom.abs_h().compute());
-    
-    // Render screen area & flush graphics
-    target->render(win);
-    
-//    if (render_if_dirty(root))
-      graphics::flush(win->win_ref);
+      cydui::components::Component* target = root;
+      if (it.data->component) {
+          cydui::components::ComponentState* target_state     = ((cydui::components::ComponentState*)it.data->component);
+          cydui::components::Component     * specified_target = target_state->component_instance;
+          if (specified_target)
+              target = specified_target;
+      }
+
+      redraw_component(this->win, target);
   })
   listen(KeyEvent, {
-  
+
   })
   listen(ButtonEvent, {
       if (it.data->pressed) {
@@ -111,7 +115,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
 
 bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {
     if (c->state->_dirty) {
-        cydui::events::emit<RedrawEvent>({ .component = c->state });
+        redraw_component(this->win, c);
         return true;
     } else {
         bool      any = false;

@@ -13,6 +13,7 @@
 cydui::threading::thread_t* x11_thread;
 
 logging::logger x11_evlog = {.name = "X11::EV"};
+logging::logger chev_log = {.name = "EV::CHANGE", .on = false};
 
 using namespace std::chrono_literals;
 
@@ -20,13 +21,17 @@ Bool evpredicate() {
   return True;
 }
 
+cydui::events::change_ev::DataMonitor<RedrawEvent> redrawEventDataMonitor([](RedrawEvent::DataType o_data, RedrawEvent::DataType n_data){
+    return true;
+});
+
 cydui::events::change_ev::DataMonitor<ResizeEvent> resizeEventDataMonitor([](ResizeEvent::DataType o_data, ResizeEvent::DataType n_data){
     return (o_data.w != n_data.w || o_data.h != n_data.h);
 });
 
 void run() {
   XEvent ev;
-  
+
   int      queued = XEventsQueued(state::get_dpy(), QueuedAlready);
   for (int i      = 0; i < queued; ++i) {
     XNextEvent(
@@ -37,7 +42,7 @@ void run() {
     using namespace cydui::events;
     switch (ev.type) {
       case Expose:
-        emit<RedrawEvent>({
+        redrawEventDataMonitor.update({
           .x = 0,
           .y = 0,
         });

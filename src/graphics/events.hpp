@@ -13,9 +13,9 @@ namespace cydui::graphics::events {
 }
 
 EVENT(RedrawEvent, {
-  const int x = 0;
-  const int y = 0;
-  const void* component = nullptr;
+  int x = 0;
+  int y = 0;
+  void* component = nullptr;
 })
 EVENT(KeyEvent, {
   const unsigned int key      = 0;

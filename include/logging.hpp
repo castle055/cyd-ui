@@ -7,9 +7,17 @@
 
 
 namespace logging {
+  enum LogLevel {
+      DEBUG,
+      INFO,
+      WARN,
+      ERROR,
+  };
+
   struct logger {
     const char* name = "log_task";
     bool on          = true;
+    LogLevel min_level = DEBUG;
 
     void debug(const char* format, ...) const;
 

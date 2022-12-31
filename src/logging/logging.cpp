@@ -8,7 +8,7 @@
 #include <string>
 
 void logging::logger::debug(const char* format, ...) const {
-  if (!this->on)
+  if (!this->on || this->min_level > DEBUG)
     return;
   std::va_list va;
   time_t       now = time(nullptr);
@@ -29,7 +29,7 @@ void logging::logger::debug(const char* format, ...) const {
 }
 
 void logging::logger::info(const char* format, ...) const {
-  if (!this->on)
+  if (!this->on || this->min_level > INFO)
     return;
   va_list va;
   time_t  now = time(nullptr);
@@ -50,7 +50,7 @@ void logging::logger::info(const char* format, ...) const {
 }
 
 void logging::logger::warn(const char* format, ...) const {
-  if (!this->on)
+  if (!this->on || this->min_level > WARN)
     return;
   va_list va;
   time_t  now = time(nullptr);
@@ -71,7 +71,7 @@ void logging::logger::warn(const char* format, ...) const {
 }
 
 void logging::logger::error(const char* format, ...) const {
-  if (!this->on)
+  if (!this->on || this->min_level > ERROR)
     return;
   va_list va;
   time_t  now = time(nullptr);

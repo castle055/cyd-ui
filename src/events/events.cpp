@@ -15,7 +15,7 @@
 // EVENT THREAD IMPLEMENTATION
 
 logging::logger log_task =
-                  {.name = "EV_TASK", .on = true};
+                  {.name = "EV_TASK", .on = true, .min_level = logging::INFO};
 logging::logger log_ctrl =
                   {.name = "EV_CTRL", .on = false};
 
@@ -40,7 +40,9 @@ std::mutex listeners_mutex;
 
 
 static void run_event(thread_data* data, cydui::events::Event* ev) {
+  ev->ev_mtx.lock();
   ev->status = cydui::events::PROCESSING;
+  ev->ev_mtx.unlock();
   listeners_mutex.lock();
   if (data->event_listeners->contains(ev->type)) {
     for (const auto &listener: (*data->event_listeners)[ev->type]) {
@@ -48,12 +50,12 @@ static void run_event(thread_data* data, cydui::events::Event* ev) {
     }
   }
   listeners_mutex.unlock();
-  ev->status = cydui::events::CONSUMED;
 }
 
 void push_event(thread_data* data, cydui::events::Event* ev) {
-  if (!event_mutex.try_lock()) return;
+  event_mutex.lock();
   data->event_queue->push_back(ev);
+  log_task.debug("NEW EVENT: %s", ev->type.c_str());
   event_mutex.unlock();
 }
 
@@ -62,7 +64,7 @@ cydui::events::Event* get_next_event(thread_data* data) {
   
   if (!event_mutex.try_lock()) return nullptr;
   if (!data->event_queue->empty()) {
-    log_task.info("EV QUEUE: %d", data->event_queue->size());
+//    log_task.info("EV QUEUE: %d", data->event_queue->size());
     ev = data->event_queue->front();
   }
   event_mutex.unlock();
@@ -71,8 +73,12 @@ cydui::events::Event* get_next_event(thread_data* data) {
 }
 
 void clean_up_event(thread_data* data, cydui::events::Event* ev) {
-  if (!event_mutex.try_lock()) return;
+  event_mutex.lock();
   data->event_queue->pop_front();
+  ev->ev_mtx.lock();
+  ev->status = cydui::events::CONSUMED;
+  ev->ev_mtx.unlock();
+  log_task.debug("DONE WITH EVENT: %s %s", ev->type.c_str(), ev->managed? "": "[deleting]");
   if (!ev->managed) delete ev;
   event_mutex.unlock();
 }
@@ -94,7 +100,7 @@ void event_task(cydui::threading::thread_t* this_thread) {
   log_task.debug("Started event_task");
   while (this_thread->running) {
     process_event((thread_data*)(this_thread->data));
-    //std::this_thread::sleep_for(500us);
+//    std::this_thread::sleep_for(500us);
   }
 }
 

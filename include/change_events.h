@@ -6,6 +6,9 @@
 #define CYD_UI_CHANGE_EVENTS_H
 
 #include "events.hpp"
+#include "logging.hpp"
+
+extern logging::logger chev_log;
 
 namespace cydui::events::change_ev {
     template<typename T>
@@ -23,25 +26,25 @@ namespace cydui::events::change_ev {
                 .ev = new T({ .data = this->data }),
                 .managed = true,
             };
+            chev_log.debug("EMITTING event: (0x%X) %s", this->ev,this->ev->type.c_str());
             emit_raw(this->ev);
         }
 
         void update(typename T::DataType new_data){
             if (predicate(this->data, new_data)) {
-                if (this->ev->status != CONSUMED) {
-                    T* prev = (T*) this->ev->ev;
-                    this->ev->ev = new T({ .data = new_data });
-                    this->data = new_data;
-                    delete prev;
-                } else {
-                    delete this->ev;
-                    this->data = new_data;
-                    this->ev = new Event {
-                            .type = T::type,
-                            .ev = new T({ .data = this->data }),
-                            .managed = true,
-                    };
+                this->ev->ev_mtx.lock();
+                ((T*) this->ev->ev)->data = new_data;
+                this->ev->ev_mtx.unlock();
+                this->data = new_data;
+                chev_log.debug("UPDATE. ev(0x%X) ev->status = %d", this->ev, this->ev->status);
+                this->ev->ev_mtx.lock();
+                if (this->ev->status == CONSUMED) {
+                    chev_log.debug("RE-EMITTING event: (0x%X) %s", this->ev,this->ev->type.c_str());
+                    this->ev->status = PENDING;
+                    this->ev->ev_mtx.unlock();
                     emit_raw(this->ev);
+                } else {
+                    this->ev->ev_mtx.unlock();
                 }
             }
         }

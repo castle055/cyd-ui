@@ -8,6 +8,7 @@
 
 #include <string>
 #include <functional>
+#include <mutex>
 
 namespace cydui::events {
   template<class T>
@@ -33,6 +34,8 @@ namespace cydui::events {
     std::string type;
     EventStatus status   = PENDING;
     void* ev;
+
+    std::mutex ev_mtx;
 
     // If it is someone else's job to delete this object
     bool managed = false;
