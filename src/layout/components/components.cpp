@@ -175,12 +175,21 @@ void Component::on_key_release() {
 }
 
 void Component::on_mouse_enter(int x, int y) {
+    // TODO - Must change coords since they are relative
+    if (this->parent)
+        this->parent->on_mouse_enter(x, y);
 }
 
 void Component::on_mouse_click(int x, int y) {
+    // TODO - Must change coords since they are relative
+    if (this->parent)
+        this->parent->on_mouse_click(x, y);
 }
 
 void Component::on_mouse_exit(int x, int y) {
+    // TODO - Must change coords since they are relative
+    if (this->parent)
+        this->parent->on_mouse_exit(x, y);
 }
 
 void Component::on_scroll() {
