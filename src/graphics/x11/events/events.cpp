@@ -14,71 +14,15 @@ cydui::threading::thread_t* x11_thread;
 
 logging::logger x11_evlog = {.name = "X11::EV"};
 
-//static void emit_lyt(
-//  XEvent ev,
-//  cydui::events::layout::CLayoutEventType type,
-//  cydui::events::layout::CLayoutData data
-//) {
-//  Window xwin = ev.xany.window;
-//  cydui::events::emit(
-//    new cydui::events::CEvent {
-//      .type      = cydui::events::EVENT_LAYOUT,
-//      .raw_event = new XEvent(ev),
-//      .data      = new cydui::events::layout::CLayoutEvent {
-//        .type = type, .data = data
-//      },
-//      .win = xwin,
-//    }
-//  );
-//}
-//
-//static void emit_lyt_state(
-//  std::string id,
-//  XEvent ev,
-//  cydui::events::layout::CLayoutEventType type,
-//  cydui::events::layout::CLayoutData data
-//) {
-//  Window xwin = ev.xany.window;
-//  cydui::events::emit(
-//    new cydui::events::CEvent {
-//      .type      = cydui::events::EVENT_LAYOUT,
-//      .mode = cydui::events::EV_MODE_STATE,
-//      .event_id = std::move(id),
-//      .raw_event = new XEvent(ev),
-//      .data      = new cydui::events::layout::CLayoutEvent {
-//        .type = type, .data = data
-//      },
-//      .win = xwin,
-//    }
-//  );
-//}
-//
-//static void emit_gph_state(
-//  std::string id,
-//  XEvent ev,
-//  cydui::events::graphics::CGraphicEventType type,
-//  cydui::events::graphics::CGraphicEventData data
-//) {
-//  Window xwin = ev.xany.window;
-//  cydui::events::emit(
-//    new cydui::events::CEvent {
-//      .type      = cydui::events::EVENT_GRAPHICS,
-//      .mode = cydui::events::EV_MODE_STATE,
-//      .event_id = std::move(id),
-//      .raw_event = new XEvent(ev),
-//      .data      = new cydui::events::graphics::CGraphicsEvent {
-//        .type = type, .data = data
-//      },
-//      .win = xwin,
-//    }
-//  );
-//}
-
 using namespace std::chrono_literals;
 
 Bool evpredicate() {
   return True;
 }
+
+cydui::events::change_ev::DataMonitor<ResizeEvent> resizeEventDataMonitor([](ResizeEvent::DataType o_data, ResizeEvent::DataType n_data){
+    return (o_data.w != n_data.w || o_data.h != n_data.h);
+});
 
 void run() {
   XEvent ev;
@@ -134,10 +78,14 @@ void run() {
         break;
       case ConfigureNotify://x11_evlog.info("%d-%d", ev.xconfigure.width, ev.xconfigure.height);
           // TODO - IMPLEMENT STATE-BASED EVENTS
-          emit<ResizeEvent>({
-                                    .w = ev.xconfigure.width,
-                                    .h = ev.xconfigure.height,
-                            });
+          resizeEventDataMonitor.update({
+                                                .w = ev.xconfigure.width,
+                                                .h = ev.xconfigure.height,
+                                        });
+//          emit<ResizeEvent>({
+//                                    .w = ev.xconfigure.width,
+//                                    .h = ev.xconfigure.height,
+//                            });
             //emit_gph_state(
             //  std::string("gph_resize_").append(std::to_string(ev.xany.window)),
             //  ev,

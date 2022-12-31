@@ -32,7 +32,7 @@ struct thread_data {
   std::unordered_map<std::string, cydui::events::Event*>* state_events =
                                                           new std::unordered_map<std::string, cydui::events::Event*>;
 };
-thread_data* th_data = nullptr;
+thread_data* th_data = new thread_data;
 
 
 std::mutex event_mutex;
@@ -73,7 +73,7 @@ cydui::events::Event* get_next_event(thread_data* data) {
 void clean_up_event(thread_data* data, cydui::events::Event* ev) {
   if (!event_mutex.try_lock()) return;
   data->event_queue->pop_front();
-  delete ev;
+  if (!ev->managed) delete ev;
   event_mutex.unlock();
 }
 
@@ -104,11 +104,13 @@ void cydui::events::start() {
     return;
   log_ctrl.debug("Starting event_thread");
   
-  delete th_data;
-  th_data = new thread_data;
   event_thread =
     threading::new_thread(&event_task, th_data)
       ->set_name("EV_THD");
+}
+
+void cydui::events::emit_raw(cydui::events::Event* ev) {
+    push_event(th_data, ev);
 }
 
 void cydui::events::emit_raw(const std::string &event_type, void* data) {

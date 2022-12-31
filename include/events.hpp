@@ -31,10 +31,12 @@ namespace cydui::events {
   
   struct Event {
     std::string type;
-    bool        consumed = false;
     EventStatus status   = PENDING;
     void* ev;
-  
+
+    // If it is someone else's job to delete this object
+    bool managed = false;
+
     template<typename T>
     requires EventType<T>
     ParsedEvent<T> parse() {
@@ -52,7 +54,9 @@ namespace cydui::events {
       }
     }
   };
-  
+
+  void emit_raw(cydui::events::Event* ev);
+
   void emit_raw(const std::string &event_type, void* data);
   
   template<typename T>
