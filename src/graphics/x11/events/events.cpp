@@ -4,7 +4,7 @@
 
 #include "../../events.hpp"
 #include "../../../../include/logging.hpp"
-#include "../../../threading/threading.hpp"
+#include "../../../../include/threading.hpp"
 #include "../state/state.hpp"
 #include <X11/Xlib.h>
 
@@ -38,7 +38,7 @@ cydui::events::change_ev::DataMonitor<MotionEvent>
   return true;
 });
 
-void run() {
+static void run() {
   XEvent ev;
   
   int      queued = XEventsQueued(state::get_dpy(), QueuedAlready);
@@ -47,14 +47,25 @@ void run() {
       state::get_dpy(),
       &ev
     );
-    //    x11_evlog.debug("event = %d", ev.type);
+    x11_evlog.debug("event = %d", ev.type);
     using namespace cydui::events;
     switch (ev.type) {
+      case VisibilityNotify:
+      case MapNotify:
       case Expose:
         redrawEventDataMonitor.update({
           .x = 0,
           .y = 0,
         });
+        if (ev.xvisibility.type == Expose
+          && ev.xexpose.count == 0
+          /*&& ev.xexpose.width > 0
+          && ev.xexpose.height > 0*/) {
+          resizeEventDataMonitor.update({
+            .w = ev.xexpose.width,
+            .h = ev.xexpose.height,
+          });
+        }
         break;
       case KeyPress:
         emit<KeyEvent>({
@@ -91,7 +102,6 @@ void run() {
         });
         break;
       case ConfigureNotify://x11_evlog.info("%d-%d", ev.xconfigure.width, ev.xconfigure.height);
-        // TODO - IMPLEMENT STATE-BASED EVENTS
         resizeEventDataMonitor.update({
           .w = ev.xconfigure.width,
           .h = ev.xconfigure.height,
@@ -104,12 +114,10 @@ void run() {
       case KeymapNotify:
       case GraphicsExpose:
       case NoExpose:
-      case VisibilityNotify:
       case CreateNotify:
       case DestroyNotify:
       case UnmapNotify:
       case ResizeRequest:
-      case MapNotify:
       case MapRequest:
       case ReparentNotify:
       case ConfigureRequest:

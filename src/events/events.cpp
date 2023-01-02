@@ -4,7 +4,7 @@
 
 #include "../../include/events.hpp"
 #include "../../include/logging.hpp"
-#include "../threading/threading.hpp"
+#include "../../include/threading.hpp"
 
 #include <deque>
 #include <list>
@@ -14,7 +14,7 @@
 // EVENT THREAD IMPLEMENTATION
 
 logging::logger log_task =
-                  {.name = "EV_TASK", .on = true, .min_level = logging::INFO};
+                  {.name = "EV_TASK", .on = true, .min_level = logging::DEBUG};
 logging::logger log_ctrl =
                   {.name = "EV_CTRL", .on = false};
 
@@ -63,7 +63,7 @@ cydui::events::Event* get_next_event(thread_data* data) {
   
   if (!event_mutex.try_lock()) return nullptr;
   if (!data->event_queue->empty()) {
-//    log_task.info("EV QUEUE: %d", data->event_queue->size());
+    //    log_task.info("EV QUEUE: %d", data->event_queue->size());
     ev = data->event_queue->front();
   }
   event_mutex.unlock();
@@ -77,7 +77,7 @@ void clean_up_event(thread_data* data, cydui::events::Event* ev) {
   ev->ev_mtx.lock();
   ev->status = cydui::events::CONSUMED;
   ev->ev_mtx.unlock();
-  log_task.debug("DONE WITH EVENT: %s %s", ev->type.c_str(), ev->managed? "": "[deleting]");
+  log_task.debug("DONE WITH EVENT: %s %s", ev->type.c_str(), ev->managed? "" : "[deleting]");
   if (!ev->managed) delete ev;
   event_mutex.unlock();
 }
@@ -99,7 +99,7 @@ void event_task(cydui::threading::thread_t* this_thread) {
   log_task.debug("Started event_task");
   while (this_thread->running) {
     process_event((thread_data*)(this_thread->data));
-//    std::this_thread::sleep_for(500us);
+    //    std::this_thread::sleep_for(500us);
   }
 }
 
@@ -115,7 +115,7 @@ void cydui::events::start() {
 }
 
 void cydui::events::emit_raw(cydui::events::Event* ev) {
-    push_event(th_data, ev);
+  push_event(th_data, ev);
 }
 
 void cydui::events::emit_raw(const std::string &event_type, void* data) {

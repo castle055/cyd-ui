@@ -17,26 +17,29 @@ CWindow* cydui::window::create(
   int x,
   int y,
   int w,
-  int h
+  int h,
+  bool override_redirect
 ) {
-    events::start();
-
-    auto win = new CWindow();
-    auto* win_ref = graphics::create_window(title, wclass, x, y, w, h);
-    win->layout = layout;
-
-    win->win_ref = win_ref;
-    graphics::set_background(win_ref);
-
-    layout->bind_window(win);
-
-    windows.push_back(win);
-    cydui::events::on_event<ResizeEvent>(cydui::events::Consumer<ResizeEvent>([=](const cydui::events::ParsedEvent<ResizeEvent>& it) {
-        graphics::resize(win_ref, it.data->w, it.data->h);
-    }));
-//isten(ResizeEvent, {
-//    })
-
-    return win;
+  events::start();
+  
+  auto win = new CWindow();
+  auto* win_ref = graphics::create_window(title, wclass, x, y, w, h, override_redirect);
+  win->layout = layout;
+  
+  win->win_ref = win_ref;
+  graphics::set_background(win_ref);
+  
+  layout->bind_window(win);
+  
+  windows.push_back(win);
+  cydui::events::on_event<ResizeEvent>(
+    cydui::events::Consumer<ResizeEvent>([=](const cydui::events::ParsedEvent<ResizeEvent> &it) {
+      graphics::resize(win_ref, it.data->w, it.data->h);
+    })
+  );
+  //isten(ResizeEvent, {
+  //    })
+  
+  return win;
 }
 

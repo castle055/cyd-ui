@@ -10,13 +10,14 @@
 #include "colors.hpp"
 #include "fonts.hpp"
 
-#include "../src/graphics/x11/x11_impl.hpp"
+#include "x11_impl.hpp"
 
 namespace cydui::graphics {
   typedef window_t window_t;
   
   window_t* create_window(
-    const char* title, const char* wclass, int x, int y, int w, int h
+    const char* title, const char* wclass, int x, int y, int w, int h,
+    bool override_redirect = false
   );
   
   void set_background(window_t* win);

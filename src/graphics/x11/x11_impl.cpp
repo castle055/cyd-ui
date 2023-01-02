@@ -3,7 +3,7 @@
 //
 
 #include "../../../include/graphics.hpp"
-#include "x11_impl.hpp"
+#include "../../../include/x11_impl.hpp"
 #include "../../../include/logging.hpp"
 #include "../events.hpp"
 #include "render/render.hpp"
@@ -35,7 +35,8 @@ static int geom_mask_to_gravity(int mask) {
 }
 
 cydui::graphics::window_t* cydui::graphics::create_window(
-  const char* title, const char* wclass, int x, int y, int w, int h
+  const char* title, const char* wclass, int x, int y, int w, int h,
+  bool override_redirect
 ) {
   static int _ig = XInitThreads();
   
@@ -47,7 +48,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
       | VisibilityChangeMask | StructureNotifyMask | ButtonMotionMask
       | ButtonPressMask | ButtonReleaseMask | ExposureMask
       | PointerMotionMask,
-    //.override_redirect = true // This makes it immutable across workspaces
+    .override_redirect = override_redirect // This makes it immutable across workspaces
   };
   std::string          title_str  = title;
   std::string          wclass_str = wclass;
@@ -82,10 +83,11 @@ cydui::graphics::window_t* cydui::graphics::create_window(
     w,
     h,
     0,
-    CopyFromParent,
+    DefaultDepth(state::get_dpy(), state::get_screen()),
     InputOutput,
-    CopyFromParent,
-    CWBorderPixel | CWBitGravity | CWColormap | CWBackPixmap | CWEventMask,
+    DefaultVisual(state::get_dpy(), state::get_screen()),
+    CWBorderPixel | CWBitGravity | CWColormap | CWBackPixmap | CWEventMask
+      | (override_redirect? CWOverrideRedirect : 0U),
     &wa
   );
   XSetClassHint(state::get_dpy(), xwin, &ch);
@@ -94,34 +96,37 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   
   log_task.info("Created window %X at (%s) x: %d, y: %d", xwin, geom.c_str(), x, y);
   
-  XWMHints wm = {.flags = InputHint, .input = 1};
-  XSizeHints* sizeh;
-  sizeh = XAllocSizeHints();
-  sizeh->flags      = PSize | PResizeInc | PBaseSize | PMinSize;
-  sizeh->height     = h;
-  sizeh->width      = w;
-  sizeh->height_inc = 1;
-  sizeh->width_inc  = 1;
-  //sizeh->base_height = 2 * borderpx;
-  ////  sizeh->base_width = 2 * borderpx;
-  ////  sizeh->min_height = win.ch + 2 * borderpx;
-  ////  sizeh->min_width = win.cw + 2 * borderpx;
-  ////  if (xw.isfixed) {
-  ////    sizeh->flags |= PMaxSize;
-  ////    sizeh->min_width = sizeh->max_width = w;
-  ////    sizeh->min_height = sizeh->max_height = h;
-  ////  }
-  if (gm_mask & (XValue | YValue)) {
-    sizeh->flags |= USPosition | PWinGravity;
-    sizeh->x           = x_o;
-    sizeh->y           = y_o;
-    sizeh->win_gravity = geom_mask_to_gravity(gm_mask);
+  if (!override_redirect) {
+    XWMHints wm = {.flags = InputHint, .input = 1};
+    XSizeHints* sizeh;
+    sizeh = XAllocSizeHints();
+    sizeh->flags      = PSize | PResizeInc | PBaseSize | PMinSize;
+    sizeh->height     = h;
+    sizeh->width      = w;
+    sizeh->height_inc = 1;
+    sizeh->width_inc  = 1;
+    //sizeh->base_height = 2 * borderpx;
+    ////  sizeh->base_width = 2 * borderpx;
+    ////  sizeh->min_height = win.ch + 2 * borderpx;
+    ////  sizeh->min_width = win.cw + 2 * borderpx;
+    ////  if (xw.isfixed) {
+    ////    sizeh->flags |= PMaxSize;
+    ////    sizeh->min_width = sizeh->max_width = w;
+    ////    sizeh->min_height = sizeh->max_height = h;
+    ////  }
+    if (gm_mask & (XValue | YValue)) {
+      sizeh->flags |= USPosition | PWinGravity;
+      sizeh->x           = x_o;
+      sizeh->y           = y_o;
+      sizeh->win_gravity = geom_mask_to_gravity(gm_mask);
+    }
+    //
+    XSetWMProperties(
+      state::get_dpy(), xwin, NULL, NULL, NULL, 0, sizeh, &wm,
+      &ch
+    );
+    XFree(sizeh);
   }
-  //
-  XSetWMProperties(
-    state::get_dpy(), xwin, NULL, NULL, NULL, 0, sizeh, &wm,
-    &ch
-  );
   XSync(state::get_dpy(), False);
   ////  r = XSetClassHint(state::get_dpy(), xwin, &ch);
   //  log_task.info("set hints");
@@ -129,13 +134,16 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   //  XDefineCursor(state::get_dpy(), xwin, state::cursor[CurNormal]->cursor);
   //if (x_o != 0 || y_o != 0) {
   //  log_task.info("Mapping RAISED window %X", xwin);
-  //  XMapRaised(state::get_dpy(), xwin);
+  if (override_redirect) {
+    XMapRaised(state::get_dpy(), xwin);
+  } else {
+    XMapWindow(state::get_dpy(), xwin);
+  }
   //} else {
   log_task.info("Mapping window %X", xwin);
-  XMapWindow(state::get_dpy(), xwin);
   //}
   
-  XSync(state::get_dpy(), False);
+  //XSync(state::get_dpy(), False);
   
   auto* win = new window_t { };
   win->xwin     = xwin;
@@ -160,10 +168,9 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   
   XSync(state::get_dpy(), False);
   
-  cydui::graphics::events::start();
   render::start(win);
+  cydui::graphics::events::start();
   
-  XFree(sizeh);
   return win;
 }
 

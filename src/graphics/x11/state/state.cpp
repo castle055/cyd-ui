@@ -17,6 +17,7 @@ Display* state::get_dpy() {
     log_task.info("dpy = %X", dpy);
     return dpy;
   } else {
+    log_task.error("Could not open display");
     return nullptr;
   }
 }

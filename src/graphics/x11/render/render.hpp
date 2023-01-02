@@ -6,7 +6,7 @@
 #define CYD_UI_RENDER_HPP
 
 #include "../../../../include/graphics.hpp"
-#include "../x11_impl.hpp"
+#include "../../../../include/x11_impl.hpp"
 
 namespace render {
   struct RenderThreadData {

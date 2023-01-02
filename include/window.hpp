@@ -19,7 +19,8 @@ namespace cydui::window {
     int x = 0,
     int y = 0,
     int w = 640,
-    int h = 480
+    int h = 480,
+    bool override_redirect = false
   );
   
   bool process_event(CWindow win);

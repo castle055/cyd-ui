@@ -5,7 +5,7 @@
 #ifndef CYD_UI_X11_IMPL_HPP
 #define CYD_UI_X11_IMPL_HPP
 
-#include "../../threading/threading.hpp"
+#include "threading.hpp"
 
 #include <X11/Xft/Xft.h>
 #include <deque>

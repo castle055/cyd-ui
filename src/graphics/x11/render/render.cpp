@@ -5,7 +5,7 @@
 #include "render.hpp"
 #include "../../../../include/logging.hpp"
 #include "../state/state.hpp"
-#include "../x11_impl.hpp"
+#include "../../../../include/x11_impl.hpp"
 
 #include <X11/Xlib.h>
 
@@ -141,7 +141,7 @@ void render::resize(cydui::graphics::window_t* win, int w, int h) {
     XSetForeground(state::get_dpy(), win->gc, BlackPixel(state::get_dpy(), state::get_screen()));
     XFillRectangle(state::get_dpy(), new_drw, win->gc, 0, 0, w, h);
     XCopyArea(state::get_dpy(), win->drawable, new_drw, win->gc, 0, 0, win->w, win->h, 0, 0);
-
+    
     XFreePixmap(state::get_dpy(), win->drawable);
     win->drawable = new_drw;
     
