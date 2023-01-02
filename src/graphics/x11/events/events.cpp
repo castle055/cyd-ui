@@ -13,7 +13,7 @@
 cydui::threading::thread_t* x11_thread;
 
 logging::logger x11_evlog = {.name = "X11::EV"};
-logging::logger chev_log = {.name = "EV::CHANGE", .on = false};
+logging::logger chev_log  = {.name = "EV::CHANGE", .on = false};
 
 using namespace std::chrono_literals;
 
@@ -21,17 +21,26 @@ Bool evpredicate() {
   return True;
 }
 
-cydui::events::change_ev::DataMonitor<RedrawEvent> redrawEventDataMonitor([](RedrawEvent::DataType o_data, RedrawEvent::DataType n_data){
-    return true;
+cydui::events::change_ev::DataMonitor<RedrawEvent>
+  redrawEventDataMonitor([](RedrawEvent::DataType o_data, RedrawEvent::DataType n_data) {
+  // this event doesn't really hold data when emitted from x11::events so just consider it changed every time
+  // it still reuses the same event object, so it won't overload the event bus
+  return true;
 });
 
-cydui::events::change_ev::DataMonitor<ResizeEvent> resizeEventDataMonitor([](ResizeEvent::DataType o_data, ResizeEvent::DataType n_data){
-    return (o_data.w != n_data.w || o_data.h != n_data.h);
+cydui::events::change_ev::DataMonitor<ResizeEvent>
+  resizeEventDataMonitor([](ResizeEvent::DataType o_data, ResizeEvent::DataType n_data) {
+  return (o_data.w != n_data.w || o_data.h != n_data.h);
+});
+
+cydui::events::change_ev::DataMonitor<MotionEvent>
+  motionEventDataMonitor([](MotionEvent::DataType o_data, MotionEvent::DataType n_data) {
+  return true;
 });
 
 void run() {
   XEvent ev;
-
+  
   int      queued = XEventsQueued(state::get_dpy(), QueuedAlready);
   for (int i      = 0; i < queued; ++i) {
     XNextEvent(
@@ -76,41 +85,17 @@ void run() {
         });
         break;
       case MotionNotify://x11_evlog.info("%d-%d", ev.xmotion.x, ev.xmotion.y);
-        emit<MotionEvent>({
+        motionEventDataMonitor.update({
           .x = ev.xmotion.x,
           .y = ev.xmotion.y,
         });
         break;
       case ConfigureNotify://x11_evlog.info("%d-%d", ev.xconfigure.width, ev.xconfigure.height);
-          // TODO - IMPLEMENT STATE-BASED EVENTS
-          resizeEventDataMonitor.update({
-                                                .w = ev.xconfigure.width,
-                                                .h = ev.xconfigure.height,
-                                        });
-//          emit<ResizeEvent>({
-//                                    .w = ev.xconfigure.width,
-//                                    .h = ev.xconfigure.height,
-//                            });
-            //emit_gph_state(
-            //  std::string("gph_resize_").append(std::to_string(ev.xany.window)),
-            //  ev,
-        //  cydui::events::graphics::GPH_EV_RESIZE,
-        //  cydui::events::graphics::CGraphicEventData {
-        //    .resize_ev = cydui::events::graphics::CResizeEvent {
-        //      .w = ev.xconfigure.width, .h = ev.xconfigure.height
-        //    }
-        //  }
-        //);
-        //emit_lyt_state(
-        //  std::string("lyt_resize_").append(std::to_string(ev.xany.window)),
-        //  ev,
-        //  cydui::events::layout::LYT_EV_RESIZE,
-        //  cydui::events::layout::CLayoutData {
-        //    .resize_ev = cydui::events::layout::CResizeEvent {
-        //      .w = ev.xconfigure.width, .h = ev.xconfigure.height
-        //    }
-        //  }
-        //);
+        // TODO - IMPLEMENT STATE-BASED EVENTS
+        resizeEventDataMonitor.update({
+          .w = ev.xconfigure.width,
+          .h = ev.xconfigure.height,
+        });
         break;
       case EnterNotify:
       case LeaveNotify:
