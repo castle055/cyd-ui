@@ -57,11 +57,11 @@ add_library(cyd_ui SHARED
         src/layout/components/components.cpp
         include/primitives.hpp
         src/threading/threading.cpp
-        src/threading/threading.hpp
+        include/threading.hpp
         include/window_types.hpp
         src/graphics/x11/render/render.cpp
         src/graphics/x11/render/render.hpp
-        src/graphics/x11/x11_impl.hpp
+        include/x11_impl.hpp
         include/colors.hpp
         src/layout/color/colors.cpp
         include/containers.hpp

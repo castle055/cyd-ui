@@ -77,7 +77,7 @@ COMPONENT(Button)
     state->dirty();
   }
   
-  void on_mouse_click(int x, int y) override {
+  void on_mouse_click(int x, int y, int button) override {
     auto state = (ButtonState*)this->state;
     state->hovering = false;
     state->dirty();

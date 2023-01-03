@@ -41,6 +41,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
   
   listen(RedrawEvent, {
+    if (it.data->win != 0 && it.data->win != win->win_ref->xwin) return;
     cydui::components::Component* target = root;
     if (it.data->component) {
       cydui::components::ComponentState* target_state     = ((cydui::components::ComponentState*)it.data->component);
@@ -52,9 +53,11 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     redraw_component(this->win, target);
   })
   listen(KeyEvent, {
-  
+    if (it.data->win != win->win_ref->xwin) return;
+    
   })
   listen(ButtonEvent, {
+    if (it.data->win != win->win_ref->xwin) return;
     if (it.data->pressed) {
       cydui::components::Component* target           = root;
       cydui::components::Component* specified_target = find_by_coords(root, it.data->x, it.data->y);
@@ -64,14 +67,13 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       int rel_x = it.data->x - target->state->geom.border_x().compute();
       int rel_y = it.data->y - target->state->geom.border_y().compute();
       
-      target->on_mouse_click(rel_x, rel_y);
+      target->on_mouse_click(rel_x, rel_y, it.data->button);
       if (render_if_dirty(root))
         graphics::flush(win->win_ref);
     }
   })
   listen(MotionEvent, {
-    // TODO - Must propagate upwards, otherwise it is rectangles and lines handling events
-    //  and that makes no sense
+    if (it.data->win != win->win_ref->xwin) return;
     cydui::components::Component* target           = root;
     cydui::components::Component* specified_target = find_by_coords(root, it.data->x, it.data->y);
     if (specified_target)
@@ -94,6 +96,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       graphics::flush(win->win_ref);
   })
   listen(ResizeEvent, {
+    if (it.data->win != win->win_ref->xwin) return;
     log_lay.debug("RESIZE w=%d, h=%d", it.data->w, it.data->h);
     
     root->state->geom.w = win->win_ref->w;
@@ -103,11 +106,13 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       graphics::flush(win->win_ref);
   })
   listen(UpdatePropEvent, {
+    if (it.data->win != win->win_ref->xwin) return;
     ((Property*)it.data->target_property)
       ->set_raw_value((void*)(it.data->new_value));
     if (render_if_dirty(root))
       graphics::flush(win->win_ref);
   })
+  
 }
 
 bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {
@@ -117,7 +122,7 @@ bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {
   } else {
     bool      any = false;
     for (auto &item: c->children)
-      any = render_if_dirty(item) || any; // FUCK, order here matters
+      any = render_if_dirty(item) || any; // F**K, order here matters
     return any;
   }
 }

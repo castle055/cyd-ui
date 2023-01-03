@@ -14,6 +14,7 @@
 #define bind(state) on_change([state](){ state->_dirty = true; })
 
 EVENT(UpdatePropEvent, {
+  unsigned int win = 0;
   const void* target_property = nullptr;
   const void* new_value       = nullptr;
 })

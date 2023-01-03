@@ -47,13 +47,14 @@ static void run() {
       state::get_dpy(),
       &ev
     );
-    x11_evlog.debug("event = %d", ev.type);
+    //x11_evlog.debug("event = %d", ev.type);
     using namespace cydui::events;
     switch (ev.type) {
       case VisibilityNotify:
-      case MapNotify:
+      case MapNotify:break;
       case Expose:
         redrawEventDataMonitor.update({
+          //.win = nullptr, // redraw all
           .x = 0,
           .y = 0,
         });
@@ -62,6 +63,7 @@ static void run() {
           /*&& ev.xexpose.width > 0
           && ev.xexpose.height > 0*/) {
           resizeEventDataMonitor.update({
+            .win = (unsigned int)ev.xexpose.window,
             .w = ev.xexpose.width,
             .h = ev.xexpose.height,
           });
@@ -69,18 +71,21 @@ static void run() {
         break;
       case KeyPress:
         emit<KeyEvent>({
+          .win = (unsigned int)ev.xkey.window,
           .key = ev.xkey.keycode,
           .pressed = true,
         });
         break;
       case KeyRelease:
         emit<KeyEvent>({
+          .win = (unsigned int)ev.xkey.window,
           .key = ev.xkey.keycode,
           .released = true,
         });
         break;
       case ButtonPress:
         emit<ButtonEvent>({
+          .win = (unsigned int)ev.xbutton.window,
           .button = ev.xbutton.button,
           .x      = ev.xbutton.x,
           .y      = ev.xbutton.y,
@@ -89,6 +94,7 @@ static void run() {
         break;
       case ButtonRelease:
         emit<ButtonEvent>({
+          .win = (unsigned int)ev.xbutton.window,
           .button = ev.xbutton.button,
           .x      = ev.xbutton.x,
           .y      = ev.xbutton.y,
@@ -97,12 +103,14 @@ static void run() {
         break;
       case MotionNotify://x11_evlog.info("%d-%d", ev.xmotion.x, ev.xmotion.y);
         motionEventDataMonitor.update({
+          .win = (unsigned int)ev.xmotion.window,
           .x = ev.xmotion.x,
           .y = ev.xmotion.y,
         });
         break;
       case ConfigureNotify://x11_evlog.info("%d-%d", ev.xconfigure.width, ev.xconfigure.height);
         resizeEventDataMonitor.update({
+          .win = (unsigned int)ev.xconfigure.window,
           .w = ev.xconfigure.width,
           .h = ev.xconfigure.height,
         });

@@ -168,8 +168,8 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   
   XSync(state::get_dpy(), False);
   
-  render::start(win);
   cydui::graphics::events::start();
+  render::start(win);
   
   return win;
 }

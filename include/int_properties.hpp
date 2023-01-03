@@ -199,9 +199,10 @@ public:
       return 0;
   }
   
-  void set(int i) {
+  void set(unsigned int win, int i) {
     if (val() != i) {
       cydui::events::emit<UpdatePropEvent>({
+        .win = win,
         .target_property = this,
         .new_value = new int(i),
       });

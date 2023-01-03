@@ -20,8 +20,6 @@ CWindow* cydui::window::create(
   int h,
   bool override_redirect
 ) {
-  events::start();
-  
   auto win = new CWindow();
   auto* win_ref = graphics::create_window(title, wclass, x, y, w, h, override_redirect);
   win->layout = layout;
@@ -37,8 +35,12 @@ CWindow* cydui::window::create(
       graphics::resize(win_ref, it.data->w, it.data->h);
     })
   );
-  //isten(ResizeEvent, {
-  //    })
+  
+  events::start();
+  
+  // Once all threads have started and everything is set up for this window
+  // force a complete redraw
+  events::emit<RedrawEvent>({ });
   
   return win;
 }
