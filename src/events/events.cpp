@@ -14,12 +14,13 @@
 // EVENT THREAD IMPLEMENTATION
 
 logging::logger log_task =
-                  {.name = "EV_TASK", .on = true, .min_level = logging::DEBUG};
+                  {.name = "EV_TASK", .on = true, .min_level = logging::INFO};
 logging::logger log_ctrl =
                   {.name = "EV_CTRL", .on = false};
 
 cydui::threading::thread_t* event_thread;
 struct thread_data {
+  bool                             pending       = false;
   std::deque<cydui::events::Event*>* event_queue =
                                      new std::deque<cydui::events::Event*>;
   std::unordered_map<
@@ -54,6 +55,7 @@ static void run_event(thread_data* data, cydui::events::Event* ev) {
 void push_event(thread_data* data, cydui::events::Event* ev) {
   event_mutex.lock();
   data->event_queue->push_back(ev);
+  data->pending = true;
   log_task.debug("NEW EVENT: %s", ev->type.c_str());
   event_mutex.unlock();
 }
@@ -61,12 +63,12 @@ void push_event(thread_data* data, cydui::events::Event* ev) {
 cydui::events::Event* get_next_event(thread_data* data) {
   cydui::events::Event* ev = nullptr;
   
-  if (!event_mutex.try_lock()) return nullptr;
-  if (!data->event_queue->empty()) {
+  //event_mutex.lock();
+  if (data->pending) {
     //    log_task.info("EV QUEUE: %d", data->event_queue->size());
     ev = data->event_queue->front();
   }
-  event_mutex.unlock();
+  //event_mutex.unlock();
   
   return ev;
 }
@@ -74,6 +76,8 @@ cydui::events::Event* get_next_event(thread_data* data) {
 void clean_up_event(thread_data* data, cydui::events::Event* ev) {
   event_mutex.lock();
   data->event_queue->pop_front();
+  if (data->event_queue->empty())
+    data->pending = false;
   ev->ev_mtx.lock();
   ev->status = cydui::events::CONSUMED;
   ev->ev_mtx.unlock();
@@ -97,9 +101,18 @@ using namespace std::chrono_literals;
 
 void event_task(cydui::threading::thread_t* this_thread) {
   log_task.debug("Started event_task");
+  int freq   = 10000;
+  int period = 1000000000 / freq;
   while (this_thread->running) {
+    auto t0 = std::chrono::system_clock::now();
     process_event((thread_data*)(this_thread->data));
-    //    std::this_thread::sleep_for(500us);
+    auto t1 = std::chrono::system_clock::now();
+    auto dt = t1 - t0;
+    if (dt.count() > 40 && dt.count() > period)
+      log_task.info("Processed event in: %d ns , \tdelay: %d ns", dt.count(), period - dt.count());
+    int delay = period - dt.count();
+    if (delay > 0)
+      std::this_thread::sleep_for(std::chrono::duration<int, std::nano>(delay));
   }
 }
 
