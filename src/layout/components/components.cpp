@@ -85,11 +85,24 @@ Component::~Component() {
 //== API for subclasses
 void Component::add(std::vector<Component*> ichildren) {
   for (auto &item: ichildren) {
-    item->parent = this;
-    this->children.push_back(item);
-    
-    if (!item->state->geom.custom_offset) {
-      item->set_pos(this, 0, 0);
+    if (item->is_group) {
+      for (auto &subitem: item->children) {
+        subitem->parent = this;
+        this->children.push_back(subitem);
+        
+        if (!subitem->state->geom.custom_offset) {
+          subitem->set_pos(this, 0, 0);
+        }
+      }
+      item->children.clear();
+      delete item;
+    } else {
+      item->parent = this;
+      this->children.push_back(item);
+      
+      if (!item->state->geom.custom_offset) {
+        item->set_pos(this, 0, 0);
+      }
     }
   }
   
@@ -192,7 +205,9 @@ void Component::on_mouse_exit(int x, int y) {
     this->parent->on_mouse_exit(x, y);
 }
 
-void Component::on_scroll() {
+void Component::on_scroll(int d) {
+  if (this->parent)
+    this->parent->on_scroll(d);
 }
 
 Component* Component::set_size(int w, int h) {

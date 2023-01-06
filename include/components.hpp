@@ -46,12 +46,71 @@ namespace cydui::components {
     ChildrenStateCollection children;
   };
   
+  template<class c>
+  concept ComponentConcept = requires {
+    typename c::Props;
+    typename c::State;
+    { c::props } -> std::convertible_to<typename c::Props>;
+  };
+  template<typename c> requires ComponentConcept<c>
+  struct c_init_t {
+    typename c::Props props;
+    std::vector<Component*> inner = {};
+    std::function<void(c*)> init = [](c*){};
+  };
+  
+  
   class Component {
     
     std::function<void(Component*)> inner_redraw = nullptr;
+    
+    bool is_group = false;
   
   protected:
-    // Private size operations
+  
+  
+    template<typename c, int ID> requires ComponentConcept<c>
+    inline c* create(c_init_t<c> init) {
+      return new c((typename c::State*)(this->state->children.contains(ID)?
+            (this->state->children[ID]): (this->state->children.add(ID, new typename c::State()))),
+        init.props,
+        [this, init](cydui::components::Component* __raw_local_) {
+          this; state;
+          auto* local = (c*)__raw_local_;
+      
+          local->add(init.inner);
+          init.init(local);
+        }
+      );
+    }
+
+#define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
+  
+    template<typename c, int ID, typename T> requires ComponentConcept<c>
+    inline Component* create_for(T iter, std::function<c_init_t<c>(typename T::value_type)> block) {
+      int i = 0;
+      auto temp_c = new Component();
+      for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
+        c_init_t<c> init = block(*a);
+        temp_c->children.push_back(new c((typename c::State*)(this->state->children.contains(ID,i)?
+              (this->state->children.get_list(ID,i)): (this->state->children.add_list(ID,i, new typename c::State()))),
+          init.props,
+          [this, init](cydui::components::Component* __raw_local_) {
+            this; state;
+            auto* local = (c*)__raw_local_;
+      
+            local->add(init.inner);
+            init.init(local);
+          }
+        ));
+      }
+      temp_c->is_group = true;
+      return temp_c;
+    }
+
+#define FOR_EACH(COMPONENT) create_for<COMPONENT, __COUNTER__>
+
+
   public:
     //explicit Component(std::unordered_set<Component*> children);
     
@@ -123,7 +182,7 @@ namespace cydui::components {
     
     virtual void on_mouse_click(int x, int y, int button);
     
-    virtual void on_scroll();
+    virtual void on_scroll(int d);
     
     virtual void on_key_press();
     
@@ -143,7 +202,8 @@ explicit NAME##State(): cydui::components::ComponentState()
 
 #define COMPONENT(NAME) \
 class NAME: public cydui::components::Component { \
-public: \
+public:                 \
+typedef NAME##State State;                        \
 logging::logger log = {.name = #NAME, .on = true};
 
 #define DISABLE_LOG this->log.on = false;

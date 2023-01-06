@@ -72,6 +72,17 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
         graphics::flush(win->win_ref);
     }
   })
+  listen(ScrollEvent, {
+    if (it.data->win != win->win_ref->xwin) return;
+    cydui::components::Component* target           = root;
+    cydui::components::Component* specified_target = find_by_coords(root, it.data->x, it.data->y);
+    if (specified_target)
+      target = specified_target;
+    
+    target->on_scroll(it.data->d);
+    if (render_if_dirty(root))
+      graphics::flush(win->win_ref);
+  })
   listen(MotionEvent, {
     if (it.data->win != win->win_ref->xwin) return;
     cydui::components::Component* target           = root;

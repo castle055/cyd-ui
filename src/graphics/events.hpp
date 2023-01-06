@@ -34,6 +34,12 @@ EVENT(ButtonEvent, {
   const bool         released = false;
   const bool         holding  = false;
 })
+EVENT(ScrollEvent, {
+  unsigned int win = 0;
+  int          d   = 0;
+  int          x   = 0;
+  int          y   = 0;
+})
 EVENT(MotionEvent, {
   unsigned int win   = 0;
   int          x     = 0;

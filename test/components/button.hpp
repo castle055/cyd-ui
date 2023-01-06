@@ -28,7 +28,7 @@ typedef std::function<void()> ButtonAction;
 COMPONENT(Button)
   PROPS({
     std::string text = "Text";
-    cydui::layout::fonts::Font* font;
+    cydui::layout::fonts::Font* font = nullptr;
     ButtonAction on_action = []() { };
     cydui::layout::color::Color* c     = nullptr;
     cydui::layout::color::Color* c_dim = nullptr;
@@ -79,7 +79,6 @@ COMPONENT(Button)
   
   void on_mouse_click(int x, int y, int button) override {
     auto state = (ButtonState*)this->state;
-    state->hovering = false;
     state->dirty();
     props.on_action();
   }

@@ -75,8 +75,9 @@ add_library(cyd_ui SHARED
         include/component_geometry.hpp
         src/layout/components/state/children_state_collection.cpp
         include/children_state_collection.hpp
-        include/change_events.h)
+        include/change_events.h include/config.hpp src/config/config.cpp test/startmenu/tabs/home/shortcuts.hpp)
 target_link_libraries(cyd_ui PRIVATE X11 Xft)
+target_link_libraries(cyd_ui PUBLIC yaml-cpp)
 
 add_executable(cyd_ui_test
         test/main.cpp
@@ -91,7 +92,7 @@ add_executable(cyd_ui_test
         test/components/clock_module.hpp
         test/status_bar/workspace_selector.hpp
         test/status_bar/window_title.hpp
-        )
+        test/startmenu/startmenu.hpp test/startmenu/startmenuselector.hpp test/startmenu/powerselector.hpp test/startmenu/tabs/hometab.hpp test/startmenu/tabs/appstab.hpp test/startmenu/tabs/searchtab.hpp test/startmenu/tabs/appbutton.hpp test/startmenu/tabs/appsection.hpp test/startmenu/tabs/listview.hpp test/tasks/list_apps_task.hpp test/startmenu/config/startappscm.hpp)
 target_link_libraries(cyd_ui_test PRIVATE cyd_ui)
 #add_dependencies(cppcheck clang-format)
 #add_dependencies(cyd_ui_test cppcheck)

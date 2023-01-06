@@ -38,6 +38,12 @@ cydui::events::change_ev::DataMonitor<MotionEvent>
   return true;
 });
 
+cydui::events::change_ev::DataMonitor<ScrollEvent>
+  scrollEventDataMonitor([](ScrollEvent::DataType o_data, ScrollEvent::DataType n_data) {
+  //return (o_data.x != n_data.x || o_data.y != n_data.y || o_data.d != n_data.d);
+  return true;
+});
+
 static void run() {
   XEvent ev;
   
@@ -54,7 +60,6 @@ static void run() {
       case MapNotify:break;
       case Expose:
         redrawEventDataMonitor.update({
-          //.win = nullptr, // redraw all
           .x = 0,
           .y = 0,
         });
@@ -83,14 +88,30 @@ static void run() {
           .released = true,
         });
         break;
-      case ButtonPress:
-        emit<ButtonEvent>({
-          .win = (unsigned int)ev.xbutton.window,
-          .button = ev.xbutton.button,
-          .x      = ev.xbutton.x,
-          .y      = ev.xbutton.y,
-          .pressed = true,
-        });
+      case ButtonPress://x11_evlog.warn("BUTTON= %d", ev.xbutton.button);
+        if (ev.xbutton.button == 4) {
+          scrollEventDataMonitor.update({
+            .win = (unsigned int)ev.xbutton.window,
+            .d = 64,
+            .x      = ev.xbutton.x,
+            .y      = ev.xbutton.y,
+          });
+        } else if (ev.xbutton.button == 5) {
+          scrollEventDataMonitor.update({
+            .win = (unsigned int)ev.xbutton.window,
+            .d = -64,
+            .x      = ev.xbutton.x,
+            .y      = ev.xbutton.y,
+          });
+        } else {
+          emit<ButtonEvent>({
+            .win = (unsigned int)ev.xbutton.window,
+            .button = ev.xbutton.button,
+            .x      = ev.xbutton.x,
+            .y      = ev.xbutton.y,
+            .pressed = true,
+          });
+        }
         break;
       case ButtonRelease:
         emit<ButtonEvent>({

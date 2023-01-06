@@ -19,8 +19,12 @@ public:
     running = true;
     if (fork() == 0) {
       setsid();
-      fprintf(stdout, "running %s", cmd);
-      std::system(cmd);
+      std::string c;
+      c.append("");
+      c.append(cmd);
+      c.append(" & disown");
+      fprintf(stdout, "running >>%s\n\r", c.c_str());
+      std::system(c.c_str());
       
       exit(0);
     }
