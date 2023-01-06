@@ -12,12 +12,12 @@ overloads:
       - private
     arguments:
       - description: __OPTIONAL__
-        name: ev
+        name: data
         type: cydui::events::layout::CLayoutEvent *
       - description: __OPTIONAL__
         name: clr
         type: bool
     description: __OPTIONAL__
     return: __OPTIONAL__
-    signature_with_names: void redraw(cydui::events::layout::CLayoutEvent * ev, bool clr)
+    signature_with_names: void redraw(cydui::events::layout::CLayoutEvent * data, bool clr)
 ---

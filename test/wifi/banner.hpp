@@ -27,7 +27,7 @@ public:
   ): cydui::components::Component(_state) {
   }
   
-  void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
+  void on_redraw() override {
     auto* state = (BannerState*)this->state;
     auto* c     = new cydui::layout::color::Color("#FCAE1E");
     auto* c1    = new cydui::layout::color::Color("#0000FF");
@@ -40,15 +40,15 @@ public:
           [c, c1, state, this](cydui::components::Component* hbox) {
             hbox->add(
               {
-                new primitives::Rectangle(c, 0, 0, 32, 32, true),
-                new primitives::Text(
-                  c,
-                  new cydui::layout::fonts::Font {
-                    .name = "Fira Code Retina",
-                    .size = 14
-                  },
-                  0, 0, "[ WIFI ]"
-                ),
+                //new primitives::Rectangle(c, 0, 0, 32, 32, true),
+                //new primitives::Text(
+                //  c,
+                //  new cydui::layout::fonts::Font {
+                //    .name = "Fira Code Retina",
+                //    .size = 14
+                //  },
+                //  0, 0, "[ WIFI ]"
+                //),
                 N(TerminalButton, ({
                   .cmd = "iwctl"
                 })),

@@ -5,11 +5,12 @@
 #ifndef CYD_UI_COMPONENTS_HPP
 #define CYD_UI_COMPONENTS_HPP
 
-#include "../src/events/events.hpp"
-#include "../src/layout/color/colors.hpp"
+#include "events.hpp"
+#include "colors.hpp"
 #include "properties.hpp"
-#include "../src/layout/components/geometry/component_geometry.hpp"
-#include "../src/layout/components/state/children_state_collection.h"
+#include "component_geometry.hpp"
+#include "children_state_collection.hpp"
+#include "window_types.hpp"
 #include <vector>
 #include <unordered_set>
 #include <functional>
@@ -45,28 +46,71 @@ namespace cydui::components {
     ChildrenStateCollection children;
   };
   
+  template<class c>
+  concept ComponentConcept = requires {
+    typename c::Props;
+    typename c::State;
+    { c::props } -> std::convertible_to<typename c::Props>;
+  };
+  template<typename c> requires ComponentConcept<c>
+  struct c_init_t {
+    typename c::Props props;
+    std::vector<Component*> inner = {};
+    std::function<void(c*)> init = [](c*){};
+  };
+  
+  
   class Component {
     
     std::function<void(Component*)> inner_redraw = nullptr;
     
-    void redraw(cydui::events::layout::CLayoutEvent* ev, bool clr);
-    
-    virtual void on_redraw(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_mouse_enter(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_mouse_exit(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_mouse_click(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_scroll(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_key_press(events::layout::CLayoutEvent* ev);
-    
-    virtual void on_key_release(events::layout::CLayoutEvent* ev);
+    bool is_group = false;
   
   protected:
-    // Private size operations
+  
+  
+    template<typename c, int ID> requires ComponentConcept<c>
+    inline c* create(c_init_t<c> init) {
+      return new c((typename c::State*)(this->state->children.contains(ID)?
+            (this->state->children[ID]): (this->state->children.add(ID, new typename c::State()))),
+        init.props,
+        [this, init](cydui::components::Component* __raw_local_) {
+          this; state;
+          auto* local = (c*)__raw_local_;
+      
+          local->add(init.inner);
+          init.init(local);
+        }
+      );
+    }
+
+#define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
+  
+    template<typename c, int ID, typename T> requires ComponentConcept<c>
+    inline Component* create_for(T iter, std::function<c_init_t<c>(typename T::value_type)> block) {
+      int i = 0;
+      auto temp_c = new Component();
+      for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
+        c_init_t<c> init = block(*a);
+        temp_c->children.push_back(new c((typename c::State*)(this->state->children.contains(ID,i)?
+              (this->state->children.get_list(ID,i)): (this->state->children.add_list(ID,i, new typename c::State()))),
+          init.props,
+          [this, init](cydui::components::Component* __raw_local_) {
+            this; state;
+            auto* local = (c*)__raw_local_;
+      
+            local->add(init.inner);
+            init.init(local);
+          }
+        ));
+      }
+      temp_c->is_group = true;
+      return temp_c;
+    }
+
+#define FOR_EACH(COMPONENT) create_for<COMPONENT, __COUNTER__>
+
+
   public:
     //explicit Component(std::unordered_set<Component*> children);
     
@@ -89,7 +133,9 @@ namespace cydui::components {
     
     std::vector<Component*> children;
     
-    void on_event(events::layout::CLayoutEvent* ev);
+    void redraw();
+    
+    void render(const cydui::window::CWindow* win);
     
     Component* get_parent();
     
@@ -125,6 +171,23 @@ namespace cydui::components {
     Component* set_margin(unsigned int top, unsigned int right, unsigned int bottom, unsigned int left);
     
     Component* set_border_enable(bool enabled);
+    
+    virtual void on_render(const cydui::window::CWindow* win);
+    
+    virtual void on_redraw();
+    
+    virtual void on_mouse_enter(int x, int y);
+    
+    virtual void on_mouse_exit(int x, int y);
+    
+    virtual void on_mouse_click(int x, int y, int button);
+    
+    virtual void on_scroll(int d);
+    
+    virtual void on_key_press();
+    
+    virtual void on_key_release();
+    
   };
   
 }// namespace cydui::components
@@ -139,7 +202,8 @@ explicit NAME##State(): cydui::components::ComponentState()
 
 #define COMPONENT(NAME) \
 class NAME: public cydui::components::Component { \
-public: \
+public:                 \
+typedef NAME##State State;                        \
 logging::logger log = {.name = #NAME, .on = true};
 
 #define DISABLE_LOG this->log.on = false;
@@ -160,18 +224,27 @@ explicit NAME(NAME##State* state, Props props, const std::function<void(cydui::c
   : cydui::components::Component(state, inner) {                                                                       \
     this->props = std::move(props);
 
-#define REDRAW(EV) \
-void on_redraw(cydui::events::layout::CLayoutEvent* (EV)) override
+#define REDRAW \
+void on_redraw() override
+
+#define RENDER(WIN) \
+void on_render(const cydui::window::CWindow* (WIN)) override
 
 
 #define WITH_STATE(NAME) auto* state = (NAME##State*)this->state;
 
 #define ADD_TO(COMPONENT, VECTOR) COMPONENT->add(std::vector<cydui::components::Component*>VECTOR);
 
-/// Using lambda captures in statements prevents IDE from showing 'unused-lambda-capture' error
+#define REDRAWw(NAME, VECTOR) \
+void on_redraw() override { \
+WITH_STATE(NAME)         \
+ADD_TO(this, VECTOR);    \
+}
+
+/// Using lambda captures ___inner statements prevents IDE from showing 'unused-lambda-capture' error
 
 // FIXME - REMOVE MACRO
-#define in(NAME, LOCAL_NAME, VECTOR) \
+#define ___inner(NAME, LOCAL_NAME, VECTOR) \
 [state](cydui::components::Component* __raw_##LOCAL_NAME) { \
 state;                                     \
 auto* LOCAL_NAME = (NAME*)__raw_##LOCAL_NAME; \
@@ -192,20 +265,17 @@ new NAME(                                     \
     this##NAME->add(v);                       \
                                               \
     std::function<void(NAME* this##NAME)> init =                  \
-    [state](NAME* this##NAME){state; INIT};            \
+    [this,state](NAME* this##NAME){this;state; INIT};            \
     init(this##NAME);                         \
                                               \
   }\
 )
 
-#define C_NEW_INNER(ID, NAME, PROPS, IN) \
-C_NEW_ALL(ID, NAME, PROPS, IN, { state; })
+#define C_NEW_INNER(ID, NAME, PROPS, IN) C_NEW_ALL(ID, NAME, PROPS, IN, { state; })
 
-#define C_NEW_PROPS(ID, NAME, PROPS) \
-C_NEW_INNER(ID, NAME, PROPS, ({ }))
+#define C_NEW_PROPS(ID, NAME, PROPS) C_NEW_INNER(ID, NAME, PROPS, ({ }))
 
-#define C_NEW(ID, NAME) \
-C_NEW_PROPS(ID, NAME, ({ }))
+#define C_NEW(ID, NAME) C_NEW_PROPS(ID, NAME, ({ }))
 
 #define C_GET_NEW_MACRO(_1, _2, _3, _4, NAME, ...) NAME
 #define N(...) C_GET_NEW_MACRO(__VA_ARGS__, C_NEW_ALL, C_NEW_INNER, C_NEW_PROPS, C_NEW)(__COUNTER__, __VA_ARGS__)

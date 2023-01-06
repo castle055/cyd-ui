@@ -5,7 +5,7 @@
 #ifndef CYD_UI_COMPONENT_GEOMETRY_HPP
 #define CYD_UI_COMPONENT_GEOMETRY_HPP
 
-#include "../../../../include/properties.hpp"
+#include "properties.hpp"
 
 class ComponentGeometry {
 public:

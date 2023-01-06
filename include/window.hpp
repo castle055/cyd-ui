@@ -6,8 +6,8 @@
 #define CYD_UI_WINDOW_HPP
 
 
-#include "../src/events/events.hpp"
-#include "../src/graphics/graphics.hpp"
+#include "events.hpp"
+#include "graphics.hpp"
 #include "layout.hpp"
 #include "window_types.hpp"
 
@@ -19,7 +19,8 @@ namespace cydui::window {
     int x = 0,
     int y = 0,
     int w = 640,
-    int h = 480
+    int h = 480,
+    bool override_redirect = false
   );
   
   bool process_event(CWindow win);

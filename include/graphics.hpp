@@ -6,22 +6,23 @@
 #define CYD_UI_GRAPHICS_HPP
 
 
-#include "../events/events.hpp"
-#include "../layout/color/colors.hpp"
-#include "../layout/fonts/fonts.hpp"
+#include "events.hpp"
+#include "colors.hpp"
+#include "fonts.hpp"
 
-#include "x11/x11_impl.hpp"
+#include "x11_impl.hpp"
 
 namespace cydui::graphics {
   typedef window_t window_t;
   
   window_t* create_window(
-    const char* title, const char* wclass, int x, int y, int w, int h
+    const char* title, const char* wclass, int x, int y, int w, int h,
+    bool override_redirect = false
   );
   
   void set_background(window_t* win);
   
-  void on_event(window_t* win, events::graphics::CGraphicsEvent* ev);
+  void resize(window_t* win, int w, int h);
   
   void flush(window_t* win);
   

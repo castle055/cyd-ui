@@ -6,8 +6,7 @@
 
 #include <utility>
 
-#include "../../../include/window_types.hpp"
-#include "../../graphics/graphics.hpp"
+#include "../../../include/graphics.hpp"
 
 using namespace cydui::components;
 
@@ -84,13 +83,26 @@ Component::~Component() {
 }
 
 //== API for subclasses
-void Component::add(std::vector<Component*> children) {
-  for (auto &item: children) {
-    item->parent = this;
-    this->children.push_back(item);
-    
-    if (!item->state->geom.custom_offset) {
-      item->set_pos(this, 0, 0);
+void Component::add(std::vector<Component*> ichildren) {
+  for (auto &item: ichildren) {
+    if (item->is_group) {
+      for (auto &subitem: item->children) {
+        subitem->parent = this;
+        this->children.push_back(subitem);
+        
+        if (!subitem->state->geom.custom_offset) {
+          subitem->set_pos(this, 0, 0);
+        }
+      }
+      item->children.clear();
+      delete item;
+    } else {
+      item->parent = this;
+      this->children.push_back(item);
+      
+      if (!item->state->geom.custom_offset) {
+        item->set_pos(this, 0, 0);
+      }
     }
   }
   
@@ -131,64 +143,24 @@ void Component::add(std::vector<Component*> children) {
   }
 }
 
-//== Events
-void Component::on_event(events::layout::CLayoutEvent* ev) {
-  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-  switch (ev->type) {
-    case events::layout::LYT_EV_REDRAW: redraw(ev, true);
-      break;
-    case events::layout::LYT_EV_KEYPRESS: break;
-    case events::layout::LYT_EV_KEYRELEASE: break;
-    case events::layout::LYT_EV_BUTTONPRESS:on_mouse_click(ev);
-      break;
-    case events::layout::LYT_EV_BUTTONRELEASE: break;
-    case events::layout::LYT_EV_RESIZE:state->geom.w = win_ref->w;
-      state->geom.h                                  = win_ref->h;
-      ev->consumed                                   = true;
-      
-      break;
-    case events::layout::LYT_EV_MOUSEMOTION:
-      if (ev->data.motion_ev.enter) {
-        on_mouse_enter(ev);
-      } else if (ev->data.motion_ev.exit) {
-        on_mouse_exit(ev);
-      }
-      break;
-    default: break;
-  }
-  
-  if (parent && !ev->consumed) {
-    parent->on_event(ev);
-  }
-  if (!parent) {
-    ev->consumed = true;
-  }
-}
-
-void Component::redraw(cydui::events::layout::CLayoutEvent* ev, bool clr) {
-  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
-  
-  if (clr) {
-    // Clear window region
-    graphics::clr_rect(
-      win_ref,
-      state->geom.abs_x().compute(),
-      state->geom.abs_y().compute(),
-      state->geom.abs_w().compute(),
-      state->geom.abs_h().compute());
-  }
-  for (auto &child: children)
-    delete child;
-  children.clear();
-  
-  on_redraw(ev);
+void Component::redraw() {
   inner_redraw(this);
+  on_redraw();
   
   for (auto &child: children) {
-    child->redraw(ev, false);
+    child->redraw();
+  }
+  state->_dirty = false;
+}
+
+void Component::render(const cydui::window::CWindow* win) {
+  auto* win_ref = win->win_ref;
+  
+  for (auto &child: children) {
+    if (child) child->render(win);
   }
   
-  if (state->border.enabled) {
+  if (state != nullptr && state->border.enabled) {
     graphics::drw_rect(
       win_ref,
       state->border.color,
@@ -200,32 +172,42 @@ void Component::redraw(cydui::events::layout::CLayoutEvent* ev, bool clr) {
     );
   }
   
-  if (clr) {
-    ev->consumed = true;
-  }
-  
-  state->_dirty = false;
+  on_render(win);
 }
 
-void Component::on_redraw(events::layout::CLayoutEvent* ev) {
+void Component::on_render(const cydui::window::CWindow* win) {
 }
 
-void Component::on_key_press(events::layout::CLayoutEvent* ev) {
+void Component::on_redraw() {
 }
 
-void Component::on_key_release(events::layout::CLayoutEvent* ev) {
+void Component::on_key_press() {
 }
 
-void Component::on_mouse_enter(events::layout::CLayoutEvent* ev) {
+void Component::on_key_release() {
 }
 
-void Component::on_mouse_click(events::layout::CLayoutEvent* ev) {
+void Component::on_mouse_enter(int x, int y) {
+  // TODO - Must change coords since they are relative
+  if (this->parent)
+    this->parent->on_mouse_enter(x, y);
 }
 
-void Component::on_mouse_exit(events::layout::CLayoutEvent* ev) {
+void Component::on_mouse_click(int x, int y, int button) {
+  // TODO - Must change coords since they are relative
+  if (this->parent)
+    this->parent->on_mouse_click(x, y, button);
 }
 
-void Component::on_scroll(events::layout::CLayoutEvent* ev) {
+void Component::on_mouse_exit(int x, int y) {
+  // TODO - Must change coords since they are relative
+  if (this->parent)
+    this->parent->on_mouse_exit(x, y);
+}
+
+void Component::on_scroll(int d) {
+  if (this->parent)
+    this->parent->on_scroll(d);
 }
 
 Component* Component::set_size(int w, int h) {

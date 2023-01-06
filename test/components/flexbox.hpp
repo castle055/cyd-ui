@@ -8,7 +8,7 @@
 #include <utility>
 
 #include "../../include/cydui.hpp"
-#include "../../src/logging/logging.hpp"
+#include "../../include/logging.hpp"
 #include "../components/button.hpp"
 
 class FlexBoxState: public cydui::components::ComponentState {
@@ -35,7 +35,7 @@ public:
     _state->inner = std::move(inner);
   }
   
-  void on_redraw(cydui::events::layout::CLayoutEvent* ev) override {
+  void on_redraw() override {
     auto* state = (FlexBoxState*)this->state;
     
     if (props.vertical) {

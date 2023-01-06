@@ -3,7 +3,7 @@
 //
 
 #include "state.hpp"
-#include "../../../logging/logging.hpp"
+#include "../../../../include/logging.hpp"
 
 const logging::logger log_task = {.name = "X11_IMPL::state"};
 
@@ -17,6 +17,7 @@ Display* state::get_dpy() {
     log_task.info("dpy = %X", dpy);
     return dpy;
   } else {
+    log_task.error("Could not open display");
     return nullptr;
   }
 }

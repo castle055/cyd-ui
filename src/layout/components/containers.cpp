@@ -6,7 +6,7 @@
 
 #include <utility>
 #include "../../../include/primitives.hpp"
-#include "../../logging/logging.hpp"
+#include "../../../include/logging.hpp"
 
 logging::logger cont_log = {.name = "CONT"};
 
@@ -21,7 +21,7 @@ containers::VBox::VBox(
   _state->offset = 1;
 }
 
-void containers::VBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
+void containers::VBox::on_redraw() {
   auto* state = (VBoxState*)this->state;
   
   int       cur_h = state->offset.val();
@@ -42,7 +42,7 @@ containers::HBox::HBox(
   _state->offset = 1;
 }
 
-void containers::HBox::on_redraw(cydui::events::layout::CLayoutEvent* ev) {
+void containers::HBox::on_redraw() {
   auto* state = (HBoxState*)this->state;
   
   int       cur_w = state->offset.val();

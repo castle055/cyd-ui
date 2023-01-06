@@ -24,8 +24,6 @@ namespace cydui::layout {
     explicit Layout(components::Component* root);
     
     void bind_window(window::CWindow* _win);
-    
-    void on_event(events::layout::CLayoutEvent* ev);
   };
   
 }// namespace cydui::layout

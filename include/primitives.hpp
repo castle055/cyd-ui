@@ -6,87 +6,136 @@
 #define CYD_UI_PRIMITIVES_HPP
 
 
-#include "../src/layout/color/colors.hpp"
-#include "../src/layout/fonts/fonts.hpp"
+#include "colors.hpp"
+#include "fonts.hpp"
+#include "window_types.hpp"
+#include "logging.hpp"
 #include "components.hpp"
 
 namespace primitives {
   using namespace cydui;
   using namespace cydui::components;
   using namespace cydui::layout::color;
-  using namespace cydui::events::layout;
   
-  class Line: public Component {
-    int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-    Color* color;
+  
+  STATE(Line) };
+  
+  COMPONENT(Line)
+    PROPS({
+      Color* color;
+    })
     
-    void on_redraw(CLayoutEvent* ev) override;
-  
-  public:
-    explicit Line(Color* color, int x1, int y1, int x2, int y2);
+    INIT(Line) DISABLE_LOG }
+    
+    RENDER(win) {
+      graphics::drw_line(
+        win->win_ref,
+        props.color,
+        state->geom.content_x().val(),
+        state->geom.content_y().val(),
+        (state->geom.content_x() + state->geom.w).val(),
+        (state->geom.content_y() + state->geom.h).val()
+      );
+    }
   };
   
-  class Rectangle: public Component {
-    int  x = 0, y = 0, w = 0, h = 0;
-    bool filled;
-    Color* color;
-    
-    void on_redraw(CLayoutEvent* ev) override;
   
-  public:
-    explicit Rectangle(
-      Color* color, int x, int y, int w, int h, bool filled = false
-    );
+  STATE(Rectangle) };
+  
+  COMPONENT(Rectangle)
+    PROPS({
+      Color* color;
+      bool filled = false;
+    })
+    
+    INIT(Rectangle) DISABLE_LOG }
+    
+    RENDER(win) {
+      graphics::drw_rect(
+        win->win_ref,
+        props.color,
+        state->geom.content_x().val(),
+        state->geom.content_y().val(),
+        state->geom.w.val(),
+        state->geom.h.val(),
+        props.filled
+      );
+    }
   };
   
-  class Arc: public Component {
-    int  x = 0, y = 0, w = 0, h = 0;
-    int  a0, a1;
-    bool filled;
-    Color* color;
-    
-    void on_redraw(CLayoutEvent* ev) override;
   
-  public:
-    explicit Arc(
-      Color* color,
-      int x,
-      int y,
-      int w,
-      int h,
-      int a0,
-      int a1,
-      bool filled = false
-    );
+  STATE(Arc) };
+  
+  COMPONENT(Arc)
+    PROPS({
+      Color* color;
+      bool filled = false;
+      int  a0     = 0;
+      int  a1     = 180;
+    })
+    
+    INIT(Arc) DISABLE_LOG }
+    
+    RENDER(win) {
+      graphics::drw_arc(
+        win->win_ref,
+        props.color,
+        state->geom.content_x().val(),
+        state->geom.content_y().val(),
+        state->geom.w.val(),
+        state->geom.h.val(),
+        props.a0, props.a1, props.filled
+      );
+    }
   };
   
-  class Circle: public Component {
-    int  x = 0, y = 0, w = 0, h = 0;
-    bool filled;
-    Color* color;
-    
-    void on_redraw(CLayoutEvent* ev) override;
   
-  public:
-    explicit Circle(
-      Color* color, int x, int y, int w, int h, bool filled = false
-    );
+  STATE(Circle) };
+  
+  COMPONENT(Circle)
+    PROPS({
+      Color* color;
+      bool filled;
+    })
+    
+    INIT(Circle) DISABLE_LOG }
+    
+    RENDER(win) {
+      graphics::drw_arc(
+        win->win_ref, props.color,
+        state->geom.content_x().val(),
+        state->geom.content_y().val(),
+        state->geom.w.val(),
+        state->geom.h.val(),
+        0, 360, props.filled
+      );
+    }
   };
   
-  class Text: public Component {
-    
-    
-    int x = 0, y = 0;
-    Color              * color;
-    layout::fonts::Font* font;
-    std::string text;
-    
-    void on_redraw(CLayoutEvent* ev) override;
   
-  public:
-    Text(
-      Color* color, layout::fonts::Font* font, int x, int y, std::string text
-    );
+  STATE(Text) };
+  
+  COMPONENT(Text)
+    PROPS({
+      Color              * color;
+      layout::fonts::Font* font;
+      std::string text;
+    })
+    
+    INIT(Text) DISABLE_LOG
+      state->geom.w             = 125;
+      state->geom.h             = this->props.font->size;
+      state->geom.custom_width  = true;
+      state->geom.custom_height = true;
+    }
+    
+    RENDER(win) {
+      graphics::drw_text(
+        win->win_ref, props.font, props.color, props.text,
+        state->geom.content_x().val(),
+        (state->geom.content_y() + props.font->size).val()
+      );
+    }
   };
   
 }// namespace primitives

@@ -3,6 +3,7 @@
 //
 
 #include "../../include/window.hpp"
+#include "../graphics/events.hpp"
 #include <vector>
 
 using namespace cydui::window;
@@ -16,36 +17,31 @@ CWindow* cydui::window::create(
   int x,
   int y,
   int w,
-  int h
+  int h,
+  bool override_redirect
 ) {
-  events::start();
-  
   auto win = new CWindow();
-  windows.push_back(win);
-  win->listener = new CWindowListener(win);
-  events::subscribe(win->listener);
+  auto* win_ref = graphics::create_window(title, wclass, x, y, w, h, override_redirect);
   win->layout = layout;
   
-  auto* win_ref = graphics::create_window(title, wclass, x, y, w, h);
   win->win_ref = win_ref;
   graphics::set_background(win_ref);
   
   layout->bind_window(win);
+  
+  windows.push_back(win);
+  cydui::events::on_event<ResizeEvent>(
+    cydui::events::Consumer<ResizeEvent>([=](const cydui::events::ParsedEvent<ResizeEvent> &it) {
+      graphics::resize(win_ref, it.data->w, it.data->h);
+    })
+  );
+  
+  events::start();
+  
+  // Once all threads have started and everything is set up for this window
+  // force a complete redraw
+  events::emit<RedrawEvent>({ });
+  
   return win;
 }
 
-CWindowListener::CWindowListener(CWindow* win) {
-  this->win = win;
-}
-
-void CWindowListener::on_event(cydui::events::CEvent* ev) {
-  switch (ev->type) {
-    case events::EVENT_GRAPHICS:
-      graphics::on_event(
-        win->win_ref, (events::graphics::CGraphicsEvent*)(ev->data));
-      break;
-    case events::EVENT_LAYOUT:win->layout->on_event((events::layout::CLayoutEvent*)(ev->data));
-      break;
-    default: break;
-  }
-}

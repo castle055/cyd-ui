@@ -33,14 +33,14 @@ COMPONENT(TerminalButton)
     full_cmd = get_full_cmd();
   }
   
-  REDRAW(ev) {
+  REDRAW {
     WITH_STATE(TerminalButton)
     
     ADD_TO(this, ({
       N(Button, ({
         .text = "T",
         .on_action = action {
-          state->open_terminal_task.run(full_cmd.c_str());
+          state->open_terminal_task.run(props.width, props.lines, full_cmd.c_str());
         }
       })),
     }))

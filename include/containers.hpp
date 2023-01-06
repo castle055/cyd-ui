@@ -6,14 +6,13 @@
 #define CYD_UI_CONTAINERS_HPP
 
 
-#include "../src/layout/color/colors.hpp"
+#include "colors.hpp"
 #include "components.hpp"
 
 namespace containers {
   using namespace cydui;
   using namespace cydui::components;
   using namespace cydui::layout::color;
-  using namespace cydui::events::layout;
   
   
   class VBoxState: public ComponentState {
@@ -24,7 +23,7 @@ namespace containers {
   
   class VBox: public Component {
     
-    void on_redraw(CLayoutEvent* ev) override;
+    void on_redraw() override;
   
   public:
     explicit VBox(
@@ -42,7 +41,7 @@ namespace containers {
   
   class HBox: public Component {
     
-    void on_redraw(CLayoutEvent* ev) override;
+    void on_redraw() override;
   
   public:
     

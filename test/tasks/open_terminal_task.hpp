@@ -15,12 +15,20 @@ class OpenTerminalTask {
   bool  error    = false;
 public:
   
-  void run(const char* cmd) {
+  void run(int w, int h, const char* cmd) {
     running = true;
     if (fork() == 0) {
       setsid();
-      fprintf(stdout, "running %s", cmd);
-      std::system(cmd);
+      std::string c;
+      c.append("st -c scratch -g");
+      c.append(std::to_string(w));
+      c.append("x");
+      c.append(std::to_string(h));
+      c.append("+0+0 -e sh -c '");
+      c.append(cmd);
+      c.append("' & disown");
+      fprintf(stdout, "running %s", c.c_str());
+      std::system(c.c_str());
       
       exit(0);
     }

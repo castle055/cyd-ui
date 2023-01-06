@@ -55,21 +55,21 @@ namespace cydui::components {
     
     std::function<void(Component*)> inner_redraw = nullptr;
     
-    void redraw(cydui::events::layout::CLayoutEvent* ev, bool clr);
+    void redraw(cydui::events::layout::CLayoutEvent* data, bool clr);
     
-    virtual void on_redraw(events::layout::CLayoutEvent* ev);
+    virtual void on_redraw(events::layout::CLayoutEvent* data);
     
-    virtual void on_mouse_enter(events::layout::CLayoutEvent* ev);
+    virtual void on_mouse_enter(events::layout::CLayoutEvent* data);
     
-    virtual void on_mouse_exit(events::layout::CLayoutEvent* ev);
+    virtual void on_mouse_exit(events::layout::CLayoutEvent* data);
     
-    virtual void on_mouse_click(events::layout::CLayoutEvent* ev);
+    virtual void on_mouse_click(events::layout::CLayoutEvent* data);
     
-    virtual void on_scroll(events::layout::CLayoutEvent* ev);
+    virtual void on_scroll(events::layout::CLayoutEvent* data);
     
-    virtual void on_key_press(events::layout::CLayoutEvent* ev);
+    virtual void on_key_press(events::layout::CLayoutEvent* data);
     
-    virtual void on_key_release(events::layout::CLayoutEvent* ev);
+    virtual void on_key_release(events::layout::CLayoutEvent* data);
   
   protected:
     // Private size operations
@@ -94,7 +94,7 @@ namespace cydui::components {
     
     std::vector<Component*> children;
     
-    void on_event(events::layout::CLayoutEvent* ev);
+    void on_event(events::layout::CLayoutEvent* data);
     
     Component* get_parent();
     

@@ -12,9 +12,9 @@ overloads:
       - private
     arguments:
       - description: __OPTIONAL__
-        name: ev
+        name: data
         type: events::layout::CLayoutEvent *
     description: __OPTIONAL__
     return: __OPTIONAL__
-    signature_with_names: void on_mouse_exit(events::layout::CLayoutEvent * ev)
+    signature_with_names: void on_mouse_exit(events::layout::CLayoutEvent * data)
 ---

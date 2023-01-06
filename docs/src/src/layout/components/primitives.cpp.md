@@ -20,8 +20,8 @@ Line::Line(Color* color, int x1, int y1, int x2, int y2)
   log_lay.info("LINE -> props, pos(x=%d,y=%d) size(w=%d,h=%d)", x1, y1, x2, y2);
 }
 
-void Line::on_redraw(CLayoutEvent* ev) {
-  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
+void Line::on_redraw(CLayoutEvent* data) {
+  auto* win_ref = ((window::CWindow*)data->win)->win_ref;
   
   //log_lay.info("props, pos(x=%d,y=%d) size(w=%d,h=%d)", x1, y1, x2, y2);
   //log_lay.info("state, pos(x=%d,y=%d)", state->geom.abs_x(), state->geom.abs_y());
@@ -47,8 +47,8 @@ Rectangle::Rectangle(Color* color, int x, int y, int w, int h, bool filled)
   this->filled            = filled;
 }
 
-void Rectangle::on_redraw(CLayoutEvent* ev) {
-  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
+void Rectangle::on_redraw(CLayoutEvent* data) {
+  auto* win_ref = ((window::CWindow*)data->win)->win_ref;
   graphics::drw_rect(
       win_ref,
       color,
@@ -72,8 +72,8 @@ Arc::Arc(Color* color, int x, int y, int w, int h, int a0, int a1, bool filled)
   this->filled  = filled;
 }
 
-void Arc::on_redraw(CLayoutEvent* ev) {
-  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
+void Arc::on_redraw(CLayoutEvent* data) {
+  auto* win_ref = ((window::CWindow*)data->win)->win_ref;
   auto* state   = this->state;
   graphics::drw_arc(
       win_ref,
@@ -96,8 +96,8 @@ Circle::Circle(Color* color, int x, int y, int w, int h, bool filled)
   this->filled  = filled;
 }
 
-void Circle::on_redraw(CLayoutEvent* ev) {
-  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
+void Circle::on_redraw(CLayoutEvent* data) {
+  auto* win_ref = ((window::CWindow*)data->win)->win_ref;
   graphics::drw_arc(
       win_ref, color,
       state->geom.content_x().val(),
@@ -121,8 +121,8 @@ Text::Text(Color* color, layout::fonts::Font* font, int x, int y, std::string te
   //state->h    = y;
 }
 
-void Text::on_redraw(CLayoutEvent* ev) {
-  auto* win_ref = ((window::CWindow*)ev->win)->win_ref;
+void Text::on_redraw(CLayoutEvent* data) {
+  auto* win_ref = ((window::CWindow*)data->win)->win_ref;
   graphics::drw_text(
       win_ref, font, color, text,
       state->geom.content_x().val(),

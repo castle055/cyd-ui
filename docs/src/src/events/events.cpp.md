@@ -28,7 +28,7 @@ logging::logger log_ctrl = {.name = "EV_CTRL", .on = false};
 
 void process_event(thread_data* data) {
   //  log_task.debug("Processing next event");
-  cydui::events::CEvent* ev;
+  cydui::events::CEvent* data;
   
   event_mutex.lock();
   //  log_task.debug("Event queue len: %d", data->event_queue->size());
@@ -38,18 +38,18 @@ void process_event(thread_data* data) {
     return;
   }
   //  log_task.debug("Event queue not empty");
-  ev = data->event_queue->front();
+  data = data->event_queue->front();
   data->event_queue->pop_front();
   log_task.debug("POP Event");
   event_mutex.unlock();
   
   listeners_mutex.lock();
   for (const auto &listener: *data->event_listeners) {
-    listener->on_event(ev);
+    listener->on_event(data);
   }
   listeners_mutex.unlock();
   
-  delete ev;
+  delete data;
 }
 
 using namespace std::chrono_literals;
@@ -72,10 +72,10 @@ void cydui::events::start() {
   event_thread = threading::new_thread(&event_task, th_data);
 }
 
-void cydui::events::emit(cydui::events::CEvent* ev) {
-  log_ctrl.debug("Emitting event. type=%d", ev->type);
+void cydui::events::emit(cydui::events::CEvent* data) {
+  log_ctrl.debug("Emitting event. type=%d", data->type);
   event_mutex.lock();
-  th_data->event_queue->push_back(ev);
+  th_data->event_queue->push_back(data);
   event_mutex.unlock();
 }
 

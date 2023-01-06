@@ -8,6 +8,7 @@ namespace cydui { }
 #include "layout.hpp"
 #include "primitives.hpp"
 #include "window.hpp"
+#include "config.hpp"
 
 
 #endif//CYD_UI_CYDUI_HPP

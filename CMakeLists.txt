@@ -43,41 +43,41 @@ add_library(cyd_ui SHARED
         include/layout.hpp
         src/window/window.cpp
         include/window.hpp
-        src/graphics/graphics.hpp
+        include/graphics.hpp
         src/graphics/x11/x11_impl.cpp
         src/graphics/x11/state/state.cpp
         src/graphics/x11/state/state.hpp
         src/logging/logging.cpp
-        src/logging/logging.hpp
+        include/logging.hpp
         src/events/events.cpp
-        src/events/events.hpp
+        include/events.hpp
         src/graphics/x11/events/events.cpp
         src/graphics/events.hpp
         include/components.hpp
         src/layout/components/components.cpp
-        src/layout/components/primitives.cpp
         include/primitives.hpp
         src/threading/threading.cpp
-        src/threading/threading.hpp
+        include/threading.hpp
         include/window_types.hpp
         src/graphics/x11/render/render.cpp
         src/graphics/x11/render/render.hpp
-        src/graphics/x11/x11_impl.hpp
-        src/layout/color/colors.hpp
+        include/x11_impl.hpp
+        include/colors.hpp
         src/layout/color/colors.cpp
         include/containers.hpp
         src/layout/components/containers.cpp
         src/layout/fonts/fonts.cpp
-        src/layout/fonts/fonts.hpp
+        include/fonts.hpp
         src/events/properties/properties.cpp
         include/properties.hpp
-        src/events/properties/int_properties.hpp
+        include/int_properties.hpp
         src/layout/components/geometry/component_geometry.cpp
-        src/layout/components/geometry/component_geometry.hpp
+        include/component_geometry.hpp
         src/layout/components/state/children_state_collection.cpp
-        src/layout/components/state/children_state_collection.h
-        )
+        include/children_state_collection.hpp
+        include/change_events.h include/config.hpp src/config/config.cpp test/startmenu/tabs/home/shortcuts.hpp)
 target_link_libraries(cyd_ui PRIVATE X11 Xft)
+target_link_libraries(cyd_ui PUBLIC yaml-cpp)
 
 add_executable(cyd_ui_test
         test/main.cpp
@@ -89,7 +89,11 @@ add_executable(cyd_ui_test
         test/wifi/banner.hpp
         test/components/button.hpp
         test/components/flexbox.hpp
-        )
+        test/components/clock_module.hpp
+        test/status_bar/workspace_selector.hpp
+        test/status_bar/window_title.hpp
+        test/startmenu/startmenu.hpp test/startmenu/startmenuselector.hpp test/startmenu/powerselector.hpp test/startmenu/tabs/hometab.hpp test/startmenu/tabs/appstab.hpp test/startmenu/tabs/searchtab.hpp test/startmenu/tabs/appbutton.hpp test/startmenu/tabs/appsection.hpp test/startmenu/tabs/listview.hpp test/tasks/list_apps_task.hpp test/startmenu/config/startappscm.hpp)
 target_link_libraries(cyd_ui_test PRIVATE cyd_ui)
 #add_dependencies(cppcheck clang-format)
 #add_dependencies(cyd_ui_test cppcheck)
+

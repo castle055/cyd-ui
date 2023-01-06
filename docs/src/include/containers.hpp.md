@@ -24,7 +24,7 @@ namespace containers {
   
   class VBox: public Component { ;
     
-    void on_redraw(CLayoutEvent* ev) override;
+    void on_redraw(CLayoutEvent* data) override;
   
   public:
     explicit VBox(
@@ -42,7 +42,7 @@ namespace containers {
   
   class HBox: public Component { ;
     
-    void on_redraw(CLayoutEvent* ev) override;
+    void on_redraw(CLayoutEvent* data) override;
   
   public:
     

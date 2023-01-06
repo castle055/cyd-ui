@@ -40,75 +40,75 @@ static void render_if_dirty(cydui::components::Component* c) {
   }
 }
 
-void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* ev) {
-  //  log_lay.debug("Event %d", ev->type);
+void cydui::layout::Layout::on_event(cydui::events::layout::CLayoutEvent* data) {
+  //  log_lay.debug("Event %d", data->type);
   
-  ev->win = (void*)win;
+  data->win = (void*)win;
   components::Component     * target       = nullptr;
   components::ComponentState* target_state = nullptr;
-  switch (ev->type) {
+  switch (data->type) {
     case events::layout::LYT_EV_REDRAW:
       log_lay.debug(
           "REDRAW"
       );
-      if (ev->data.redraw_ev.component) {
-        target_state = ((components::ComponentState*)ev->data.redraw_ev.component);
+      if (data->data.redraw_ev.component) {
+        target_state = ((components::ComponentState*)data->data.redraw_ev.component);
         if (target_state)
           target     = target_state->component_instance;
         if (target)
-          target->on_event(ev);
+          target->on_event(data);
       } else {
-        root->on_event(ev);
+        root->on_event(data);
       }
       render_if_dirty(root);
       graphics::flush(win->win_ref);
       break;
     case events::layout::LYT_EV_KEYPRESS: break;
     case events::layout::LYT_EV_KEYRELEASE: break;
-    case events::layout::LYT_EV_BUTTONPRESS:target = find_by_coords(root, ev->data.button_ev.x, ev->data.button_ev.y);
+    case events::layout::LYT_EV_BUTTONPRESS:target = find_by_coords(root, data->data.button_ev.x, data->data.button_ev.y);
       if (!target)
         break;
-      ev->data.motion_ev.x -= target->state->geom.border_x().compute();
-      ev->data.motion_ev.y -= target->state->geom.border_y().compute();
-      target->on_event(ev);
+      data->data.motion_ev.x -= target->state->geom.border_x().compute();
+      data->data.motion_ev.y -= target->state->geom.border_y().compute();
+      target->on_event(data);
       render_if_dirty(root);
       break;
     case events::layout::LYT_EV_BUTTONRELEASE: break;
     case events::layout::LYT_EV_MOUSEMOTION:
-      //      log_lay.debug("MOTION x=%d, y=%d", ev->data.motion_ev.x, ev->data.motion_ev.y);
-      target = find_by_coords(root, ev->data.motion_ev.x, ev->data.motion_ev.y);
+      //      log_lay.debug("MOTION x=%d, y=%d", data->data.motion_ev.x, data->data.motion_ev.y);
+      target = find_by_coords(root, data->data.motion_ev.x, data->data.motion_ev.y);
       if (!target)
         break;
-      ev->data.motion_ev.x -= target->state->geom.border_x().compute();
-      ev->data.motion_ev.y -= target->state->geom.border_y().compute();
+      data->data.motion_ev.x -= target->state->geom.border_x().compute();
+      data->data.motion_ev.y -= target->state->geom.border_y().compute();
       if (focused != target->state) {
         if (focused && focused->component_instance) {
-          ev->data.motion_ev.exit = true;
-          focused->component_instance->on_event(ev);
-          ev->consumed            = false;
-          ev->data.motion_ev.exit = false;
+          data->data.motion_ev.exit = true;
+          focused->component_instance->on_event(data);
+          data->consumed            = false;
+          data->data.motion_ev.exit = false;
         }
-        ev->data.motion_ev.enter = true;
+        data->data.motion_ev.enter = true;
         focused = target->state;
       }
-      //if (ev->data.motion_ev.enter) {
+      //if (data->data.motion_ev.enter) {
       //  log_lay.debug(
-      //      "MOTION w=%d, h=%d", ev->data.motion_ev.x, ev->data.motion_ev.y
+      //      "MOTION w=%d, h=%d", data->data.motion_ev.x, data->data.motion_ev.y
       //  );
       //}
-      target->on_event(ev);
+      target->on_event(data);
       render_if_dirty(root);
       break;
     case events::layout::LYT_EV_RESIZE:
       log_lay.debug(
-          "RESIZE w=%d, h=%d", ev->data.resize_ev.w, ev->data.resize_ev.h
+          "RESIZE w=%d, h=%d", data->data.resize_ev.w, data->data.resize_ev.h
       );
-      root->on_event(ev);
+      root->on_event(data);
       render_if_dirty(root);
       break;
     case events::layout::LYT_EV_UPDATE_PROP:
-      ((Property*)ev->data.update_prop_ev.target_property)
-          ->set_raw_value((void*)(ev->data.update_prop_ev.new_value));
+      ((Property*)data->data.update_prop_ev.target_property)
+          ->set_raw_value((void*)(data->data.update_prop_ev.new_value));
       render_if_dirty(root);
       break;
     default: break;

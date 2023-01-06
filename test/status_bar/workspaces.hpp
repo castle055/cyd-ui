@@ -8,10 +8,21 @@
 #include "../../include/cydui.hpp"
 #include "../components/button.hpp"
 #include "../components/flexbox.hpp"
+#include "../components/clock_module.hpp"
+#include "workspace_selector.hpp"
 
 STATE(Workspaces)
+  IntProperty occupied_workspaces;
+  IntProperty selected_workspaces = 1;
+  
+  cydui::layout::fonts::Font font {
+    .name = "Fira Code Retina",
+    .size = 10
+  };
   
   INIT_STATE(Workspaces) {
+    occupied_workspaces.bind(this);
+    selected_workspaces.bind(this);
   }
 };
 
@@ -22,51 +33,79 @@ COMPONENT(Workspaces)
     DISABLE_LOG
   }
   
-  REDRAW(ev) {
+  REDRAW {
     WITH_STATE(Workspaces)
     
     ADD_TO(this, {
       N(FlexBox, ({ .vertical = false }), ({
-        N(Button, ({
-          .text = "1",
-          .on_action = action { }
-        }), ({ }), {
-          thisButton->set_width(24);
-          thisButton->set_border_enable(true);
-        }),
-          N(Button, ({
+        N(ClockModule),
+          N(WorkspaceSelector, ({
+            .text = "1",
+            .font = &state->font,
+            .occupied = (state->occupied_workspaces.val() & (1 << 0)) > 0,
+            .selected = (state->selected_workspaces.val() & (1 << 0)) > 0,
+            .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 0);}
+          })),
+          N(WorkspaceSelector, ({
             .text = "2",
-            .on_action = action { }
+            .font = &state->font,
+            .occupied = (state->occupied_workspaces.val() & (1 << 1)) > 0,
+            .selected = (state->selected_workspaces.val() & (1 << 1)) > 0,
+            .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 1);}
           })),
-          N(Button, ({
+          N(WorkspaceSelector, ({
             .text = "3",
-            .on_action = action { }
+            .font = &state->font,
+            .occupied = (state->occupied_workspaces.val() & (1 << 2)) > 0,
+            .selected = (state->selected_workspaces.val() & (1 << 2)) > 0,
+            .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 2);}
           })),
-          N(Button, ({
+          N(WorkspaceSelector, ({
             .text = "4",
-            .on_action = action { }
+            .font = &state->font,
+            .occupied = (state->occupied_workspaces.val() & (1 << 3)) > 0,
+            .selected = (state->selected_workspaces.val() & (1 << 3)) > 0,
+            .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 3);}
           })),
-          N(Button, ({
+          N(WorkspaceSelector, ({
             .text = "5",
-            .on_action = action { }
+            .font = &state->font,
+            .occupied = (state->occupied_workspaces.val() & (1 << 4)) > 0,
+            .selected = (state->selected_workspaces.val() & (1 << 4)) > 0,
+            .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 4);}
           })),
-          N(Button, ({
+          N(WorkspaceSelector, ({
             .text = "6",
-            .on_action = action { }
+            .font = &state->font,
+            .occupied = (state->occupied_workspaces.val() & (1 << 5)) > 0,
+            .selected = (state->selected_workspaces.val() & (1 << 5)) > 0,
+            .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 5);}
           })),
-          N(Button, ({
+          N(WorkspaceSelector, ({
             .text = "7",
-            .on_action = action { }
+            .font = &state->font,
+            .occupied = (state->occupied_workspaces.val() & (1 << 6)) > 0,
+            .selected = (state->selected_workspaces.val() & (1 << 6)) > 0,
+            .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 6);}
           })),
-          N(Button, ({
+          N(WorkspaceSelector, ({
             .text = "8",
-            .on_action = action { }
+            .font = &state->font,
+            .occupied = (state->occupied_workspaces.val() & (1 << 7)) > 0,
+            .selected = (state->selected_workspaces.val() & (1 << 7)) > 0,
+            .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 7);}
           })),
-          N(Button, ({
+          N(WorkspaceSelector, ({
             .text = "9",
-            .on_action = action { }
+            .font = &state->font,
+            .occupied = (state->occupied_workspaces.val() & (1 << 8)) > 0,
+            .selected = (state->selected_workspaces.val() & (1 << 8)) > 0,
+            .on_click = action {state->selected_workspaces = state->selected_workspaces.val() ^ (1 << 8);}
           })),
-      }))
+      }), {
+        thisFlexBox->set_width(270);
+        thisFlexBox->set_pos(this, 10, 1);
+      })
     })
   }
 };

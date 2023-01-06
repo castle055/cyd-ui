@@ -13,11 +13,11 @@ overloads:
         name: win
         type: cydui::graphics::window_t *
       - description: __OPTIONAL__
-        name: ev
+        name: data
         type: events::graphics::CGraphicsEvent *
     description: __OPTIONAL__
     return: __OPTIONAL__
-    signature_with_names: void on_event(cydui::graphics::window_t * win, events::graphics::CGraphicsEvent * ev)
+    signature_with_names: void on_event(cydui::graphics::window_t * win, events::graphics::CGraphicsEvent * data)
 namespace:
   - cydui
   - graphics

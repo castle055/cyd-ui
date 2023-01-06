@@ -10,7 +10,7 @@ overloads:
   static void emit_lyt(XEvent, cydui::events::layout::CLayoutEventType, cydui::events::layout::CLayoutData):
     arguments:
       - description: __OPTIONAL__
-        name: ev
+        name: data
         type: XEvent
       - description: __OPTIONAL__
         name: type
@@ -20,5 +20,5 @@ overloads:
         type: cydui::events::layout::CLayoutData
     description: __OPTIONAL__
     return: __OPTIONAL__
-    signature_with_names: static void emit_lyt(XEvent ev, cydui::events::layout::CLayoutEventType type, cydui::events::layout::CLayoutData data)
+    signature_with_names: static void emit_lyt(XEvent data, cydui::events::layout::CLayoutEventType type, cydui::events::layout::CLayoutData data)
 ---

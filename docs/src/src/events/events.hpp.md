@@ -23,7 +23,7 @@ namespace cydui::events {
   
   class CEventListener {
   public:
-    virtual void on_event(CEvent* ev) = 0;
+    virtual void on_event(CEvent* data) = 0;
   };
   
   void subscribe(CEventListener* listener);
@@ -31,7 +31,7 @@ namespace cydui::events {
   void unsubscribe(CEventListener* listener);
   
   // Must be thread safe
-  void emit(CEvent* ev);
+  void emit(CEvent* data);
   
   namespace layout {
     enum CLayoutEventType {

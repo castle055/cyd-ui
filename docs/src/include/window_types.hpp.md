@@ -17,7 +17,7 @@ namespace cydui::window {
   class CWindowListener: public events::CEventListener {
     CWindow* win;
     
-    void on_event(events::CEvent* ev) override;
+    void on_event(events::CEvent* data) override;
   
   public:
     explicit CWindowListener(CWindow* win);
