@@ -40,34 +40,40 @@ thread_t* cydui::threading::thread_t::set_name(const std::string &name) {
 
 
 // ===== TASKS
+std::mutex                                   task_queue_mtx;
+std::mutex                                   timer_list_mtx;
+typedef std::vector<cydui::tasks::_timer_t*> timer_list_t;
+typedef std::deque<cydui::tasks::task_t*>    task_queue_t;
 
-struct task_row_t {
-  cydui::tasks::task_t* task;
-};
-struct timer_row_t {
-  std::chrono::duration<long, std::nano> lasttime = 0s;
-  cydui::tasks::timer_t* timer;
-};
-
-typedef std::unordered_map<cydui::tasks::timer_id, timer_row_t>           timer_table_t;
-typedef std::unordered_map<cydui::tasks::timer_id, cydui::tasks::task_t*> trigger_table_t;
-
-std::mutex                                task_queue_mtx;
-typedef std::deque<cydui::tasks::task_t*> task_queue_t;
-
-static timer_table_t   timer_table;
-static trigger_table_t trigger_table;
-
-// TASK QUEUE
+static timer_list_t timer_list;
 static task_queue_t task_queue;
 
-void push_task(cydui::tasks::task_t* task) {
+static void add_timer(cydui::tasks::_timer_t* timer) {
+  timer_list_mtx.lock();
+  if (std::find(timer_list.begin(), timer_list.end(), timer) == timer_list.end()) {
+    timer_list.push_back(timer);
+  }
+  timer_list_mtx.unlock();
+}
+
+cydui::tasks::_timer_t* remove_timer(cydui::tasks::_timer_t* timer) {
+  timer_list_mtx.lock();
+  auto t = std::find(timer_list.begin(), timer_list.end(), timer);
+  cydui::tasks::_timer_t* t_ret = *t;
+  if (t != timer_list.end()) {
+    timer_list.erase(t);
+  } else t_ret = nullptr;
+  timer_list_mtx.unlock();
+  return t_ret;
+}
+
+static void push_task(cydui::tasks::task_t* task) {
   task_queue_mtx.lock();
   task_queue.push_back(task);
   task_queue_mtx.unlock();
 }
 
-cydui::tasks::task_t* pop_task() {
+static cydui::tasks::task_t* pop_task() {
   task_queue_mtx.lock();
   cydui::tasks::task_t* id = nullptr;
   if (!task_queue.empty()) {
@@ -87,30 +93,27 @@ static void task_executor(cydui::tasks::task_t* task) {
 }
 
 static void trigger_executor() {
-  std::vector<cydui::tasks::timer_id> to_delete;
-  for (auto                           &item: trigger_table) {
+  timer_list_mtx.lock();
+  for (auto &item: timer_list) {
     auto now = std::chrono::system_clock::now().time_since_epoch();
-    if (timer_table.contains(item.first)) {
-      auto timer_row = timer_table[item.first];
-      auto* timer = timer_row.timer;
-      auto* task  = item.second;
-      
-      if (now - timer_row.lasttime > timer->period && timer->count != 0) {
-        timer_row.lasttime = now;
-        if (timer->count > 0) timer->count--;
-        task_executor(task);
-      }
-    } else {
-      to_delete.push_back(item.first);
+    auto* timer = item;
+    if (!timer) continue;
+    auto* task = item->task;
+    
+    //logger.debug("Found one count=%d, task=%X", timer->count, task);
+    if (timer->count != 0 && task && (timer->run_now || now - timer->last_time > timer->period)) {
+      timer->last_time = now;
+      timer->run_now   = false;
+      if (timer->count > 0) timer->count--;
+      timer_list_mtx.unlock(); // NOTE - this is on purpose
+      task_executor(task);
+      timer_list_mtx.lock();
     }
   }
-  for (const auto &item: to_delete) {
-    trigger_table.erase(item);
-  }
+  timer_list_mtx.unlock();
 }
 
 static void taskrunner_task(thread_t* this_thread) {
-  
   while (this_thread->running) {
     auto task = pop_task();
     if (task) {
@@ -121,7 +124,6 @@ static void taskrunner_task(thread_t* this_thread) {
     
     std::this_thread::sleep_for(std::chrono::duration<int, std::nano>(10ms));
   }
-  
 }
 
 cydui::threading::thread_t* taskrunner_thread;
@@ -145,7 +147,14 @@ void cydui::tasks::start(task_t* task) {
   push_task(task);
 }
 
+void cydui::tasks::start_timer(_timer_t* timer) {
+  start_thd();
+  add_timer(timer);
+}
+
+
 // TYPE IMPLEMENTATION
+
 cydui::tasks::task_id cydui::tasks::task_t::get_id() {
   return this->id;
 }

@@ -18,6 +18,10 @@ STATE(RadialIndicator)
     .name = "Fira Code Retina",
     .size = 7,
   };
+  cydui::layout::fonts::Font font_bigger {
+    .name = "Fira Code Retina",
+    .size = 8,
+  };
   
   INIT_STATE(RadialIndicator) {
   }
@@ -25,21 +29,33 @@ STATE(RadialIndicator)
 
 COMPONENT(RadialIndicator)
   PROPS({
-    int  value      = 50;
-    bool show_value = false;
+    std::string text       = "";
+    int         value      = 50;
+    bool        show_value = false;
     cydui::layout::color::Color* color = nullptr;
   })
   
   INIT(RadialIndicator)
-    DISABLE_LOG
     if (!this->props.color) this->props.color = state->color;
   }
   
   REDRAW {
-    WITH_STATE(RadialIndicator)
+    int y = props.text.empty()? 0 : 13;
     
     using namespace primitives;
     add({
+      !props.text.empty()?
+      COMP(Text)({
+        .props = {
+          .color = state->color,
+          .font = &state->font_bigger,
+          .text = props.text,
+        },
+        .init = [this](Text* a) {
+          a->set_pos(this, 6, 0);
+          a->set_size(30, 15);
+        },
+      }) : NULLCOMP,
       COMP(Arc)({
         .props = {
           .color = state->color,
@@ -47,8 +63,8 @@ COMPONENT(RadialIndicator)
           .a0 = 270,
           .a1 = -((props.value * 360) / 100),
         },
-        .init = [this, state](Arc* a) {
-          a->set_pos(this, 0, 0);
+        .init = [this, y](Arc* a) {
+          a->set_pos(this, 0, y);
           a->set_size(30, 30);
         },
       }),
@@ -59,8 +75,8 @@ COMPONENT(RadialIndicator)
           .a0 = 270,
           .a1 = -((props.value * 360) / 100),
         },
-        .init = [this, state](Arc* a) {
-          a->set_pos(this, 3, 3);
+        .init = [this, y](Arc* a) {
+          a->set_pos(this, 3, y + 3);
           a->set_size(24, 24);
         },
       }),
@@ -71,8 +87,8 @@ COMPONENT(RadialIndicator)
           .a0 = 270,
           .a1 = -((props.value * 360) / 100),
         },
-        .init = [this, state](Arc* a) {
-          a->set_pos(this, 4, 4);
+        .init = [this, y](Arc* a) {
+          a->set_pos(this, 4, y + 4);
           a->set_size(22, 22);
         },
       }),
@@ -83,8 +99,8 @@ COMPONENT(RadialIndicator)
           .a0 = 270,
           .a1 = -((props.value * 360) / 100),
         },
-        .init = [this, state](Arc* a) {
-          a->set_pos(this, 7, 7);
+        .init = [this, y](Arc* a) {
+          a->set_pos(this, 7, y + 7);
           a->set_size(16, 16);
         },
       }),
@@ -95,13 +111,13 @@ COMPONENT(RadialIndicator)
           .font = props.value == 100? &state->font_smaller : &state->font,
           .text = std::to_string(props.value),
         },
-        .init = [this, state](Text* t) {
+        .init = [this, y](Text* t) {
           if (props.value == 100) {
-            t->set_pos(this, 8, 12);
+            t->set_pos(this, 8, y + 12);
           } else if (props.value < 10) {
-            t->set_pos(this, 11, 12);
+            t->set_pos(this, 11, y + 12);
           } else {
-            t->set_pos(this, 10, 12);
+            t->set_pos(this, 10, y + 12);
           }
           t->set_width(10);
         },

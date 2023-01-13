@@ -12,11 +12,17 @@
 #include "home/shortcuts.hpp"
 #include "home/sysmon.hpp"
 #include "home/quicksettings.hpp"
+#include "home/projects.hpp"
+#include "home/music_player.hpp"
+#include "home/opened_apps.hpp"
+#include "home/services.hpp"
+
+using namespace std::chrono_literals;
 
 STATE(HomeTab)
   cydui::layout::color::Color* c_fg = new cydui::layout::color::Color("#2d2310");
-  INIT_STATE(HomeTab) {
-  }
+  
+  INIT_STATE(HomeTab) { }
 };
 
 COMPONENT(HomeTab)
@@ -41,13 +47,41 @@ COMPONENT(HomeTab)
       }),
       COMP(SysMon)({
         .init = [this, state](SysMon* s) {
-          s->set_pos(this, 0, 300);
+          s->set_pos(this, 0, 270);
           s->set_margin(10, 10, 10, 10);
         },
       }),
       COMP(QuickSettings)({
         .init = [this, state](QuickSettings* q) {
           q->set_pos(this, 0, 680);
+          q->set_margin(10, 10, 10, 10);
+        },
+      }),
+      COMP(Services)({
+        .init = [this, state](Services* q) {
+          q->set_pos(this, 0, 490);
+          q->set_size(305, 200);
+          q->set_margin(10, 10, 10, 10);
+        },
+      }),
+      COMP(MusicPlayer)({
+        .init = [this, state](MusicPlayer* q) {
+          q->set_pos(this, 300, 490);
+          q->set_size(330, 300);
+          q->set_margin(10, 10, 10, 10);
+        },
+      }),
+      COMP(Projects)({
+        .init = [this, state](Projects* q) {
+          q->set_pos(this, 160, 270);
+          q->set_size(410, 230);
+          q->set_margin(10, 10, 10, 10);
+        },
+      }),
+      COMP(OpenedApps)({
+        .init = [this, state](OpenedApps* q) {
+          q->set_pos(this, 0, 0);
+          q->set_size(570, 280);
           q->set_margin(10, 10, 10, 10);
         },
       }),

@@ -10,13 +10,20 @@
 STATE(BarIndicator)
   cydui::layout::color::Color* color = new cydui::layout::color::Color("#FCAE1E");
   
+  cydui::layout::fonts::Font font {
+    .name = "Fira Code Retina",
+    .size = 6,
+  };
+  
   INIT_STATE(BarIndicator) {
   }
 };
 
 COMPONENT(BarIndicator)
   PROPS({
-    int value = 50;
+    std::string text       = "";
+    int         value      = 50;
+    bool        show_value = false;
     cydui::layout::color::Color* color = nullptr;
   })
   
@@ -26,17 +33,41 @@ COMPONENT(BarIndicator)
   }
   
   REDRAW {
-    WITH_STATE(BarIndicator)
+    int y = props.text.empty()? 0 : 9;
     
     using namespace primitives;
     add({
+      !props.text.empty()?
+      COMP(Text)({
+        .props = {
+          .color = state->color,
+          .font = &state->font,
+          .text = props.text,
+        },
+        .init = [this](Text* a) {
+          a->set_pos(this, 3, 0);
+          a->set_size(30, 8);
+        },
+      }) : NULLCOMP,
+      props.show_value?
+      COMP(Text)({
+        .props = {
+          .color = state->color,
+          .font = &state->font,
+          .text = std::to_string(props.value).append(" %"),
+        },
+        .init = [this](Text* a) {
+          a->set_pos(this, state->geom.content_w().val() - 30, 0);
+          a->set_size(30, 8);
+        },
+      }) : NULLCOMP,
       COMP(Rectangle)({
         .props = {
           .color = state->color,
           .filled = false,
         },
-        .init = [this, state](Rectangle* r) {
-          r->set_pos(this, 0, 0);
+        .init = [this, y](Rectangle* r) {
+          r->set_pos(this, 0, y + 0);
           r->set_size(state->geom.content_w().val(), std::max(state->geom.content_h().val(), 8));
         },
       }),
@@ -45,8 +76,8 @@ COMPONENT(BarIndicator)
           .color = state->color,
           .filled = true,
         },
-        .init = [this, state](Rectangle* r) {
-          r->set_pos(this, 2, 3);
+        .init = [this, y](Rectangle* r) {
+          r->set_pos(this, 2, y + 3);
           r->set_size((props.value * (state->geom.content_w().val() - 3)) / 100,
             std::max(state->geom.content_h().val(), 8) - 5);
         },

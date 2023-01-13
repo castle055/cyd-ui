@@ -50,33 +50,16 @@ namespace cydui::tasks {
   };
   
   using namespace std::chrono_literals;
-  struct timer_t {
-    std::chrono::duration<long, std::milli> period = 1s;
-    int                                     count  = -1;
+  struct _timer_t {
+    std::chrono::duration<long, std::nano> last_time = std::chrono::system_clock::now().time_since_epoch();
+    std::chrono::duration<long, std::nano> period    = 1s;
+    int                                    count     = -1;
+    bool                                   run_now   = false;
     
-  };
-
-#define SIMPLE_TASK(NAME, ARGS, BLOCK) \
-  struct NAME##Args ARGS; \
-  class NAME: public cydui::tasks::simple_task_t<NAME##Args> { \
-    logging::logger log {.name = #NAME }; \
-  protected: \
-    void main() override BLOCK \
+    task_t* task = nullptr;
   };
   
-  
-  template<typename A>
-  class simple_task_t: public tasks::task_t {
-  protected:
-    A args;
-  public:
-    void run(A _args) {
-      this->args = _args;
-      start(this);
-    }
-    
-    void res() { }
-  };
+  struct NoResult { };
 
 #define SIMPLE_TASK_W_RESULT(NAME, ARGS, RESULT, BLOCK) \
   struct NAME##Args ARGS; \
@@ -98,28 +81,86 @@ namespace cydui::tasks {
   
   template<typename A, typename R>
   class simple_task_w_result_t: public tasks::task_t {
-  protected:
-    A args;
-    R result;
-    R default_result;
   public:
-    void run(A _args) {
+    typedef A Args;
+    typedef R Result;
+    
+    //simple_task_w_result_t() = default;
+    //simple_task_w_result_t(const simple_task_w_result_t<A,R>&) = default;
+  protected:
+    Args   args;
+    Result result;
+    Result default_result;
+  
+  public:
+    void run(Args _args) {
       this->args = _args;
       start(this);
     }
     
-    R* res() {
+    void main() override {
+    
+    }
+    
+    Result* res() {
       if (is_complete())
         return &result;
       else return &default_result;
     }
+    
+    void set_args(Args _args) {
+      this->args = _args;
+    }
+  };
+  
+  template<typename A>
+  class simple_t: public simple_task_w_result_t<A, NoResult> { };
+
+#define SIMPLE_TASK(NAME, ARGS, BLOCK) \
+  struct NAME##Args ARGS; \
+  class NAME: public cydui::tasks::simple_t<NAME##Args> { \
+    logging::logger log {.name = #NAME }; \
+  protected: \
+    void main() override BLOCK \
   };
   
   void start_thd();
   
   void start(task_t* task);
   
-  void add_timer(timer_t timer);
+  void start_timer(_timer_t* timer);
+  
+  template<typename T>
+  concept TaskType = requires {
+    typename T::Args;
+    typename T::Result;
+    //{ T() } -> std::convertible_to<simple_task_w_result_t<typename T::Args, typename T::Result>>;
+  };
+  
+  template<typename T> requires TaskType<T>
+  class timer_t: public tasks::_timer_t {
+    T _task;
+  public:
+    void start(
+      typename T::Args _args,
+      std::chrono::duration<long, std::nano> period,
+      int count = -1,
+      bool run_now = false
+    ) {
+      this->period    = period;
+      this->count     = count;
+      this->run_now   = run_now;
+      this->last_time = std::chrono::system_clock::now().time_since_epoch();
+      _task.set_args(_args);
+      this->task = &_task;
+      start_timer(this);
+    };
+    
+    typename T::Result* res() {
+      return _task.res();
+    }
+  };
+  
 }
 
 
