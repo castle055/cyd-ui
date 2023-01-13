@@ -191,7 +191,7 @@ public:
       update();
   }
   
-  int val() {
+  int val() const {
     int* v = (int*)value;
     if (v)
       return *v;

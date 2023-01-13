@@ -37,7 +37,7 @@ COMPONENT(StartMenuSelector)
     ADD_TO(this, {
       N(FlexBox, ({ .vertical = true }), ({
         N(Button, ({
-          .text = "H",
+          .text = "HOM",
           .font = &state->font,
           .on_action = action {props.on_action(0);},
         }), ({ }), {
@@ -45,7 +45,7 @@ COMPONENT(StartMenuSelector)
           thisButton->set_height(50);
         }),
           N(Button, ({
-            .text = "A",
+            .text = "APP",
             .font = &state->font,
             .on_action = action {props.on_action(1);},
           }), ({ }), {
@@ -53,7 +53,7 @@ COMPONENT(StartMenuSelector)
             thisButton->set_height(50);
           }),
           N(Button, ({
-            .text = "S",
+            .text = "SCH",
             .font = &state->font,
             .on_action = action {props.on_action(2);},
           }), ({ }), {

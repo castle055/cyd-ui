@@ -40,7 +40,11 @@ COMPONENT(TerminalButton)
       N(Button, ({
         .text = "T",
         .on_action = action {
-          state->open_terminal_task.run(props.width, props.lines, full_cmd.c_str());
+          state->open_terminal_task.run({
+            props.width,
+            props.lines,
+            full_cmd.c_str()
+          });
         }
       })),
     }))

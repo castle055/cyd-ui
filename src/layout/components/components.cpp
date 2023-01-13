@@ -83,10 +83,18 @@ Component::~Component() {
 }
 
 //== API for subclasses
+Component* Component::set_group() {
+  this->is_group = true;
+  return this;
+}
+
 void Component::add(std::vector<Component*> ichildren) {
+  // TODO - Needs to be recursive when flattening groups, not just first layer
   for (auto &item: ichildren) {
+    if (item == nullptr) continue;
     if (item->is_group) {
       for (auto &subitem: item->children) {
+        if (subitem == nullptr) continue;
         subitem->parent = this;
         this->children.push_back(subitem);
         
@@ -166,8 +174,8 @@ void Component::render(const cydui::window::CWindow* win) {
       state->border.color,
       state->geom.border_x().compute(),
       state->geom.border_y().compute(),
-      state->geom.border_w().compute(),
-      state->geom.border_h().compute(),
+      state->geom.border_w().compute() + 2,
+      state->geom.border_h().compute() + 1,
       false
     );
   }

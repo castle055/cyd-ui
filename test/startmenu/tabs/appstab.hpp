@@ -20,32 +20,35 @@ STATE(AppsTab)
   cydui::layout::color::Color* c_fg = new cydui::layout::color::Color("#2d2310");
   int scroll = 0;
   
-  StartAppsCM  config = StartAppsCM("/home/castle/.config/corium/startmenu/start.apps.yml");
+  StartAppsCM* config = new StartAppsCM("/home/castle/.config/corium/startmenu/start.apps.yml");
   ListAppsTask list_apps_task;
   
   INIT_STATE(AppsTab) {
-    list_apps_task.run(config);
+    list_apps_task.run({config});
   }
 };
 
 COMPONENT(AppsTab)
-  NO_PROPS
-  
-  INIT(AppsTab)
-    DISABLE_LOG
-  }
-  
+  NO_PROPS INIT(AppsTab) }
   REDRAW {
-    WITH_STATE(AppsTab)
-    
-    using namespace primitives;
     add({
+      COMP(Rectangle)({
+        .props = {
+          .color = &c::Black,
+          .filled = true,
+        },
+        .init = [this](Rectangle* r) {
+          r->set_pos(this, 0, 0);
+          r->set_size(state->geom.abs_w().val(), state->geom.abs_h().val());
+        },
+      }),
+      state->list_apps_task.is_complete()?
       COMP(ListView)({
         .props = {
-          .scroll = state->scroll,
+          .scroll = &state->scroll,
         },
         .inner = {
-          FOR_EACH(AppSection)(state->list_apps_task.section_apps,
+          FOR_EACH(AppSection)(state->list_apps_task.res()->section_apps,
             [](auto section_data) {
               return c_init_t<AppSection> {
                 .props = {
@@ -53,7 +56,7 @@ COMPONENT(AppsTab)
                   .apps = section_data.second,
                 }};
             }),
-          FOR_EACH(AppSection)(state->list_apps_task.apps,
+          FOR_EACH(AppSection)(state->list_apps_task.res()->apps,
             [](auto section_data) {
               return c_init_t<AppSection> {
                 .props = {
@@ -62,12 +65,11 @@ COMPONENT(AppsTab)
                 }};
             }),
         }
-      }),
+      }) : NULLCOMP,
     });
   }
   
   void on_scroll(int d) override {
-    auto* state = (AppsTabState*)this->state;
     state->scroll += d;
     if (state->scroll > 0) state->scroll = 0;
     state->dirty();

@@ -60,7 +60,7 @@ COMPONENT(StartMenu)
         })),
           N(PowerSelector),
       }), {
-        thisFlexBox->set_width(50);
+        thisFlexBox->set_width(54);
         thisFlexBox->set_height(800);
         thisFlexBox->set_pos(this, 0, 0);
       }),

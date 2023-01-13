@@ -34,7 +34,6 @@ COMPONENT(AppSection)
   })
   
   INIT(AppSection)
-    DISABLE_LOG
     int s    = this->props.apps.size();
     int rows = s / 3;
     if (s % 3 > 0)
@@ -43,7 +42,6 @@ COMPONENT(AppSection)
   }
   
   REDRAW {
-    WITH_STATE(AppSection)
     
     int x       = 10;
     int w       = 200;
@@ -112,18 +110,22 @@ COMPONENT(AppSection)
           l->set_size(w, 0);
         },
       }),
-      FOR_EACH(AppButton)(props.apps, [this, &x, &y, &w, &total_w, &spacing, state](Application app) {
+      FOR_EACH(AppButton)(props.apps, [this, &x, &y, &w, &total_w, &spacing](Application app) {
         c_init_t<AppButton> init = {
           .props = {
             .app = app,
             .x = x,
             .y = y,
-            .on_action = [state, app](int button) {
+            .on_action = [this, app](int button) {
               if (!app.group) {
                 if (app.terminal) {
-                  state->open_terminal_task.run(110, 30, app.exec.c_str());
+                  state->open_terminal_task.run({
+                    .w = 110,
+                    .h = 30,
+                    .cmd = app.exec.c_str(),
+                  });
                 } else {
-                  state->run_command_task.run(app.exec.c_str());
+                  state->run_command_task.run({app.exec.c_str()});
                 }
               }
             }

@@ -92,7 +92,7 @@ add_executable(cyd_ui_test
         test/components/clock_module.hpp
         test/status_bar/workspace_selector.hpp
         test/status_bar/window_title.hpp
-        test/startmenu/startmenu.hpp test/startmenu/startmenuselector.hpp test/startmenu/powerselector.hpp test/startmenu/tabs/hometab.hpp test/startmenu/tabs/appstab.hpp test/startmenu/tabs/searchtab.hpp test/startmenu/tabs/appbutton.hpp test/startmenu/tabs/appsection.hpp test/startmenu/tabs/listview.hpp test/tasks/list_apps_task.hpp test/startmenu/config/startappscm.hpp)
+        test/startmenu/startmenu.hpp test/startmenu/startmenuselector.hpp test/startmenu/powerselector.hpp test/startmenu/tabs/hometab.hpp test/startmenu/tabs/appstab.hpp test/startmenu/tabs/searchtab.hpp test/startmenu/tabs/appbutton.hpp test/startmenu/tabs/appsection.hpp test/startmenu/tabs/listview.hpp test/tasks/list_apps_task.hpp test/startmenu/config/startappscm.hpp test/startmenu/tabs/home/sysmon.hpp test/startmenu/tabs/home/radial_indicator.hpp test/startmenu/tabs/home/bar_indicator.hpp test/startmenu/tabs/home/quicksettings.hpp)
 target_link_libraries(cyd_ui_test PRIVATE cyd_ui)
 #add_dependencies(cppcheck clang-format)
 #add_dependencies(cyd_ui_test cppcheck)

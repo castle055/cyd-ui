@@ -27,12 +27,7 @@ STATE(Workspaces)
 };
 
 COMPONENT(Workspaces)
-  NO_PROPS
-  
-  INIT(Workspaces)
-    DISABLE_LOG
-  }
-  
+  NO_PROPS INIT(Workspaces) }
   REDRAW {
     WITH_STATE(Workspaces)
     

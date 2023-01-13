@@ -263,9 +263,9 @@ void render::drw_arc(
     win->gc,
     BlackPixel(state::get_dpy(), state::get_screen()));
   if (filled) {
-    XFillArc(state::get_dpy(), win->drawable, win->gc, x, y, w, h, a0, a1);
+    XFillArc(state::get_dpy(), win->drawable, win->gc, x, y, w, h, a0 * 64, a1 * 64);
   } else {
-    XDrawArc(state::get_dpy(), win->drawable, win->gc, x, y, w, h, a0, a1);
+    XDrawArc(state::get_dpy(), win->drawable, win->gc, x, y, w, h, a0 * 64, a1 * 64);
   }
   win->x_mtx.unlock();
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines

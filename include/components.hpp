@@ -30,13 +30,8 @@ namespace cydui::components {
     
     Component* component_instance;
     bool stateless_comp = false;
-    //int  x       = 0,
-    //     y       = 0,
-    //     w       = 0,
-    //     h       = 0;
     bool focused        = false;
     
-    // TODO - maybe init with 'true'? so it renders right away
     bool _dirty = false;
     
     void dirty();
@@ -54,9 +49,14 @@ namespace cydui::components {
   };
   template<typename c> requires ComponentConcept<c>
   struct c_init_t {
-    typename c::Props props;
-    std::vector<Component*> inner = {};
-    std::function<void(c*)> init = [](c*){};
+    typename c::Props       props;
+    std::vector<Component*> inner = { };
+    std::function<void(c*)> init  = [](c*) { };
+    // TODO - FIXME - THIS DOES NOT WORK BECAUSE IT NEEDS THE ADD CALL TO HAVE BEEN EXECUTED FIRST
+    //int x = INT_MAX;
+    //int y = INT_MAX;
+    //int w = INT_MAX;
+    //int h = INT_MAX;
   };
   
   
@@ -67,38 +67,62 @@ namespace cydui::components {
     bool is_group = false;
   
   protected:
-  
-  
-    template<typename c, int ID> requires ComponentConcept<c>
+    
+    template<typename c, int ID>
+    requires ComponentConcept<c>
     inline c* create(c_init_t<c> init) {
       return new c((typename c::State*)(this->state->children.contains(ID)?
-            (this->state->children[ID]): (this->state->children.add(ID, new typename c::State()))),
+                                        (this->state->children[ID]) : (this->state
+                                                                           ->children
+                                                                           .add(ID, new typename c::State()))),
         init.props,
         [this, init](cydui::components::Component* __raw_local_) {
-          this; state;
+          this;
+          state;
           auto* local = (c*)__raw_local_;
-      
+          
           local->add(init.inner);
+          // TODO - FIXME - THIS DOES NOT WORK BECAUSE IT NEEDS THE ADD CALL TO HAVE BEEN EXECUTED FIRST
+          //const int x = init.x;
+          //const int y = init.y;
+          //const int w = init.w;
+          //const int h = init.h;
+          //if (x != INT_MAX && y != INT_MAX) {
+          //  local->set_pos(this, x, y);
+          //}
+          //if (w != INT_MAX && h != INT_MAX) {
+          //  local->set_size(w, h);
+          //} else if (w != INT_MAX) {
+          //  local->set_width(w);
+          //} else if (h != INT_MAX) {
+          //  local->set_height(h);
+          //}
           init.init(local);
         }
       );
     }
 
 #define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
-  
-    template<typename c, int ID, typename T> requires ComponentConcept<c>
+    
+    template<typename c, int ID, typename T>
+    requires ComponentConcept<c>
     inline Component* create_for(T iter, std::function<c_init_t<c>(typename T::value_type)> block) {
-      int i = 0;
-      auto temp_c = new Component();
-      for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
+      int       i      = 0;
+      auto      temp_c = new Component();
+      for (auto a      = iter.begin(); a != iter.end(); ++a, ++i) {
         c_init_t<c> init = block(*a);
-        temp_c->children.push_back(new c((typename c::State*)(this->state->children.contains(ID,i)?
-              (this->state->children.get_list(ID,i)): (this->state->children.add_list(ID,i, new typename c::State()))),
+        temp_c->children.push_back(new c((typename c::State*)(this->state->children.contains(ID, i)?
+                                                              (this->state->children.get_list(ID, i)) : (this->state
+                                                                                                             ->children
+                                                                                                             .add_list(
+                                                                                                               ID, i,
+                                                                                                               new typename c::State()))),
           init.props,
           [this, init](cydui::components::Component* __raw_local_) {
-            this; state;
+            this;
+            state;
             auto* local = (c*)__raw_local_;
-      
+            
             local->add(init.inner);
             init.init(local);
           }
@@ -109,9 +133,11 @@ namespace cydui::components {
     }
 
 #define FOR_EACH(COMPONENT) create_for<COMPONENT, __COUNTER__>
-
-
+#define NULLCOMP (new Component())->set_group()
+  
+  
   public:
+    Component* set_group();
     //explicit Component(std::unordered_set<Component*> children);
     
     //explicit Component(ComponentState* state, std::unordered_set<Component*> children);
@@ -201,12 +227,15 @@ public:
 explicit NAME##State(): cydui::components::ComponentState()
 
 #define COMPONENT(NAME) \
+using namespace primitives;                        \
 class NAME: public cydui::components::Component { \
 public:                 \
 typedef NAME##State State;                        \
+NAME##State* state = nullptr;                        \
 logging::logger log = {.name = #NAME, .on = true};
 
 #define DISABLE_LOG this->log.on = false;
+#define ENABLE_LOG  this->log.on = true;
 
 #define PROPS(block) \
 struct Props         \
@@ -222,7 +251,9 @@ explicit NAME##Component(STATE_CLASS* state) \
 #define INIT(NAME) \
 explicit NAME(NAME##State* state, Props props, const std::function<void(cydui::components::Component*)>& inner) \
   : cydui::components::Component(state, inner) {                                                                       \
-    this->props = std::move(props);
+    this->props = std::move(props);                                                                             \
+    this->state = state;               \
+    DISABLE_LOG
 
 #define REDRAW \
 void on_redraw() override

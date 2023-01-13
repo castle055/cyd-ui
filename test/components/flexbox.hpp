@@ -21,6 +21,7 @@ public:
 
 class FlexBox: public cydui::components::Component {
 public:
+  typedef FlexBoxState State;
   PROPS({
     bool vertical = false;
   })

@@ -79,8 +79,9 @@ COMPONENT(Button)
   
   void on_mouse_click(int x, int y, int button) override {
     auto state = (ButtonState*)this->state;
-    state->dirty();
+    state->hovering = false;
     props.on_action();
+    state->dirty();
   }
 };
 

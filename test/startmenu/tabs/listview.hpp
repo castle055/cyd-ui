@@ -9,13 +9,15 @@
 #include "../../../include/logging.hpp"
 
 STATE(ListView)
+  int diff = 0;
+  
   INIT_STATE(ListView) {
   }
 };
 
 COMPONENT(ListView)
   PROPS({
-    int scroll  = -1;
+    int* scroll = new int(0);
     int spacing = 40;
   })
   
@@ -25,9 +27,11 @@ COMPONENT(ListView)
   REDRAW {
     WITH_STATE(ListView)
     
-    //log.info("SCROLL= %d", props.scroll);
+    *props.scroll += state->diff;
+    state->diff = 0;
+    //logger.info("SCROLL= %d", props.scroll);
     int x = 0;
-    int y = props.scroll + props.spacing;
+    int y = *props.scroll + props.spacing;
     
     auto given_children = children;
     children.clear();
@@ -40,6 +44,9 @@ COMPONENT(ListView)
         children.push_back(item);
       }
       y += props.spacing + item_height;
+    }
+    if (y < 400 && *props.scroll < -400) {
+      state->diff = 400 - y;
     }
   }
 };

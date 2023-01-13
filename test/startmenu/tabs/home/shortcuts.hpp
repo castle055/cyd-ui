@@ -30,6 +30,21 @@ STATE(ShortCuts)
     {
       .name = "APP3"
     },
+    {
+      .name = "APP3"
+    },
+    {
+      .name = "APP3"
+    },
+    {
+      .name = "APP3"
+    },
+    {
+      .name = "APP3"
+    },
+    {
+      .name = "APP3"
+    },
   };
   
   INIT_STATE(ShortCuts) {
@@ -50,8 +65,8 @@ COMPONENT(ShortCuts)
     add({
       COMP(ListView)({
         .props = {
-          .scroll = state->scroll,
-          .spacing = 8,
+          .scroll = &state->scroll,
+          .spacing = 12,
         },
         .inner = {
           FOR_EACH(AppButton)(state->apps,
@@ -59,6 +74,7 @@ COMPONENT(ShortCuts)
               return c_init_t<AppButton> {
                 .props = {
                   .app = app,
+                  .show_text = false,
                 }};
             }),
         }

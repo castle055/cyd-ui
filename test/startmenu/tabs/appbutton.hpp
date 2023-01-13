@@ -38,6 +38,8 @@ COMPONENT(AppButton)
     int x = 0;
     int y = 0;
     
+    bool show_text = true;
+    
     AppButtonAction on_action = [](int) { };
   })
   
@@ -64,7 +66,7 @@ COMPONENT(AppButton)
         },
         .init = [this, state](Rectangle* r) {
           r->set_pos(this, 0, 0);
-          r->set_size(state->geom.content_w(), state->geom.content_h());
+          r->set_size(props.show_text? state->geom.content_w().val() : 48, props.show_text? 34 : 48);
         },
       }),
       COMP(Rectangle)({
@@ -73,23 +75,32 @@ COMPONENT(AppButton)
           .filled = true
         },
         .init = [this](Rectangle* r) {
-          r->set_pos(this, 5, 5);
-          r->set_size(24, 24);
+          if (props.show_text) {
+            r->set_pos(this, 5, 5);
+            r->set_size(24, 24);
+          } else {
+            r->set_pos(this, 8, 8);
+            r->set_size(32, 32);
+          }
         },
       }),
-      COMP(Text)({
-        .props = {
-          .color = state->hovering? props.c1 : props.c,
-          .font = props.font,
-          .text = props.app.name,
-        },
-        .init = [this, state](Text* t) {
-          t->set_pos(this, 34, 7);
-          t->set_margin(5, 5, 5, 5);
-          t->set_width(state->geom.custom_width? state->geom.content_w() : 125);
-        },
-      })
     });
+    if (props.show_text) {
+      add({
+        COMP(Text)({
+          .props = {
+            .color = state->hovering? props.c1 : props.c,
+            .font = props.font,
+            .text = props.app.name,
+          },
+          .init = [this, state](Text* t) {
+            t->set_pos(this, 34, 7);
+            t->set_margin(5, 5, 5, 5);
+            t->set_width(state->geom.custom_width? state->geom.content_w() : 125);
+          },
+        })
+      });
+    }
     
   }
   
