@@ -12,6 +12,8 @@ namespace cydui { }
 #include "primitives.hpp"
 #include "window.hpp"
 #include "config.hpp"
+#include "events.hpp"
+#include "event_types.h"
 
 
 #endif//CYD_UI_CYDUI_HPP
