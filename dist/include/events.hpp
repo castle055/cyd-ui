@@ -109,5 +109,4 @@ struct DataType DATA data; \
 }; \
 
 
-
 #endif//CYD_UI_EVENTS_HPP

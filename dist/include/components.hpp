@@ -218,19 +218,14 @@ namespace cydui::components {
 
 
 #define STATE(NAME) \
-class NAME##State: public cydui::components::ComponentState { \
-public:
+struct NAME##State: public cydui::components::ComponentState
 
 #define INIT_STATE(NAME) \
 explicit NAME##State(): cydui::components::ComponentState()
 
 #define COMPONENT(NAME) \
 using namespace primitives;                        \
-class NAME: public cydui::components::Component { \
-public:                 \
-typedef NAME##State State;                        \
-NAME##State* state = nullptr;                        \
-logging::logger log = {.name = #NAME, .on = true};
+struct NAME: public cydui::components::Component
 
 #define DISABLE_LOG this->log.on = false;
 #define ENABLE_LOG  this->log.on = true;
@@ -247,11 +242,13 @@ explicit NAME##Component(STATE_CLASS* state) \
   : cydui::components::Component(state)
 
 #define INIT(NAME) \
+typedef NAME##State State;                        \
+NAME##State* state = nullptr;                        \
+logging::logger log = {.name = #NAME, .on = false}; \
 explicit NAME(NAME##State* state, Props props, const std::function<void(cydui::components::Component*)>& inner) \
-  : cydui::components::Component(state, inner) {                                                                       \
-    this->props = std::move(props);                                                                             \
-    this->state = state;               \
-    DISABLE_LOG
+  : cydui::components::Component(state, inner),    \
+    props(std::move(props)),                       \
+    state(state)
 
 #define REDRAW \
 void on_redraw() override
@@ -286,7 +283,7 @@ new NAME(                                     \
       ((NAME##State*)state->children[ID])     \
     : ((NAME##State*)state->children.add(ID, new NAME##State())), \
   NAME::Props _PROPS,                         \
-  [this, state](cydui::components::Component* __raw_local_##NAME) { \
+  [this](cydui::components::Component* __raw_local_##NAME) { \
     this; state;                                          \
     auto* this##NAME = (NAME*)__raw_local_##NAME;                 \
                                               \

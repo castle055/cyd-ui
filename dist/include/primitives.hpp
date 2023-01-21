@@ -18,14 +18,14 @@ namespace primitives {
   using namespace cydui::layout::color;
   
   
-  STATE(Line) };
+  STATE(Line) { };
   
-  COMPONENT(Line)
+  COMPONENT(Line) {
     PROPS({
       Color* color;
     })
     
-    INIT(Line) DISABLE_LOG }
+    INIT(Line) { }
     
     RENDER(win) {
       graphics::drw_line(
@@ -40,15 +40,15 @@ namespace primitives {
   };
   
   
-  STATE(Rectangle) };
+  STATE(Rectangle) { };
   
-  COMPONENT(Rectangle)
+  COMPONENT(Rectangle) {
     PROPS({
       Color* color;
       bool filled = false;
     })
     
-    INIT(Rectangle) DISABLE_LOG }
+    INIT(Rectangle) { }
     
     RENDER(win) {
       graphics::drw_rect(
@@ -64,9 +64,9 @@ namespace primitives {
   };
   
   
-  STATE(Arc) };
+  STATE(Arc) { };
   
-  COMPONENT(Arc)
+  COMPONENT(Arc) {
     PROPS({
       Color* color;
       bool filled = false;
@@ -74,7 +74,7 @@ namespace primitives {
       int  a1     = 180;
     })
     
-    INIT(Arc) DISABLE_LOG }
+    INIT(Arc) { }
     
     RENDER(win) {
       graphics::drw_arc(
@@ -90,15 +90,15 @@ namespace primitives {
   };
   
   
-  STATE(Circle) };
+  STATE(Circle) { };
   
-  COMPONENT(Circle)
+  COMPONENT(Circle) {
     PROPS({
       Color* color;
       bool filled;
     })
     
-    INIT(Circle) DISABLE_LOG }
+    INIT(Circle) { }
     
     RENDER(win) {
       graphics::drw_arc(
@@ -113,16 +113,16 @@ namespace primitives {
   };
   
   
-  STATE(Text) };
+  STATE(Text) { };
   
-  COMPONENT(Text)
+  COMPONENT(Text) {
     PROPS({
       Color              * color;
       layout::fonts::Font* font;
       std::string text;
     })
     
-    INIT(Text) DISABLE_LOG
+    INIT(Text) {
       state->geom.w             = 125;
       state->geom.h             = this->props.font->size;
       state->geom.custom_width  = true;
