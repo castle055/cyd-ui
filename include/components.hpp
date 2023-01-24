@@ -83,7 +83,7 @@ namespace cydui::components {
                         ? (this->state->children[ID])
                         : (this->state->children.add(ID, new typename c::State()))),
                 init.props,
-                [this, init](cydui::components::Component* __raw_local_) {
+                [init](cydui::components::Component* __raw_local_) {
                   auto* local = (c*) __raw_local_;
 
                   if (init.x.has_value())
@@ -180,50 +180,50 @@ namespace cydui::components {
 
     Component* get_parent();
 
-    Component* set_size(int w, int h);
-
-    Component* set_size(IntProperty* w, IntProperty* h);
-
-    Component* set_size(IntProperty::IntBinding w, IntProperty::IntBinding h);
-
-
-    Component* set_width(int w);
+    //Component* set_size(int w, int h);
+    //
+    //Component* set_size(IntProperty* w, IntProperty* h);
+    //
+    //Component* set_size(IntProperty::IntBinding w, IntProperty::IntBinding h);
+    //
+    //
+    //Component* set_width(int w);
 
     //Component* set_width(IntProperty* w);
 
-    Component* set_width(IntProperty::IntBinding w);
-
-
-    Component* set_height(int h);
+    //Component* set_width(IntProperty::IntBinding w);
+    //
+    //
+    //Component* set_height(int h);
 
     //Component* set_height(IntProperty* h);
 
-    Component* set_height(IntProperty::IntBinding h);
-
-
-    Component* set_pos(Component* relative, int x, int y);
+    //Component* set_height(IntProperty::IntBinding h);
+    //
+    //
+    //Component* set_pos(Component* relative, int x, int y);
 
     //Component* set_pos(Component* relative, IntProperty* x, IntProperty* y);
 
-    Component* set_pos(
-            Component* relative,
-            IntProperty::IntBinding x,
-            IntProperty::IntBinding y
-    );
-
-    Component* set_padding(
-            unsigned int top,
-            unsigned int right,
-            unsigned int bottom,
-            unsigned int left
-    );
-
-    Component* set_margin(
-            unsigned int top,
-            unsigned int right,
-            unsigned int bottom,
-            unsigned int left
-    );
+    //Component* set_pos(
+    //        Component* relative,
+    //        IntProperty::IntBinding x,
+    //        IntProperty::IntBinding y
+    //);
+    //
+    //Component* set_padding(
+    //        unsigned int top,
+    //        unsigned int right,
+    //        unsigned int bottom,
+    //        unsigned int left
+    //);
+    //
+    //Component* set_margin(
+    //        unsigned int top,
+    //        unsigned int right,
+    //        unsigned int bottom,
+    //        unsigned int left
+    //);
 
     Component* set_border_enable(bool enabled);
 

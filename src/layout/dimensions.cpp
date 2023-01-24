@@ -80,7 +80,7 @@ dimensions::dimension_t& dimensions::dimension_t::operator=(
     dimensional_relation_t val) {
     this->deps.clear();
     this->deps    = val.deps;
-    this->binding = [val]() { return val.binding(); };
+    this->binding = std::move(val.binding);
     this->unknown = false;
     return *this;
 }
@@ -144,25 +144,25 @@ DIMENSION_OPERATOR(%)
 
 #define DIMENSION_REL_OPERATOR(OP)                                             \
   dimensions::dimensional_relation_t dimensions::operator OP(                  \
-      const dimensional_relation_t& r, dimension_value_t val) {                \
+      const dimensional_relation_t r, dimension_value_t val) {                \
     return dimensional_relation_t(                                                                   \
-        [&r, val]() { return r.binding() OP val; },                 \
+        [r, val]() { return r.binding() OP val; },                 \
         r.deps                                                     \
     );                                                                         \
   }                                                                            \
                                                                                \
   dimensions::dimensional_relation_t dimensions::operator OP(                  \
-      dimension_value_t val, dimensional_relation_t& r) {                      \
+      dimension_value_t val, dimensional_relation_t r) {                      \
     return dimensional_relation_t(                                                                   \
-        [&r, val]() { return r.binding() OP val; },                 \
+        [r, val]() { return r.binding() OP val; },                 \
         r.deps                                                     \
     );                                                                         \
   }                                                                            \
                                                                                \
   dimensions::dimensional_relation_t dimensions::operator OP(                  \
-      const dimensional_relation_t& r, dimension_t& dim) {                     \
+      const dimensional_relation_t r, dimension_t& dim) {                     \
     dimensional_relation_t rel(                                             \
-        [&r, &dim]() { return r.binding() OP dim.val(); },          \
+        [r, &dim]() { return r.binding() OP dim.val(); },          \
         {&dim}                                                     \
     );                                                                         \
     for (const auto& item: r.deps)                                             \
@@ -172,9 +172,9 @@ DIMENSION_OPERATOR(%)
   }                                                                            \
                                                                                \
   dimensions::dimensional_relation_t dimensions::operator OP(                  \
-      const dimensional_relation_t& r, const dimensional_relation_t& val) {    \
+      const dimensional_relation_t r, const dimensional_relation_t val) {    \
     dimensional_relation_t rel(                                             \
-        [&r, val]() { return r.binding() OP val.binding(); },       \
+        [r, val]() { return r.binding() OP val.binding(); },       \
         {}                                                         \
     );                                                                         \
     for (const auto& item: r.deps)                                             \

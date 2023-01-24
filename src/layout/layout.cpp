@@ -59,23 +59,40 @@ static bool compute_dimensions(cydui::components::Component* rt) {
 
     if (dim->given_w) {
         COMPUTE(dim->w)
+        dim->cw = dim->w.val()
+                - dim->padding.left.val()
+                - dim->padding.right.val()
+                - dim->margin.left.val()
+                - dim->margin.right.val();
     } else {// If not given, or given has error (ie: circular dep)
-        dim->w = total_w;
+        dim->cw = total_w;
+        dim->w = dim->cw.val()
+                + dim->padding.left.val()
+                + dim->padding.right.val()
+                + dim->margin.left.val()
+                + dim->margin.right.val();
     }
 
     if (dim->given_h) {
         COMPUTE(dim->h)
+        dim->ch = dim->h.val()
+                - dim->padding.top.val()
+                - dim->padding.bottom.val()
+                - dim->margin.top.val()
+                - dim->margin.bottom.val();
     } else {// If not given, or given has error (ie: circular dep)
-        dim->h = total_h;
+        dim->ch = total_h;
+        dim->h = dim->ch.val()
+                + dim->padding.top.val()
+                + dim->padding.bottom.val()
+                + dim->margin.top.val()
+                + dim->margin.bottom.val();
     }
 
-    for (auto &item: pending) {
-        if (!compute_dimensions(item)) {
-            return false;
-        }
-    }
+    dim->cx = dim->x.val() + dim->margin.left.val() + dim->padding.left.val();
+    dim->cy = dim->y.val() + dim->margin.top.val() + dim->padding.top.val();
 
-    return true;
+    return std::all_of(pending.begin(), pending.end(), compute_dimensions);
 }
 
 #undef COMPUTE
@@ -93,14 +110,17 @@ static void redraw_component(
     target->redraw();
 
     if (!compute_dimensions(target)) {
-        cydui::components::Component* c = target;
-        while (c->parent && !compute_dimensions(c->parent)) {
+        cydui::components::Component* c = target->parent;
+        while (c && !compute_dimensions(c)) {
+            if (!c->parent) {
+                log_lay.error("Could not compute dimensions");
+                // TODO - Catch dimensional error
+            }
             c = c->parent;
         }
-        if (c->parent) {
-            // TODO - Catch dimensional error
-        }
     }
+    log_lay.debug("TARGET: w  = %d, h  = %d", target->state->dim.w.val(), target->state->dim.h.val());
+    log_lay.debug("TARGET: cw = %d, ch = %d", target->state->dim.cw.val(), target->state->dim.ch.val());
 
     // Clear screen area
     cydui::graphics::clr_rect(win->win_ref,
@@ -118,6 +138,10 @@ static void redraw_component(
 
 void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     this->win = _win;
+    root->state->dim.w = win->win_ref->w;
+    root->state->dim.h = win->win_ref->h;
+    root->state->dim.given_w = true;
+    root->state->dim.given_h = true;
 
     listen(RedrawEvent, {
         if (it.data->win != 0 && it.data->win != win->win_ref->xwin)
@@ -148,8 +172,8 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
             if (specified_target)
                 target = specified_target;
 
-            int rel_x = it.data->x - target->state->geom.border_x().compute();
-            int rel_y = it.data->y - target->state->geom.border_y().compute();
+            int rel_x = it.data->x - target->state->dim.cx.val();
+            int rel_y = it.data->y - target->state->dim.cy.val();
 
             target->on_mouse_click(rel_x, rel_y, it.data->button);
             if (render_if_dirty(root))
@@ -188,15 +212,15 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
 
             if (focused != target->state) {
                 if (focused && focused->component_instance) {
-                    int exit_rel_x = it.data->x - focused->geom.border_x().compute();
-                    int exit_rel_y = it.data->y - focused->geom.border_y().compute();
+                    int exit_rel_x = it.data->x - target->state->dim.cx.val();
+                    int exit_rel_y = it.data->y - target->state->dim.cy.val();
                     focused->component_instance->on_mouse_exit(exit_rel_x, exit_rel_y);
                 }
                 focused = target->state;
             }
 
-            int rel_x = it.data->x - target->state->geom.border_x().compute();
-            int rel_y = it.data->y - target->state->geom.border_y().compute();
+            int rel_x = it.data->x - target->state->dim.cx.val();
+            int rel_y = it.data->y - target->state->dim.cy.val();
             target->on_mouse_enter(rel_x, rel_y);
         }
 
@@ -208,11 +232,14 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
             return;
         log_lay.debug("RESIZE w=%d, h=%d", it.data->w, it.data->h);
 
-        root->state->geom.w = win->win_ref->w;
-        root->state->geom.h = win->win_ref->h;
+        root->state->dim.w = it.data->w;
+        root->state->dim.h = it.data->h;
+        root->state->dim.given_w = true;
+        root->state->dim.given_h = true;
 
-        if (render_if_dirty(root))
-            graphics::flush(win->win_ref);
+        redraw_component(this->win, root);
+        //if (render_if_dirty(root))
+        //    graphics::flush(win->win_ref);
     });
     listen(UpdatePropEvent, {
         if (it.data->win != win->win_ref->xwin)
@@ -246,12 +273,12 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(
     components::Component* target = nullptr;
     for (auto i = c->children.rbegin(); i != c->children.rend(); ++i) {
         auto* item = *i;
-        if (x >= item->state->geom.border_x().compute()
-                && x < (item->state->geom.border_x().compute()
-                + item->state->geom.border_w().compute())
-                && y >= item->state->geom.border_y().compute()
-                && y < (item->state->geom.border_y().compute()
-                + item->state->geom.border_h().compute())) {
+        if (x >= item->state->dim.x.val()
+                && x < (item->state->dim.x.val()
+                + item->state->dim.w.val())
+                && y >= item->state->dim.y.val()
+                && y < (item->state->dim.y.val()
+                + item->state->dim.h.val())) {
             target = find_by_coords(item, x, y);
             if (target)
                 break;
@@ -260,12 +287,12 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(
     if (target)
         return target;
 
-    if (!c->state->stateless_comp && x >= c->state->geom.border_x().compute()
-            && x < (c->state->geom.border_x().compute()
-            + c->state->geom.border_w().compute())
-            && y >= c->state->geom.border_y().compute()
-            && y < (c->state->geom.border_y().compute()
-            + c->state->geom.border_h().compute())) {
+    if (!c->state->stateless_comp && x >= c->state->dim.x.val()
+            && x < (c->state->dim.x.val()
+            + c->state->dim.w.val())
+            && y >= c->state->dim.y.val()
+            && y < (c->state->dim.y.val()
+            + c->state->dim.h.val())) {
         target = c;
     }
     return target;

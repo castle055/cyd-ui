@@ -84,13 +84,13 @@ namespace cydui::dimensions {
 
 #define DIMENSION_REL_OPERATOR_H(OP)                                           \
   dimensional_relation_t operator OP(                                          \
-      const dimensional_relation_t& r, dimension_t& value);                    \
+      const dimensional_relation_t r, dimension_t& value);                    \
   dimensional_relation_t operator OP(                                          \
-      const dimensional_relation_t& r, dimension_value_t value);               \
+      const dimensional_relation_t r, dimension_value_t value);               \
   dimensional_relation_t operator OP(                                          \
-      dimension_value_t value, dimensional_relation_t& r);                     \
+      dimension_value_t value, dimensional_relation_t r);                     \
   dimensional_relation_t operator OP(                                          \
-      const dimensional_relation_t& r, const dimensional_relation_t& value);
+      const dimensional_relation_t r, const dimensional_relation_t value);
 
 
   DIMENSION_REL_OPERATOR_H(+)
@@ -122,6 +122,11 @@ namespace cydui::dimensions {
 
     bool given_w = false;
     bool given_h = false;
+
+    dimension_t cx = 0;
+    dimension_t cy = 0;
+    dimension_t cw = 0;
+    dimension_t ch = 0;
 
     four_sided_dimension_t margin;
     four_sided_dimension_t padding;
