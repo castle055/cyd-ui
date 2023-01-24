@@ -90,6 +90,7 @@ Property::~Property() {
 }
 
 void Property::clearDependencies() {
+  if (this->dead) return;
   for (auto &item: *dependencies) {
     if (item->dead == 0 && item->value != nullptr)
       item->removeListener(this);

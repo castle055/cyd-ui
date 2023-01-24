@@ -2,11 +2,10 @@
 // Created by castle on 8/22/22.
 //
 
-#include "../../include/events.hpp"
+#include "events.hpp"
 #include "../graphics/events.hpp"
-#include "../../include/threading.hpp"
+#include "threading.hpp"
 #include <thread>
-#include <unordered_map>
 #include <deque>
 #include <vector>
 

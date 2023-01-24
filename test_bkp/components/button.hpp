@@ -7,9 +7,8 @@
 
 #include <functional>
 #include "../../include/cydui.hpp"
-#include "../../include/logging.hpp"
 
-STATE(Button)
+STATE(Button) {
   bool hovering = false;
   
   cydui::layout::fonts::Font font {
@@ -25,7 +24,7 @@ STATE(Button)
 typedef std::function<void()> ButtonAction;
 #define action [&,state, this]
 
-COMPONENT(Button)
+COMPONENT(Button) {
   PROPS({
     std::string text = "Text";
     cydui::layout::fonts::Font* font = nullptr;
@@ -35,7 +34,7 @@ COMPONENT(Button)
     cydui::layout::color::Color* c1    = nullptr;
   })
   
-  INIT(Button)
+  INIT(Button) {
     if (!this->props.font) this->props.font   = &state->font;
     if (!this->props.c) this->props.c         = state->c;
     if (!this->props.c_dim) this->props.c_dim = state->c_dim;
@@ -43,9 +42,6 @@ COMPONENT(Button)
   }
   
   REDRAW {
-    WITH_STATE(Button)
-    
-    using namespace primitives;
     ADD_TO(this, ({
       N(Rectangle, ({
         .color = state->hovering? props.c : props.c_dim,

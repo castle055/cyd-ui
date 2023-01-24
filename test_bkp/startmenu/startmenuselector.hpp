@@ -9,7 +9,7 @@
 #include "../components/clock_module.hpp"
 #include "../components/flexbox.hpp"
 
-STATE(StartMenuSelector)
+STATE(StartMenuSelector) {
   cydui::layout::fonts::Font font {
     .name = "Fira Code Retina",
     .size = 10
@@ -21,20 +21,17 @@ STATE(StartMenuSelector)
 
 typedef std::function<void(int)> SelectorAction;
 
-COMPONENT(StartMenuSelector)
+COMPONENT(StartMenuSelector) {
   PROPS({
     std::string    text;
     SelectorAction on_action = [](int i) { };
   })
   
-  INIT(StartMenuSelector)
-    DISABLE_LOG
+  INIT(StartMenuSelector) {
   }
   
   REDRAW {
-    WITH_STATE(StartMenuSelector)
-    
-    ADD_TO(this, {
+    add({
       N(FlexBox, ({ .vertical = true }), ({
         N(Button, ({
           .text = "HOM",
@@ -65,7 +62,7 @@ COMPONENT(StartMenuSelector)
         thisFlexBox->set_height(150);
         thisFlexBox->set_pos(this, 0, 0);
       })
-    })
+    });
   }
 };
 

@@ -32,84 +32,65 @@ enable_cxx_compiler_flag_if_supported("-Wno-missing-field-initializers")
 
 enable_cxx_compiler_flag_if_supported("-Wno-unknown-pragmas")
 
+enable_cxx_compiler_flag_if_supported("-fmodules-ts")
+
+include_directories(${CMAKE_CURRENT_LIST_DIR}/.cyd/deps)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 include_directories(/usr/include/freetype2)
 
 include(cppcheck.cmake)
 include(clang-format.cmake)
 
-add_library(cyd_ui SHARED
-        src/cydui.cpp
-        src/layout/layout.cpp
-        include/layout.hpp
-        src/window/window.cpp
-        include/window.hpp
-        include/graphics.hpp
-        src/graphics/x11/x11_impl.cpp
-        src/graphics/x11/state/state.cpp
-        src/graphics/x11/state/state.hpp
-        src/logging/logging.cpp
-        include/logging.hpp
-        src/events/events.cpp
-        include/events.hpp
-        src/graphics/x11/events/events.cpp
-        src/graphics/events.hpp
-        include/components.hpp
-        src/layout/components/components.cpp
-        include/primitives.hpp
-        src/threading/threading.cpp
-        include/threading.hpp
-        include/window_types.hpp
-        src/graphics/x11/render/render.cpp
-        src/graphics/x11/render/render.hpp
-        include/x11_impl.hpp
-        include/colors.hpp
-        src/layout/color/colors.cpp
-        include/containers.hpp
-        src/layout/components/containers.cpp
-        src/layout/fonts/fonts.cpp
-        include/fonts.hpp
-        src/events/properties/properties.cpp
-        include/properties.hpp
-        include/int_properties.hpp
-        src/layout/components/geometry/component_geometry.cpp
-        include/component_geometry.hpp
-        src/layout/components/state/children_state_collection.cpp
-        include/children_state_collection.hpp
-        include/change_events.h include/config.hpp src/config/config.cpp test/startmenu/tabs/home/shortcuts.hpp)
-target_link_libraries(cyd_ui PRIVATE X11 Xft)
+FILE(GLOB_RECURSE STATIC_EXTRA_LIBS
+        ${CMAKE_CURRENT_LIST_DIR}/.cyd/deps/*.a
+        )
+
+FILE(GLOB_RECURSE EXTRA_LIBS_LIST
+        ${CMAKE_CURRENT_LIST_DIR}/.cyd/deps/*.*
+        )
+
+FILE(GLOB_RECURSE SRC_LIST
+        ${CMAKE_CURRENT_LIST_DIR}/include/*.*
+        ${CMAKE_CURRENT_LIST_DIR}/src/*.*
+        )
+list(APPEND SRC_LIST ${EXTRA_LIBS_LIST})
+add_library(cyd_ui ${SRC_LIST})
+target_link_libraries(cyd_ui PUBLIC ${STATIC_EXTRA_LIBS})
+target_link_libraries(cyd_ui PUBLIC X11 Xft fontconfig)
 target_link_libraries(cyd_ui PUBLIC yaml-cpp)
 
-add_executable(cyd_ui_test
-        test/main.cpp
-        test/wifi/wifi.hpp
-        test/status_bar/workspaces.hpp
-        test/components/terminal_button.hpp
-        test/tasks/open_terminal_task.hpp
-        test/tasks/run_command_task.h
-        test/wifi/banner.hpp
-        test/components/button.hpp
-        test/components/flexbox.hpp
-        test/components/clock_module.hpp
-        test/status_bar/workspace_selector.hpp
-        test/status_bar/window_title.hpp
-        test/startmenu/startmenu.hpp
-        test/startmenu/startmenuselector.hpp
-        test/startmenu/powerselector.hpp
-        test/startmenu/tabs/hometab.hpp
-        test/startmenu/tabs/appstab.hpp
-        test/startmenu/tabs/searchtab.hpp
-        test/startmenu/tabs/appbutton.hpp
-        test/startmenu/tabs/appsection.hpp
-        test/startmenu/tabs/listview.hpp
-        test/tasks/list_apps_task.hpp
-        test/startmenu/config/startappscm.hpp
-        test/startmenu/tabs/home/sysmon.hpp
-        test/startmenu/tabs/home/radial_indicator.hpp
-        test/startmenu/tabs/home/bar_indicator.hpp
-        test/startmenu/tabs/home/quicksettings.hpp
-        test/startmenu/tabs/home/opened_apps.hpp
-        test/startmenu/tabs/home/projects.hpp test/startmenu/tabs/home/music_player.hpp test/startmenu/tabs/home/services.hpp)
+FILE(GLOB_RECURSE TEST_LIST
+        ${CMAKE_CURRENT_LIST_DIR}/test/*.*
+        )
+add_executable(cyd_ui_test ${TEST_LIST})
 target_link_libraries(cyd_ui_test PRIVATE cyd_ui)
+
 #add_dependencies(cppcheck clang-format)
 #add_dependencies(cyd_ui_test cppcheck)
 
+if (CMAKE_BUILD_TYPE MATCHES "Release")
+    add_custom_command(TARGET cyd_ui POST_BUILD
+            COMMAND /usr/bin/cp
+            -v
+            ${CMAKE_CURRENT_LIST_DIR}/cmake-build-release/libcyd_ui.a
+            ${CMAKE_CURRENT_LIST_DIR}/dist/
+            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+            COMMENT "Generating distribution files..."
+            )
+    add_custom_command(TARGET cyd_ui POST_BUILD
+            COMMAND /usr/bin/cp
+            -rv
+            ${CMAKE_CURRENT_LIST_DIR}/include
+            ${CMAKE_CURRENT_LIST_DIR}/dist/
+            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+            COMMENT "Copying header files..."
+            )
+    add_custom_command(TARGET cyd_ui POST_BUILD
+            COMMAND /usr/bin/cp
+            -v
+            ${CMAKE_CURRENT_LIST_DIR}/cyd.yml
+            ${CMAKE_CURRENT_LIST_DIR}/dist/
+            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+            COMMENT "Copying CYD files..."
+            )
+endif ()

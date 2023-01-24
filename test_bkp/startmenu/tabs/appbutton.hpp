@@ -7,7 +7,6 @@
 
 #include <functional>
 #include "../../../include/cydui.hpp"
-#include "../../../include/logging.hpp"
 #include "../../tasks/list_apps_task.hpp"
 
 STATE(AppButton)

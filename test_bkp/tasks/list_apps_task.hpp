@@ -12,7 +12,6 @@
 #include <filesystem>
 #include <map>
 #include <vector>
-#include "../../include/logging.hpp"
 #include <algorithm>
 #include "../../include/cydui.hpp"
 #include "../startmenu/config/startappscm.hpp"

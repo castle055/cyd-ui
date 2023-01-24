@@ -7,7 +7,7 @@
 
 
 namespace cydui::graphics::events {
-  void start();
+  void start_thd();
 
 }
 

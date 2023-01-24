@@ -9,7 +9,7 @@
 logging::logger log_lay = {.name = "LAYOUT", .on = false};
 
 cydui::layout::Layout::Layout(cydui::components::Component* root): root(root) {
-  events::start();
+  events::start_thd();
 }
 
 void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {

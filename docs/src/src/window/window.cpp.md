@@ -18,7 +18,7 @@ CWindow* cydui::window::create(
     int w,
     int h
 ) {
-  events::start();
+  events::start_thd();
   
   auto win = new CWindow();
   windows.push_back(win);

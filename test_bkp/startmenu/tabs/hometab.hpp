@@ -10,9 +10,9 @@
 #include "../../components/flexbox.hpp"
 #include "../../components/clock_module.hpp"
 #include "home/shortcuts.hpp"
-#include "home/sysmon.hpp"
+#include "home/sysmon/sysmon.hpp"
 #include "home/quicksettings.hpp"
-#include "home/projects.hpp"
+#include "home/projects/projects.hpp"
 #include "home/music_player.hpp"
 #include "home/opened_apps.hpp"
 #include "home/services.hpp"
@@ -35,53 +35,50 @@ COMPONENT(HomeTab)
   }
   
   REDRAW {
-    WITH_STATE(HomeTab)
-    
-    using namespace primitives;
     add({
       COMP(ShortCuts)({
-        .init = [this, state](ShortCuts* sc) {
+        .init = [this](ShortCuts* sc) {
           sc->set_pos(this, props.width - 78, 0);
           sc->set_margin(10, 10, 10, 10);
         },
       }),
       COMP(SysMon)({
-        .init = [this, state](SysMon* s) {
-          s->set_pos(this, 0, 270);
+        .init = [this](SysMon* s) {
+          s->set_pos(this, 0, 265);
           s->set_margin(10, 10, 10, 10);
         },
       }),
       COMP(QuickSettings)({
-        .init = [this, state](QuickSettings* q) {
+        .init = [this](QuickSettings* q) {
           q->set_pos(this, 0, 680);
           q->set_margin(10, 10, 10, 10);
         },
       }),
       COMP(Services)({
-        .init = [this, state](Services* q) {
+        .init = [this](Services* q) {
           q->set_pos(this, 0, 490);
           q->set_size(305, 200);
           q->set_margin(10, 10, 10, 10);
         },
       }),
       COMP(MusicPlayer)({
-        .init = [this, state](MusicPlayer* q) {
+        .init = [this](MusicPlayer* q) {
           q->set_pos(this, 300, 490);
           q->set_size(330, 300);
           q->set_margin(10, 10, 10, 10);
         },
       }),
       COMP(Projects)({
-        .init = [this, state](Projects* q) {
+        .init = [this](Projects* q) {
           q->set_pos(this, 160, 270);
           q->set_size(410, 230);
-          q->set_margin(10, 10, 10, 10);
+          q->set_margin(5, 10, 10, 10);
         },
       }),
       COMP(OpenedApps)({
-        .init = [this, state](OpenedApps* q) {
+        .init = [this](OpenedApps* q) {
           q->set_pos(this, 0, 0);
-          q->set_size(570, 280);
+          q->set_size(570, 275);
           q->set_margin(10, 10, 10, 10);
         },
       }),

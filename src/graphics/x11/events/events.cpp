@@ -3,8 +3,8 @@
 //
 
 #include "../../events.hpp"
-#include "../../../../include/logging.hpp"
-#include "../../../../include/threading.hpp"
+#include "cyd-log/dist/include/logging.hpp"
+#include "threading.hpp"
 #include "../state/state.hpp"
 #include <X11/Xlib.h>
 
@@ -136,8 +136,15 @@ static void run() {
           .h = ev.xconfigure.height,
         });
         break;
-      case EnterNotify:
+      case EnterNotify:break;
       case LeaveNotify:
+        motionEventDataMonitor.update({
+          .win = (unsigned int)ev.xcrossing.window,
+          .x = -1,
+          .y = -1,
+        });
+        break;
+        break;
       case FocusIn:
       case FocusOut:
       case KeymapNotify:

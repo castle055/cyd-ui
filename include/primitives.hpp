@@ -9,135 +9,139 @@
 #include "colors.hpp"
 #include "fonts.hpp"
 #include "window_types.hpp"
-#include "logging.hpp"
+#include "cyd-log/dist/include/logging.hpp"
 #include "components.hpp"
 
 namespace primitives {
   using namespace cydui;
   using namespace cydui::components;
   using namespace cydui::layout::color;
-  
-  
-  STATE(Line) };
-  
-  COMPONENT(Line)
+
+
+  STATE(Line) { };
+
+  COMPONENT(Line) {
     PROPS({
-      Color* color;
+        Color* color;
     })
-    
-    INIT(Line) DISABLE_LOG }
-    
+
+    INIT(Line) {
+    }
+
     RENDER(win) {
-      graphics::drw_line(
-        win->win_ref,
-        props.color,
-        state->geom.content_x().val(),
-        state->geom.content_y().val(),
-        (state->geom.content_x() + state->geom.w).val(),
-        (state->geom.content_y() + state->geom.h).val()
-      );
+        graphics::drw_line(
+                win->win_ref,
+                props.color,
+                state->geom.content_x().val(),
+                state->geom.content_y().val(),
+                state->geom.content_x().val() + state->geom.content_w().val(),
+                state->geom.content_y().val() + state->geom.content_h().val()
+        );
     }
   };
-  
-  
-  STATE(Rectangle) };
-  
-  COMPONENT(Rectangle)
+
+
+  STATE(Rectangle) { };
+
+  COMPONENT(Rectangle) {
     PROPS({
-      Color* color;
-      bool filled = false;
+        Color* color;
+        bool filled = false;
     })
-    
-    INIT(Rectangle) DISABLE_LOG }
-    
+
+    INIT(Rectangle) {
+    }
+
     RENDER(win) {
-      graphics::drw_rect(
-        win->win_ref,
-        props.color,
-        state->geom.content_x().val(),
-        state->geom.content_y().val(),
-        state->geom.w.val(),
-        state->geom.h.val(),
-        props.filled
-      );
+        graphics::drw_rect(
+                win->win_ref,
+                props.color,
+                state->geom.content_x().val(),
+                state->geom.content_y().val(),
+                state->geom.w.val(),
+                state->geom.h.val(),
+                props.filled
+        );
     }
   };
-  
-  
-  STATE(Arc) };
-  
-  COMPONENT(Arc)
+
+
+  STATE(Arc) { };
+
+  COMPONENT(Arc) {
     PROPS({
-      Color* color;
-      bool filled = false;
-      int  a0     = 0;
-      int  a1     = 180;
+        Color* color;
+        bool filled = false;
+        int a0 = 0;
+        int a1 = 180;
     })
-    
-    INIT(Arc) DISABLE_LOG }
-    
+
+    INIT(Arc) {
+    }
+
     RENDER(win) {
-      graphics::drw_arc(
-        win->win_ref,
-        props.color,
-        state->geom.content_x().val(),
-        state->geom.content_y().val(),
-        state->geom.w.val(),
-        state->geom.h.val(),
-        props.a0, props.a1, props.filled
-      );
+        graphics::drw_arc(
+                win->win_ref,
+                props.color,
+                state->geom.content_x().val(),
+                state->geom.content_y().val(),
+                state->geom.w.val(),
+                state->geom.h.val(),
+                props.a0, props.a1, props.filled
+        );
     }
   };
-  
-  
-  STATE(Circle) };
-  
-  COMPONENT(Circle)
+
+
+  STATE(Circle) { };
+
+  COMPONENT(Circle) {
     PROPS({
-      Color* color;
-      bool filled;
+        Color* color;
+        bool filled;
     })
-    
-    INIT(Circle) DISABLE_LOG }
-    
+
+    INIT(Circle) {
+    }
+
     RENDER(win) {
-      graphics::drw_arc(
-        win->win_ref, props.color,
-        state->geom.content_x().val(),
-        state->geom.content_y().val(),
-        state->geom.w.val(),
-        state->geom.h.val(),
-        0, 360, props.filled
-      );
+        graphics::drw_arc(
+                win->win_ref, props.color,
+                state->geom.content_x().val(),
+                state->geom.content_y().val(),
+                state->geom.w.val(),
+                state->geom.h.val(),
+                0, 360, props.filled
+        );
     }
   };
-  
-  
-  STATE(Text) };
-  
-  COMPONENT(Text)
+
+
+  STATE(Text) { };
+
+  COMPONENT(Text) {
     PROPS({
-      Color              * color;
-      layout::fonts::Font* font;
-      std::string text;
+        Color* color;
+        layout::fonts::Font* font;
+        std::string text;
     })
-    
-    INIT(Text) DISABLE_LOG
-      state->geom.w             = 125;
-      state->geom.h             = this->props.font->size;
-      state->geom.custom_width  = true;
-      state->geom.custom_height = true;
+
+    INIT(Text) {
+        state->geom.w = 125;
+        state->geom.h = this->props.font->size;
+        state->geom.custom_width = true;
+        state->geom.custom_height = true;
     }
-    
+
     RENDER(win) {
-      graphics::drw_text(
-        win->win_ref, props.font, props.color, props.text,
-        state->geom.content_x().val(),
-        (state->geom.content_y() + props.font->size).val()
-      );
+        graphics::drw_text(
+                win->win_ref, props.font, props.color, props.text,
+                state->geom.content_x().val(),
+                (state->geom.content_y() + props.font->size).val()
+        );
     }
   };
-  
+
 }// namespace primitives
 
 #define rectangle(CLR, W, H, FILLED) \

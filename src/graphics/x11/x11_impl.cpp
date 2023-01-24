@@ -2,9 +2,8 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../../../include/graphics.hpp"
-#include "../../../include/x11_impl.hpp"
-#include "../../../include/logging.hpp"
+#include "graphics.hpp"
+#include "x11_impl.hpp"
 #include "../events.hpp"
 #include "render/render.hpp"
 #include "state/state.hpp"

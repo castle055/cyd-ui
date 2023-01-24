@@ -6,7 +6,6 @@
 #define CYD_UI_LISTVIEW_HPP
 
 #include "../../../include/cydui.hpp"
-#include "../../../include/logging.hpp"
 
 STATE(ListView)
   int diff = 0;
@@ -19,19 +18,18 @@ COMPONENT(ListView)
   PROPS({
     int* scroll = new int(0);
     int spacing = 40;
+    int height  = 800;
   })
   
   INIT(ListView)
   }
   
   REDRAW {
-    WITH_STATE(ListView)
-    
     *props.scroll += state->diff;
     state->diff = 0;
     //logger.info("SCROLL= %d", props.scroll);
-    int x = 0;
-    int y = *props.scroll + props.spacing;
+    int x       = 0;
+    int y       = *props.scroll + props.spacing;
     
     auto given_children = children;
     children.clear();
@@ -40,13 +38,13 @@ COMPONENT(ListView)
       int item_height = item->state->geom.h.val();
       item->set_pos(this, x, y);
       // Push only if in viewport
-      if (y <= 800 && y + item_height + props.spacing >= 0) {
+      if (y + item_height <= props.height && y /*+ item_height + props.spacing*/ >= 0) {
         children.push_back(item);
       }
       y += props.spacing + item_height;
     }
-    if (y < 400 && *props.scroll < -400) {
-      state->diff = 400 - y;
+    if (y < props.height / 2 && *props.scroll < -props.height / 2) {
+      state->diff = (props.height / 2) - y;
     }
   }
 };

@@ -9,9 +9,9 @@
 #include <unistd.h>
 
 SIMPLE_TASK(OpenTerminalTask, {
-  int w;
-  int h;
-  const char* cmd;
+  int         w = 110;
+  int         h = 30;
+  std::string cmd;
 }, {
   if (fork() == 0) {
     setsid();
@@ -21,7 +21,7 @@ SIMPLE_TASK(OpenTerminalTask, {
     c.append("x");
     c.append(std::to_string(args.h));
     c.append("+0+0 -e sh -c '");
-    c.append(args.cmd);
+    c.append(args.cmd.c_str());
     c.append("' & disown");
     log.debug("running %s", c.c_str());
     std::system(c.c_str());

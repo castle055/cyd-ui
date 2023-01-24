@@ -1,16 +1,16 @@
 ---
 layout: function
-title: start
+title: start_thd
 owner: __MISSING__
 brief: __MISSING__
 tags:
   - function
 defined_in_file: src/graphics/events.hpp
 overloads:
-  void start():
+  void start_thd():
     description: __OPTIONAL__
     return: __OPTIONAL__
-    signature_with_names: void start()
+    signature_with_names: void start_thd()
 namespace:
   - cydui
   - graphics

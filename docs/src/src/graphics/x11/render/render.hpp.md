@@ -13,7 +13,7 @@ namespace render {
     cydui::graphics::window_t* win;
   };
   
-  void start(cydui::graphics::window_t* win);
+  void start_thd(cydui::graphics::window_t* win);
   
   void resize(cydui::graphics::window_t* win, int w, int h);
   

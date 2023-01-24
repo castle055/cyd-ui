@@ -2,7 +2,7 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../../include/window.hpp"
+#include "window.hpp"
 #include "../graphics/events.hpp"
 #include <vector>
 

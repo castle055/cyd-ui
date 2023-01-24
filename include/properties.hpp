@@ -7,7 +7,7 @@
 
 #include <functional>
 #include "events.hpp"
-#include "logging.hpp"
+#include "cyd-log/dist/include/logging.hpp"
 #include <unordered_set>
 #include <vector>
 

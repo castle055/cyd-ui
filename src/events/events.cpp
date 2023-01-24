@@ -2,9 +2,9 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../../include/events.hpp"
-#include "../../include/logging.hpp"
-#include "../../include/threading.hpp"
+#include "events.hpp"
+#include "cyd-log/dist/include/logging.hpp"
+#include "threading.hpp"
 
 #include <deque>
 #include <list>

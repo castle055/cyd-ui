@@ -8,7 +8,6 @@
 #include <utility>
 
 #include "../../include/cydui.hpp"
-#include "../../include/logging.hpp"
 #include "../components/button.hpp"
 
 class FlexBoxState: public cydui::components::ComponentState {

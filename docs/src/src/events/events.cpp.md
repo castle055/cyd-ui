@@ -62,7 +62,7 @@ void event_task(cydui::threading::thread_t* this_thread) {
   }
 }
 
-void cydui::events::start() {
+void cydui::events::start_thd() {
   if (event_thread && event_thread->native_thread != nullptr)
     return;
   log_ctrl.debug("Starting event_thread");
