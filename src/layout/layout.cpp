@@ -128,10 +128,10 @@ static void redraw_component(
   
   // Clear screen area
   cydui::graphics::clr_rect(win->win_ref,
-    target->state->dim.cx,
-    target->state->dim.cy,
-    target->state->dim.cw,
-    target->state->dim.ch);
+    target->state->dim.cx.val(),
+    target->state->dim.cy.val(),
+    target->state->dim.cw.val(),
+    target->state->dim.ch.val());
   
   // Render screen area & flush graphics
   target->render(win);
