@@ -65,8 +65,8 @@ dimensions::dimension_t& dimensions::dimension_t::operator=(
   this->deps.clear();
   this->value   = val;
   this->binding = [val]() { return val; };
-    this->unknown = false;
-    return *this;
+  this->unknown = false;
+  return *this;
 }
 
 dimensions::dimension_t& dimensions::dimension_t::operator=(

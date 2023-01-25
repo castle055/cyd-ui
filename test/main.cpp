@@ -13,7 +13,7 @@ STATE(Test) {
   cydui::layout::color::Color* c = new cydui::layout::color::Color("#FCAE1E");
   cydui::layout::fonts::Font font {
     .name = "Fira Code Retina",
-    .size = 10
+    .size = 14
   };
   
   //cydui::layout::images::image_t img {"/home/castle/pics/FLASHLE.png"}; // NOT WORKING
@@ -26,92 +26,83 @@ COMPONENT(Test) {
   REDRAW {
     HBox* hbox_ref;
     add({
-      COMP(Text)({
-        .props = {
-          .color = state->c,
-          .font = &state->font,
-          .text = "Test TEXT",
-        },
-      }),
       COMP(Image)({
         .props = {
           .img = "/home/castle/pics/prof.jpg",
         },
-        //.w = dim->cw,
-        .h = dim->ch,
-        //.h = 24,
+        .w = dim->cw,
       }),
-      //COMP(HBox)({
-      //  .ref = &hbox_ref,
-      //  .props = {
-      //    .spacing = 10,
-      //  },
-      //  .x = 10,
-      //  .y = 10,
-      //  .inner = {
-      //    COMP(VBox)({
-      //      .props = {
-      //        .spacing = 10,
-      //      },
-      //      .inner = {
-      //        COMP(Rectangle)({
-      //          .props = {
-      //            .color = state->c,
-      //            .filled = true,
-      //          },
-      //          .w = dim->cw / 2 - 15,
-      //          .h = dim->ch / 4,
-      //        }),
-      //        COMP(Rectangle)({
-      //          .props = {
-      //            .color = state->c,
-      //            .filled = true,
-      //          },
-      //          .w = dim->cw / 2 - 15,
-      //          .h = 40,
-      //        }),
-      //        COMP(Text)({
-      //          .props = {
-      //            .color = state->c,
-      //            .font = &state->font,
-      //            .text = "Test TEXT",
-      //          },
-      //        }),
-      //        COMP(Rectangle)({
-      //          .props = {
-      //            .color = state->c,
-      //            .filled = true,
-      //          },
-      //          .w = dim->cw / 2 - 15,
-      //          .h = dim->ch / 4,
-      //        }),
-      //      }
-      //    }),
-      //    COMP(VBox)({
-      //      .props = {
-      //        .spacing = 10,
-      //      },
-      //      .inner = {
-      //        COMP(Rectangle)({
-      //          .props = {
-      //            .color = state->c,
-      //            .filled = true,
-      //          },
-      //          .w = dim->cw / 2 - 15,
-      //          .h = dim->ch / 4,
-      //        }),
-      //        COMP(Rectangle)({
-      //          .props = {
-      //            .color = state->c,
-      //            .filled = true,
-      //          },
-      //          .w = dim->cw / 2 - 15,
-      //          .h = 50,
-      //        }),
-      //      }
-      //    })
-      //  },
-      //}),
+      COMP(HBox)({
+        .ref = &hbox_ref,
+        .props = {
+          .spacing = 10,
+        },
+        .x = 10,
+        .y = 10,
+        .inner = {
+          COMP(VBox)({
+            .props = {
+              .spacing = 10,
+            },
+            .inner = {
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = dim->ch / 4,
+              }),
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = 40,
+              }),
+              COMP(Text)({
+                .props = {
+                  .color = state->c,
+                  .font = &state->font,
+                  .text = "Test TEXT",
+                },
+              }),
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = dim->ch / 4,
+              }),
+            }
+          }),
+          COMP(VBox)({
+            .props = {
+              .spacing = 10,
+            },
+            .inner = {
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = dim->ch / 4,
+              }),
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = 50,
+              }),
+            }
+          })
+        },
+      }),
     });
   }
 };

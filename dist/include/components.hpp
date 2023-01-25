@@ -127,7 +127,7 @@ namespace cydui::components {
                 : (this->state->children.add_list(
                   ID, i, new typename c::State()))),
               init.props,
-              [this, init](cydui::components::Component* __raw_local_) {
+              [init](cydui::components::Component* __raw_local_) {
                 auto* local = (c*) __raw_local_;
                 
                 if (init.x.has_value())
@@ -309,39 +309,5 @@ namespace cydui::components {
     auto* LOCAL_NAME = (NAME*)__raw_##LOCAL_NAME;                              \
     LOCAL_NAME->add(VECTOR);                                                   \
   }
-
-#define C_NEW_ALL(ID, NAME, _PROPS, IN, INIT)                                  \
-  new NAME(state->children.contains(ID)                                        \
-          ? ((NAME##State*)state->children[ID])                                \
-          : ((NAME##State*)state->children.add(ID, new NAME##State())),        \
-      NAME::Props _PROPS,                                                      \
-      [this](cydui::components::Component* __raw_local_##NAME) {               \
-        this;                                                                  \
-        state;                                                                 \
-        auto* this##NAME = (NAME*)__raw_local_##NAME;                          \
-                                                                               \
-        std::vector<cydui::components::Component*> v IN;                       \
-        this##NAME->add(v);                                                    \
-                                                                               \
-        std::function<void(NAME * this##NAME)> init = [this, state](           \
-                                                          NAME* this##NAME) {  \
-          this;                                                                \
-          state;                                                               \
-          INIT                                                                 \
-        };                                                                     \
-        init(this##NAME);                                                      \
-      })
-
-#define C_NEW_INNER(ID, NAME, PROPS, IN)                                       \
-  C_NEW_ALL(ID, NAME, PROPS, IN, { state; })
-
-#define C_NEW_PROPS(ID, NAME, PROPS) C_NEW_INNER(ID, NAME, PROPS, ({}))
-
-#define C_NEW(ID, NAME) C_NEW_PROPS(ID, NAME, ({}))
-
-#define C_GET_NEW_MACRO(_1, _2, _3, _4, NAME, ...) NAME
-#define N(...)                                                                 \
-  C_GET_NEW_MACRO(__VA_ARGS__, C_NEW_ALL, C_NEW_INNER, C_NEW_PROPS, C_NEW)     \
-  (__COUNTER__, __VA_ARGS__)
 
 #endif//CYD_UI_COMPONENTS_HPP
