@@ -310,3 +310,74 @@ void render::drw_text(
   
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }
+
+void render::drw_image(
+  cydui::graphics::window_t* win,
+  window_image img,
+  int x,
+  int y,
+  int w,
+  int h
+) {
+  win->x_mtx.lock();
+  
+  Pixmap tmp_pixmap = XCreatePixmap(
+    state::get_dpy(),
+    win->drawable,
+    img.ximg->width,
+    img.ximg->height,
+    DefaultDepth(state::get_dpy(), state::get_screen())
+  );
+  
+  GC tmp_gc = XCreateGC(state::get_dpy(), tmp_pixmap, 0, NULL);
+  
+  XPutImage(
+    state::get_dpy(),
+    tmp_pixmap,
+    tmp_gc,
+    img.ximg,
+    0, 0,
+    0, 0,
+    img.ximg->width,
+    img.ximg->height
+  );
+  
+  XRenderPictureAttributes p;
+  XRenderPictFormat* p_fmt = XRenderFindVisualFormat(state::get_dpy(),
+    DefaultVisual(state::get_dpy(), state::get_screen()));
+  Picture src_p = XRenderCreatePicture(state::get_dpy(), tmp_pixmap, p_fmt, 0, &p);
+  Picture dst_p = XRenderCreatePicture(state::get_dpy(), win->drawable, p_fmt, 0, &p);
+  
+  double x_scl = (double) img.ximg->width / w;
+  double y_scl = (double) img.ximg->height / h;
+  XTransform tr = {{
+    {XDoubleToFixed(x_scl), XDoubleToFixed(0), XDoubleToFixed(0)},
+    {XDoubleToFixed(0), XDoubleToFixed(y_scl), XDoubleToFixed(0)},
+    {XDoubleToFixed(0), XDoubleToFixed(0), XDoubleToFixed(1.0)},
+  }};
+  XRenderSetPictureTransform(state::get_dpy(), src_p, &tr);
+  
+  int final_w = x + w > win->w ? win->w - x : w;
+  int final_h = y + h > win->h ? win->h - y : h;
+  
+  XRenderComposite(
+    state::get_dpy(),
+    PictOpSrc,
+    src_p, 0, dst_p,
+    0, 0,
+    0, 0,
+    x, y,
+    final_w, final_h
+  );
+  
+  XSync(state::get_dpy(), False);
+  
+  XRenderFreePicture(state::get_dpy(), src_p);
+  XRenderFreePicture(state::get_dpy(), dst_p);
+  XFreeGC(state::get_dpy(), tmp_gc);
+  XFreePixmap(state::get_dpy(), tmp_pixmap);
+  
+  win->x_mtx.unlock();
+  //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
+}
+

@@ -7,9 +7,11 @@
 #include "../events.hpp"
 #include "render/render.hpp"
 #include "state/state.hpp"
+#include "images.h"
 #include <X11/Xft/Xft.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <png.h>
 
 const logging::logger log_task = {.name = "X11_IMPL", .on = true};
 
@@ -282,6 +284,47 @@ static void unload_font(
   // TODO - Implement
 }
 
+static window_image load_image(
+  cydui::graphics::window_t* win, cydui::layout::images::image_t* img
+) {
+  if (win->loaded_images.contains(img->path))
+    return win->loaded_images[img->path];
+  
+  XImage* image = nullptr;
+  
+  //if (img->path.ends_with(".jpg")
+  //  || img->path.ends_with("jpeg")) {
+  imgs::img_data data = imgs::read_jpg(img->path);
+  
+  image = XCreateImage(
+    state::get_dpy(),
+    CopyFromParent,
+    DisplayPlanes(state::get_dpy(), state::get_screen()),
+    ZPixmap,
+    0,
+    data.data,
+    data.width,
+    data.height,
+    8,
+    data.width * data.components
+  );
+  //log_task.info("STATUS = %d", XInitImage(image));
+  //}
+  
+  //
+  //auto f = window_font {.xfont = xfont, .pattern = pattern};
+  //win->loaded_fonts[font_spec] = f;
+  auto i = window_image {image};
+  win->loaded_images[img->path] = i;
+  return i;
+}
+
+static void unload_image(
+  cydui::graphics::window_t* win, cydui::layout::images::image_t* img
+) {
+  // TODO - Implement
+}
+
 void cydui::graphics::drw_text(
   window_t* win,
   layout::fonts::Font* font,
@@ -315,4 +358,21 @@ std::pair<int, int> cydui::graphics::get_text_size(
   );
   XftFontClose(state::get_dpy(), xfont);
   return {x_glyph_info.width, x_glyph_info.height};
+}
+
+void cydui::graphics::drw_image(
+  window_t* win,
+  layout::images::image_t* img,
+  int x,
+  int y,
+  int w,
+  int h
+) {
+  window_image i = load_image(win, img);
+  render::drw_image(win, i, x, y, w, h);
+}
+
+std::pair<int, int> cydui::graphics::get_image_size(layout::images::image_t* img) {
+  imgs::img_data data = imgs::read_jpg(img->path);
+  return {data.width, data.height};
 }

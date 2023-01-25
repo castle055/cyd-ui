@@ -16,6 +16,9 @@ STATE(Test) {
     .size = 10
   };
   
+  //cydui::layout::images::image_t img {"/home/castle/pics/FLASHLE.png"}; // NOT WORKING
+  //cydui::layout::images::image_t img {"/home/castle/pics/spaceman.png"}; // WORKING (bc it's a camouflaged JPEG)
+  
 };
 COMPONENT(Test) {
   NO_PROPS INIT(Test) {
@@ -23,77 +26,92 @@ COMPONENT(Test) {
   REDRAW {
     HBox* hbox_ref;
     add({
-      COMP(HBox)({
-        .ref = &hbox_ref,
+      COMP(Text)({
         .props = {
-          .spacing = 10,
-        },
-        .x = 10,
-        .y = 10,
-        .inner = {
-          COMP(VBox)({
-            .props = {
-              .spacing = 10,
-            },
-            .inner = {
-              COMP(Rectangle)({
-                .props = {
-                  .color = state->c,
-                  .filled = true,
-                },
-                .w = dim->cw / 2 - 15,
-                .h = dim->ch / 4,
-              }),
-              COMP(Rectangle)({
-                .props = {
-                  .color = state->c,
-                  .filled = true,
-                },
-                .w = dim->cw / 2 - 15,
-                .h = 40,
-              }),
-              COMP(Text)({
-                .props = {
-                  .color = state->c,
-                  .font = &state->font,
-                  .text = "Test TEXT",
-                },
-              }),
-              COMP(Rectangle)({
-                .props = {
-                  .color = state->c,
-                  .filled = true,
-                },
-                .w = dim->cw / 2 - 15,
-                .h = dim->ch / 4,
-              }),
-            }
-          }),
-          COMP(VBox)({
-            .props = {
-              .spacing = 10,
-            },
-            .inner = {
-              COMP(Rectangle)({
-                .props = {
-                  .color = state->c,
-                  .filled = true,
-                },
-                .w = dim->cw / 2 - 15,
-                .h = dim->ch / 4,
-              }),
-              COMP(Rectangle)({
-                .props = {
-                  .color = state->c,
-                  .filled = true,
-                },
-                .w = dim->cw / 2 - 15,
-                .h = 50,
-              }),
-            }
-          })
+          .color = state->c,
+          .font = &state->font,
+          .text = "Test TEXT",
         },
       }),
+      COMP(Image)({
+        .props = {
+          .img = "/home/castle/pics/prof.jpg",
+        },
+        //.w = dim->cw,
+        .h = dim->ch,
+        //.h = 24,
+      }),
+      //COMP(HBox)({
+      //  .ref = &hbox_ref,
+      //  .props = {
+      //    .spacing = 10,
+      //  },
+      //  .x = 10,
+      //  .y = 10,
+      //  .inner = {
+      //    COMP(VBox)({
+      //      .props = {
+      //        .spacing = 10,
+      //      },
+      //      .inner = {
+      //        COMP(Rectangle)({
+      //          .props = {
+      //            .color = state->c,
+      //            .filled = true,
+      //          },
+      //          .w = dim->cw / 2 - 15,
+      //          .h = dim->ch / 4,
+      //        }),
+      //        COMP(Rectangle)({
+      //          .props = {
+      //            .color = state->c,
+      //            .filled = true,
+      //          },
+      //          .w = dim->cw / 2 - 15,
+      //          .h = 40,
+      //        }),
+      //        COMP(Text)({
+      //          .props = {
+      //            .color = state->c,
+      //            .font = &state->font,
+      //            .text = "Test TEXT",
+      //          },
+      //        }),
+      //        COMP(Rectangle)({
+      //          .props = {
+      //            .color = state->c,
+      //            .filled = true,
+      //          },
+      //          .w = dim->cw / 2 - 15,
+      //          .h = dim->ch / 4,
+      //        }),
+      //      }
+      //    }),
+      //    COMP(VBox)({
+      //      .props = {
+      //        .spacing = 10,
+      //      },
+      //      .inner = {
+      //        COMP(Rectangle)({
+      //          .props = {
+      //            .color = state->c,
+      //            .filled = true,
+      //          },
+      //          .w = dim->cw / 2 - 15,
+      //          .h = dim->ch / 4,
+      //        }),
+      //        COMP(Rectangle)({
+      //          .props = {
+      //            .color = state->c,
+      //            .filled = true,
+      //          },
+      //          .w = dim->cw / 2 - 15,
+      //          .h = 50,
+      //        }),
+      //      }
+      //    })
+      //  },
+      //}),
     });
   }
 };
@@ -120,7 +138,7 @@ int main() {
     "scratch",
     0, 25,//100, 260,
     //1, 13,
-    300, 200,
+    800, 800,
     false);
   //cydui::window::CWindow   * win1 = cydui::window::create(
   //  layout1,

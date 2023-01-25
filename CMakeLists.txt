@@ -56,8 +56,9 @@ FILE(GLOB_RECURSE SRC_LIST
 list(APPEND SRC_LIST ${EXTRA_LIBS_LIST})
 add_library(cyd_ui ${SRC_LIST})
 target_link_libraries(cyd_ui PUBLIC ${STATIC_EXTRA_LIBS})
-target_link_libraries(cyd_ui PUBLIC X11 Xft fontconfig)
+target_link_libraries(cyd_ui PUBLIC X11 Xft Xrender fontconfig)
 target_link_libraries(cyd_ui PUBLIC yaml-cpp)
+target_link_libraries(cyd_ui PUBLIC jpeg)
 
 FILE(GLOB_RECURSE TEST_LIST
         ${CMAKE_CURRENT_LIST_DIR}/test/*.*

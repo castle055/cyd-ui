@@ -66,6 +66,15 @@ namespace render {
       int x,
       int y
     );
+    
+    void drw_image(
+      cydui::graphics::window_t* win,
+      window_image img,
+      int x,
+      int y,
+      int w,
+      int h
+    );
   
 }// namespace render
 

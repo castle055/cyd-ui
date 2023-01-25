@@ -1,7 +1,8 @@
 #ifndef CYD_UI_CYDUI_HPP
 #define CYD_UI_CYDUI_HPP
 
-namespace cydui { }
+namespace cydui {
+}
 
 
 #include "cyd-log/dist/include/logging.hpp"
@@ -15,6 +16,7 @@ namespace cydui { }
 #include "config.hpp"
 #include "events.hpp"
 #include "event_types.h"
+#include "images.h"
 
 
 #endif//CYD_UI_CYDUI_HPP

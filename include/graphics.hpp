@@ -11,6 +11,7 @@
 #include "fonts.hpp"
 
 #include "x11_impl.hpp"
+#include "images.h"
 
 namespace cydui::graphics {
     typedef window_t window_t;
@@ -66,6 +67,19 @@ namespace cydui::graphics {
     std::pair<int, int> get_text_size(
       layout::fonts::Font* font,
       const std::string &text
+    );
+    
+    void drw_image(
+      window_t* win,
+      layout::images::image_t* img,
+      int x,
+      int y,
+      int w,
+      int h
+    );
+    
+    std::pair<int, int> get_image_size(
+      layout::images::image_t* img
     );
   
 }// namespace cydui::graphics

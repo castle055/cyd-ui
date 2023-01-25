@@ -34,6 +34,12 @@ dimensions::dimensional_relation_t::dimensional_relation_t(
   this->binding = [val]() { return val; };
 }
 
+dimensions::dimensional_relation_t::dimensional_relation_t(
+  dimensions::dimension_t &dim) {
+  this->deps = {&dim};
+  this->binding = [&dim]() { return dim.val(); };
+}
+
 dimensions::dimension_t::dimension_t(dimensions::dimension_value_t val) {
   this->value   = val;
   this->binding = [val]() { return val; };
