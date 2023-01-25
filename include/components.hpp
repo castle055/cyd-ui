@@ -9,7 +9,6 @@
 #include "colors.hpp"
 #include "dimensions.hpp"
 #include "events.hpp"
-#include "properties.hpp"
 #include "window_types.hpp"
 #include <functional>
 #include <optional>
@@ -17,233 +16,239 @@
 #include <vector>
 
 namespace cydui::components {
-  class Component;
-
-  class ComponentBorder {
-  public:
-    bool enabled = false;
-    layout::color::Color* color = new layout::color::Color("#FCAE1E");
-  };
-
-  class ComponentState {
-  public:
-    ComponentState();
-
-    Component* component_instance;
-    bool stateless_comp = false;
-    bool focused = false;
-
-    bool _dirty = false;
-
-    void dirty();
-
-    dimensions::component_dimensions_t dim;
-    ComponentBorder border;
-    ChildrenStateCollection children;
-  };
-
-  template<class c>
-  concept ComponentConcept = requires {
+    class Component;
+    
+    
+    class ComponentBorder {
+    public:
+      bool enabled = false;
+      layout::color::Color* color = new layout::color::Color("#FCAE1E");
+    };
+    
+    class ComponentState {
+    public:
+      ComponentState();
+      
+      Component* component_instance;
+      bool stateless_comp = false;
+      bool focused = false;
+      
+      bool _dirty = false;
+      
+      void dirty();
+      
+      dimensions::component_dimensions_t dim;
+      ComponentBorder border;
+      ChildrenStateCollection children;
+    };
+    
+    template<class c>
+    concept ComponentConcept = requires {
       typename c::Props;
       typename c::State;
       {
       c::props
       } -> std::convertible_to<typename c::Props>;
-  };
-
-  template<typename c> requires ComponentConcept<c>
-  struct c_init_t {
-    typename c::Props props;
-
-    std::optional<dimensions::dimensional_relation_t> x;
-    std::optional<dimensions::dimensional_relation_t> y;
-    std::optional<dimensions::dimensional_relation_t> w;
-    std::optional<dimensions::dimensional_relation_t> h;
-
-    std::vector<Component*> inner = {};
-
-    std::function<void(c*)> init = [](c*) {
     };
-  };
-
-
-  class Component {
-
-    std::function<void(Component*)> inner_redraw = [](Component*) {
+    
+    template<typename c> requires ComponentConcept<c>
+    struct c_init_t {
+      c** ref = nullptr;
+      typename c::Props props;
+      
+      std::optional<dimensions::dimensional_relation_t> x;
+      std::optional<dimensions::dimensional_relation_t> y;
+      std::optional<dimensions::dimensional_relation_t> w;
+      std::optional<dimensions::dimensional_relation_t> h;
+      
+      std::vector<Component*> inner = {};
+      
+      std::function<void(c*)> init = [](c*) {
+      };
     };
-
-    bool is_group = false;
-
-  protected:
-    template<typename c, int ID>
-    requires ComponentConcept<c>
-    inline c* create(c_init_t<c> init) {
+    
+    
+    class Component {
+      
+      std::function<void(Component*)> inner_redraw = [](Component*) {
+      };
+      
+      bool is_group = false;
+    
+    protected:
+      template<typename c, int ID>
+      requires ComponentConcept<c>
+      inline c* create(c_init_t<c> init) {
         auto* _c = new c(
-                (typename c::State*) (this->state->children.contains(ID)
-                        ? (this->state->children[ID])
-                        : (this->state->children.add(ID, new typename c::State()))),
-                init.props,
-                [init](cydui::components::Component* __raw_local_) {
-                  auto* local = (c*) __raw_local_;
-
-                  if (init.x.has_value())
-                      __raw_local_->state->dim.x = init.x.value();
-                  if (init.y.has_value())
-                      __raw_local_->state->dim.y = init.y.value();
-                  if (init.w.has_value()) {
-                      __raw_local_->state->dim.w = init.w.value();
-                      __raw_local_->state->dim.given_w = true;
-                  }
-                  if (init.h.has_value()) {
-                      __raw_local_->state->dim.h = init.h.value();
-                      __raw_local_->state->dim.given_h = true;
-                  }
-
-                  local->add(init.inner);
-                  init.init(local);
-                });
+          (typename c::State*) (this->state->children.contains(ID)
+            ? (this->state->children[ID])
+            : (this->state->children.add(ID, new typename c::State()))),
+          init.props,
+          [init](cydui::components::Component* __raw_local_) {
+            auto* local = (c*) __raw_local_;
+            
+            if (init.x.has_value())
+              __raw_local_->state->dim.x = init.x.value();
+            if (init.y.has_value())
+              __raw_local_->state->dim.y = init.y.value();
+            if (init.w.has_value()) {
+              __raw_local_->state->dim.w = init.w.value();
+              __raw_local_->state->dim.given_w = true;
+            }
+            if (init.h.has_value()) {
+              __raw_local_->state->dim.h = init.h.value();
+              __raw_local_->state->dim.given_h = true;
+            }
+            
+            local->add(init.inner);
+            init.init(local);
+          });
+        if (init.ref)
+          *(init.ref) = _c;
         return _c;
-    }
+      }
 
 #define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
-
-    template<typename c, int ID, typename T>
-    requires ComponentConcept<c>
-    inline Component* create_for(
-            T iter, std::function<c_init_t<c>(typename T::value_type)> block
-    ) {
+      
+      template<typename c, int ID, typename T>
+      requires ComponentConcept<c>
+      inline Component* create_for(
+        T iter, std::function<c_init_t<c>(typename T::value_type)> block
+      ) {
         int i = 0;
         auto temp_c = new Component();
         for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
-            const c_init_t<c> init = block(*a);
-            temp_c->children.push_back(
-                    new c((typename c::State*) (this->state->children.contains(ID, i)
-                                    ? (this->state->children.get_list(ID, i))
-                                    : (this->state->children.add_list(
-                                            ID, i, new typename c::State()))),
-                            init.props,
-                            [this, init](cydui::components::Component* __raw_local_) {
-                              auto* local = (c*) __raw_local_;
-
-                              if (init.x.has_value())
-                                  __raw_local_->state->dim.x = init.x.value();
-                              if (init.y.has_value())
-                                  __raw_local_->state->dim.y = init.y.value();
-                              if (init.w.has_value()) {
-                                  __raw_local_->state->dim.w = init.w.value();
-                                  __raw_local_->state->dim.given_w = true;
-                              }
-                              if (init.h.has_value()) {
-                                  __raw_local_->state->dim.h = init.h.value();
-                                  __raw_local_->state->dim.given_h = true;
-                              }
-
-                              local->add(init.inner);
-                              init.init(local);
-                            }));
+          const c_init_t<c> init = block(*a);
+          if (init.ref)
+            *(init.ref) = nullptr;
+          temp_c->children.push_back(
+            new c((typename c::State*) (this->state->children.contains(ID, i)
+                ? (this->state->children.get_list(ID, i))
+                : (this->state->children.add_list(
+                  ID, i, new typename c::State()))),
+              init.props,
+              [this, init](cydui::components::Component* __raw_local_) {
+                auto* local = (c*) __raw_local_;
+                
+                if (init.x.has_value())
+                  __raw_local_->state->dim.x = init.x.value();
+                if (init.y.has_value())
+                  __raw_local_->state->dim.y = init.y.value();
+                if (init.w.has_value()) {
+                  __raw_local_->state->dim.w = init.w.value();
+                  __raw_local_->state->dim.given_w = true;
+                }
+                if (init.h.has_value()) {
+                  __raw_local_->state->dim.h = init.h.value();
+                  __raw_local_->state->dim.given_h = true;
+                }
+                
+                local->add(init.inner);
+                init.init(local);
+              }));
         }
         temp_c->is_group = true;
         return temp_c;
-    }
+      }
 
 #define FOR_EACH(COMPONENT) create_for<COMPONENT, __COUNTER__>
 #define NULLCOMP            Component::new_group()
-
-
-  public:
-    static Component* new_group();
-    //explicit Component(std::unordered_set<Component*> children);
-
-    //explicit Component(ComponentState* state, std::unordered_set<Component*> children);
-
-    Component();
-
-    Component(std::function<void(Component*)> inner);
-
-    Component(ComponentState* state);
-
-    Component(ComponentState* state, std::function<void(Component*)> inner);
-
-    virtual ~Component();
-
-    Component* parent;
-    ComponentState* state;
-    cydui::dimensions::component_dimensions_t* dim = nullptr;
-
-    void add(std::vector<Component*> children);
-
-    std::vector<Component*> children;
-
-    void redraw();
-
-    void render(const cydui::window::CWindow* win);
-
-    Component* get_parent();
-
-    //Component* set_size(int w, int h);
-    //
-    //Component* set_size(IntProperty* w, IntProperty* h);
-    //
-    //Component* set_size(IntProperty::IntBinding w, IntProperty::IntBinding h);
-    //
-    //
-    //Component* set_width(int w);
-
-    //Component* set_width(IntProperty* w);
-
-    //Component* set_width(IntProperty::IntBinding w);
-    //
-    //
-    //Component* set_height(int h);
-
-    //Component* set_height(IntProperty* h);
-
-    //Component* set_height(IntProperty::IntBinding h);
-    //
-    //
-    //Component* set_pos(Component* relative, int x, int y);
-
-    //Component* set_pos(Component* relative, IntProperty* x, IntProperty* y);
-
-    //Component* set_pos(
-    //        Component* relative,
-    //        IntProperty::IntBinding x,
-    //        IntProperty::IntBinding y
-    //);
-    //
-    //Component* set_padding(
-    //        unsigned int top,
-    //        unsigned int right,
-    //        unsigned int bottom,
-    //        unsigned int left
-    //);
-    //
-    //Component* set_margin(
-    //        unsigned int top,
-    //        unsigned int right,
-    //        unsigned int bottom,
-    //        unsigned int left
-    //);
-
-    Component* set_border_enable(bool enabled);
-
-    virtual void on_render(const cydui::window::CWindow* win);
-
-    virtual void on_redraw();
-
-    virtual void on_mouse_enter(int x, int y);
-
-    virtual void on_mouse_exit(int x, int y);
-
-    virtual void on_mouse_click(int x, int y, int button);
-
-    virtual void on_scroll(int d);
-
-    virtual void on_key_press();
-
-    virtual void on_key_release();
-  };
-
+    
+    
+    public:
+      static Component* new_group();
+      //explicit Component(std::unordered_set<Component*> children);
+      
+      //explicit Component(ComponentState* state, std::unordered_set<Component*> children);
+      
+      Component();
+      
+      Component(std::function<void(Component*)> inner);
+      
+      Component(ComponentState* state);
+      
+      Component(ComponentState* state, std::function<void(Component*)> inner);
+      
+      virtual ~Component();
+      
+      Component* parent;
+      ComponentState* state;
+      cydui::dimensions::component_dimensions_t* dim = nullptr;
+      
+      void add(std::vector<Component*> children);
+      
+      std::vector<Component*> children;
+      
+      void redraw();
+      
+      void render(const cydui::window::CWindow* win);
+      
+      Component* get_parent();
+      
+      //Component* set_size(int w, int h);
+      //
+      //Component* set_size(IntProperty* w, IntProperty* h);
+      //
+      //Component* set_size(IntProperty::IntBinding w, IntProperty::IntBinding h);
+      //
+      //
+      //Component* set_width(int w);
+      
+      //Component* set_width(IntProperty* w);
+      
+      //Component* set_width(IntProperty::IntBinding w);
+      //
+      //
+      //Component* set_height(int h);
+      
+      //Component* set_height(IntProperty* h);
+      
+      //Component* set_height(IntProperty::IntBinding h);
+      //
+      //
+      //Component* set_pos(Component* relative, int x, int y);
+      
+      //Component* set_pos(Component* relative, IntProperty* x, IntProperty* y);
+      
+      //Component* set_pos(
+      //        Component* relative,
+      //        IntProperty::IntBinding x,
+      //        IntProperty::IntBinding y
+      //);
+      //
+      //Component* set_padding(
+      //        unsigned int top,
+      //        unsigned int right,
+      //        unsigned int bottom,
+      //        unsigned int left
+      //);
+      //
+      //Component* set_margin(
+      //        unsigned int top,
+      //        unsigned int right,
+      //        unsigned int bottom,
+      //        unsigned int left
+      //);
+      
+      Component* set_border_enable(bool enabled);
+      
+      virtual void on_render(const cydui::window::CWindow* win);
+      
+      virtual void on_redraw();
+      
+      virtual void on_mouse_enter(int x, int y);
+      
+      virtual void on_mouse_exit(int x, int y);
+      
+      virtual void on_mouse_click(int x, int y, int button);
+      
+      virtual void on_scroll(int d);
+      
+      virtual void on_key_press();
+      
+      virtual void on_key_release();
+    };
+  
 }// namespace cydui::components
 
 

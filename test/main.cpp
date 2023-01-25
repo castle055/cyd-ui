@@ -16,30 +16,72 @@ COMPONENT(Test) {
   NO_PROPS INIT(Test) {
   }
   REDRAW {
+    HBox* hbox_ref;
     add({
-      COMP(VBox)({
+      COMP(HBox)({
+        .ref = &hbox_ref,
         .props = {
           .spacing = 10,
         },
+        .x = 10,
+        .y = 10,
         .inner = {
-          COMP(Rectangle)({
+          COMP(VBox)({
             .props = {
-              .color = state->c,
-              .filled = true,
+              .spacing = 10,
             },
-            .w = dim->cw / 2,
-            .h = 50,
+            .inner = {
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = dim->ch / 4,
+              }),
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = 40,
+              }),
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = dim->ch / 4,
+              }),
+            }
           }),
-          COMP(Rectangle)({
+          COMP(VBox)({
             .props = {
-              .color = state->c,
-              .filled = true,
+              .spacing = 10,
             },
-            .w = dim->cw / 2,
-            .h = 50,
-          }),
-        }
-      })
+            .inner = {
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = dim->ch / 4,
+              }),
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = 50,
+              }),
+            }
+          })
+        },
+      }),
     });
   }
 };
