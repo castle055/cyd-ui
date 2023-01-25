@@ -269,12 +269,12 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(
   components::Component* target = nullptr;
   for (auto i = c->children.rbegin(); i != c->children.rend(); ++i) {
     auto* item = *i;
-    if (x >= item->state->dim.x.val()
-      && x < (item->state->dim.x.val()
-      + item->state->dim.w.val())
-      && y >= item->state->dim.y.val()
-      && y < (item->state->dim.y.val()
-      + item->state->dim.h.val())) {
+    if (x >= item->state->dim.cx.val()
+      && x < (item->state->dim.cx.val()
+      + item->state->dim.cw.val())
+      && y >= item->state->dim.cy.val()
+      && y < (item->state->dim.cy.val()
+      + item->state->dim.ch.val())) {
       target = find_by_coords(item, x, y);
       if (target)
         break;
@@ -283,12 +283,12 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(
   if (target)
     return target;
   
-  if (!c->state->stateless_comp && x >= c->state->dim.x.val()
-    && x < (c->state->dim.x.val()
-    + c->state->dim.w.val())
-    && y >= c->state->dim.y.val()
-    && y < (c->state->dim.y.val()
-    + c->state->dim.h.val())) {
+  if (!c->state->stateless_comp && x >= c->state->dim.cx.val()
+    && x < (c->state->dim.cx.val()
+    + c->state->dim.cw.val())
+    && y >= c->state->dim.cy.val()
+    && y < (c->state->dim.cy.val()
+    + c->state->dim.ch.val())) {
     target = c;
   }
   return target;
