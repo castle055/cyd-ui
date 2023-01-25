@@ -42,7 +42,7 @@ using namespace std::chrono_literals;
 
 void render_task(cydui::threading::thread_t* this_thread) {
   xlog_task.debug("Started render thread");
-  auto* render_data = (render::RenderThreadData*)this_thread->data;
+  auto* render_data = (render::RenderThreadData*) this_thread->data;
   while (this_thread->running) {
     render_sbr(render_data->win);
     std::this_thread::sleep_for(30ms);
@@ -57,7 +57,7 @@ void render::start(cydui::graphics::window_t* win) {
   win->render_data = new RenderThreadData {
     .win = win,
   };
-  win->render_thd  = cydui::threading::new_thread(render_task, win->render_data)
+  win->render_thd = cydui::threading::new_thread(render_task, win->render_data)
     ->set_name("X11_RENDER_THD");
 }
 
@@ -98,7 +98,7 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
 
 XColor color_to_xcolor(cydui::layout::color::Color* color) {
   Colormap map = DefaultColormap(state::get_dpy(), state::get_screen());
-  XColor   c;
+  XColor c;
   XParseColor(state::get_dpy(), map, color->to_string().c_str(), &c);
   XAllocColor(state::get_dpy(), map, &c);
   
@@ -126,7 +126,7 @@ void render::resize(cydui::graphics::window_t* win, int w, int h) {
     
     win->x_mtx.lock();
     
-    Drawable new_drw         = XCreatePixmap(
+    Drawable new_drw = XCreatePixmap(
       state::get_dpy(),
       win->xwin,
       w,
@@ -275,7 +275,7 @@ void render::drw_text(
   cydui::graphics::window_t* win,
   window_font font,
   cydui::layout::color::Color* color,
-  std::string text,
+  const std::string &text,
   int x,
   int y
 ) {
@@ -283,12 +283,12 @@ void render::drw_text(
     color = new cydui::layout::color::Color("#FCAE1E");
   
   XColor c = color_to_xcolor(color);
-  XftColor* xft_c    = color_to_xftcolor(color);
-  XftDraw * xft_draw = XftDrawCreate(
+  XftColor* xft_c = color_to_xftcolor(color);
+  XftDraw* xft_draw = XftDrawCreate(
     state::get_dpy(), win->drawable, DefaultVisual(state::get_dpy(), state::get_screen()),
     DefaultColormap(state::get_dpy(), state::get_screen()));
   XGlyphInfo x_glyph_info;
-  int        w, h;
+  int w, h;
   
   win->x_mtx.lock();
   
@@ -299,8 +299,8 @@ void render::drw_text(
     BlackPixel(state::get_dpy(), state::get_screen()));
   
   XftDrawStringUtf8(
-    xft_draw, xft_c, font.xfont, x, y, (FcChar8*)text.c_str(), text.size());
-  XftTextExtentsUtf8(state::get_dpy(), font.xfont, (XftChar8*)text.c_str(), text.size(), &x_glyph_info);
+    xft_draw, xft_c, font.xfont, x, y, (FcChar8*) text.c_str(), text.size());
+  XftTextExtentsUtf8(state::get_dpy(), font.xfont, (XftChar8*) text.c_str(), text.size(), &x_glyph_info);
   w = x_glyph_info.xOff;
   h = x_glyph_info.yOff;
   

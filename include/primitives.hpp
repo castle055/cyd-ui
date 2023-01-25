@@ -16,7 +16,8 @@ namespace primitives {
     using namespace cydui;
     using namespace cydui::components;
     using namespace cydui::layout::color;
-    
+
+#define CLAMP_ZERO(VAL) std::max(VAL, 0)
     
     STATE(Line) { };
     
@@ -34,8 +35,8 @@ namespace primitives {
           props.color,
           state->dim.cx.val(),
           state->dim.cy.val(),
-          state->dim.cx.val() + state->dim.cw.val(),
-          state->dim.cy.val() + state->dim.ch.val()
+          state->dim.cx.val() + CLAMP_ZERO(state->dim.cw.val()),
+          state->dim.cy.val() + CLAMP_ZERO(state->dim.ch.val())
         );
       }
     };
@@ -60,8 +61,8 @@ namespace primitives {
           props.color,
           state->dim.cx.val(),
           state->dim.cy.val(),
-          state->dim.cw.val(),
-          state->dim.ch.val(),
+          CLAMP_ZERO(state->dim.cw.val()),
+          CLAMP_ZERO(state->dim.ch.val()),
           props.filled
         );
       }
@@ -87,8 +88,8 @@ namespace primitives {
           props.color,
           state->dim.cx.val(),
           state->dim.cy.val(),
-          state->dim.cw.val(),
-          state->dim.ch.val(),
+          CLAMP_ZERO(state->dim.cw.val()),
+          CLAMP_ZERO(state->dim.ch.val()),
           props.a0, props.a1, props.filled
         );
       }
@@ -111,8 +112,8 @@ namespace primitives {
           win->win_ref, props.color,
           state->dim.cx.val(),
           state->dim.cy.val(),
-          state->dim.cw.val(),
-          state->dim.ch.val(),
+          CLAMP_ZERO(state->dim.cw.val()),
+          CLAMP_ZERO(state->dim.ch.val()),
           0, 360, props.filled
         );
       }
@@ -129,24 +130,28 @@ namespace primitives {
       })
       
       INIT(Text) {
-        state->dim.w = 125;
-        state->dim.h = this->props.font->size;
+        ENABLE_LOG
+        std::pair<int, int> text_size = graphics::get_text_size(
+          this->props.font,
+          this->props.text
+        );
+        state->dim.w = text_size.first;
+        state->dim.h = text_size.second;
         state->dim.given_w = true;
         state->dim.given_h = true;
       }
       
       RENDER(win) {
+        log.debug("w = %d, h = %d", state->dim.cx.val(), state->dim.cy.val());
         graphics::drw_text(
           win->win_ref, props.font, props.color, props.text,
           state->dim.cx.val(),
-          state->dim.cy.val()
+          state->dim.cy.val() + state->dim.ch.val()
         );
       }
     };
-  
-}// namespace primitives
 
-#define rectangle(CLR, W, H, FILLED) \
-new primitives::Rectangle(CLR,0,0,W,H,FILLED)
+#undef CLAMP_ZERO
+}// namespace primitives
 
 #endif//CYD_UI_PRIMITIVES_HPP

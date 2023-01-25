@@ -6,5 +6,8 @@ project:
   deps:
     - cyd/cyd-log
 
+include:
+  - '$HOME/.config/corium/cyd-includes/project-cpp/cyd.yml'
+
 cmd:
   lines: wc -l $(find ./src ./include ./test -name '*.cpp' -o -name '*.hpp' -o -name '*.h') | sort -n

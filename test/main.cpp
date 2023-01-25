@@ -11,6 +11,11 @@ using namespace std::chrono_literals;
 
 STATE(Test) {
   cydui::layout::color::Color* c = new cydui::layout::color::Color("#FCAE1E");
+  cydui::layout::fonts::Font font {
+    .name = "Fira Code Retina",
+    .size = 10
+  };
+  
 };
 COMPONENT(Test) {
   NO_PROPS INIT(Test) {
@@ -46,6 +51,13 @@ COMPONENT(Test) {
                 },
                 .w = dim->cw / 2 - 15,
                 .h = 40,
+              }),
+              COMP(Text)({
+                .props = {
+                  .color = state->c,
+                  .font = &state->font,
+                  .text = "Test TEXT",
+                },
               }),
               COMP(Rectangle)({
                 .props = {

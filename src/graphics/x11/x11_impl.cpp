@@ -39,7 +39,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
 ) {
   static int _ig = XInitThreads();
   
-  XSetWindowAttributes wa         = {
+  XSetWindowAttributes wa = {
     .background_pixmap =
     BlackPixel(state::get_dpy(), state::get_screen()),//ParentRelative,
     .bit_gravity = NorthWestGravity,
@@ -49,16 +49,16 @@ cydui::graphics::window_t* cydui::graphics::create_window(
       | PointerMotionMask,
     .override_redirect = override_redirect // This makes it immutable across workspaces
   };
-  std::string          title_str  = title;
-  std::string          wclass_str = wclass;
-  XClassHint           ch         = {
+  std::string title_str = title;
+  std::string wclass_str = wclass;
+  XClassHint ch = {
     title_str.data(),
     wclass_str.data()
   };
   
-  int          x_o, y_o;
+  int x_o, y_o;
   unsigned int w_o, h_o;
-  std::string  geom;
+  std::string geom;
   geom += "0x0";
   if (x >= 0)
     geom += "+";
@@ -86,7 +86,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
     InputOutput,
     DefaultVisual(state::get_dpy(), state::get_screen()),
     CWBorderPixel | CWBitGravity | CWColormap | CWBackPixmap | CWEventMask
-      | (override_redirect? CWOverrideRedirect : 0U),
+      | (override_redirect ? CWOverrideRedirect : 0U),
     &wa
   );
   XSetClassHint(state::get_dpy(), xwin, &ch);
@@ -99,11 +99,11 @@ cydui::graphics::window_t* cydui::graphics::create_window(
     XWMHints wm = {.flags = InputHint, .input = 1};
     XSizeHints* sizeh;
     sizeh = XAllocSizeHints();
-    sizeh->flags      = PSize | PResizeInc | PBaseSize | PMinSize;
-    sizeh->height     = h;
-    sizeh->width      = w;
+    sizeh->flags = PSize | PResizeInc | PBaseSize | PMinSize;
+    sizeh->height = h;
+    sizeh->width = w;
     sizeh->height_inc = 1;
-    sizeh->width_inc  = 1;
+    sizeh->width_inc = 1;
     //sizeh->base_height = 2 * borderpx;
     ////  sizeh->base_width = 2 * borderpx;
     ////  sizeh->min_height = win.ch + 2 * borderpx;
@@ -115,8 +115,8 @@ cydui::graphics::window_t* cydui::graphics::create_window(
     ////  }
     if (gm_mask & (XValue | YValue)) {
       sizeh->flags |= USPosition | PWinGravity;
-      sizeh->x           = x_o;
-      sizeh->y           = y_o;
+      sizeh->x = x_o;
+      sizeh->y = y_o;
       sizeh->win_gravity = geom_mask_to_gravity(gm_mask);
     }
     //
@@ -144,15 +144,15 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   
   //XSync(state::get_dpy(), False);
   
-  auto* win = new window_t { };
-  win->xwin     = xwin;
+  auto* win = new window_t {};
+  win->xwin = xwin;
   win->drawable = XCreatePixmap(
     state::get_dpy(),
     xwin,
     w,
     h,
     DefaultDepth(state::get_dpy(), state::get_screen()));
-  win->gc       = XCreateGC(state::get_dpy(), win->drawable, 0, NULL);
+  win->gc = XCreateGC(state::get_dpy(), win->drawable, 0, NULL);
   
   win->staging_drawable = XCreatePixmap(
     state::get_dpy(),
@@ -243,10 +243,10 @@ static std::string to_pattern(cydui::layout::fonts::Font* font) {
   str.append(font->name + ":");
   str.append("size=" + std::to_string(font->size) + ":");
   str.append("antialias=");
-  str.append((font->antialias? "true" : "false"));
+  str.append((font->antialias ? "true" : "false"));
   str.append(":");
   str.append("autohint=");
-  str.append((font->autohint? "true" : "false"));
+  str.append((font->autohint ? "true" : "false"));
   //str.append(":");
   
   return str;
@@ -258,17 +258,17 @@ static window_font load_font(
   std::string font_spec = to_pattern(font);
   if (win->loaded_fonts.contains(font_spec))
     return win->loaded_fonts[font_spec];
-  XftFont  * xfont;
+  XftFont* xfont;
   FcPattern* pattern;
   
-  if (!(xfont   = XftFontOpenName(
+  if (!(xfont = XftFontOpenName(
     state::get_dpy(), state::get_screen(), font_spec.c_str()))) {
     log_task.error("Cannot load font from name %s", font_spec.c_str());
-    return { };
+    return {};
   }
-  if (!(pattern = FcNameParse((FcChar8*)(font_spec.c_str())))) {
+  if (!(pattern = FcNameParse((FcChar8*) (font_spec.c_str())))) {
     log_task.error("Cannot parse font name to pattern: %s", font_spec.c_str());
-    return { };
+    return {};
   }
   
   auto f = window_font {.xfont = xfont, .pattern = pattern};
@@ -292,4 +292,27 @@ void cydui::graphics::drw_text(
 ) {
   window_font xfont = load_font(win, font);
   render::drw_text(win, xfont, color, text, x, y);
+}
+
+std::pair<int, int> cydui::graphics::get_text_size(
+  layout::fonts::Font* font,
+  const std::string &text
+) {
+  std::string font_spec = to_pattern(font);
+  XftFont* xfont;
+  if (!(xfont = XftFontOpenName(
+    state::get_dpy(), state::get_screen(), font_spec.c_str()))) {
+    log_task.error("Cannot load font from name %s", font_spec.c_str());
+    return {};
+  }
+  XGlyphInfo x_glyph_info;
+  XftTextExtentsUtf8(
+    state::get_dpy(),
+    xfont,
+    (XftChar8*) text.c_str(),
+    text.size(),
+    &x_glyph_info
+  );
+  XftFontClose(state::get_dpy(), xfont);
+  return {x_glyph_info.width, x_glyph_info.height};
 }

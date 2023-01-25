@@ -9,6 +9,7 @@ namespace cydui { }
 #include "components.hpp"
 #include "containers.hpp"
 #include "layout.hpp"
+#include "dimensions.hpp"
 #include "primitives.hpp"
 #include "window.hpp"
 #include "config.hpp"
