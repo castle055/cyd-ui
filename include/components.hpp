@@ -182,9 +182,9 @@ namespace cydui::components {
       ComponentState* state;
       cydui::dimensions::component_dimensions_t* dim = nullptr;
       
-      void add(const std::vector<component_builder_t> &ichildren);
+      void add(const std::vector<component_builder_t> &ichildren, bool prepend = false);
       
-      std::vector<Component*> children;
+      std::deque<Component*> children;
       
       void redraw();
       
