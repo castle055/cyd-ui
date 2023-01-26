@@ -75,21 +75,22 @@ Component* Component::new_group() {
   return c;
 }
 
-void Component::add(std::vector<Component*> ichildren) {
+void Component::add(const std::vector<component_builder_t> &ichildren) {
   // TODO - Needs to be recursive when flattening groups, not just first layer
   for (auto &item: ichildren) {
-    if (item == nullptr) continue;
-    if (item->is_group) {
-      for (auto &subitem: item->children) {
+    auto* child = item();
+    if (child == nullptr) continue;
+    if (child->is_group) {
+      for (auto &subitem: child->children) {
         if (subitem == nullptr || !subitem->state) continue;
         subitem->parent = this;
         this->children.push_back(subitem);
       }
-      item->children.clear();
-      delete item;
+      child->children.clear();
+      delete child;
     } else {
-      item->parent = this;
-      this->children.push_back(item);
+      child->parent = this;
+      this->children.push_back(child);
     }
   }
 }

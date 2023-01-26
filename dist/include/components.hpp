@@ -51,6 +51,8 @@ namespace cydui::components {
       } -> std::convertible_to<typename c::Props>;
     };
     
+    typedef std::function<Component*()> component_builder_t;
+    
     template<typename c> requires ComponentConcept<c>
     struct c_init_t {
       c** ref = nullptr;
@@ -61,7 +63,7 @@ namespace cydui::components {
       std::optional<dimensions::dimensional_relation_t> w;
       std::optional<dimensions::dimensional_relation_t> h;
       
-      std::vector<Component*> inner = {};
+      std::vector<component_builder_t> inner = {};
       
       std::function<void(c*)> init = [](c*) {
       };
@@ -76,12 +78,14 @@ namespace cydui::components {
       bool is_group = false;
     
     protected:
+      
       template<typename c, int ID>
       requires ComponentConcept<c>
-      inline c* create(c_init_t<c> init) {
-        auto* _c = new c(
-          (typename c::State*) (this->state->children.contains(ID)
-            ? (this->state->children[ID])
+      inline component_builder_t create(c_init_t<c> init) {
+        return [this, init]() {
+          auto* _c = new c(
+            (typename c::State*) (this->state->children.contains(ID)
+              ? (this->state->children[ID])
             : (this->state->children.add(ID, new typename c::State()))),
           init.props,
           [init](cydui::components::Component* __raw_local_) {
@@ -103,21 +107,23 @@ namespace cydui::components {
             local->add(init.inner);
             init.init(local);
           });
-        if (init.ref)
-          *(init.ref) = _c;
-        return _c;
+          if (init.ref)
+            *(init.ref) = _c;
+          return _c;
+        };
       }
 
 #define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
       
       template<typename c, int ID, typename T>
       requires ComponentConcept<c>
-      inline Component* create_for(
+      inline component_builder_t create_for(
         T iter, std::function<c_init_t<c>(typename T::value_type)> block
       ) {
-        int i = 0;
-        auto temp_c = new Component();
-        for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
+        return [this, iter, block]() {
+          int i = 0;
+          auto temp_c = new Component();
+          for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
           const c_init_t<c> init = block(*a);
           if (init.ref)
             *(init.ref) = nullptr;
@@ -146,9 +152,10 @@ namespace cydui::components {
                 local->add(init.inner);
                 init.init(local);
               }));
-        }
-        temp_c->is_group = true;
-        return temp_c;
+          }
+          temp_c->is_group = true;
+          return temp_c;
+        };
       }
 
 #define FOR_EACH(COMPONENT) create_for<COMPONENT, __COUNTER__>
@@ -175,7 +182,7 @@ namespace cydui::components {
       ComponentState* state;
       cydui::dimensions::component_dimensions_t* dim = nullptr;
       
-      void add(std::vector<Component*> children);
+      void add(const std::vector<component_builder_t> &ichildren);
       
       std::vector<Component*> children;
       
