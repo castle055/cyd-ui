@@ -82,14 +82,15 @@ namespace cydui::components {
       template<typename c, int ID>
       requires ComponentConcept<c>
       inline component_builder_t create(c_init_t<c> init) {
-        return [this, init]() {
+        auto* c_state = (typename c::State*) (this->state->children.contains(ID)
+          ? (this->state->children[ID])
+          : (this->state->children.add(ID, new typename c::State())));
+        return [this, init, c_state]() {
           auto* _c = new c(
-            (typename c::State*) (this->state->children.contains(ID)
-              ? (this->state->children[ID])
-            : (this->state->children.add(ID, new typename c::State()))),
-          init.props,
-          [init](cydui::components::Component* __raw_local_) {
-            auto* local = (c*) __raw_local_;
+            c_state,
+            init.props,
+            [init](cydui::components::Component* __raw_local_) {
+              auto* local = (c*) __raw_local_;
             
             if (init.x.has_value())
               __raw_local_->state->dim.x = init.x.value();
@@ -120,21 +121,28 @@ namespace cydui::components {
       inline component_builder_t create_for(
         T iter, std::function<c_init_t<c>(typename T::value_type)> block
       ) {
-        return [this, iter, block]() {
+        std::vector<ComponentState*> states = {};
+        int k = 0;
+        for (auto a = iter.begin(); a != iter.end(); ++a, ++k) {
+          const c_init_t<c> init = block(*a);
+          states.push_back(
+            (typename c::State*) (this->state->children.contains(ID, k)
+              ? (this->state->children.get_list(ID, k))
+              : (this->state->children.add_list(ID, k, new typename c::State())))
+          );
+        }
+        return [this, iter, block, states]() {
           int i = 0;
           auto temp_c = new Component();
           for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
           const c_init_t<c> init = block(*a);
-          if (init.ref)
-            *(init.ref) = nullptr;
-          temp_c->children.push_back(
-            new c((typename c::State*) (this->state->children.contains(ID, i)
-                ? (this->state->children.get_list(ID, i))
-                : (this->state->children.add_list(
-                  ID, i, new typename c::State()))),
-              init.props,
-              [init](cydui::components::Component* __raw_local_) {
-                auto* local = (c*) __raw_local_;
+            if (init.ref)
+              *(init.ref) = nullptr;
+            temp_c->children.push_back(
+              new c(states[i],
+                init.props,
+                [init](cydui::components::Component* __raw_local_) {
+                  auto* local = (c*) __raw_local_;
                 
                 if (init.x.has_value())
                   __raw_local_->state->dim.x = init.x.value();
