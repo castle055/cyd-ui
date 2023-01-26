@@ -159,7 +159,7 @@ namespace cydui::components {
       }
 
 #define FOR_EACH(COMPONENT) create_for<COMPONENT, __COUNTER__>
-#define NULLCOMP            Component::new_group()
+#define NULLCOMP            [](){ return Component::new_group(); }
     
     
     public:
