@@ -139,7 +139,7 @@ namespace cydui::components {
             if (init.ref)
               *(init.ref) = nullptr;
             temp_c->children.push_back(
-              new c(states[i],
+              new c((typename c::State*) states[i],
                 init.props,
                 [init](cydui::components::Component* __raw_local_) {
                   auto* local = (c*) __raw_local_;
