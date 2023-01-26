@@ -36,8 +36,8 @@ namespace primitives {
           props.color,
           state->dim.cx.val(),
           state->dim.cy.val(),
-          state->dim.cx.val() + CLAMP_ZERO(state->dim.cw.val()),
-          state->dim.cy.val() + CLAMP_ZERO(state->dim.ch.val())
+          state->dim.cx.val() + state->dim.cw.val(),
+          state->dim.cy.val() + state->dim.ch.val()
         );
       }
     };
