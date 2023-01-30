@@ -37,6 +37,8 @@ namespace cydui::components {
       
       void dirty();
       
+      unsigned int win;
+      
       dimensions::component_dimensions_t dim;
       ComponentBorder border;
       ChildrenStateCollection children;
@@ -85,6 +87,7 @@ namespace cydui::components {
         auto* c_state = (typename c::State*) (this->state->children.contains(ID)
           ? (this->state->children[ID])
           : (this->state->children.add(ID, new typename c::State())));
+        c_state->win = this->state->win;
         return [this, init, c_state]() {
           auto* _c = new c(
             c_state,
@@ -137,6 +140,7 @@ namespace cydui::components {
             const c_init_t<c> init = block(*a);
             if (init.ref)
               *(init.ref) = nullptr;
+            (states[i])->win = this->state->win;
             temp_c->children.push_back(
               new c((typename c::State*) states[i],
                 init.props,

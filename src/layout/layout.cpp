@@ -147,6 +147,8 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   root->state->dim.given_w = true;
   root->state->dim.given_h = true;
   
+  root->state->win = _win->win_ref->xwin;
+
   listen(RedrawEvent, {
     if (it.data->win != 0 && it.data->win != win->win_ref->xwin)
       return;
