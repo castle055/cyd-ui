@@ -24,7 +24,7 @@ COMPONENT(Test) {
   NO_PROPS INIT(Test) {
   }
   REDRAW {
-    HBox* hbox_ref;
+    HBoxState* hbox_ref;
     add({
       COMP(Image)({
         .props = {

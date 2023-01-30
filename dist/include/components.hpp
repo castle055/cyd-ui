@@ -57,7 +57,7 @@ namespace cydui::components {
     
     template<typename c> requires ComponentConcept<c>
     struct c_init_t {
-      c** ref = nullptr;
+      typename c::State** ref = nullptr;
       typename c::Props props;
       
       std::optional<dimensions::dimensional_relation_t> x;
@@ -88,6 +88,8 @@ namespace cydui::components {
           ? (this->state->children[ID])
           : (this->state->children.add(ID, new typename c::State())));
         c_state->win = this->state->win;
+        if (init.ref)
+          *(init.ref) = c_state;
         return [this, init, c_state]() {
           auto* _c = new c(
             c_state,
@@ -111,8 +113,6 @@ namespace cydui::components {
               local->add(init.inner);
               init.init(local);
             });
-          if (init.ref)
-            *(init.ref) = _c;
           return _c;
         };
       }
