@@ -53,7 +53,7 @@ Bool evpredicate() {
   return True;
 }
 
-void run() {
+void start_thd() {
   XEvent data;
   
   int      queued = XEventsQueued(state::get_dpy(), QueuedAlready);
@@ -188,12 +188,12 @@ using namespace std::chrono_literals;
 
 void x11_event_emitter_task(cydui::threading::thread_t* this_thread) {
   while (this_thread->running) {
-    run();
+    start_thd();
     std::this_thread::sleep_for(10ms);
   }
 }
 
-void cydui::graphics::events::start() {
+void cydui::graphics::events::start_thd() {
   if (x11_thread && x11_thread->native_thread != nullptr)
     return;
   x11_evlog.debug("starting x11_thread");

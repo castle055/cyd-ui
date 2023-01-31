@@ -2,7 +2,7 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../../include/window.hpp"
+#include "window.hpp"
 #include "../graphics/events.hpp"
 #include <vector>
 
@@ -40,7 +40,9 @@ CWindow* cydui::window::create(
   
   // Once all threads have started and everything is set up for this window
   // force a complete redraw
-  events::emit<RedrawEvent>({ });
+  //events::emit<RedrawEvent>({.win = (unsigned int) win_ref->xwin});
+  //events::emit<RedrawEvent>({ });
+  events::emit<RedrawEvent>({.win = (unsigned int) win_ref->xwin});
   
   return win;
 }

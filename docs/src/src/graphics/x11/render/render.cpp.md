@@ -52,7 +52,7 @@ void render_task(cydui::threading::thread_t* this_thread) {
 
 static render::RenderThreadData* render_data = nullptr;
 
-void render::start(cydui::graphics::window_t* win) {
+void render::start_thd(cydui::graphics::window_t* win) {
   if (win->render_thd && win->render_thd->running)
     return;
   xlog_ctrl.debug("Starting render thread");

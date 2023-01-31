@@ -3,7 +3,7 @@
 //
 
 #include "state.hpp"
-#include "../../../../include/logging.hpp"
+#include "cyd-log/dist/include/logging.hpp"
 
 const logging::logger log_task = {.name = "X11_IMPL::state"};
 

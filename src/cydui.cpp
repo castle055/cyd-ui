@@ -1,3 +1,3 @@
-#include "../include/cydui.hpp"
+#include "cydui.hpp"
 
 #include <iostream>

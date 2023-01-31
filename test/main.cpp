@@ -3,40 +3,134 @@
 //
 
 #include "../include/cydui.hpp"
-#include "wifi/wifi.hpp"
-#include "startmenu/startmenu.hpp"
-#include "status_bar/workspaces.hpp"
-#include "status_bar/window_title.hpp"
 
 #include <mcheck.h>
 #include <thread>
 
 using namespace std::chrono_literals;
 
+STATE(Test) {
+  cydui::layout::color::Color* c = new cydui::layout::color::Color("#FCAE1E");
+  cydui::layout::fonts::Font font {
+    .name = "Fira Code Retina",
+    .size = 14
+  };
+  
+  //cydui::layout::images::image_t img {"/home/castle/pics/FLASHLE.png"}; // NOT WORKING
+  //cydui::layout::images::image_t img {"/home/castle/pics/spaceman.png"}; // WORKING (bc it's a camouflaged JPEG)
+  
+};
+COMPONENT(Test) {
+  NO_PROPS INIT(Test) {
+  }
+  REDRAW {
+    HBoxState* hbox_ref;
+    add({
+      COMP(Image)({
+        .props = {
+          .img = "/home/castle/pics/prof.jpg",
+        },
+        .w = dim->cw,
+      }),
+      COMP(HBox)({
+        .ref = &hbox_ref,
+        .props = {
+          .spacing = 10,
+        },
+        .x = 10,
+        .y = 10,
+        .inner = {
+          COMP(VBox)({
+            .props = {
+              .spacing = 10,
+            },
+            .inner = {
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = dim->ch / 4,
+              }),
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = 40,
+              }),
+              COMP(Text)({
+                .props = {
+                  .color = state->c,
+                  .font = &state->font,
+                  .text = "Test TEXT",
+                },
+              }),
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = dim->ch / 4,
+              }),
+            }
+          }),
+          COMP(VBox)({
+            .props = {
+              .spacing = 10,
+            },
+            .inner = {
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = dim->ch / 4,
+              }),
+              COMP(Rectangle)({
+                .props = {
+                  .color = state->c,
+                  .filled = true,
+                },
+                .w = dim->cw / 2 - 15,
+                .h = 50,
+              }),
+            }
+          })
+        },
+      }),
+    });
+  }
+};
+
 int main() {
   //mtrace();
   // Create layout tree
   
   // Instantiate window with layout
-  auto* state = new StartMenuState();
+  auto* state = new TestState();
   //auto* state1 = new WorkspacesState();
   //state->selected_workspaces.on_change([state]() {
   //  state->selected_workspaces.set(state->selected_workspaces.val() ^ 1);
   //});
-  auto* tc    = new StartMenu(state, { }, ___inner(StartMenu, t, { }));
+  auto* tc = new Test(state, {}, ___inner(Test, t, {
+  }));
   //auto* tc1    = new Workspaces(state1, { }, ___inner(Workspaces, t, { }));
   
   auto* layout = new cydui::layout::Layout(tc);
   //auto* layout1 = new cydui::layout::Layout(tc1);
   
-  cydui::window::CWindow* win = cydui::window::create(
-    layout,
-    "startmenu", "scratch",
-    1920, 25,//100, 260,
+  cydui::window::CWindow* win = cydui::window::create(layout,
+    "startmenu",
+    "scratch",
+    0, 25,//100, 260,
     //1, 13,
-    700, 800,
-    true
-  );
+    800, 800,
+    false);
   //cydui::window::CWindow   * win1 = cydui::window::create(
   //  layout1,
   //  "workspaces", "scratch",

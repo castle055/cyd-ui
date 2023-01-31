@@ -135,8 +135,8 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   
   XSync(state::get_dpy(), False);
   
-  cydui::graphics::events::start();
-  render::start(win);
+  cydui::graphics::events::start_thd();
+  render::start_thd(win);
   
   XFree(sizeh);
   return win;

@@ -2,7 +2,7 @@
 // Created by castle on 8/22/22.
 //
 
-#include "../../../include/components.hpp"
+#include "components.hpp"
 
 #include <utility>
 
@@ -11,22 +11,6 @@
 using namespace cydui::components;
 
 ComponentState::ComponentState() {
-  geom.x.bind(this);
-  geom.y.bind(this);
-  geom.x_off.bind(this);
-  geom.y_off.bind(this);
-  geom.w.bind(this);
-  geom.h.bind(this);
-  geom.min_w.bind(this);
-  geom.min_h.bind(this);
-  geom.padding_top.bind(this);
-  geom.padding_right.bind(this);
-  geom.padding_bottom.bind(this);
-  geom.padding_left.bind(this);
-  geom.margin_top.bind(this);
-  geom.margin_right.bind(this);
-  geom.margin_bottom.bind(this);
-  geom.margin_left.bind(this);
 }
 
 void ComponentState::dirty() {
@@ -48,7 +32,8 @@ void ComponentState::dirty() {
 //}
 
 Component::Component()
-  : Component([](Component*) { }) {
+  : Component([](Component*) {
+}) {
 }
 
 Component::Component(std::function<void(Component*)> inner)
@@ -57,13 +42,14 @@ Component::Component(std::function<void(Component*)> inner)
 }
 
 Component::Component(ComponentState* state)
-  : Component(state, [](Component*) { }) {
+  : Component(state, [](Component*) {
+}) {
 }
 
 Component::Component(ComponentState* state, std::function<void(Component*)> inner)
-  : state(state) {
+  : state(state), dim(&state->dim) {
   state->component_instance = this;
-  this->inner_redraw        = inner;
+  this->inner_redraw = std::move(inner);
   parent = nullptr;
   
 }
@@ -83,63 +69,37 @@ Component::~Component() {
 }
 
 //== API for subclasses
-void Component::add(std::vector<Component*> ichildren) {
+Component* Component::new_group() {
+  auto* c = new Component();
+  c->is_group = true;
+  return c;
+}
+
+void Component::add(const std::vector<component_builder_t> &ichildren, bool prepend) {
+  // TODO - Needs to be recursive when flattening groups, not just first layer
   for (auto &item: ichildren) {
-    if (item->is_group) {
-      for (auto &subitem: item->children) {
+    auto* child = item();
+    if (child == nullptr) continue;
+    if (child->is_group) {
+      for (auto &subitem: child->children) {
+        if (subitem == nullptr || !subitem->state) continue;
         subitem->parent = this;
-        this->children.push_back(subitem);
-        
-        if (!subitem->state->geom.custom_offset) {
-          subitem->set_pos(this, 0, 0);
+        if (prepend) {
+          this->children.push_front(subitem);
+        } else {
+          this->children.push_back(subitem);
         }
       }
-      item->children.clear();
-      delete item;
+      child->children.clear();
+      delete child;
     } else {
-      item->parent = this;
-      this->children.push_back(item);
-      
-      if (!item->state->geom.custom_offset) {
-        item->set_pos(this, 0, 0);
+      child->parent = this;
+      if (prepend) {
+        this->children.push_front(child);
+      } else {
+        this->children.push_back(child);
       }
     }
-  }
-  
-  std::vector<Property*> w_deps = { };
-  std::vector<Property*> h_deps = { };
-  for (const auto        &item: this->children) {
-    w_deps.push_back(item->state->geom.abs_w().unwrap());
-    w_deps.push_back(&item->state->geom.x);
-    h_deps.push_back(item->state->geom.abs_h().unwrap());
-    h_deps.push_back(&item->state->geom.y);
-  }
-  
-  if (!state->geom.custom_width) {
-    state->geom.w.set_binding(
-      [this]() {
-        int             max = 0;
-        for (const auto &item: this->children) {
-          int item_w = item->state->geom.x.val() + item->state->geom.abs_w().compute();
-          if (item_w > max)
-            max = item_w;
-        }
-        return max;
-      }, w_deps
-    );
-  }
-  if (!state->geom.custom_height) {
-    state->geom.h.set_binding(
-      [this]() {
-        int             max = 0;
-        for (const auto &item: this->children) {
-          int item_h = item->state->geom.y.val() + item->state->geom.abs_h().compute();
-          if (item_h > max)
-            max      = item_h;
-        }
-        return max;
-      }, h_deps
-    );
   }
 }
 
@@ -164,10 +124,10 @@ void Component::render(const cydui::window::CWindow* win) {
     graphics::drw_rect(
       win_ref,
       state->border.color,
-      state->geom.border_x().compute(),
-      state->geom.border_y().compute(),
-      state->geom.border_w().compute(),
-      state->geom.border_h().compute(),
+      state->dim.cx.val() - state->dim.padding.left.val(),
+      state->dim.cy.val() - state->dim.padding.top.val(),
+      state->dim.cw.val() + state->dim.padding.left.val() + state->dim.padding.right.val() + 2,
+      state->dim.ch.val() + state->dim.padding.top.val() + state->dim.padding.bottom.val() + 1,
       false
     );
   }
@@ -190,19 +150,25 @@ void Component::on_key_release() {
 void Component::on_mouse_enter(int x, int y) {
   // TODO - Must change coords since they are relative
   if (this->parent)
-    this->parent->on_mouse_enter(x, y);
+    this->parent->on_mouse_enter(x + dim->x.val(), y + dim->y.val());
 }
 
 void Component::on_mouse_click(int x, int y, int button) {
   // TODO - Must change coords since they are relative
   if (this->parent)
-    this->parent->on_mouse_click(x, y, button);
+    this->parent->on_mouse_click(x + dim->x.val(), y + dim->y.val(), button);
 }
 
 void Component::on_mouse_exit(int x, int y) {
   // TODO - Must change coords since they are relative
   if (this->parent)
-    this->parent->on_mouse_exit(x, y);
+    this->parent->on_mouse_exit(x + dim->x.val(), y + dim->y.val());
+}
+
+void Component::on_mouse_motion(int x, int y) {
+  // TODO - Must change coords since they are relative
+  if (this->parent)
+    this->parent->on_mouse_motion(x + dim->x.val(), y + dim->y.val());
 }
 
 void Component::on_scroll(int d) {
@@ -210,84 +176,91 @@ void Component::on_scroll(int d) {
     this->parent->on_scroll(d);
 }
 
-Component* Component::set_size(int w, int h) {
-  state->geom.set_size(w, h);
-  return this;
-}
-
-Component* Component::set_size(IntProperty* w, IntProperty* h) {
-  state->geom.set_size(w, h);
-  return this;
-}
-
-Component* Component::set_size(IntProperty::IntBinding w, IntProperty::IntBinding h) {
-  state->geom.set_size(w, h);
-  return this;
-}
-
-
-Component* Component::set_width(int w) {
-  state->geom.set_width(w);
-  return this;
-}
-
+//Component* Component::set_size(int w, int h) {
+//    state->geom.set_size(w, h);
+//    return this;
+//}
+//
+//Component* Component::set_size(IntProperty* w, IntProperty* h) {
+//    state->geom.set_size(w, h);
+//    return this;
+//}
+//
+//Component* Component::set_size(IntProperty::IntBinding w, IntProperty::IntBinding h) {
+//    state->geom.set_size(w, h);
+//    return this;
+//}
+//
+//
+//Component* Component::set_width(int w) {
+//    state->geom.set_width(w);
+//    return this;
+//}
+//
+///=====================================================================
 //Component* Component::set_width(IntProperty* w) {
 //  state->geom.set_width(w);
 //  return this;
 //}
 
-Component* Component::set_width(IntProperty::IntBinding w) {
-  state->geom.set_width(w);
-  return this;
-}
-
-
-Component* Component::set_height(int h) {
-  state->geom.set_height(h);
-  return this;
-}
+///=====================================================================
+//Component* Component::set_width(IntProperty::IntBinding w) {
+//    state->geom.set_width(w);
+//    return this;
+//}
+//
+//
+//Component* Component::set_height(int h) {
+//    state->geom.set_height(h);
+//    return this;
+//}
+///=====================================================================
 
 //Component* Component::set_height(IntProperty* h) {
 //  state->geom.set_height(h);
 //  return this;
 //}
 //
-Component* Component::set_height(IntProperty::IntBinding h) {
-  state->geom.set_height(h);
-  return this;
-}
-
-
-Component* Component::set_pos(Component* relative, int x, int y) {
-  state->geom.set_pos(&relative->state->geom, x, y);
-  return this;
-}
+///=====================================================================
+//Component* Component::set_height(IntProperty::IntBinding h) {
+//    state->geom.set_height(h);
+//    return this;
+//}
+//
+//
+//Component* Component::set_pos(Component* relative, int x, int y) {
+//    state->geom.set_pos(&relative->state->geom, x, y);
+//    return this;
+//}
+///=====================================================================
 
 //Component* Component::set_pos(Component* relative, IntProperty* x, IntProperty* y) {
 //  state->geom.set_pos(&relative->state->geom, x, y);
 //  return this;
 //}
 //
-Component* Component::set_pos(Component* relative, IntProperty::IntBinding x, IntProperty::IntBinding y) {
-  state->geom.set_pos(&relative->state->geom, x, y);
-  return this;
-}
-
-Component* Component::set_padding(unsigned int top, unsigned int right, unsigned int bottom, unsigned int left) {
-  state->geom.padding_top    = top;
-  state->geom.padding_right  = right;
-  state->geom.padding_bottom = bottom;
-  state->geom.padding_left   = left;
-  return this;
-}
-
-Component* Component::set_margin(unsigned int top, unsigned int right, unsigned int bottom, unsigned int left) {
-  state->geom.margin_top    = top;
-  state->geom.margin_right  = right;
-  state->geom.margin_bottom = bottom;
-  state->geom.margin_left   = left;
-  return this;
-}
+///=====================================================================
+//Component* Component::set_pos(Component* relative, IntProperty::IntBinding x, IntProperty::IntBinding y) {
+//    state->geom.set_pos(&relative->state->geom, x, y);
+//    return this;
+//}
+//
+//Component* Component::set_padding(unsigned int top, unsigned int right, unsigned int bottom, unsigned int left) {
+//    state->geom.padding_top = top;
+//    state->geom.padding_right = right;
+//    state->geom.padding_bottom = bottom;
+//    state->geom.padding_left = left;
+//    return this;
+//}
+//
+//Component* Component::set_margin(unsigned int top, unsigned int right, unsigned int bottom, unsigned int left) {
+//    state->geom.margin_top = top;
+//    state->geom.margin_right = right;
+//    state->geom.margin_bottom = bottom;
+//    state->geom.margin_left = left;
+//    return this;
+//}
+///=====================================================================
 
 Component* Component::set_border_enable(bool enabled) {
   state->border.enabled = enabled;

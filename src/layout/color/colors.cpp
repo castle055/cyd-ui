@@ -2,7 +2,7 @@
 // Created by castle on 8/24/22.
 //
 
-#include "../../../include/colors.hpp"
+#include "colors.hpp"
 
 using namespace cydui::layout::color;
 
