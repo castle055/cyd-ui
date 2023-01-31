@@ -328,6 +328,7 @@ std::pair<int, int> cydui::graphics::get_text_size(
       log_task.error("Cannot load font from name %s", font_spec.c_str());
       return {};
     }
+    cached_fonts[font_spec] = xfont;
   }
   XGlyphInfo x_glyph_info;
   XftTextExtentsUtf8(state::get_dpy(),
