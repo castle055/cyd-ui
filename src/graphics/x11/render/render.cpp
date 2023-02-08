@@ -105,16 +105,27 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   win->render_mtx.unlock();
 }
 
+static std::unordered_map<std::string, XColor> xcolor_cache;
+
 XColor color_to_xcolor(cydui::layout::color::Color* color) {
+  if (xcolor_cache.contains(color->to_string()))
+    return xcolor_cache[color->to_string()];
+  
   Colormap map = DefaultColormap(state::get_dpy(), state::get_screen());
   XColor c;
   XParseColor(state::get_dpy(), map, color->to_string().c_str(), &c);
   XAllocColor(state::get_dpy(), map, &c);
   
+  xcolor_cache[color->to_string()] = c;
   return c;
 }
 
+static std::unordered_map<std::string, XftColor*> xftcolor_cache;
+
 XftColor* color_to_xftcolor(cydui::layout::color::Color* color) {
+  if (xftcolor_cache.contains(color->to_string()))
+    return xftcolor_cache[color->to_string()];
+  
   auto* c = new XftColor;
   
   if (!XftColorAllocName(state::get_dpy(),
@@ -125,6 +136,7 @@ XftColor* color_to_xftcolor(cydui::layout::color::Color* color) {
     xlog_ctrl.error("Cannot allocate color %s", color->to_string().c_str());
   }
   
+  xftcolor_cache[color->to_string()] = c;
   return c;
 }
 
