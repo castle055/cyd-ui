@@ -37,7 +37,7 @@ namespace cydui::components {
       
       void dirty();
       
-      graphics::window_t* win;
+      graphics::window_t* win = nullptr;
       graphics::render_target_t* sub_render_target = nullptr;
       
       dimensions::component_dimensions_t dim;
