@@ -9,37 +9,22 @@
 
 using namespace std::chrono_literals;
 
-STATE(Test) {
-  cydui::layout::color::Color* c = new cydui::layout::color::Color("#FCAE1E");
-  cydui::layout::fonts::Font font {
-    .name = "Fira Code Retina",
-    .size = 14
-  };
-  
-  //cydui::layout::images::image_t img {"/home/castle/pics/FLASHLE.png"}; // NOT WORKING
-  //cydui::layout::images::image_t img {"/home/castle/pics/spaceman.png"}; // WORKING (bc it's a camouflaged JPEG)
-  
-};
-COMPONENT(Test) {
-  NO_PROPS INIT(Test) {
-  }
-  REDRAW {
-    HBoxState* hbox_ref;
-    add({
-      COMP(Image)({
-        .props = {
-          .img = "/home/castle/pics/prof.jpg",
-        },
-        .w = dim->cw,
-      }),
-      COMP(HBox)({
-        .ref = &hbox_ref,
-        .props = {
-          .spacing = 10,
-        },
-        .x = 10,
-        .y = 10,
-        .inner = {
+namespace test {
+    STATE(Test) {
+      cydui::layout::color::Color* c = new cydui::layout::color::Color("#FCAE1E");
+      cydui::layout::color::Color* c1 = new cydui::layout::color::Color("#111A1E");
+      cydui::layout::fonts::Font font {.name = "Fira Code Retina", .size = 14};
+      
+      int scroll = 0;
+    };
+    COMPONENT(Test) {
+      NO_PROPS
+      INIT(Test) {
+        ENABLE_LOG
+      }
+      REDRAW {
+        HBoxState* hbox_ref;
+        add({
           COMP(VBox)({
             .props = {
               .spacing = 10,
@@ -47,78 +32,214 @@ COMPONENT(Test) {
             .inner = {
               COMP(Rectangle)({
                 .props = {
-                  .color = state->c,
+                  .color  = state->c1,
                   .filled = true,
                 },
                 .w = dim->cw / 2 - 15,
                 .h = dim->ch / 4,
               }),
-              COMP(Rectangle)({
+              COMP(ViewPort)({
                 .props = {
-                  .color = state->c,
-                  .filled = true,
+                  .x = 0,
+                  .y = state->scroll,
                 },
-                .w = dim->cw / 2 - 15,
-                .h = 40,
+                .w = 100,
+                .h = 100,
+                .inner = {
+                  COMP(VBox)({
+                    .props = {
+                      .spacing = 10,
+                    },
+                    .inner = {
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                      COMP(Text)({
+                        .props = {
+                          .color = state->c,
+                          .font  = &state->font,
+                          .text  = "Test TEXT",
+                        },
+                      }),
+                    },
+                  }),
+                  //COMP(Rectangle)({
+                  //  .props = {
+                  //    .color  = state->c,
+                  //    .filled = true,
+                  //  },
+                  //  .w = dim->cw / 2 - 15,
+                  //  .h = dim->ch / 4,
+                  //}),
+                }
               }),
-              COMP(Text)({
-                .props = {
-                  .color = state->c,
-                  .font = &state->font,
-                  .text = "Test TEXT",
-                },
-              }),
-              COMP(Rectangle)({
-                .props = {
-                  .color = state->c,
-                  .filled = true,
-                },
-                .w = dim->cw / 2 - 15,
-                .h = dim->ch / 4,
-              }),
-            }
+            },
           }),
-          COMP(VBox)({
-            .props = {
-              .spacing = 10,
-            },
-            .inner = {
-              COMP(Rectangle)({
-                .props = {
-                  .color = state->c,
-                  .filled = true,
-                },
-                .w = dim->cw / 2 - 15,
-                .h = dim->ch / 4,
-              }),
-              COMP(Rectangle)({
-                .props = {
-                  .color = state->c,
-                  .filled = true,
-                },
-                .w = dim->cw / 2 - 15,
-                .h = 50,
-              }),
-            }
-          })
-        },
-      }),
-    });
-  }
-};
+          //COMP(Image)({
+          //  .props = {
+          //    .img = "/home/castle/pics/prof.jpg",
+          //  },
+          //  .w = dim->cw,
+          //}),
+          //COMP(HBox)({
+          //  .ref = &hbox_ref,
+          //  .props = {
+          //    .spacing = 10,
+          //  },
+          //  .x     = 10,
+          //  .y     = 10,
+          //  .inner = {
+          //    COMP(VBox)({
+          //      .props = {
+          //        .spacing = 10,
+          //      },
+          //      .inner = {
+          //COMP(Rectangle)({
+          //  .props = {
+          //    .color  = state->c1,
+          //    .filled = true,
+          //  },
+          //  .w = dim->cw / 2 - 15,
+          //  .h = dim->ch / 4,
+          //}),
+          //COMP(Rectangle)({
+          //  .props = {
+          //    .color  = state->c,
+          //    .filled = true,
+          //  },
+          //  .w = dim->cw / 2 - 15,
+          //  .h = 40,
+          //}),
+          //COMP(VBox)({
+          //  .props = {
+          //    .spacing = 10,
+          //  },
+          //  .inner = {
+          //    COMP(Rectangle)({
+          //      .props = {
+          //        .color  = state->c,
+          //        .filled = true,
+          //      },
+          //      .w = dim->cw / 2 - 15,
+          //      .h = dim->ch / 4,
+          //    }),
+          //    COMP(Rectangle)({
+          //      .props = {
+          //        .color  = state->c,
+          //        .filled = true,
+          //      },
+          //      .w = dim->cw / 2 - 15,
+          //      .h = 50,
+          //    }),
+          //  }
+          //}),
+          //      },
+          //    }),
+          //  },
+          //})
+        });
+      };
+      void on_scroll(int d) override {
+        //log.info("SCROLL: %d", d);
+        state->scroll += d > 0 ? 10 : (d < 0 ? -10 : 0);
+        state->dirty();
+      }
+    };
+}
 
 int main() {
   //mtrace();
   // Create layout tree
   
   // Instantiate window with layout
-  auto* state = new TestState();
+  auto* state = new test::TestState();
   //auto* state1 = new WorkspacesState();
   //state->selected_workspaces.on_change([state]() {
   //  state->selected_workspaces.set(state->selected_workspaces.val() ^ 1);
   //});
-  auto* tc = new Test(state, {}, ___inner(Test, t, {
-  }));
+  auto* tc = new test::Test(state, {}, [](Component*) {
+  });
   //auto* tc1    = new Workspaces(state1, { }, ___inner(Workspaces, t, { }));
   
   auto* layout = new cydui::layout::Layout(tc);
@@ -127,9 +248,11 @@ int main() {
   cydui::window::CWindow* win = cydui::window::create(layout,
     "startmenu",
     "scratch",
-    0, 25,//100, 260,
+    0,
+    25,//100, 260,
     //1, 13,
-    800, 800,
+    800,
+    800,
     false);
   //cydui::window::CWindow   * win1 = cydui::window::create(
   //  layout1,

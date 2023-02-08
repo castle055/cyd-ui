@@ -11,6 +11,7 @@
 #include <deque>
 #include <mutex>
 #include <unordered_map>
+#include <vector>
 
 struct window_render_req {
   int x, y, w, h;
@@ -27,23 +28,43 @@ struct window_image {
 };
 typedef std::unordered_map<std::string, window_image> loaded_images_map_t;
 
-struct window_t {
-  Window xwin;
+struct window_ti;
+
+struct render_target_ti {
   Drawable drawable;
-  Drawable staging_drawable;
-  int staging_w;
-  int staging_h;
   GC gc;
   int w;
   int h;
+
+  window_ti* win;
+
+  render_target_ti(window_ti* win, int w, int h);
+
+  void set_background();
+  void resize(int w, int h);
+};
+
+struct window_ti {
+  Window xwin;
+  render_target_ti* staging_target;
+  render_target_ti* render_target;
+  //Drawable drawable;
+  //Drawable staging_drawable;
+  //int staging_w;
+  //int staging_h;
+  //GC gc;
+  //int w;
+  //int h;
   std::deque<window_render_req> render_reqs;
   bool dirty = true;
   std::mutex render_mtx;
   std::mutex x_mtx;
-  cydui::threading::thread_t* render_thd;
-  void* render_data = nullptr;
+  cydui::threading::thread_t* render_thd = nullptr;
+  void* render_data                      = nullptr;
   loaded_font_map_t loaded_fonts;
   loaded_images_map_t loaded_images;
+
+  window_ti(Window xwin, int w, int h);
 };
 
 #endif//CYD_UI_X11_IMPL_HPP

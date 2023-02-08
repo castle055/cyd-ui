@@ -7,11 +7,11 @@
 
 
 #include "colors.hpp"
+#include "components.hpp"
+#include "cyd-log/dist/include/logging.hpp"
+#include "event_types.h"
 #include "fonts.hpp"
 #include "window_types.hpp"
-#include "cyd-log/dist/include/logging.hpp"
-#include "components.hpp"
-#include "event_types.h"
 
 namespace primitives {
     using namespace cydui;
@@ -22,31 +22,27 @@ namespace primitives {
     
     STATE(Line) { };
     
-    COMPONENT(Line) {
-      PROPS({
+    COMPONENT(Line) {PROPS({
         Color* color;
       })
       
       INIT(Line) {
       }
       
-      RENDER(win) {
-        graphics::drw_line(
-          win->win_ref,
+      RENDER(target) {
+        graphics::drw_line(target,
           props.color,
           state->dim.cx.val(),
           state->dim.cy.val(),
           state->dim.cx.val() + state->dim.cw.val(),
-          state->dim.cy.val() + state->dim.ch.val()
-        );
-      }
+          state->dim.cy.val() + state->dim.ch.val());
+      }// namespace primitives
     };
     
     
     STATE(Rectangle) { };
     
-    COMPONENT(Rectangle) {
-      PROPS({
+    COMPONENT(Rectangle) {PROPS({
         Color* color;
         bool filled = false;
       })
@@ -55,25 +51,22 @@ namespace primitives {
         //ENABLE_LOG
       }
       
-      RENDER(win) {
+      RENDER(target) {
         log.debug("X= %d, CX= %d", dim->x.val(), dim->cx.val());
-        graphics::drw_rect(
-          win->win_ref,
+        graphics::drw_rect(target,
           props.color,
           state->dim.cx.val(),
           state->dim.cy.val(),
           CLAMP_ZERO(state->dim.cw.val()),
           CLAMP_ZERO(state->dim.ch.val()),
-          props.filled
-        );
+          props.filled);
       }
     };
     
     
     STATE(Arc) { };
     
-    COMPONENT(Arc) {
-      PROPS({
+    COMPONENT(Arc) {PROPS({
         Color* color;
         bool filled = false;
         int a0 = 0;
@@ -83,24 +76,23 @@ namespace primitives {
       INIT(Arc) {
       }
       
-      RENDER(win) {
-        graphics::drw_arc(
-          win->win_ref,
+      RENDER(target) {
+        graphics::drw_arc(target,
           props.color,
           state->dim.cx.val(),
           state->dim.cy.val(),
           CLAMP_ZERO(state->dim.cw.val()),
           CLAMP_ZERO(state->dim.ch.val()),
-          props.a0, props.a1, props.filled
-        );
+          props.a0,
+          props.a1,
+          props.filled);
       }
     };
     
     
     STATE(Circle) { };
     
-    COMPONENT(Circle) {
-      PROPS({
+    COMPONENT(Circle) {PROPS({
         Color* color;
         bool filled;
       })
@@ -108,47 +100,45 @@ namespace primitives {
       INIT(Circle) {
       }
       
-      RENDER(win) {
-        graphics::drw_arc(
-          win->win_ref, props.color,
+      RENDER(target) {
+        graphics::drw_arc(target,
+          props.color,
           state->dim.cx.val(),
           state->dim.cy.val(),
           CLAMP_ZERO(state->dim.cw.val()),
           CLAMP_ZERO(state->dim.ch.val()),
-          0, 360, props.filled
-        );
+          0,
+          360,
+          props.filled);
       }
     };
     
     
     STATE(Text) { };
     
-    COMPONENT(Text) {
-      PROPS({
+    COMPONENT(Text) {PROPS({
         Color* color;
         layout::fonts::Font* font;
         std::string text;
       })
       
-      INIT(Text) {
-        //ENABLE_LOG
+      INIT(Text) {//ENABLE_LOG
         std::pair<int, int> text_size = graphics::get_text_size(
-          this->props.font,
-          this->props.text
-        );
+          this->props.font, this->props.text);
         state->dim.w = text_size.first;
         state->dim.h = text_size.second;
         state->dim.given_w = true;
         state->dim.given_h = true;
       }
       
-      RENDER(win) {
+      RENDER(target) {
         log.debug("w = %d, h = %d", state->dim.cx.val(), state->dim.cy.val());
-        graphics::drw_text(
-          win->win_ref, props.font, props.color, props.text,
+        graphics::drw_text(target,
+          props.font,
+          props.color,
+          props.text,
           state->dim.cx.val(),
-          state->dim.cy.val() + state->dim.ch.val()
-        );
+          state->dim.cy.val() + state->dim.ch.val());
       }
     };
     
@@ -169,8 +159,8 @@ namespace primitives {
       })
       
       INIT(Image) {
-        ENABLE_LOG
-        if (!state->image) {
+        //ENABLE_LOG
+        if (!state->image || std::string(this->props.img) == state->image->path) {
           state->image = new cydui::layout::images::image_t {this->props.img};
         }
         std::pair<int, int> img_size = graphics::get_image_size(state->image);
@@ -201,19 +191,50 @@ namespace primitives {
         }
       };
       
-      RENDER(win) {
-        graphics::drw_image(
-          win->win_ref,
+      RENDER(target) {
+        graphics::drw_image(target,
           state->image,
           state->dim.cx.val(),
           state->dim.cy.val(),
           state->dim.cw.val(),
-          state->dim.ch.val()
-        );
+          state->dim.ch.val());
       }
     };
-
-#undef CLAMP_ZERO
+    
+    
+    STATE(ViewPort) {
+      INIT_STATE(ViewPort) {
+      }
+    };
+    
+    COMPONENT(ViewPort) {
+      PROPS({
+        int x;
+        int y;
+      })
+      INIT(ViewPort) {
+        ENABLE_LOG
+        if (!state->sub_render_target) {
+          state->sub_render_target = new render_target_ti(state->win, 10, 10);
+        }
+      }
+      
+      REDRAW {
+      };
+      RENDER(target) {
+        if (state->sub_render_target) {
+          graphics::drw_target(target,
+            state->sub_render_target,
+            props.x + state->dim.cx.val(),
+            props.y + state->dim.cy.val(),
+            state->dim.cx.val(),
+            state->dim.cy.val(),
+            state->dim.cw.val(),
+            state->dim.ch.val());
+        }
+      }
+    };
 }// namespace primitives
 
+#undef CLAMP_ZERO
 #endif//CYD_UI_PRIMITIVES_HPP

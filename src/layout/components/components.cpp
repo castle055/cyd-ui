@@ -31,8 +31,7 @@ void ComponentState::dirty() {
 //  parent = nullptr;
 //}
 
-Component::Component()
-  : Component([](Component*) {
+Component::Component(): Component([](Component*) {
 }) {
 }
 
@@ -46,12 +45,13 @@ Component::Component(ComponentState* state)
 }) {
 }
 
-Component::Component(ComponentState* state, std::function<void(Component*)> inner)
+Component::Component(
+  ComponentState* state, std::function<void(Component*)> inner
+)
   : state(state), dim(&state->dim) {
   state->component_instance = this;
   this->inner_redraw = std::move(inner);
   parent = nullptr;
-  
 }
 
 //== Destructor
@@ -75,14 +75,18 @@ Component* Component::new_group() {
   return c;
 }
 
-void Component::add(const std::vector<component_builder_t> &ichildren, bool prepend) {
+void Component::add(
+  const std::vector<component_builder_t> &ichildren, bool prepend
+) {
   // TODO - Needs to be recursive when flattening groups, not just first layer
   for (auto &item: ichildren) {
     auto* child = item();
-    if (child == nullptr) continue;
+    if (child == nullptr)
+      continue;
     if (child->is_group) {
       for (auto &subitem: child->children) {
-        if (subitem == nullptr || !subitem->state) continue;
+        if (subitem == nullptr || !subitem->state)
+          continue;
         subitem->parent = this;
         if (prepend) {
           this->children.push_front(subitem);
@@ -113,29 +117,43 @@ void Component::redraw() {
   state->_dirty = false;
 }
 
-void Component::render(const cydui::window::CWindow* win) {
-  auto* win_ref = win->win_ref;
+void Component::render(cydui::graphics::render_target_t* target) {
+  
+  auto* sub_render_target = target;
+  if (state->sub_render_target) {
+    sub_render_target = state->sub_render_target;
+    cydui::graphics::clr_rect(sub_render_target, 0, 0, sub_render_target->w, sub_render_target->h);
+  }
   
   for (auto &child: children) {
-    if (child) child->render(win);
+    if (child) {
+      if (child->state->dim.cx.val() + child->state->dim.cw.val() + child->state->dim.padding.right.val() > sub_render_target->w
+        || child->state->dim.cy.val() + child->state->dim.ch.val() + child->state->dim.padding.bottom.val() > sub_render_target->h) {
+        sub_render_target->resize(
+          child->state->dim.cx.val() + child->state->dim.cw.val() + child->state->dim.padding.right.val(),
+          child->state->dim.cy.val() + child->state->dim.ch.val() + child->state->dim.padding.bottom.val()
+        );
+      }
+      child->render(sub_render_target);
+    }
   }
   
   if (state != nullptr && state->border.enabled) {
-    graphics::drw_rect(
-      win_ref,
+    graphics::drw_rect(target,
       state->border.color,
       state->dim.cx.val() - state->dim.padding.left.val(),
       state->dim.cy.val() - state->dim.padding.top.val(),
-      state->dim.cw.val() + state->dim.padding.left.val() + state->dim.padding.right.val() + 2,
-      state->dim.ch.val() + state->dim.padding.top.val() + state->dim.padding.bottom.val() + 1,
-      false
-    );
+      state->dim.cw.val() + state->dim.padding.left.val()
+        + state->dim.padding.right.val() + 2,
+      state->dim.ch.val() + state->dim.padding.top.val()
+        + state->dim.padding.bottom.val() + 1,
+      false);
   }
   
-  on_render(win);
+  on_render(target);
 }
 
-void Component::on_render(const cydui::window::CWindow* win) {
+void Component::on_render(cydui::graphics::render_target_t* target) {
 }
 
 void Component::on_redraw() {

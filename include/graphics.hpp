@@ -6,45 +6,50 @@
 #define CYD_UI_GRAPHICS_HPP
 
 
-#include "events.hpp"
 #include "colors.hpp"
+#include "events.hpp"
 #include "fonts.hpp"
 
-#include "x11_impl.hpp"
 #include "images.h"
+#include "x11_impl.hpp"
 
 namespace cydui::graphics {
-    typedef window_t window_t;
-    
-    window_t* create_window(
-      const char* title, const char* wclass, int x, int y, int w, int h,
-      bool override_redirect = false
-    );
-    
-    void set_background(window_t* win);
-    
-    void resize(window_t* win, int w, int h);
-    
-    void flush(window_t* win);
-    
-    void clr_rect(window_t* win, int x, int y, unsigned int w, unsigned int h);
-    
-    void drw_line(
-      window_t* win, layout::color::Color* color, int x, int y, int x1, int y1
-    );
-    
-    void drw_rect(
-      window_t* win,
+  typedef window_ti window_t;
+  typedef render_target_ti render_target_t;
+
+  window_t* create_window(const char* title,
+      const char* wclass,
+      int x,
+      int y,
+      int w,
+      int h,
+      bool override_redirect = false);
+
+  void set_background(window_t* win);
+
+  void resize(window_t* win, int w, int h);
+
+  void flush(window_t* win);
+
+  void clr_rect(
+      render_target_t* target, int x, int y, unsigned int w, unsigned int h);
+
+  void drw_line(render_target_t* target,
+      layout::color::Color* color,
+      int x,
+      int y,
+      int x1,
+      int y1);
+
+  void drw_rect(render_target_t* target,
       layout::color::Color* color,
       int x,
       int y,
       int w,
       int h,
-      bool filled
-    );
-    
-    void drw_arc(
-      window_t* win,
+      bool filled);
+
+  void drw_arc(render_target_t* target,
       layout::color::Color* color,
       int x,
       int y,
@@ -52,36 +57,36 @@ namespace cydui::graphics {
       int h,
       int a0,
       int a1,
-      bool filled
-    );
-    
-    void drw_text(
-      window_t* win,
+      bool filled);
+
+  void drw_text(render_target_t* target,
       layout::fonts::Font* font,
       layout::color::Color* color,
       std::string text,
       int x,
-      int y
-    );
-    
-    std::pair<int, int> get_text_size(
-      layout::fonts::Font* font,
-      const std::string &text
-    );
-    
-    void drw_image(
-      window_t* win,
+      int y);
+
+  std::pair<int, int> get_text_size(
+      layout::fonts::Font* font, const std::string& text);
+
+  void drw_image(render_target_t* target,
       layout::images::image_t* img,
       int x,
       int y,
       int w,
-      int h
-    );
-    
-    std::pair<int, int> get_image_size(
-      layout::images::image_t* img
-    );
-  
+      int h);
+
+  std::pair<int, int> get_image_size(layout::images::image_t* img);
+
+  void drw_target(render_target_t* dest_target,
+      render_target_t* source_target,
+      int xs,
+      int ys,
+      int xd,
+      int yd,
+      int w,
+      int h);
+
 }// namespace cydui::graphics
 
 #endif//CYD_UI_GRAPHICS_HPP

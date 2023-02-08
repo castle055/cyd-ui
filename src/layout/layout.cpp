@@ -11,8 +11,10 @@ logging::logger log_lay = {
 cydui::layout::Layout::Layout(cydui::components::Component* root): root(root) {
 }
 
-#define COMPUTE(DIM) \
-if (!dimension_t::compute(DIM)) { return false; }
+#define COMPUTE(DIM)                                                           \
+  if (!dimension_t::compute(DIM)) {                                            \
+    return false;                                                              \
+  }
 
 static bool compute_dimensions(cydui::components::Component* rt) {
   using namespace cydui::dimensions;
@@ -32,8 +34,10 @@ static bool compute_dimensions(cydui::components::Component* rt) {
   COMPUTE(dim->padding.left)
   
   if (rt->parent) {
-    dim->cx = rt->parent->state->dim.cx.val() + dim->x.val() + dim->margin.left.val() + dim->padding.left.val();
-    dim->cy = rt->parent->state->dim.cy.val() + dim->y.val() + dim->margin.top.val() + dim->padding.top.val();
+    dim->cx = rt->parent->state->dim.cx.val() + dim->x.val()
+      + dim->margin.left.val() + dim->padding.left.val();
+    dim->cy = rt->parent->state->dim.cy.val() + dim->y.val()
+      + dim->margin.top.val() + dim->padding.top.val();
   } else {
     dim->cx = dim->x.val() + dim->margin.left.val() + dim->padding.left.val();
     dim->cy = dim->y.val() + dim->margin.top.val() + dim->padding.top.val();
@@ -43,21 +47,15 @@ static bool compute_dimensions(cydui::components::Component* rt) {
     dim->w.unknown = true;
   } else {
     COMPUTE(dim->w)
-    dim->cw = dim->w.val()
-      - dim->padding.left.val()
-      - dim->padding.right.val()
-      - dim->margin.left.val()
-      - dim->margin.right.val();
+    dim->cw = dim->w.val() - dim->padding.left.val() - dim->padding.right.val()
+      - dim->margin.left.val() - dim->margin.right.val();
   }
   if (!dim->given_h) {
     dim->h.unknown = true;
   } else {
     COMPUTE(dim->h)
-    dim->ch = dim->h.val()
-      - dim->padding.top.val()
-      - dim->padding.bottom.val()
-      - dim->margin.top.val()
-      - dim->margin.bottom.val();
+    dim->ch = dim->h.val() - dim->padding.top.val() - dim->padding.bottom.val()
+      - dim->margin.top.val() - dim->margin.bottom.val();
   }
   
   std::vector<cydui::components::Component*> pending;
@@ -80,20 +78,14 @@ static bool compute_dimensions(cydui::components::Component* rt) {
   
   if (!dim->given_w) {// If not given, or given has error (ie: circular dep)
     dim->cw = total_w;
-    dim->w = dim->cw.val()
-      + dim->padding.left.val()
-      + dim->padding.right.val()
-      + dim->margin.left.val()
-      + dim->margin.right.val();
+    dim->w = dim->cw.val() + dim->padding.left.val() + dim->padding.right.val()
+      + dim->margin.left.val() + dim->margin.right.val();
   }
   
   if (!dim->given_h) {// If not given, or given has error (ie: circular dep)
     dim->ch = total_h;
-    dim->h = dim->ch.val()
-      + dim->padding.top.val()
-      + dim->padding.bottom.val()
-      + dim->margin.top.val()
-      + dim->margin.bottom.val();
+    dim->h = dim->ch.val() + dim->padding.top.val() + dim->padding.bottom.val()
+      + dim->margin.top.val() + dim->margin.bottom.val();
   }
   
   return std::all_of(pending.begin(), pending.end(), compute_dimensions);
@@ -123,18 +115,24 @@ static void redraw_component(
       c = c->parent;
     }
   }
-  log_lay.debug("TARGET: w  = %d, h  = %d", target->state->dim.w.val(), target->state->dim.h.val());
-  log_lay.debug("TARGET: cw = %d, ch = %d", target->state->dim.cw.val(), target->state->dim.ch.val());
-  
-  // Clear screen area
-  cydui::graphics::clr_rect(win->win_ref,
-    target->state->dim.cx.val(),
-    target->state->dim.cy.val(),
+  log_lay.debug("TARGET: w  = %d, h  = %d",
+    target->state->dim.w.val(),
+    target->state->dim.h.val());
+  log_lay.debug("TARGET: cw = %d, ch = %d",
     target->state->dim.cw.val(),
     target->state->dim.ch.val());
   
+  // Clear screen area
+  cydui::graphics::render_target_t* r_target = win->win_ref->render_target;
+  
+  cydui::graphics::clr_rect(r_target,
+    target->state->dim.cx.val() - target->state->dim.padding.left.val(),
+    target->state->dim.cy.val() - target->state->dim.padding.top.val(),
+    target->state->dim.cw.val() + target->state->dim.padding.left.val() + target->state->dim.padding.right.val(),
+    target->state->dim.ch.val() + target->state->dim.padding.top.val() + target->state->dim.padding.bottom.val());
+  
   // Render screen area & flush graphics
-  target->render(win);
+  target->render(r_target);
   
   //    if (render_if_dirty(root))
   cydui::graphics::flush(win->win_ref);
@@ -142,13 +140,13 @@ static void redraw_component(
 
 void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
-  root->state->dim.w = win->win_ref->w;
-  root->state->dim.h = win->win_ref->h;
+  root->state->dim.w = win->win_ref->render_target->w;
+  root->state->dim.h = win->win_ref->render_target->h;
   root->state->dim.given_w = true;
   root->state->dim.given_h = true;
   
-  root->state->win = _win->win_ref->xwin;
-
+  root->state->win = _win->win_ref;
+  
   listen(RedrawEvent, {
     if (it.data->win != 0 && it.data->win != win->win_ref->xwin)
       return;
@@ -272,11 +270,9 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(
   for (auto i = c->children.rbegin(); i != c->children.rend(); ++i) {
     auto* item = *i;
     if (x >= item->state->dim.cx.val()
-      && x < (item->state->dim.cx.val()
-      + item->state->dim.cw.val())
+      && x < (item->state->dim.cx.val() + item->state->dim.cw.val())
       && y >= item->state->dim.cy.val()
-      && y < (item->state->dim.cy.val()
-      + item->state->dim.ch.val())) {
+      && y < (item->state->dim.cy.val() + item->state->dim.ch.val())) {
       target = find_by_coords(item, x, y);
       if (target)
         break;
@@ -286,11 +282,9 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(
     return target;
   
   if (!c->state->stateless_comp && x >= c->state->dim.cx.val()
-    && x < (c->state->dim.cx.val()
-    + c->state->dim.cw.val())
+    && x < (c->state->dim.cx.val() + c->state->dim.cw.val())
     && y >= c->state->dim.cy.val()
-    && y < (c->state->dim.cy.val()
-    + c->state->dim.ch.val())) {
+    && y < (c->state->dim.cy.val() + c->state->dim.ch.val())) {
     target = c;
   }
   return target;

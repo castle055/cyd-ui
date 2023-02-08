@@ -37,7 +37,8 @@ namespace cydui::components {
       
       void dirty();
       
-      unsigned int win;
+      graphics::window_t* win;
+      graphics::render_target_t* sub_render_target = nullptr;
       
       dimensions::component_dimensions_t dim;
       ComponentBorder border;
@@ -199,7 +200,7 @@ namespace cydui::components {
       
       void redraw();
       
-      void render(const cydui::window::CWindow* win);
+      void render(cydui::graphics::render_target_t* target);
       
       Component* get_parent();
       
@@ -250,7 +251,7 @@ namespace cydui::components {
       
       Component* set_border_enable(bool enabled);
       
-      virtual void on_render(const cydui::window::CWindow* win);
+      virtual void on_render(cydui::graphics::render_target_t* target);
       
       virtual void on_redraw();
       
@@ -306,7 +307,7 @@ namespace cydui::components {
 
 #define REDRAW void on_redraw() override
 
-#define RENDER(WIN) void on_render(const cydui::window::CWindow*(WIN)) override
+#define RENDER(TARGET) void on_render(cydui::graphics::render_target_t*(TARGET)) override
 
 
 #define WITH_STATE(NAME) auto* state = (NAME##State*)this->state;
