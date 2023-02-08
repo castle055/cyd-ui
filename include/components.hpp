@@ -123,7 +123,7 @@ namespace cydui::components {
       template<typename c, int ID, typename T>
       requires ComponentConcept<c>
       inline component_builder_t create_for(
-        T iter, std::function<c_init_t<c>(typename T::value_type)> block
+        T& iter, std::function<c_init_t<c>(typename T::value_type)> block
       ) {
         std::vector<ComponentState*> states = {};
         int k = 0;
