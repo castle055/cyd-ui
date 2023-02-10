@@ -71,8 +71,6 @@ namespace cydui::components {
       
       std::function<void(c*)> init = [](c*) {
       };
-      
-      bool focused = false;
     };
     
     
