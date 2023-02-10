@@ -176,10 +176,14 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     if (it.data->win != win->win_ref->xwin)
       return;
     if (focused && focused->component_instance) {
-      if (it.data->pressed) {
-        focused->component_instance->on_key_press(*it.data);
-      } else if (it.data->released) {
-        focused->component_instance->on_key_release(*it.data);
+      if (focused->focused) {
+        if (it.data->pressed) {
+          focused->component_instance->on_key_press(*it.data);
+        } else if (it.data->released) {
+          focused->component_instance->on_key_release(*it.data);
+        }
+      } else {
+        focused = nullptr;
       }
     }
   });
@@ -198,9 +202,11 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       
       if (focused != target->state) {
         if (focused && focused->component_instance) {
+          focused->focused = false;
           focused = nullptr;
         }
         focused = target->state;
+        focused->focused = true;
       }
       
       target->on_mouse_click(rel_x, rel_y, it.data->button);
