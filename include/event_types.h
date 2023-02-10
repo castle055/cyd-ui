@@ -71,6 +71,10 @@ enum Key {
   SPACE,
   ENTER,
   ESC,
+  LEFT,
+  RIGHT,
+  UP,
+  DOWN,
 };
 
 EVENT(KeyEvent, {
