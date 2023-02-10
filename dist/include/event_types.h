@@ -56,7 +56,6 @@ enum Key {
   L,
   M,
   N,
-  Ñ,
   O,
   P,
   Q,
