@@ -79,6 +79,7 @@ EVENT(KeyEvent, {
   const bool pressed = false;
   const bool released = false;
   const bool holding = false;
+  const std::string text = "";
 })
 
 #endif //CYD_UI_EVENT_TYPES_H

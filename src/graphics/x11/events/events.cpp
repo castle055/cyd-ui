@@ -71,6 +71,12 @@ static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_Escape, Key::ESC},
 };
 
+char input_buffer[10];
+static XIM xim;
+static XIC xic;
+Status st;
+KeySym ksym;
+
 static void run() {
   XEvent ev;
   
@@ -102,12 +108,15 @@ static void run() {
         }
         break;
       case KeyPress://x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));
-        if (xkey_map.contains(XLookupKeysym(&ev.xkey, 0))) {
+        Xutf8LookupString(xic, &ev.xkey, input_buffer, 10, &ksym, &st);
+        //x11_evlog.warn("BUF(%d)= %s", st, input_buffer);
+        if (xkey_map.contains(ksym)) {
           //x11_evlog.warn("====FOUND");
           emit<KeyEvent>({
             .win = (unsigned int) ev.xkey.window,
-            .key = xkey_map[XLookupKeysym(&ev.xkey, 0)],
+            .key = xkey_map[ksym],
             .pressed = true,
+            .text = st == 2 ? std::string(input_buffer) : "",
           });
         }
         break;
@@ -209,10 +218,17 @@ static void run() {
 using namespace std::chrono_literals;
 
 void x11_event_emitter_task(cydui::threading::thread_t* this_thread) {
+  xim = XOpenIM(state::get_dpy(), NULL, NULL, NULL);
+  xic = XCreateIC(xim,
+    XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
+    NULL
+  );
   while (this_thread->running) {
     run();
     std::this_thread::sleep_for(20ms);
   }
+  XDestroyIC(xic);
+  XCloseIM(xim);
 }
 
 void cydui::graphics::events::start() {

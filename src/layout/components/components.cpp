@@ -162,12 +162,12 @@ void Component::on_render(cydui::graphics::render_target_t* target) {
 void Component::on_redraw() {
 }
 
-void Component::on_key_press(Key key) {
+void Component::on_key_press(KeyData key) {
   if (this->parent)
     this->parent->on_key_press(key);
 }
 
-void Component::on_key_release(Key key) {
+void Component::on_key_release(KeyData key) {
   if (this->parent)
     this->parent->on_key_release(key);
 }

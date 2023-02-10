@@ -177,9 +177,9 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       return;
     if (focused && focused->component_instance) {
       if (it.data->pressed) {
-        focused->component_instance->on_key_press(it.data->key);
+        focused->component_instance->on_key_press(*it.data);
       } else if (it.data->released) {
-        focused->component_instance->on_key_release(it.data->key);
+        focused->component_instance->on_key_release(*it.data);
       }
     }
   });

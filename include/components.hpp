@@ -266,9 +266,11 @@ namespace cydui::components {
       
       virtual void on_scroll(int d);
       
-      virtual void on_key_press(Key key);
+      typedef typename KeyEvent::DataType KeyData;
       
-      virtual void on_key_release(Key key);
+      virtual void on_key_press(KeyData key);
+      
+      virtual void on_key_release(KeyData key);
     };
   
 }// namespace cydui::components
