@@ -362,7 +362,7 @@ std::pair<int, int> cydui::graphics::get_text_size(
     text.size(),
     &x_glyph_info);
   //XftFontClose(state::get_dpy(), xfont);
-  return {x_glyph_info.y * 2, x_glyph_info.height};
+  return {x_glyph_info.width, x_glyph_info.y * 2};
 }
 
 void cydui::graphics::drw_image(
