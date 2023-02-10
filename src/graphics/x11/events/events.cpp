@@ -115,12 +115,12 @@ static void run() {
         break;
       case KeyPress://x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));
         Xutf8LookupString(xic, &ev.xkey, input_buffer, 10, &ksym, &st);
-        x11_evlog.warn("BUF(%d)= %s", st, input_buffer);
-        if ((st == XLookupKeySym || st == XLookupBoth) && xkey_map.contains(ksym)) {
+        //x11_evlog.warn("BUF(%d)= %s", st, input_buffer);
+        if ((st == XLookupKeySym || st == XLookupBoth)) {
           //x11_evlog.warn("====FOUND");
           emit<KeyEvent>({
             .win = (unsigned int) ev.xkey.window,
-            .key = xkey_map[ksym],
+            .key = xkey_map.contains(ksym) ? xkey_map[ksym] : Key::UNKNOWN,
             .pressed = true,
             .text = st == XLookupBoth ? std::string(input_buffer) : "",
           });

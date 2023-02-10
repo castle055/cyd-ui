@@ -42,6 +42,7 @@ EVENT(ResizeEvent, {
 })
 
 enum Key {
+  UNKNOWN,
   A,
   B,
   C,
