@@ -299,7 +299,6 @@ namespace cydui::components {
 #define INIT(NAME)                                                             \
   typedef NAME##State State;                                                   \
   NAME##State* state  = nullptr;                                               \
-  static constexpr std::string name = #NAME;                                               \
   logging::logger log = {.name = #NAME, .on = false};                          \
   explicit NAME(NAME##State* state,                                            \
       Props props,                                                             \
