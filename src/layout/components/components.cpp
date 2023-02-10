@@ -161,31 +161,31 @@ void Component::on_redraw() {
 }
 
 void Component::on_key_press(Key key) {
+  if (this->parent)
+    this->parent->on_key_press(key);
 }
 
 void Component::on_key_release(Key key) {
+  if (this->parent)
+    this->parent->on_key_release(key);
 }
 
 void Component::on_mouse_enter(int x, int y) {
-  // TODO - Must change coords since they are relative
   if (this->parent)
     this->parent->on_mouse_enter(x + dim->x.val(), y + dim->y.val());
 }
 
 void Component::on_mouse_click(int x, int y, int button) {
-  // TODO - Must change coords since they are relative
   if (this->parent)
     this->parent->on_mouse_click(x + dim->x.val(), y + dim->y.val(), button);
 }
 
 void Component::on_mouse_exit(int x, int y) {
-  // TODO - Must change coords since they are relative
   if (this->parent)
     this->parent->on_mouse_exit(x + dim->x.val(), y + dim->y.val());
 }
 
 void Component::on_mouse_motion(int x, int y) {
-  // TODO - Must change coords since they are relative
   if (this->parent)
     this->parent->on_mouse_motion(x + dim->x.val(), y + dim->y.val());
 }
