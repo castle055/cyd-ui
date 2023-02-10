@@ -131,8 +131,10 @@ void Component::render(cydui::graphics::render_target_t* target) {
       if (child->state->dim.cx.val() + child->state->dim.cw.val() + child->state->dim.padding.right.val() > sub_render_target->w
         || child->state->dim.cy.val() + child->state->dim.ch.val() + child->state->dim.padding.bottom.val() > sub_render_target->h) {
         sub_render_target->resize(
-          child->state->dim.cx.val() + child->state->dim.cw.val() + child->state->dim.padding.right.val(),
-          child->state->dim.cy.val() + child->state->dim.ch.val() + child->state->dim.padding.bottom.val()
+          std::max(sub_render_target->w,
+            child->state->dim.cx.val() + child->state->dim.cw.val() + child->state->dim.padding.right.val()),
+          std::max(sub_render_target->h,
+            child->state->dim.cy.val() + child->state->dim.ch.val() + child->state->dim.padding.bottom.val())
         );
       }
       child->render(sub_render_target);
