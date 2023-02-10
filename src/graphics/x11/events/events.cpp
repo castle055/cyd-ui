@@ -101,9 +101,9 @@ static void run() {
           });
         }
         break;
-      case KeyPress:x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));
+      case KeyPress://x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));
         if (xkey_map.contains(XLookupKeysym(&ev.xkey, 0))) {
-          x11_evlog.warn("====FOUND");
+          //x11_evlog.warn("====FOUND");
           emit<KeyEvent>({
             .win = (unsigned int) ev.xkey.window,
             .key = xkey_map[XLookupKeysym(&ev.xkey, 0)],
