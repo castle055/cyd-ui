@@ -39,7 +39,7 @@ cydui::events::change_ev::DataMonitor<MotionEvent>
   return true;
 });
 
-static std::unordered_map<unsigned int, Key> xkey_map = {
+static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_a, Key::A},
   {XK_b, Key::B},
   {XK_c, Key::C},
@@ -101,21 +101,21 @@ static void run() {
           });
         }
         break;
-      case KeyPress:x11_evlog.warn("KEY= %X", ev.xkey.keycode);
-        if (xkey_map.contains(ev.xkey.keycode)) {
+      case KeyPress:x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));
+        if (xkey_map.contains(XLookupKeysym(&ev.xkey, 0))) {
           x11_evlog.warn("====FOUND");
           emit<KeyEvent>({
             .win = (unsigned int) ev.xkey.window,
-            .key = xkey_map[ev.xkey.keycode],
+            .key = xkey_map[XLookupKeysym(&ev.xkey, 0)],
             .pressed = true,
           });
         }
         break;
       case KeyRelease:
-        if (xkey_map.contains(ev.xkey.keycode)) {
+        if (xkey_map.contains(XLookupKeysym(&ev.xkey, 0))) {
           emit<KeyEvent>({
             .win = (unsigned int) ev.xkey.window,
-            .key = xkey_map[ev.xkey.keycode],
+            .key = xkey_map[XLookupKeysym(&ev.xkey, 0)],
             .released = true,
           });
         }
