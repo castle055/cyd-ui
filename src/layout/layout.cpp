@@ -127,15 +127,17 @@ static void redraw_component(
   // Clear screen area
   cydui::graphics::render_target_t* r_target = win->win_ref->render_target;
   
-  cydui::graphics::clr_rect(r_target,
-    target->state->dim.cx.val() - target->state->dim.padding.left.val(),
-    target->state->dim.cy.val() - target->state->dim.padding.top.val(),
-    target->state->dim.cw.val() + target->state->dim.padding.left.val() + target->state->dim.padding.right.val(),
-    target->state->dim.ch.val() + target->state->dim.padding.top.val() + target->state->dim.padding.bottom.val());
-  
   // Render screen area & flush graphics
+  /// We must render from the root, this also re-renders any component that might
+  /// occlude the target.
   cydui::components::Component* root = target;
   while (root->parent) root = root->parent;
+  
+  cydui::graphics::clr_rect(r_target,
+    root->state->dim.cx.val() - root->state->dim.padding.left.val(),
+    root->state->dim.cy.val() - root->state->dim.padding.top.val(),
+    root->state->dim.cw.val() + root->state->dim.padding.left.val() + root->state->dim.padding.right.val(),
+    root->state->dim.ch.val() + root->state->dim.padding.top.val() + root->state->dim.padding.bottom.val());
   root->render(r_target);
   
   cydui::graphics::flush(win->win_ref);
