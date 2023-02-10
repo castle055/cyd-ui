@@ -97,6 +97,7 @@ static void redraw_component(
   const cydui::window::CWindow* win, cydui::components::Component* target
 ) {
   log_lay.debug("REDRAW");
+  auto t0 = std::chrono::system_clock::now().time_since_epoch();
   // Clear render area of component instances
   for (auto child: target->children)
     delete child;
@@ -115,12 +116,13 @@ static void redraw_component(
       c = c->parent;
     }
   }
-  log_lay.debug("TARGET: w  = %d, h  = %d",
-    target->state->dim.w.val(),
-    target->state->dim.h.val());
-  log_lay.debug("TARGET: cw = %d, ch = %d",
-    target->state->dim.cw.val(),
-    target->state->dim.ch.val());
+  auto t1 = std::chrono::system_clock::now().time_since_epoch();
+  //log_lay.debug("TARGET: w  = %d, h  = %d",
+  //  target->state->dim.w.val(),
+  //  target->state->dim.h.val());
+  //log_lay.debug("TARGET: cw = %d, ch = %d",
+  //  target->state->dim.cw.val(),
+  //  target->state->dim.ch.val());
   
   // Clear screen area
   cydui::graphics::render_target_t* r_target = win->win_ref->render_target;
@@ -132,10 +134,16 @@ static void redraw_component(
     target->state->dim.ch.val() + target->state->dim.padding.top.val() + target->state->dim.padding.bottom.val());
   
   // Render screen area & flush graphics
-  target->render(r_target);
+  cydui::components::Component* root = target;
+  while (root->parent) root = root->parent;
+  root->render(r_target);
   
-  //    if (render_if_dirty(root))
   cydui::graphics::flush(win->win_ref);
+  auto t2 = std::chrono::system_clock::now().time_since_epoch();
+  auto redraw_time = (t1 - t0).count();
+  auto render_time = (t2 - t1).count();
+  log_lay.info("[REDRAW EV] REDRAW=%d, RENDER=%d, f=%f", redraw_time, render_time,
+    ((double) render_time) / redraw_time);
 }
 
 void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
