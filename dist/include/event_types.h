@@ -70,6 +70,8 @@ enum Key {
   Z,
   SPACE,
   ENTER,
+  BACKSPACE,
+  DELETE,
   ESC,
   LEFT,
   RIGHT,

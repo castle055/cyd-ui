@@ -68,6 +68,8 @@ static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_z, Key::Z},
   {XK_space, Key::SPACE},
   {XK_ISO_Enter, Key::ENTER},
+  {XK_BackSpace, Key::BACKSPACE},
+  {XK_Delete, Key::DELETE},
   {XK_Escape, Key::ESC},
   {XK_Left, Key::LEFT},
   {XK_Right, Key::RIGHT},
