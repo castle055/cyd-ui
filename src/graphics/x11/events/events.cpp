@@ -101,8 +101,9 @@ static void run() {
           });
         }
         break;
-      case KeyPress:
+      case KeyPress:x11_evlog.warn("KEY= %d", ev.xkey.keycode);
         if (xkey_map.contains(ev.xkey.keycode)) {
+          x11_evlog.warn("====FOUND");
           emit<KeyEvent>({
             .win = (unsigned int) ev.xkey.window,
             .key = xkey_map[ev.xkey.keycode],
