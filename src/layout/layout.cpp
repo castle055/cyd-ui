@@ -175,6 +175,13 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   listen(KeyEvent, {
     if (it.data->win != win->win_ref->xwin)
       return;
+    if (focused && focused->component_instance) {
+      if (it.data->pressed) {
+        focused->component_instance->on_key_press(it.data->key);
+      } else if (it.data->released) {
+        focused->component_instance->on_key_release(it.data->key);
+      }
+    }
   });
   listen(ButtonEvent, {
     if (it.data->win != win->win_ref->xwin)
@@ -188,6 +195,13 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       
       int rel_x = it.data->x - target->state->dim.cx.val();
       int rel_y = it.data->y - target->state->dim.cy.val();
+      
+      if (focused != target->state) {
+        if (focused && focused->component_instance) {
+          focused = nullptr;
+        }
+        focused = target->state;
+      }
       
       target->on_mouse_click(rel_x, rel_y, it.data->button);
       if (render_if_dirty(root))
@@ -212,10 +226,11 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       return;
     
     if (it.data->x == -1 && it.data->y == -1) {
-      if (focused && focused->component_instance) {
+      if (hovering && hovering->component_instance) {
         int exit_rel_x = 0;
         int exit_rel_y = 0;
-        focused->component_instance->on_mouse_exit(exit_rel_x, exit_rel_y);
+        hovering->component_instance->on_mouse_exit(exit_rel_x, exit_rel_y);
+        hovering = nullptr;
       }
     } else {
       cydui::components::Component* target = root;
@@ -224,13 +239,14 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       if (specified_target)
         target = specified_target;
       
-      if (focused != target->state) {
-        if (focused && focused->component_instance) {
+      if (hovering != target->state) {
+        if (hovering && hovering->component_instance) {
           int exit_rel_x = it.data->x - target->state->dim.cx.val();
           int exit_rel_y = it.data->y - target->state->dim.cy.val();
-          focused->component_instance->on_mouse_exit(exit_rel_x, exit_rel_y);
+          hovering->component_instance->on_mouse_exit(exit_rel_x, exit_rel_y);
+          hovering = nullptr;
         }
-        focused = target->state;
+        hovering = target->state;
       }
       
       int rel_x = it.data->x - target->state->dim.cx.val();

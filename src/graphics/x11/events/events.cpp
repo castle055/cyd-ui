@@ -7,6 +7,7 @@
 #include "threading.hpp"
 #include "../state/state.hpp"
 #include <X11/Xlib.h>
+#include <X11/keysym.h>
 
 #include <utility>
 
@@ -37,6 +38,38 @@ cydui::events::change_ev::DataMonitor<MotionEvent>
   motionEventDataMonitor([](MotionEvent::DataType o_data, MotionEvent::DataType n_data) {
   return true;
 });
+
+static std::unordered_map<unsigned int, Key> xkey_map = {
+  {XK_A, Key::A},
+  {XK_B, Key::B},
+  {XK_C, Key::C},
+  {XK_D, Key::D},
+  {XK_E, Key::E},
+  {XK_F, Key::F},
+  {XK_G, Key::G},
+  {XK_H, Key::H},
+  {XK_I, Key::I},
+  {XK_J, Key::J},
+  {XK_K, Key::K},
+  {XK_L, Key::L},
+  {XK_M, Key::M},
+  {XK_N, Key::N},
+  {XK_O, Key::O},
+  {XK_P, Key::P},
+  {XK_Q, Key::Q},
+  {XK_R, Key::R},
+  {XK_S, Key::S},
+  {XK_T, Key::T},
+  {XK_U, Key::U},
+  {XK_V, Key::V},
+  {XK_W, Key::W},
+  {XK_X, Key::X},
+  {XK_Y, Key::Y},
+  {XK_Z, Key::Z},
+  {XK_space, Key::SPACE},
+  {XK_ISO_Enter, Key::ENTER},
+  {XK_Escape, Key::ESC},
+};
 
 static void run() {
   XEvent ev;
@@ -69,18 +102,22 @@ static void run() {
         }
         break;
       case KeyPress:
-        emit<KeyEvent>({
-          .win = (unsigned int) ev.xkey.window,
-          .key = ev.xkey.keycode,
-          .pressed = true,
-        });
+        if (xkey_map.contains(ev.xkey.keycode)) {
+          emit<KeyEvent>({
+            .win = (unsigned int) ev.xkey.window,
+            .key = xkey_map[ev.xkey.keycode],
+            .pressed = true,
+          });
+        }
         break;
       case KeyRelease:
-        emit<KeyEvent>({
-          .win = (unsigned int) ev.xkey.window,
-          .key = ev.xkey.keycode,
-          .released = true,
-        });
+        if (xkey_map.contains(ev.xkey.keycode)) {
+          emit<KeyEvent>({
+            .win = (unsigned int) ev.xkey.window,
+            .key = xkey_map[ev.xkey.keycode],
+            .released = true,
+          });
+        }
         break;
       case ButtonPress://x11_evlog.warn("BUTTON= %d", ev.xbutton.button);
         if (ev.xbutton.button == 4) {

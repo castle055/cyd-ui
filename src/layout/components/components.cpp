@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "../../../include/graphics.hpp"
+#include "event_types.h"
 
 using namespace cydui::components;
 
@@ -159,10 +160,10 @@ void Component::on_render(cydui::graphics::render_target_t* target) {
 void Component::on_redraw() {
 }
 
-void Component::on_key_press() {
+void Component::on_key_press(Key key) {
 }
 
-void Component::on_key_release() {
+void Component::on_key_release(Key key) {
 }
 
 void Component::on_mouse_enter(int x, int y) {

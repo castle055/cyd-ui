@@ -10,6 +10,7 @@
 #include "dimensions.hpp"
 #include "events.hpp"
 #include "window_types.hpp"
+#include "event_types.h"
 #include <functional>
 #include <optional>
 #include <unordered_set>
@@ -265,9 +266,9 @@ namespace cydui::components {
       
       virtual void on_scroll(int d);
       
-      virtual void on_key_press();
+      virtual void on_key_press(Key key);
       
-      virtual void on_key_release();
+      virtual void on_key_release(Key key);
     };
   
 }// namespace cydui::components
@@ -298,6 +299,7 @@ namespace cydui::components {
 #define INIT(NAME)                                                             \
   typedef NAME##State State;                                                   \
   NAME##State* state  = nullptr;                                               \
+  static constexpr std::string name = #NAME;                                               \
   logging::logger log = {.name = #NAME, .on = false};                          \
   explicit NAME(NAME##State* state,                                            \
       Props props,                                                             \
