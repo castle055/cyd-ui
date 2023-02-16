@@ -3,6 +3,7 @@
 //
 
 #include "../include/cydui.hpp"
+#include "../include/containers.hpp"
 
 #include <mcheck.h>
 #include <thread>
@@ -230,21 +231,8 @@ namespace test {
 
 int main() {
   //mtrace();
-  // Create layout tree
   
-  // Instantiate window with layout
-  auto* state = new test::TestState();
-  //auto* state1 = new WorkspacesState();
-  //state->selected_workspaces.on_change([state]() {
-  //  state->selected_workspaces.set(state->selected_workspaces.val() ^ 1);
-  //});
-  auto* tc = new test::Test(state, {}, [](Component*) {
-  });
-  //auto* tc1    = new Workspaces(state1, { }, ___inner(Workspaces, t, { }));
-  
-  auto* layout = new cydui::layout::Layout(tc);
-  //auto* layout1 = new cydui::layout::Layout(tc1);
-  
+  cydui::layout::Layout* layout = cydui::layout::create<test::Test>({});
   cydui::window::CWindow* win = cydui::window::create(layout,
     "startmenu",
     "scratch",
@@ -254,18 +242,6 @@ int main() {
     800,
     800,
     false);
-  //cydui::window::CWindow   * win1 = cydui::window::create(
-  //  layout1,
-  //  "workspaces", "scratch",
-  //  0, 90,//100, 260,
-  //  //1, 13,
-  //  280, 25,
-  //  true
-  //);
-  
-  cydui::graphics::window_t* w = win->win_ref;
-  
-  // Interact with window through window pointer
   
   while (1) {
     std::this_thread::sleep_for(10000s);

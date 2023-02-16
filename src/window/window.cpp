@@ -2,8 +2,9 @@
 // Created by castle on 8/21/22.
 //
 
-#include "window.hpp"
+#include "types.hpp"
 #include "../graphics/events.hpp"
+#include "graphics.hpp"
 #include <vector>
 
 using namespace cydui::window;

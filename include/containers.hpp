@@ -6,7 +6,6 @@
 #define CYD_UI_CONTAINERS_HPP
 
 #include "cydui.hpp"
-#include "primitives.hpp"
 
 STATE(VBox) { };
 

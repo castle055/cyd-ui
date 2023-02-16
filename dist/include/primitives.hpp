@@ -6,12 +6,7 @@
 #define CYD_UI_PRIMITIVES_HPP
 
 
-#include "colors.hpp"
-#include "components.hpp"
-#include "cyd-log/dist/include/logging.hpp"
-#include "event_types.h"
-#include "fonts.hpp"
-#include "window_types.hpp"
+#include "cydui.hpp"
 
 namespace primitives {
     using namespace cydui;

@@ -2,14 +2,12 @@
 // Created by castle on 8/21/22.
 //
 
-#include "layout.hpp"
+#include "components.hpp"
+#include "graphics.hpp"
 #include "../graphics/events.hpp"
 
 logging::logger log_lay = {
   .name = "LAYOUT", .on = true, .min_level = logging::INFO};
-
-cydui::layout::Layout::Layout(cydui::components::Component* root): root(root) {
-}
 
 #define COMPUTE(DIM)                                                           \
   if (!dimension_t::compute(DIM)) {                                            \
