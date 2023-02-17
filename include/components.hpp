@@ -16,98 +16,94 @@ namespace cydui::components {
       
       bool is_group = false;
     
+    private:
+      template<typename c>
+      requires ComponentConcept<c>
+      static std::function<void(Component*)> get_init_function(c_init_t<c> init) {
+        return [init](cydui::components::Component* __raw_local_) {
+          auto* local = (c*) __raw_local_;
+          
+          if (init.x.has_value())
+            __raw_local_->state->dim.x = init.x.value();
+          if (init.y.has_value())
+            __raw_local_->state->dim.y = init.y.value();
+          if (init.w.has_value()) {
+            __raw_local_->state->dim.w = init.w.value();
+            __raw_local_->state->dim.given_w = true;
+          }
+          if (init.h.has_value()) {
+            __raw_local_->state->dim.h = init.h.value();
+            __raw_local_->state->dim.given_h = true;
+          }
+          
+          local->add(init.inner);
+          init.init(local);
+        };
+      }
+    
     protected:
+
+#define SET_REFERENCE if (init.ref) *(init.ref) =
+#define SET_WINDOW(STATE) (STATE)->win = this->state->win
+#define INSTANTIATE_COMP(STATE) new c(STATE, init.props, get_init_function(init))
       
       template<typename c, int ID>
       requires ComponentConcept<c>
       inline component_builder_t create(c_init_t<c> init) {
-        auto* c_state = (typename c::State*) (this->state->children.contains(ID)
-          ? (this->state->children[ID])
-          : (this->state->children.add(ID, new typename c::State())));
-        c_state->win = this->state->win;
-        if (init.ref)
-          *(init.ref) = c_state;
+        auto* c_state = (typename c::State*) (state->children.contains(ID)
+          ? (state->children[ID])
+          : (state->children.add(ID, new typename c::State())));
+        SET_WINDOW(c_state);
+        SET_REFERENCE c_state;
         return [this, init, c_state]() {
-          auto* _c = new c(
-            c_state,
-            init.props,
-            [init](cydui::components::Component* __raw_local_) {
-              auto* local = (c*) __raw_local_;
-              
-              if (init.x.has_value())
-                __raw_local_->state->dim.x = init.x.value();
-              if (init.y.has_value())
-                __raw_local_->state->dim.y = init.y.value();
-              if (init.w.has_value()) {
-                __raw_local_->state->dim.w = init.w.value();
-                __raw_local_->state->dim.given_w = true;
-              }
-              if (init.h.has_value()) {
-                __raw_local_->state->dim.h = init.h.value();
-                __raw_local_->state->dim.given_h = true;
-              }
-              
-              local->add(init.inner);
-              init.init(local);
-            });
+          auto* _c = INSTANTIATE_COMP(c_state);
           return _c;
         };
       }
-
-#define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
       
       template<typename c, int ID, typename T>
       requires ComponentConcept<c>
       inline component_builder_t create_for(
         T &iter, std::function<c_init_t<c>(typename T::value_type)> block
       ) {
-        std::vector<ComponentState*> states = {};
+        std::vector<typename c::State*> states = {};
         int k = 0;
         for (auto a = iter.begin(); a != iter.end(); ++a, ++k) {
           states.push_back(
-            (typename c::State*) (this->state->children.contains(ID, k)
-              ? (this->state->children.get_list(ID, k))
-              : (this->state->children.add_list(ID, k, new typename c::State())))
+            (typename c::State*) (state->children.contains(ID, k)
+              ? (state->children.get_list(ID, k))
+              : (state->children.add_list(ID, k, new typename c::State())))
           );
         }
         return [this, iter, block, states]() {
           int i = 0;
-          auto temp_c = new Component();
+          auto temp_c = Component::new_group();
           for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
             const c_init_t<c> init = block(*a);
-            if (init.ref)
-              *(init.ref) = nullptr;
-            (states[i])->win = this->state->win;
+            SET_REFERENCE nullptr;
+            SET_WINDOW(states[i]);
             temp_c->children.push_back(
-              new c((typename c::State*) states[i],
-                init.props,
-                [init](cydui::components::Component* __raw_local_) {
-                  auto* local = (c*) __raw_local_;
-                  
-                  if (init.x.has_value())
-                    __raw_local_->state->dim.x = init.x.value();
-                  if (init.y.has_value())
-                    __raw_local_->state->dim.y = init.y.value();
-                  if (init.w.has_value()) {
-                    __raw_local_->state->dim.w = init.w.value();
-                    __raw_local_->state->dim.given_w = true;
-                  }
-                  if (init.h.has_value()) {
-                    __raw_local_->state->dim.h = init.h.value();
-                    __raw_local_->state->dim.given_h = true;
-                  }
-                  
-                  local->add(init.inner);
-                  init.init(local);
-                }));
+              INSTANTIATE_COMP(states[i])
+            );
           }
-          temp_c->is_group = true;
           return temp_c;
         };
       }
 
-#define FOR_EACH(COMPONENT) create_for<COMPONENT, __COUNTER__>
+
 #define NULLCOMP            [](){ return Component::new_group(); }
+
+#define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
+
+#define IF(CONDITION) [&,this]()->component_builder_t { if (CONDITION) return
+#define ELSE                                            else return
+#define ELSE_IF(CONDITION)                              else if(CONDITION) return
+
+#define WHEN(VARIABLE) [&,this]()->component_builder_t { auto value = VARIABLE;
+#define CASE(VALUE)                 if (value == VALUE) return
+#define END           return NULLCOMP; }()
+
+#define FOR_EACH(COMPONENT) create_for<COMPONENT, __COUNTER__>
     
     
     public:
