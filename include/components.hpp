@@ -89,11 +89,25 @@ namespace cydui::components {
           return temp_c;
         };
       }
+      
+      inline component_builder_t create_group(std::vector<component_builder_t> _children) {
+        return [_children]() {
+          auto* group = Component::new_group();
+          group->add(_children);
+          return group;
+        };
+      }
+
+#undef SET_REFERENCE
+#undef SET_WINDOW
+#undef INSTANTIATE_COMP
 
 
 #define NULLCOMP            [](){ return Component::new_group(); }
 
 #define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
+
+#define GROUP create_group
 
 #define IF(CONDITION) [&,this]()->component_builder_t { if (CONDITION) return
 #define ELSE                                            else return
