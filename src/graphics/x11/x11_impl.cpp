@@ -144,8 +144,8 @@ cydui::graphics::window_t* cydui::graphics::create_window(
 window_ti::window_ti(Window xwin, int w, int h) {
   //window_ti::window_ti(Window xwin, int w, int h) {
   this->xwin = xwin;
-  this->render_target = new render_target_ti(this, w, h);
-  this->staging_target = new render_target_ti(this, w, h);
+  this->staging_target = new cydui::graphics::render_target_t(this, w, h);
+  this->render_target = new cydui::graphics::render_target_t(this, w, h);
 }
 
 render_target_ti::render_target_ti(

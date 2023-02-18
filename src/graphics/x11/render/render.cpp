@@ -24,6 +24,7 @@ void render_sbr(cydui::graphics::window_t* win) {
     return;
   
   //win->x_mtx.lock();
+  //win->render_mtx.lock();
   XCopyArea(state::get_dpy(),
     win->staging_target->drawable,
     win->xwin,
@@ -34,6 +35,7 @@ void render_sbr(cydui::graphics::window_t* win) {
     win->staging_target->h,
     0,
     0);
+  //win->render_mtx.unlock();
   //win->x_mtx.unlock();
   XFlush(state::get_dpy());
 }
@@ -58,7 +60,7 @@ void render::start(cydui::graphics::window_t* win) {
     .win = win,
   };
   win->render_thd = cydui::threading::new_thread(render_task, win->render_data)
-    ->set_name("X11_RENDER_THD");
+    ->set_name("RENDER_THD");
 }
 
 static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {

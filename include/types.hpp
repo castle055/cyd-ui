@@ -11,6 +11,8 @@
 
 #include <cyd-log/dist/include/logging.hpp>
 
+#include "../src/cydstd/cydstd.h"
+
 #include "dimensions.hpp"
 #include "children_state_collection.hpp"
 #include "x11_impl.hpp"
@@ -130,8 +132,8 @@ public:
   
   void dirty();
   
-  cydui::graphics::window_t* win = nullptr;
-  cydui::graphics::render_target_t* sub_render_target = nullptr;
+  nullable<cydui::graphics::window_t*> win;
+  nullable<cydui::graphics::render_target_t*> sub_render_target;
   
   cydui::dimensions::component_dimensions_t dim;
   ComponentBorder border;

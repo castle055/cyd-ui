@@ -8,6 +8,8 @@
 #include <mcheck.h>
 #include <thread>
 
+#include "../src/cydstd/nullable.h"
+
 using namespace std::chrono_literals;
 
 namespace test {
@@ -19,46 +21,63 @@ namespace test {
       int scroll = 0;
     };
     COMPONENT(Test) {
-      NO_PROPS
+      PROPS({
+        int a = 4;
+      })
+      int b = 4;
       INIT(Test) {
         ENABLE_LOG
       }
       REDRAW {
         HBoxState* hbox_ref;
+        bool teast = 10;
+        //this->parent = this;
+        //this->parent->dim->given_h = true;
+        //this->parent->dim = nullptr;
         add({
+          //[this]() {
+          //  return COMP(Rectangle)({
+          //
+          //  });
+          //}(),
+          //IF((1 & 2) > 0, Rectangle)({
+          //
+          //}),
+          //IF((1 & 3) > 0) COMP(Rectangle)({});
+          //ELSE_IF(-1 < 0) COMP(Rectangle)({});
+          //ELSE_IF(1 < 0) COMP(Rectangle)({});
+          //  ELSE COMP(Circle)({});
+          //  END,
+          //WHEN(teast)
+          //  CASE(false) COMP(Rectangle)({});
+          //  CASE(true) COMP(Circle)({});
+          //  END,
           COMP(VBox)({
             .props = {
               .spacing = 10,
             },
             .inner = {
-              COMP(Rectangle)({
-                .props = {
-                  .color  = state->c1,
-                  .filled = true,
-                },
-                .w = dim->cw / 2 - 15,
-                .h = dim->ch / 4,
-              }),
               COMP(ViewPort)({
                 .props = {
                   .x = 0,
                   .y = state->scroll,
                 },
+                .x = 50,
                 .w = 100,
                 .h = 100,
                 .inner = {
+                  COMP(Text)({
+                    .props = {
+                      .color = state->c,
+                      .font  = &state->font,
+                      .text  = "Test TEXT",
+                    },
+                  }),
                   COMP(VBox)({
                     .props = {
                       .spacing = 10,
                     },
                     .inner = {
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
                       COMP(Text)({
                         .props = {
                           .color = state->c,
@@ -221,7 +240,7 @@ namespace test {
           //})
         });
       };
-      void on_scroll(int d) override {
+      ON_SCROLL(d) {
         //log.info("SCROLL: %d", d);
         state->scroll += d > 0 ? 10 : (d < 0 ? -10 : 0);
         state->dirty();

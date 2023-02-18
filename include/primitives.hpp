@@ -17,7 +17,8 @@ namespace primitives {
     
     STATE(Line) { };
     
-    COMPONENT(Line) {PROPS({
+    COMPONENT(Line) {
+      PROPS({
         Color* color;
       })
       
@@ -47,7 +48,7 @@ namespace primitives {
       }
       
       RENDER(target) {
-        log.debug("X= %d, CX= %d", dim->x.val(), dim->cx.val());
+        //log.debug("X= %d, CX= %d", dim->x.val(), dim->cx.val());
         graphics::drw_rect(target,
           props.color,
           state->dim.cx.val(),
@@ -175,7 +176,7 @@ namespace primitives {
       }
       
       REDRAW {
-        log.info("img: %d", dim->given_h);
+        //log.info("img: %d", dim->given_h);
         if (props.preserve_ratio) {
           if (!state->dim.given_w && !state->dim.given_h) {
             state->dim.w = state->img_w;
@@ -209,9 +210,9 @@ namespace primitives {
       })
       INIT(ViewPort) {
         ENABLE_LOG
-        if (!state->sub_render_target) {
-          state->sub_render_target = new render_target_ti(state->win, 10, 10);
-        }
+        state->sub_render_target or __((), {
+          state->sub_render_target = new graphics::render_target_t(*state->win.unwrap(), 10, 10);
+        });
       }
       
       REDRAW {
@@ -219,7 +220,7 @@ namespace primitives {
       RENDER(target) {
         if (state->sub_render_target) {
           graphics::drw_target(target,
-            state->sub_render_target,
+            *state->sub_render_target.unwrap(),
             props.x + state->dim.cx.val(),
             props.y + state->dim.cy.val(),
             state->dim.cx.val(),
