@@ -81,6 +81,7 @@ namespace cydui::components {
                 ? (it->children.get_list(ID, k))
                 : (it->children.add_list(ID, k, new typename c::State())));
             st->win = it->win;
+            states.push_back(st);
           }
         }));
         
