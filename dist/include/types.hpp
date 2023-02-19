@@ -11,7 +11,7 @@
 
 #include <cyd-log/dist/include/logging.hpp>
 
-#include "../src/cydstd/cydstd.h"
+#include "cydstd/cydstd.h"
 
 #include "dimensions.hpp"
 #include "children_state_collection.hpp"
@@ -64,12 +64,12 @@ namespace cydui {
     
         namespace images {
             struct image_t {
-              std::string path;
+              str path;
             };
         }
         namespace fonts {
             struct Font {
-              std::string name;
+              str name;
               int size;
           
               bool antialias = true;
@@ -79,12 +79,12 @@ namespace cydui {
         }
         namespace color {
             class Color {
-              std::string hex;
+              str hex;
         
             public:
-              explicit Color(std::string color);
+              explicit Color(str color);
           
-              std::string to_string();
+              str to_string();
             };
         }
     }
@@ -132,7 +132,7 @@ public:
   
   void dirty();
   
-  nullable<cydui::graphics::window_t> win;
+  nullable<cydui::graphics::window_t*> win;
   nullable<cydui::graphics::render_target_t*> sub_render_target;
   
   cydui::dimensions::component_dimensions_t dim;
@@ -177,7 +177,7 @@ cydui::layout::Layout* cydui::layout::create(components::c_init_t<C> init) {
     [init](cydui::components::Component* __raw_local_) {
       auto* local = (C*) __raw_local_;
       
-      auto component_name = std::string("LAYOUT::ROOT<").append(C::Name).append(">");
+      auto component_name = str("LAYOUT::ROOT<").append(C::Name).append(">");
       logging::logger log = {.name = component_name.c_str(), .on = true, .min_level = logging::WARN};
       auto warn_if_set = [log]<typename T>(std::optional<T> opt) {
       if (opt.has_value()) {

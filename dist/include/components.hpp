@@ -23,18 +23,18 @@ namespace cydui::components {
         return [init](cydui::components::Component* __raw_local_) {
           auto* local = (c*) __raw_local_;
           
-          __raw_local_->state.let(_(ComponentState &, {
+          __raw_local_->state.let(_(ComponentState *, {
             if (init.x.has_value())
-              it.dim.x = init.x.value();
+              it->dim.x = init.x.value();
             if (init.y.has_value())
-              it.dim.y = init.y.value();
+              it->dim.y = init.y.value();
             if (init.w.has_value()) {
-              it.dim.w = init.w.value();
-              it.dim.given_w = true;
+              it->dim.w = init.w.value();
+              it->dim.given_w = true;
             }
             if (init.h.has_value()) {
-              it.dim.h = init.h.value();
-              it.dim.given_h = true;
+              it->dim.h = init.h.value();
+              it->dim.given_h = true;
             }
           }));
           
@@ -52,15 +52,15 @@ namespace cydui::components {
       template<typename c, int ID>
       requires ComponentConcept<c>
       inline component_builder_t create(c_init_t<c> init) const {
-        return *(state.let(_(ComponentState &, {
-          auto* st = (typename c::State*) (it.children.contains(ID)
-            ? (it.children[ID])
-            : (it.children.add(ID, new typename c::State())));
-          st->win = it.win;
+        return *(state.let(_(ComponentState *, {
+          auto* st = (typename c::State*) (it->children.contains(ID)
+            ? (it->children[ID])
+            : (it->children.add(ID, new typename c::State())));
+          st->win = it->win;
           return st;
         })).let(_(typename c::State*, {
           SET_REFERENCE it;
-          return [&]() {
+          return [=]() {
             auto* _c = INSTANTIATE_COMP(it);
             return _c;
           };
@@ -73,14 +73,14 @@ namespace cydui::components {
         T &iter, std::function<c_init_t<c>(typename T::value_type)> block
       ) const {
         std::vector<typename c::State*> states = {};
-        state.let(_(ComponentState &, {
+        state.let(_(ComponentState *, {
           int k = 0;
           for (auto a = iter.begin(); a != iter.end(); ++a, ++k) {
             auto* st =
-              (typename c::State*) (it.children.contains(ID, k)
-                ? (it.children.get_list(ID, k))
-                : (it.children.add_list(ID, k, new typename c::State())));
-            st->win = it.win;
+              (typename c::State*) (it->children.contains(ID, k)
+                ? (it->children.get_list(ID, k))
+                : (it->children.add_list(ID, k, new typename c::State())));
+            st->win = it->win;
           }
         }));
         
@@ -142,7 +142,7 @@ namespace cydui::components {
       virtual ~Component();
       
       mutable nullable<Component*> parent;
-      mutable nullable<ComponentState> state;
+      mutable nullable<ComponentState*> state;
       cydui::dimensions::component_dimensions_t* dim;
       
       void add(const std::vector<component_builder_t> &ichildren, bool prepend = false) const;

@@ -10,7 +10,7 @@
 #include <mutex>
 #include <string>
 
-#include "../src/cydstd/cydstd.h"
+#include "cydstd/cydstd.h"
 
 namespace cydui::events {
   template<class T>

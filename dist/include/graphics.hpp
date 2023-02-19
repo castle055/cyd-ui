@@ -66,13 +66,13 @@ namespace cydui::graphics {
       render_target_t* target,
       layout::fonts::Font* font,
       layout::color::Color* color,
-      std::string text,
+      str text,
       int x,
       int y
     );
     
     std::pair<int, int> get_text_size(
-      layout::fonts::Font* font, const std::string &text
+      layout::fonts::Font* font, const str &text
     );
     
     void drw_image(

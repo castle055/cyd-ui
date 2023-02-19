@@ -7,7 +7,7 @@
 
 #include <thread>
 #include <chrono>
-#include "../src/cydstd/cydstd.h"
+#include "cydstd/cydstd.h"
 
 namespace cydui::threading {
     struct thread_t {

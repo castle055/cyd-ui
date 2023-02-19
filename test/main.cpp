@@ -8,7 +8,7 @@
 #include <mcheck.h>
 #include <thread>
 
-#include "../src/cydstd/nullable.h"
+#include "cydstd/nullable.h"
 
 using namespace std::chrono_literals;
 

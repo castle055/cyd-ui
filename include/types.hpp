@@ -11,7 +11,7 @@
 
 #include <cyd-log/dist/include/logging.hpp>
 
-#include "../src/cydstd/cydstd.h"
+#include "cydstd/cydstd.h"
 
 #include "dimensions.hpp"
 #include "children_state_collection.hpp"
