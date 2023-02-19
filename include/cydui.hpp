@@ -4,19 +4,12 @@
 namespace cydui {
 }
 
-
 #include "cyd-log/dist/include/logging.hpp"
 
 #include "components.hpp"
-#include "containers.hpp"
-#include "layout.hpp"
-#include "dimensions.hpp"
+#include "graphics.hpp"
 #include "primitives.hpp"
-#include "window.hpp"
 #include "config.hpp"
-#include "events.hpp"
-#include "event_types.h"
-#include "images.h"
 
 
 #endif//CYD_UI_CYDUI_HPP

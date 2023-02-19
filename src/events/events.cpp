@@ -14,23 +14,23 @@
 // EVENT THREAD IMPLEMENTATION
 
 logging::logger log_task =
-                  {.name = "EV_TASK", .on = true, .min_level = logging::INFO};
+  {.name = "EV_TASK", .on = true, .min_level = logging::INFO};
 logging::logger log_ctrl =
-                  {.name = "EV_CTRL", .on = false};
+  {.name = "EV_CTRL", .on = false};
 
 cydui::threading::thread_t* event_thread;
 struct thread_data {
-  bool                             pending       = false;
+  bool pending = false;
   std::deque<cydui::events::Event*>* event_queue =
-                                     new std::deque<cydui::events::Event*>;
+    new std::deque<cydui::events::Event*>;
   std::unordered_map<
-    std::string,
+    str,
     std::deque<cydui::events::Listener>
   >* event_listeners =
-     new std::unordered_map<std::string, std::deque<cydui::events::Listener>>;
+    new std::unordered_map<str, std::deque<cydui::events::Listener>>;
   
-  std::unordered_map<std::string, cydui::events::Event*>* state_events =
-                                                          new std::unordered_map<std::string, cydui::events::Event*>;
+  std::unordered_map<str, cydui::events::Event*>* state_events =
+    new std::unordered_map<str, cydui::events::Event*>;
 };
 thread_data* th_data = new thread_data;
 
@@ -81,7 +81,7 @@ void clean_up_event(thread_data* data, cydui::events::Event* ev) {
   ev->ev_mtx.lock();
   ev->status = cydui::events::CONSUMED;
   ev->ev_mtx.unlock();
-  log_task.debug("DONE WITH EVENT: %s %s", ev->type.c_str(), ev->managed? "" : "[deleting]");
+  log_task.debug("DONE WITH EVENT: %s %s", ev->type.c_str(), ev->managed ? "" : "[deleting]");
   if (!ev->managed) delete ev;
   event_mutex.unlock();
 }
@@ -101,11 +101,11 @@ using namespace std::chrono_literals;
 
 void event_task(cydui::threading::thread_t* this_thread) {
   log_task.debug("Started event_task");
-  int freq   = 10000;
+  int freq = 10000;
   int period = 1000000000 / freq;
   while (this_thread->running) {
     auto t0 = std::chrono::system_clock::now();
-    process_event((thread_data*)(this_thread->data));
+    process_event((thread_data*) (this_thread->data));
     auto t1 = std::chrono::system_clock::now();
     auto dt = t1 - t0;
     if (dt.count() > 40 && dt.count() > period)
@@ -131,7 +131,7 @@ void cydui::events::emit_raw(cydui::events::Event* ev) {
   push_event(th_data, ev);
 }
 
-void cydui::events::emit_raw(const std::string &event_type, void* data) {
+void cydui::events::emit_raw(const str &event_type, void* data) {
   auto ev = new cydui::events::Event {
     .type = event_type,
     .ev = data,
@@ -140,9 +140,9 @@ void cydui::events::emit_raw(const std::string &event_type, void* data) {
   push_event(th_data, ev);
 }
 
-void cydui::events::on_event_raw(const std::string &event_type, const Listener &c) {
+void cydui::events::on_event_raw(const str &event_type, const Listener &c) {
   if (!th_data->event_listeners->contains(event_type))
-    (*th_data->event_listeners)[event_type] = { };
+    (*th_data->event_listeners)[event_type] = {};
   (*th_data->event_listeners)[event_type].push_back(c);
 }
 

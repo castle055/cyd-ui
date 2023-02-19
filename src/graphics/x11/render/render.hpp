@@ -15,12 +15,12 @@ namespace render {
     
     void start(cydui::graphics::window_t* win);
     
-    void resize(cydui::graphics::window_t* win, int w, int h);
+    void resize(cydui::graphics::render_target_t* target, int w, int h);
     
     void flush(cydui::graphics::window_t* win);
     
     void clr_rect(
-      cydui::graphics::window_t* win,
+      cydui::graphics::render_target_t* target,
       int x,
       int y,
       unsigned int w,
@@ -28,7 +28,7 @@ namespace render {
     );
     
     void drw_line(
-      cydui::graphics::window_t* win,
+      cydui::graphics::render_target_t* target,
       cydui::layout::color::Color* color,
       int x,
       int y,
@@ -37,7 +37,7 @@ namespace render {
     );
     
     void drw_rect(
-      cydui::graphics::window_t* win,
+      cydui::graphics::render_target_t* target,
       cydui::layout::color::Color* color,
       int x,
       int y,
@@ -47,7 +47,7 @@ namespace render {
     );
     
     void drw_arc(
-      cydui::graphics::window_t* win,
+      cydui::graphics::render_target_t* target,
       cydui::layout::color::Color* color,
       int x,
       int y,
@@ -59,19 +59,30 @@ namespace render {
     );
     
     void drw_text(
-      cydui::graphics::window_t* win,
+      cydui::graphics::render_target_t* target,
       window_font font,
       cydui::layout::color::Color* color,
-      const std::string &text,
+      const str &text,
       int x,
       int y
     );
     
     void drw_image(
-      cydui::graphics::window_t* win,
+      cydui::graphics::render_target_t* target,
       window_image img,
       int x,
       int y,
+      int w,
+      int h
+    );
+    
+    void drw_target(
+      cydui::graphics::render_target_t* dest_target,
+      cydui::graphics::render_target_t* source_target,
+      int xs,
+      int ys,
+      int xd,
+      int yd,
       int w,
       int h
     );

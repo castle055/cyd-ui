@@ -184,14 +184,12 @@ Finally, a window is constructed.
 #include "SomeComponent.hpp"
 
 int main() {
-  // Instantiate state of root component
-  auto* state = new SomeComponentState();
-  
-  // Instantiate root component
-  auto* some_component = new SomeComponent(state, {}, [](Component*){});
-  
   // Instantiate a layout to hold the root component and handle events
-  auto* layout = new cydui::layout::Layout(some_component);
+  cydui::layout::Layout* layout = cydui::layout::create<SomeComponent>({
+    .props = {
+      .label = "Hello, World!",
+    },
+  });
   
   // Create the window that will display the layout
   cydui::window::CWindow* win = cydui::window::create(
