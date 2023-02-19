@@ -122,7 +122,7 @@ static void run() {
             .win = (unsigned int) ev.xkey.window,
             .key = xkey_map.contains(ksym) ? xkey_map[ksym] : Key::UNKNOWN,
             .pressed = true,
-            .text = st == XLookupBoth ? std::string(input_buffer) : "",
+            .text = st == XLookupBoth ? str(input_buffer) : "",
           });
         }
         break;

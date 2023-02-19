@@ -107,7 +107,7 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   win->render_mtx.unlock();
 }
 
-static std::unordered_map<std::string, XColor> xcolor_cache;
+static std::unordered_map<str, XColor> xcolor_cache;
 
 XColor color_to_xcolor(cydui::layout::color::Color* color) {
   if (xcolor_cache.contains(color->to_string()))
@@ -122,7 +122,7 @@ XColor color_to_xcolor(cydui::layout::color::Color* color) {
   return c;
 }
 
-static std::unordered_map<std::string, XftColor*> xftcolor_cache;
+static std::unordered_map<str, XftColor*> xftcolor_cache;
 
 XftColor* color_to_xftcolor(cydui::layout::color::Color* color) {
   if (xftcolor_cache.contains(color->to_string()))
@@ -303,7 +303,7 @@ void render::drw_text(
   cydui::graphics::render_target_t* target,
   window_font font,
   cydui::layout::color::Color* color,
-  const std::string &text,
+  const str &text,
   int x,
   int y
 ) {

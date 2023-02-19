@@ -6,10 +6,10 @@
 
 using namespace cydui::layout::color;
 
-Color::Color(std::string color): hex(color) {
+Color::Color(str color): hex(color) {
 }
 
-std::string Color::to_string() {
+str Color::to_string() {
   return hex;
 }
 

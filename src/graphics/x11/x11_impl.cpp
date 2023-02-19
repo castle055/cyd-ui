@@ -57,13 +57,13 @@ cydui::graphics::window_t* cydui::graphics::create_window(
     .override_redirect =
     override_redirect// This makes it immutable across workspaces
   };
-  std::string title_str = title;
-  std::string wclass_str = wclass;
+  str title_str = title;
+  str wclass_str = wclass;
   XClassHint ch = {title_str.data(), wclass_str.data()};
   
   int x_o, y_o;
   unsigned int w_o, h_o;
-  std::string geom;
+  str geom;
   geom += "0x0";
   if (x >= 0)
     geom += "+";
@@ -242,8 +242,8 @@ void cydui::graphics::drw_arc(
   render::drw_arc(target, color, x, y, w, h, a0, a1, filled);
 }
 
-static std::string to_pattern(cydui::layout::fonts::Font* font) {
-  std::string str;
+static str to_pattern(cydui::layout::fonts::Font* font) {
+  str str;
   str.append(font->name + ":");
   str.append("size=" + std::to_string(font->size) + ":");
   str.append("antialias=");
@@ -259,7 +259,7 @@ static std::string to_pattern(cydui::layout::fonts::Font* font) {
 static window_font load_font(
   cydui::graphics::window_t* win, cydui::layout::fonts::Font* font
 ) {
-  std::string font_spec = to_pattern(font);
+  str font_spec = to_pattern(font);
   if (win->loaded_fonts.contains(font_spec))
     return win->loaded_fonts[font_spec];
   XftFont* xfont;
@@ -330,7 +330,7 @@ void cydui::graphics::drw_text(
   render_target_t* target,
   layout::fonts::Font* font,
   layout::color::Color* color,
-  std::string text,
+  str text,
   int x,
   int y
 ) {
@@ -338,12 +338,12 @@ void cydui::graphics::drw_text(
   render::drw_text(target, xfont, color, text, x, y);
 }
 
-static std::unordered_map<std::string, XftFont*> cached_fonts;
+static std::unordered_map<str, XftFont*> cached_fonts;
 
 std::pair<int, int> cydui::graphics::get_text_size(
-  layout::fonts::Font* font, const std::string &text
+  layout::fonts::Font* font, const str &text
 ) {
-  std::string font_spec = to_pattern(font);
+  str font_spec = to_pattern(font);
   XftFont* xfont;
   if (cached_fonts.contains(font_spec)) {
     xfont = cached_fonts[font_spec];

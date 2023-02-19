@@ -13,7 +13,7 @@ using namespace cydui::threading;
 using namespace std::chrono_literals;
 
 logging::logger logger =
-                  {.name = "TASKRUNNER", .on = true};
+  {.name = "TASKRUNNER", .on = true};
 
 thread_t* cydui::threading::new_thread(void(task)(thread_t* this_thread)) {
   return new_thread(task, nullptr);
@@ -24,25 +24,25 @@ thread_t* cydui::threading::new_thread(
 ) {
   auto* arg = new thread_t();
   arg->running = true;
-  arg->data    = data;
+  arg->data = data;
   auto* thread = new std::thread(task, arg);
   arg->native_thread = thread;
   return arg;
 }
 
 
-thread_t* cydui::threading::thread_t::set_name(const std::string &name) {
-  pthread_t pt = ((std::thread*)native_thread)->native_handle();
+thread_t* cydui::threading::thread_t::set_name(const str &name) {
+  pthread_t pt = ((std::thread*) native_thread)->native_handle();
   pthread_setname_np(pt, name.c_str());
   return this;
 }
 
 
 // ===== TASKS
-std::mutex                                   task_queue_mtx;
-std::mutex                                   timer_list_mtx;
+std::mutex task_queue_mtx;
+std::mutex timer_list_mtx;
 typedef std::vector<cydui::tasks::_timer_t*> timer_list_t;
-typedef std::deque<cydui::tasks::task_t*>    task_queue_t;
+typedef std::deque<cydui::tasks::task_t*> task_queue_t;
 
 static timer_list_t timer_list;
 static task_queue_t task_queue;
@@ -87,7 +87,7 @@ static void task_executor(cydui::tasks::task_t* task) {
   if (task->reset()) {
     task->exec();
     // TODO - There should be a specific event for task completion
-    cydui::events::emit<RedrawEvent>({ });
+    cydui::events::emit<RedrawEvent>({});
   }
 }
 
@@ -102,7 +102,7 @@ static void trigger_executor() {
     //logger.debug("Found one count=%d, task=%X", timer->count, task);
     if (timer->count != 0 && task && (timer->run_now || now - timer->last_time > timer->period)) {
       timer->last_time = now;
-      timer->run_now   = false;
+      timer->run_now = false;
       if (timer->count > 0) timer->count--;
       timer_list_mtx.unlock(); // NOTE - this is on purpose
       task_executor(task);
@@ -162,12 +162,12 @@ bool cydui::tasks::task_t::exec() {
   this->task_mutex.lock();
   if (!this->running) {
     this->progress = 1;
-    this->running  = true;
+    this->running = true;
     this->task_mutex.unlock();
     this->main();
     this->task_mutex.lock();
     this->progress = 100;
-    this->running  = false;
+    this->running = false;
     this->task_mutex.unlock();
     return true;
   } else {
@@ -180,7 +180,7 @@ bool cydui::tasks::task_t::reset() {
   this->task_mutex.lock();
   if (!this->running) {
     this->progress = 0;
-    this->running  = false;
+    this->running = false;
     this->task_mutex.unlock();
     return true;
   } else {

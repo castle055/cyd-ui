@@ -10,10 +10,12 @@
 #include <mutex>
 #include <string>
 
+#include "../src/cydstd/cydstd.h"
+
 namespace cydui::events {
   template<class T>
   concept EventType = requires {
-                        { T::type } -> std::convertible_to<std::string>;
+                        { T::type } -> std::convertible_to<str>;
                         typename T::DataType;
                         {
                           T::data
@@ -23,7 +25,7 @@ namespace cydui::events {
   template<typename T>
     requires EventType<T>
   struct ParsedEvent {
-    const std::string type;
+    const str type;
     const typename T::DataType* data;
   };
 
@@ -34,7 +36,7 @@ namespace cydui::events {
   };
 
   struct Event {
-    std::string type;
+    str type;
     EventStatus status = PENDING;
     void* ev;
 
@@ -46,7 +48,7 @@ namespace cydui::events {
     template<typename T>
       requires EventType<T>
     ParsedEvent<T> parse() {
-      std::string matchName = T::type;
+      str matchName = T::type;
       if (matchName == type) {
         return ParsedEvent<T> {
             .type = type,
@@ -63,7 +65,7 @@ namespace cydui::events {
 
   void emit_raw(cydui::events::Event* ev);
 
-  void emit_raw(const std::string& event_type, void* data);
+  void emit_raw(const str& event_type, void* data);
 
   template<typename T>
     requires EventType<T>
@@ -86,7 +88,7 @@ namespace cydui::events {
 
   typedef std::function<void(Event*)> Listener;
 
-  void on_event_raw(const std::string& event_type, const Listener& l);
+  void on_event_raw(const str& event_type, const Listener& l);
 
   template<typename T>
     requires EventType<T>

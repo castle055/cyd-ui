@@ -208,11 +208,11 @@ public:
 //  testt = 4;
 //  testt.set_null();
 //
-//  std::string aaa = testt
+//  str aaa = testt
 //    .let  _(int, { return (long)it * 2; })
-//    .let  _(long, { return std::string(" "); })
-//    .also _(std::string, { std::string(" "); })
-//    .let  _(std::string, { return " "; }) or "asdf";
+//    .let  _(long, { return str(" "); })
+//    .also _(str, { str(" "); })
+//    .let  _(str, { return " "; }) or "asdf";
 //}
 //
 #endif //CYD_UI_NULLABLE_H

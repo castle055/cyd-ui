@@ -33,7 +33,7 @@ public:
 
 #define CONFIG(NAME) \
 struct NAME: cydui::config::ConfigManager { \
-  explicit NAME(std::string path): cydui::config::ConfigManager(std::move(path)) { \
+  explicit NAME(str path): cydui::config::ConfigManager(std::move(path)) { \
   refresh(); \
   }
 

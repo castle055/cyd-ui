@@ -115,7 +115,7 @@ namespace primitives {
     COMPONENT(Text) {PROPS({
         Color* color;
         layout::fonts::Font* font;
-        std::string text;
+        str text;
       })
       
       INIT(Text) {//ENABLE_LOG
@@ -156,7 +156,7 @@ namespace primitives {
       
       INIT(Image) {
         //ENABLE_LOG
-        if (!state->image || std::string(this->props.img) == state->image->path) {
+        if (!state->image || str(this->props.img) == state->image->path) {
           state->image = new cydui::layout::images::image_t {this->props.img};
         }
         std::pair<int, int> img_size = graphics::get_image_size(state->image);

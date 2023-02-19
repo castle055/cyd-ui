@@ -21,12 +21,12 @@ struct window_font {
   XftFont* xfont;
   FcPattern* pattern;
 };
-typedef std::unordered_map<std::string, window_font> loaded_font_map_t;
+typedef std::unordered_map<str, window_font> loaded_font_map_t;
 
 struct window_image {
   XImage* ximg;
 };
-typedef std::unordered_map<std::string, window_image> loaded_images_map_t;
+typedef std::unordered_map<str, window_image> loaded_images_map_t;
 
 struct window_ti;
 

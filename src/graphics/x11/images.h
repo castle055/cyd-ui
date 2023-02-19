@@ -25,7 +25,7 @@ namespace imgs {
       char* data = nullptr;
     };
     
-    inline img_data read_jpg(std::string path) {
+    inline img_data read_jpg(str path) {
       FILE* infile;
       JSAMPARRAY buffer;
       jpeg_decompress_struct cinfo {};
