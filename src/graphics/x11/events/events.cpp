@@ -139,14 +139,28 @@ static void run() {
         if (ev.xbutton.button == 4) {
           emit<ScrollEvent>({
             .win = (unsigned int) ev.xbutton.window,
-            .d = 64,
+            .dy = 64,
             .x      = ev.xbutton.x,
             .y      = ev.xbutton.y,
           });
         } else if (ev.xbutton.button == 5) {
           emit<ScrollEvent>({
             .win = (unsigned int) ev.xbutton.window,
-            .d = -64,
+            .dy = -64,
+            .x      = ev.xbutton.x,
+            .y      = ev.xbutton.y,
+          });
+        } else if (ev.xbutton.button == 6) {
+          emit<ScrollEvent>({
+            .win = (unsigned int) ev.xbutton.window,
+            .dx = -64,
+            .x      = ev.xbutton.x,
+            .y      = ev.xbutton.y,
+          });
+        } else if (ev.xbutton.button == 7) {
+          emit<ScrollEvent>({
+            .win = (unsigned int) ev.xbutton.window,
+            .dx = 64,
             .x      = ev.xbutton.x,
             .y      = ev.xbutton.y,
           });

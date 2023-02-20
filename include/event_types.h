@@ -24,7 +24,8 @@ EVENT(ButtonEvent, {
 })
 EVENT(ScrollEvent, {
   unsigned int win = 0;
-  int d = 0;
+  int dy = 0;
+  int dx = 0;
   int x = 0;
   int y = 0;
 })

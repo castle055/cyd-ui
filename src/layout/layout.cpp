@@ -233,7 +233,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     if (specified_target)
       target = specified_target;
     
-    target->on_scroll(it.data->d);
+    target->on_scroll(it.data->dx, it.data->dy);
     if (render_if_dirty(root))
       graphics::flush(win->win_ref);
   });

@@ -175,7 +175,7 @@ namespace cydui::components {
       
       COMP_EVENT_HANDLER(mouse_click, (int x, int y, int button));
       
-      COMP_EVENT_HANDLER(scroll, (int d));
+      COMP_EVENT_HANDLER(scroll, (int dx, int dy));
       
       COMP_EVENT_HANDLER(key_press, (KeyData key));
       
@@ -185,7 +185,7 @@ namespace cydui::components {
 #define RENDER(TARGET)          COMP_EVENT_HANDLER_OVERRIDE(render, (cydui::graphics::render_target_t * (TARGET)))
 #define ON_KEY_RELEASE(KEY)     COMP_EVENT_HANDLER_OVERRIDE(key_release, (KeyData (KEY)))
 #define ON_KEY_PRESS(KEY)       COMP_EVENT_HANDLER_OVERRIDE(key_press, (KeyData (KEY)))
-#define ON_SCROLL(D)            COMP_EVENT_HANDLER_OVERRIDE(scroll, (int (D)))
+#define ON_SCROLL(DX, DY)       COMP_EVENT_HANDLER_OVERRIDE(scroll, (int (DX), int (DY)))
 #define ON_CLICK(X, Y, BUTTON)  COMP_EVENT_HANDLER_OVERRIDE(mouse_click,  (int (X), int (Y), int (BUTTON)))
 #define ON_MOUSE_MOTION(X, Y)   COMP_EVENT_HANDLER_OVERRIDE(mouse_motion, (int (X), int (Y)))
 #define ON_MOUSE_EXIT(X, Y)     COMP_EVENT_HANDLER_OVERRIDE(mouse_exit,   (int (X), int (Y)))
