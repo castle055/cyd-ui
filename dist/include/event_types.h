@@ -79,6 +79,10 @@ enum Key {
   RIGHT,
   UP,
   DOWN,
+  LEFT_CTRL,
+  RIGHT_CTRL,
+  LEFT_SHIFT,
+  RIGHT_SHIFT,
 };
 
 EVENT(KeyEvent, {

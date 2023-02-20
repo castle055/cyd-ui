@@ -68,6 +68,7 @@ static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_z, Key::Z},
   {XK_space, Key::SPACE},
   {XK_ISO_Enter, Key::ENTER},
+  {XK_KP_Enter, Key::ENTER},
   {XK_BackSpace, Key::BACKSPACE},
   {XK_Delete, Key::DELETE},
   {XK_Escape, Key::ESC},
@@ -75,6 +76,10 @@ static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_Right, Key::RIGHT},
   {XK_Up, Key::UP},
   {XK_Down, Key::DOWN},
+  {XK_Control_L, Key::LEFT_CTRL},
+  {XK_Control_R, Key::RIGHT_CTRL},
+  {XK_Shift_L, Key::LEFT_SHIFT},
+  {XK_Shift_R, Key::RIGHT_CTRL},
 };
 
 char input_buffer[10];
