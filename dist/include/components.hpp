@@ -225,10 +225,10 @@ namespace cydui::components {
         state(state)
 
 #define REFRESH \
-if (state->win) \
-      events::emit<RedrawEvent>({ \
-.win = (unsigned int)(*state->win.unwrap())->xwin, \
-});             \
+if (state->win) { \
+  events::emit<RedrawEvent>({ \
+    .win = (unsigned int)(*state->win.unwrap())->xwin, \
+  });           \
 }               \
 
 
