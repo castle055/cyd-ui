@@ -224,4 +224,12 @@ namespace cydui::components {
       : cydui::components::Component(state, inner), props(std::move(props)),   \
         state(state)
 
+#define REFRESH \
+if (state->win) \
+      events::emit<RedrawEvent>({ \
+.win = (unsigned int)(*state->win.unwrap())->xwin, \
+});             \
+}               \
+
+
 #endif//CYD_UI_COMPONENTS_HPP
