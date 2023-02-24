@@ -99,7 +99,7 @@ namespace cydui::components {
         };
       }
       
-      inline component_builder_t create_group(std::vector<component_builder_t> _children) {
+      inline component_builder_t create_group(std::vector<component_builder_t> _children) const {
         return [_children]() {
           auto* group = Component::new_group();
           group->add(_children);
