@@ -19,20 +19,32 @@ namespace cydui::components {
     private:
       template<typename c>
       requires ComponentConcept<c>
-      static std::function<void(Component*)> get_init_function(c_init_t<c> init) {
-        return [init](cydui::components::Component* __raw_local_) {
+      static std::function<void(Component*)> get_init_function(c_init_t<c> init, const component_builder_t &spec) {
+        return [init, spec](cydui::components::Component* __raw_local_) {
           auto* local = (c*) __raw_local_;
           
           __raw_local_->state.let(_(ComponentState *, {
-            if (init.x.has_value())
+            if (spec.x.has_value())
+              it->dim.x = spec.x.value();
+            else if (init.x.has_value())
               it->dim.x = init.x.value();
-            if (init.y.has_value())
+            
+            if (spec.y.has_value())
+              it->dim.y = spec.y.value();
+            else if (init.y.has_value())
               it->dim.y = init.y.value();
-            if (init.w.has_value()) {
+            
+            if (spec.w.has_value()) {
+              it->dim.w = spec.w.value();
+              it->dim.given_w = true;
+            } else if (init.w.has_value()) {
               it->dim.w = init.w.value();
               it->dim.given_w = true;
             }
-            if (init.h.has_value()) {
+            if (spec.h.has_value()) {
+              it->dim.h = spec.h.value();
+              it->dim.given_h = true;
+            } else if (init.h.has_value()) {
               it->dim.h = init.h.value();
               it->dim.given_h = true;
             }
@@ -52,19 +64,25 @@ namespace cydui::components {
       template<typename c, int ID>
       requires ComponentConcept<c>
       inline component_builder_t create(c_init_t<c> init) const {
-        return *(state.let(_(ComponentState *, {
-          auto* st = (typename c::State*) (it->children.contains(ID)
-            ? (it->children[ID])
-            : (it->children.add(ID, new typename c::State())));
-          st->win = it->win;
-          return st;
-        })).let(_(typename c::State*, {
-          SET_REFERENCE it;
-          return [=]() {
-            auto* _c = INSTANTIATE_COMP(it);
-            return _c;
-          };
-        })).unwrap());
+        return {
+          .x = init.x,
+          .y = init.y,
+          .w = init.w,
+          .h = init.h,
+          .build = *(state.let(_(ComponentState *, {
+            auto* st = (typename c::State*) (it->children.contains(ID)
+              ? (it->children[ID])
+              : (it->children.add(ID, new typename c::State())));
+            st->win = it->win;
+            return st;
+          })).let(_(typename c::State*, {
+            SET_REFERENCE it;
+            return [=](component_builder_t spec) {
+              auto* _c = new c(it, init.props, get_init_function(init, spec));
+              return _c;
+            };
+          })).unwrap())
+        };
       }
       
       template<typename c, int ID, typename T>
@@ -85,25 +103,33 @@ namespace cydui::components {
           }
         }));
         
-        return [this, iter, block, states]() {
-          int i = 0;
-          auto temp_c = Component::new_group();
-          for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
-            const c_init_t<c> init = block(*a);
-            SET_REFERENCE nullptr;
-            temp_c->children.push_back(
-              INSTANTIATE_COMP(states[i])
-            );
-          }
-          return temp_c;
+        return {
+          .x = std::nullopt,
+          .y = std::nullopt,
+          .w = std::nullopt,
+          .h = std::nullopt,
+          .build = [this, iter, block, states](component_builder_t spec) {
+            int i = 0;
+            auto temp_c = Component::new_group();
+            for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
+              const c_init_t<c> init = block(*a);
+              SET_REFERENCE nullptr;
+              temp_c->children.push_back(
+                new c(states[i], init.props, get_init_function(init, spec))
+              );
+            }
+            return temp_c;
+          },
         };
       }
       
       inline component_builder_t create_group(std::vector<component_builder_t> _children) const {
-        return [_children]() {
-          auto* group = Component::new_group();
-          group->add(_children);
-          return group;
+        return {
+          .build = [_children](component_builder_t) {
+            auto* group = Component::new_group();
+            group->add(_children);
+            return group;
+          }
         };
       }
 

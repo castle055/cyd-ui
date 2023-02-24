@@ -37,7 +37,15 @@ namespace cydui {
           } -> std::convertible_to<const char*>;
         };
         
-        typedef std::function<Component*()> component_builder_t;
+        struct component_builder_t {
+          // Geometric constraints
+          std::optional<cydui::dimensions::dimensional_relation_t> x;
+          std::optional<cydui::dimensions::dimensional_relation_t> y;
+          std::optional<cydui::dimensions::dimensional_relation_t> w;
+          std::optional<cydui::dimensions::dimensional_relation_t> h;
+  
+          std::function<Component*(component_builder_t)> build;
+        };
         
         template<typename c> requires ComponentConcept<c>
         struct c_init_t {

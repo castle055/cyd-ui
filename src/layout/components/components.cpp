@@ -70,7 +70,7 @@ void Component::add(
 ) const {
   // TODO - Needs to be recursive when flattening groups, not just first layer
   for (auto &item: ichildren) {
-    auto* child = item();
+    auto* child = item.build(item);
     if (child == nullptr)
       continue;
     if (child->is_group) {
