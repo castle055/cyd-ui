@@ -138,7 +138,7 @@ namespace cydui::components {
 #undef INSTANTIATE_COMP
 
 
-#define NULLCOMP            [](){ return Component::new_group(); }
+#define NULLCOMP            [](component_builder_t){ return Component::new_group(); }
 
 #define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
 
