@@ -138,7 +138,7 @@ namespace cydui::components {
 #undef INSTANTIATE_COMP
 
 
-#define NULLCOMP            {.x = std::nullopt, .y = std::nullopt, .w = std::nullopt, .h = std::nullopt, .build = [](component_builder_t){ return Component::new_group(); }
+#define NULLCOMP            {.x = std::nullopt, .y = std::nullopt, .w = std::nullopt, .h = std::nullopt, .build = [](component_builder_t){ return Component::new_group(); } }
 
 #define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
 
