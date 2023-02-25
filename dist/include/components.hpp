@@ -111,7 +111,7 @@ namespace cydui::components {
           .build = [this, iter, block, states](component_builder_t spec) {
             int i = 0;
             auto temp_c = Component::new_group();
-            for (const auto a = iter.begin(); a != iter.end(); ++a, ++i) {
+            for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
               const c_init_t<c> init = block(*a);
               SET_REFERENCE nullptr;
               temp_c->children.push_back(
