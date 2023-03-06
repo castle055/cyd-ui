@@ -108,7 +108,7 @@ namespace cydui::components {
           .y = std::nullopt,
           .w = std::nullopt,
           .h = std::nullopt,
-          .build = [this, iter, block, states](component_builder_t spec) {
+          .build = [iter, block, states](component_builder_t spec) {
             int i = 0;
             auto temp_c = Component::new_group();
             for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
