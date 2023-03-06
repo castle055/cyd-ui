@@ -9,6 +9,7 @@
 #include <thread>
 
 #include "cydstd/nullable.h"
+#include "primitives.hpp"
 
 using namespace std::chrono_literals;
 

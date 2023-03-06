@@ -233,8 +233,8 @@ namespace cydui::components {
 #define DISABLE_LOG this->log.on = false;
 #define ENABLE_LOG  this->log.on = true;
 
-#define PROPS(block)                                                           \
-  struct Props block;                                                          \
+#define PROPS(...)                                                           \
+  struct Props __VA_ARGS__;                                                          \
   Props props;
 
 #define NO_PROPS PROPS({})
