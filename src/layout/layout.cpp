@@ -309,6 +309,12 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(
   components::Component* c, int x, int y
 ) {
   components::Component* target = nullptr;
+  c->state.let(_(components::ComponentState*, {
+    if (it->sub_render_target) {
+      x += it->sub_render_event_offset.first;
+      y += it->sub_render_event_offset.second;
+    }
+  }));
   for (auto i = c->children.rbegin(); i != c->children.rend(); ++i) {
     auto* item = *i;
     if (x >= (*item->state.unwrap())->dim.cx.val()

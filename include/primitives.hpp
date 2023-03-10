@@ -216,6 +216,7 @@ namespace primitives {
       }
       
       REDRAW {
+        state->sub_render_event_offset = {props.x, props.y};
       };
       RENDER(target) {
         if (state->sub_render_target) {
