@@ -167,6 +167,7 @@ class cydui::layout::Layout {
   
   Layout(components::ComponentState* _root_state, components::Component* _root)
     : root_state(_root_state), root(_root), focused(_root_state) {
+    focused->focused = true;
   }
   
   template<typename C>
