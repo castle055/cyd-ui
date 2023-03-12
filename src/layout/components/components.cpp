@@ -210,13 +210,6 @@ COMP_EVENT_HANDLER_IMPL(scroll, (int dx, int dy)) { // NOLINT(misc-no-recursion)
 
 #undef COMP_EVENT_HANDLER_IMPL
 
-Component* Component::set_border_enable(bool enabled) {
-  state.let(_(ComponentState *, {
-    it->border.enabled = enabled;
-  }));
-  return this;
-}
-
 nullable<Component*> Component::get_parent() const {
   return parent;
 }

@@ -181,8 +181,6 @@ namespace cydui::components {
       void render(cydui::graphics::render_target_t* target) const;
       
       nullable<Component*> get_parent() const;
-      
-      Component* set_border_enable(bool enabled);
 
 #define COMP_EVENT_HANDLER(EV, ARGS) virtual void on_##EV ARGS const
 #define COMP_EVENT_HANDLER_OVERRIDE(EV, ARGS) virtual void on_##EV ARGS const override

@@ -166,7 +166,7 @@ class cydui::layout::Layout {
   bool render_if_dirty(components::Component* c);
   
   Layout(components::ComponentState* _root_state, components::Component* _root)
-    : root_state(_root_state), root(_root) {
+    : root_state(_root_state), root(_root), focused(_root_state) {
   }
   
   template<typename C>
