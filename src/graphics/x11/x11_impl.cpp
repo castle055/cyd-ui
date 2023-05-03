@@ -52,7 +52,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
     .bit_gravity = NorthWestGravity,
     .event_mask  = FocusChangeMask | KeyPressMask | KeyReleaseMask
       | VisibilityChangeMask | StructureNotifyMask | ButtonMotionMask
-      | ButtonPressMask | ButtonReleaseMask | ExposureMask
+      | ButtonPressMask | ButtonReleaseMask | ExposureMask | LeaveWindowMask | EnterWindowMask
       | PointerMotionMask,
     .override_redirect =
     override_redirect// This makes it immutable across workspaces
