@@ -103,22 +103,28 @@ static void run() {
     //x11_evlog.debug("event = %d", ev.type);
     using namespace cydui::events;
     switch (ev.type) {
-      case VisibilityNotify:
       case MapNotify:break;
+      case VisibilityNotify:
       case Expose:
-        redrawEventDataMonitor.update({
-          .x = 0,
-          .y = 0,
-        });
-        if (ev.xvisibility.type == Expose
+        if (ev.xvisibility.type == VisibilityNotify) {
+          redrawEventDataMonitor.update({
+            .win = (unsigned int) ev.xvisibility.window,
+          });
+          //emit<RedrawEvent>({
+          //  .win = (unsigned int) ev.xvisibility.window,
+          //});
+        } else if (ev.xexpose.type == Expose
           && ev.xexpose.count == 0
           /*&& ev.xexpose.width > 0
           && ev.xexpose.height > 0*/) {
-          resizeEventDataMonitor.update({
-            .win = (unsigned int) ev.xexpose.window,
-            .w = ev.xexpose.width,
-            .h = ev.xexpose.height,
+          redrawEventDataMonitor.update({
+            .win = (unsigned int) ev.xvisibility.window,
           });
+          //resizeEventDataMonitor.update({ -- Why would you even do this?, size is of (Re)Exposed area, not of window
+          //  .win = (unsigned int) ev.xexpose.window,
+          //  .w = ev.xexpose.width,
+          //  .h = ev.xexpose.height,
+          //});
         }
         break;
       case KeyPress://x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));
