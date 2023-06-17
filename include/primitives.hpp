@@ -11,7 +11,7 @@
 namespace primitives {
     using namespace cydui;
     using namespace cydui::components;
-    using namespace cydui::layout::color;
+    using namespace color;
 
 #define CLAMP_ZERO(VAL) std::max(VAL, 0)
     
@@ -19,7 +19,7 @@ namespace primitives {
     
     COMPONENT(Line) {
       PROPS({
-        Color* color;
+        Color color = "#FCAE1E"_color;
       })
       
       INIT(Line) {
@@ -39,7 +39,7 @@ namespace primitives {
     STATE(Rectangle) { };
     
     COMPONENT(Rectangle) {PROPS({
-        Color* color;
+        Color color = "#FCAE1E"_color;
         bool filled = false;
       })
       
@@ -63,7 +63,7 @@ namespace primitives {
     STATE(Arc) { };
     
     COMPONENT(Arc) {PROPS({
-        Color* color;
+        Color color = "#FCAE1E"_color;
         bool filled = false;
         int a0 = 0;
         int a1 = 180;
@@ -89,7 +89,7 @@ namespace primitives {
     STATE(Circle) { };
     
     COMPONENT(Circle) {PROPS({
-        Color* color;
+        Color color = "#FCAE1E"_color;
         bool filled;
       })
       
@@ -113,8 +113,8 @@ namespace primitives {
     STATE(Text) { };
     
     COMPONENT(Text) {PROPS({
-        Color* color;
-        layout::fonts::Font* font;
+        Color color = "#FCAE1E"_color;
+        font::Font* font;
         str text;
       })
       

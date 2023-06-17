@@ -16,6 +16,8 @@
 #include "dimensions.hpp"
 #include "children_state_collection.hpp"
 #include "x11_impl.hpp"
+#include "color.h"
+#include "font.h"
 
 namespace cydui {
     namespace components {
@@ -76,33 +78,6 @@ namespace cydui {
               str path;
             };
         }
-        namespace fonts {
-            struct Font {
-              str name;
-              int size;
-              
-              bool antialias = true;
-              bool autohint = true;
-            };
-          
-        }
-        namespace color {
-            class Color {
-              str hex;
-            
-            public:
-              explicit Color(str color);
-              
-              str to_string();
-            };
-        }
-    }
-    namespace c {
-        extern cydui::layout::color::Color White;
-        extern cydui::layout::color::Color Black;
-        extern cydui::layout::color::Color Red;
-        extern cydui::layout::color::Color Green;
-        extern cydui::layout::color::Color Blue;
     }
     namespace window {
         class CWindow;
@@ -127,7 +102,7 @@ namespace cydui {
 class cydui::components::ComponentBorder {
 public:
   bool enabled = false;
-  cydui::layout::color::Color* color = new layout::color::Color("#FCAE1E");
+  color::Color color = "#FCAE1E"_color;
 };
 
 class cydui::components::ComponentState {

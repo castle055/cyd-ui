@@ -6,6 +6,9 @@ namespace cydui {
 
 #include "cyd-log/dist/include/logging.hpp"
 
+#include "font.h"
+#include "color.h"
+#include "graphics.hpp"
 #include "components.hpp"
 #include "graphics.hpp"
 #include "primitives.hpp"
