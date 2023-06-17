@@ -37,7 +37,15 @@ namespace cydui {
           } -> std::convertible_to<const char*>;
         };
         
-        typedef std::function<Component*()> component_builder_t;
+        struct component_builder_t {
+          // Geometric constraints
+          std::optional<cydui::dimensions::dimensional_relation_t> x;
+          std::optional<cydui::dimensions::dimensional_relation_t> y;
+          std::optional<cydui::dimensions::dimensional_relation_t> w;
+          std::optional<cydui::dimensions::dimensional_relation_t> h;
+          
+          std::function<Component*(component_builder_t)> build;
+        };
         
         template<typename c> requires ComponentConcept<c>
         struct c_init_t {
@@ -58,10 +66,11 @@ namespace cydui {
     }
     namespace layout {
         class Layout;
+        
         template<typename C>
         requires components::ComponentConcept<C>
         Layout* create(components::c_init_t<C> init);
-    
+        
         namespace images {
             struct image_t {
               str path;
@@ -71,19 +80,19 @@ namespace cydui {
             struct Font {
               str name;
               int size;
-          
+              
               bool antialias = true;
-              bool autohint  = true;
+              bool autohint = true;
             };
-      
+          
         }
         namespace color {
             class Color {
               str hex;
-        
+            
             public:
               explicit Color(str color);
-          
+              
               str to_string();
             };
         }
@@ -97,6 +106,7 @@ namespace cydui {
     }
     namespace window {
         class CWindow;
+        
         CWindow* create(
           layout::Layout* layout,
           const char* title = "CydUI",
@@ -134,6 +144,7 @@ public:
   
   nullable<cydui::graphics::window_t*> win;
   nullable<cydui::graphics::render_target_t*> sub_render_target;
+  std::pair<int, int> sub_render_event_offset = {0, 0};
   
   cydui::dimensions::component_dimensions_t dim;
   ComponentBorder border;
@@ -155,7 +166,8 @@ class cydui::layout::Layout {
   bool render_if_dirty(components::Component* c);
   
   Layout(components::ComponentState* _root_state, components::Component* _root)
-    : root_state(_root_state), root(_root) {
+    : root_state(_root_state), root(_root), focused(_root_state) {
+    focused->focused = true;
   }
   
   template<typename C>
@@ -180,10 +192,10 @@ cydui::layout::Layout* cydui::layout::create(components::c_init_t<C> init) {
       auto component_name = str("LAYOUT::ROOT<").append(C::Name).append(">");
       logging::logger log = {.name = component_name.c_str(), .on = true, .min_level = logging::WARN};
       auto warn_if_set = [log]<typename T>(std::optional<T> opt) {
-      if (opt.has_value()) {
-        log.warn("Geometric constraints are ignored for the root component.");
-      }
-    };
+        if (opt.has_value()) {
+          log.warn("Geometric constraints are ignored for the root component.");
+        }
+      };
       warn_if_set(init.x);
       warn_if_set(init.y);
       warn_if_set(init.w);
@@ -200,7 +212,7 @@ cydui::layout::Layout* cydui::layout::create(components::c_init_t<C> init) {
 class cydui::window::CWindow {
 public:
   graphics::window_t* win_ref;
-  layout::Layout    * layout;
+  layout::Layout* layout;
 };
 
 #endif //CYD_UI_TYPES_HPP

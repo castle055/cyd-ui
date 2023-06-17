@@ -68,6 +68,8 @@ static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_z, Key::Z},
   {XK_space, Key::SPACE},
   {XK_ISO_Enter, Key::ENTER},
+  {XK_KP_Enter, Key::ENTER},
+  {XK_Return, Key::ENTER},
   {XK_BackSpace, Key::BACKSPACE},
   {XK_Delete, Key::DELETE},
   {XK_Escape, Key::ESC},
@@ -75,6 +77,12 @@ static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_Right, Key::RIGHT},
   {XK_Up, Key::UP},
   {XK_Down, Key::DOWN},
+  {XK_Control_L, Key::LEFT_CTRL},
+  {XK_Control_R, Key::RIGHT_CTRL},
+  {XK_Shift_L, Key::LEFT_SHIFT},
+  {XK_Shift_R, Key::RIGHT_CTRL},
+  {XK_Super_L, Key::LEFT_SUPER},
+  {XK_Super_R, Key::RIGHT_SUPER},
 };
 
 char input_buffer[10];
@@ -95,22 +103,28 @@ static void run() {
     //x11_evlog.debug("event = %d", ev.type);
     using namespace cydui::events;
     switch (ev.type) {
-      case VisibilityNotify:
       case MapNotify:break;
+      case VisibilityNotify:
       case Expose:
-        redrawEventDataMonitor.update({
-          .x = 0,
-          .y = 0,
-        });
-        if (ev.xvisibility.type == Expose
+        if (ev.xvisibility.type == VisibilityNotify) {
+          redrawEventDataMonitor.update({
+            .win = (unsigned int) ev.xvisibility.window,
+          });
+          //emit<RedrawEvent>({
+          //  .win = (unsigned int) ev.xvisibility.window,
+          //});
+        } else if (ev.xexpose.type == Expose
           && ev.xexpose.count == 0
           /*&& ev.xexpose.width > 0
           && ev.xexpose.height > 0*/) {
-          resizeEventDataMonitor.update({
-            .win = (unsigned int) ev.xexpose.window,
-            .w = ev.xexpose.width,
-            .h = ev.xexpose.height,
+          redrawEventDataMonitor.update({
+            .win = (unsigned int) ev.xvisibility.window,
           });
+          //resizeEventDataMonitor.update({ -- Why would you even do this?, size is of (Re)Exposed area, not of window
+          //  .win = (unsigned int) ev.xexpose.window,
+          //  .w = ev.xexpose.width,
+          //  .h = ev.xexpose.height,
+          //});
         }
         break;
       case KeyPress://x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));
@@ -139,14 +153,28 @@ static void run() {
         if (ev.xbutton.button == 4) {
           emit<ScrollEvent>({
             .win = (unsigned int) ev.xbutton.window,
-            .d = 64,
+            .dy = 64,
             .x      = ev.xbutton.x,
             .y      = ev.xbutton.y,
           });
         } else if (ev.xbutton.button == 5) {
           emit<ScrollEvent>({
             .win = (unsigned int) ev.xbutton.window,
-            .d = -64,
+            .dy = -64,
+            .x      = ev.xbutton.x,
+            .y      = ev.xbutton.y,
+          });
+        } else if (ev.xbutton.button == 6) {
+          emit<ScrollEvent>({
+            .win = (unsigned int) ev.xbutton.window,
+            .dx = -64,
+            .x      = ev.xbutton.x,
+            .y      = ev.xbutton.y,
+          });
+        } else if (ev.xbutton.button == 7) {
+          emit<ScrollEvent>({
+            .win = (unsigned int) ev.xbutton.window,
+            .dx = 64,
             .x      = ev.xbutton.x,
             .y      = ev.xbutton.y,
           });

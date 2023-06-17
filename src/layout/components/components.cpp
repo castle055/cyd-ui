@@ -70,7 +70,7 @@ void Component::add(
 ) const {
   // TODO - Needs to be recursive when flattening groups, not just first layer
   for (auto &item: ichildren) {
-    auto* child = item();
+    auto* child = item.build(item);
     if (child == nullptr)
       continue;
     if (child->is_group) {
@@ -202,20 +202,13 @@ COMP_EVENT_HANDLER_IMPL(mouse_motion, (int x, int y)) { // NOLINT(misc-no-recurs
   }));
 }
 
-COMP_EVENT_HANDLER_IMPL(scroll, (int d)) { // NOLINT(misc-no-recursion)
+COMP_EVENT_HANDLER_IMPL(scroll, (int dx, int dy)) { // NOLINT(misc-no-recursion)
   parent.let(_(Component *, {
-    it->on_scroll(d);
+    it->on_scroll(dx, dy);
   }));
 }
 
 #undef COMP_EVENT_HANDLER_IMPL
-
-Component* Component::set_border_enable(bool enabled) {
-  state.let(_(ComponentState *, {
-    it->border.enabled = enabled;
-  }));
-  return this;
-}
 
 nullable<Component*> Component::get_parent() const {
   return parent;

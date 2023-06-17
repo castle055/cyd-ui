@@ -9,6 +9,7 @@
 #include <thread>
 
 #include "cydstd/nullable.h"
+#include "primitives.hpp"
 
 using namespace std::chrono_literals;
 
@@ -240,8 +241,8 @@ namespace test {
           //})
         });
       };
-      ON_SCROLL(d) {
-        //log.info("SCROLL: %d", d);
+      ON_SCROLL(dx, d) {
+        //log.info("SCROLL: %dy", dy);
         state->scroll += d > 0 ? 10 : (d < 0 ? -10 : 0);
         state->dirty();
       }

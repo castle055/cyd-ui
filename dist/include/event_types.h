@@ -24,7 +24,8 @@ EVENT(ButtonEvent, {
 })
 EVENT(ScrollEvent, {
   unsigned int win = 0;
-  int d = 0;
+  int dy = 0;
+  int dx = 0;
   int x = 0;
   int y = 0;
 })
@@ -78,6 +79,12 @@ enum Key {
   RIGHT,
   UP,
   DOWN,
+  LEFT_CTRL,
+  RIGHT_CTRL,
+  LEFT_SHIFT,
+  RIGHT_SHIFT,
+  LEFT_SUPER,
+  RIGHT_SUPER,
 };
 
 EVENT(KeyEvent, {

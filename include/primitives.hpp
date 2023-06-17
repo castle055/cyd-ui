@@ -156,7 +156,7 @@ namespace primitives {
       
       INIT(Image) {
         //ENABLE_LOG
-        if (!state->image || str(this->props.img) == state->image->path) {
+        if (!state->image || str(this->props.img) != state->image->path) {
           state->image = new cydui::layout::images::image_t {this->props.img};
         }
         std::pair<int, int> img_size = graphics::get_image_size(state->image);
@@ -216,6 +216,7 @@ namespace primitives {
       }
       
       REDRAW {
+        state->sub_render_event_offset = {props.x, props.y};
       };
       RENDER(target) {
         if (state->sub_render_target) {

@@ -19,20 +19,32 @@ namespace cydui::components {
     private:
       template<typename c>
       requires ComponentConcept<c>
-      static std::function<void(Component*)> get_init_function(c_init_t<c> init) {
-        return [init](cydui::components::Component* __raw_local_) {
+      static std::function<void(Component*)> get_init_function(c_init_t<c> init, const component_builder_t &spec) {
+        return [init, spec](cydui::components::Component* __raw_local_) {
           auto* local = (c*) __raw_local_;
           
           __raw_local_->state.let(_(ComponentState *, {
-            if (init.x.has_value())
+            if (spec.x.has_value())
+              it->dim.x = spec.x.value();
+            else if (init.x.has_value())
               it->dim.x = init.x.value();
-            if (init.y.has_value())
+            
+            if (spec.y.has_value())
+              it->dim.y = spec.y.value();
+            else if (init.y.has_value())
               it->dim.y = init.y.value();
-            if (init.w.has_value()) {
+            
+            if (spec.w.has_value()) {
+              it->dim.w = spec.w.value();
+              it->dim.given_w = true;
+            } else if (init.w.has_value()) {
               it->dim.w = init.w.value();
               it->dim.given_w = true;
             }
-            if (init.h.has_value()) {
+            if (spec.h.has_value()) {
+              it->dim.h = spec.h.value();
+              it->dim.given_h = true;
+            } else if (init.h.has_value()) {
               it->dim.h = init.h.value();
               it->dim.given_h = true;
             }
@@ -52,25 +64,31 @@ namespace cydui::components {
       template<typename c, int ID>
       requires ComponentConcept<c>
       inline component_builder_t create(c_init_t<c> init) const {
-        return *(state.let(_(ComponentState *, {
-          auto* st = (typename c::State*) (it->children.contains(ID)
-            ? (it->children[ID])
-            : (it->children.add(ID, new typename c::State())));
-          st->win = it->win;
-          return st;
-        })).let(_(typename c::State*, {
-          SET_REFERENCE it;
-          return [=]() {
-            auto* _c = INSTANTIATE_COMP(it);
-            return _c;
-          };
-        })).unwrap());
+        return {
+          .x = init.x,
+          .y = init.y,
+          .w = init.w,
+          .h = init.h,
+          .build = *(state.let(_(ComponentState *, {
+            auto* st = (typename c::State*) (it->children.contains(ID)
+              ? (it->children[ID])
+              : (it->children.add(ID, new typename c::State())));
+            st->win = it->win;
+            return st;
+          })).let(_(typename c::State*, {
+            SET_REFERENCE it;
+            return [=](component_builder_t spec) {
+              auto* _c = new c(it, init.props, get_init_function(init, spec));
+              return _c;
+            };
+          })).unwrap())
+        };
       }
       
       template<typename c, int ID, typename T>
       requires ComponentConcept<c>
       inline component_builder_t create_for(
-        T &iter, std::function<c_init_t<c>(typename T::value_type)> block
+        const T &iter, std::function<c_init_t<c>(typename T::value_type)> block
       ) const {
         std::vector<typename c::State*> states = {};
         state.let(_(ComponentState *, {
@@ -85,25 +103,33 @@ namespace cydui::components {
           }
         }));
         
-        return [this, iter, block, states]() {
-          int i = 0;
-          auto temp_c = Component::new_group();
-          for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
-            const c_init_t<c> init = block(*a);
-            SET_REFERENCE nullptr;
-            temp_c->children.push_back(
-              INSTANTIATE_COMP(states[i])
-            );
-          }
-          return temp_c;
+        return {
+          .x = std::nullopt,
+          .y = std::nullopt,
+          .w = std::nullopt,
+          .h = std::nullopt,
+          .build = [iter, block, states](component_builder_t spec) {
+            int i = 0;
+            auto temp_c = Component::new_group();
+            for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
+              const c_init_t<c> init = block(*a);
+              SET_REFERENCE nullptr;
+              temp_c->children.push_back(
+                new c(states[i], init.props, get_init_function(init, spec))
+              );
+            }
+            return temp_c;
+          },
         };
       }
       
-      inline component_builder_t create_group(std::vector<component_builder_t> _children) {
-        return [_children]() {
-          auto* group = Component::new_group();
-          group->add(_children);
-          return group;
+      inline component_builder_t create_group(std::vector<component_builder_t> _children) const {
+        return {
+          .build = [_children](component_builder_t) {
+            auto* group = Component::new_group();
+            group->add(_children);
+            return group;
+          }
         };
       }
 
@@ -112,7 +138,7 @@ namespace cydui::components {
 #undef INSTANTIATE_COMP
 
 
-#define NULLCOMP            [](){ return Component::new_group(); }
+#define NULLCOMP            {.x = std::nullopt, .y = std::nullopt, .w = std::nullopt, .h = std::nullopt, .build = [](component_builder_t){ return Component::new_group(); } }
 
 #define COMP(COMPONENT) create<COMPONENT, __COUNTER__>
 
@@ -155,8 +181,6 @@ namespace cydui::components {
       void render(cydui::graphics::render_target_t* target) const;
       
       nullable<Component*> get_parent() const;
-      
-      Component* set_border_enable(bool enabled);
 
 #define COMP_EVENT_HANDLER(EV, ARGS) virtual void on_##EV ARGS const
 #define COMP_EVENT_HANDLER_OVERRIDE(EV, ARGS) virtual void on_##EV ARGS const override
@@ -175,7 +199,7 @@ namespace cydui::components {
       
       COMP_EVENT_HANDLER(mouse_click, (int x, int y, int button));
       
-      COMP_EVENT_HANDLER(scroll, (int d));
+      COMP_EVENT_HANDLER(scroll, (int dx, int dy));
       
       COMP_EVENT_HANDLER(key_press, (KeyData key));
       
@@ -185,7 +209,7 @@ namespace cydui::components {
 #define RENDER(TARGET)          COMP_EVENT_HANDLER_OVERRIDE(render, (cydui::graphics::render_target_t * (TARGET)))
 #define ON_KEY_RELEASE(KEY)     COMP_EVENT_HANDLER_OVERRIDE(key_release, (KeyData (KEY)))
 #define ON_KEY_PRESS(KEY)       COMP_EVENT_HANDLER_OVERRIDE(key_press, (KeyData (KEY)))
-#define ON_SCROLL(D)            COMP_EVENT_HANDLER_OVERRIDE(scroll, (int (D)))
+#define ON_SCROLL(DX, DY)       COMP_EVENT_HANDLER_OVERRIDE(scroll, (int (DX), int (DY)))
 #define ON_CLICK(X, Y, BUTTON)  COMP_EVENT_HANDLER_OVERRIDE(mouse_click,  (int (X), int (Y), int (BUTTON)))
 #define ON_MOUSE_MOTION(X, Y)   COMP_EVENT_HANDLER_OVERRIDE(mouse_motion, (int (X), int (Y)))
 #define ON_MOUSE_EXIT(X, Y)     COMP_EVENT_HANDLER_OVERRIDE(mouse_exit,   (int (X), int (Y)))
@@ -207,8 +231,8 @@ namespace cydui::components {
 #define DISABLE_LOG this->log.on = false;
 #define ENABLE_LOG  this->log.on = true;
 
-#define PROPS(block)                                                           \
-  struct Props block;                                                          \
+#define PROPS(...)                                                           \
+  struct Props __VA_ARGS__;                                                          \
   Props props;
 
 #define NO_PROPS PROPS({})
@@ -223,5 +247,13 @@ namespace cydui::components {
       const std::function<void(cydui::components::Component*)>& inner)         \
       : cydui::components::Component(state, inner), props(std::move(props)),   \
         state(state)
+
+#define REFRESH \
+if (state->win) { \
+  events::emit<RedrawEvent>({ \
+    .win = (unsigned int)(*state->win.unwrap())->xwin, \
+  });           \
+}               \
+
 
 #endif//CYD_UI_COMPONENTS_HPP
