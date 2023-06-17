@@ -5,11 +5,17 @@
 #include <iomanip>
 #include "color.h"
 
+#include "cyd-log/dist/include/logging.hpp"
+
+logging::logger logg {};
+
 str color::Color::to_string() const {
   std::ostringstream oss;
   oss << '#';
-  oss << std::setfill('0') << std::setw(2) << std::hex
-      << static_cast<int>(r) << static_cast<int>(g) << static_cast<int>(b);
+  oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(r);
+  oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(g);
+  oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(b);
+  logg.info("Color (%d,%d,%d) -> %s", r, g, b, oss.str().c_str());
   return oss.str();
 }
 
