@@ -5,13 +5,16 @@
 #ifndef CYD_UI_COLOR_H
 #define CYD_UI_COLOR_H
 
+#include <charconv>
 #include "cydstd/cydstd.h"
 #include "cydstd/template_str_buffer.h"
 #include "cydstd/assert.h"
 
 namespace color {
     struct Color {
-      const char* hex;
+      uint8_t r = 0U;
+      uint8_t g = 0U;
+      uint8_t b = 0U;
       
       [[nodiscard("Don't call 'to_string()' if you don't need a string.")]]
       str to_string() const;
@@ -36,7 +39,13 @@ consteval color::Color operator ""_color() {
   STATIC_ASSERT_IS_HEX(data.data[5]);
   STATIC_ASSERT_IS_HEX(data.data[6]);
   
-  return {.hex = data.data};
+  uint8_t r = 0U;
+  (void) std::from_chars(&data.data[1], &data.data[3], r, 16);
+  uint8_t g = 0U;
+  (void) std::from_chars(&data.data[3], &data.data[5], g, 16);
+  uint8_t b = 0U;
+  (void) std::from_chars(&data.data[5], &data.data[7], b, 16);
+  return {r, g, b};
 }
 
 #endif //CYD_UI_COLOR_H
