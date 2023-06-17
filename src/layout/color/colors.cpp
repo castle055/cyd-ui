@@ -7,7 +7,7 @@
 
 #include "cyd-log/dist/include/logging.hpp"
 
-logging::logger logg {};
+logging::logger logg {.on = false};
 
 str color::Color::to_string() const {
   std::ostringstream oss;
