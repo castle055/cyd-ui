@@ -29,7 +29,7 @@ namespace render {
     
     void drw_line(
       cydui::graphics::render_target_t* target,
-      cydui::layout::color::Color* color,
+      color::Color color,
       int x,
       int y,
       int x1,
@@ -38,7 +38,7 @@ namespace render {
     
     void drw_rect(
       cydui::graphics::render_target_t* target,
-      cydui::layout::color::Color* color,
+      color::Color color,
       int x,
       int y,
       int w,
@@ -48,7 +48,7 @@ namespace render {
     
     void drw_arc(
       cydui::graphics::render_target_t* target,
-      cydui::layout::color::Color* color,
+      color::Color color,
       int x,
       int y,
       int w,
@@ -61,7 +61,7 @@ namespace render {
     void drw_text(
       cydui::graphics::render_target_t* target,
       window_font font,
-      cydui::layout::color::Color* color,
+      color::Color color,
       const str &text,
       int x,
       int y

@@ -118,7 +118,7 @@ static void run() {
           /*&& ev.xexpose.width > 0
           && ev.xexpose.height > 0*/) {
           redrawEventDataMonitor.update({
-            .win = (unsigned int) ev.xvisibility.window,
+            .win = (unsigned int) ev.xexpose.window,
           });
           //resizeEventDataMonitor.update({ -- Why would you even do this?, size is of (Re)Exposed area, not of window
           //  .win = (unsigned int) ev.xexpose.window,
@@ -223,8 +223,6 @@ static void run() {
       case FocusIn:
       case FocusOut:
       case KeymapNotify:
-      case GraphicsExpose:
-      case NoExpose:
       case CreateNotify:
       case DestroyNotify:
       case UnmapNotify:

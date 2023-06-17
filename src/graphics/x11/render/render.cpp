@@ -109,36 +109,36 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
 
 static std::unordered_map<str, XColor> xcolor_cache;
 
-XColor color_to_xcolor(cydui::layout::color::Color* color) {
-  if (xcolor_cache.contains(color->to_string()))
-    return xcolor_cache[color->to_string()];
+XColor color_to_xcolor(color::Color color) {
+  if (xcolor_cache.contains(color.to_string()))
+    return xcolor_cache[color.to_string()];
   
   Colormap map = DefaultColormap(state::get_dpy(), state::get_screen());
   XColor c;
-  XParseColor(state::get_dpy(), map, color->to_string().c_str(), &c);
+  XParseColor(state::get_dpy(), map, color.to_string().c_str(), &c);
   XAllocColor(state::get_dpy(), map, &c);
   
-  xcolor_cache[color->to_string()] = c;
+  xcolor_cache[color.to_string()] = c;
   return c;
 }
 
 static std::unordered_map<str, XftColor*> xftcolor_cache;
 
-XftColor* color_to_xftcolor(cydui::layout::color::Color* color) {
-  if (xftcolor_cache.contains(color->to_string()))
-    return xftcolor_cache[color->to_string()];
+XftColor* color_to_xftcolor(color::Color color) {
+  if (xftcolor_cache.contains(color.to_string()))
+    return xftcolor_cache[color.to_string()];
   
   auto* c = new XftColor;
   
   if (!XftColorAllocName(state::get_dpy(),
     DefaultVisual(state::get_dpy(), state::get_screen()),
     DefaultColormap(state::get_dpy(), state::get_screen()),
-    color->to_string().c_str(),
+    color.to_string().c_str(),
     c)) {
-    xlog_ctrl.error("Cannot allocate color %s", color->to_string().c_str());
+    xlog_ctrl.error("Cannot allocate color %s", color.to_string().c_str());
   }
   
-  xftcolor_cache[color->to_string()] = c;
+  xftcolor_cache[color.to_string()] = c;
   return c;
 }
 
@@ -207,7 +207,7 @@ void render::flush(cydui::graphics::window_t* win) {
 
 void render::drw_line(
   cydui::graphics::render_target_t* target,
-  cydui::layout::color::Color* color,
+  color::Color color,
   int x,
   int y,
   int x1,
@@ -215,9 +215,7 @@ void render::drw_line(
 ) {
   target->win->x_mtx.lock();
   
-  if (color) {
-    XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
-  }
+  XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
   XSetBackground(state::get_dpy(),
     target->gc,
     BlackPixel(state::get_dpy(), state::get_screen()));
@@ -230,7 +228,7 @@ void render::drw_line(
 
 void render::drw_rect(
   cydui::graphics::render_target_t* target,
-  cydui::layout::color::Color* color,
+  color::Color color,
   int x,
   int y,
   int w,
@@ -239,9 +237,7 @@ void render::drw_rect(
 ) {
   target->win->x_mtx.lock();
   
-  if (color) {
-    XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
-  }
+  XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
   XSetBackground(state::get_dpy(),
     target->gc,
     BlackPixel(state::get_dpy(), state::get_screen()));
@@ -258,7 +254,7 @@ void render::drw_rect(
 
 void render::drw_arc(
   cydui::graphics::render_target_t* target,
-  cydui::layout::color::Color* color,
+  color::Color color,
   int x,
   int y,
   int w,
@@ -268,9 +264,7 @@ void render::drw_arc(
   bool filled
 ) {
   target->win->x_mtx.lock();
-  if (color) {
-    XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
-  }
+  XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
   XSetBackground(state::get_dpy(),
     target->gc,
     BlackPixel(state::get_dpy(), state::get_screen()));
@@ -302,14 +296,11 @@ void render::drw_arc(
 void render::drw_text(
   cydui::graphics::render_target_t* target,
   window_font font,
-  cydui::layout::color::Color* color,
+  color::Color color,
   const str &text,
   int x,
   int y
 ) {
-  if (!color)
-    color = new cydui::layout::color::Color("#FCAE1E");
-  
   XColor c = color_to_xcolor(color);
   XftColor* xft_c = color_to_xftcolor(color);
   XftDraw* xft_draw = XftDrawCreate(state::get_dpy(),

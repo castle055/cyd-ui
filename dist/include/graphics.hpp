@@ -33,7 +33,7 @@ namespace cydui::graphics {
     
     void drw_line(
       render_target_t* target,
-      layout::color::Color* color,
+      color::Color color,
       int x,
       int y,
       int x1,
@@ -42,7 +42,7 @@ namespace cydui::graphics {
     
     void drw_rect(
       render_target_t* target,
-      layout::color::Color* color,
+      color::Color color,
       int x,
       int y,
       int w,
@@ -52,7 +52,7 @@ namespace cydui::graphics {
     
     void drw_arc(
       render_target_t* target,
-      layout::color::Color* color,
+      color::Color color,
       int x,
       int y,
       int w,
@@ -64,15 +64,15 @@ namespace cydui::graphics {
     
     void drw_text(
       render_target_t* target,
-      layout::fonts::Font* font,
-      layout::color::Color* color,
+      font::Font* font,
+      color::Color color,
       str text,
       int x,
       int y
     );
     
     std::pair<int, int> get_text_size(
-      layout::fonts::Font* font, const str &text
+      font::Font* font, const str &text
     );
     
     void drw_image(

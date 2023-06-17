@@ -207,7 +207,7 @@ void cydui::graphics::clr_rect(
 
 void cydui::graphics::drw_line(
   render_target_t* target,
-  cydui::layout::color::Color* color,
+  color::Color color,
   int x,
   int y,
   int x1,
@@ -218,7 +218,7 @@ void cydui::graphics::drw_line(
 
 void cydui::graphics::drw_rect(
   render_target_t* target,
-  cydui::layout::color::Color* color,
+  color::Color color,
   int x,
   int y,
   int w,
@@ -230,7 +230,7 @@ void cydui::graphics::drw_rect(
 
 void cydui::graphics::drw_arc(
   render_target_t* target,
-  cydui::layout::color::Color* color,
+  color::Color color,
   int x,
   int y,
   int w,
@@ -242,7 +242,7 @@ void cydui::graphics::drw_arc(
   render::drw_arc(target, color, x, y, w, h, a0, a1, filled);
 }
 
-static str to_pattern(cydui::layout::fonts::Font* font) {
+static str to_pattern(font::Font* font) {
   str str;
   str.append(font->name + ":");
   str.append("size=" + std::to_string(font->size) + ":");
@@ -257,7 +257,7 @@ static str to_pattern(cydui::layout::fonts::Font* font) {
 }
 
 static window_font load_font(
-  cydui::graphics::window_t* win, cydui::layout::fonts::Font* font
+  cydui::graphics::window_t* win, font::Font* font
 ) {
   str font_spec = to_pattern(font);
   if (win->loaded_fonts.contains(font_spec))
@@ -281,7 +281,7 @@ static window_font load_font(
 }
 
 static void unload_font(
-  cydui::graphics::window_t* win, cydui::layout::fonts::Font* font
+  cydui::graphics::window_t* win, font::Font* font
 ) {
   // TODO - Implement
 }
@@ -328,8 +328,8 @@ static void unload_image(
 
 void cydui::graphics::drw_text(
   render_target_t* target,
-  layout::fonts::Font* font,
-  layout::color::Color* color,
+  font::Font* font,
+  color::Color color,
   str text,
   int x,
   int y
@@ -341,7 +341,7 @@ void cydui::graphics::drw_text(
 static std::unordered_map<str, XftFont*> cached_fonts;
 
 std::pair<int, int> cydui::graphics::get_text_size(
-  layout::fonts::Font* font, const str &text
+  font::Font* font, const str &text
 ) {
   str font_spec = to_pattern(font);
   XftFont* xfont;
