@@ -15,9 +15,10 @@ using namespace std::chrono_literals;
 
 namespace test {
     STATE(Test) {
-      cydui::layout::color::Color* c = new cydui::layout::color::Color("#FCAE1E");
-      cydui::layout::color::Color* c1 = new cydui::layout::color::Color("#111A1E");
-      cydui::layout::fonts::Font font {.name = "Fira Code Retina", .size = 14};
+      color::Color c = "#FCAE1E"_color;
+      //color::Color c = color::Red;
+      color::Color c1 = "#111A1E"_color;
+      font::Font font {.name = "Fira Code Retina", .size = 14};
       
       int scroll = 0;
     };
@@ -53,10 +54,19 @@ namespace test {
           //  CASE(false) COMP(Rectangle)({});
           //  CASE(true) COMP(Circle)({});
           //  END,
+          COMP(Rectangle)({
+            .props = {
+              .color  = state->c,
+              .filled = true,
+            },
+            .w = 250,
+            .h = 50,
+          }),
           COMP(VBox)({
             .props = {
               .spacing = 10,
             },
+            .y = 60,
             .inner = {
               COMP(ViewPort)({
                 .props = {
@@ -165,14 +175,6 @@ namespace test {
                       }),
                     },
                   }),
-                  //COMP(Rectangle)({
-                  //  .props = {
-                  //    .color  = state->c,
-                  //    .filled = true,
-                  //  },
-                  //  .w = dim->cw / 2 - 15,
-                  //  .h = dim->ch / 4,
-                  //}),
                 }
               }),
             },

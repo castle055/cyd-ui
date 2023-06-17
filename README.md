@@ -100,13 +100,11 @@ A third component is added 40 pixels down from the top.
 //   This one persists across renders
 STATE(SomeComponent) { // Expands to 'SomeComponentState'
   // Color instances
-  cydui::layout::color::Color* fg_color =
-          new cydui::layout::color::Color("#FCAE1E");
-  cydui::layout::color::Color* fg_inv_color =
-          new cydui::layout::color::Color("#000000");
+  color::Color fg_color = "#FCAE1E"_color;
+  color::Color fg_inv_color = "#000000"_color;
   
   // Font specification
-  cydui::layout::fonts::Font font {
+  font::Font font {
     .name = "Fira Code Retina",
     .size = 10,
   };
