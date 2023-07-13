@@ -202,6 +202,7 @@ static void run() {
           .win = (unsigned int) ev.xmotion.window,
           .x = ev.xmotion.x,
           .y = ev.xmotion.y,
+          .dragging = (ev.xmotion.state | Button1Mask) > 0,
         });
         break;
       case ConfigureNotify://x11_evlog.info("%d-%d", ev.xconfigure.width, ev.xconfigure.height);

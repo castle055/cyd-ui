@@ -260,14 +260,17 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
           int exit_rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
           int exit_rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
           hovering->component_instance->on_mouse_exit(exit_rel_x, exit_rel_y);
-          hovering = nullptr;
         }
         hovering = *target->state.unwrap();
+        
+        int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
+        int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+        target->on_mouse_enter(rel_x, rel_y);
+      } else {
+        int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
+        int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+        target->on_mouse_motion(rel_x, rel_y);
       }
-      
-      int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
-      int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
-      target->on_mouse_enter(rel_x, rel_y);
     }
     
     if (render_if_dirty(root))
