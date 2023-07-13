@@ -202,6 +202,27 @@ COMP_EVENT_HANDLER_IMPL(mouse_motion, (int x, int y)) { // NOLINT(misc-no-recurs
   }));
 }
 
+COMP_EVENT_HANDLER_IMPL(drag_start, (int x, int y)) { // NOLINT(misc-no-recursion)
+  parent.let(_(Component *, {
+    auto &p = it;
+    p->on_drag_start(x + dim->x.val(), y + dim->y.val());
+  }));
+}
+
+COMP_EVENT_HANDLER_IMPL(drag_motion, (int x, int y)) { // NOLINT(misc-no-recursion)
+  parent.let(_(Component *, {
+    auto &p = it;
+    p->on_drag_motion(x + dim->x.val(), y + dim->y.val());
+  }));
+}
+
+COMP_EVENT_HANDLER_IMPL(drag_finish, (int x, int y)) { // NOLINT(misc-no-recursion)
+  parent.let(_(Component *, {
+    auto &p = it;
+    p->on_drag_finish(x + dim->x.val(), y + dim->y.val());
+  }));
+}
+
 COMP_EVENT_HANDLER_IMPL(scroll, (int dx, int dy)) { // NOLINT(misc-no-recursion)
   parent.let(_(Component *, {
     it->on_scroll(dx, dy);

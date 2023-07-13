@@ -273,6 +273,31 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       }
     }
     
+    // Calling 'Drag' related event handlers
+    cydui::components::Component* target = root;
+    cydui::components::Component* specified_target =
+      find_by_coords(root, it.data->x, it.data->y);
+    if (specified_target)
+      target = specified_target;
+    
+    if (it.data->dragging) {
+      if (dragging) {
+        int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
+        int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+        target->on_drag_motion(rel_x, rel_y);
+      } else {
+        int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
+        int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+        target->on_drag_start(rel_x, rel_y);
+        dragging = true;
+      }
+    } else if (dragging) {
+      int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
+      int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+      target->on_drag_finish(rel_x, rel_y);
+      dragging = false;
+    }
+    
     if (render_if_dirty(root))
       graphics::flush(win->win_ref);
   });

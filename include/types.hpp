@@ -134,6 +134,8 @@ class cydui::layout::Layout {
   components::ComponentState* hovering = nullptr;
   components::ComponentState* focused = nullptr;
   
+  bool dragging = false;
+  
   components::Component* find_by_coords(
     components::Component* c, int x, int y
   );
