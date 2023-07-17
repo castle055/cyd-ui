@@ -281,21 +281,32 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       target = specified_target;
     
     if (it.data->dragging) {
-      if (dragging) {
+      if (dragging_context.dragging) {
         int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
         int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+        dragging_context.dragging_item.drag_move(dragging_context.dragging_item, rel_x, rel_y);
         target->on_drag_motion(rel_x, rel_y);
       } else {
         int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
         int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+        target->state.let(_(components::ComponentState*,{
+          for (auto &item : it->draggable_sources) {
+            if (item.x - 10 <= rel_x && rel_x <= item.x + 10
+              && item.y - 10 <= rel_y && rel_y <= item.y + 10) {
+              dragging_context.dragging_item = item.start_drag(rel_x, rel_y);
+              break;
+            }
+          }
+        }));
         target->on_drag_start(rel_x, rel_y);
-        dragging = true;
+        dragging_context.dragging = true;
       }
-    } else if (dragging) {
+    } else if (dragging_context.dragging) {
       int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
       int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+      dragging_context.dragging_item.drag_end(dragging_context.dragging_item, rel_x, rel_y);
       target->on_drag_finish(rel_x, rel_y);
-      dragging = false;
+      dragging_context.dragging = false;
     }
     
     if (render_if_dirty(root))

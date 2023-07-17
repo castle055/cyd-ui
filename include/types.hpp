@@ -19,6 +19,8 @@
 #include "color.h"
 #include "font.h"
 
+#include "drag_n_drop.h"
+
 namespace cydui {
     namespace components {
         class Component;
@@ -124,6 +126,8 @@ public:
   cydui::dimensions::component_dimensions_t dim;
   ComponentBorder border;
   ChildrenStateCollection children;
+  
+  std::vector<drag_n_drop::draggable_source_t> draggable_sources = {};
 };
 
 class cydui::layout::Layout {
@@ -134,7 +138,7 @@ class cydui::layout::Layout {
   components::ComponentState* hovering = nullptr;
   components::ComponentState* focused = nullptr;
   
-  bool dragging = false;
+  drag_n_drop::dragging_context_t dragging_context {};
   
   components::Component* find_by_coords(
     components::Component* c, int x, int y
