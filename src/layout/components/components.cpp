@@ -97,14 +97,15 @@ void Component::add(
   }
 }
 
-void Component::redraw() {
+void Component::redraw(cydui::layout::Layout* layout) {
   inner_redraw(this);
   on_redraw();
   
   for (auto &child: children) {
-    child->redraw();
+    child->redraw(layout);
   }
   state.let(_(ComponentState *, {
+    it->dragging_context = &layout->dragging_context;
     it->_dirty = false;
   }));
 }

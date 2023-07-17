@@ -42,3 +42,5 @@ bin/lib/libLLVM-13.so.1
 .cyd/
 
 .ccls-cache/
+
+docs/

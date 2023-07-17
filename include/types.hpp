@@ -128,6 +128,7 @@ public:
   ChildrenStateCollection children;
   
   std::vector<drag_n_drop::draggable_source_t> draggable_sources = {};
+  drag_n_drop::dragging_context_t* dragging_context = nullptr;
 };
 
 class cydui::layout::Layout {
@@ -137,8 +138,6 @@ class cydui::layout::Layout {
   components::Component* root;
   components::ComponentState* hovering = nullptr;
   components::ComponentState* focused = nullptr;
-  
-  drag_n_drop::dragging_context_t dragging_context {};
   
   components::Component* find_by_coords(
     components::Component* c, int x, int y
@@ -156,6 +155,7 @@ class cydui::layout::Layout {
   friend Layout* cydui::layout::create(components::c_init_t<C> init);
 
 public:
+  drag_n_drop::dragging_context_t dragging_context {};
   
   void bind_window(window::CWindow* _win);
 };

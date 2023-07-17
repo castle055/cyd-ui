@@ -96,7 +96,7 @@ static bool compute_dimensions(cydui::components::Component* rt) {
 #undef COMPUTE
 
 static void redraw_component(
-  const cydui::window::CWindow* win, cydui::components::Component* target
+  const cydui::window::CWindow* win, cydui::components::Component* target, cydui::layout::Layout* layout
 ) {
   log_lay.debug("REDRAW");
   //auto t0 = std::chrono::system_clock::now().time_since_epoch();
@@ -106,7 +106,7 @@ static void redraw_component(
   target->children.clear();
   
   // Recreate those instances with redraw(), this set all size hints relationships
-  target->redraw();
+  target->redraw(layout);
   
   if (!compute_dimensions(target)) {
     cydui::components::Component* c = *target->parent.unwrap();
@@ -176,7 +176,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
         target = specified_target;
     }
     
-    redraw_component(this->win, target);
+    redraw_component(this->win, target, this);
   });
   listen(KeyEvent, {
     if (it.data->win != win->win_ref->xwin)
@@ -289,7 +289,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       } else {
         int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
         int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
-        target->state.let(_(components::ComponentState*,{
+        target->state.let(_(components::ComponentState * , {
           for (auto &item : it->draggable_sources) {
             if (item.x - 10 <= rel_x && rel_x <= item.x + 10
               && item.y - 10 <= rel_y && rel_y <= item.y + 10) {
@@ -322,7 +322,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     (*root->state.unwrap())->dim.given_w = true;
     (*root->state.unwrap())->dim.given_h = true;
     
-    redraw_component(this->win, root);
+    redraw_component(this->win, root, this);
     //if (render_if_dirty(root))
     //    graphics::flush(win->win_ref);
   });
@@ -330,7 +330,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
 
 bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {
   if ((*c->state.unwrap())->_dirty) {
-    redraw_component(this->win, c);
+    redraw_component(this->win, c, this);
     return true;
   } else {
     bool any = false;

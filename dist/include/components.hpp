@@ -176,7 +176,7 @@ namespace cydui::components {
       
       mutable std::deque<Component*> children;
       
-      void redraw();
+      void redraw(cydui::layout::Layout* layout);
       
       void render(cydui::graphics::render_target_t* target) const;
       

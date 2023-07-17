@@ -39,6 +39,15 @@ namespace cydui::drag_n_drop {
     struct dragging_context_t {
       draggable_t dragging_item {};
       bool dragging = false;
+      
+      void set_item(draggable_t item) {
+        dragging_item = item;
+        dragging = true;
+      }
+      
+      void set_item_if_empty(draggable_t item) {
+        if (!dragging) set_item(std::move(item));
+      }
     };
 }
 
