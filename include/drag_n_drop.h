@@ -11,8 +11,10 @@ namespace cydui::drag_n_drop {
     struct draggable_t {
       void* data = nullptr;
       
-      std::function<void(draggable_t, int, int)> drag_move;
-      std::function<void(draggable_t, int, int)> drag_end;
+      std::function<void(draggable_t, int, int)> drag_move = [](draggable_t, int, int) {
+      };
+      std::function<void(draggable_t, int, int)> drag_end = [](draggable_t, int, int) {
+      };
     };
     
     struct draggable_source_t {

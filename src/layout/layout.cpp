@@ -307,6 +307,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       dragging_context.dragging_item.drag_end(dragging_context.dragging_item, rel_x, rel_y);
       target->on_drag_finish(rel_x, rel_y);
       dragging_context.dragging = false;
+      dragging_context.dragging_item = drag_n_drop::draggable_t {};
     }
     
     if (render_if_dirty(root))
