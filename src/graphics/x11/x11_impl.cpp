@@ -97,7 +97,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   XSync(state::get_dpy(), False);
   
   log_task.info(
-    "Created window %X at (%s) x: %d, y: %d", xwin, geom.c_str(), x, y);
+    "Created window %lX at (%s) x: %d, y: %d", xwin, geom.c_str(), x, y);
   
   if (!override_redirect) {
     XWMHints wm = {.flags = InputHint, .input = 1};
@@ -127,7 +127,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   } else {
     XMapWindow(state::get_dpy(), xwin);
   }
-  log_task.debug("Mapping window %X", xwin);
+  log_task.debug("Mapping window %lX", xwin);
   
   //XSync(state::get_dpy(), False);
   
@@ -225,6 +225,7 @@ void cydui::graphics::drw_line(
   int y1
 ) {
   //render::drw_line(target, color, x, y, x1, y1);
+  std::scoped_lock lock(target->win->render_mtx);
   target->win->render_reqs->push_back({
     .type = render_req_type_e::LINE,
     .target = target,
@@ -444,6 +445,7 @@ void cydui::graphics::drw_target(
   int h
 ) {
   //render::drw_target(dest_target, source_target, xs, ys, xd, yd, w, h);
+  std::scoped_lock lock(dest_target->win->render_mtx);
   dest_target->win->render_reqs->push_back({
     .type = render_req_type_e::TARGET,
     .target = dest_target,

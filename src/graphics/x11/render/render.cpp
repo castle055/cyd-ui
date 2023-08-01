@@ -10,10 +10,12 @@
 #include <X11/Xlib.h>
 
 logging::logger xlog_ctrl = {.name = "X11::RENDER::CTRL", .on = false};
-logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = true};
+logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = false};
 
 static void render_requests(cydui::graphics::window_t* win) {
-  for (const auto &r: *win->render_reqs) {
+  if (!win->staging_reqs) return;
+  xlog_task.info("rendering requests %zu", win->staging_reqs->size());
+  for (const auto &r: *win->staging_reqs) {
     switch (r.type) {
       case render_req_type_e::LINE:render::drw_line(r.target, r.color, r.x, r.y, r.x + r.w, r.y + r.h);
         break;
@@ -32,7 +34,7 @@ static void render_requests(cydui::graphics::window_t* win) {
         break;
     }
   }
-  win->render_reqs->clear();
+  win->staging_reqs->clear();
 }
 
 void render_sbr(cydui::graphics::window_t* win) {
@@ -41,16 +43,27 @@ void render_sbr(cydui::graphics::window_t* win) {
   win->render_mtx.lock();
   bool dirty = win->dirty;
   win->dirty = false;
-  win->render_mtx.unlock();
   
   if (!dirty) {
+    win->render_mtx.unlock();
     return;
   } else {
     render_requests(win);
+    win->render_mtx.unlock();
   }
   
   //win->x_mtx.lock();
   //win->render_mtx.lock();
+  XCopyArea(state::get_dpy(),
+    win->render_target->drawable,
+    win->staging_target->drawable,
+    win->render_target->gc,
+    0,
+    0,
+    win->render_target->w,
+    win->render_target->h,
+    0,
+    0);
   XCopyArea(state::get_dpy(),
     win->staging_target->drawable,
     win->xwin,
@@ -90,22 +103,7 @@ void render::start(cydui::graphics::window_t* win) {
 }
 
 static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
-  //window_render_req req = {
-  //    .x = x,
-  //    .y = y,
-  //    .w = w,
-  //    .h = h,
-  //};
-  //xlog_ctrl.debug(
-  //    "REQ Render area, pos(x=%d,y=%d) size(w=%d,h=%d)",
-  //    req.x,
-  //    req.y,
-  //    req.w,
-  //    req.h
-  //);
   win->render_mtx.lock();
-  //win->x_mtx.lock();
-  //win->render_reqs.push_back(req);
   win->dirty = true;
   //win->staging_drawable = win->drawable;
   //win->staging_gc       = win->gc;
@@ -116,16 +114,22 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   //    h,
   //    DefaultDepth(state::get_dpy(), state::get_screen()));
   //win->gc               = XCreateGC(state::get_dpy(), win->drawable, 0, NULL);
-  XCopyArea(state::get_dpy(),
-    win->render_target->drawable,
-    win->staging_target->drawable,
-    win->render_target->gc,
-    0,
-    0,
-    win->render_target->w,
-    win->render_target->h,
-    0,
-    0);
+  //-------------
+  for (auto &r: *win->render_reqs) {
+    win->staging_reqs->push_back(r);
+  }
+  win->render_reqs = new std::deque<render_req_t> {};
+  //XCopyArea(state::get_dpy(),
+  //  win->render_target->drawable,
+  //  win->staging_target->drawable,
+  //  win->render_target->gc,
+  //  0,
+  //  0,
+  //  win->render_target->w,
+  //  win->render_target->h,
+  //  0,
+  //  0);
+  //-------------
   //win->staging_target->w = win->render_target->w;
   //win->staging_target->h = win->render_target->h;
   
@@ -133,7 +137,7 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   win->render_mtx.unlock();
 }
 
-static std::unordered_map <u32, XColor> xcolor_cache;
+static std::unordered_map<u32, XColor> xcolor_cache;
 
 struct xcolor_hot_cache_entry_t {
   u32 id;
