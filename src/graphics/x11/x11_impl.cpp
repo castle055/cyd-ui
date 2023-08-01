@@ -151,7 +151,7 @@ window_ti::window_ti(Window xwin, int w, int h) {
 render_target_ti::render_target_ti(
   cydui::graphics::window_t* win, int w, int h
 ) {
-  std::lock_guard guard(win->x_mtx);
+  //std::lock_guard guard(win->x_mtx);
   this->drawable = XCreatePixmap(state::get_dpy(),
     win->xwin,
     w,

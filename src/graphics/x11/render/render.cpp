@@ -78,7 +78,7 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   //    req.h
   //);
   win->render_mtx.lock();
-  win->x_mtx.lock();
+  //win->x_mtx.lock();
   //win->render_reqs.push_back(req);
   win->dirty = true;
   //win->staging_drawable = win->drawable;
@@ -103,11 +103,11 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   //win->staging_target->w = win->render_target->w;
   //win->staging_target->h = win->render_target->h;
   
-  win->x_mtx.unlock();
+  //win->x_mtx.unlock();
   win->render_mtx.unlock();
 }
 
-static std::unordered_map<u32, XColor> xcolor_cache;
+static std::unordered_map <u32, XColor> xcolor_cache;
 
 XColor color_to_xcolor(color::Color color) {
   u32 color_id = color.to_id();
@@ -156,7 +156,7 @@ void render::resize(cydui::graphics::render_target_t* target, int w, int h) {
       BlackPixel(state::get_dpy(), state::get_screen()));
     XFillRectangle(state::get_dpy(), new_drw, target->gc, 0, 0, w, h);
     
-    target->win->x_mtx.lock();
+    //target->win->x_mtx.lock();
     XCopyArea(state::get_dpy(),
       target->drawable,
       new_drw,
@@ -174,7 +174,7 @@ void render::resize(cydui::graphics::render_target_t* target, int w, int h) {
     target->drawable = new_drw;
     target->gc = XCreateGC(state::get_dpy(), target->drawable, 0, NULL);
     
-    target->win->x_mtx.unlock();
+    //target->win->x_mtx.unlock();
     
     XFlush(state::get_dpy());
     
@@ -191,14 +191,14 @@ void render::clr_rect(
   unsigned int w,
   unsigned int h
 ) {
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   
   XSetForeground(state::get_dpy(),
     target->gc,
     BlackPixel(state::get_dpy(), state::get_screen()));
   XFillRectangle(state::get_dpy(), target->drawable, target->gc, x, y, w, h);
   
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   
   //req(win, x, y, (int)w + 1, (int)h + 1);// added 1 margin for lines
 }
@@ -215,7 +215,7 @@ void render::drw_line(
   int x1,
   int y1
 ) {
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   
   XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
   XSetBackground(state::get_dpy(),
@@ -223,7 +223,7 @@ void render::drw_line(
     BlackPixel(state::get_dpy(), state::get_screen()));
   XDrawLine(state::get_dpy(), target->drawable, target->gc, x, y, x1, y1);
   
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   
   //req(win, x, y, x1 - x + 1, y1 - y + 1);// added 1 margin for lines
 }
@@ -237,7 +237,7 @@ void render::drw_rect(
   int h,
   bool filled
 ) {
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   
   XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
   XSetBackground(state::get_dpy(),
@@ -249,7 +249,7 @@ void render::drw_rect(
     XDrawRectangle(state::get_dpy(), target->drawable, target->gc, x, y, w, h);
   }
   
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }
@@ -265,7 +265,7 @@ void render::drw_arc(
   int a1,
   bool filled
 ) {
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
   XSetBackground(state::get_dpy(),
     target->gc,
@@ -291,7 +291,7 @@ void render::drw_arc(
       a0 * 64,
       a1 * 64);
   }
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }
 
@@ -312,7 +312,7 @@ void render::drw_text(
   XGlyphInfo x_glyph_info;
   int w, h;
   
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   
   XSetForeground(state::get_dpy(), target->gc, c.pixel);
   XSetBackground(state::get_dpy(),
@@ -331,7 +331,7 @@ void render::drw_text(
   
   XftDrawDestroy(xft_draw);
   
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }
@@ -344,7 +344,7 @@ void render::drw_image(
   int w,
   int h
 ) {
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   
   Pixmap tmp_pixmap = XCreatePixmap(state::get_dpy(),
     target->drawable,
@@ -408,7 +408,7 @@ void render::drw_image(
   XFreeGC(state::get_dpy(), tmp_gc);
   XFreePixmap(state::get_dpy(), tmp_pixmap);
   
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }
 
@@ -422,7 +422,7 @@ void render::drw_target(
   int w,
   int h
 ) {
-  dest_target->win->x_mtx.lock();
+  //dest_target->win->x_mtx.lock();
   XCopyArea(state::get_dpy(),
     source_target->drawable,
     dest_target->drawable,
@@ -433,6 +433,6 @@ void render::drw_target(
     h,
     xd,
     yd);
-  dest_target->win->x_mtx.unlock();
+  //dest_target->win->x_mtx.unlock();
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }
