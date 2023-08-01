@@ -107,17 +107,49 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   win->render_mtx.unlock();
 }
 
-static std::unordered_map <u32, XColor> xcolor_cache;
+static std::unordered_map<u32, XColor> xcolor_cache;
+
+struct xcolor_hot_cache_entry_t {
+  u32 id;
+  XColor xcolor;
+};
+static constexpr u32 xcolor_hot_cache_size = 8;
+static xcolor_hot_cache_entry_t xcolor_hot_cache[xcolor_hot_cache_size];
+static u32 xcolor_hot_cache_current_insert_index = 0U;
 
 XColor color_to_xcolor(color::Color color) {
   u32 color_id = color.to_id();
-  if (xcolor_cache.contains(color_id))
-    return xcolor_cache[color_id];
+  
+  for (auto &entry: xcolor_hot_cache) {
+    if (entry.id == color_id) {
+      return entry.xcolor;
+    }
+  }
+  
+  if (xcolor_cache.contains(color_id)) {
+    auto &c = xcolor_cache[color_id];
+    xcolor_hot_cache[xcolor_hot_cache_current_insert_index++] = {
+      .id = color_id,
+      .xcolor = c,
+    };
+    if (xcolor_hot_cache_current_insert_index >= xcolor_hot_cache_size) {
+      xcolor_hot_cache_current_insert_index = 0U;
+    }
+    return c;
+  }
   
   Colormap map = DefaultColormap(state::get_dpy(), state::get_screen());
   XColor c;
   XParseColor(state::get_dpy(), map, color.to_string().c_str(), &c);
   XAllocColor(state::get_dpy(), map, &c);
+  
+  xcolor_hot_cache[xcolor_hot_cache_current_insert_index++] = {
+    .id = color_id,
+    .xcolor = c,
+  };
+  if (xcolor_hot_cache_current_insert_index >= xcolor_hot_cache_size) {
+    xcolor_hot_cache_current_insert_index = 0U;
+  }
   
   xcolor_cache[color_id] = c;
   return c;
