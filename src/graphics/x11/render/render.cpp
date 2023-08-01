@@ -138,10 +138,12 @@ XColor color_to_xcolor(color::Color color) {
     return c;
   }
   
-  Colormap map = DefaultColormap(state::get_dpy(), state::get_screen());
+  auto dpy = state::get_dpy();
+  auto screen = state::get_screen();
+  Colormap map = DefaultColormap(dpy, screen);
   XColor c;
-  XParseColor(state::get_dpy(), map, color.to_string().c_str(), &c);
-  XAllocColor(state::get_dpy(), map, &c);
+  XParseColor(dpy, map, color.to_string().c_str(), &c);
+  XAllocColor(dpy, map, &c);
   
   xcolor_hot_cache[xcolor_hot_cache_current_insert_index++] = {
     .id = color_id,
@@ -164,9 +166,11 @@ XftColor* color_to_xftcolor(color::Color color) {
   
   auto* c = new XftColor;
   
-  if (!XftColorAllocName(state::get_dpy(),
-    DefaultVisual(state::get_dpy(), state::get_screen()),
-    DefaultColormap(state::get_dpy(), state::get_screen()),
+  auto dpy = state::get_dpy();
+  auto screen = state::get_screen();
+  if (!XftColorAllocName(dpy,
+    DefaultVisual(dpy, screen),
+    DefaultColormap(dpy, screen),
     color.to_string().c_str(),
     c)) {
     xlog_ctrl.error("Cannot allocate color %s", color.to_string().c_str());
