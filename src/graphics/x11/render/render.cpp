@@ -238,15 +238,17 @@ void render::drw_rect(
   bool filled
 ) {
   //target->win->x_mtx.lock();
-  
-  XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
-  XSetBackground(state::get_dpy(),
-    target->gc,
-    BlackPixel(state::get_dpy(), state::get_screen()));
+  auto dpy = state::get_dpy();
+  XSetState(dpy, target->gc, color_to_xcolor(color).pixel, BlackPixel(dpy, state::get_screen()), GCFunction,
+    GCPlaneMask);
+  //XSetForeground(dpy, target->gc, color_to_xcolor(color).pixel);
+  //XSetBackground(dpy,
+  //  target->gc,
+  //  BlackPixel(state::get_dpy(), state::get_screen()));
   if (filled) {
-    XFillRectangle(state::get_dpy(), target->drawable, target->gc, x, y, w, h);
+    XFillRectangle(dpy, target->drawable, target->gc, x, y, w, h);
   } else {
-    XDrawRectangle(state::get_dpy(), target->drawable, target->gc, x, y, w, h);
+    XDrawRectangle(dpy, target->drawable, target->gc, x, y, w, h);
   }
   
   //target->win->x_mtx.unlock();
