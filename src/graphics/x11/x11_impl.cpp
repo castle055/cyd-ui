@@ -13,6 +13,8 @@
 #include <X11/Xutil.h>
 #include <png.h>
 
+#include <utility>
+
 const logging::logger log_task = {.name = "X11_IMPL", .on = true};
 
 char* log_error_code(int err) {
@@ -208,11 +210,13 @@ void cydui::graphics::clr_rect(
   //render::clr_rect(target, x, y, w, h);
   target->win->render_reqs->push_back({
     .type = render_req_type_e::RECTANGLE,
-    .target = target,
-    .color = color::Black,
-    .filled = true,
-    .x = x, .y = y,
-    .w = (int) w, .h = (int) h,
+    .rect = {
+      .target = target,
+      .color = color::Black,
+      .x = x, .y = y,
+      .w = (int) w, .h = (int) h,
+      .filled = true,
+    }
   });
 }
 
@@ -228,10 +232,12 @@ void cydui::graphics::drw_line(
   std::scoped_lock lock(target->win->render_mtx);
   target->win->render_reqs->push_back({
     .type = render_req_type_e::LINE,
-    .target = target,
-    .color = color,
-    .x = x, .y = y,
-    .w = x1 - x, .h = y1 - y,
+    .line = {
+      .target = target,
+      .color = color,
+      .x = x, .y = y,
+      .x1 = x1, .y1 = y1,
+    },
   });
 }
 
@@ -247,11 +253,13 @@ void cydui::graphics::drw_rect(
   //render::drw_rect(target, color, x, y, w, h, filled);
   target->win->render_reqs->push_back({
     .type = render_req_type_e::RECTANGLE,
-    .target = target,
-    .color = color,
-    .filled = filled,
-    .x = x, .y = y,
-    .w = w, .h = h,
+    .rect = {
+      .target = target,
+      .color = color,
+      .x = x, .y = y,
+      .w = (int) w, .h = (int) h,
+      .filled = filled,
+    },
   });
 }
 
@@ -269,12 +277,14 @@ void cydui::graphics::drw_arc(
   //render::drw_arc(target, color, x, y, w, h, a0, a1, filled);
   target->win->render_reqs->push_back({
     .type = render_req_type_e::ARC,
-    .target = target,
-    .color = color,
-    .filled = filled,
-    .x = x, .y = y,
-    .w = w, .h = h,
-    .a0_xs = a0, .a1_ys = a1,
+    .arc = {
+      .target = target,
+      .color = color,
+      .x = x, .y = y,
+      .w = w, .h = h,
+      .a0 = a0, .a1 = a1,
+      .filled = filled,
+    },
   });
 }
 
@@ -292,12 +302,12 @@ static str to_pattern(font::Font* font) {
   return str;
 }
 
-static window_font load_font(
+static window_font* load_font(
   cydui::graphics::window_t* win, font::Font* font
 ) {
   str font_spec = to_pattern(font);
   if (win->loaded_fonts.contains(font_spec))
-    return win->loaded_fonts[font_spec];
+    return &(win->loaded_fonts[font_spec]);
   XftFont* xfont;
   FcPattern* pattern;
   
@@ -313,7 +323,7 @@ static window_font load_font(
   
   auto f = window_font {.xfont = xfont, .pattern = pattern};
   win->loaded_fonts[font_spec] = f;
-  return f;
+  return &(win->loaded_fonts[font_spec]);
 }
 
 static void unload_font(
@@ -370,15 +380,17 @@ void cydui::graphics::drw_text(
   int x,
   int y
 ) {
-  window_font xfont = load_font(target->win, font);
+  window_font* xfont = load_font(target->win, font);
   //render::drw_text(target, xfont, color, text, x, y);
   target->win->render_reqs->push_back({
     .type = render_req_type_e::TEXT,
-    .target = target,
-    .color = color,
-    .font = xfont,
-    .text = text,
-    .x = x, .y = y,
+    .text = {
+      .target = target,
+      .color = color,
+      .font = xfont,
+      .text = new std::string {std::move(text)},
+      .x = x, .y = y,
+    },
   });
 }
 
@@ -421,9 +433,12 @@ void cydui::graphics::drw_image(
   //render::drw_image(target, i, x, y, w, h);
   target->win->render_reqs->push_back({
     .type = render_req_type_e::IMAGE,
-    .image = i,
-    .x = x, .y = y,
-    .w = w, .h = h,
+    .img = {
+      .target = target,
+      .image = i,
+      .x = x, .y = y,
+      .w = w, .h = h,
+    },
   });
 }
 
@@ -448,10 +463,12 @@ void cydui::graphics::drw_target(
   std::scoped_lock lock(dest_target->win->render_mtx);
   dest_target->win->render_reqs->push_back({
     .type = render_req_type_e::TARGET,
-    .target = dest_target,
-    .source_target = source_target,
-    .x = xd, .y = yd,
-    .w = w, .h = h,
-    .a0_xs = xs, .a1_ys = ys,
+    .target = {
+      .target = dest_target,
+      .source_target = source_target,
+      .xs = xs, .ys = ys,
+      .xd = xd, .yd = yd,
+      .w = w, .h = h,
+    },
   });
 }

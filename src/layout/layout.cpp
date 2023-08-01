@@ -98,7 +98,6 @@ static bool compute_dimensions(cydui::components::Component* rt) {
 static void redraw_component(
   const cydui::window::CWindow* win, cydui::components::Component* target, cydui::layout::Layout* layout
 ) {
-  log_lay.debug("REDRAW");
   //auto t0 = std::chrono::system_clock::now().time_since_epoch();
   // Clear render area of component instances
   for (auto child: target->children)
@@ -176,7 +175,14 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
         target = specified_target;
     }
     
+    //auto t1 = std::chrono::high_resolution_clock::now();
     redraw_component(this->win, target, this);
+    //auto t2 = std::chrono::high_resolution_clock::now();
+    //auto dt = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+    //auto us = dt.count();
+    //if (us > 0) {
+    //  log_lay.info("REDRAW EV: %ld us | FPS: %ld", us, 1000000 / std::max(16000L, us));
+    //}
   });
   listen(KeyEvent, {
     if (it.data->win != win->win_ref->xwin)

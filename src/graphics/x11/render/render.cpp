@@ -10,29 +10,86 @@
 #include <X11/Xlib.h>
 
 logging::logger xlog_ctrl = {.name = "X11::RENDER::CTRL", .on = false};
-logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = false};
+logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = true};
 
 static void render_requests(cydui::graphics::window_t* win) {
   if (!win->staging_reqs) return;
-  xlog_task.info("rendering requests %zu", win->staging_reqs->size());
-  for (const auto &r: *win->staging_reqs) {
-    switch (r.type) {
-      case render_req_type_e::LINE:render::drw_line(r.target, r.color, r.x, r.y, r.x + r.w, r.y + r.h);
+  //xlog_task.info("rendering requests %zu", win->staging_reqs->size());
+  auto* node = win->staging_reqs->begin();
+  while (node != nullptr) {
+    auto* r = node;
+    switch (r->type) {
+      case render_req_type_e::LINE:
+        render::drw_line(
+          r->line.target,
+          r->line.color,
+          r->line.x,
+          r->line.y,
+          r->line.x1,
+          r->line.y1
+        );
         break;
-      case render_req_type_e::RECTANGLE:render::drw_rect(r.target, r.color, r.x, r.y, r.w, r.h, r.filled);
+      case render_req_type_e::RECTANGLE:
+        render::drw_rect(
+          r->rect.target,
+          r->rect.color,
+          r->rect.x,
+          r->rect.y,
+          r->rect.w,
+          r->rect.h,
+          r->rect.filled
+        );
         break;
-      case render_req_type_e::ARC:render::drw_arc(r.target, r.color, r.x, r.y, r.w, r.h, r.a0_xs, r.a1_ys, r.filled);
+      case render_req_type_e::ARC:
+        render::drw_arc(
+          r->arc.target,
+          r->arc.color,
+          r->arc.x,
+          r->arc.y,
+          r->arc.w,
+          r->arc.h,
+          r->arc.a0,
+          r->arc.a1,
+          r->arc.filled
+        );
         break;
-      case render_req_type_e::TEXT:render::drw_text(r.target, r.font, r.color, r.text, r.x, r.y);
+      case render_req_type_e::TEXT:if (r->text.text == nullptr) break;
+        render::drw_text(
+          r->text.target,
+          *r->text.font,
+          r->text.color,
+          r->text.text->c_str(),
+          r->text.x,
+          r->text.y
+        );
+        delete r->text.text;
         break;
-      case render_req_type_e::IMAGE:render::drw_image(r.target, r.image, r.x, r.y, r.w, r.h);
+      case render_req_type_e::IMAGE:
+        render::drw_image(
+          r->img.target,
+          r->img.image,
+          r->img.x,
+          r->img.y,
+          r->img.w,
+          r->img.h
+        );
         break;
       case render_req_type_e::TARGET:
-        render::drw_target(r.target, r.source_target, r.a0_xs, r.a1_ys, r.x, r.y, r.w, r.h);
+        render::drw_target(
+          r->target.target,
+          r->target.source_target,
+          r->target.xs,
+          r->target.ys,
+          r->target.xd,
+          r->target.yd,
+          r->target.w,
+          r->target.h
+        );
         break;
       case render_req_type_e::FLUSH://render::flush(win);
         break;
     }
+    node = node->next;
   }
   win->staging_reqs->clear();
 }
@@ -44,7 +101,7 @@ void render_sbr(cydui::graphics::window_t* win) {
   bool dirty = win->dirty;
   win->dirty = false;
   
-  if (!dirty) {
+  if (!dirty || win->staging_reqs->empty()) {
     win->render_mtx.unlock();
     return;
   } else {
@@ -85,8 +142,16 @@ void render_task(cydui::threading::thread_t* this_thread) {
   xlog_task.debug("Started render thread");
   auto* render_data = (render::RenderThreadData*) this_thread->data;
   while (this_thread->running) {
+    auto t1 = std::chrono::high_resolution_clock::now();
     render_sbr(render_data->win);
-    std::this_thread::sleep_for(30ms);
+    auto t2 = std::chrono::high_resolution_clock::now();
+    auto dt = std::chrono::duration_cast<std::chrono::microseconds>(t2 - t1);
+    //auto us = dt.count();
+    //if (us > 0) {
+    //  xlog_task.debug("RENDER: %ld us | FPS: %ld", us, 1000000 / std::max(16000L, us));
+    //}
+    
+    std::this_thread::sleep_for(16ms - dt);
   }
 }
 
@@ -105,39 +170,11 @@ void render::start(cydui::graphics::window_t* win) {
 static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   win->render_mtx.lock();
   win->dirty = true;
-  //win->staging_drawable = win->drawable;
-  //win->staging_gc       = win->gc;
-  //win->drawable         = XCreatePixmap(
-  //    state::get_dpy(),
-  //    win->xwin,
-  //    w,
-  //    h,
-  //    DefaultDepth(state::get_dpy(), state::get_screen()));
-  //win->gc               = XCreateGC(state::get_dpy(), win->drawable, 0, NULL);
-  //-------------
-  for (auto &r: *win->render_reqs) {
-    win->staging_reqs->push_back(r);
-  }
-  win->render_reqs = new std::deque<render_req_t> {};
-  //XCopyArea(state::get_dpy(),
-  //  win->render_target->drawable,
-  //  win->staging_target->drawable,
-  //  win->render_target->gc,
-  //  0,
-  //  0,
-  //  win->render_target->w,
-  //  win->render_target->h,
-  //  0,
-  //  0);
-  //-------------
-  //win->staging_target->w = win->render_target->w;
-  //win->staging_target->h = win->render_target->h;
-  
-  //win->x_mtx.unlock();
+  win->staging_reqs->append(*win->render_reqs);
   win->render_mtx.unlock();
 }
 
-static std::unordered_map<u32, XColor> xcolor_cache;
+static std::unordered_map <u32, XColor> xcolor_cache;
 
 struct xcolor_hot_cache_entry_t {
   u32 id;
@@ -279,7 +316,8 @@ void render::drw_line(
 ) {
   //target->win->x_mtx.lock();
   
-  XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
+  auto xc = color_to_xcolor(color).pixel;
+  XSetForeground(state::get_dpy(), target->gc, xc);
   XSetBackground(state::get_dpy(),
     target->gc,
     BlackPixel(state::get_dpy(), state::get_screen()));
