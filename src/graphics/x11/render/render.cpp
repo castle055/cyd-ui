@@ -239,12 +239,8 @@ void render::drw_rect(
 ) {
   //target->win->x_mtx.lock();
   auto dpy = state::get_dpy();
-  XSetState(dpy, target->gc, color_to_xcolor(color).pixel, BlackPixel(dpy, state::get_screen()), GXcopyInverted,
+  XSetState(dpy, target->gc, color_to_xcolor(color).pixel, BlackPixel(dpy, state::get_screen()), GXcopy,
     AllPlanes);
-  //XSetForeground(dpy, target->gc, color_to_xcolor(color).pixel);
-  //XSetBackground(dpy,
-  //  target->gc,
-  //  BlackPixel(state::get_dpy(), state::get_screen()));
   if (filled) {
     XFillRectangle(dpy, target->drawable, target->gc, x, y, w, h);
   } else {
