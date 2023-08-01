@@ -197,12 +197,23 @@ void cydui::graphics::render_target_t::resize(int nw, int nh) {
 
 void cydui::graphics::flush(window_t* win) {
   render::flush(win);
+  //win->render_reqs.push_back({
+  //  .type = render_req_type_e::FLUSH,
+  //});
 }
 
 void cydui::graphics::clr_rect(
   render_target_t* target, int x, int y, unsigned int w, unsigned int h
 ) {
-  render::clr_rect(target, x, y, w, h);
+  //render::clr_rect(target, x, y, w, h);
+  target->win->render_reqs.push_back({
+    .type = render_req_type_e::RECTANGLE,
+    .target = target,
+    .color = color::Black,
+    .filled = true,
+    .x = x, .y = y,
+    .w = (int) w, .h = (int) h,
+  });
 }
 
 void cydui::graphics::drw_line(
@@ -213,7 +224,14 @@ void cydui::graphics::drw_line(
   int x1,
   int y1
 ) {
-  render::drw_line(target, color, x, y, x1, y1);
+  //render::drw_line(target, color, x, y, x1, y1);
+  target->win->render_reqs.push_back({
+    .type = render_req_type_e::LINE,
+    .target = target,
+    .color = color,
+    .x = x, .y = y,
+    .w = x1 - x, .h = y1 - y,
+  });
 }
 
 void cydui::graphics::drw_rect(
@@ -225,7 +243,15 @@ void cydui::graphics::drw_rect(
   int h,
   bool filled
 ) {
-  render::drw_rect(target, color, x, y, w, h, filled);
+  //render::drw_rect(target, color, x, y, w, h, filled);
+  target->win->render_reqs.push_back({
+    .type = render_req_type_e::RECTANGLE,
+    .target = target,
+    .color = color,
+    .filled = filled,
+    .x = x, .y = y,
+    .w = w, .h = h,
+  });
 }
 
 void cydui::graphics::drw_arc(
@@ -239,7 +265,16 @@ void cydui::graphics::drw_arc(
   int a1,
   bool filled
 ) {
-  render::drw_arc(target, color, x, y, w, h, a0, a1, filled);
+  //render::drw_arc(target, color, x, y, w, h, a0, a1, filled);
+  target->win->render_reqs.push_back({
+    .type = render_req_type_e::ARC,
+    .target = target,
+    .color = color,
+    .filled = filled,
+    .x = x, .y = y,
+    .w = w, .h = h,
+    .a0_xs = a0, .a1_ys = a1,
+  });
 }
 
 static str to_pattern(font::Font* font) {
@@ -335,7 +370,15 @@ void cydui::graphics::drw_text(
   int y
 ) {
   window_font xfont = load_font(target->win, font);
-  render::drw_text(target, xfont, color, text, x, y);
+  //render::drw_text(target, xfont, color, text, x, y);
+  target->win->render_reqs.push_back({
+    .type = render_req_type_e::TEXT,
+    .target = target,
+    .color = color,
+    .font = xfont,
+    .text = text,
+    .x = x, .y = y,
+  });
 }
 
 static std::unordered_map<str, XftFont*> cached_fonts;
@@ -374,7 +417,13 @@ void cydui::graphics::drw_image(
   int h
 ) {
   window_image i = load_image(target->win, img);
-  render::drw_image(target, i, x, y, w, h);
+  //render::drw_image(target, i, x, y, w, h);
+  target->win->render_reqs.push_back({
+    .type = render_req_type_e::IMAGE,
+    .image = i,
+    .x = x, .y = y,
+    .w = w, .h = h,
+  });
 }
 
 std::pair<int, int> cydui::graphics::get_image_size(
@@ -394,5 +443,13 @@ void cydui::graphics::drw_target(
   int w,
   int h
 ) {
-  render::drw_target(dest_target, source_target, xs, ys, xd, yd, w, h);
+  //render::drw_target(dest_target, source_target, xs, ys, xd, yd, w, h);
+  dest_target->win->render_reqs.push_back({
+    .type = render_req_type_e::TARGET,
+    .target = dest_target,
+    .source_target = source_target,
+    .x = xd, .y = yd,
+    .w = w, .h = h,
+    .a0_xs = xs, .a1_ys = ys,
+  });
 }

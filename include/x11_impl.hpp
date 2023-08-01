@@ -6,6 +6,7 @@
 #define CYD_UI_X11_IMPL_HPP
 
 #include "threading.hpp"
+#include "color.h"
 
 #include <X11/Xft/Xft.h>
 #include <deque>
@@ -28,6 +29,7 @@ struct window_image {
 };
 typedef std::unordered_map<str, window_image> loaded_images_map_t;
 
+
 struct window_ti;
 
 struct render_target_ti {
@@ -45,6 +47,35 @@ struct render_target_ti {
   void resize(int w, int h);
 };
 
+
+enum class render_req_type_e {
+  LINE,
+  RECTANGLE,
+  ARC,
+  TEXT,
+  IMAGE,
+  TARGET,
+  FLUSH,
+};
+
+struct render_req_t {
+  render_req_type_e type = render_req_type_e::LINE;
+  render_target_ti* target = nullptr;
+  color::Color color {};
+  bool filled = false;
+  window_font font {};
+  std::string text {};
+  window_image image {};
+  render_target_ti* source_target = nullptr;
+  int x = 0;
+  int y = 0;
+  int w = 0;
+  int h = 0;
+  int a0_xs = 0;
+  int a1_ys = 0;
+};
+
+
 struct window_ti {
   char padd[128];
   Window xwin;
@@ -57,7 +88,7 @@ struct window_ti {
   //GC gc;
   //int w;
   //int h;
-  std::deque<window_render_req> render_reqs;
+  std::deque<render_req_t> render_reqs;
   bool dirty = true;
   std::mutex render_mtx;
   std::mutex x_mtx;

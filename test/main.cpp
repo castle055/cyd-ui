@@ -81,13 +81,14 @@ namespace test {
                     .props = {
                       .color = state->c,
                       .font  = &state->font,
-                      .text  = "Test TEXT",
+                      .text  = "=======Test TEXT",
                     },
                   }),
                   COMP(VBox)({
                     .props = {
                       .spacing = 10,
                     },
+                    .y = 20,
                     .inner = {
                       COMP(Text)({
                         .props = {

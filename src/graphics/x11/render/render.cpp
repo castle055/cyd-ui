@@ -12,6 +12,29 @@
 logging::logger xlog_ctrl = {.name = "X11::RENDER::CTRL", .on = false};
 logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = true};
 
+static void render_requests(cydui::graphics::window_t* win) {
+  for (const auto &r: win->render_reqs) {
+    switch (r.type) {
+      case render_req_type_e::LINE:render::drw_line(r.target, r.color, r.x, r.y, r.x + r.w, r.y + r.h);
+        break;
+      case render_req_type_e::RECTANGLE:render::drw_rect(r.target, r.color, r.x, r.y, r.w, r.h, r.filled);
+        break;
+      case render_req_type_e::ARC:render::drw_arc(r.target, r.color, r.x, r.y, r.w, r.h, r.a0_xs, r.a1_ys, r.filled);
+        break;
+      case render_req_type_e::TEXT:render::drw_text(r.target, r.font, r.color, r.text, r.x, r.y);
+        break;
+      case render_req_type_e::IMAGE:render::drw_image(r.target, r.image, r.x, r.y, r.w, r.h);
+        break;
+      case render_req_type_e::TARGET:
+        render::drw_target(r.target, r.source_target, r.a0_xs, r.a1_ys, r.x, r.y, r.w, r.h);
+        break;
+      case render_req_type_e::FLUSH://render::flush(win);
+        break;
+    }
+  }
+  win->render_reqs.clear();
+}
+
 void render_sbr(cydui::graphics::window_t* win) {
   //window_render_req req;
   
@@ -20,8 +43,11 @@ void render_sbr(cydui::graphics::window_t* win) {
   win->dirty = false;
   win->render_mtx.unlock();
   
-  if (!dirty)
+  if (!dirty) {
     return;
+  } else {
+    render_requests(win);
+  }
   
   //win->x_mtx.lock();
   //win->render_mtx.lock();
@@ -107,7 +133,7 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   win->render_mtx.unlock();
 }
 
-static std::unordered_map<u32, XColor> xcolor_cache;
+static std::unordered_map <u32, XColor> xcolor_cache;
 
 struct xcolor_hot_cache_entry_t {
   u32 id;
@@ -278,7 +304,6 @@ void render::drw_rect(
   } else {
     XDrawRectangle(dpy, target->drawable, target->gc, x, y, w, h);
   }
-  
   //target->win->x_mtx.unlock();
   
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
