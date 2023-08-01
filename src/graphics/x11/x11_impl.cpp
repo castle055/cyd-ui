@@ -206,7 +206,7 @@ void cydui::graphics::clr_rect(
   render_target_t* target, int x, int y, unsigned int w, unsigned int h
 ) {
   //render::clr_rect(target, x, y, w, h);
-  target->win->render_reqs.push_back({
+  target->win->render_reqs->push_back({
     .type = render_req_type_e::RECTANGLE,
     .target = target,
     .color = color::Black,
@@ -225,7 +225,7 @@ void cydui::graphics::drw_line(
   int y1
 ) {
   //render::drw_line(target, color, x, y, x1, y1);
-  target->win->render_reqs.push_back({
+  target->win->render_reqs->push_back({
     .type = render_req_type_e::LINE,
     .target = target,
     .color = color,
@@ -244,7 +244,7 @@ void cydui::graphics::drw_rect(
   bool filled
 ) {
   //render::drw_rect(target, color, x, y, w, h, filled);
-  target->win->render_reqs.push_back({
+  target->win->render_reqs->push_back({
     .type = render_req_type_e::RECTANGLE,
     .target = target,
     .color = color,
@@ -266,7 +266,7 @@ void cydui::graphics::drw_arc(
   bool filled
 ) {
   //render::drw_arc(target, color, x, y, w, h, a0, a1, filled);
-  target->win->render_reqs.push_back({
+  target->win->render_reqs->push_back({
     .type = render_req_type_e::ARC,
     .target = target,
     .color = color,
@@ -371,7 +371,7 @@ void cydui::graphics::drw_text(
 ) {
   window_font xfont = load_font(target->win, font);
   //render::drw_text(target, xfont, color, text, x, y);
-  target->win->render_reqs.push_back({
+  target->win->render_reqs->push_back({
     .type = render_req_type_e::TEXT,
     .target = target,
     .color = color,
@@ -418,7 +418,7 @@ void cydui::graphics::drw_image(
 ) {
   window_image i = load_image(target->win, img);
   //render::drw_image(target, i, x, y, w, h);
-  target->win->render_reqs.push_back({
+  target->win->render_reqs->push_back({
     .type = render_req_type_e::IMAGE,
     .image = i,
     .x = x, .y = y,
@@ -444,7 +444,7 @@ void cydui::graphics::drw_target(
   int h
 ) {
   //render::drw_target(dest_target, source_target, xs, ys, xd, yd, w, h);
-  dest_target->win->render_reqs.push_back({
+  dest_target->win->render_reqs->push_back({
     .type = render_req_type_e::TARGET,
     .target = dest_target,
     .source_target = source_target,

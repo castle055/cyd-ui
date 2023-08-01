@@ -88,7 +88,7 @@ struct window_ti {
   //GC gc;
   //int w;
   //int h;
-  std::deque<render_req_t> render_reqs;
+  std::deque<render_req_t>* render_reqs = new std::deque<render_req_t> {};
   bool dirty = true;
   std::mutex render_mtx;
   std::mutex x_mtx;

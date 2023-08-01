@@ -13,7 +13,7 @@ logging::logger xlog_ctrl = {.name = "X11::RENDER::CTRL", .on = false};
 logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = true};
 
 static void render_requests(cydui::graphics::window_t* win) {
-  for (const auto &r: win->render_reqs) {
+  for (const auto &r: *win->render_reqs) {
     switch (r.type) {
       case render_req_type_e::LINE:render::drw_line(r.target, r.color, r.x, r.y, r.x + r.w, r.y + r.h);
         break;
@@ -32,7 +32,7 @@ static void render_requests(cydui::graphics::window_t* win) {
         break;
     }
   }
-  win->render_reqs.clear();
+  win->render_reqs->clear();
 }
 
 void render_sbr(cydui::graphics::window_t* win) {
