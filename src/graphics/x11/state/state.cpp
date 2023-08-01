@@ -14,7 +14,7 @@ Display* state::get_dpy() {
   if (dpy)
     return dpy;
   if ((dpy = XOpenDisplay(nullptr))) {
-    log_task.info("dpy = %X", dpy);
+    log_task.info("dpy = %lX", (unsigned long) dpy);
     return dpy;
   } else {
     log_task.error("Could not open display");
@@ -32,6 +32,6 @@ int state::get_screen() {
 
 Window state::get_root() {
   Window root = XRootWindow(get_dpy(), get_screen());
-  log_task.info("root = %d", root);
+  log_task.info("root = %lu", root);
   return root;
 }

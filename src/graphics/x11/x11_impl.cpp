@@ -97,7 +97,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   XSync(state::get_dpy(), False);
   
   log_task.info(
-    "Created window %X at (%s) x: %d, y: %d", xwin, geom.c_str(), x, y);
+    "Created window %lX at (%s) x: %d, y: %d", xwin, geom.c_str(), x, y);
   
   if (!override_redirect) {
     XWMHints wm = {.flags = InputHint, .input = 1};
@@ -127,7 +127,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   } else {
     XMapWindow(state::get_dpy(), xwin);
   }
-  log_task.debug("Mapping window %X", xwin);
+  log_task.debug("Mapping window %lX", xwin);
   
   //XSync(state::get_dpy(), False);
   
