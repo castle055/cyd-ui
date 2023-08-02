@@ -4,7 +4,7 @@
 
 #include "render.hpp"
 #include "../state/state.hpp"
-#include "cyd-log/dist/include/logging.hpp"
+#include "cyd-log/logging.hpp"
 #include "x11_impl.hpp"
 
 #include <X11/Xlib.h>

@@ -3,7 +3,7 @@
 //
 
 #include "../../events.hpp"
-#include "cyd-log/dist/include/logging.hpp"
+#include "cyd-log/logging.hpp"
 #include "threading.hpp"
 #include "../state/state.hpp"
 #include <X11/Xlib.h>

@@ -42,11 +42,11 @@ include(cppcheck.cmake)
 include(clang-format.cmake)
 
 FILE(GLOB_RECURSE STATIC_EXTRA_LIBS
-        ${CMAKE_CURRENT_LIST_DIR}/.cyd/deps/*.a
+        ${CMAKE_CURRENT_LIST_DIR}/.cyd/deps/**/*.a
         )
 
 FILE(GLOB_RECURSE EXTRA_LIBS_LIST
-        ${CMAKE_CURRENT_LIST_DIR}/.cyd/deps/*.*
+        ${CMAKE_CURRENT_LIST_DIR}/.cyd/deps/**/*.*
         )
 
 FILE(GLOB_RECURSE SRC_LIST

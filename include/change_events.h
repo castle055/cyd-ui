@@ -6,7 +6,7 @@
 #define CYD_UI_CHANGE_EVENTS_H
 
 #include "events.hpp"
-#include "cyd-log/dist/include/logging.hpp"
+#include "cyd-log/logging.hpp"
 
 extern logging::logger chev_log;
 
