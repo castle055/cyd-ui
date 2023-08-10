@@ -231,16 +231,24 @@ namespace cydui::components {
     struct dynamic_builder_impl_t;
     
     struct dynamic_builder_t {
+    private:
+      std::function<void(dynamic_builder_t*)> destroyer = [](dynamic_builder_t* it) {
+        delete it;
+      };
+    public:
       template<components::ComponentConcept C>
       static dynamic_builder_t* create() {
-        return new dynamic_builder_impl_t<C>;
+        dynamic_builder_t* db = new dynamic_builder_impl_t<C>;
+        db->destroyer = [](dynamic_builder_t* it) {
+          delete (dynamic_builder_impl_t <C>*) it;
+        };
+        return db;
       }
       
       virtual ~dynamic_builder_t() = default;
       
-      template<components::ComponentConcept C>
       static void destroy(dynamic_builder_t* builder) {
-        delete (dynamic_builder_impl_t <C>*) builder;
+        builder->destroyer(builder);
       }
       
       virtual components::ComponentState* build_state() = 0;
