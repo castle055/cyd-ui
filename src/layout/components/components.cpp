@@ -78,6 +78,7 @@ void Component::add(
         if (subitem == nullptr || !subitem->state)
           continue;
         subitem->parent = (Component*) this;
+        (*subitem->state.unwrap())->win = (*state.unwrap())->win;
         if (prepend) {
           this->children.push_front(subitem);
         } else {
@@ -88,6 +89,7 @@ void Component::add(
       delete child;
     } else {
       child->parent = (Component*) this;
+      (*child->state.unwrap())->win = (*state.unwrap())->win;
       if (prepend) {
         this->children.push_front(child);
       } else {
