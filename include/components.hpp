@@ -88,7 +88,7 @@ namespace cydui::components {
       template<typename c, int ID, typename T>
       requires ComponentConcept<c>
       inline component_builder_t create_for(
-        const T &iter, std::function<c_init_t<c>(typename T::value_type &)> block
+        const T &iter, std::function<c_init_t<c>(const typename T::value_type &)> block
       ) const {
         std::vector<typename c::State*> states = {};
         state.let(_(ComponentState *, {
