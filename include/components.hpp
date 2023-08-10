@@ -123,7 +123,7 @@ namespace cydui::components {
         };
       }
       
-      inline component_builder_t create_group(std::vector<component_builder_t> _children) const {
+      inline component_builder_t create_group(std::vector <component_builder_t> _children) const {
         return {
           .build = [_children](const component_builder_t &) {
             auto* group = Component::new_group();
@@ -172,7 +172,7 @@ namespace cydui::components {
       mutable nullable<ComponentState*> state;
       cydui::dimensions::component_dimensions_t* dim;
       
-      void add(const std::vector<component_builder_t> &ichildren, bool prepend = false) const;
+      void add(const std::vector <component_builder_t> &ichildren, bool prepend = false) const;
       
       mutable std::deque<Component*> children;
       
@@ -224,6 +224,75 @@ namespace cydui::components {
 #define ON_DRAG_MOTION(X, Y)   COMP_EVENT_HANDLER_OVERRIDE(drag_motion, (int (X), int (Y)))
 #define ON_DRAG_FINISH(X, Y)   COMP_EVENT_HANDLER_OVERRIDE(drag_finish, (int (X), int (Y)))
     };
+    
+    // Dynamic Builder for when you need an extra bit of flexibility
+    // They can keep building components and states for ever and it remembers which kind!
+    template<components::ComponentConcept C>
+    struct dynamic_builder_impl_t;
+    
+    struct dynamic_builder_t {
+      template<components::ComponentConcept C>
+      static dynamic_builder_t* create() {
+        return new dynamic_builder_impl_t<C>;
+      }
+      
+      virtual ~dynamic_builder_t() = default;
+      
+      template<components::ComponentConcept C>
+      static void destroy(dynamic_builder_t* builder) {
+        delete (dynamic_builder_impl_t <C>*) builder;
+      }
+      
+      virtual components::ComponentState* build_state() = 0;
+      
+      struct comp_init_t {
+        components::ComponentState* state = nullptr;
+        void* props_ptr = nullptr;
+        cydui::dimensions::dimensional_relation_t x = 0;
+        cydui::dimensions::dimensional_relation_t y = 0;
+        cydui::dimensions::dimensional_relation_t w = 0;
+        cydui::dimensions::dimensional_relation_t h = 0;
+        std::function<void(components::Component*)> init = [](components::Component*) {
+        };
+      };
+      
+      virtual component_builder_t build_component(const comp_init_t &init) = 0;
+    };
+    
+    template<components::ComponentConcept C>
+    struct dynamic_builder_impl_t: public dynamic_builder_t {
+      ~dynamic_builder_impl_t() override = default;
+      
+      C::State* build_state() override {
+        return new C::State();
+      }
+      
+      component_builder_t build_component(const comp_init_t &init) override {
+        typename C::Props props = (init.props_ptr == nullptr) ? typename C::Props() : *(typename C::Props*) init.props_ptr;
+        if (init.props_ptr != nullptr) delete (typename C::Props*) init.props_ptr;
+        return {
+          .x = init.x,
+          .y = init.y,
+          .w = init.w,
+          .h = init.h,
+          .build = [props, init](component_builder_t spec) {
+            return new C((typename C::State*) init.state, props, [spec, init](components::Component* __c) {
+              __c->state.let(_(ComponentState *, {
+                it->dim.given_h = true;
+                it->dim.given_w = true;
+                it->dim.x = spec.x.value();
+                it->dim.y = spec.y.value();
+                it->dim.w = spec.w.value();
+                it->dim.h = spec.h.value();
+              }));
+              
+              init.init(__c);
+            });
+          }
+        };
+      }
+    };
+  
   
 }// namespace cydui::components
 
