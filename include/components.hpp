@@ -88,7 +88,7 @@ namespace cydui::components {
       template<typename c, int ID, typename T>
       requires ComponentConcept<c>
       inline component_builder_t create_for(
-        const T &iter, std::function<c_init_t<c>(typename T::value_type)> block
+        const T &iter, std::function<c_init_t<c>(const typename T::value_type &)> block
       ) const {
         std::vector<typename c::State*> states = {};
         state.let(_(ComponentState *, {
@@ -125,7 +125,7 @@ namespace cydui::components {
       
       inline component_builder_t create_group(std::vector<component_builder_t> _children) const {
         return {
-          .build = [_children](component_builder_t) {
+          .build = [_children](const component_builder_t &) {
             auto* group = Component::new_group();
             group->add(_children);
             return group;
