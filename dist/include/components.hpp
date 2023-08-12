@@ -123,45 +123,6 @@ namespace cydui::components {
         };
       }
       
-      template<typename c, int ID, typename T>
-      requires ComponentConcept<c>
-      inline component_builder_t create_for(
-        T &iter, std::function<c_init_t<c>(typename T::value_type &)> block
-      ) const {
-        std::vector<typename c::State*> states = {};
-        state.let(_(ComponentState *, {
-          int k = 0;
-          for (auto a = iter.begin(); a != iter.end(); ++a, ++k) {
-            auto* st =
-              (typename c::State*) (it->children.contains(ID, k)
-                ? (it->children.get_list(ID, k))
-                : (it->children.add_list(ID, k, new typename c::State())));
-            st->win = it->win;
-            states.push_back(st);
-          }
-        }));
-        
-        return {
-          .x = std::nullopt,
-          .y = std::nullopt,
-          .w = std::nullopt,
-          .h = std::nullopt,
-          .build = [iter, block, states](component_builder_t spec) {
-            int i = 0;
-            auto temp_c = Component::new_group();
-            for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
-              typename T::value_type &a_ref = *a;
-              c_init_t<c> init = block(a_ref);
-              SET_REFERENCE nullptr;
-              temp_c->children.push_back(
-                new c(states[i], init.props, get_init_function(init, spec))
-              );
-            }
-            return temp_c;
-          },
-        };
-      }
-      
       inline component_builder_t create_group(std::vector<component_builder_t> _children) const {
         return {
           .build = [_children](const component_builder_t &) {
