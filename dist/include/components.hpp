@@ -123,7 +123,45 @@ namespace cydui::components {
         };
       }
       
-      inline component_builder_t create_group(std::vector <component_builder_t> _children) const {
+      template<typename c, int ID, typename T>
+      requires ComponentConcept<c>
+      inline component_builder_t create_for(
+        const T &iter, std::function<c_init_t<c>(typename T::value_type &)> block
+      ) const {
+        std::vector<typename c::State*> states = {};
+        state.let(_(ComponentState *, {
+          int k = 0;
+          for (auto a = iter.begin(); a != iter.end(); ++a, ++k) {
+            auto* st =
+              (typename c::State*) (it->children.contains(ID, k)
+                ? (it->children.get_list(ID, k))
+                : (it->children.add_list(ID, k, new typename c::State())));
+            st->win = it->win;
+            states.push_back(st);
+          }
+        }));
+        
+        return {
+          .x = std::nullopt,
+          .y = std::nullopt,
+          .w = std::nullopt,
+          .h = std::nullopt,
+          .build = [iter, block, states](component_builder_t spec) {
+            int i = 0;
+            auto temp_c = Component::new_group();
+            for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
+              const c_init_t<c> init = block(*a);
+              SET_REFERENCE nullptr;
+              temp_c->children.push_back(
+                new c(states[i], init.props, get_init_function(init, spec))
+              );
+            }
+            return temp_c;
+          },
+        };
+      }
+      
+      inline component_builder_t create_group(std::vector<component_builder_t> _children) const {
         return {
           .build = [_children](const component_builder_t &) {
             auto* group = Component::new_group();
@@ -172,7 +210,7 @@ namespace cydui::components {
       mutable nullable<ComponentState*> state;
       cydui::dimensions::component_dimensions_t* dim;
       
-      void add(const std::vector <component_builder_t> &ichildren, bool prepend = false) const;
+      void add(const std::vector<component_builder_t> &ichildren, bool prepend = false) const;
       
       mutable std::deque<Component*> children;
       
@@ -226,7 +264,7 @@ namespace cydui::components {
     };
     
     // Dynamic Builder for when you need an extra bit of flexibility
-    // They can keep building components and states for ever and it remembers which kind!
+    // They can keep building components and states forever, and it remembers which kind!
     template<components::ComponentConcept C>
     struct dynamic_builder_impl_t;
     
