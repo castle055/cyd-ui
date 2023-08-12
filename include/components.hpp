@@ -126,7 +126,7 @@ namespace cydui::components {
       template<typename c, int ID, typename T>
       requires ComponentConcept<c>
       inline component_builder_t create_for(
-        const T &iter, std::function<c_init_t<c>(typename T::value_type &)> block
+        T &iter, std::function<c_init_t<c>(typename T::value_type &)> block
       ) const {
         std::vector<typename c::State*> states = {};
         state.let(_(ComponentState *, {
@@ -150,7 +150,7 @@ namespace cydui::components {
             int i = 0;
             auto temp_c = Component::new_group();
             for (auto a = iter.begin(); a != iter.end(); ++a, ++i) {
-              const c_init_t<c> init = block(*a);
+              c_init_t<c> init = block(*a);
               SET_REFERENCE nullptr;
               temp_c->children.push_back(
                 new c(states[i], init.props, get_init_function(init, spec))
@@ -161,7 +161,7 @@ namespace cydui::components {
         };
       }
       
-      inline component_builder_t create_group(std::vector<component_builder_t> _children) const {
+      inline component_builder_t create_group(std::vector <component_builder_t> _children) const {
         return {
           .build = [_children](const component_builder_t &) {
             auto* group = Component::new_group();
@@ -210,7 +210,7 @@ namespace cydui::components {
       mutable nullable<ComponentState*> state;
       cydui::dimensions::component_dimensions_t* dim;
       
-      void add(const std::vector<component_builder_t> &ichildren, bool prepend = false) const;
+      void add(const std::vector <component_builder_t> &ichildren, bool prepend = false) const;
       
       mutable std::deque<Component*> children;
       
