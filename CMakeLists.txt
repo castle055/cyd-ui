@@ -34,20 +34,11 @@ enable_cxx_compiler_flag_if_supported("-Wno-unknown-pragmas")
 
 enable_cxx_compiler_flag_if_supported("-fmodules-ts")
 
-include_directories(${CMAKE_CURRENT_LIST_DIR}/.cyd/deps)
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 include_directories(/usr/include/freetype2)
 
 include(cppcheck.cmake)
 include(clang-format.cmake)
-
-FILE(GLOB_RECURSE STATIC_EXTRA_LIBS
-        ${CMAKE_CURRENT_LIST_DIR}/.cyd/deps/*.a
-        )
-
-FILE(GLOB_RECURSE EXTRA_LIBS_LIST
-        ${CMAKE_CURRENT_LIST_DIR}/.cyd/deps/*.*
-        )
 
 FILE(GLOB_RECURSE SRC_LIST
         ${CMAKE_CURRENT_LIST_DIR}/include/*.*

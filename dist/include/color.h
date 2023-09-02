@@ -18,6 +18,8 @@ namespace color {
       
       [[nodiscard("Don't call 'to_string()' if you don't need a string.")]]
       str to_string() const;
+      
+      u32 to_id() const;
     };
     
     extern Color White;

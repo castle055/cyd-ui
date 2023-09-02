@@ -35,6 +35,8 @@ EVENT(MotionEvent, {
   int y = 0;
   bool enter = false;
   bool exit = false;
+  
+  bool dragging = false;
 })
 EVENT(ResizeEvent, {
   unsigned int win = 0;

@@ -5,7 +5,7 @@
 #include <iomanip>
 #include "color.h"
 
-#include "cyd-log/dist/include/logging.hpp"
+#include "cydstd/logging.hpp"
 
 logging::logger logg {.on = false};
 
@@ -17,6 +17,11 @@ str color::Color::to_string() const {
   oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(b);
   logg.info("Color (%d,%d,%d) -> %s", r, g, b, oss.str().c_str());
   return oss.str();
+}
+
+u32 color::Color::to_id() const {
+  u32 id = 0;
+  return id | ((u32) r << 16) | ((u32) g << 8) | (u32) b;
 }
 
 color::Color color::White = "#FFFFFF"_color;

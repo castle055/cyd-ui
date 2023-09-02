@@ -3,7 +3,7 @@
 //
 
 #include "events.hpp"
-#include "cyd-log/dist/include/logging.hpp"
+#include "cydstd/logging.hpp"
 #include "threading.hpp"
 
 #include <deque>
@@ -109,7 +109,7 @@ void event_task(cydui::threading::thread_t* this_thread) {
     auto t1 = std::chrono::system_clock::now();
     auto dt = t1 - t0;
     if (dt.count() > 40 && dt.count() > period)
-      log_task.debug("Processed event in: %d ns , \tdelay: %d ns", dt.count(), period - dt.count());
+      log_task.debug("Processed event in: %ld ns , \tdelay: %ld ns", dt.count(), period - dt.count());
     int delay = period - dt.count();
     if (delay > 0)
       std::this_thread::sleep_for(std::chrono::duration<int, std::nano>(delay));

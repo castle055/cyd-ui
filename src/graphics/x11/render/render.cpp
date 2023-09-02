@@ -4,7 +4,7 @@
 
 #include "render.hpp"
 #include "../state/state.hpp"
-#include "cyd-log/dist/include/logging.hpp"
+#include "cydstd/logging.hpp"
 #include "x11_impl.hpp"
 
 #include <X11/Xlib.h>
@@ -78,7 +78,7 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   //    req.h
   //);
   win->render_mtx.lock();
-  win->x_mtx.lock();
+  //win->x_mtx.lock();
   //win->render_reqs.push_back(req);
   win->dirty = true;
   //win->staging_drawable = win->drawable;
@@ -103,42 +103,80 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   //win->staging_target->w = win->render_target->w;
   //win->staging_target->h = win->render_target->h;
   
-  win->x_mtx.unlock();
+  //win->x_mtx.unlock();
   win->render_mtx.unlock();
 }
 
-static std::unordered_map<str, XColor> xcolor_cache;
+static std::unordered_map<u32, XColor> xcolor_cache;
+
+struct xcolor_hot_cache_entry_t {
+  u32 id;
+  XColor xcolor;
+};
+static constexpr u32 xcolor_hot_cache_size = 8;
+static xcolor_hot_cache_entry_t xcolor_hot_cache[xcolor_hot_cache_size];
+static u32 xcolor_hot_cache_current_insert_index = 0U;
 
 XColor color_to_xcolor(color::Color color) {
-  if (xcolor_cache.contains(color.to_string()))
-    return xcolor_cache[color.to_string()];
+  u32 color_id = color.to_id();
   
-  Colormap map = DefaultColormap(state::get_dpy(), state::get_screen());
+  for (auto &entry: xcolor_hot_cache) {
+    if (entry.id == color_id) {
+      return entry.xcolor;
+    }
+  }
+  
+  if (xcolor_cache.contains(color_id)) {
+    auto &c = xcolor_cache[color_id];
+    xcolor_hot_cache[xcolor_hot_cache_current_insert_index++] = {
+      .id = color_id,
+      .xcolor = c,
+    };
+    if (xcolor_hot_cache_current_insert_index >= xcolor_hot_cache_size) {
+      xcolor_hot_cache_current_insert_index = 0U;
+    }
+    return c;
+  }
+  
+  auto dpy = state::get_dpy();
+  auto screen = state::get_screen();
+  Colormap map = DefaultColormap(dpy, screen);
   XColor c;
-  XParseColor(state::get_dpy(), map, color.to_string().c_str(), &c);
-  XAllocColor(state::get_dpy(), map, &c);
+  XParseColor(dpy, map, color.to_string().c_str(), &c);
+  XAllocColor(dpy, map, &c);
   
-  xcolor_cache[color.to_string()] = c;
+  xcolor_hot_cache[xcolor_hot_cache_current_insert_index++] = {
+    .id = color_id,
+    .xcolor = c,
+  };
+  if (xcolor_hot_cache_current_insert_index >= xcolor_hot_cache_size) {
+    xcolor_hot_cache_current_insert_index = 0U;
+  }
+  
+  xcolor_cache[color_id] = c;
   return c;
 }
 
-static std::unordered_map<str, XftColor*> xftcolor_cache;
+static std::unordered_map<u32, XftColor*> xftcolor_cache;
 
 XftColor* color_to_xftcolor(color::Color color) {
-  if (xftcolor_cache.contains(color.to_string()))
-    return xftcolor_cache[color.to_string()];
+  u32 color_id = color.to_id();
+  if (xftcolor_cache.contains(color_id))
+    return xftcolor_cache[color_id];
   
   auto* c = new XftColor;
   
-  if (!XftColorAllocName(state::get_dpy(),
-    DefaultVisual(state::get_dpy(), state::get_screen()),
-    DefaultColormap(state::get_dpy(), state::get_screen()),
+  auto dpy = state::get_dpy();
+  auto screen = state::get_screen();
+  if (!XftColorAllocName(dpy,
+    DefaultVisual(dpy, screen),
+    DefaultColormap(dpy, screen),
     color.to_string().c_str(),
     c)) {
     xlog_ctrl.error("Cannot allocate color %s", color.to_string().c_str());
   }
   
-  xftcolor_cache[color.to_string()] = c;
+  xftcolor_cache[color_id] = c;
   return c;
 }
 
@@ -154,7 +192,7 @@ void render::resize(cydui::graphics::render_target_t* target, int w, int h) {
       BlackPixel(state::get_dpy(), state::get_screen()));
     XFillRectangle(state::get_dpy(), new_drw, target->gc, 0, 0, w, h);
     
-    target->win->x_mtx.lock();
+    //target->win->x_mtx.lock();
     XCopyArea(state::get_dpy(),
       target->drawable,
       new_drw,
@@ -172,7 +210,7 @@ void render::resize(cydui::graphics::render_target_t* target, int w, int h) {
     target->drawable = new_drw;
     target->gc = XCreateGC(state::get_dpy(), target->drawable, 0, NULL);
     
-    target->win->x_mtx.unlock();
+    //target->win->x_mtx.unlock();
     
     XFlush(state::get_dpy());
     
@@ -189,14 +227,14 @@ void render::clr_rect(
   unsigned int w,
   unsigned int h
 ) {
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   
   XSetForeground(state::get_dpy(),
     target->gc,
     BlackPixel(state::get_dpy(), state::get_screen()));
   XFillRectangle(state::get_dpy(), target->drawable, target->gc, x, y, w, h);
   
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   
   //req(win, x, y, (int)w + 1, (int)h + 1);// added 1 margin for lines
 }
@@ -213,7 +251,7 @@ void render::drw_line(
   int x1,
   int y1
 ) {
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   
   XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
   XSetBackground(state::get_dpy(),
@@ -221,7 +259,7 @@ void render::drw_line(
     BlackPixel(state::get_dpy(), state::get_screen()));
   XDrawLine(state::get_dpy(), target->drawable, target->gc, x, y, x1, y1);
   
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   
   //req(win, x, y, x1 - x + 1, y1 - y + 1);// added 1 margin for lines
 }
@@ -235,19 +273,17 @@ void render::drw_rect(
   int h,
   bool filled
 ) {
-  target->win->x_mtx.lock();
-  
-  XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
-  XSetBackground(state::get_dpy(),
-    target->gc,
-    BlackPixel(state::get_dpy(), state::get_screen()));
+  //target->win->x_mtx.lock();
+  auto dpy = state::get_dpy();
+  XSetState(dpy, target->gc, color_to_xcolor(color).pixel, BlackPixel(dpy, state::get_screen()), GXcopy,
+    AllPlanes);
   if (filled) {
-    XFillRectangle(state::get_dpy(), target->drawable, target->gc, x, y, w, h);
+    XFillRectangle(dpy, target->drawable, target->gc, x, y, w, h);
   } else {
-    XDrawRectangle(state::get_dpy(), target->drawable, target->gc, x, y, w, h);
+    XDrawRectangle(dpy, target->drawable, target->gc, x, y, w, h);
   }
   
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }
@@ -263,7 +299,7 @@ void render::drw_arc(
   int a1,
   bool filled
 ) {
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   XSetForeground(state::get_dpy(), target->gc, color_to_xcolor(color).pixel);
   XSetBackground(state::get_dpy(),
     target->gc,
@@ -289,7 +325,7 @@ void render::drw_arc(
       a0 * 64,
       a1 * 64);
   }
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }
 
@@ -310,7 +346,7 @@ void render::drw_text(
   XGlyphInfo x_glyph_info;
   int w, h;
   
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   
   XSetForeground(state::get_dpy(), target->gc, c.pixel);
   XSetBackground(state::get_dpy(),
@@ -329,7 +365,7 @@ void render::drw_text(
   
   XftDrawDestroy(xft_draw);
   
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }
@@ -342,7 +378,7 @@ void render::drw_image(
   int w,
   int h
 ) {
-  target->win->x_mtx.lock();
+  //target->win->x_mtx.lock();
   
   Pixmap tmp_pixmap = XCreatePixmap(state::get_dpy(),
     target->drawable,
@@ -406,7 +442,7 @@ void render::drw_image(
   XFreeGC(state::get_dpy(), tmp_gc);
   XFreePixmap(state::get_dpy(), tmp_pixmap);
   
-  target->win->x_mtx.unlock();
+  //target->win->x_mtx.unlock();
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }
 
@@ -420,7 +456,7 @@ void render::drw_target(
   int w,
   int h
 ) {
-  dest_target->win->x_mtx.lock();
+  //dest_target->win->x_mtx.lock();
   XCopyArea(state::get_dpy(),
     source_target->drawable,
     dest_target->drawable,
@@ -431,6 +467,6 @@ void render::drw_target(
     h,
     xd,
     yd);
-  dest_target->win->x_mtx.unlock();
+  //dest_target->win->x_mtx.unlock();
   //req(win, x, y, w + 1, h + 1);// added 1 margin for lines
 }

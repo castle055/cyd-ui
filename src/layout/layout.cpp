@@ -96,7 +96,7 @@ static bool compute_dimensions(cydui::components::Component* rt) {
 #undef COMPUTE
 
 static void redraw_component(
-  const cydui::window::CWindow* win, cydui::components::Component* target
+  const cydui::window::CWindow* win, cydui::components::Component* target, cydui::layout::Layout* layout
 ) {
   log_lay.debug("REDRAW");
   //auto t0 = std::chrono::system_clock::now().time_since_epoch();
@@ -106,7 +106,7 @@ static void redraw_component(
   target->children.clear();
   
   // Recreate those instances with redraw(), this set all size hints relationships
-  target->redraw();
+  target->redraw(layout);
   
   if (!compute_dimensions(target)) {
     cydui::components::Component* c = *target->parent.unwrap();
@@ -176,7 +176,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
         target = specified_target;
     }
     
-    redraw_component(this->win, target);
+    redraw_component(this->win, target, this);
   });
   listen(KeyEvent, {
     if (it.data->win != win->win_ref->xwin)
@@ -260,14 +260,54 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
           int exit_rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
           int exit_rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
           hovering->component_instance->on_mouse_exit(exit_rel_x, exit_rel_y);
-          hovering = nullptr;
         }
         hovering = *target->state.unwrap();
+        
+        int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
+        int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+        target->on_mouse_enter(rel_x, rel_y);
+      } else {
+        int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
+        int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+        target->on_mouse_motion(rel_x, rel_y);
       }
-      
+    }
+    
+    // Calling 'Drag' related event handlers
+    cydui::components::Component* target = root;
+    cydui::components::Component* specified_target =
+      find_by_coords(root, it.data->x, it.data->y);
+    if (specified_target)
+      target = specified_target;
+    
+    if (it.data->dragging) {
+      if (dragging_context.dragging) {
+        int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
+        int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+        dragging_context.dragging_item.drag_move(dragging_context.dragging_item, rel_x, rel_y);
+        target->on_drag_motion(rel_x, rel_y);
+      } else {
+        int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
+        int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
+        target->state.let(_(components::ComponentState * , {
+          for (auto &item : it->draggable_sources) {
+            if (item.x - 10 <= rel_x && rel_x <= item.x + 10
+              && item.y - 10 <= rel_y && rel_y <= item.y + 10) {
+              dragging_context.dragging_item = item.start_drag(rel_x, rel_y);
+              break;
+            }
+          }
+        }));
+        target->on_drag_start(rel_x, rel_y);
+        dragging_context.dragging = true;
+      }
+    } else if (dragging_context.dragging) {
       int rel_x = it.data->x - (*target->state.unwrap())->dim.cx.val();
       int rel_y = it.data->y - (*target->state.unwrap())->dim.cy.val();
-      target->on_mouse_enter(rel_x, rel_y);
+      dragging_context.dragging_item.drag_end(dragging_context.dragging_item, rel_x, rel_y);
+      target->on_drag_finish(rel_x, rel_y);
+      dragging_context.dragging = false;
+      dragging_context.dragging_item = drag_n_drop::draggable_t {};
     }
     
     if (render_if_dirty(root))
@@ -283,7 +323,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     (*root->state.unwrap())->dim.given_w = true;
     (*root->state.unwrap())->dim.given_h = true;
     
-    redraw_component(this->win, root);
+    redraw_component(this->win, root, this);
     //if (render_if_dirty(root))
     //    graphics::flush(win->win_ref);
   });
@@ -291,7 +331,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
 
 bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {
   if ((*c->state.unwrap())->_dirty) {
-    redraw_component(this->win, c);
+    redraw_component(this->win, c, this);
     return true;
   } else {
     bool any = false;

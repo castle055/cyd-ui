@@ -11,6 +11,10 @@
 #include "cydstd/nullable.h"
 #include "primitives.hpp"
 
+#include "terminal_button.hpp"
+
+#include <cydstd/loops.h>
+
 using namespace std::chrono_literals;
 
 namespace test {
@@ -37,6 +41,10 @@ namespace test {
         //this->parent->dim->given_h = true;
         //this->parent->dim = nullptr;
         add({
+          COMP(TerminalButton)({
+            .x = 20,
+            .y = 450,
+          }),
           //[this]() {
           //  return COMP(Rectangle)({
           //
@@ -254,7 +262,8 @@ namespace test {
 int main() {
   //mtrace();
   
-  cydui::layout::Layout* layout = cydui::layout::create<test::Test>({});
+  cydui::layout::Layout* layout = cydui::layout::create < test::Test > ({
+  });
   cydui::window::CWindow* win = cydui::window::create(layout,
     "startmenu",
     "scratch",
@@ -265,7 +274,7 @@ int main() {
     800,
     false);
   
-  while (1) {
+  for (ever) {
     std::this_thread::sleep_for(10000s);
   }
   return 0;

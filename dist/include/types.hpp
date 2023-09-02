@@ -9,7 +9,7 @@
 #include <functional>
 #include <string>
 
-#include <cyd-log/dist/include/logging.hpp>
+#include "cydstd/logging.hpp"
 
 #include "cydstd/cydstd.h"
 
@@ -18,6 +18,8 @@
 #include "x11_impl.hpp"
 #include "color.h"
 #include "font.h"
+
+#include "drag_n_drop.h"
 
 namespace cydui {
     namespace components {
@@ -124,6 +126,9 @@ public:
   cydui::dimensions::component_dimensions_t dim;
   ComponentBorder border;
   ChildrenStateCollection children;
+  
+  std::vector<drag_n_drop::draggable_source_t> draggable_sources = {};
+  drag_n_drop::dragging_context_t* dragging_context = nullptr;
 };
 
 class cydui::layout::Layout {
@@ -150,6 +155,7 @@ class cydui::layout::Layout {
   friend Layout* cydui::layout::create(components::c_init_t<C> init);
 
 public:
+  drag_n_drop::dragging_context_t dragging_context {};
   
   void bind_window(window::CWindow* _win);
 };

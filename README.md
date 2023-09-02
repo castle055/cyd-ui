@@ -195,7 +195,7 @@ int main() {
     "Example Window Title",
     "example-window-class",
       0,   0, // X, Y of the window
-    800, 800, // W, H of the window
+    800, 800  // W, H of the window
   );
   
   // Hold main thread in a loop of do something else...

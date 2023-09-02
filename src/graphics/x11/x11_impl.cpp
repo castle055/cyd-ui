@@ -97,7 +97,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   XSync(state::get_dpy(), False);
   
   log_task.info(
-    "Created window %X at (%s) x: %d, y: %d", xwin, geom.c_str(), x, y);
+    "Created window %lX at (%s) x: %d, y: %d", xwin, geom.c_str(), x, y);
   
   if (!override_redirect) {
     XWMHints wm = {.flags = InputHint, .input = 1};
@@ -127,7 +127,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   } else {
     XMapWindow(state::get_dpy(), xwin);
   }
-  log_task.debug("Mapping window %X", xwin);
+  log_task.debug("Mapping window %lX", xwin);
   
   //XSync(state::get_dpy(), False);
   
@@ -151,7 +151,7 @@ window_ti::window_ti(Window xwin, int w, int h) {
 render_target_ti::render_target_ti(
   cydui::graphics::window_t* win, int w, int h
 ) {
-  std::lock_guard guard(win->x_mtx);
+  //std::lock_guard guard(win->x_mtx);
   this->drawable = XCreatePixmap(state::get_dpy(),
     win->xwin,
     w,
@@ -359,10 +359,10 @@ std::pair<int, int> cydui::graphics::get_text_size(
   XftTextExtentsUtf8(state::get_dpy(),
     xfont,
     (XftChar8*) text.c_str(),
-    text.size(),
+    (int) text.size(),
     &x_glyph_info);
   //XftFontClose(state::get_dpy(), xfont);
-  return {x_glyph_info.width, x_glyph_info.y};
+  return {x_glyph_info.xOff, x_glyph_info.y};
 }
 
 void cydui::graphics::drw_image(

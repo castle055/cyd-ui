@@ -193,6 +193,7 @@ void cydui::tasks::task_t::set_progress(int p) {
   this->task_mutex.lock();
   this->progress = p;
   this->task_mutex.unlock();
+  cydui::events::emit<RedrawEvent>({});
 }
 
 int cydui::tasks::task_t::get_progress() {
@@ -200,6 +201,13 @@ int cydui::tasks::task_t::get_progress() {
   int p = this->progress;
   this->task_mutex.unlock();
   return p;
+}
+
+bool cydui::tasks::task_t::is_running() {
+  this->task_mutex.lock();
+  int r = this->running;
+  this->task_mutex.unlock();
+  return r;
 }
 
 bool cydui::tasks::task_t::is_complete() {

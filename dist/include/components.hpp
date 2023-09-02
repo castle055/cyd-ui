@@ -88,7 +88,7 @@ namespace cydui::components {
       template<typename c, int ID, typename T>
       requires ComponentConcept<c>
       inline component_builder_t create_for(
-        const T &iter, std::function<c_init_t<c>(typename T::value_type)> block
+        const T &iter, std::function<c_init_t<c>(const typename T::value_type &)> block
       ) const {
         std::vector<typename c::State*> states = {};
         state.let(_(ComponentState *, {
@@ -125,7 +125,7 @@ namespace cydui::components {
       
       inline component_builder_t create_group(std::vector<component_builder_t> _children) const {
         return {
-          .build = [_children](component_builder_t) {
+          .build = [_children](const component_builder_t &) {
             auto* group = Component::new_group();
             group->add(_children);
             return group;
@@ -176,7 +176,7 @@ namespace cydui::components {
       
       mutable std::deque<Component*> children;
       
-      void redraw();
+      void redraw(cydui::layout::Layout* layout);
       
       void render(cydui::graphics::render_target_t* target) const;
       
@@ -199,6 +199,12 @@ namespace cydui::components {
       
       COMP_EVENT_HANDLER(mouse_click, (int x, int y, int button));
       
+      COMP_EVENT_HANDLER(drag_start, (int x, int y));
+      
+      COMP_EVENT_HANDLER(drag_motion, (int x, int y));
+      
+      COMP_EVENT_HANDLER(drag_finish, (int x, int y));
+      
       COMP_EVENT_HANDLER(scroll, (int dx, int dy));
       
       COMP_EVENT_HANDLER(key_press, (KeyData key));
@@ -214,7 +220,87 @@ namespace cydui::components {
 #define ON_MOUSE_MOTION(X, Y)   COMP_EVENT_HANDLER_OVERRIDE(mouse_motion, (int (X), int (Y)))
 #define ON_MOUSE_EXIT(X, Y)     COMP_EVENT_HANDLER_OVERRIDE(mouse_exit,   (int (X), int (Y)))
 #define ON_MOUSE_ENTER(X, Y)    COMP_EVENT_HANDLER_OVERRIDE(mouse_enter,  (int (X), int (Y)))
+#define ON_DRAG_START(X, Y)   COMP_EVENT_HANDLER_OVERRIDE(drag_start, (int (X), int (Y)))
+#define ON_DRAG_MOTION(X, Y)   COMP_EVENT_HANDLER_OVERRIDE(drag_motion, (int (X), int (Y)))
+#define ON_DRAG_FINISH(X, Y)   COMP_EVENT_HANDLER_OVERRIDE(drag_finish, (int (X), int (Y)))
     };
+    
+    // Dynamic Builder for when you need an extra bit of flexibility
+    // They can keep building components and states forever, and it remembers which kind!
+    template<components::ComponentConcept C>
+    struct dynamic_builder_impl_t;
+    
+    struct dynamic_builder_t {
+    private:
+      std::function<void(dynamic_builder_t*)> destroyer = [](dynamic_builder_t* it) {
+        delete it;
+      };
+    public:
+      template<components::ComponentConcept C>
+      static dynamic_builder_t* create() {
+        dynamic_builder_t* db = new dynamic_builder_impl_t<C>;
+        db->destroyer = [](dynamic_builder_t* it) {
+          delete (dynamic_builder_impl_t <C>*) it;
+        };
+        return db;
+      }
+      
+      virtual ~dynamic_builder_t() = default;
+      
+      static void destroy(dynamic_builder_t* builder) {
+        builder->destroyer(builder);
+      }
+      
+      virtual components::ComponentState* build_state() = 0;
+      
+      struct comp_init_t {
+        components::ComponentState* state = nullptr;
+        void* props_ptr = nullptr;
+        cydui::dimensions::dimensional_relation_t x = 0;
+        cydui::dimensions::dimensional_relation_t y = 0;
+        cydui::dimensions::dimensional_relation_t w = 0;
+        cydui::dimensions::dimensional_relation_t h = 0;
+        std::function<void(components::Component*)> init = [](components::Component*) {
+        };
+      };
+      
+      virtual component_builder_t build_component(const comp_init_t &init) = 0;
+    };
+    
+    template<components::ComponentConcept C>
+    struct dynamic_builder_impl_t: public dynamic_builder_t {
+      ~dynamic_builder_impl_t() override = default;
+      
+      C::State* build_state() override {
+        return new C::State();
+      }
+      
+      component_builder_t build_component(const comp_init_t &init) override {
+        typename C::Props props = (init.props_ptr == nullptr) ? typename C::Props() : *(typename C::Props*) init.props_ptr;
+        if (init.props_ptr != nullptr) delete (typename C::Props*) init.props_ptr;
+        return {
+          .x = init.x,
+          .y = init.y,
+          .w = init.w,
+          .h = init.h,
+          .build = [props, init](component_builder_t spec) {
+            return new C((typename C::State*) init.state, props, [spec, init](components::Component* __c) {
+              __c->state.let(_(ComponentState *, {
+                it->dim.given_h = true;
+                it->dim.given_w = true;
+                it->dim.x = spec.x.value();
+                it->dim.y = spec.y.value();
+                it->dim.w = spec.w.value();
+                it->dim.h = spec.h.value();
+              }));
+              
+              init.init(__c);
+            });
+          }
+        };
+      }
+    };
+  
   
 }// namespace cydui::components
 

@@ -47,6 +47,8 @@ namespace cydui::tasks {
       
       int get_progress();
       
+      bool is_running();
+      
       bool is_complete();
     };
     

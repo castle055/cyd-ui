@@ -78,6 +78,7 @@ void Component::add(
         if (subitem == nullptr || !subitem->state)
           continue;
         subitem->parent = (Component*) this;
+        (*subitem->state.unwrap())->win = (*state.unwrap())->win;
         if (prepend) {
           this->children.push_front(subitem);
         } else {
@@ -88,6 +89,7 @@ void Component::add(
       delete child;
     } else {
       child->parent = (Component*) this;
+      (*child->state.unwrap())->win = (*state.unwrap())->win;
       if (prepend) {
         this->children.push_front(child);
       } else {
@@ -97,14 +99,15 @@ void Component::add(
   }
 }
 
-void Component::redraw() {
+void Component::redraw(cydui::layout::Layout* layout) {
   inner_redraw(this);
   on_redraw();
   
   for (auto &child: children) {
-    child->redraw();
+    child->redraw(layout);
   }
   state.let(_(ComponentState *, {
+    it->dragging_context = &layout->dragging_context;
     it->_dirty = false;
   }));
 }
@@ -199,6 +202,27 @@ COMP_EVENT_HANDLER_IMPL(mouse_motion, (int x, int y)) { // NOLINT(misc-no-recurs
   parent.let(_(Component *, {
     auto &p = it;
     p->on_mouse_motion(x + dim->x.val(), y + dim->y.val());
+  }));
+}
+
+COMP_EVENT_HANDLER_IMPL(drag_start, (int x, int y)) { // NOLINT(misc-no-recursion)
+  parent.let(_(Component *, {
+    auto &p = it;
+    p->on_drag_start(x + dim->x.val(), y + dim->y.val());
+  }));
+}
+
+COMP_EVENT_HANDLER_IMPL(drag_motion, (int x, int y)) { // NOLINT(misc-no-recursion)
+  parent.let(_(Component *, {
+    auto &p = it;
+    p->on_drag_motion(x + dim->x.val(), y + dim->y.val());
+  }));
+}
+
+COMP_EVENT_HANDLER_IMPL(drag_finish, (int x, int y)) { // NOLINT(misc-no-recursion)
+  parent.let(_(Component *, {
+    auto &p = it;
+    p->on_drag_finish(x + dim->x.val(), y + dim->y.val());
   }));
 }
 
