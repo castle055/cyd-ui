@@ -3,7 +3,7 @@
 //
 
 #include "events.hpp"
-#include "cyd-log/logging.hpp"
+#include "cydstd/logging.hpp"
 #include "threading.hpp"
 
 #include <deque>

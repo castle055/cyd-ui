@@ -9,7 +9,7 @@
 #include <functional>
 #include <string>
 
-#include "cyd-log/logging.hpp"
+#include "cydstd/logging.hpp"
 
 #include "cydstd/cydstd.h"
 

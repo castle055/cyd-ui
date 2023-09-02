@@ -13,6 +13,8 @@
 
 #include "terminal_button.hpp"
 
+#include <cydstd/loops.h>
+
 using namespace std::chrono_literals;
 
 namespace test {
@@ -272,7 +274,7 @@ int main() {
     800,
     false);
   
-  while (1) {
+  for (ever) {
     std::this_thread::sleep_for(10000s);
   }
   return 0;

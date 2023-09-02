@@ -5,7 +5,7 @@
 #include <iomanip>
 #include "color.h"
 
-#include "cyd-log/logging.hpp"
+#include "cydstd/logging.hpp"
 
 logging::logger logg {.on = false};
 
