@@ -99,6 +99,11 @@ namespace cydui::events {
       long ID;
       bool active = true;
     public:
+      listener_t() {
+        ID = 0;
+        active = false;
+      }
+      
       explicit listener_t(Listener c): func(std::move(c)) {
         ID = (long) new u8;
       }

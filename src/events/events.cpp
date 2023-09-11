@@ -149,6 +149,7 @@ cydui::events::listener_t cydui::events::on_event_raw(const str &event_type, con
 }
 
 void cydui::events::remove_listener(const str &event_type, const listener_t &listener) {
+  if (listener.get_id() == 0) return;
   if (th_data->event_listeners->contains(event_type)) {
     for (auto l = (*th_data->event_listeners)[event_type].begin(); l != (*th_data->event_listeners)[event_type].end(); l++) {
       if (l->get_id() == listener.get_id()) {
