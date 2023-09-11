@@ -9,6 +9,7 @@
 #include <functional>
 #include <mutex>
 #include <string>
+#include <utility>
 
 #include "cydstd/cydstd.h"
 
@@ -89,13 +90,50 @@ namespace cydui::events {
     
     
     typedef std::function<void(Event*)> Listener;
+    struct listener_t;
     
-    void on_event_raw(const str &event_type, const Listener &l);
+    void remove_listener(const str &event_type, const listener_t &listener);
+    
+    struct listener_t {
+    private:
+      long ID;
+      bool active = true;
+    public:
+      explicit listener_t(Listener c): func(std::move(c)) {
+        ID = (long) new u8;
+      }
+      //
+      //listener_t(const listener_t &other) {
+      //  ID = other.get_id();
+      //}
+      
+      [[nodiscard]] long get_id() const {
+        return ID;
+      }
+      
+      str event_type;
+      Listener func;
+      
+      void remove() {
+        cydui::events::remove_listener(event_type, *this);
+        active = false;
+      }
+      
+      bool is_active() const {
+        return active;
+      }
+      
+      void operator()(Event* ev) const {
+        func(ev);
+      }
+    };
+    
+    listener_t on_event_raw(const str &event_type, const Listener &l);
     
     template<typename T>
     requires EventType<T>
-    inline void on_event(Consumer<T> c) {
-      cydui::events::on_event_raw(T::type, [c](Event* ev) {
+    inline listener_t on_event(Consumer<T> c) {
+      return cydui::events::on_event_raw(T::type, [c](Event* ev) {
         auto parsed = ev->parse<T>();
         if (parsed.data) {
           c(parsed);

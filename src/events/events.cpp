@@ -25,9 +25,9 @@ struct thread_data {
     new std::deque<cydui::events::Event*>;
   std::unordered_map<
     str,
-    std::deque<cydui::events::Listener>
+    std::deque<cydui::events::listener_t>
   >* event_listeners =
-    new std::unordered_map<str, std::deque<cydui::events::Listener>>;
+    new std::unordered_map<str, std::deque<cydui::events::listener_t>>;
   
   std::unordered_map<str, cydui::events::Event*>* state_events =
     new std::unordered_map<str, cydui::events::Event*>;
@@ -140,10 +140,22 @@ void cydui::events::emit_raw(const str &event_type, void* data) {
   push_event(th_data, ev);
 }
 
-void cydui::events::on_event_raw(const str &event_type, const Listener &c) {
+cydui::events::listener_t cydui::events::on_event_raw(const str &event_type, const Listener &c) {
   if (!th_data->event_listeners->contains(event_type))
-    (*th_data->event_listeners)[event_type] = {};
-  (*th_data->event_listeners)[event_type].push_back(c);
+    (*th_data->event_listeners).insert({event_type, {}});
+  listener_t l(c);
+  (*th_data->event_listeners)[event_type].push_back(l);
+  return l;
 }
 
+void cydui::events::remove_listener(const str &event_type, const listener_t &listener) {
+  if (th_data->event_listeners->contains(event_type)) {
+    for (auto l = (*th_data->event_listeners)[event_type].begin(); l != (*th_data->event_listeners)[event_type].end(); l++) {
+      if (l->get_id() == listener.get_id()) {
+        (*th_data->event_listeners)[event_type].erase(l);
+        delete (u8*) listener.get_id();
+      }
+    }
+  }
+}
 
