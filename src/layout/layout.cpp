@@ -2,9 +2,8 @@
 // Created by castle on 8/21/22.
 //
 
-#include "components.hpp"
-#include "graphics.hpp"
-#include "../graphics/events.hpp"
+#include "core/layout.h"
+#include "core/window.h"
 
 logging::logger log_lay = {
   .name = "LAYOUT", .on = true, .min_level = logging::INFO};

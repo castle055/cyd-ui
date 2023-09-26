@@ -6,11 +6,15 @@
 #define CYD_UI_GRAPHICS_HPP
 
 
-#include "types.hpp"
-#include "events.hpp"
-
+#include "color.h"
+#include "graphics/font.h"
+#include "graphics/images.h"
+#include "x11_impl.hpp"
 
 namespace cydui::graphics {
+    typedef window_ti window_t;
+    typedef render_target_ti render_target_t;
+    
     window_t* create_window(
       const char* title,
       const char* wclass,

@@ -3,7 +3,7 @@
 //
 
 #include <iomanip>
-#include "color.h"
+#include "graphics/color.h"
 
 #include "cydstd/logging.hpp"
 

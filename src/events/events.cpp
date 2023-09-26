@@ -2,9 +2,8 @@
 // Created by castle on 8/21/22.
 //
 
-#include "events.hpp"
+#include "events/events.hpp"
 #include "cydstd/logging.hpp"
-#include "threading.hpp"
 
 #include <deque>
 #include <list>

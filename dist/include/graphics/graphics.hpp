@@ -7,8 +7,8 @@
 
 
 #include "color.h"
-#include "font.h"
-#include "images.h"
+#include "graphics/font.h"
+#include "graphics/images.h"
 #include "x11_impl.hpp"
 
 namespace cydui::graphics {

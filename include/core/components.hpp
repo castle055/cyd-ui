@@ -5,10 +5,88 @@
 #ifndef CYD_UI_COMPONENTS_HPP
 #define CYD_UI_COMPONENTS_HPP
 
-#include "event_types.h"
-#include "types.hpp"
+#include "events/cydui_events.h"
+#include "children_state_collection.hpp"
+#include "core/dimensions.hpp"
+#include "graphics/graphics.hpp"
+#include "core/drag_n_drop.h"
+
+namespace cydui::layout {
+    class Layout;
+}
 
 namespace cydui::components {
+    class Component;
+    
+    class ComponentBorder {
+    public:
+      bool enabled = false;
+      color::Color color = "#FCAE1E"_color;
+    };
+    
+    class ComponentState {
+    public:
+      ComponentState();
+      
+      Component* component_instance;
+      bool stateless_comp = false;
+      bool focused = false;
+      
+      bool _dirty = false;
+      
+      void dirty();
+      
+      nullable<cydui::graphics::window_t*> win;
+      nullable<cydui::graphics::render_target_t*> sub_render_target;
+      std::pair<int, int> sub_render_event_offset = {0, 0};
+      
+      cydui::dimensions::component_dimensions_t dim;
+      ComponentBorder border;
+      ChildrenStateCollection children;
+      
+      std::vector<drag_n_drop::draggable_source_t> draggable_sources = {};
+      drag_n_drop::dragging_context_t* dragging_context = nullptr;
+    };
+    
+    template<class c>
+    concept ComponentConcept = requires {
+      typename c::Props;
+      typename c::State;
+      {
+      c::props
+      } -> std::convertible_to<typename c::Props>;
+      {
+      c::Name
+      } -> std::convertible_to<const char*>;
+    };
+    
+    struct component_builder_t {
+      // Geometric constraints
+      std::optional<cydui::dimensions::dimensional_relation_t> x;
+      std::optional<cydui::dimensions::dimensional_relation_t> y;
+      std::optional<cydui::dimensions::dimensional_relation_t> w;
+      std::optional<cydui::dimensions::dimensional_relation_t> h;
+      
+      std::function<Component*(component_builder_t)> build;
+    };
+    
+    template<typename c> requires ComponentConcept<c>
+    struct c_init_t {
+      typename c::State** ref = nullptr;
+      typename c::Props props;
+      
+      // Geometric constraints
+      std::optional<cydui::dimensions::dimensional_relation_t> x;
+      std::optional<cydui::dimensions::dimensional_relation_t> y;
+      std::optional<cydui::dimensions::dimensional_relation_t> w;
+      std::optional<cydui::dimensions::dimensional_relation_t> h;
+      
+      std::vector<component_builder_t> inner = {};
+      
+      std::function<void(c*)> init = [](c*) {
+      };
+    };
+    
     class Component {
       
       std::function<void(Component*)> inner_redraw = [](Component*) {

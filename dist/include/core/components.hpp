@@ -5,11 +5,11 @@
 #ifndef CYD_UI_COMPONENTS_HPP
 #define CYD_UI_COMPONENTS_HPP
 
-#include "event_types.h"
+#include "events/cydui_events.h"
 #include "children_state_collection.hpp"
-#include "dimensions.hpp"
-#include "graphics.hpp"
-#include "drag_n_drop.h"
+#include "core/dimensions.hpp"
+#include "graphics/graphics.hpp"
+#include "core/drag_n_drop.h"
 
 namespace cydui::layout {
     class Layout;

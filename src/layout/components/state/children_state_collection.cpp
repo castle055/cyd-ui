@@ -2,7 +2,7 @@
 // Created by castle on 9/11/22.
 //
 
-#include "../../../../include/children_state_collection.hpp"
+#include "core/children_state_collection.hpp"
 
 bool ChildrenStateCollection::contains(unsigned long state_id, std::size_t index) {
   return elements.contains(state_id) || (element_lists.contains(state_id) && element_lists[state_id].size() > index);
