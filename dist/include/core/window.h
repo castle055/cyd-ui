@@ -5,7 +5,7 @@
 #ifndef CYD_UI_WINDOW_H
 #define CYD_UI_WINDOW_H
 
-#include "graphics/graphics.hpp"
+#include "../graphics/graphics.hpp"
 
 namespace cydui::layout {
     class Layout;

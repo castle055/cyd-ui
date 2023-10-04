@@ -5,7 +5,7 @@
 #ifndef CYD_UI_TASKS_H
 #define CYD_UI_TASKS_H
 
-#include "events/cydui_events.h"
+#include "../events/cydui_events.h"
 
 namespace cydui::tasks {
     typedef unsigned long task_id;

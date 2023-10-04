@@ -6,7 +6,7 @@
 #define CYD_UI_LAYOUT_H
 
 #include "components.hpp"
-#include "cydstd/logging.hpp"
+#include "../cydstd/logging.hpp"
 
 namespace cydui::window {
     class CWindow;
@@ -51,7 +51,7 @@ namespace cydui::layout {
 
 template<typename C>
 requires cydui::components::ComponentConcept<C>
-cydui::layout::Layout* cydui::layout::create(components::c_init_t <C> init) {
+cydui::layout::Layout* cydui::layout::create(components::c_init_t<C> init) {
   auto* root_state = new typename C::State();
   auto* root = new C(
     root_state,

@@ -6,9 +6,9 @@
 #define CYD_UI_COLOR_H
 
 #include <charconv>
-#include "cydstd/cydstd.h"
-#include "cydstd/template_str_buffer.h"
-#include "cydstd/assert.h"
+#include "../cydstd/cydstd.h"
+#include "../cydstd/template_str_buffer.h"
+#include "../cydstd/assert.h"
 
 namespace color {
     struct Color {

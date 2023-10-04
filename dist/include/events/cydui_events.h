@@ -5,7 +5,7 @@
 #ifndef CYD_UI_CYDUI_EVENTS_H
 #define CYD_UI_CYDUI_EVENTS_H
 
-#include "events/change_events.h"
+#include "change_events.h"
 
 EVENT(RedrawEvent, {
   unsigned int win = 0;
