@@ -377,6 +377,17 @@ void cydui::graphics::drw_image(
   render::drw_image(target, i, x, y, w, h);
 }
 
+void cydui::graphics::drw_image(
+  render_target_t* target,
+  window_image img,
+  int x,
+  int y,
+  int w,
+  int h
+) {
+  render::drw_image(target, img, x, y, w, h);
+}
+
 std::pair<int, int> cydui::graphics::get_image_size(
   layout::images::image_t* img
 ) {
