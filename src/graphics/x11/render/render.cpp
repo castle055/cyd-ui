@@ -2,10 +2,9 @@
 // Created by castle on 8/23/22.
 //
 
-#include "render.hpp"
 #include "../state/state.hpp"
+#include "render.hpp"
 #include "cydstd/logging.hpp"
-#include "x11_impl.hpp"
 
 #include <X11/Xlib.h>
 

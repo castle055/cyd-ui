@@ -11,8 +11,8 @@
 #include <string>
 #include <utility>
 
-#include "cydstd/cydstd.h"
-#include "threading.hpp"
+#include "../cydstd/cydstd.h"
+#include "../threading.hpp"
 
 namespace cydui::events {
     template<class T>

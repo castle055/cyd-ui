@@ -5,12 +5,8 @@
 #ifndef CYD_UI_X11_EVENTS_H
 #define CYD_UI_X11_EVENTS_H
 
-#include "change_events.h"
-#include "event_types.h"
-
-namespace cydui::graphics::events {
-  void start();
-  
+namespace x11::events {
+    void start();
 }
 
 #endif//CYD_UI_X11_EVENTS_H

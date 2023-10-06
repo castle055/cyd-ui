@@ -20,6 +20,7 @@
   <a href="#key-features">Key Features</a> •
   <a href="#installation">Installation</a> •
   <a href="#how-to-use">How To Use</a> •
+  <a href="#code-architecture">Code Architecture</a> •
   <a href="#credits">Credits</a> •
   <a href="#license">License</a>
 </p>
@@ -205,6 +206,10 @@ int main() {
 ```
 
 This will start the window on a separate thread.
+
+## Code Architecture
+### Include Graph
+![include graph](./include_graph.png)
 
 ## Credits
 

@@ -2,7 +2,7 @@
 // Created by castle on 1/4/23.
 //
 
-#include "config.hpp"
+#include "tools/config.hpp"
 
 using namespace cydui::config;
 

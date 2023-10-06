@@ -9,7 +9,7 @@
 #include <thread>
 
 #include "cydstd/nullable.h"
-#include "primitives.hpp"
+#include "core/primitives.hpp"
 
 #include "terminal_button.hpp"
 
@@ -262,7 +262,7 @@ namespace test {
 int main() {
   //mtrace();
   
-  cydui::layout::Layout* layout = cydui::layout::create < test::Test > ({
+  cydui::layout::Layout* layout = cydui::layout::create<test::Test>({
   });
   cydui::window::CWindow* win = cydui::window::create(layout,
     "startmenu",

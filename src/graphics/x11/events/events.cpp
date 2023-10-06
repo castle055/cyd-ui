@@ -2,14 +2,11 @@
 // Created by castle on 8/21/22.
 //
 
-#include "../../events.hpp"
+#include "events.hpp"
 #include "cydstd/logging.hpp"
-#include "threading.hpp"
 #include "../state/state.hpp"
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
-
-#include <utility>
 
 cydui::threading::thread_t* x11_thread;
 
@@ -22,24 +19,24 @@ Bool evpredicate() {
   return True;
 }
 
-cydui::events::change_ev::DataMonitor<RedrawEvent>
+cydui::events::change_ev::DataMonitor <RedrawEvent>
   redrawEventDataMonitor([](RedrawEvent::DataType o_data, RedrawEvent::DataType n_data) {
   // this event doesn't really hold data when emitted from x11::events so just consider it changed every time
   // it still reuses the same event object, so it won't overload the event bus
   return true;
 });
 
-cydui::events::change_ev::DataMonitor<ResizeEvent>
+cydui::events::change_ev::DataMonitor <ResizeEvent>
   resizeEventDataMonitor([](ResizeEvent::DataType o_data, ResizeEvent::DataType n_data) {
   return (o_data.w != n_data.w || o_data.h != n_data.h);
 });
 
-cydui::events::change_ev::DataMonitor<MotionEvent>
+cydui::events::change_ev::DataMonitor <MotionEvent>
   motionEventDataMonitor([](MotionEvent::DataType o_data, MotionEvent::DataType n_data) {
   return true;
 });
 
-static std::unordered_map<KeySym, Key> xkey_map = {
+static std::unordered_map <KeySym, Key> xkey_map = {
   {XK_a, Key::A},
   {XK_b, Key::B},
   {XK_c, Key::C},
@@ -264,10 +261,10 @@ void x11_event_emitter_task(cydui::threading::thread_t* this_thread) {
   XCloseIM(xim);
 }
 
-void cydui::graphics::events::start() {
+void x11::events::start() {
   if (x11_thread && x11_thread->native_thread != nullptr)
     return;
   x11_evlog.debug("starting x11_thread");
-  x11_thread = threading::new_thread(x11_event_emitter_task)
+  x11_thread = cydui::threading::new_thread(x11_event_emitter_task)
     ->set_name("X11_EV_THD");
 }

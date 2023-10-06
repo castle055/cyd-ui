@@ -2,12 +2,12 @@
 // Created by castle on 8/21/22.
 //
 
-#include "x11_impl.hpp"
-#include "../events.hpp"
-#include "graphics.hpp"
-#include "images.h"
-#include "render/render.hpp"
 #include "state/state.hpp"
+#include "cydstd/cydstd.h"
+#include "cydstd/logging.hpp"
+#include "images.h"
+#include "events/events.hpp"
+#include "render/render.hpp"
 #include <X11/Xft/Xft.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
@@ -135,7 +135,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   
   XSync(state::get_dpy(), False);
   
-  cydui::graphics::events::start();
+  x11::events::start();
   render::start(win);
   
   return win;
@@ -375,6 +375,17 @@ void cydui::graphics::drw_image(
 ) {
   window_image i = load_image(target->win, img);
   render::drw_image(target, i, x, y, w, h);
+}
+
+void cydui::graphics::drw_image(
+  render_target_t* target,
+  window_image img,
+  int x,
+  int y,
+  int w,
+  int h
+) {
+  render::drw_image(target, img, x, y, w, h);
 }
 
 std::pair<int, int> cydui::graphics::get_image_size(

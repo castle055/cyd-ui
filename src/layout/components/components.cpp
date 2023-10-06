@@ -2,12 +2,10 @@
 // Created by castle on 8/22/22.
 //
 
-#include "components.hpp"
+#include "core/components.hpp"
+#include "core/layout.h"
 
 #include <utility>
-
-#include "../../../include/graphics.hpp"
-#include "event_types.h"
 
 using namespace cydui::components;
 

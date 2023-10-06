@@ -11,7 +11,8 @@
 #include <string>
 #include <utility>
 
-#include "cydstd/cydstd.h"
+#include "../cydstd/cydstd.h"
+#include "../threading.hpp"
 
 namespace cydui::events {
     template<class T>
@@ -99,6 +100,11 @@ namespace cydui::events {
       long ID;
       bool active = true;
     public:
+      listener_t() {
+        ID = 0;
+        active = false;
+      }
+      
       explicit listener_t(Listener c): func(std::move(c)) {
         ID = (long) new u8;
       }

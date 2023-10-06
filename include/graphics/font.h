@@ -5,8 +5,8 @@
 #ifndef CYD_UI_FONT_H
 #define CYD_UI_FONT_H
 
-#include "cydstd/cydstd.h"
-#include "cydstd/template_str_buffer.h"
+#include "../cydstd/cydstd.h"
+#include "../cydstd/template_str_buffer.h"
 
 namespace font {
     struct Font {

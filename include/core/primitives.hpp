@@ -6,8 +6,6 @@
 #define CYD_UI_PRIMITIVES_HPP
 
 
-#include "cydui.hpp"
-
 namespace primitives {
     using namespace cydui;
     using namespace cydui::components;

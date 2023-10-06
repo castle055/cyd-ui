@@ -6,13 +6,10 @@ namespace cydui {
 
 #include "cydstd/logging.hpp"
 
-#include "font.h"
-#include "color.h"
-#include "graphics.hpp"
-#include "components.hpp"
-#include "graphics.hpp"
-#include "primitives.hpp"
-#include "config.hpp"
+#include "core/layout.h"
+#include "core/window.h"
+#include "tools/tools.h"
 
+#include "core/primitives.hpp"
 
 #endif//CYD_UI_CYDUI_HPP

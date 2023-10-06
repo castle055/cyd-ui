@@ -2,10 +2,10 @@
 // Created by castle on 1/16/23.
 //
 
-#ifndef CYD_UI_EVENT_TYPES_H
-#define CYD_UI_EVENT_TYPES_H
+#ifndef CYD_UI_CYDUI_EVENTS_H
+#define CYD_UI_CYDUI_EVENTS_H
 
-#include "events.hpp"
+#include "change_events.h"
 
 EVENT(RedrawEvent, {
   unsigned int win = 0;
@@ -98,4 +98,4 @@ EVENT(KeyEvent, {
   const str text = "";
 })
 
-#endif //CYD_UI_EVENT_TYPES_H
+#endif //CYD_UI_CYDUI_EVENTS_H

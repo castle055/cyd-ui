@@ -88,6 +88,15 @@ namespace cydui::graphics {
       int h
     );
     
+    void drw_image(
+      render_target_t* target,
+      window_image img,
+      int x,
+      int y,
+      int w,
+      int h
+    );
+    
     std::pair<int, int> get_image_size(layout::images::image_t* img);
     
     void drw_target(
