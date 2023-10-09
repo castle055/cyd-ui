@@ -15,6 +15,8 @@
 
 #include <cydstd/loops.h>
 
+#include "SplineTest.h"
+
 using namespace std::chrono_literals;
 
 namespace test {
@@ -249,6 +251,11 @@ namespace test {
           //    }),
           //  },
           //})
+          COMP(SplineTest)({
+            .x = dim->cw / 2,
+            .w = dim->cw / 2,
+            .h = 400,
+          })
         });
       };
       ON_SCROLL(dx, d) {

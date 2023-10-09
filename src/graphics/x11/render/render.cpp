@@ -14,16 +14,16 @@ logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = true};
 void render_sbr(cydui::graphics::window_t* win) {
   //window_render_req req;
   
-  win->render_mtx.lock();
-  bool dirty = win->dirty;
-  win->dirty = false;
-  win->render_mtx.unlock();
-  
-  if (!dirty)
-    return;
+  //win->render_mtx.lock();
+  //bool dirty = win->dirty;
+  //win->dirty = false;
+  //win->render_mtx.unlock();
+  //
+  //if (!dirty)
+  //  return;
   
   //win->x_mtx.lock();
-  //win->render_mtx.lock();
+  win->render_mtx.lock();
   XCopyArea(state::get_dpy(),
     win->staging_target->drawable,
     win->xwin,
@@ -34,7 +34,7 @@ void render_sbr(cydui::graphics::window_t* win) {
     win->staging_target->h,
     0,
     0);
-  //win->render_mtx.unlock();
+  win->render_mtx.unlock();
   //win->x_mtx.unlock();
   XFlush(state::get_dpy());
 }
@@ -45,8 +45,16 @@ void render_task(cydui::threading::thread_t* this_thread) {
   xlog_task.debug("Started render thread");
   auto* render_data = (render::RenderThreadData*) this_thread->data;
   while (this_thread->running) {
+    auto t0 = std::chrono::system_clock::now();
     render_sbr(render_data->win);
-    std::this_thread::sleep_for(30ms);
+    auto t1 = std::chrono::system_clock::now();
+    long dt = std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count();
+    for (long i = 0; i < dt; ++i) {
+      printf("*");
+    }
+    printf("\n\r");
+    //printf("RENDER TASK TIME: %03ld us\n\r", dt);
+    std::this_thread::sleep_for(16666us); // 60 FPS
   }
 }
 
@@ -106,7 +114,7 @@ static void req(cydui::graphics::window_t* win, int x, int y, int w, int h) {
   win->render_mtx.unlock();
 }
 
-static std::unordered_map<u32, XColor> xcolor_cache;
+static std::unordered_map <u32, XColor> xcolor_cache;
 
 struct xcolor_hot_cache_entry_t {
   u32 id;

@@ -10,10 +10,11 @@
 #include "font.h"
 #include "images.h"
 #include "x11_impl.hpp"
+#include "pixelmap.h"
 
 namespace cydui::graphics {
     typedef window_ti window_t;
-    typedef render_target_ti render_target_t;
+    typedef pixelmap_t render_target_t;
     
     window_t* create_window(
       const char* title,

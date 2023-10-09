@@ -38,6 +38,12 @@ namespace cydui::layout {
         focused->focused = true;
       }
       
+      void redraw_component(cydui::components::Component* target);
+      
+      void recompute_dimensions(cydui::components::Component* start_from);
+      
+      void recompose_layout();
+      
       template<typename C>
       requires components::ComponentConcept<C>
       friend Layout* cydui::layout::create(components::c_init_t<C> init);

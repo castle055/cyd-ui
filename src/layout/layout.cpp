@@ -94,21 +94,11 @@ static bool compute_dimensions(cydui::components::Component* rt) {
 
 #undef COMPUTE
 
-static void redraw_component(
-  const cydui::window::CWindow* win, cydui::components::Component* target, cydui::layout::Layout* layout
+void cydui::layout::Layout::recompute_dimensions(
+  cydui::components::Component* start_from
 ) {
-  log_lay.debug("REDRAW");
-  //auto t0 = std::chrono::system_clock::now().time_since_epoch();
-  // Clear render area of component instances
-  for (auto child: target->children)
-    delete child;
-  target->children.clear();
-  
-  // Recreate those instances with redraw(), this set all size hints relationships
-  target->redraw(layout);
-  
-  if (!compute_dimensions(target)) {
-    cydui::components::Component* c = *target->parent.unwrap();
+  if (!compute_dimensions(start_from)) {
+    cydui::components::Component* c = *start_from->parent.unwrap();
     while (c && !compute_dimensions(c)) {
       if (!c->parent) {
         log_lay.error("Could not compute dimensions");
@@ -117,22 +107,31 @@ static void redraw_component(
       c = *c->parent.unwrap();
     }
   }
-  //auto t1 = std::chrono::system_clock::now().time_since_epoch();
-  //log_lay.debug("TARGET: w  = %d, h  = %d",
-  //  target->state->dim.w.val(),
-  //  target->state->dim.h.val());
-  //log_lay.debug("TARGET: cw = %d, ch = %d",
-  //  target->state->dim.cw.val(),
-  //  target->state->dim.ch.val());
+}
+
+void cydui::layout::Layout::redraw_component(cydui::components::Component* target) {
+  log_lay.debug("REDRAW");
+  //auto t0 = std::chrono::system_clock::now().time_since_epoch();
+  // Clear render area of component instances
+  for (auto child: target->children)
+    delete child;
+  target->children.clear();
   
+  // Recreate those instances with redraw(), this set all size hints relationships
+  target->redraw(this);
+  
+  recompute_dimensions(target);
+  
+  recompose_layout();
+}
+
+void cydui::layout::Layout::recompose_layout() {
   // Clear screen area
   cydui::graphics::render_target_t* r_target = win->win_ref->render_target;
   
   // Render screen area & flush graphics
   /// We must render from the root, this also re-renders any component that might
   /// occlude the target.
-  const cydui::components::Component* root = target;
-  while (root->parent) root = *root->parent.unwrap();
   
   root->state.let(_(cydui::components::ComponentState *, {
     cydui::graphics::clr_rect(r_target,
@@ -175,7 +174,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
         target = specified_target;
     }
     
-    redraw_component(this->win, target, this);
+    redraw_component(target);
   });
   listen(KeyEvent, {
     if (it.data->win != win->win_ref->xwin)
@@ -322,7 +321,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     (*root->state.unwrap())->dim.given_w = true;
     (*root->state.unwrap())->dim.given_h = true;
     
-    redraw_component(this->win, root, this);
+    redraw_component(root);
     //if (render_if_dirty(root))
     //    graphics::flush(win->win_ref);
   });
@@ -330,12 +329,13 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
 
 bool cydui::layout::Layout::render_if_dirty(cydui::components::Component* c) {
   if ((*c->state.unwrap())->_dirty) {
-    redraw_component(this->win, c, this);
+    redraw_component(c);
     return true;
   } else {
     bool any = false;
     for (auto &item: c->children)
-      any = render_if_dirty(item) || any;// F**K, order here matters
+      any = render_if_dirty(item) || any;// ! F**K, order here matters
+    // ? render_if_dirty() needs to be called before `any` is checked.
     return any;
   }
 }

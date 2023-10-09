@@ -149,7 +149,15 @@ void Component::render(cydui::graphics::render_target_t* target) const {
           + it->dim.padding.bottom.val() + 1,
         false);
     }
+    
+    pixelmap_t t {
+      (unsigned long) it->dim.cw.val(),
+      (unsigned long) it->dim.ch.val()
+    };
+    
+    on_render(&t);
   }));
+  
   
   on_render(target);
 }
