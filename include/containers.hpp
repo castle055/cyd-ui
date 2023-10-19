@@ -11,7 +11,7 @@ STATE(VBox) { };
 
 COMPONENT(VBox) {
   PROPS({
-    dimensions::dimensional_relation_t spacing = 0;
+    cydui::dimensions::dimensional_relation_t spacing = 0;
     int offset = 0;
   })
   INIT(VBox) {
@@ -31,7 +31,7 @@ STATE(HBox) { };
 
 COMPONENT(HBox) {
   PROPS({
-    dimensions::dimensional_relation_t spacing = 0;
+    cydui::dimensions::dimensional_relation_t spacing = 0;
     int offset = 0;
   })
   INIT(HBox) {

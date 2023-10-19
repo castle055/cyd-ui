@@ -2,6 +2,9 @@
 // Created by castle on 2/16/23.
 //
 
+
+#define CYD_UI_CONFIG_HPP
+
 #ifndef CYD_UI_CONFIG_HPP
 #define CYD_UI_CONFIG_HPP
 

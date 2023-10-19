@@ -20,7 +20,9 @@ namespace cydui::layout {
     Layout* create(components::c_init_t<C> init);
     
     class Layout {
-      const window::CWindow* win = nullptr;
+      window::CWindow* win = nullptr;
+      
+      compositing::LayoutCompositor compositor {};
       
       components::ComponentState* root_state;
       components::Component* root;

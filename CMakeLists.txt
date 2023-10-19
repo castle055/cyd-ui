@@ -37,23 +37,28 @@ enable_cxx_compiler_flag_if_supported("-fmodules-ts")
 include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
 include_directories(/usr/include/freetype2)
 
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(CAIROMM-1.16 REQUIRED cairomm-1.16)
+include_directories(${CAIROMM-1.16_INCLUDE_DIRS})
+
 include(cppcheck.cmake)
 include(clang-format.cmake)
 
 FILE(GLOB_RECURSE SRC_LIST
         ${CMAKE_CURRENT_LIST_DIR}/include/*.*
         ${CMAKE_CURRENT_LIST_DIR}/src/*.*
-        )
+)
 list(APPEND SRC_LIST ${EXTRA_LIBS_LIST})
 add_library(cyd_ui ${SRC_LIST})
 target_link_libraries(cyd_ui PUBLIC ${STATIC_EXTRA_LIBS})
 target_link_libraries(cyd_ui PUBLIC X11 Xft Xrender fontconfig)
 target_link_libraries(cyd_ui PUBLIC yaml-cpp)
 target_link_libraries(cyd_ui PUBLIC jpeg)
+target_link_libraries(cyd_ui PUBLIC ${CAIROMM-1.16_LIBRARIES})
 
 FILE(GLOB_RECURSE TEST_LIST
         ${CMAKE_CURRENT_LIST_DIR}/test/*.*
-        )
+)
 add_executable(cyd_ui_test ${TEST_LIST})
 target_link_libraries(cyd_ui_test PRIVATE cyd_ui)
 
@@ -68,7 +73,7 @@ if (CMAKE_BUILD_TYPE MATCHES "Release")
             ${CMAKE_CURRENT_LIST_DIR}/dist/
             WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
             COMMENT "Generating distribution files..."
-            )
+    )
     add_custom_command(TARGET cyd_ui POST_BUILD
             COMMAND /usr/bin/cp
             -rv
@@ -76,7 +81,7 @@ if (CMAKE_BUILD_TYPE MATCHES "Release")
             ${CMAKE_CURRENT_LIST_DIR}/dist/
             WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
             COMMENT "Copying header files..."
-            )
+    )
     add_custom_command(TARGET cyd_ui POST_BUILD
             COMMAND /usr/bin/cp
             -v
@@ -84,5 +89,5 @@ if (CMAKE_BUILD_TYPE MATCHES "Release")
             ${CMAKE_CURRENT_LIST_DIR}/dist/
             WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
             COMMENT "Copying CYD files..."
-            )
+    )
 endif ()

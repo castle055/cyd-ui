@@ -3,286 +3,116 @@
 //
 
 #include "../include/cydui.hpp"
-#include "../include/containers.hpp"
-
 #include <mcheck.h>
 #include <thread>
-
 #include "cydstd/nullable.h"
-#include "core/primitives.hpp"
-
-#include "terminal_button.hpp"
-
 #include <cydstd/loops.h>
-
-#include "SplineTest.h"
+#include "tools/profiler/Profiler.h"
 
 using namespace std::chrono_literals;
 
-namespace test {
-    STATE(Test) {
-      color::Color c = "#FCAE1E"_color;
-      //color::Color c = color::Red;
-      color::Color c1 = "#111A1E"_color;
-      font::Font font {.name = "Fira Code Retina", .size = 14};
-      
-      int scroll = 0;
-    };
-    COMPONENT(Test) {
-      PROPS({
-        int a = 4;
-      })
-      int b = 4;
-      INIT(Test) {
-        ENABLE_LOG
-      }
-      REDRAW {
-        HBoxState* hbox_ref;
-        bool teast = 10;
-        //this->parent = this;
-        //this->parent->dim->given_h = true;
-        //this->parent->dim = nullptr;
-        add({
-          COMP(TerminalButton)({
-            .x = 20,
-            .y = 450,
-          }),
-          //[this]() {
-          //  return COMP(Rectangle)({
-          //
-          //  });
-          //}(),
-          //IF((1 & 2) > 0, Rectangle)({
-          //
-          //}),
-          //IF((1 & 3) > 0) COMP(Rectangle)({});
-          //ELSE_IF(-1 < 0) COMP(Rectangle)({});
-          //ELSE_IF(1 < 0) COMP(Rectangle)({});
-          //  ELSE COMP(Circle)({});
-          //  END,
-          //WHEN(teast)
-          //  CASE(false) COMP(Rectangle)({});
-          //  CASE(true) COMP(Circle)({});
-          //  END,
-          COMP(Rectangle)({
-            .props = {
-              .color  = state->c,
-              .filled = true,
-            },
-            .w = 250,
-            .h = 50,
-          }),
-          COMP(VBox)({
-            .props = {
-              .spacing = 10,
-            },
-            .y = 60,
-            .inner = {
-              COMP(ViewPort)({
-                .props = {
-                  .x = 0,
-                  .y = state->scroll,
-                },
-                .x = 50,
-                .w = 100,
-                .h = 100,
-                .inner = {
-                  COMP(Text)({
-                    .props = {
-                      .color = state->c,
-                      .font  = &state->font,
-                      .text  = "Test TEXT",
-                    },
-                  }),
-                  COMP(VBox)({
-                    .props = {
-                      .spacing = 10,
-                    },
-                    .inner = {
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                      COMP(Text)({
-                        .props = {
-                          .color = state->c,
-                          .font  = &state->font,
-                          .text  = "Test TEXT",
-                        },
-                      }),
-                    },
-                  }),
-                }
-              }),
-            },
-          }),
-          //COMP(Image)({
-          //  .props = {
-          //    .img = "/home/castle/pics/prof.jpg",
-          //  },
-          //  .w = dim->cw,
-          //}),
-          //COMP(HBox)({
-          //  .ref = &hbox_ref,
-          //  .props = {
-          //    .spacing = 10,
-          //  },
-          //  .x     = 10,
-          //  .y     = 10,
-          //  .inner = {
-          //    COMP(VBox)({
-          //      .props = {
-          //        .spacing = 10,
-          //      },
-          //      .inner = {
-          //COMP(Rectangle)({
-          //  .props = {
-          //    .color  = state->c1,
-          //    .filled = true,
-          //  },
-          //  .w = dim->cw / 2 - 15,
-          //  .h = dim->ch / 4,
-          //}),
-          //COMP(Rectangle)({
-          //  .props = {
-          //    .color  = state->c,
-          //    .filled = true,
-          //  },
-          //  .w = dim->cw / 2 - 15,
-          //  .h = 40,
-          //}),
-          //COMP(VBox)({
-          //  .props = {
-          //    .spacing = 10,
-          //  },
-          //  .inner = {
-          //    COMP(Rectangle)({
-          //      .props = {
-          //        .color  = state->c,
-          //        .filled = true,
-          //      },
-          //      .w = dim->cw / 2 - 15,
-          //      .h = dim->ch / 4,
-          //    }),
-          //    COMP(Rectangle)({
-          //      .props = {
-          //        .color  = state->c,
-          //        .filled = true,
-          //      },
-          //      .w = dim->cw / 2 - 15,
-          //      .h = 50,
-          //    }),
-          //  }
-          //}),
-          //      },
-          //    }),
-          //  },
-          //})
-          COMP(SplineTest)({
-            .x = dim->cw / 2,
-            .w = dim->cw / 2,
-            .h = 400,
-          })
-        });
-      };
-      ON_SCROLL(dx, d) {
-        //log.info("SCROLL: %dy", dy);
-        state->scroll += d > 0 ? 10 : (d < 0 ? -10 : 0);
-        state->dirty();
-      }
-    };
-}
+STATE(TestComponent) {
+  int off = 0.0;
+  INIT_STATE(TestComponent) {
+  }
+};
+
+COMPONENT(TestComponent) {
+  PROPS({
+  })
+  INIT(TestComponent) {
+    ENABLE_LOG
+  }
+  REDRAW {
+    add({
+      COMP(Canvas)({
+        .props = {
+          .draw = [this](vg::vg_fragment_t &gc) {
+            for (int i = 0; i < dim->cw.val() / 8; ++i) {
+              gc.append(
+                vg::line {}
+                  .stroke({.color = "#FCAE1E"_color})
+                  .x1(int {i * 8})
+                  .y1(0)
+                  .x2(dim->cw.val() - i * 8)
+                  .y2(dim->ch.val())
+                  .stroke_dashoffset(state->off)
+                  .stroke_dasharray({20, 10, 2})
+              );
+            }
+            
+            gc.append(
+              vg::polyline {}
+                .stroke_width(3)
+                .stroke({.color = "#FCAE1E"_color})
+                .fill({.color = "#AC7E0E"_color})
+                .points({
+                  {0, 300},
+                  {30, 300},
+                  {30, 350},
+                  {80, 400},
+                  {30, 450},
+                  {30, 500},
+                  {0, 500},
+                })
+            );
+          }
+        },
+        .w = dim->cw,
+        .h = dim->ch,
+      }),
+    });
+  };
+  
+  ON_SCROLL(dx, dy) {
+    state->off += dy / 64;
+    cydui::events::emit<RedrawEvent>({
+      .win = cydui::graphics::get_id(*state->win.unwrap()),
+      .component = state,
+    });
+  }
+};
 
 int main() {
-  //mtrace();
+//mtrace();
   
-  cydui::layout::Layout* layout = cydui::layout::create<test::Test>({
-  });
-  cydui::window::CWindow* win = cydui::window::create(layout,
-    "startmenu",
+  cydui::window::CWindow* win = cydui::window::create(
+    cydui::layout::create<TestComponent>({
+    }),
+    "test",
     "scratch",
-    0,
-    25,//100, 260,
-    //1, 13,
-    800,
-    800,
-    false);
+    0, 25,//100, 260,
+    800, 800,
+    false
+  );
+  
+  cydui::window::CWindow* pwin = cydui::window::create(
+    cydui::layout::create<Profiler>({
+      .props = {
+        .ctx = win->profiling_ctx,
+      }
+    }),
+    "Profiler",
+    "scratch",
+    0, 25,//100, 260,
+    1280, 400,
+    false
+  );
+  //
+  //cydui::events::on_event<RedrawEvent>(cydui::events::Consumer<RedrawEvent>(
+  //  [=](const cydui::events::ParsedEvent<RedrawEvent> &it) {
+  //    if (it.data->win == cydui::graphics::get_id(win->win_ref)) {
+  //      cydui::events::emit<RedrawEvent>({
+  //        .win = cydui::graphics::get_id(pwin->win_ref)
+  //      });
+  //    }
+  //  }));
   
   for (ever) {
-    std::this_thread::sleep_for(10000s);
+    cydui::events::emit<RedrawEvent>({
+      .win = cydui::graphics::get_id(pwin->win_ref)
+    });
+    std::this_thread::sleep_for(16666us);
   }
   return 0;
 }

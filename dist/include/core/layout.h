@@ -20,7 +20,9 @@ namespace cydui::layout {
     Layout* create(components::c_init_t<C> init);
     
     class Layout {
-      const window::CWindow* win = nullptr;
+      window::CWindow* win = nullptr;
+      
+      compositing::LayoutCompositor compositor {};
       
       components::ComponentState* root_state;
       components::Component* root;
@@ -37,6 +39,12 @@ namespace cydui::layout {
         : root_state(_root_state), root(_root), focused(_root_state) {
         focused->focused = true;
       }
+      
+      void redraw_component(cydui::components::Component* target);
+      
+      void recompute_dimensions(cydui::components::Component* start_from);
+      
+      void recompose_layout();
       
       template<typename C>
       requires components::ComponentConcept<C>

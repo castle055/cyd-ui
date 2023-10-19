@@ -21,20 +21,23 @@ CWindow* cydui::window::create(
   bool override_redirect
 ) {
   auto win = new CWindow();
-  auto* win_ref = graphics::create_window(title, wclass, x, y, w, h, override_redirect);
+  auto* win_ref = graphics::create_window(&win->profiling_ctx, title, wclass, x, y, w, h, override_redirect);
   win->layout = layout;
   
   win->win_ref = win_ref;
-  graphics::set_background(win_ref);
+  //graphics::set_background(win_ref);
   
   layout->bind_window(win);
   
   windows.push_back(win);
-  cydui::events::on_event<ResizeEvent>(
-    cydui::events::Consumer<ResizeEvent>([=](const cydui::events::ParsedEvent<ResizeEvent> &it) {
-      graphics::resize(win_ref, it.data->w, it.data->h);
-    })
-  );
+  //cydui::events::on_event<ResizeEvent>(
+  //  cydui::events::Consumer<ResizeEvent>([=](const cydui::events::ParsedEvent<ResizeEvent> &it) {
+  //    if (get_id(win_ref) == it.data->win) {
+  //      printf("%d - %d\n\r", it.data->w, it.data->h);
+  //      graphics::resize(win_ref, it.data->w, it.data->h);
+  //    }
+  //  })
+  //);
   
   events::start();
   
@@ -42,7 +45,7 @@ CWindow* cydui::window::create(
   // force a complete redraw
   //events::emit<RedrawEvent>({.win = (unsigned int) win_ref->xwin});
   //events::emit<RedrawEvent>({ });
-  events::emit<RedrawEvent>({.win = (unsigned int) win_ref->xwin});
+  events::emit<RedrawEvent>({.win = get_id(win_ref)});
   
   return win;
 }

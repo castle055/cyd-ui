@@ -8,13 +8,13 @@
 #include "change_events.h"
 
 EVENT(RedrawEvent, {
-  unsigned int win = 0;
+  unsigned long win = 0;
   int x = 0;
   int y = 0;
   void* component = nullptr;
 })
 EVENT(ButtonEvent, {
-  const unsigned int win = 0;
+  const unsigned long win = 0;
   const unsigned int button = 0;
   const int x = 0;
   const int y = 0;
@@ -23,14 +23,14 @@ EVENT(ButtonEvent, {
   const bool holding = false;
 })
 EVENT(ScrollEvent, {
-  unsigned int win = 0;
+  unsigned long win = 0;
   int dy = 0;
   int dx = 0;
   int x = 0;
   int y = 0;
 })
 EVENT(MotionEvent, {
-  unsigned int win = 0;
+  unsigned long win = 0;
   int x = 0;
   int y = 0;
   bool enter = false;
@@ -39,7 +39,7 @@ EVENT(MotionEvent, {
   bool dragging = false;
 })
 EVENT(ResizeEvent, {
-  unsigned int win = 0;
+  unsigned long win = 0;
   int w = 0;
   int h = 0;
 })
@@ -90,7 +90,7 @@ enum Key {
 };
 
 EVENT(KeyEvent, {
-  const unsigned int win = 0;
+  const unsigned long win = 0;
   const Key key;
   const bool pressed = false;
   const bool released = false;

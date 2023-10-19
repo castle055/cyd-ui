@@ -12,9 +12,10 @@
 
 namespace color {
     struct Color {
-      uint8_t r = 0U;
-      uint8_t g = 0U;
-      uint8_t b = 0U;
+      double r = 0.0;
+      double g = 0.0;
+      double b = 0.0;
+      double a = 0.0;
       
       [[nodiscard("Don't call 'to_string()' if you don't need a string.")]]
       str to_string() const;
@@ -47,7 +48,7 @@ consteval color::Color operator ""_color() {
   (void) std::from_chars(&data.data[3], &data.data[5], g, 16);
   uint8_t b = 0U;
   (void) std::from_chars(&data.data[5], &data.data[7], b, 16);
-  return {r, g, b};
+  return {(double) r / 255.0, (double) g / 255.0, (double) b / 255.0, 1.0};
 }
 
 #endif //CYD_UI_COLOR_H

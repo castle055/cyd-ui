@@ -126,35 +126,17 @@ void cydui::layout::Layout::redraw_component(cydui::components::Component* targe
 }
 
 void cydui::layout::Layout::recompose_layout() {
-  // Clear screen area
-  cydui::graphics::render_target_t* r_target = win->win_ref->render_target;
-  
-  // Render screen area & flush graphics
-  /// We must render from the root, this also re-renders any component that might
-  /// occlude the target.
-  
-  root->state.let(_(cydui::components::ComponentState *, {
-    cydui::graphics::clr_rect(r_target,
-      it->dim.cx.val() - it->dim.padding.left.val(),
-      it->dim.cy.val() - it->dim.padding.top.val(),
-      it->dim.cw.val() + it->dim.padding.left.val() + it->dim.padding.right.val(),
-      it->dim.ch.val() + it->dim.padding.top.val() + it->dim.padding.bottom.val());
-  }));
-  root->render(r_target);
-  
-  cydui::graphics::flush(win->win_ref);
-  //auto t2 = std::chrono::system_clock::now().time_since_epoch();
-  //auto redraw_time = (t1 - t0).count();
-  //auto render_time = (t2 - t1).count();
-  //log_lay.info("[REDRAW EV] REDRAW=%d, RENDER=%d, f=%f", redraw_time, render_time,
-  //  ((double) render_time) / redraw_time);
+  auto* tree = new compositing::compositing_tree_t;
+  root->render(&tree->root);
+  compositor.compose(tree);
 }
 
 void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
+  compositor.set_render_target(this->win->win_ref, &this->win->profiling_ctx);
   root->state.let(_(cydui::components::ComponentState *, {
-    it->dim.w = win->win_ref->render_target->w;
-    it->dim.h = win->win_ref->render_target->h;
+    it->dim.w = get_frame(win->win_ref)->width();
+    it->dim.h = get_frame(win->win_ref)->height();
     it->dim.given_w = true;
     it->dim.given_h = true;
     
@@ -162,8 +144,9 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   }));
   
   listen(RedrawEvent, {
-    if (it.data->win != 0 && it.data->win != win->win_ref->xwin)
+    if (it.data->win != 0 && it.data->win != get_id(win->win_ref))
       return;
+    auto _pev = this->win->profiling_ctx.scope_event("Redraw");
     cydui::components::Component* target = root;
     if (it.data->component) {
       cydui::components::ComponentState* target_state =
@@ -177,8 +160,9 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     redraw_component(target);
   });
   listen(KeyEvent, {
-    if (it.data->win != win->win_ref->xwin)
+    if (it.data->win != get_id(win->win_ref))
       return;
+    auto _pev = this->win->profiling_ctx.scope_event("Key");
     if (focused && focused->component_instance) {
       if (focused->focused) {
         if (it.data->pressed) {
@@ -192,8 +176,9 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     }
   });
   listen(ButtonEvent, {
-    if (it.data->win != win->win_ref->xwin)
+    if (it.data->win != get_id(win->win_ref))
       return;
+    auto _pev = this->win->profiling_ctx.scope_event("Button");
     if (it.data->pressed) {
       cydui::components::Component* target = root;
       cydui::components::Component* specified_target =
@@ -223,8 +208,9 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     }
   });
   listen(ScrollEvent, {
-    if (it.data->win != win->win_ref->xwin)
+    if (it.data->win != get_id(win->win_ref))
       return;
+    auto _pev = this->win->profiling_ctx.scope_event("Scroll");
     cydui::components::Component* target = root;
     cydui::components::Component* specified_target =
       find_by_coords(root, it.data->x, it.data->y);
@@ -236,8 +222,9 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       graphics::flush(win->win_ref);
   });
   listen(MotionEvent, {
-    if (it.data->win != win->win_ref->xwin)
+    if (it.data->win != get_id(win->win_ref))
       return;
+    auto _pev = this->win->profiling_ctx.scope_event("Motion");
     
     if (it.data->x == -1 && it.data->y == -1) {
       if (hovering && hovering->component_instance) {
@@ -312,8 +299,9 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       graphics::flush(win->win_ref);
   });
   listen(ResizeEvent, {
-    if (it.data->win != win->win_ref->xwin)
+    if (it.data->win != get_id(win->win_ref))
       return;
+    auto _pev = this->win->profiling_ctx.scope_event("Resize");
     log_lay.debug("RESIZE w=%d, h=%d", it.data->w, it.data->h);
     
     (*root->state.unwrap())->dim.w = it.data->w;
@@ -348,12 +336,13 @@ cydui::components::Component* cydui::layout::Layout::find_by_coords(
   components::Component* c, int x, int y
 ) {
   components::Component* target = nullptr;
-  c->state.let(_(components::ComponentState*, {
-    if (it->sub_render_target) {
-      x += it->sub_render_event_offset.first;
-      y += it->sub_render_event_offset.second;
-    }
-  }));
+  // ! TODO - FIX THIS
+  //c->state.let(_(components::ComponentState*, {
+  //  if (it->sub_render_target) {
+  //    x += it->sub_render_event_offset.first;
+  //    y += it->sub_render_event_offset.second;
+  //  }
+  //}));
   for (auto i = c->children.rbegin(); i != c->children.rend(); ++i) {
     auto* item = *i;
     if (x >= (*item->state.unwrap())->dim.cx.val()

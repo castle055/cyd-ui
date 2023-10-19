@@ -9,6 +9,7 @@
 #include "../../driver.h"
 
 #include <X11/Xlib.h>
+#include "../x11_impl.hpp"
 
 namespace state {
     Display* get_dpy();

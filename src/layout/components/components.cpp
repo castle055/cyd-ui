@@ -110,62 +110,39 @@ void Component::redraw(cydui::layout::Layout* layout) {
   }));
 }
 
-void Component::render(cydui::graphics::render_target_t* target) const {
+void Component::render(cydui::compositing::compositing_node_t* node) const {
+  node->id = (unsigned long) (*this->state.unwrap());
+  node->op = {
+    .x = dim->x.val(),
+    .y = dim->y.val(),
+    .w = dim->w.val(),
+    .h = dim->h.val(),
+    .rot = 0.0, // dim->rot.val(),
+    .scale_x = 1.0, // dim->scale_x.val(),
+    .scale_y = 1.0, // dim->scale_y.val(),
+  };
   
-  auto* sub_render_target = target;
-  state.let(_(ComponentState *, {
-    it->sub_render_target.let(_(cydui::graphics::render_target_t * , {
-      sub_render_target = it;
-      cydui::graphics::clr_rect(sub_render_target, 0, 0, sub_render_target->w, sub_render_target->h);
-    }));
-  }));
-  
-  for (const auto &child: children) {
-    if (child) {
-      child->state.let(_(ComponentState *, {
-        if (it->dim.cx.val() + it->dim.cw.val() + it->dim.padding.right.val() > sub_render_target->w
-          || it->dim.cy.val() + it->dim.ch.val() + it->dim.padding.bottom.val() > sub_render_target->h) {
-          sub_render_target->resize(
-            std::max(sub_render_target->w,
-              it->dim.cx.val() + it->dim.cw.val() + it->dim.padding.right.val()),
-            std::max(sub_render_target->h,
-              it->dim.cy.val() + it->dim.ch.val() + it->dim.padding.bottom.val())
-          );
-        }
-      }));
-      child->render(sub_render_target);
+  if (is_drawable()) {
+    on_render(node->graphics);
+  } else {
+    for (const auto &child: children) {
+      if (child) {
+        auto* c_node = new compositing::compositing_node_t();
+        node->children.push_back(c_node);
+        child->render(c_node);
+      }
     }
   }
-  
-  state.let(_(ComponentState *, {
-    if (it->border.enabled) {
-      graphics::drw_rect(target,
-        it->border.color,
-        it->dim.cx.val() - it->dim.padding.left.val(),
-        it->dim.cy.val() - it->dim.padding.top.val(),
-        it->dim.cw.val() + it->dim.padding.left.val()
-          + it->dim.padding.right.val() + 2,
-        it->dim.ch.val() + it->dim.padding.top.val()
-          + it->dim.padding.bottom.val() + 1,
-        false);
-    }
-    
-    pixelmap_t t {
-      (unsigned long) it->dim.cw.val(),
-      (unsigned long) it->dim.ch.val()
-    };
-    
-    on_render(&t);
-  }));
-  
-  
-  on_render(target);
+}
+
+bool cydui::components::Component::is_drawable() const {
+  return false;
 }
 
 #define COMP_EVENT_HANDLER_IMPL(EV, ARGS) void Component::on_##EV ARGS const
 #define RECURSIVE
 
-COMP_EVENT_HANDLER_IMPL(render, (cydui::graphics::render_target_t * target)) {
+COMP_EVENT_HANDLER_IMPL(render, (vg::vg_fragment_t & graphics)) {
 }
 
 COMP_EVENT_HANDLER_IMPL(redraw, ()) {

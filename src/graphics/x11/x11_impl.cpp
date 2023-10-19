@@ -2,16 +2,16 @@
 // Created by castle on 8/21/22.
 //
 
-#include "state/state.hpp"
 #include "cydstd/cydstd.h"
 #include "cydstd/logging.hpp"
 #include "images.h"
 #include "events/events.hpp"
-#include "render/render.hpp"
 #include <X11/Xft/Xft.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <png.h>
+#include "state/state.hpp"
+#include "render/render.hpp"
 
 const logging::logger log_task = {.name = "X11_IMPL", .on = true};
 
@@ -36,6 +36,7 @@ static int geom_mask_to_gravity(int mask) {
 }
 
 cydui::graphics::window_t* cydui::graphics::create_window(
+  prof::context_t* profiler,
   const char* title,
   const char* wclass,
   int x,
@@ -129,117 +130,34 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   }
   log_task.debug("Mapping window %lX", xwin);
   
-  //XSync(state::get_dpy(), False);
+  auto* win = new window_t(profiler, xwin, w, h);
   
-  auto* win = new window_t(xwin, w, h);
+  win->gc = XCreateGC(state::get_dpy(), xwin, 0, nullptr);
   
   XSync(state::get_dpy(), False);
   
   x11::events::start();
-  render::start(win);
   
   return win;
 }
 
-window_ti::window_ti(Window xwin, int w, int h) {
-  //window_ti::window_ti(Window xwin, int w, int h) {
+window_t::window_t(prof::context_t* profiler, Window xwin, unsigned long w, unsigned long h) {
+  this->profiler = profiler;
   this->xwin = xwin;
-  this->staging_target = new cydui::graphics::render_target_t(this, w, h);
-  this->render_target = new cydui::graphics::render_target_t(this, w, h);
-}
-
-render_target_ti::render_target_ti(
-  cydui::graphics::window_t* win, int w, int h
-) {
-  //std::lock_guard guard(win->x_mtx);
-  this->drawable = XCreatePixmap(state::get_dpy(),
-    win->xwin,
-    w,
-    h,
-    DefaultDepth(state::get_dpy(), state::get_screen()));
-  this->gc = XCreateGC(state::get_dpy(), this->drawable, 0, nullptr);
-  XSetLineAttributes(
-    state::get_dpy(), this->gc, 1, LineSolid, CapButt, JoinMiter);
-  this->w = w;
-  this->h = h;
-  this->win = win;
-  
-  set_background();
-}
-
-
-void cydui::graphics::set_background(window_t* win) {
-  XSetWindowBackground(state::get_dpy(),
-    win->xwin,
-    BlackPixel(state::get_dpy(), state::get_screen()));
-  win->render_target->set_background();
-  win->staging_target->set_background();
-}
-
-void cydui::graphics::render_target_t::set_background() {
-  XSetBackground(state::get_dpy(),
-    this->gc,
-    BlackPixel(state::get_dpy(), state::get_screen()));
+  this->staging_target = new pixelmap_t {w, h};
+  this->render_target = new pixelmap_t {w, h};
+  render::start(this);
 }
 
 void cydui::graphics::resize(window_t* win, int w, int h) {
   if (w == 0 || h == 0) return;
-  win->render_target->resize(w, h);
-  win->staging_target->resize(w, h);
-}
-
-void cydui::graphics::render_target_t::resize(int nw, int nh) {
-  if (w == 0 || h == 0) return;
-  if (nw != this->w || nh != this->h) {
-    render::resize(this, nw, nh);
-  }
+  std::lock_guard lk {win->render_mtx};
+  win->render_target->resize({(size_t) w, (size_t) h});
+  win->staging_target->resize({(size_t) w, (size_t) h});
 }
 
 void cydui::graphics::flush(window_t* win) {
   render::flush(win);
-}
-
-void cydui::graphics::clr_rect(
-  render_target_t* target, int x, int y, unsigned int w, unsigned int h
-) {
-  render::clr_rect(target, x, y, w, h);
-}
-
-void cydui::graphics::drw_line(
-  render_target_t* target,
-  color::Color color,
-  int x,
-  int y,
-  int x1,
-  int y1
-) {
-  render::drw_line(target, color, x, y, x1, y1);
-}
-
-void cydui::graphics::drw_rect(
-  render_target_t* target,
-  color::Color color,
-  int x,
-  int y,
-  int w,
-  int h,
-  bool filled
-) {
-  render::drw_rect(target, color, x, y, w, h, filled);
-}
-
-void cydui::graphics::drw_arc(
-  render_target_t* target,
-  color::Color color,
-  int x,
-  int y,
-  int w,
-  int h,
-  int a0,
-  int a1,
-  bool filled
-) {
-  render::drw_arc(target, color, x, y, w, h, a0, a1, filled);
 }
 
 static str to_pattern(font::Font* font) {
@@ -320,27 +238,15 @@ static window_image load_image(
 }
 
 static void unload_image(
-  cydui::graphics::render_target_t* target,
+  cydui::graphics::window_t* win,
   cydui::layout::images::image_t* img
 ) {
   // TODO - Implement
 }
 
-void cydui::graphics::drw_text(
-  render_target_t* target,
-  font::Font* font,
-  color::Color color,
-  str text,
-  int x,
-  int y
-) {
-  window_font xfont = load_font(target->win, font);
-  render::drw_text(target, xfont, color, text, x, y);
-}
-
 static std::unordered_map<str, XftFont*> cached_fonts;
 
-std::pair<int, int> cydui::graphics::get_text_size(
+std::pair<int, int> get_text_size(
   font::Font* font, const str &text
 ) {
   str font_spec = to_pattern(font);
@@ -365,45 +271,17 @@ std::pair<int, int> cydui::graphics::get_text_size(
   return {x_glyph_info.xOff, x_glyph_info.y};
 }
 
-void cydui::graphics::drw_image(
-  render_target_t* target,
-  layout::images::image_t* img,
-  int x,
-  int y,
-  int w,
-  int h
-) {
-  window_image i = load_image(target->win, img);
-  render::drw_image(target, i, x, y, w, h);
-}
-
-void cydui::graphics::drw_image(
-  render_target_t* target,
-  window_image img,
-  int x,
-  int y,
-  int w,
-  int h
-) {
-  render::drw_image(target, img, x, y, w, h);
-}
-
-std::pair<int, int> cydui::graphics::get_image_size(
-  layout::images::image_t* img
+std::pair<int, int> get_image_size(
+  cydui::layout::images::image_t* img
 ) {
   imgs::img_data data = imgs::read_jpg(img->path);
   return {data.width, data.height};
 }
 
-void cydui::graphics::drw_target(
-  render_target_t* dest_target,
-  render_target_t* source_target,
-  int xs,
-  int ys,
-  int xd,
-  int yd,
-  int w,
-  int h
-) {
-  render::drw_target(dest_target, source_target, xs, ys, xd, yd, w, h);
+pixelmap_t* cydui::graphics::get_frame(cydui::graphics::window_t* win) {
+  return win->staging_target;
+}
+
+unsigned long cydui::graphics::get_id(cydui::graphics::window_t* win) {
+  return (unsigned int) win->xwin;
 }

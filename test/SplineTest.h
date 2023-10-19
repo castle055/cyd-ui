@@ -36,7 +36,7 @@ COMPONENT(SplineTest) {
     log.debug("t = %.2f", state->t);
   }
   
-  RENDER(win) {
+  RENDER {
     //using namespace std::chrono_literals;
     //std::this_thread::sleep_for(1s);
     static int scale = 50;
