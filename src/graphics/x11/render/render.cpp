@@ -38,20 +38,20 @@ void render_sbr(cydui::graphics::window_t* win, XImage* image) {
     image->bytes_per_line = (int) win->render_target->width() * 4;
     if (0 != XInitImage(image)
       && win->gc) {
-      if (x_mtx.try_lock()) {
-        auto _pev = win->profiler->scope_event("render::render_sbr");
-        //win->x_mtx.lock();
-        XPutImage(state::get_dpy(),
-          win->xwin,
-          win->gc,
-          image,
-          0, 0,
-          0, 0,
-          win->render_target->width(), win->render_target->height()
-        );
-        x_mtx.unlock();
-      }
-      //XFlush(state::get_dpy());
+      //if (x_mtx.try_lock()) {
+      auto _pev = win->profiler->scope_event("render::render_sbr");
+      //win->x_mtx.lock();
+      XPutImage(state::get_dpy(),
+        win->xwin,
+        win->gc,
+        image,
+        0, 0,
+        0, 0,
+        win->render_target->width(), win->render_target->height()
+      );
+      //x_mtx.unlock();
+      //}
+      //X Flush(state::get_dpy());
       
       //XDestroyImage(image);
     }
@@ -70,7 +70,7 @@ void render_task(cydui::threading::thread_t* this_thread) {
     t0 = std::chrono::system_clock::now();
     render_sbr(render_data->win, render_data->image);
     //std::this_thread::sleep_until(t0 + 16666us); // 60 FPS
-    std::this_thread::sleep_until(t0 + 16666us); // 60 FPS
+    std::this_thread::sleep_until(t0 + 2 * 16666us); // 60 FPS
   }
 }
 
@@ -87,7 +87,7 @@ void render::start(cydui::graphics::window_t* win) {
     ->set_name("RENDER_THD");
 }
 
-static std::unordered_map<u32, XColor> xcolor_cache;
+static std::unordered_map <u32, XColor> xcolor_cache;
 
 struct xcolor_hot_cache_entry_t {
   u32 id;

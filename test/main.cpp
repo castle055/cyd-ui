@@ -17,6 +17,19 @@ STATE(TestComponent) {
   }
 };
 
+
+void asdfgg(std::string s) {
+
+}
+
+struct something {
+  int num;
+  
+  std::string str() const {
+    return std::to_string(num);
+  }
+};
+
 COMPONENT(TestComponent) {
   PROPS({
   })
@@ -24,6 +37,11 @@ COMPONENT(TestComponent) {
     ENABLE_LOG
   }
   REDRAW {
+    asdfgg("fdas");
+    asdfgg(something{1234234}.str());
+    asdfgg(something{34}.str());
+    //auto f = {it -> return it.first };
+    //auto d = [](auto it){ return it.first; };
     add({
       COMP(Canvas)({
         .props = {
@@ -73,8 +91,15 @@ COMPONENT(TestComponent) {
   }
 };
 
+inline consteval int counter() {
+  return __LINE__;
+}
+
 int main() {
-//mtrace();
+  int a = counter();
+  int b = counter();
+  int c = counter();
+  
   
   cydui::window::CWindow* win = cydui::window::create(
     cydui::layout::create<TestComponent>({
