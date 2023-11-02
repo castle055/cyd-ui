@@ -49,7 +49,7 @@ COMPONENT(ThreadTimeline) {
             int x = 0;
             int w = 0;
             for (const auto &ev: std::ranges::reverse_view(thd_ctx.timeline)) {
-              if ('\0' == ev.description[0]) continue;
+              if (nullptr == ev.description || '\0' == *ev.description) continue;
               x = dim->cw.val() - (int) ((double) prof::duration_cast<prof::microseconds>(
                 props.now - ev.t0).count() * props.time_scale);
               if (ev.t1.has_value()) {
@@ -60,11 +60,8 @@ COMPONENT(ThreadTimeline) {
                     vg::rect {}
                       .x(x)
                       .y(0)
-                      .width(w)
+                      .width(int {std::max(w, 1)})
                       .height(dim->ch.val())
-                        //.stroke({.color = "#00FF66"_color})
-                      .stroke({.color = "#FFFFFF"_color})
-                      .stroke_width(1)
                       .fill({.color = "#FCAE1E"_color})
                   );
                 }

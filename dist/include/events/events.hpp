@@ -28,6 +28,8 @@ namespace cydui::events {
     
     template<typename T> requires EventType<T>
     struct ParsedEvent {
+      using DataType = T::DataType;
+      
       const str type;
       const typename T::DataType* data;
     };

@@ -67,14 +67,14 @@ namespace cydui::dimensions {
       dimension_t &operator=(dimensional_relation_t value);
     };
 
-#define DIMENSION_OPERATOR_H(OP)                                               \
-  dimensional_relation_t operator OP(                                          \
-      const dimension_t& dim, dimension_t& value);                             \
-  dimensional_relation_t operator OP(                                          \
-      const dimension_t& dim, dimension_value_t value);                        \
-  dimensional_relation_t operator OP(                                          \
-      dimension_value_t value, dimension_t& dim);                              \
-  dimensional_relation_t operator OP(                                          \
+#define DIMENSION_OPERATOR_H(OP) \
+  dimensional_relation_t operator OP( \
+      const dimension_t& dim, dimension_t& value); \
+  dimensional_relation_t operator OP( \
+      const dimension_t& dim, dimension_value_t value); \
+  dimensional_relation_t operator OP( \
+      dimension_value_t value, dimension_t& dim);  \
+  dimensional_relation_t operator OP( \
       const dimension_t& dim, const dimensional_relation_t& value);
     
     
@@ -90,14 +90,14 @@ namespace cydui::dimensions {
 
 #undef DIMENSION_OPERATOR_H
 
-#define DIMENSION_REL_OPERATOR_H(OP)                                           \
-  dimensional_relation_t operator OP(                                          \
-      const dimensional_relation_t r, dimension_t& value);                    \
-  dimensional_relation_t operator OP(                                          \
-      const dimensional_relation_t r, dimension_value_t value);               \
-  dimensional_relation_t operator OP(                                          \
-      dimension_value_t value, dimensional_relation_t r);                     \
-  dimensional_relation_t operator OP(                                          \
+#define DIMENSION_REL_OPERATOR_H(OP) \
+  dimensional_relation_t operator OP(\
+      const dimensional_relation_t r, dimension_t& value); \
+  dimensional_relation_t operator OP(\
+      const dimensional_relation_t r, dimension_value_t value); \
+  dimensional_relation_t operator OP(\
+      dimension_value_t value, dimensional_relation_t r);  \
+  dimensional_relation_t operator OP(\
       const dimensional_relation_t r, const dimensional_relation_t value);
     
     

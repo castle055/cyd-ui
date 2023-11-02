@@ -44,7 +44,16 @@ EVENT(ResizeEvent, {
   int h = 0;
 })
 
-enum Key {
+enum class Button {
+  PRIMARY,
+  SECONDARY,
+  WHEEL,
+  BUTTON1 = PRIMARY,
+  BUTTON2 = SECONDARY,
+  BUTTON3 = WHEEL,
+};
+
+enum class Key {
   UNKNOWN,
   A,
   B,

@@ -20,19 +20,45 @@ Bool evpredicate() {
 }
 
 cydui::events::change_ev::DataMonitor<RedrawEvent>
-  redrawEventDataMonitor([](RedrawEvent::DataType o_data, RedrawEvent::DataType n_data) {
+  redrawEventDataMonitor([](RedrawEvent::DataType &o_data, RedrawEvent::DataType &n_data) {
   // this event doesn't really hold data when emitted from x11::events so just consider it changed every time
   // it still reuses the same event object, so it won't overload the event bus
   return true;
 });
 
 cydui::events::change_ev::DataMonitor<ResizeEvent>
-  resizeEventDataMonitor([](ResizeEvent::DataType o_data, ResizeEvent::DataType n_data) {
+  resizeEventDataMonitor([](ResizeEvent::DataType &o_data, ResizeEvent::DataType &n_data) {
   return (o_data.w != n_data.w || o_data.h != n_data.h);
 });
 
 cydui::events::change_ev::DataMonitor<MotionEvent>
-  motionEventDataMonitor([](MotionEvent::DataType o_data, MotionEvent::DataType n_data) {
+  motionEventDataMonitor([](MotionEvent::DataType &o_data, MotionEvent::DataType &n_data) {
+  return true;
+});
+
+/*!
+ * @brief This prevents the event thread from chocking on scroll events
+ * @note It does impose a limit on the scroll speed to 64 units per frame
+ * in either direction
+ */
+cydui::events::change_ev::DataMonitor<ScrollEvent>
+  vScrollEventDataMonitor([](ScrollEvent::DataType &o_data, ScrollEvent::DataType &n_data) {
+  //if (n_data.dy * o_data.dy > 0) {
+  //  n_data.dy += o_data.dy;
+  //}
+  return true;
+});
+
+/*!
+ * @brief This prevents the event thread from chocking on scroll events
+ * @note It does impose a limit on the scroll speed to 64 units per frame
+ * in either direction
+ */
+cydui::events::change_ev::DataMonitor<ScrollEvent>
+  hScrollEventDataMonitor([](ScrollEvent::DataType &o_data, ScrollEvent::DataType &n_data) {
+  //if (n_data.dx * o_data.dx > 0) {
+  //  n_data.dx += o_data.dx;
+  //}
   return true;
 });
 
@@ -100,7 +126,8 @@ static void run() {
     //x11_evlog.debug("event = %d", ev.type);
     using namespace cydui::events;
     switch (ev.type) {
-      case MapNotify:break;
+      case MapNotify:
+        break;
       case VisibilityNotify:
       case Expose:
         if (ev.xvisibility.type == VisibilityNotify) {
@@ -148,32 +175,32 @@ static void run() {
         break;
       case ButtonPress://x11_evlog.warn("BUTTON= %d", ev.xbutton.button);
         if (ev.xbutton.button == 4) {
-          emit<ScrollEvent>({
+          vScrollEventDataMonitor.update({
             .win = (unsigned int) ev.xbutton.window,
             .dy = 64,
-            .x      = ev.xbutton.x,
-            .y      = ev.xbutton.y,
+            .x = ev.xbutton.x,
+            .y = ev.xbutton.y,
           });
         } else if (ev.xbutton.button == 5) {
-          emit<ScrollEvent>({
+          vScrollEventDataMonitor.update({
             .win = (unsigned int) ev.xbutton.window,
             .dy = -64,
-            .x      = ev.xbutton.x,
-            .y      = ev.xbutton.y,
+            .x = ev.xbutton.x,
+            .y = ev.xbutton.y,
           });
         } else if (ev.xbutton.button == 6) {
-          emit<ScrollEvent>({
+          hScrollEventDataMonitor.update({
             .win = (unsigned int) ev.xbutton.window,
             .dx = -64,
-            .x      = ev.xbutton.x,
-            .y      = ev.xbutton.y,
+            .x = ev.xbutton.x,
+            .y = ev.xbutton.y,
           });
         } else if (ev.xbutton.button == 7) {
-          emit<ScrollEvent>({
+          hScrollEventDataMonitor.update({
             .win = (unsigned int) ev.xbutton.window,
             .dx = 64,
-            .x      = ev.xbutton.x,
-            .y      = ev.xbutton.y,
+            .x = ev.xbutton.x,
+            .y = ev.xbutton.y,
           });
         } else {
           emit<ButtonEvent>({
@@ -209,7 +236,8 @@ static void run() {
           .h = ev.xconfigure.height,
         });
         break;
-      case EnterNotify:break;
+      case EnterNotify:
+        break;
       case LeaveNotify:
         motionEventDataMonitor.update({
           .win = (unsigned int) ev.xcrossing.window,
@@ -239,7 +267,8 @@ static void run() {
       case ClientMessage:
       case MappingNotify:
       case GenericEvent:
-      default: break;
+      default:
+        break;
     }
   }
   XFlush(state::get_dpy());

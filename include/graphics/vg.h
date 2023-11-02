@@ -21,9 +21,14 @@ namespace vg {
       std::vector<vg_element_t*> elements {};
       
       ~vg_fragment_t() {
+        clear();
+      }
+      
+      void clear() {
         for (auto &item: elements) {
           delete item;
         }
+        elements.clear();
       }
       
       bool empty() const {

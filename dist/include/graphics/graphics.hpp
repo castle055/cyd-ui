@@ -10,11 +10,13 @@
 #include "font.h"
 #include "images.h"
 #include "pixelmap.h"
+#include "../cydstd/profiling.h"
 
 namespace cydui::graphics {
     struct window_t;
     
     window_t* create_window(
+      prof::context_t* profiler,
       const char* title,
       const char* wclass,
       int x,

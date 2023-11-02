@@ -11,3 +11,4 @@ include:
 
 cmd:
   lines: wc -l $(find ./src ./include ./test -name '*.cpp' -o -name '*.hpp' -o -name '*.h') | sort -n
+  doc: doxygen ./Doxyfile

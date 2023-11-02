@@ -68,16 +68,14 @@ namespace cydui::compositing {
             compositor->cv.wait(lk, [&] {
               return compositor->tree_dirty;
             });
-            {
-              auto _ev = compositor->profiler->scope_event("COMPOSITING TASK");
-              compositor->tree_dirty = false;
-              
-              // Resize if needed, window size -(EV)-> layout size -> frame size -> screen size
-              graphics::resize(compositor->render_target, compositor->tree->root.op.w, compositor->tree->root.op.h);
-              pixelmap_t* frame = graphics::get_frame(compositor->render_target);
-              compositor->repaint(&compositor->tree->root, frame);
-              graphics::flush(compositor->render_target);
-            }
+            auto _pev = compositor->profiler->scope_event("COMPOSITING TASK");
+            compositor->tree_dirty = false;
+            
+            // Resize if needed, window size -(EV)-> layout size -> frame size -> screen size
+            graphics::resize(compositor->render_target, compositor->tree->root.op.w, compositor->tree->root.op.h);
+            pixelmap_t * frame = graphics::get_frame(compositor->render_target);
+            compositor->repaint(&compositor->tree->root, frame);
+            graphics::flush(compositor->render_target);
           }
           lk.unlock();
           
@@ -91,7 +89,7 @@ namespace cydui::compositing {
           for (auto* c: node->children) {
             sub_frames.emplace_back(c, repaint(c));
           }
-          pixelmap_t* frm = frame;
+          pixelmap_t * frm = frame;
           if (nullptr == frm) {
             if (sub_frame_cache.contains(node->id)) {
               frm = sub_frame_cache[node->id];
@@ -134,7 +132,7 @@ namespace cydui::compositing {
           
           return frm;
         } else if (!node->graphics.empty()) {
-          pixelmap_t* frm = frame;
+          pixelmap_t * frm = frame;
           if (nullptr == frm) {
             if (sub_frame_cache.contains(node->id)) {
               frm = sub_frame_cache[node->id];

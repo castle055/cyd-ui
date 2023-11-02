@@ -70,7 +70,7 @@ void render_task(cydui::threading::thread_t* this_thread) {
     t0 = std::chrono::system_clock::now();
     render_sbr(render_data->win, render_data->image);
     //std::this_thread::sleep_until(t0 + 16666us); // 60 FPS
-    std::this_thread::sleep_until(t0 + 2 * 16666us); // 60 FPS
+    std::this_thread::sleep_until(t0 + 2 * 16666us); // 30 FPS
   }
 }
 

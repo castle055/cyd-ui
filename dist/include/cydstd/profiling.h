@@ -12,14 +12,14 @@
 #include <mutex>
 #include <shared_mutex>
 #include <cstring>
+#include <utility>
 
 using namespace std::chrono_literals;
 
 
 namespace prof {
-    constexpr std::size_t PROFILING_EV_DESCRIPTION_SIZE = 32;
-    constexpr std::size_t PROFILING_THREAD_NAME_SIZE = PROFILING_EV_DESCRIPTION_SIZE;
-    constexpr std::size_t PROFILING_TIMELINE_SIZE = 500;
+    constexpr std::size_t PROFILING_THREAD_NAME_SIZE = 32;
+    constexpr std::size_t PROFILING_TIMELINE_SIZE = 10000;
     
     using PROFILING_CLOCK = std::chrono::steady_clock;
     
@@ -29,7 +29,7 @@ namespace prof {
     using duration = std::chrono::duration<PROFILING_CLOCK>;
     
     struct event_t {
-      char description[PROFILING_EV_DESCRIPTION_SIZE] {};
+      const char* description;
       time_point t0;
       std::optional<time_point> t1 = std::nullopt;
       
@@ -53,7 +53,8 @@ namespace prof {
       
       inline void add_event(event_t ev) {
         timeline[insert_index] = ev;
-        if (insert_index++ >= PROFILING_TIMELINE_SIZE) {
+        insert_index = insert_index + 1;
+        if (insert_index >= PROFILING_TIMELINE_SIZE) {
           insert_index = 0;
         }
       }
@@ -65,41 +66,45 @@ namespace prof {
     };
     
     struct context_t {
-      inline void mark_event(const char ev_desc[PROFILING_EV_DESCRIPTION_SIZE]) {
+      inline void mark_event(const char* ev_desc) {
         event_t ev;
-        memcpy(ev.description, ev_desc, PROFILING_EV_DESCRIPTION_SIZE);
+        ev.description = ev_desc;
         ev.mark();
         
-        threads[std::this_thread::get_id()].add_event(ev);
+        auto id = std::this_thread::get_id();
+        add_thd(id);
+        std::shared_lock lk {mtx};
+        threads[id].add_event(ev);
       }
       
-      inline event_t start_event(const char ev_desc[PROFILING_EV_DESCRIPTION_SIZE]) const {
+      inline event_t start_event(const char* ev_desc) {
         event_t ev;
-        memcpy(ev.description, ev_desc, PROFILING_EV_DESCRIPTION_SIZE);
+        ev.description = ev_desc;
         ev.mark_start();
+        auto id = std::this_thread::get_id();
+        add_thd(id);
         return ev;
       }
       
       inline void end_event(event_t ev) {
         ev.mark_end();
+        std::shared_lock lk {mtx};
         threads[std::this_thread::get_id()].add_event(ev);
       }
       
       struct scope_event_t {
         scope_event_t(
           context_t* ctx,
-          std::string_view ev_desc
+          const char* ev_desc
         ): ctx(ctx) {
-          memcpy(ev.description, ev_desc.data(), std::min(ev_desc.size(), PROFILING_EV_DESCRIPTION_SIZE));
+          ev.description = ev_desc;
           ev.mark_start();
         }
         
         ~scope_event_t() {
           ev.mark_end();
           auto id = std::this_thread::get_id();
-          if (!ctx->threads.contains(id)) {
-            ctx->threads[id] = {};
-          }
+          std::shared_lock lk {ctx->mtx};
           ctx->threads[id].add_event(ev);
         }
       
@@ -108,10 +113,20 @@ namespace prof {
         event_t ev {};
       };
       
-      scope_event_t scope_event(std::string_view ev_desc) {
+      inline scope_event_t scope_event(const char* ev_desc) {
+        auto id = std::this_thread::get_id();
+        add_thd(id);
         return {this, ev_desc};
       }
       
+      inline void add_thd(std::thread::id id) {
+        std::unique_lock lk {mtx};
+        if (!threads.contains(id)) {
+          threads[id] = {};
+        }
+      }
+      
+      std::shared_mutex mtx;
       std::unordered_map<std::thread::id, thread_context_t> threads {};
     };
 }

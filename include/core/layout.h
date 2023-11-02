@@ -5,7 +5,7 @@
 #ifndef CYD_UI_LAYOUT_H
 #define CYD_UI_LAYOUT_H
 
-#include "components.hpp"
+#include "component.h"
 #include "../cydstd/logging.hpp"
 
 namespace cydui::window {
@@ -17,7 +17,7 @@ namespace cydui::layout {
     
     template<typename C>
     requires components::ComponentConcept<C>
-    Layout* create(components::c_init_t<C> init);
+    Layout* create(components::c_init_t <C> init);
     
     class Layout {
       window::CWindow* win = nullptr;
@@ -48,7 +48,7 @@ namespace cydui::layout {
       
       template<typename C>
       requires components::ComponentConcept<C>
-      friend Layout* cydui::layout::create(components::c_init_t<C> init);
+      friend Layout* cydui::layout::create(components::c_init_t <C> init);
     
     public:
       drag_n_drop::dragging_context_t dragging_context {};
@@ -59,7 +59,7 @@ namespace cydui::layout {
 
 template<typename C>
 requires cydui::components::ComponentConcept<C>
-cydui::layout::Layout* cydui::layout::create(components::c_init_t<C> init) {
+cydui::layout::Layout* cydui::layout::create(components::c_init_t <C> init) {
   auto* root_state = new typename C::State();
   auto* root = new C(
     root_state,
