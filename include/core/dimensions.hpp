@@ -58,7 +58,13 @@ namespace cydui::dimensions {
       
       dimension_t(dimension_value_t value);// NOLINT(google-explicit-constructor)
       
-      dimension_t(dimension_t &value) = delete;
+      /* *
+       * Copy constructor comes in handy sometimes, so NOT deleting it
+       *
+       * HOWEVER, BE AWARE that if you have A depending on B and you copy A to C,
+       * B still depends on A and not C.
+       */
+      //dimension_t(dimension_t &value) = delete;
       
       dimension_t &operator=(dimension_value_t value);
       

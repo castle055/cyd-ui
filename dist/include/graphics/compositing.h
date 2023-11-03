@@ -21,6 +21,8 @@ namespace cydui::compositing {
       double rot = 0.0;
       double scale_x = 1.0;
       double scale_y = 1.0;
+      
+      std::function<void(compositing_operation_t &op)> _fix_dimensions = [](compositing_operation_t &op) { };
     };
     
     struct compositing_object_t {
@@ -39,10 +41,21 @@ namespace cydui::compositing {
           delete item;
         }
       }
+      
+      void fix_op_dimensions() {
+        op._fix_dimensions(op);
+        for (auto &node: children) {
+          node->fix_op_dimensions();
+        }
+      }
     };
     
     struct compositing_tree_t {
       compositing_node_t root {};
+      
+      void fix_dimensions() {
+        root.fix_op_dimensions();
+      }
     };
     
     class LayoutCompositor {
@@ -73,7 +86,7 @@ namespace cydui::compositing {
             
             // Resize if needed, window size -(EV)-> layout size -> frame size -> screen size
             graphics::resize(compositor->render_target, compositor->tree->root.op.w, compositor->tree->root.op.h);
-            pixelmap_t * frame = graphics::get_frame(compositor->render_target);
+            pixelmap_t* frame = graphics::get_frame(compositor->render_target);
             compositor->repaint(&compositor->tree->root, frame);
             graphics::flush(compositor->render_target);
           }
@@ -89,7 +102,7 @@ namespace cydui::compositing {
           for (auto* c: node->children) {
             sub_frames.emplace_back(c, repaint(c));
           }
-          pixelmap_t * frm = frame;
+          pixelmap_t* frm = frame;
           if (nullptr == frm) {
             if (sub_frame_cache.contains(node->id)) {
               frm = sub_frame_cache[node->id];
@@ -132,7 +145,7 @@ namespace cydui::compositing {
           
           return frm;
         } else if (!node->graphics.empty()) {
-          pixelmap_t * frm = frame;
+          pixelmap_t* frm = frame;
           if (nullptr == frm) {
             if (sub_frame_cache.contains(node->id)) {
               frm = sub_frame_cache[node->id];

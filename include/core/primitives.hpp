@@ -5,21 +5,21 @@
 #ifndef CYD_UI_PRIMITIVES_HPP
 #define CYD_UI_PRIMITIVES_HPP
 
-STATE(Canvas) {
-  INIT_STATE(Canvas) {
-  }
-};
-
-COMPONENT(Canvas) {
-  PROPS({
-    std::function<void(vg::vg_fragment_t &)> draw;
-  })
-  INIT(Canvas) {
-  }
-  RENDER {
-    props.draw(graphics);
-  };
-};
+//STATE(Canvas) {
+//  INIT_STATE(Canvas) {
+//  }
+//};
+//
+//COMPONENT(Canvas) {
+//  PROPS({
+//    std::function<void(vg::vg_fragment_t &)> draw;
+//  })
+//  INIT(Canvas) {
+//  }
+//  RENDER {
+//    props.draw(graphics);
+//  };
+//};
 
 
 //namespace primitives {

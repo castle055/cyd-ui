@@ -31,6 +31,16 @@ COMPONENT_TEMPLATE(Transparent, {
   }
 };
 
+STATE(TESTTEST) {
+
+};
+COMPONENT(TESTTEST, {
+}) {
+  ON_REDRAW {
+    return {};
+  }
+};
+
 EVENT(TestEvent, {
   std::string hello_world;
 })
@@ -43,6 +53,7 @@ COMPONENT(OtherComponent, {
 }) {
   ON_REDRAW {
     return {
+      TESTTEST {},
       SomeComponent<int> {{3}}
         .x(10)
         .y(100),
@@ -75,11 +86,11 @@ struct init_t {
 
 struct asdfhalsd {
   int a = 0;
-  int b = 1;
   init({
     a;
     b;
   });
+  int b = 1;
 };
 
 #endif //CYD_UI_COMPONENT_TEST_H

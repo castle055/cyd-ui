@@ -45,9 +45,9 @@ EVENT(ResizeEvent, {
 })
 
 enum class Button {
-  PRIMARY,
-  SECONDARY,
-  WHEEL,
+  PRIMARY = 1,
+  SECONDARY = 2,
+  WHEEL = 3,
   BUTTON1 = PRIMARY,
   BUTTON2 = SECONDARY,
   BUTTON3 = WHEEL,

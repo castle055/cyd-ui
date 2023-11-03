@@ -37,7 +37,9 @@ struct NAME:                 \
       __VA_ARGS__            \
     props{};                 \
     NAME() = default;        \
-    explicit NAME(props_t props): props(props) { }     \
+    explicit NAME(props_t props)    \
+      : component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\
+      , props(std::move(props)) { }     \
   };                         \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {              \
   CYDUI_STATE_NAME(NAME)* state;                       \
@@ -71,7 +73,12 @@ struct NAME:                          \
       __VA_ARGS__                     \
     props{};                          \
     NAME() = default;                 \
-    explicit NAME(props_t props): props(props) { } \
+    explicit NAME(props_t props)      \
+      : component_t<                  \
+        CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT,        \
+        NAME SET_COMPONENT_TEMPLATE_SHORT                     \
+      >()                             \
+      , props(std::move(props)) { }              \
 };                                    \
 template SET_COMPONENT_TEMPLATE       \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {          \

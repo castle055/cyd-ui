@@ -5,10 +5,12 @@
 #ifndef CYD_UI_COMPONENT_EVENT_HANDLER_H
 #define CYD_UI_COMPONENT_EVENT_HANDLER_H
 
+#include "../cydstd/pragma.h"
 #include "component_holder.h"
 
+
 #include "../events/cydui_events.h"
-#include "../cydstd/pragma.h"
+#include "../graphics/graphics.hpp"
 
 #include <vector>
 
@@ -37,6 +39,10 @@
   on_##NAME                                        \
   CYDUI_INTERNAL_EV_##NAME##_ARGS                  \
   override
+
+#define CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(NAME) \
+  inline cydui::dimensions::dimension_t& $##NAME() const   \
+    { return get_dim().NAME; }
 // ! }
 
 #pragma clang diagnostic push
@@ -44,6 +50,26 @@
 
 // ? EVENT HANDLER STRUCT
 struct event_handler_t {
+  event_handler_t* parent;
+  
+  std::function<component_dimensional_relations_t()> get_dim;
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(x)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(y)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(w)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(h)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(cx)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(cy)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(cw)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(ch)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(margin_top)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(margin_bottom)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(margin_left)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(margin_right)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(padding_top)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(padding_bottom)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(padding_left)
+  CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(padding_right)
+  
   event_handler_t() = default;
   virtual ~event_handler_t() = default;
 
@@ -55,29 +81,59 @@ struct event_handler_t {
   // ? MOUSE EVENTS
 #define CYDUI_INTERNAL_EV_button_ARGS (Button button, int x, int y)
 #define CYDUI_INTERNAL_EV_mouse_ARGS  (int x, int y)
+#define CYDUI_INTERNAL_EV_scroll_ARGS  (int dx, int dy)
+
+#define CYDUI_INTERNAL_EV_button_PROPAGATE(NAME) \
+  if (parent)                                   \
+    parent->on_button_##NAME(button, x + $x().val(), y + $y().val())
+#define CYDUI_INTERNAL_EV_mouse_PROPAGATE(NAME) \
+  if (parent)                                   \
+    parent->on_mouse_##NAME(x + $x().val(), y + $y().val())
+  
   // * button press
 #define CYDUI_INTERNAL_EV_button_press_ARGS       CYDUI_INTERNAL_EV_button_ARGS
-  CYDUI_INTERNAL_EV_HANDLER_DECL(button_press) { }
+  CYDUI_INTERNAL_EV_HANDLER_DECL(button_press) {
+    CYDUI_INTERNAL_EV_button_PROPAGATE(press);
+  }
   // * button release
 #define CYDUI_INTERNAL_EV_button_release_ARGS     CYDUI_INTERNAL_EV_button_ARGS
-  CYDUI_INTERNAL_EV_HANDLER_DECL(button_release) { }
+  CYDUI_INTERNAL_EV_HANDLER_DECL(button_release) {
+    CYDUI_INTERNAL_EV_button_PROPAGATE(release);
+  }
   // * mouse enter
 #define CYDUI_INTERNAL_EV_mouse_enter_ARGS        CYDUI_INTERNAL_EV_mouse_ARGS
-  CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_enter) { }
+  CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_enter) {
+    CYDUI_INTERNAL_EV_mouse_PROPAGATE(enter);
+  }
   // * mouse exit
 #define CYDUI_INTERNAL_EV_mouse_exit_ARGS         CYDUI_INTERNAL_EV_mouse_ARGS
-  CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_exit) { }
+  CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_exit) {
+    CYDUI_INTERNAL_EV_mouse_PROPAGATE(exit);
+  }
   // * mouse motion
 #define CYDUI_INTERNAL_EV_mouse_motion_ARGS       CYDUI_INTERNAL_EV_mouse_ARGS
-  CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_motion) { }
+  CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_motion) {
+    CYDUI_INTERNAL_EV_mouse_PROPAGATE(motion);
+  }
+  // * mouse scroll
+  CYDUI_INTERNAL_EV_HANDLER_DECL(scroll) {
+    if (parent)
+      parent->on_scroll(dx, dy);
+  }
   
   // ? KEYBOARD EVENTS
   // * key press
-#define CYDUI_INTERNAL_EV_key_press_ARGS          (Key key)
-  CYDUI_INTERNAL_EV_HANDLER_DECL(key_press) { }
+#define CYDUI_INTERNAL_EV_key_press_ARGS          (const KeyEvent::DataType& ev)
+  CYDUI_INTERNAL_EV_HANDLER_DECL(key_press) {
+    if (parent)
+      parent->on_key_press(ev);
+  }
   // * key release
-#define CYDUI_INTERNAL_EV_key_release_ARGS        (Key key)
-  CYDUI_INTERNAL_EV_HANDLER_DECL(key_release) { }
+#define CYDUI_INTERNAL_EV_key_release_ARGS        (const KeyEvent::DataType& ev)
+  CYDUI_INTERNAL_EV_HANDLER_DECL(key_release) {
+    if (parent)
+      parent->on_key_release(ev);
+  }
   // * set text input context (a type that accepts text events like insert, backspace and such)
   TODO("Implement a method to set an input context for text input")
   
@@ -87,16 +143,21 @@ struct event_handler_t {
   virtual std::unordered_map<std::string, listener_data_t> get_event_listeners() {
     return {};
   }
+  
+  virtual void draw_fragment(vg::vg_fragment_t &fragment) {
+  
+  }
 };
 
 #define ON_REDRAW           CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(redraw)
-#define ON_BUTTON_PRESS     CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(button_press)
-#define ON_BUTTON_RELEASE   CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(button_release)
-#define ON_MOUSE_ENTER      CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(mouse_enter)
-#define ON_MOUSE_EXIT       CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(mouse_exit)
-#define ON_MOUSE_MOTION     CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(mouse_motion)
-#define ON_KEY_PRESS        CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(key_press)
-#define ON_KEY_RELEASE      CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(key_release)
+#define ON_BUTTON_PRESS     CYDUI_INTERNAL_EV_HANDLER_IMPL(button_press)
+#define ON_BUTTON_RELEASE   CYDUI_INTERNAL_EV_HANDLER_IMPL(button_release)
+#define ON_MOUSE_ENTER      CYDUI_INTERNAL_EV_HANDLER_IMPL(mouse_enter)
+#define ON_MOUSE_EXIT       CYDUI_INTERNAL_EV_HANDLER_IMPL(mouse_exit)
+#define ON_MOUSE_MOTION     CYDUI_INTERNAL_EV_HANDLER_IMPL(mouse_motion)
+#define ON_SCROLL           CYDUI_INTERNAL_EV_HANDLER_IMPL(scroll)
+#define ON_KEY_PRESS        CYDUI_INTERNAL_EV_HANDLER_IMPL(key_press)
+#define ON_KEY_RELEASE      CYDUI_INTERNAL_EV_HANDLER_IMPL(key_release)
 TODO("Implement a method to set an input context for text input")
 
 #pragma clang diagnostic pop
@@ -116,5 +177,11 @@ std::unordered_map<std::string, listener_data_t> get_event_listeners() override 
     __VA_ARGS__              \
   (parsed_event.data);       \
 }}}
+
+#define FRAGMENT \
+  void           \
+  draw_fragment  \
+  (vg::vg_fragment_t& fragment) \
+  override
 
 #endif //CYD_UI_COMPONENT_EVENT_HANDLER_H

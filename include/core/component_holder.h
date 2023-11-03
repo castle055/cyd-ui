@@ -19,7 +19,7 @@ struct component_holder_t {
   }
   
   template<typename T>
-  inline component_holder_t(with<T> _with) {
+  inline component_holder_t(with<T> &_with) {
     for (const auto &item: _with.get_selection()) {
       components[item.first] = item.second;
     }

@@ -11,13 +11,13 @@
 extern logging::logger chev_log;
 
 namespace cydui::events::change_ev {
-    template<typename T> requires EventType<T>
+    template<EventType T>
     class DataMonitor {
       typename T::DataType data;
       Event* ev = nullptr;
     
     public:
-      typedef std::function<bool(typename T::DataType, typename T::DataType)> change_predicate_t;
+      typedef std::function<bool(typename T::DataType &, typename T::DataType &)> change_predicate_t;
       
       explicit DataMonitor(change_predicate_t predicate) {
         this->predicate = predicate;
@@ -50,7 +50,7 @@ namespace cydui::events::change_ev {
       }
     
     private:
-      change_predicate_t predicate = [](typename T::DataType, typename T::DataType) {
+      change_predicate_t predicate = [](typename T::DataType &, typename T::DataType &) {
         return true;
       };
     };

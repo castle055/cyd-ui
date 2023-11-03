@@ -35,6 +35,20 @@ namespace env {
       setenv(ENVVAR.c_str(), VALUE.c_str(), true);
       return prev;
     }
+    
+    struct var {
+      const std::string &ENVVAR;
+      
+      operator std::string() {
+        return env::get(ENVVAR);
+      }
+      
+      var &operator=(const std::string &VALUE) {
+        env::set(ENVVAR, VALUE);
+        return *this;
+      }
+    };
 }
+
 
 #endif //CYD_UI_ENV_H

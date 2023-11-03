@@ -10,14 +10,14 @@
 
 namespace vg {
     struct paint_t {
-      enum {
+      enum class paint_type_e {
         COLOR,
-      } type = COLOR;
-      union {
-        color::Color color = "#000000"_color;
-        //color::Color coaor = "#FBAD1E"_color;
-        //color::Color coror = "#FCAE1E"_color;
-      };
+      } type = paint_type_e::COLOR;
+      //union {
+      color::Color color = "#000000"_color;
+      //color::Color coaor = "#FBAD1E"_color;
+      //color::Color coror = "#FCAE1E"_color;
+      //};
     };
 
 #define VG_ATTRIBUTE(TYPE, NAME, DEFAULT) \

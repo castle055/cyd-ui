@@ -29,6 +29,7 @@ cydui::events::change_ev::DataMonitor<RedrawEvent>
 cydui::events::change_ev::DataMonitor<ResizeEvent>
   resizeEventDataMonitor([](ResizeEvent::DataType &o_data, ResizeEvent::DataType &n_data) {
   return (o_data.w != n_data.w || o_data.h != n_data.h);
+  //return true;
 });
 
 cydui::events::change_ev::DataMonitor<MotionEvent>
@@ -123,7 +124,11 @@ static void run() {
       state::get_dpy(),
       &ev
     );
-    //x11_evlog.debug("event = %d", ev.type);
+    if (6 != ev.type
+      && 2 != ev.type
+      && 3 != ev.type
+      )
+      x11_evlog.debug("event = %d", ev.type);
     using namespace cydui::events;
     switch (ev.type) {
       case MapNotify:
@@ -134,21 +139,13 @@ static void run() {
           redrawEventDataMonitor.update({
             .win = (unsigned int) ev.xvisibility.window,
           });
-          //emit<RedrawEvent>({
-          //  .win = (unsigned int) ev.xvisibility.window,
-          //});
         } else if (ev.xexpose.type == Expose
           && ev.xexpose.count == 0
           /*&& ev.xexpose.width > 0
           && ev.xexpose.height > 0*/) {
-          //redrawEventDataMonitor.update({
-          //  .win = (unsigned int) ev.xexpose.window,
-          //});
-          //resizeEventDataMonitor.update({ -- Why would you even do this?, size is of (Re)Exposed area, not of window
-          //  .win = (unsigned int) ev.xexpose.window,
-          //  .w = ev.xexpose.width,
-          //  .h = ev.xexpose.height,
-          //});
+          redrawEventDataMonitor.update({
+            .win = (unsigned int) ev.xexpose.window,
+          });
         }
         break;
       case KeyPress://x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));

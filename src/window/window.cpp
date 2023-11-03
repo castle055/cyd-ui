@@ -30,14 +30,6 @@ CWindow* cydui::window::create(
   layout->bind_window(win);
   
   windows.push_back(win);
-  //cydui::events::on_event<ResizeEvent>(
-  //  cydui::events::Consumer<ResizeEvent>([=](const cydui::events::ParsedEvent<ResizeEvent> &it) {
-  //    if (get_id(win_ref) == it.data->win) {
-  //      printf("%d - %d\n\r", it.data->w, it.data->h);
-  //      graphics::resize(win_ref, it.data->w, it.data->h);
-  //    }
-  //  })
-  //);
   
   events::start();
   
@@ -45,7 +37,7 @@ CWindow* cydui::window::create(
   // force a complete redraw
   //events::emit<RedrawEvent>({.win = (unsigned int) win_ref->xwin});
   //events::emit<RedrawEvent>({ });
-  events::emit<RedrawEvent>({.win = get_id(win_ref)});
+  //events::emit<RedrawEvent>({.win = get_id(win_ref)});
   
   return win;
 }

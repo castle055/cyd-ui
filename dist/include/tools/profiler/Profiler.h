@@ -2,6 +2,9 @@
 // Created by castle on 10/19/23.
 //
 
+#define CYD_UI_PROFILER_H
+#define CYD_UI_THREAD_TIMELINE_H
+
 #ifndef CYD_UI_PROFILER_H
 #define CYD_UI_PROFILER_H
 
