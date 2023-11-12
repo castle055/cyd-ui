@@ -37,14 +37,14 @@ namespace cydui::components {
       void dirty();
       
       nullable<cydui::graphics::window_t*> win;
-      nullable<cydui::graphics::render_target_t*> sub_render_target;
+      //nullable<cydui::graphics::render_target_t*> sub_render_target;
       std::pair<int, int> sub_render_event_offset = {0, 0};
       
       cydui::dimensions::component_dimensions_t dim;
       ComponentBorder border;
       ChildrenStateCollection children;
       
-      std::vector<drag_n_drop::draggable_source_t> draggable_sources = {};
+      std::vector <drag_n_drop::draggable_source_t> draggable_sources = {};
       drag_n_drop::dragging_context_t* dragging_context = nullptr;
     };
     
@@ -62,10 +62,10 @@ namespace cydui::components {
     
     struct component_builder_t {
       // Geometric constraints
-      std::optional<cydui::dimensions::dimensional_relation_t> x;
-      std::optional<cydui::dimensions::dimensional_relation_t> y;
-      std::optional<cydui::dimensions::dimensional_relation_t> w;
-      std::optional<cydui::dimensions::dimensional_relation_t> h;
+      std::optional <cydui::dimensions::dimensional_relation_t> x;
+      std::optional <cydui::dimensions::dimensional_relation_t> y;
+      std::optional <cydui::dimensions::dimensional_relation_t> w;
+      std::optional <cydui::dimensions::dimensional_relation_t> h;
       
       std::function<Component*(component_builder_t)> build;
     };
@@ -76,12 +76,12 @@ namespace cydui::components {
       typename c::Props props;
       
       // Geometric constraints
-      std::optional<cydui::dimensions::dimensional_relation_t> x;
-      std::optional<cydui::dimensions::dimensional_relation_t> y;
-      std::optional<cydui::dimensions::dimensional_relation_t> w;
-      std::optional<cydui::dimensions::dimensional_relation_t> h;
+      std::optional <cydui::dimensions::dimensional_relation_t> x;
+      std::optional <cydui::dimensions::dimensional_relation_t> y;
+      std::optional <cydui::dimensions::dimensional_relation_t> w;
+      std::optional <cydui::dimensions::dimensional_relation_t> h;
       
-      std::vector<component_builder_t> inner = {};
+      std::vector <component_builder_t> inner = {};
       
       std::function<void(c*)> init = [](c*) {
       };
@@ -201,7 +201,7 @@ namespace cydui::components {
         };
       }
       
-      inline component_builder_t create_group(std::vector<component_builder_t> _children) const {
+      inline component_builder_t create_group(std::vector <component_builder_t> _children) const {
         return {
           .build = [_children](const component_builder_t &) {
             auto* group = Component::new_group();
@@ -250,15 +250,17 @@ namespace cydui::components {
       mutable nullable<ComponentState*> state;
       cydui::dimensions::component_dimensions_t* dim;
       
-      void add(const std::vector<component_builder_t> &ichildren, bool prepend = false) const;
+      void add(const std::vector <component_builder_t> &ichildren, bool prepend = false) const;
       
       mutable std::deque<Component*> children;
       
       void redraw(cydui::layout::Layout* layout);
       
-      void render(cydui::graphics::render_target_t* target) const;
+      void render(cydui::compositing::compositing_node_t* node) const;
       
       nullable<Component*> get_parent() const;
+      
+      virtual bool is_drawable() const;
 
 #define COMP_EVENT_HANDLER(EV, ARGS) virtual void on_##EV ARGS const
 #define COMP_EVENT_HANDLER_OVERRIDE(EV, ARGS) virtual void on_##EV ARGS const override
@@ -267,7 +269,7 @@ namespace cydui::components {
       
       COMP_EVENT_HANDLER(redraw, ());
       
-      COMP_EVENT_HANDLER(render, (cydui::graphics::render_target_t * target));
+      COMP_EVENT_HANDLER(render, (vg::vg_fragment_t & graphics));
       
       COMP_EVENT_HANDLER(mouse_enter, (int x, int y));
       
@@ -290,7 +292,7 @@ namespace cydui::components {
       COMP_EVENT_HANDLER(key_release, (KeyData key));
 
 #define REDRAW                  COMP_EVENT_HANDLER_OVERRIDE(redraw, ())
-#define RENDER(TARGET)          COMP_EVENT_HANDLER_OVERRIDE(render, (cydui::graphics::render_target_t * (TARGET)))
+#define RENDER                  virtual bool is_drawable() const override {return true;} COMP_EVENT_HANDLER_OVERRIDE(render, (vg::vg_fragment_t& graphics))
 #define ON_KEY_RELEASE(KEY)     COMP_EVENT_HANDLER_OVERRIDE(key_release, (KeyData (KEY)))
 #define ON_KEY_PRESS(KEY)       COMP_EVENT_HANDLER_OVERRIDE(key_press, (KeyData (KEY)))
 #define ON_SCROLL(DX, DY)       COMP_EVENT_HANDLER_OVERRIDE(scroll, (int (DX), int (DY)))
@@ -389,7 +391,7 @@ namespace cydui::components {
   explicit NAME##State(): cydui::components::ComponentState()
 
 #define COMPONENT(NAME)                                                        \
-  using namespace primitives;                                                  \
+  /*using namespace primitives;*/                                              \
   struct NAME: public cydui::components::Component
 
 #define DISABLE_LOG this->log.on = false;

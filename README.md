@@ -16,6 +16,8 @@
 <img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/castle055/cyd-ui?color=%23fcae1e&label=latest&sort=semver&style=for-the-badge">
 </p>
 
+[TOC]
+
 <p align="center">
   <a href="#key-features">Key Features</a> •
   <a href="#installation">Installation</a> •
@@ -209,7 +211,8 @@ This will start the window on a separate thread.
 
 ## Code Architecture
 ### Include Graph
-![include graph](./include_graph.png)
+
+<img alt="include graph" src="include_graph.png" width="100%"/>
 
 ## Credits
 

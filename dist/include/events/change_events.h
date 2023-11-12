@@ -11,19 +11,23 @@
 extern logging::logger chev_log;
 
 namespace cydui::events::change_ev {
-    template<typename T> requires EventType<T>
+    template<EventType T>
     class DataMonitor {
-      typename T::DataType data;
       Event* ev = nullptr;
     
     public:
-      typedef std::function<bool(typename T::DataType, typename T::DataType)> change_predicate_t;
+      typedef std::function<bool(typename T::DataType &, typename T::DataType &)> change_predicate_t;
+      typedef std::function<void(typename T::DataType &)> completion_callback_t;
       
-      explicit DataMonitor(change_predicate_t predicate) {
+      DataMonitor(
+        change_predicate_t predicate,
+        completion_callback_t completion_callback = [](typename T::DataType &) { }
+      ) {
         this->predicate = predicate;
+        this->completion_callback = completion_callback;
         this->ev = new Event {
           .type = T::type,
-          .ev = new T({.data = this->data}),
+          .ev = new T,
           .managed = true,
         };
         chev_log.debug("EMITTING event: (0x%lX) %s", (unsigned long) this->ev, this->ev->type.c_str());
@@ -31,12 +35,20 @@ namespace cydui::events::change_ev {
       }
       
       void update(typename T::DataType new_data) {
-        if (predicate(this->data, new_data)) {
+        this->ev->ev_mtx.lock();
+        if (this->ev->status == CONSUMED) {
+          this->ev->ev_mtx.unlock();
+          completion_callback(((T*) this->ev->ev)->data);
+        } else {
+          this->ev->ev_mtx.unlock();
+        }
+        
+        if (predicate(((T*) this->ev->ev)->data, new_data)) {
           this->ev->ev_mtx.lock();
           ((T*) this->ev->ev)->data = new_data;
           this->ev->ev_mtx.unlock();
-          this->data = new_data;
-          chev_log.debug("UPDATE. ev(0x%lX) ev->status = %d", (unsigned long) this->ev, this->ev->status);
+          chev_log.debug("UPDATE. ev(0x%lX)[%s] ev->status = %d", (unsigned long) this->ev, this->ev->type.c_str(),
+            this->ev->status);
           this->ev->ev_mtx.lock();
           if (this->ev->status == CONSUMED) {
             chev_log.debug("RE-EMITTING event: (0x%lX) %s", (unsigned long) this->ev, this->ev->type.c_str());
@@ -50,7 +62,8 @@ namespace cydui::events::change_ev {
       }
     
     private:
-      change_predicate_t predicate = [](typename T::DataType, typename T::DataType) {
+      completion_callback_t completion_callback;
+      change_predicate_t predicate = [](typename T::DataType &, typename T::DataType &) {
         return true;
       };
     };

@@ -5,7 +5,7 @@
 #ifndef CYD_UI_IMAGES_H
 #define CYD_UI_IMAGES_H
 
-namespace cydui::layout::images {
+namespace cydui::graphics::images {
     struct image_t {
       str path;
     };

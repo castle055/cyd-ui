@@ -10,7 +10,9 @@
 
 template<typename F, typename T, typename R>
 concept CCCC = requires(T t) {
-  { F(t) } -> std::convertible_to<R>;
+  {
+  F(t)
+  } -> std::convertible_to<R>;
 };
 
 template<typename T>
@@ -22,6 +24,7 @@ public:
   }
   
   nullable() = default;
+  
   ~nullable() {
     if (value != nullptr) {
       delete value;
@@ -29,11 +32,11 @@ public:
     }
   }
   
-  nullable(T& t) {
+  nullable(T &t) {
     value = new T(t);
   }
   
-  nullable(const T& t) {
+  nullable(const T &t) {
     value = new T(t);
   }
   
@@ -62,7 +65,7 @@ public:
   }
   
   template<typename R>
-  nullable<R> let(const std::function<R(T)>& block) {
+  nullable<R> let(const std::function<R(T)> &block) {
     if (value != nullptr) {
       return block(*value);
     }
@@ -70,7 +73,7 @@ public:
   }
   
   template<typename R>
-  nullable<R> let(const std::function<nullable<R>(T)>& block) {
+  nullable<R> let(const std::function<nullable<R>(T)> &block) {
     if (value != nullptr) {
       return block(*value);
     }
@@ -78,7 +81,7 @@ public:
   }
   
   template<typename R>
-  nullable<R> let(const std::function<R(T&)>& block) {
+  nullable<R> let(const std::function<R(T &)> &block) {
     if (value != nullptr) {
       return block(*value);
     }
@@ -86,7 +89,7 @@ public:
   }
   
   template<typename R>
-  nullable<R> let(const std::function<nullable<R>(T&)>& block) {
+  nullable<R> let(const std::function<nullable<R>(T &)> &block) {
     if (value != nullptr) {
       return block(*value);
     }
@@ -94,7 +97,7 @@ public:
   }
   
   template<typename R>
-  nullable<R> let(const std::function<R(const T&)>& block) const {
+  nullable<R> let(const std::function<R(const T &)> &block) const {
     if (value != nullptr) {
       return block(*value);
     }
@@ -102,7 +105,7 @@ public:
   }
   
   template<typename R>
-  nullable<R> let(const std::function<nullable<R>(const T&)>& block) const {
+  nullable<R> let(const std::function<nullable<R>(const T &)> &block) const {
     if (value != nullptr) {
       return block(*value);
     }
@@ -110,28 +113,28 @@ public:
   }
   
   
-  nullable<T> let(const std::function<void(T)>& block) {
+  nullable<T> let(const std::function<void(T)> &block) {
     if (value != nullptr) {
       block(*value);
     }
     return nullable<T>();
   }
   
-  nullable<T> let(const std::function<nullable<T>(T)>& block) {
+  nullable<T> let(const std::function<nullable<T>(T)> &block) {
     if (value != nullptr) {
       block(*value);
     }
     return nullable<T>();
   }
   
-  nullable<T> let(const std::function<void(T&)>& block) {
+  nullable<T> let(const std::function<void(T &)> &block) {
     if (value != nullptr) {
       block(*value);
     }
     return nullable<T>();
   }
   
-  nullable<T> let(const std::function<void(const T&)>& block) const {
+  nullable<T> let(const std::function<void(const T &)> &block) const {
     if (value != nullptr) {
       block(*value);
     }
@@ -150,14 +153,14 @@ public:
   //  }
   //}
   //
-  nullable<T>& also(const std::function<void(T&)>& block) {
+  nullable<T> &also(const std::function<void(T &)> &block) {
     if (value != nullptr) {
       block(*value);
     }
     return *this;
   }
   
-  T operator or(T other) {
+  T operatoror(T other) {
     if (value != nullptr) {
       return *value;
     } else {
@@ -165,13 +168,13 @@ public:
     }
   }
   
-  void operator or(const std::function<void()>& block) {
+  void operatoror(const std::function<void()> &block) {
     if (value == nullptr) {
       block();
     }
   }
   
-  nullable<T> operator or(const std::function<T()>& block) const {
+  nullable<T> operatoror(const std::function<T()> &block) const {
     if (value == nullptr) {
       return block();
     }
@@ -188,7 +191,7 @@ public:
   
 };
 
-#define _(ARG, BLOCK) (std::function([&](ARG it) {BLOCK} ))
+#define _(ARG, ...) (std::function([&](ARG it) {__VA_ARGS__} ))
 #define __(ARG, BLOCK) (std::function([&]ARG {BLOCK} ))
 
 //#define lm std::function([&]

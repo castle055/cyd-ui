@@ -4,6 +4,8 @@
 
 #include "tools/config.hpp"
 
+#ifndef CYD_UI_CONFIG_HPP
+
 using namespace cydui::config;
 
 ConfigManager::ConfigManager(std::string path)
@@ -26,3 +28,4 @@ void ConfigManager::refresh() {
 void ConfigManager::update_config_file() {
 
 }
+#endif //CYD_UI_CONFIG_HPP

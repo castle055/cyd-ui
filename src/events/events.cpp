@@ -88,6 +88,7 @@ void clean_up_event(thread_data* data, cydui::events::Event* ev) {
 void process_event(thread_data* data) {
   //    log_task.debug("Processing next event");
   
+  log_task.debug("EVENT COUNT: %ld", data->event_queue->size());
   cydui::events::Event* ev = get_next_event(data);
   
   if (ev != nullptr) {
@@ -100,18 +101,11 @@ using namespace std::chrono_literals;
 
 void event_task(cydui::threading::thread_t* this_thread) {
   log_task.debug("Started event_task");
-  int freq = 10000;
-  int period = 1000000000 / freq;
+  auto t0 = std::chrono::system_clock::now();
   while (this_thread->running) {
-    auto t0 = std::chrono::system_clock::now();
+    t0 = std::chrono::system_clock::now();
     process_event((thread_data*) (this_thread->data));
-    auto t1 = std::chrono::system_clock::now();
-    auto dt = t1 - t0;
-    if (dt.count() > 40 && dt.count() > period)
-      log_task.debug("Processed event in: %ld ns , \tdelay: %ld ns", dt.count(), period - dt.count());
-    int delay = period - dt.count();
-    if (delay > 0)
-      std::this_thread::sleep_for(std::chrono::duration<int, std::nano>(delay));
+    std::this_thread::sleep_until(t0 + 100us);
   }
 }
 

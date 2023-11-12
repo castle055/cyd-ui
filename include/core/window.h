@@ -6,6 +6,7 @@
 #define CYD_UI_WINDOW_H
 
 #include "../graphics/graphics.hpp"
+#include "../cydstd/profiling.h"
 
 namespace cydui::layout {
     class Layout;
@@ -15,6 +16,8 @@ namespace cydui::window {
     public:
       graphics::window_t* win_ref;
       layout::Layout* layout;
+      
+      prof::context_t profiling_ctx {};
     };
     
     CWindow* create(

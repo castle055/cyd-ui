@@ -14,26 +14,54 @@ logging::logger x11_evlog = {.name = "X11::EV"};
 logging::logger chev_log = {.name = "EV::CHANGE", .on = false};
 
 using namespace std::chrono_literals;
+using namespace x11;
 
 Bool evpredicate() {
   return True;
 }
 
-cydui::events::change_ev::DataMonitor <RedrawEvent>
-  redrawEventDataMonitor([](RedrawEvent::DataType o_data, RedrawEvent::DataType n_data) {
+cydui::events::change_ev::DataMonitor<RedrawEvent>
+  redrawEventDataMonitor([](RedrawEvent::DataType &o_data, RedrawEvent::DataType &n_data) {
   // this event doesn't really hold data when emitted from x11::events so just consider it changed every time
   // it still reuses the same event object, so it won't overload the event bus
   return true;
 });
 
-cydui::events::change_ev::DataMonitor <ResizeEvent>
-  resizeEventDataMonitor([](ResizeEvent::DataType o_data, ResizeEvent::DataType n_data) {
+cydui::events::change_ev::DataMonitor<ResizeEvent>
+  resizeEventDataMonitor([](ResizeEvent::DataType &o_data, ResizeEvent::DataType &n_data) {
   return (o_data.w != n_data.w || o_data.h != n_data.h);
+  //return true;
 });
 
-cydui::events::change_ev::DataMonitor <MotionEvent>
-  motionEventDataMonitor([](MotionEvent::DataType o_data, MotionEvent::DataType n_data) {
+cydui::events::change_ev::DataMonitor<MotionEvent>
+  motionEventDataMonitor([](MotionEvent::DataType &o_data, MotionEvent::DataType &n_data) {
   return true;
+});
+
+/*!
+ * @brief This prevents the event thread from chocking on scroll events
+ * @note It does impose a limit on the scroll speed to 64 units per frame
+ * in either direction
+ */
+cydui::events::change_ev::DataMonitor<ScrollEvent>
+  vScrollEventDataMonitor([](ScrollEvent::DataType &o_data, ScrollEvent::DataType &n_data) {
+  n_data.dy += o_data.dy;
+  return true;
+}, [](ScrollEvent::DataType &data) {
+  data.dy = 0;
+});
+
+/*!
+ * @brief This prevents the event thread from chocking on scroll events
+ * @note It does impose a limit on the scroll speed to 64 units per frame
+ * in either direction
+ */
+cydui::events::change_ev::DataMonitor<ScrollEvent>
+  hScrollEventDataMonitor([](ScrollEvent::DataType &o_data, ScrollEvent::DataType &n_data) {
+  n_data.dx += o_data.dx;
+  return true;
+}, [](ScrollEvent::DataType &data) {
+  data.dx = 0;
 });
 
 static std::unordered_map <KeySym, Key> xkey_map = {
@@ -97,19 +125,21 @@ static void run() {
       state::get_dpy(),
       &ev
     );
+    //if (6 != ev.type
+    //  && 2 != ev.type
+    //  && 3 != ev.type
+    //  )
     //x11_evlog.debug("event = %d", ev.type);
     using namespace cydui::events;
     switch (ev.type) {
-      case MapNotify:break;
+      case MapNotify:
+        break;
       case VisibilityNotify:
       case Expose:
         if (ev.xvisibility.type == VisibilityNotify) {
           redrawEventDataMonitor.update({
             .win = (unsigned int) ev.xvisibility.window,
           });
-          //emit<RedrawEvent>({
-          //  .win = (unsigned int) ev.xvisibility.window,
-          //});
         } else if (ev.xexpose.type == Expose
           && ev.xexpose.count == 0
           /*&& ev.xexpose.width > 0
@@ -117,11 +147,6 @@ static void run() {
           redrawEventDataMonitor.update({
             .win = (unsigned int) ev.xexpose.window,
           });
-          //resizeEventDataMonitor.update({ -- Why would you even do this?, size is of (Re)Exposed area, not of window
-          //  .win = (unsigned int) ev.xexpose.window,
-          //  .w = ev.xexpose.width,
-          //  .h = ev.xexpose.height,
-          //});
         }
         break;
       case KeyPress://x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));
@@ -146,34 +171,47 @@ static void run() {
           });
         }
         break;
-      case ButtonPress://x11_evlog.warn("BUTTON= %d", ev.xbutton.button);
+      case ButtonPress:
+        //x11_evlog.warn("BUTTON= %d", ev.xbutton.button);
         if (ev.xbutton.button == 4) {
-          emit<ScrollEvent>({
+          //emit<ScrollEvent>({
+          //  .win = (unsigned int) ev.xbutton.window,
+          //  .dy = 64,
+          //  .x = ev.xbutton.x,
+          //  .y = ev.xbutton.y,
+          //});
+          vScrollEventDataMonitor.update({
             .win = (unsigned int) ev.xbutton.window,
             .dy = 64,
-            .x      = ev.xbutton.x,
-            .y      = ev.xbutton.y,
+            .x = ev.xbutton.x,
+            .y = ev.xbutton.y,
           });
         } else if (ev.xbutton.button == 5) {
-          emit<ScrollEvent>({
+          //emit<ScrollEvent>({
+          //  .win = (unsigned int) ev.xbutton.window,
+          //  .dy = -64,
+          //  .x = ev.xbutton.x,
+          //  .y = ev.xbutton.y,
+          //});
+          vScrollEventDataMonitor.update({
             .win = (unsigned int) ev.xbutton.window,
             .dy = -64,
-            .x      = ev.xbutton.x,
-            .y      = ev.xbutton.y,
+            .x = ev.xbutton.x,
+            .y = ev.xbutton.y,
           });
         } else if (ev.xbutton.button == 6) {
-          emit<ScrollEvent>({
+          hScrollEventDataMonitor.update({
             .win = (unsigned int) ev.xbutton.window,
             .dx = -64,
-            .x      = ev.xbutton.x,
-            .y      = ev.xbutton.y,
+            .x = ev.xbutton.x,
+            .y = ev.xbutton.y,
           });
         } else if (ev.xbutton.button == 7) {
-          emit<ScrollEvent>({
+          hScrollEventDataMonitor.update({
             .win = (unsigned int) ev.xbutton.window,
             .dx = 64,
-            .x      = ev.xbutton.x,
-            .y      = ev.xbutton.y,
+            .x = ev.xbutton.x,
+            .y = ev.xbutton.y,
           });
         } else {
           emit<ButtonEvent>({
@@ -186,15 +224,22 @@ static void run() {
         }
         break;
       case ButtonRelease:
-        emit<ButtonEvent>({
-          .win = (unsigned int) ev.xbutton.window,
-          .button = ev.xbutton.button,
-          .x      = ev.xbutton.x,
-          .y      = ev.xbutton.y,
-          .released = true,
-        });
+        if (4 != ev.xbutton.button
+          && 5 != ev.xbutton.button
+          && 6 != ev.xbutton.button
+          && 7 != ev.xbutton.button
+          ) {
+          emit<ButtonEvent>({
+            .win = (unsigned int) ev.xbutton.window,
+            .button = ev.xbutton.button,
+            .x      = ev.xbutton.x,
+            .y      = ev.xbutton.y,
+            .released = true,
+          });
+        }
         break;
       case MotionNotify://x11_evlog.info("%d-%d", ev.xmotion.x, ev.xmotion.y);
+        //x11_evlog.warn("%lX - MOTION", ev.xmotion.window);
         motionEventDataMonitor.update({
           .win = (unsigned int) ev.xmotion.window,
           .x = ev.xmotion.x,
@@ -209,17 +254,25 @@ static void run() {
           .h = ev.xconfigure.height,
         });
         break;
-      case EnterNotify:break;
+      case EnterNotify:
+        break;
       case LeaveNotify:
-        motionEventDataMonitor.update({
+        //! I give no chance for this event not to be emitted
+        emit<MotionEvent>({
           .win = (unsigned int) ev.xcrossing.window,
           .x = -1,
           .y = -1,
         });
-        break;
+        redrawEventDataMonitor.update({
+          .win = (unsigned int) ev.xcrossing.window,
+        });
         break;
       case FocusIn:
+        //x11_evlog.error("%lX - FOCUS IN", ev.xfocus.window);
+        break;
       case FocusOut:
+        //x11_evlog.error("%lX - FOCUS OUT", ev.xfocus.window);
+        break;
       case KeymapNotify:
       case CreateNotify:
       case DestroyNotify:
@@ -239,7 +292,8 @@ static void run() {
       case ClientMessage:
       case MappingNotify:
       case GenericEvent:
-      default: break;
+      default:
+        break;
     }
   }
   XFlush(state::get_dpy());
