@@ -3,7 +3,6 @@
 //
 
 #include "core/layout.h"
-#include "core/window.h"
 
 logging::logger log_lay = {
   .name = "LAYOUT", .on = true, .min_level = logging::INFO};
@@ -12,6 +11,9 @@ logging::logger log_lay = {
   if (!dimension_t::compute(DIM)) {                                            \
     return false;                                                              \
   }
+
+using namespace cydui;
+using namespace cydui::components;
 
 static bool compute_dimensions(component_base_t* rt) {
   using namespace cydui::dimensions;
@@ -120,13 +122,17 @@ void cydui::layout::Layout::redraw_component(component_base_t* target) {
   // Clear render area of component instances
   auto* compositing_tree = new compositing::compositing_tree_t;
   
+  // TODO - For now the entire screen is redraw everytime, in the future it
+  // would be interesting to implement a diff algorithm that could redraw
+  // subsections of the screen.
   target->clear_children();
   // Recreate those instances with redraw(), this set all size hints relationships
-  target->redraw(this, &compositing_tree->root);
+  target->redraw(this);
   
-  recompute_dimensions(target);
+  recompute_dimensions(root);
   
-  compositing_tree->fix_dimensions();
+  root->get_fragment(this, &compositing_tree->root);
+  //compositing_tree->fix_dimensions();
   
   compositor.compose(compositing_tree);
 }
@@ -161,7 +167,9 @@ static event_handler_t* get_instance_ev_handler(component_state_t* component_sta
 void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
   compositor.set_render_target(this->win->win_ref, &this->win->profiling_ctx);
-  {
+  {/// Configure root component
+    root_state->win = this->win;
+    
     auto dim = root->get_dimensional_relations();
     dim.w = get_frame(win->win_ref)->width();
     dim.h = get_frame(win->win_ref)->height();

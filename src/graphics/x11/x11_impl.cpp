@@ -13,6 +13,8 @@
 #include "state/state.hpp"
 #include "render/render.hpp"
 
+using namespace x11;
+
 const logging::logger log_task = {.name = "X11_IMPL", .on = true};
 
 char* log_error_code(int err) {
@@ -27,9 +29,12 @@ static Bool evpredicate() {
 
 static int geom_mask_to_gravity(int mask) {
   switch (mask & (XNegative | YNegative)) {
-    case 0: return NorthWestGravity;
-    case XNegative: return NorthEastGravity;
-    case YNegative: return SouthWestGravity;
+    case 0:
+      return NorthWestGravity;
+    case XNegative:
+      return NorthEastGravity;
+    case YNegative:
+      return SouthWestGravity;
   }
   
   return SouthEastGravity;
@@ -53,7 +58,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
     .bit_gravity = NorthWestGravity,
     .event_mask  = FocusChangeMask | KeyPressMask | KeyReleaseMask
       | VisibilityChangeMask | StructureNotifyMask | ButtonMotionMask
-      | ButtonPressMask | ButtonReleaseMask | ExposureMask
+      | ButtonPressMask | ButtonReleaseMask | ExposureMask | FocusChangeMask
       | LeaveWindowMask | EnterWindowMask | PointerMotionMask,
     .override_redirect =
     override_redirect// This makes it immutable across workspaces
@@ -205,7 +210,7 @@ static void unload_font(
 }
 
 static window_image load_image(
-  cydui::graphics::window_t* win, cydui::layout::images::image_t* img
+  cydui::graphics::window_t* win, cydui::graphics::images::image_t* img
 ) {
   if (win->loaded_images.contains(img->path))
     return win->loaded_images[img->path];
@@ -239,7 +244,7 @@ static window_image load_image(
 
 static void unload_image(
   cydui::graphics::window_t* win,
-  cydui::layout::images::image_t* img
+  cydui::graphics::images::image_t* img
 ) {
   // TODO - Implement
 }
@@ -272,7 +277,7 @@ std::pair<int, int> get_text_size(
 }
 
 std::pair<int, int> get_image_size(
-  cydui::layout::images::image_t* img
+  cydui::graphics::images::image_t* img
 ) {
   imgs::img_data data = imgs::read_jpg(img->path);
   return {data.width, data.height};

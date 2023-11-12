@@ -10,6 +10,8 @@ const logging::logger log_task = {.name = "X11_IMPL::state"};
 static Display* dpy = nullptr;
 static int screen = -1;
 
+using namespace x11;
+
 Display* state::get_dpy() {
   if (dpy)
     return dpy;

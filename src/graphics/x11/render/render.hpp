@@ -5,7 +5,7 @@
 #ifndef CYD_UI_RENDER_HPP
 #define CYD_UI_RENDER_HPP
 
-namespace render {
+namespace x11::render {
     struct RenderThreadData {
       cydui::graphics::window_t* win;
       XImage* image = (XImage*) malloc(sizeof(XImage));

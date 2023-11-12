@@ -7,9 +7,11 @@
 
 #include "dimensions.hpp"
 
+struct attribute_i { };
+
 #define COMPONENT_ATTRIBUTE(TYPE, NAME, DEFAULT) \
     template<typename E>                         \
-    struct attr_##NAME {                         \
+    struct attr_##NAME: public attribute_i {     \
       inline E &NAME(auto& _##NAME##_) {         \
         this->_##NAME = _##NAME##_;              \
         return *(E*)this;                        \
@@ -23,7 +25,7 @@
 
 #define COMPONENT_ATTRIBUTE_W_MONITOR(TYPE, NAME, DEFAULT) \
     template<typename E>                                   \
-    struct attr_##NAME {                                   \
+    struct attr_##NAME: public attribute_i {               \
       inline E &NAME(auto& _##NAME##_) {                   \
         this->_##NAME = _##NAME##_;                        \
         this->_##NAME##_has_changed = true;                \
@@ -53,6 +55,21 @@ COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, padding_bottom, 0);
 COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, padding_left, 0);
 COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, padding_right, 0);
 
+using content = std::vector<cydui::components::component_holder_t>;
+
+template<typename E>
+struct attr_content: public attribute_i {
+  inline E &operator()(auto &&_content_) {
+    this->_content = _content_;
+    return *(E*) this;
+  }
+  inline E &operator()(auto &_content_) {
+    this->_content = _content_;
+    return *(E*) this;
+  }
+  std::function<content()> _content = [] -> content {return {};};
+};
+
 template<typename T>
 struct attrs_margin
   : attr_margin_top<T>,
@@ -75,6 +92,14 @@ struct attrs_dimensions
     attr_y<T>,
     attr_w<T>,
     attr_h<T> {
+};
+
+template<typename T>
+struct attrs_component
+  : attrs_dimensions<T>,
+    attrs_margin<T>,
+    attrs_padding<T>,
+    attr_content<T> {
 };
 
 #undef COMPONENT_ATTRIBUTE

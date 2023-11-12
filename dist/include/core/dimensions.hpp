@@ -34,6 +34,10 @@ namespace cydui::dimensions {
         dimension_t &dim
       );
       
+      operator dimension_value_t() const {
+        return this->binding();
+      }
+      
       //dimensional_relation_t(// NOLINT(google-explicit-constructor)
       //  dimensional_relation_t const &rel
       //) = default;

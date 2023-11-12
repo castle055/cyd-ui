@@ -14,6 +14,7 @@ logging::logger x11_evlog = {.name = "X11::EV"};
 logging::logger chev_log = {.name = "EV::CHANGE", .on = false};
 
 using namespace std::chrono_literals;
+using namespace x11;
 
 Bool evpredicate() {
   return True;
@@ -44,10 +45,10 @@ cydui::events::change_ev::DataMonitor<MotionEvent>
  */
 cydui::events::change_ev::DataMonitor<ScrollEvent>
   vScrollEventDataMonitor([](ScrollEvent::DataType &o_data, ScrollEvent::DataType &n_data) {
-  //if (n_data.dy * o_data.dy > 0) {
-  //  n_data.dy += o_data.dy;
-  //}
+  n_data.dy += o_data.dy;
   return true;
+}, [](ScrollEvent::DataType &data) {
+  data.dy = 0;
 });
 
 /*!
@@ -57,13 +58,13 @@ cydui::events::change_ev::DataMonitor<ScrollEvent>
  */
 cydui::events::change_ev::DataMonitor<ScrollEvent>
   hScrollEventDataMonitor([](ScrollEvent::DataType &o_data, ScrollEvent::DataType &n_data) {
-  //if (n_data.dx * o_data.dx > 0) {
-  //  n_data.dx += o_data.dx;
-  //}
+  n_data.dx += o_data.dx;
   return true;
+}, [](ScrollEvent::DataType &data) {
+  data.dx = 0;
 });
 
-static std::unordered_map<KeySym, Key> xkey_map = {
+static std::unordered_map <KeySym, Key> xkey_map = {
   {XK_a, Key::A},
   {XK_b, Key::B},
   {XK_c, Key::C},
@@ -124,11 +125,11 @@ static void run() {
       state::get_dpy(),
       &ev
     );
-    if (6 != ev.type
-      && 2 != ev.type
-      && 3 != ev.type
-      )
-      x11_evlog.debug("event = %d", ev.type);
+    //if (6 != ev.type
+    //  && 2 != ev.type
+    //  && 3 != ev.type
+    //  )
+    //x11_evlog.debug("event = %d", ev.type);
     using namespace cydui::events;
     switch (ev.type) {
       case MapNotify:
@@ -170,8 +171,15 @@ static void run() {
           });
         }
         break;
-      case ButtonPress://x11_evlog.warn("BUTTON= %d", ev.xbutton.button);
+      case ButtonPress:
+        //x11_evlog.warn("BUTTON= %d", ev.xbutton.button);
         if (ev.xbutton.button == 4) {
+          //emit<ScrollEvent>({
+          //  .win = (unsigned int) ev.xbutton.window,
+          //  .dy = 64,
+          //  .x = ev.xbutton.x,
+          //  .y = ev.xbutton.y,
+          //});
           vScrollEventDataMonitor.update({
             .win = (unsigned int) ev.xbutton.window,
             .dy = 64,
@@ -179,6 +187,12 @@ static void run() {
             .y = ev.xbutton.y,
           });
         } else if (ev.xbutton.button == 5) {
+          //emit<ScrollEvent>({
+          //  .win = (unsigned int) ev.xbutton.window,
+          //  .dy = -64,
+          //  .x = ev.xbutton.x,
+          //  .y = ev.xbutton.y,
+          //});
           vScrollEventDataMonitor.update({
             .win = (unsigned int) ev.xbutton.window,
             .dy = -64,
@@ -210,15 +224,22 @@ static void run() {
         }
         break;
       case ButtonRelease:
-        emit<ButtonEvent>({
-          .win = (unsigned int) ev.xbutton.window,
-          .button = ev.xbutton.button,
-          .x      = ev.xbutton.x,
-          .y      = ev.xbutton.y,
-          .released = true,
-        });
+        if (4 != ev.xbutton.button
+          && 5 != ev.xbutton.button
+          && 6 != ev.xbutton.button
+          && 7 != ev.xbutton.button
+          ) {
+          emit<ButtonEvent>({
+            .win = (unsigned int) ev.xbutton.window,
+            .button = ev.xbutton.button,
+            .x      = ev.xbutton.x,
+            .y      = ev.xbutton.y,
+            .released = true,
+          });
+        }
         break;
       case MotionNotify://x11_evlog.info("%d-%d", ev.xmotion.x, ev.xmotion.y);
+        //x11_evlog.warn("%lX - MOTION", ev.xmotion.window);
         motionEventDataMonitor.update({
           .win = (unsigned int) ev.xmotion.window,
           .x = ev.xmotion.x,
@@ -236,15 +257,22 @@ static void run() {
       case EnterNotify:
         break;
       case LeaveNotify:
-        motionEventDataMonitor.update({
+        //! I give no chance for this event not to be emitted
+        emit<MotionEvent>({
           .win = (unsigned int) ev.xcrossing.window,
           .x = -1,
           .y = -1,
         });
-        break;
+        redrawEventDataMonitor.update({
+          .win = (unsigned int) ev.xcrossing.window,
+        });
         break;
       case FocusIn:
+        //x11_evlog.error("%lX - FOCUS IN", ev.xfocus.window);
+        break;
       case FocusOut:
+        //x11_evlog.error("%lX - FOCUS OUT", ev.xfocus.window);
+        break;
       case KeymapNotify:
       case CreateNotify:
       case DestroyNotify:

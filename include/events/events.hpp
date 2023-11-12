@@ -14,6 +14,69 @@
 #include "../cydstd/cydstd.h"
 #include "../threading.hpp"
 
+//namespace events {
+//    template<class T>
+//    concept EventType = requires {
+//      {
+//      T::type
+//      } -> std::convertible_to<str>;
+//      typename T::DataType;
+//      {
+//      T::data
+//      } -> std::convertible_to<typename T::DataType>;
+//    };
+//
+//    template<typename T> requires EventType<T>
+//    struct ParsedEvent {
+//      using DataType = T::DataType;
+//
+//      const str type;
+//      const typename T::DataType* data;
+//    };
+//
+//    enum EventStatus {
+//      PENDING,
+//      PROCESSING,
+//      CONSUMED,
+//    };
+//
+//    struct Event {
+//      str type;
+//      EventStatus status = PENDING;
+//      void* ev;
+//
+//      std::mutex ev_mtx;
+//
+//      // If it is someone else's job to delete this object
+//      bool managed = false;
+//
+//      template<typename T>
+//      requires EventType<T>
+//      ParsedEvent<T> parse() {
+//        str matchName = T::type;
+//        if (matchName == type) {
+//          return ParsedEvent<T> {
+//            .type = type,
+//            .data = (typename T::DataType*) ev,
+//          };
+//        } else {
+//          return ParsedEvent<T> {
+//            .type = type,
+//            .data = nullptr,
+//          };
+//        }
+//      }
+//    };
+//
+//    struct event_emitter_t {
+//      virtual void emit() = 0;
+//    };
+//
+//    class event_bus_t {
+//
+//    };
+//}
+
 namespace cydui::events {
     template<class T>
     concept EventType = requires {
@@ -24,6 +87,9 @@ namespace cydui::events {
       {
       T::data
       } -> std::convertible_to<typename T::DataType>;
+      {
+      T::DataType::win
+      } -> std::convertible_to<unsigned long>;
     };
     
     template<typename T> requires EventType<T>

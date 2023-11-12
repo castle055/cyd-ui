@@ -13,7 +13,7 @@
  *
  * This namespace provides an abstraction over environmental variables.
  */
-namespace env {
+namespace cydstd::env {
     /**
      * \brief Get the value of the environmental variable with name `ENVVAR`
      * \returns `std::string` containing the value of the variable

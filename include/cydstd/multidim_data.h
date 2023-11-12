@@ -6,6 +6,7 @@
 #define CYD_UI_STD_MULTIDIM_DATA_H
 
 #include <cstddef>
+#include <array>
 #include <cstdlib>
 #include <cmath>
 #include <cstring>

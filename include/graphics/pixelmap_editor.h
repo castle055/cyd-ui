@@ -33,6 +33,10 @@ public:
   Cairo::RefPtr<Cairo::Context> operator->() {
     return ctx;
   }
+  
+  void clear() {
+    memset(img.data, 0, img.width() * img.height() * sizeof(pixel_t));
+  }
 };
 
 #endif //CYD_UI_PIXELMAP_EDITOR_H

@@ -15,7 +15,7 @@ namespace cydui::window {
 namespace cydui::layout {
     class Layout;
     
-    template<ComponentConcept C>
+    template<components::ComponentConcept C>
     Layout* create(C &&root_component);
     
     class Layout {
@@ -23,29 +23,29 @@ namespace cydui::layout {
       
       compositing::LayoutCompositor compositor {};
       
-      component_state_t* root_state;
-      component_base_t* root;
+      components::component_state_t* root_state;
+      components::component_base_t* root;
       
-      component_state_t* hovering = nullptr;
-      component_state_t* focused = nullptr;
+      components::component_state_t* hovering = nullptr;
+      components::component_state_t* focused = nullptr;
       
       
-      component_base_t* find_by_coords(int x, int y);
+      components::component_base_t* find_by_coords(int x, int y);
       
-      bool render_if_dirty(component_base_t* c);
+      bool render_if_dirty(components::component_base_t* c);
       
-      Layout(component_state_t* _root_state, component_base_t* _root)
+      Layout(components::component_state_t* _root_state, components::component_base_t* _root)
         : root_state(_root_state), root(_root), focused(_root_state) {
         focused->focused = true;
       }
       
-      void redraw_component(component_base_t* target);
+      void redraw_component(components::component_base_t* target);
       
-      void recompute_dimensions(component_base_t* start_from);
+      void recompute_dimensions(components::component_base_t* start_from);
       
       void recompose_layout();
       
-      template<ComponentConcept C>
+      template<components::ComponentConcept C>
       friend Layout* cydui::layout::create(C &&root_component);
     
     public:
@@ -55,7 +55,7 @@ namespace cydui::layout {
     };
 }
 
-template<ComponentConcept C>
+template<cydui::components::ComponentConcept C>
 cydui::layout::Layout* cydui::layout::create(C &&root_component) {
   auto* root_state = new typename C::state_t();
   auto* root = new C {root_component};

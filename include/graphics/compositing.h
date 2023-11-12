@@ -13,11 +13,11 @@
 #include "../cydstd/profiling.h"
 
 namespace cydui::compositing {
-    using namespace vg;
+    using namespace graphics::vg;
     using namespace std::chrono_literals;
     
     struct compositing_operation_t {
-      int x, y, w, h;
+      int x, y, orig_x, orig_y, w, h;
       double rot = 0.0;
       double scale_x = 1.0;
       double scale_y = 1.0;
@@ -42,10 +42,23 @@ namespace cydui::compositing {
         }
       }
       
-      void fix_op_dimensions() {
-        op._fix_dimensions(op);
-        for (auto &node: children) {
-          node->fix_op_dimensions();
+      //void fix_op_dimensions() {
+      //  op._fix_dimensions(op);
+      //  for (auto &node: children) {
+      //    node->fix_op_dimensions();
+      //  }
+      //}
+      compositing_node_t* find_by_id(unsigned long _id) {
+        if (id == _id) {
+          return this;
+        } else {
+          for (auto &item: children) {
+            auto* res = item->find_by_id(_id);
+            if (nullptr != res) {
+              return res;
+            }
+          }
+          return nullptr;
         }
       }
     };
@@ -53,8 +66,12 @@ namespace cydui::compositing {
     struct compositing_tree_t {
       compositing_node_t root {};
       
-      void fix_dimensions() {
-        root.fix_op_dimensions();
+      //void fix_dimensions() {
+      //  root.fix_op_dimensions();
+      //}
+      //
+      compositing_node_t* find_by_id(unsigned long _id) {
+        return root.find_by_id(_id);
       }
     };
     
@@ -97,34 +114,43 @@ namespace cydui::compositing {
       }
       
       pixelmap_t* repaint(compositing_node_t* node, pixelmap_t* frame = nullptr) {
+        pixelmap_t* frm = frame;
+        if (nullptr == frm) {
+          if (sub_frame_cache.contains(node->id)) {
+            frm = sub_frame_cache[node->id];
+            if (frm->width() != (size_t) node->op.w || frm->height() != (size_t) node->op.h) {
+              frm->resize({
+                (unsigned long) node->op.w,
+                (unsigned long) node->op.h
+              });
+            }
+          } else {
+            frm = new pixelmap_t {
+              (unsigned long) node->op.w,
+              (unsigned long) node->op.h
+            };
+            sub_frame_cache[node->id] = frm;
+          }
+        }
+        pixelmap_editor_t editor {frm};
+        editor.clear();
+        bool empty = true;
+        if (!node->graphics.empty()) {
+          empty = false;
+          // Rasterize graphics into `frm`
+          for (const auto &element: node->graphics.elements) {
+            element->_internal_set_origin(node->op.orig_x, node->op.orig_y);
+            element->apply_to(editor);
+          }
+        }
         if (!node->children.empty()) {
+          empty = false;
           std::vector<std::pair<compositing_node_t*, pixelmap_t*>> sub_frames {};
           for (auto* c: node->children) {
             sub_frames.emplace_back(c, repaint(c));
           }
-          pixelmap_t* frm = frame;
-          if (nullptr == frm) {
-            if (sub_frame_cache.contains(node->id)) {
-              frm = sub_frame_cache[node->id];
-              if (frm->width() != (size_t) node->op.w || frm->height() != (size_t) node->op.h) {
-                frm->resize({
-                  (unsigned long) node->op.w,
-                  (unsigned long) node->op.h
-                });
-              }
-            } else {
-              frm = new pixelmap_t {
-                (unsigned long) node->op.w,
-                (unsigned long) node->op.h
-              };
-              sub_frame_cache[node->id] = frm;
-            }
-          }
           
           // Compose graphics into 'frm'
-          pixelmap_editor_t editor {frm};
-          editor->set_source_rgba(0, 0, 0, 1);
-          editor->paint();
           
           for (const auto &item: sub_frames) {
             auto &[snode, sfrm] = item;
@@ -137,44 +163,14 @@ namespace cydui::compositing {
               (int) sfrm->width(), (int) sfrm->height(),
               cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, (int) sfrm->width())
             );
-            editor->set_source(surface, snode->op.x, snode->op.y);
+            editor->set_source(surface, node->op.orig_x + snode->op.x, node->op.orig_y + snode->op.y);
             editor->paint();
             
             //delete sfrm;
           }
           
-          return frm;
-        } else if (!node->graphics.empty()) {
-          pixelmap_t* frm = frame;
-          if (nullptr == frm) {
-            if (sub_frame_cache.contains(node->id)) {
-              frm = sub_frame_cache[node->id];
-              if (frm->width() != (size_t) node->op.w || frm->height() != (size_t) node->op.h) {
-                frm->resize({
-                  (unsigned long) node->op.w,
-                  (unsigned long) node->op.h
-                });
-              }
-            } else {
-              frm = new pixelmap_t {
-                (unsigned long) node->op.w,
-                (unsigned long) node->op.h
-              };
-              sub_frame_cache[node->id] = frm;
-            }
-          }
-          // Rasterize graphics into `frm`
-          pixelmap_editor_t editor {frm};
-          editor->set_source_rgba(0, 0, 0, 1);
-          editor->paint();
-          for (const auto &element: node->graphics.elements) {
-            element->apply_to(editor);
-          }
-          
-          return frm;
-        } else {
-          return nullptr;
         }
+        return empty ? nullptr : frm;
       }
     
     public:

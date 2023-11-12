@@ -88,6 +88,7 @@ void clean_up_event(thread_data* data, cydui::events::Event* ev) {
 void process_event(thread_data* data) {
   //    log_task.debug("Processing next event");
   
+  log_task.debug("EVENT COUNT: %ld", data->event_queue->size());
   cydui::events::Event* ev = get_next_event(data);
   
   if (ev != nullptr) {

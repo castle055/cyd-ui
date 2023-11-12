@@ -8,6 +8,8 @@
 
 #include <X11/Xlib.h>
 
+using namespace x11;
+
 logging::logger xlog_ctrl = {.name = "X11::RENDER::CTRL", .on = false};
 logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = true};
 
@@ -87,7 +89,7 @@ void render::start(cydui::graphics::window_t* win) {
     ->set_name("RENDER_THD");
 }
 
-static std::unordered_map <u32, XColor> xcolor_cache;
+static std::unordered_map<u32, XColor> xcolor_cache;
 
 struct xcolor_hot_cache_entry_t {
   u32 id;

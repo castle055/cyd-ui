@@ -8,7 +8,7 @@
 #include <string>
 #include <jpeglib.h>
 
-namespace imgs {
+namespace x11::imgs {
     struct jpg_err_mgr {
       jpeg_error_mgr pub;
     };

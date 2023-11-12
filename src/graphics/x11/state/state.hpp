@@ -11,7 +11,7 @@
 #include <X11/Xlib.h>
 #include "../x11_impl.hpp"
 
-namespace state {
+namespace x11::state {
     Display* get_dpy();
     
     int get_screen();

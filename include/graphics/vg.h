@@ -10,11 +10,23 @@
 
 #include "vg_attributes.h"
 
-namespace vg {
+namespace cydui::graphics::vg {
     struct vg_element_t {
+      int origin_x = 0;
+      int origin_y = 0;
+      void _internal_set_origin(int x, int y) {
+        origin_x = x;
+        origin_y = y;
+      }
+      
       virtual ~vg_element_t() = default;
       
       virtual void apply_to(pixelmap_editor_t &editor) const = 0;
+      
+      struct footprint {
+        int x, y, w, h;
+      };
+      virtual footprint get_footprint() const = 0;
     };
     
     struct vg_fragment_t {
@@ -59,6 +71,34 @@ namespace vg {
     };
     
     // ? Basic Shapes
+    // * <pixel>
+    struct pixel:
+      vg_element_t,
+      attrs_core<pixel>,
+      attrs_fill<pixel>,
+      attr_x<pixel>,
+      attr_y<pixel> {
+      pixel() = default;
+      
+      void apply_to(pixelmap_editor_t &editor) const override {
+        auto lg = Cairo::LinearGradient::create(0, 0, 1, 1);
+        
+        if (origin_x + _x < editor.img.width() && origin_y + _y < editor.img.height()) {
+          auto clr = sample_fill(_x, _y);
+          editor.img.set({(unsigned int) origin_x + _x, (unsigned int) origin_y + _y}, {
+            (u8) (clr.b * 255),
+            (u8) (clr.g * 255),
+            (u8) (clr.r * 255),
+            (u8) (clr.a * _fill_opacity * 255)
+          });
+        }
+      }
+      
+      footprint get_footprint() const override {
+        return {_x, _y, 1, 1};
+      }
+    };
+    
     // * <line>
     struct line:
       vg_element_t,
@@ -76,17 +116,21 @@ namespace vg {
       void apply_to(pixelmap_editor_t &editor) const override {
         apply_stroke(editor);
         
-        editor->set_source_rgba(
-          _stroke.color.r,
-          _stroke.color.g,
-          _stroke.color.b,
-          _stroke.color.a * _stroke_opacity
-        );
+        set_source_to_stroke(editor);
         
-        editor->move_to(_x1, _y1);
-        editor->line_to(_x2, _y2);
+        editor->move_to(origin_x + _x1, origin_y + _y1);
+        editor->line_to(origin_x + _x2, origin_y + _y2);
         
         editor->stroke();
+      }
+      
+      footprint get_footprint() const override {
+        return {
+          std::min(_x1, _x2),
+          std::min(_y1, _y2),
+          std::abs(_x2 - _x1),
+          std::abs(_y2 - _y1),
+        };
       }
     };
     
@@ -104,30 +148,46 @@ namespace vg {
         bool first = true;
         for (const auto &p: _points) {
           if (first) {
-            editor->move_to(p[0], p[1]);
+            editor->move_to(origin_x + p[0], origin_y + p[1]);
             first = false;
           } else {
-            editor->line_to(p[0], p[1]);
+            editor->line_to(origin_x + p[0], origin_y + p[1]);
           }
         }
         // Close the polygon
         editor->close_path();
         
-        editor->set_source_rgba(
-          _stroke.color.r,
-          _stroke.color.g,
-          _stroke.color.b,
-          _stroke.color.a * _stroke_opacity
-        );
+        set_source_to_stroke(editor);
         editor->stroke_preserve();
         
-        editor->set_source_rgba(
-          _fill.color.r,
-          _fill.color.g,
-          _fill.color.b,
-          _fill.color.a * _fill_opacity
-        );
+        set_source_to_fill(editor);
         editor->fill();
+      }
+      
+      footprint get_footprint() const override {
+        if (_points.empty()) {
+          return {0, 0, 0, 0};
+        }
+        
+        int min_x = _points[0][0];
+        int min_y = _points[0][1];
+        int max_x = _points[0][0];
+        int max_y = _points[0][1];
+        int x, y;
+        for (std::size_t i = 1; i < _points.size(); ++i) {
+          x = _points[i][0];
+          y = _points[i][1];
+          if (x < min_x) min_x = x;
+          if (x > max_x) max_x = x;
+          if (y < min_y) min_y = y;
+          if (y > max_y) max_y = y;
+        }
+        return {
+          min_x,
+          min_y,
+          max_x - min_x,
+          max_y - min_y,
+        };
       }
     };
     
@@ -145,28 +205,44 @@ namespace vg {
         bool first = true;
         for (const auto &p: _points) {
           if (first) {
-            editor->move_to(p[0], p[1]);
+            editor->move_to(origin_x + p[0], origin_y + p[1]);
             first = false;
           } else {
-            editor->line_to(p[0], p[1]);
+            editor->line_to(origin_x + p[0], origin_y + p[1]);
           }
         }
         
-        editor->set_source_rgba(
-          _stroke.color.r,
-          _stroke.color.g,
-          _stroke.color.b,
-          _stroke.color.a * _stroke_opacity
-        );
+        set_source_to_stroke(editor);
         editor->stroke_preserve();
         
-        editor->set_source_rgba(
-          _fill.color.r,
-          _fill.color.g,
-          _fill.color.b,
-          _fill.color.a * _fill_opacity
-        );
+        set_source_to_fill(editor);
         editor->fill();
+      }
+      
+      footprint get_footprint() const override {
+        if (_points.empty()) {
+          return {0, 0, 0, 0};
+        }
+        
+        int min_x = _points[0][0];
+        int min_y = _points[0][1];
+        int max_x = _points[0][0];
+        int max_y = _points[0][1];
+        int x, y;
+        for (std::size_t i = 1; i < _points.size(); ++i) {
+          x = _points[i][0];
+          y = _points[i][1];
+          if (x < min_x) min_x = x;
+          if (x > max_x) max_x = x;
+          if (y < min_y) min_y = y;
+          if (y > max_y) max_y = y;
+        }
+        return {
+          min_x,
+          min_y,
+          max_x - min_x,
+          max_y - min_y,
+        };
       }
     };
     
@@ -182,6 +258,10 @@ namespace vg {
         apply_fill(editor);
         
       }
+      
+      footprint get_footprint() const override {
+        return {};
+      }
     };
     
     // * <rect>
@@ -192,8 +272,8 @@ namespace vg {
       attrs_stroke<rect>,
       attr_x<rect>,
       attr_y<rect>,
-      attr_width<rect>,
-      attr_height<rect>,
+      attr_w<rect>,
+      attr_h<rect>,
       attr_rx<rect>,
       attr_ry<rect> {
       void apply_to(pixelmap_editor_t &editor) const override {
@@ -203,42 +283,38 @@ namespace vg {
         // Replace with a proper path construction that takes into account
         // _rx and _ry
         if (_rx == 0 && _ry == 0) {
-          editor->rectangle(_x, _y, _width, _height);
-          editor->set_source_rgba(
-            _stroke.color.r,
-            _stroke.color.g,
-            _stroke.color.b,
-            _stroke.color.a * _stroke_opacity
-          );
-          editor->stroke_preserve();
+          editor->rectangle(origin_x + _x, origin_y + _y, _w, _h);
+          if (_stroke_width > 0) {
+            set_source_to_stroke(editor);
+            editor->stroke_preserve();
+          }
           
-          editor->set_source_rgba(
-            _fill.color.r,
-            _fill.color.g,
-            _fill.color.b,
-            _fill.color.a * _fill_opacity
-          );
+          set_source_to_fill(editor);
           editor->fill();
         } else {
-          editor->rectangle(
-            _x + _rx,
-            _y,
-            _width - _rx * 2,
-            _height
-          );
-          editor->rectangle(
-            _x,
-            _y + _ry,
-            _rx,
-            _height - _ry * 2
-          );
-          editor->rectangle(
-            _width - _rx,
-            _y + _ry,
-            _rx,
-            _height - _ry * 2
-          );
+          //editor->rectangle(
+          //  _x + _rx,
+          //  _y,
+          //  _width - _rx * 2,
+          //  _height
+          //);
+          //editor->rectangle(
+          //  _x,
+          //  _y + _ry,
+          //  _rx,
+          //  _height - _ry * 2
+          //);
+          //editor->rectangle(
+          //  _width - _rx,
+          //  _y + _ry,
+          //  _rx,
+          //  _height - _ry * 2
+          //);
         }
+      }
+      
+      footprint get_footprint() const override {
+        return {_x, _y, _w, _h};
       }
     };
     
@@ -255,22 +331,16 @@ namespace vg {
         apply_stroke(editor);
         apply_fill(editor);
         
-        editor->arc(_cx, _cy, _r, 0, 2 * M_PI);
-        editor->set_source_rgba(
-          _stroke.color.r,
-          _stroke.color.g,
-          _stroke.color.b,
-          _stroke.color.a * _stroke_opacity
-        );
+        editor->arc(origin_x + _cx, origin_y + _cy, _r, 0, 2 * M_PI);
+        set_source_to_stroke(editor);
         editor->stroke_preserve();
         
-        editor->set_source_rgba(
-          _fill.color.r,
-          _fill.color.g,
-          _fill.color.b,
-          _fill.color.a * _fill_opacity
-        );
+        set_source_to_fill(editor);
         editor->fill();
+      }
+      
+      footprint get_footprint() const override {
+        return {_cx - _r, _cy - _r, 2 * _r, 2 * _r};
       }
     };
     
@@ -289,27 +359,21 @@ namespace vg {
         apply_fill(editor);
         
         editor->save();
-        editor->translate(_cx, _cy);
+        editor->translate(origin_x + _cx, origin_y + _cy);
         editor->scale(_rx, _ry);
         editor->arc(0.0, 0.0, 1.0, 0.0, 2 * M_PI);
         
-        editor->set_source_rgba(
-          _stroke.color.r,
-          _stroke.color.g,
-          _stroke.color.b,
-          _stroke.color.a * _stroke_opacity
-        );
+        set_source_to_stroke(editor);
         editor->stroke_preserve();
         
-        editor->set_source_rgba(
-          _fill.color.r,
-          _fill.color.g,
-          _fill.color.b,
-          _fill.color.a * _fill_opacity
-        );
+        set_source_to_fill(editor);
         editor->fill();
         
         editor->restore();
+      }
+      
+      footprint get_footprint() const override {
+        return {};
       }
     };
     
@@ -325,7 +389,56 @@ namespace vg {
       void apply_to(pixelmap_editor_t &editor) const override {
         apply_stroke(editor);
       }
+      
+      footprint get_footprint() const override {
+        return {};
+      }
     };
+    
+    // ? Text
+    // * <text>
+    struct text:
+      vg_element_t,
+      attrs_core<text>,
+      attrs_fill<text>,
+      //attrs_stroke<text>,
+      attrs_font<text>,
+      attr_x<text>,
+      attr_y<text>,
+      attr_w<text>,
+      attr_h<text> {
+      std::string _text;
+      text(std::string _text): _text(std::move(_text)) { }
+      void apply_to(pixelmap_editor_t &editor) const override {
+        apply_font(editor);
+        //apply_stroke(editor);
+        apply_fill(editor);
+        
+        Cairo::FontExtents fextents;
+        editor->get_font_extents(fextents);
+        
+        Cairo::TextExtents extents;
+        editor->get_text_extents(_text, extents);
+        
+        
+        set_source_to_fill(editor);
+        editor->move_to(origin_x + _x, origin_y + _y);
+        editor->show_text(_text);
+        //editor->move_to(origin_x + _x, origin_y + _y + fextents.ascent);
+        //editor->show_text(_text);
+        //editor->move_to(origin_x + _x + 5, origin_y + _y + fextents.height);
+        //editor->show_text(_text);
+        //editor->move_to(origin_x + _x + 10, origin_y + _y + extents.height);
+        //editor->show_text(_text);
+      }
+      
+      footprint get_footprint() const override {
+        return {};
+      }
+    };
+    
+    // * <textPath>
+    // * <tspan>
 }
 
 
