@@ -1,0 +1,258 @@
+.TH "src/threading/tasks.cpp" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+src/threading/tasks.cpp
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'cydstd/logging\&.hpp'\fP
+.br
+\fC#include 'tools/tasks\&.h'\fP
+.br
+\fC#include <deque>\fP
+.br
+\fC#include <vector>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBthread_data\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef std::vector< \fBcydui::tasks::_timer_t\fP * > \fBtimer_list_t\fP"
+.br
+.ti -1c
+.RI "typedef std::deque< \fBcydui::tasks::task_t\fP * > \fBtask_queue_t\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "static void \fBadd_timer\fP (\fBcydui::tasks::_timer_t\fP *timer)"
+.br
+.ti -1c
+.RI "\fBcydui::tasks::_timer_t\fP * \fBremove_timer\fP (\fBcydui::tasks::_timer_t\fP *timer)"
+.br
+.ti -1c
+.RI "static void \fBpush_task\fP (\fBcydui::tasks::task_t\fP *task)"
+.br
+.ti -1c
+.RI "static \fBcydui::tasks::task_t\fP * \fBpop_task\fP ()"
+.br
+.ti -1c
+.RI "static void \fBtask_executor\fP (\fBcydui::tasks::task_t\fP *task)"
+.br
+.ti -1c
+.RI "static void \fBtrigger_executor\fP ()"
+.br
+.ti -1c
+.RI "static void \fBtaskrunner_task\fP (\fBthread_t\fP *this_thread)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBlogging::logger\fP \fBlogger\fP"
+.br
+.ti -1c
+.RI "std::mutex \fBtask_queue_mtx\fP"
+.br
+.ti -1c
+.RI "std::mutex \fBtimer_list_mtx\fP"
+.br
+.ti -1c
+.RI "static \fBtimer_list_t\fP \fBtimer_list\fP"
+.br
+.ti -1c
+.RI "static \fBtask_queue_t\fP \fBtask_queue\fP"
+.br
+.ti -1c
+.RI "\fBcydui::threading::thread_t\fP * \fBtaskrunner_thread\fP"
+.br
+.ti -1c
+.RI "\fBthread_data\fP * \fBtaskrunner_th_data\fP = new \fBthread_data\fP"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef std::deque<\fBcydui::tasks::task_t\fP*> \fBtask_queue_t\fP"
+
+.PP
+Definition at line \fB19\fP of file \fBtasks\&.cpp\fP\&.
+.SS "typedef std::vector<\fBcydui::tasks::_timer_t\fP*> \fBtimer_list_t\fP"
+
+.PP
+Definition at line \fB18\fP of file \fBtasks\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "static void add_timer (\fBcydui::tasks::_timer_t\fP * timer)\fC [static]\fP"
+
+.PP
+Definition at line \fB24\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+24                                                  {
+25   timer_list_mtx\&.lock();
+26   if (std::find(timer_list\&.begin(), timer_list\&.end(), timer) == timer_list\&.end()) {
+27     timer_list\&.push_back(timer);
+28   }
+29   timer_list_mtx\&.unlock();
+30 }
+.fi
+
+.SS "static \fBcydui::tasks::task_t\fP * pop_task ()\fC [static]\fP"
+
+.PP
+Definition at line \fB49\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+49                                     {
+50   task_queue_mtx\&.lock();
+51   cydui::tasks::task_t* id = nullptr;
+52   if (!task_queue\&.empty()) {
+53     id = task_queue\&.front();
+54     task_queue\&.pop_front();
+55   }
+56   task_queue_mtx\&.unlock();
+57   return id;
+58 }
+.fi
+
+.SS "static void push_task (\fBcydui::tasks::task_t\fP * task)\fC [static]\fP"
+
+.PP
+Definition at line \fB43\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+43                                               {
+44   task_queue_mtx\&.lock();
+45   task_queue\&.push_back(task);
+46   task_queue_mtx\&.unlock();
+47 }
+.fi
+
+.SS "\fBcydui::tasks::_timer_t\fP * remove_timer (\fBcydui::tasks::_timer_t\fP * timer)"
+
+.PP
+Definition at line \fB32\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+32                                                             {
+33   timer_list_mtx\&.lock();
+34   auto t = std::find(timer_list\&.begin(), timer_list\&.end(), timer);
+35   cydui::tasks::_timer_t* t_ret = *t;
+36   if (t != timer_list\&.end()) {
+37     timer_list\&.erase(t);
+38   } else t_ret = nullptr;
+39   timer_list_mtx\&.unlock();
+40   return t_ret;
+41 }
+.fi
+
+.SS "static void task_executor (\fBcydui::tasks::task_t\fP * task)\fC [static]\fP"
+
+.PP
+Definition at line \fB60\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+60                                                   {
+61   if (task\->reset()) {
+62     task\->exec();
+63     // TODO \- There should be a specific event for task completion
+64     cydui::events::emit<RedrawEvent>({});
+65   }
+66 }
+.fi
+
+.SS "static void taskrunner_task (\fBthread_t\fP * this_thread)\fC [static]\fP"
+
+.PP
+Definition at line \fB89\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+89                                                    {
+90   while (this_thread\->running) {
+91     auto task = pop_task();
+92     if (task) {
+93       task_executor(task);
+94     }
+95     
+96     trigger_executor();
+97     
+98     std::this_thread::sleep_for(std::chrono::duration<int, std::nano>(10ms));
+99   }
+100 }
+.fi
+
+.SS "static void trigger_executor ()\fC [static]\fP"
+
+.PP
+Definition at line \fB68\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+68                                {
+69   timer_list_mtx\&.lock();
+70   for (auto &item: timer_list) {
+71     auto now = std::chrono::system_clock::now()\&.time_since_epoch();
+72     auto* timer = item;
+73     if (!timer) continue;
+74     auto* task = item\->task;
+75     
+76     //logger\&.debug("Found one count=%d, task=%X", timer\->count, task);
+77     if (timer\->count != 0 && task && (timer\->run_now || now \- timer\->last_time > timer\->period)) {
+78       timer\->last_time = now;
+79       timer\->run_now = false;
+80       if (timer\->count > 0) timer\->count\-\-;
+81       timer_list_mtx\&.unlock(); // NOTE \- this is on purpose
+82       task_executor(task);
+83       timer_list_mtx\&.lock();
+84     }
+85   }
+86   timer_list_mtx\&.unlock();
+87 }
+.fi
+
+.SH "Variable Documentation"
+.PP 
+.SS "\fBlogging::logger\fP logger"
+\fBInitial value:\fP.PP
+.nf
+=
+  {\&.name = "TASKRUNNER", \&.on = true}
+.fi
+
+.PP
+Definition at line \fB13\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+14   {\&.name = "TASKRUNNER", \&.on = true};
+.fi
+
+.SS "\fBtask_queue_t\fP task_queue\fC [static]\fP"
+
+.PP
+Definition at line \fB22\fP of file \fBtasks\&.cpp\fP\&.
+.SS "std::mutex task_queue_mtx"
+
+.PP
+Definition at line \fB16\fP of file \fBtasks\&.cpp\fP\&.
+.SS "\fBthread_data\fP* taskrunner_th_data = new \fBthread_data\fP"
+
+.PP
+Definition at line \fB106\fP of file \fBtasks\&.cpp\fP\&.
+.SS "\fBcydui::threading::thread_t\fP* taskrunner_thread"
+
+.PP
+Definition at line \fB102\fP of file \fBtasks\&.cpp\fP\&.
+.SS "\fBtimer_list_t\fP timer_list\fC [static]\fP"
+
+.PP
+Definition at line \fB21\fP of file \fBtasks\&.cpp\fP\&.
+.SS "std::mutex timer_list_mtx"
+
+.PP
+Definition at line \fB17\fP of file \fBtasks\&.cpp\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

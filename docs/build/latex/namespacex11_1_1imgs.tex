@@ -1,0 +1,126 @@
+\doxysection{x11\+::imgs Namespace Reference}
+\hypertarget{namespacex11_1_1imgs}{}\label{namespacex11_1_1imgs}\index{x11::imgs@{x11::imgs}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structx11_1_1imgs_1_1img__data}{img\+\_\+data}}
+\item 
+struct \mbox{\hyperlink{structx11_1_1imgs_1_1jpg__err__mgr}{jpg\+\_\+err\+\_\+mgr}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacex11_1_1imgs_a36779ab69d945a1e7159c8578041f9b2}{jpg\+\_\+error\+\_\+exit}} (j\+\_\+common\+\_\+ptr cinfo)
+\item 
+\mbox{\hyperlink{structx11_1_1imgs_1_1img__data}{img\+\_\+data}} \mbox{\hyperlink{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094}{read\+\_\+jpg}} (str path)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacex11_1_1imgs_a36779ab69d945a1e7159c8578041f9b2}\label{namespacex11_1_1imgs_a36779ab69d945a1e7159c8578041f9b2} 
+\index{x11::imgs@{x11::imgs}!jpg\_error\_exit@{jpg\_error\_exit}}
+\index{jpg\_error\_exit@{jpg\_error\_exit}!x11::imgs@{x11::imgs}}
+\doxysubsubsection{\texorpdfstring{jpg\_error\_exit()}{jpg\_error\_exit()}}
+{\footnotesize\ttfamily x11\+::imgs\+::jpg\+\_\+error\+\_\+exit (\begin{DoxyParamCaption}\item[{j\+\_\+common\+\_\+ptr}]{cinfo }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{src_2graphics_2x11_2images_8h_source_l00017}{17}} of file \mbox{\hyperlink{src_2graphics_2x11_2images_8h_source}{images.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ (*cinfo-\/>err-\/>output\_message)(cinfo);}
+\DoxyCodeLine{00019\ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacex11_1_1imgs_a36779ab69d945a1e7159c8578041f9b2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094}\label{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094} 
+\index{x11::imgs@{x11::imgs}!read\_jpg@{read\_jpg}}
+\index{read\_jpg@{read\_jpg}!x11::imgs@{x11::imgs}}
+\doxysubsubsection{\texorpdfstring{read\_jpg()}{read\_jpg()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structx11_1_1imgs_1_1img__data}{img\+\_\+data}} x11\+::imgs\+::read\+\_\+jpg (\begin{DoxyParamCaption}\item[{str}]{path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{src_2graphics_2x11_2images_8h_source_l00028}{28}} of file \mbox{\hyperlink{src_2graphics_2x11_2images_8h_source}{images.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ FILE*\ infile;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ JSAMPARRAY\ buffer;}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ jpeg\_decompress\_struct\ cinfo\ \{\};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ jpg\_err\_mgr\ jerr\ \{\};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ }
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((infile\ =\ fopen(path.c\_str(),\ \textcolor{stringliteral}{"{}rb"{}}))\ ==\ \textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ cinfo.err\ =\ jpeg\_std\_error(\&jerr.pub);}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ jerr.pub.error\_exit\ =\ \mbox{\hyperlink{namespacex11_1_1imgs_a36779ab69d945a1e7159c8578041f9b2}{jpg\_error\_exit}};}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ jpeg\_create\_decompress(\&cinfo);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ jpeg\_stdio\_src(\&cinfo,\ infile);}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ jpeg\_read\_header(\&cinfo,\ TRUE);}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ jpeg\_start\_decompress(\&cinfo);}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ JDIMENSION\ row\_stride\ =\ cinfo.output\_width\ *\ cinfo.output\_components;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ buffer\ =\ (*cinfo.mem-\/>alloc\_sarray)(}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ (j\_common\_ptr)\ \&cinfo,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ JPOOL\_IMAGE,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ row\_stride,}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ 1}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ );}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ \mbox{\hyperlink{colors_8cpp_a2545ccd7b824ac18e5311a4489af01fa}{logg}}\ \{\};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ data\ =\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*)\ malloc(cinfo.output\_height\ *\ cinfo.output\_width\ *\ 4);}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ }
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (cinfo.output\_scanline\ <\ cinfo.output\_height)\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ jpeg\_read\_scanlines(\&cinfo,\ buffer,\ 1);}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (uint\ i\ =\ 0;\ i\ <\ row\_stride;\ i\ +=\ cinfo.output\_components)\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ c1\ =\ buffer[0][i];}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ c2\ =\ buffer[0][i\ +\ 1];}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}\ c3\ =\ buffer[0][i\ +\ 2];}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ uint\ r\ =\ cinfo.output\_width\ *\ 4\ *\ (cinfo.output\_scanline\ -\/\ 1);}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ data[r\ +\ (4\ *\ i\ /\ 3)\ +\ 0]\ =\ c3;}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ data[r\ +\ (4\ *\ i\ /\ 3)\ +\ 1]\ =\ c2;}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ data[r\ +\ (4\ *\ i\ /\ 3)\ +\ 2]\ =\ c1;}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ data[r\ +\ (4\ *\ i\ /\ 3)\ +\ 3]\ =\ 5;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ }
+\DoxyCodeLine{00071\ \ \ \ \ \ \ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ jpeg\_finish\_decompress(\&cinfo);}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ jpeg\_destroy\_decompress(\&cinfo);}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ fclose(infile);}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ }
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ cinfo.output\_width,}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ cinfo.output\_height,}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ 4,}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ (\textcolor{keywordtype}{char}*)\ data,}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=339pt]{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=301pt]{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094_icgraph}
+\end{center}
+\end{figure}

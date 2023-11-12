@@ -44,6 +44,4 @@ bin/lib/libLLVM-13.so.1
 .ccls-cache/
 .cache/
 
-docs/
-
 cmake-build-debug-clang/

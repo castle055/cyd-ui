@@ -1,0 +1,58 @@
+\doxysection{include/cydstd/profiling.h File Reference}
+\hypertarget{profiling_8h}{}\label{profiling_8h}\index{include/cydstd/profiling.h@{include/cydstd/profiling.h}}
+{\ttfamily \#include $<$chrono$>$}\newline
+{\ttfamily \#include $<$optional$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$thread$>$}\newline
+{\ttfamily \#include $<$mutex$>$}\newline
+{\ttfamily \#include $<$shared\+\_\+mutex$>$}\newline
+{\ttfamily \#include $<$cstring$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+Include dependency graph for profiling.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{profiling_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{profiling_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structprof_1_1event__t}{prof\+::event\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structprof_1_1thread__context__t}{prof\+::thread\+\_\+context\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structprof_1_1context__t}{prof\+::context\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structprof_1_1context__t_1_1scope__event__t}{prof\+::context\+\_\+t\+::scope\+\_\+event\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespaceprof}{prof}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespaceprof_a3e8def5b3b1505ce7e335f538917f003}{prof\+::\+PROFILING\+\_\+\+CLOCK}} = std\+::chrono\+::steady\+\_\+clock
+\item 
+using \mbox{\hyperlink{namespaceprof_a2a9caf65a453a1e71532f1607f921353}{prof\+::time\+\_\+point}} = std\+::chrono\+::time\+\_\+point$<$ \mbox{\hyperlink{namespaceprof_a3e8def5b3b1505ce7e335f538917f003}{PROFILING\+\_\+\+CLOCK}} $>$
+\item 
+using \mbox{\hyperlink{namespaceprof_ac75bf20a8d0bc38232a60323de3248df}{prof\+::duration}} = std\+::chrono\+::duration$<$ \mbox{\hyperlink{namespaceprof_a3e8def5b3b1505ce7e335f538917f003}{PROFILING\+\_\+\+CLOCK}} $>$
+\item 
+using \mbox{\hyperlink{namespaceprof_a834539a76e5545901863a6b773fb8d64}{prof\+::thread\+\_\+timeline\+\_\+t}} = std\+::array$<$ \mbox{\hyperlink{structprof_1_1event__t}{event\+\_\+t}}, \mbox{\hyperlink{namespaceprof_a69706c94d0693e53fed29cd292bff567}{PROFILING\+\_\+\+TIMELINE\+\_\+\+SIZE}} $>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr std\+::size\+\_\+t \mbox{\hyperlink{namespaceprof_a491d7d71df090852666b543a979cc77d}{prof\+::\+PROFILING\+\_\+\+THREAD\+\_\+\+NAME\+\_\+\+SIZE}} = 32
+\item 
+constexpr std\+::size\+\_\+t \mbox{\hyperlink{namespaceprof_a69706c94d0693e53fed29cd292bff567}{prof\+::\+PROFILING\+\_\+\+TIMELINE\+\_\+\+SIZE}} = 10000
+\end{DoxyCompactItemize}

@@ -1,0 +1,95 @@
+\doxysection{thread\+\_\+data Struct Reference}
+\hypertarget{structthread__data}{}\label{structthread__data}\index{thread\_data@{thread\_data}}
+
+
+Collaboration diagram for thread\+\_\+data\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structthread__data__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{structthread__data_aa8aba6b97a2602a994f4d5a0db913491}{pending}} = false
+\item 
+std\+::deque$<$ \mbox{\hyperlink{structcydui_1_1events_1_1Event}{cydui\+::events\+::\+Event}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structthread__data_ab6d3e0bca38681ca4871ca293c71e814}{event\+\_\+queue}}
+\item 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}, std\+::deque$<$ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{cydui\+::events\+::listener\+\_\+t}} $>$ $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structthread__data_abecb89e8ef44a913bfd14b43a2a59a70}{event\+\_\+listeners}}
+\item 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}, \mbox{\hyperlink{structcydui_1_1events_1_1Event}{cydui\+::events\+::\+Event}} \texorpdfstring{$\ast$}{*} $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structthread__data_a554fa732be87a8bfebb983e0a0e4a314}{state\+\_\+events}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{events_2events_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{events_2events_8cpp_source}{events.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structthread__data_abecb89e8ef44a913bfd14b43a2a59a70}\label{structthread__data_abecb89e8ef44a913bfd14b43a2a59a70} 
+\index{thread\_data@{thread\_data}!event\_listeners@{event\_listeners}}
+\index{event\_listeners@{event\_listeners}!thread\_data@{thread\_data}}
+\doxysubsubsection{\texorpdfstring{event\_listeners}{event\_listeners}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}, std\+::deque$<$\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{cydui\+::events\+::listener\+\_\+t}}$>$ $>$\texorpdfstring{$\ast$}{*} thread\+\_\+data\+::event\+\_\+listeners}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{new}\ std::unordered\_map<str,\ std::deque<cydui::events::listener\_t>>}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{events_2events_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{events_2events_8cpp_source}{events.\+cpp}}.
+
+\Hypertarget{structthread__data_ab6d3e0bca38681ca4871ca293c71e814}\label{structthread__data_ab6d3e0bca38681ca4871ca293c71e814} 
+\index{thread\_data@{thread\_data}!event\_queue@{event\_queue}}
+\index{event\_queue@{event\_queue}!thread\_data@{thread\_data}}
+\doxysubsubsection{\texorpdfstring{event\_queue}{event\_queue}}
+{\footnotesize\ttfamily std\+::deque$<$\mbox{\hyperlink{structcydui_1_1events_1_1Event}{cydui\+::events\+::\+Event}}\texorpdfstring{$\ast$}{*}$>$\texorpdfstring{$\ast$}{*} thread\+\_\+data\+::event\+\_\+queue}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{new}\ std::deque<cydui::events::Event*>}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{events_2events_8cpp_source_l00023}{23}} of file \mbox{\hyperlink{events_2events_8cpp_source}{events.\+cpp}}.
+
+\Hypertarget{structthread__data_aa8aba6b97a2602a994f4d5a0db913491}\label{structthread__data_aa8aba6b97a2602a994f4d5a0db913491} 
+\index{thread\_data@{thread\_data}!pending@{pending}}
+\index{pending@{pending}!thread\_data@{thread\_data}}
+\doxysubsubsection{\texorpdfstring{pending}{pending}}
+{\footnotesize\ttfamily bool thread\+\_\+data\+::pending = false}
+
+
+
+Definition at line \mbox{\hyperlink{events_2events_8cpp_source_l00022}{22}} of file \mbox{\hyperlink{events_2events_8cpp_source}{events.\+cpp}}.
+
+\Hypertarget{structthread__data_a554fa732be87a8bfebb983e0a0e4a314}\label{structthread__data_a554fa732be87a8bfebb983e0a0e4a314} 
+\index{thread\_data@{thread\_data}!state\_events@{state\_events}}
+\index{state\_events@{state\_events}!thread\_data@{thread\_data}}
+\doxysubsubsection{\texorpdfstring{state\_events}{state\_events}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}, \mbox{\hyperlink{structcydui_1_1events_1_1Event}{cydui\+::events\+::\+Event}}\texorpdfstring{$\ast$}{*}$>$\texorpdfstring{$\ast$}{*} thread\+\_\+data\+::state\+\_\+events}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{new}\ std::unordered\_map<str,\ cydui::events::Event*>}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{events_2events_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{events_2events_8cpp_source}{events.\+cpp}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/events/\mbox{\hyperlink{events_2events_8cpp}{events.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,96 @@
+.TH "cydui::component_holder_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::component_holder_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <component_holder\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "template<ComponentConcept C> \fBcomponent_holder_t\fP (\fBC\fP &&comp)"
+.br
+.ti -1c
+.RI "template<ComponentConcept C> \fBcomponent_holder_t\fP (\fBC\fP &comp)"
+.br
+.ti -1c
+.RI "template<typename \fBT\fP > \fBcomponent_holder_t\fP (\fBwith\fP< \fBT\fP > &_with)"
+.br
+.ti -1c
+.RI "const auto & \fBget_components\fP () const"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::unordered_map< std::string, \fBcomponent_base_t\fP * > \fBcomponents\fP {}"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB11\fP of file \fBcomponent_holder\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<ComponentConcept C> cydui::component_holder_t::component_holder_t (\fBC\fP && comp)\fC [inline]\fP"
+
+.PP
+Definition at line \fB13\fP of file \fBcomponent_holder\&.h\fP\&..PP
+.nf
+13                                           {
+14         components[""] = new C {comp};
+15       }
+.fi
+
+.SS "template<ComponentConcept C> cydui::component_holder_t::component_holder_t (\fBC\fP & comp)\fC [inline]\fP"
+
+.PP
+Definition at line \fB18\fP of file \fBcomponent_holder\&.h\fP\&..PP
+.nf
+18                                          {
+19         components[""] = new C {comp};
+20       }
+.fi
+
+.SS "template<typename \fBT\fP > cydui::component_holder_t::component_holder_t (\fBwith\fP< \fBT\fP > & _with)\fC [inline]\fP"
+
+.PP
+Definition at line \fB23\fP of file \fBcomponent_holder\&.h\fP\&..PP
+.nf
+23                                                 {
+24         for (const auto &item: _with\&.get_selection()) {
+25           components[item\&.first] = item\&.second;
+26         }
+27       }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "const auto & cydui::component_holder_t::get_components () const\fC [inline]\fP"
+
+.PP
+Definition at line \fB29\fP of file \fBcomponent_holder\&.h\fP\&..PP
+.nf
+29                                          {
+30         return components;
+31       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "std::unordered_map<std::string, \fBcomponent_base_t\fP*> cydui::component_holder_t::components {}\fC [private]\fP"
+
+.PP
+Definition at line \fB33\fP of file \fBcomponent_holder\&.h\fP\&..PP
+.nf
+33 {};
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

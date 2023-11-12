@@ -1,0 +1,115 @@
+\doxysection{vg\+::group Struct Reference}
+\hypertarget{structvg_1_1group}{}\label{structvg_1_1group}\index{vg::group@{vg::group}}
+
+
+{\ttfamily \#include $<$vg.\+h$>$}
+
+
+
+Inheritance diagram for vg\+::group\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=286pt]{structvg_1_1group__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for vg\+::group\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structvg_1_1group__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structvg_1_1group_a3cdadfbded5c66a11a8894c01a7b0867}{apply\+\_\+to}} (\mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\+\_\+editor\+\_\+t}} \&editor) const override
+\item 
+\mbox{\hyperlink{structvg_1_1vg__element__t_1_1footprint}{footprint}} \mbox{\hyperlink{structvg_1_1group_ad1a097d4b10edc6ecefac51f2bed1cb8}{get\+\_\+footprint}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structvg_1_1vg__element__t}{vg\+::vg\+\_\+element\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structvg_1_1vg__element__t_a4b6333568b6b06d7657afb902e6b45d6}{\+\_\+internal\+\_\+set\+\_\+origin}} (int x, int y)
+\item 
+virtual \mbox{\hyperlink{structvg_1_1vg__element__t_aa2a033ec04ad8994213cc0d0140b3838}{\texorpdfstring{$\sim$}{\string~}vg\+\_\+element\+\_\+t}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structvg_1_1accepts__content}{vg\+::accepts\+\_\+content$<$ line $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structvg_1_1accepts__content}{accepts\+\_\+content}} \& \mbox{\hyperlink{structvg_1_1accepts__content_afda693390c467e4fea19aac4f9c6adaf}{with}} (std\+::vector$<$ std\+::variant$<$ T... $>$ $>$ \+\_\+content\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structvg_1_1vg__element__t}{vg\+::vg\+\_\+element\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022}{origin\+\_\+x}} = 0
+\item 
+int \mbox{\hyperlink{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59}{origin\+\_\+y}} = 0
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structvg_1_1accepts__content}{vg\+::accepts\+\_\+content$<$ line $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::variant$<$ T... $>$ $>$ \mbox{\hyperlink{structvg_1_1accepts__content_a62f121f9cc3522c1f6ce3ac3db46e176}{content}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00382}{382}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structvg_1_1group_a3cdadfbded5c66a11a8894c01a7b0867}\label{structvg_1_1group_a3cdadfbded5c66a11a8894c01a7b0867} 
+\index{vg::group@{vg::group}!apply\_to@{apply\_to}}
+\index{apply\_to@{apply\_to}!vg::group@{vg::group}}
+\doxysubsubsection{\texorpdfstring{apply\_to()}{apply\_to()}}
+{\footnotesize\ttfamily void vg\+::group\+::apply\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\+\_\+editor\+\_\+t}} \&}]{editor }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structvg_1_1vg__element__t_a34e274817a70ba1e3ff8d551797bac25}{vg\+::vg\+\_\+element\+\_\+t}}.
+
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00389}{389}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00389\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00390\ \ \ \ \ \ \ \ \ apply\_stroke(editor);}
+\DoxyCodeLine{00391\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structvg_1_1group_ad1a097d4b10edc6ecefac51f2bed1cb8}\label{structvg_1_1group_ad1a097d4b10edc6ecefac51f2bed1cb8} 
+\index{vg::group@{vg::group}!get\_footprint@{get\_footprint}}
+\index{get\_footprint@{get\_footprint}!vg::group@{vg::group}}
+\doxysubsubsection{\texorpdfstring{get\_footprint()}{get\_footprint()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structvg_1_1vg__element__t_1_1footprint}{footprint}} vg\+::group\+::get\+\_\+footprint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structvg_1_1vg__element__t_a5574fb0a7fb4afb3748da1cbee21f6b8}{vg\+::vg\+\_\+element\+\_\+t}}.
+
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00393}{393}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00393\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00394\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00395\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/graphics/\mbox{\hyperlink{vg_8h}{vg.\+h}}\end{DoxyCompactItemize}

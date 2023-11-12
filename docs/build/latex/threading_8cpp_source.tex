@@ -1,0 +1,39 @@
+\doxysection{threading.\+cpp}
+\hypertarget{threading_8cpp_source}{}\label{threading_8cpp_source}\index{src/threading/threading.cpp@{src/threading/threading.cpp}}
+\mbox{\hyperlink{threading_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 8/22/22.}}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{threading_8hpp}{threading.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <thread>}}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <deque>}}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00009}00009\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespacecydui_1_1threading}{cydui::threading}};}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00010}00010\ \textcolor{keyword}{using\ namespace\ }std::chrono\_literals;}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00012}\mbox{\hyperlink{namespacecydui_1_1threading_ab51f5bf48b28c9022460156c207217f5}{00012}}\ \mbox{\hyperlink{structcydui_1_1threading_1_1thread__t}{thread\_t}}*\ \mbox{\hyperlink{namespacecydui_1_1threading_ab51f5bf48b28c9022460156c207217f5}{cydui::threading::new\_thread}}(\textcolor{keywordtype}{void}(task)(\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t}{thread\_t}}*\ this\_thread))\ \{}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00013}00013\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacecydui_1_1threading_ab51f5bf48b28c9022460156c207217f5}{new\_thread}}(task,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00014}00014\ \}}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00016}\mbox{\hyperlink{namespacecydui_1_1threading_a6bece9bb400eb5f38c31b13105c69227}{00016}}\ \mbox{\hyperlink{structcydui_1_1threading_1_1thread__t}{thread\_t}}*\ \mbox{\hyperlink{namespacecydui_1_1threading_ab51f5bf48b28c9022460156c207217f5}{cydui::threading::new\_thread}}(}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00017}00017\ \ \ \textcolor{keywordtype}{void}(task)(\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t}{thread\_t}}*\ this\_thread),\ \textcolor{keywordtype}{void}*\ data}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00018}00018\ )\ \{}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00019}00019\ \ \ \textcolor{keyword}{auto}*\ arg\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{structcydui_1_1threading_1_1thread__t}{thread\_t}}();}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00020}00020\ \ \ arg-\/>running\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00021}00021\ \ \ arg-\/>data\ =\ data;}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00022}00022\ \ \ \textcolor{keyword}{auto}*\ thread\ =\ \textcolor{keyword}{new}\ std::thread(task,\ arg);}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00023}00023\ \ \ arg-\/>native\_thread\ =\ thread;}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00024}00024\ \ \ \textcolor{keywordflow}{return}\ arg;}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00025}00025\ \}}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00028}\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_aa740ecb2c3aec2371e86fca90b115600}{00028}}\ \mbox{\hyperlink{structcydui_1_1threading_1_1thread__t}{thread\_t}}*\ \mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_aa740ecb2c3aec2371e86fca90b115600}{cydui::threading::thread\_t::set\_name}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \&name)\ \{}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00029}00029\ \ \ pthread\_t\ pt\ =\ ((std::thread*)\ \mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a0133f1df15c19c50cdbb85b45bedf24b}{native\_thread}})-\/>native\_handle();}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00030}00030\ \ \ pthread\_setname\_np(pt,\ name.c\_str());}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00031}00031\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00032}00032\ \}}
+\DoxyCodeLine{\Hypertarget{threading_8cpp_source_l00033}00033\ }
+
+\end{DoxyCode}

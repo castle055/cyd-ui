@@ -1,0 +1,213 @@
+\doxysection{include/core/dimensions.hpp File Reference}
+\hypertarget{dimensions_8hpp}{}\label{dimensions_8hpp}\index{include/core/dimensions.hpp@{include/core/dimensions.hpp}}
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+set$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+Include dependency graph for dimensions.\+hpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=295pt]{dimensions_8hpp__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dimensions_8hpp__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{cydui\+::dimensions\+::dimensional\+\_\+relation\+\_\+t}}
+\item 
+class \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1dimensions_1_1four__sided__dimension__t}{cydui\+::dimensions\+::four\+\_\+sided\+\_\+dimension\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1dimensions_1_1component__dimensions__t}{cydui\+::dimensions\+::component\+\_\+dimensions\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecydui}{cydui}}
+\item 
+namespace \mbox{\hyperlink{namespacecydui_1_1dimensions}{cydui\+::dimensions}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{dimensions_8hpp_afe0edca401becca6734ca680343c4cb0}{DIMENSION\+\_\+\+OPERATOR\+\_\+H}}(OP)
+\item 
+\#define \mbox{\hyperlink{dimensions_8hpp_afd89d917d2b1f52b5fa6cdda39b28053}{DIMENSION\+\_\+\+REL\+\_\+\+OPERATOR\+\_\+H}}(OP)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{cydui\+::dimensions\+::dimension\+\_\+value\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a435d25c762731f507c9de3f4645237f9}{cydui\+::dimensions\+::operator+}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a558c8b9378eb258cd3709d9c2b803073}{cydui\+::dimensions\+::operator+}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a4a485c0630c6015dab4682fa3d038126}{cydui\+::dimensions\+::operator+}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_ac295a45475585303c63dee202cb6540c}{cydui\+::dimensions\+::operator+}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_aaa974217e3a0fdf69bd5331e19528c42}{cydui\+::dimensions\+::operator-\/}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a8081fc749804fc3688eb2e75e1de7038}{cydui\+::dimensions\+::operator-\/}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a7b140b62285129416097baac142cff8b}{cydui\+::dimensions\+::operator-\/}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a7fedcb9d0d35a5d4550c008c3e8a2906}{cydui\+::dimensions\+::operator-\/}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_acf451e0b3c8da287cd36529880ecfb2e}{cydui\+::dimensions\+::operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_acb172ae63455234c32834e2aa9c9221a}{cydui\+::dimensions\+::operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a650e06edec0f7ab15e9f97be58712259}{cydui\+::dimensions\+::operator\texorpdfstring{$\ast$}{*}}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a2fdcd39e83beb33e2e03a7b52a9a1f90}{cydui\+::dimensions\+::operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a0e3f0ed378974dbf27f1bcb45258750c}{cydui\+::dimensions\+::operator/}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a623fd08133f1d1c0231abd60240b8ed2}{cydui\+::dimensions\+::operator/}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_af53e8e6ac7b76350d6d706de4d2537b8}{cydui\+::dimensions\+::operator/}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_aa8b49bb852a2c775b48773f4e7f88b85}{cydui\+::dimensions\+::operator/}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_aab3a85b8707b4cf4aed724f8542bb919}{cydui\+::dimensions\+::operator\%}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_ab94c84c73dab0bb12af09594d8312f68}{cydui\+::dimensions\+::operator\%}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a76dd4db19274d3fbf3aea814ac643c52}{cydui\+::dimensions\+::operator\%}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a17950f179e5f2fb3e5827d27e18b9036}{cydui\+::dimensions\+::operator\%}} (const \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&dim, const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a3686ee7ed8165f9808b5a44a4523c2a2}{cydui\+::dimensions\+::operator+}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a6d213d157962f8aef61aabf6fc66c595}{cydui\+::dimensions\+::operator+}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a1cf67acaae183ae4008b357e14aca821}{cydui\+::dimensions\+::operator+}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value, \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_abcb9029948b5b2701352a4af7f9b07fd}{cydui\+::dimensions\+::operator+}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_af3fc7a01a084c9e0af5a995a91208620}{cydui\+::dimensions\+::operator-\/}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a2e4b11c4475c0ca78005f814bae239c2}{cydui\+::dimensions\+::operator-\/}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a80468b45e03cc7f67b8296a24b431df8}{cydui\+::dimensions\+::operator-\/}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value, \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a2c716535f3477c348502ad1c516ee30a}{cydui\+::dimensions\+::operator-\/}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a20c56f2842c976f24880908a1383accf}{cydui\+::dimensions\+::operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_af80435cdf22258cda9bf885addc304e5}{cydui\+::dimensions\+::operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_aab7f889383e1daa5b94ccc4f8860a1bf}{cydui\+::dimensions\+::operator\texorpdfstring{$\ast$}{*}}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value, \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a13e966027dcaa727ff01446bd8008c96}{cydui\+::dimensions\+::operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a2cb06b794f692aa37a0ad78907ac97f4}{cydui\+::dimensions\+::operator/}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a8d432513dc3ea882465de434c5518996}{cydui\+::dimensions\+::operator/}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_ae0f2d27f25f9b56a6fae47bc32800000}{cydui\+::dimensions\+::operator/}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value, \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_aaf1112b1a63545665b35d71169cf41a3}{cydui\+::dimensions\+::operator/}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_afdb73b4763db4f5ceaf1969f3f3b1455}{cydui\+::dimensions\+::operator\%}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \&value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a33fa7b9aff302af2327c4c870bf69977}{cydui\+::dimensions\+::operator\%}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_afc489e6bf17377b2be0d8039202f71ad}{cydui\+::dimensions\+::operator\%}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} value, \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r)
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1dimensions_a92580d71441c49e181f684d34a1dc1a4}{cydui\+::dimensions\+::operator\%}} (const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} r, const \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\+\_\+relation\+\_\+t}} value)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{dimensions_8hpp_afe0edca401becca6734ca680343c4cb0}\label{dimensions_8hpp_afe0edca401becca6734ca680343c4cb0} 
+\index{dimensions.hpp@{dimensions.hpp}!DIMENSION\_OPERATOR\_H@{DIMENSION\_OPERATOR\_H}}
+\index{DIMENSION\_OPERATOR\_H@{DIMENSION\_OPERATOR\_H}!dimensions.hpp@{dimensions.hpp}}
+\doxysubsubsection{\texorpdfstring{DIMENSION\_OPERATOR\_H}{DIMENSION\_OPERATOR\_H}}
+{\footnotesize\ttfamily \#define DIMENSION\+\_\+\+OPERATOR\+\_\+H(\begin{DoxyParamCaption}\item[{}]{OP }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ dimensional\_relation\_t\ \textcolor{keyword}{operator}\ OP(\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{const}\ dimension\_t\&\ dim,\ dimension\_t\&\ value);\ \(\backslash\)}
+\DoxyCodeLine{\ \ dimensional\_relation\_t\ \textcolor{keyword}{operator}\ OP(\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{const}\ dimension\_t\&\ dim,\ dimension\_value\_t\ value);\ \(\backslash\)}
+\DoxyCodeLine{\ \ dimensional\_relation\_t\ \textcolor{keyword}{operator}\ OP(\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ dimension\_value\_t\ value,\ dimension\_t\&\ dim);\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ dimensional\_relation\_t\ \textcolor{keyword}{operator}\ OP(\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{const}\ dimension\_t\&\ dim,\ \textcolor{keyword}{const}\ dimensional\_relation\_t\&\ value);}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{dimensions_8hpp_source_l00080}{80}} of file \mbox{\hyperlink{dimensions_8hpp_source}{dimensions.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ dimension\_t\ top\ =\ 0;}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ dimension\_t\ right\ =\ 0;}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ dimension\_t\ bottom\ =\ 0;}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ dimension\_t\ left\ =\ 0;}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ four\_sided\_dimension\_t\ \&operator=(dimension\_value\_t\ val);}
+\DoxyCodeLine{00133\ \ \ \ \ \};}
+\DoxyCodeLine{00134\ \ \ \ \ }
+\DoxyCodeLine{00135\ \ \ \ \ \textcolor{keyword}{struct\ }component\_dimensions\_t\ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ dimension\_t\ x\ =\ 0;}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ dimension\_t\ y\ =\ 0;}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ dimension\_t\ w\ =\ 0;}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ dimension\_t\ h\ =\ 0;}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ }
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ given\_w\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ given\_h\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ }
+\DoxyCodeLine{00144\ \ \ \ \ \ \ dimension\_t\ cx\ =\ 0;}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ dimension\_t\ cy\ =\ 0;}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ dimension\_t\ cw\ =\ 0;}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ dimension\_t\ ch\ =\ 0;}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ }
+\DoxyCodeLine{00149\ \ \ \ \ \ \ four\_sided\_dimension\_t\ margin;}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ four\_sided\_dimension\_t\ padding;}
+\DoxyCodeLine{00151\ \ \ \ \ \};}
+\DoxyCodeLine{00152\ \}\textcolor{comment}{//\ namespace\ cydui::dimensions}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ }
+\DoxyCodeLine{00155\ \textcolor{preprocessor}{\#endif}\textcolor{comment}{//CYD\_UI\_DIMENSIONS\_HPP}}
+
+\end{DoxyCode}
+\Hypertarget{dimensions_8hpp_afd89d917d2b1f52b5fa6cdda39b28053}\label{dimensions_8hpp_afd89d917d2b1f52b5fa6cdda39b28053} 
+\index{dimensions.hpp@{dimensions.hpp}!DIMENSION\_REL\_OPERATOR\_H@{DIMENSION\_REL\_OPERATOR\_H}}
+\index{DIMENSION\_REL\_OPERATOR\_H@{DIMENSION\_REL\_OPERATOR\_H}!dimensions.hpp@{dimensions.hpp}}
+\doxysubsubsection{\texorpdfstring{DIMENSION\_REL\_OPERATOR\_H}{DIMENSION\_REL\_OPERATOR\_H}}
+{\footnotesize\ttfamily \#define DIMENSION\+\_\+\+REL\+\_\+\+OPERATOR\+\_\+H(\begin{DoxyParamCaption}\item[{}]{OP }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ dimensional\_relation\_t\ \textcolor{keyword}{operator}\ OP(\(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{const}\ dimensional\_relation\_t\ r,\ dimension\_t\&\ value);\ \(\backslash\)}
+\DoxyCodeLine{\ \ dimensional\_relation\_t\ \textcolor{keyword}{operator}\ OP(\(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{const}\ dimensional\_relation\_t\ r,\ dimension\_value\_t\ value);\ \(\backslash\)}
+\DoxyCodeLine{\ \ dimensional\_relation\_t\ \textcolor{keyword}{operator}\ OP(\(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ dimension\_value\_t\ value,\ dimensional\_relation\_t\ r);\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ dimensional\_relation\_t\ \textcolor{keyword}{operator}\ OP(\(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{const}\ dimensional\_relation\_t\ r,\ \textcolor{keyword}{const}\ dimensional\_relation\_t\ value);}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{dimensions_8hpp_source_l00103}{103}} of file \mbox{\hyperlink{dimensions_8hpp_source}{dimensions.\+hpp}}.
+

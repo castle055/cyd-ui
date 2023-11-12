@@ -1,0 +1,39 @@
+\doxysection{types.\+h}
+\hypertarget{types_8h_source}{}\label{types_8h_source}\index{include/cydstd/types.h@{include/cydstd/types.h}}
+\mbox{\hyperlink{types_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 2/18/23.}}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ CYD\_UI\_TYPES\_H}}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00006}00006\ \textcolor{preprocessor}{\#define\ CYD\_UI\_TYPES\_H}}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ <cstdint>}}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00012}\mbox{\hyperlink{namespacecydstd_1_1types}{00012}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecydstd_1_1types}{cydstd::types}}\ \{}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00013}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives}{00013}}\ \ \ \ \ \textcolor{keyword}{namespace\ }primitives\ \{}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00014}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a51ee327ca031a1aa4d206e800ae0baaa}{00014}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ int8\_t\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a51ee327ca031a1aa4d206e800ae0baaa}{i8}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00015}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab12b3277592e813817ad0f60ed573b3e}{00015}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ int16\_t\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab12b3277592e813817ad0f60ed573b3e}{i16}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00016}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a502e53b5bc1147919304c3f1ce99b7ef}{00016}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ int32\_t\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a502e53b5bc1147919304c3f1ce99b7ef}{i32}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00017}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a383173b290867b39647dc18f8cb8ec16}{00017}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ int64\_t\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a383173b290867b39647dc18f8cb8ec16}{i64}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00018}00018\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00019}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a3bf8ddf8f9db452cb684587edf51337a}{00019}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ uint8\_t\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a3bf8ddf8f9db452cb684587edf51337a}{u8}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00020}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a69b41e8e0859a74af855adf3c50607c7}{00020}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ uint16\_t\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a69b41e8e0859a74af855adf3c50607c7}{u16}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00021}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ac8db3a4667f052ca03c96f9a66539545}{00021}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ uint32\_t\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ac8db3a4667f052ca03c96f9a66539545}{u32}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00022}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a804d768e270bfa33ed32d94820820d7c}{00022}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ uint64\_t\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a804d768e270bfa33ed32d94820820d7c}{u64}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00023}00023\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00024}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a82c394bf07e00030a87808b34595eb78}{00024}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a82c394bf07e00030a87808b34595eb78}{f32}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00025}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a25cbb401925fafbffccca24a550269a0}{00025}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a25cbb401925fafbffccca24a550269a0}{f64}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00026}00026\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00027}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a794bc818d8442d706a6b5feda8cade54}{00027}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a3bf8ddf8f9db452cb684587edf51337a}{u8}}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_a794bc818d8442d706a6b5feda8cade54}{byte}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00029}\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{00029}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ std::string\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}};}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00030}00030\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00031}00031\ \}}
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{types_8h_source_l00033}00033\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_TYPES\_H}}
+
+\end{DoxyCode}

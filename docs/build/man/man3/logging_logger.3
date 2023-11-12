@@ -1,0 +1,170 @@
+.TH "logging::logger" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+logging::logger
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <logging\&.hpp>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBdebug\fP (const char *format,\&.\&.\&.) const \fB__attribute__\fP((format(printf"
+.br
+.ti -1c
+.RI "void void \fBinfo\fP (const char *format,\&.\&.\&.) const \fB__attribute__\fP((format(printf"
+.br
+.ti -1c
+.RI "void void void \fBwarn\fP (const char *format,\&.\&.\&.) const \fB__attribute__\fP((format(printf"
+.br
+.ti -1c
+.RI "void void void void \fBerror\fP (const char *format,\&.\&.\&.) const \fB__attribute__\fP((format(printf"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBname\fP = 'log_task'"
+.br
+.ti -1c
+.RI "bool \fBon\fP = true"
+.br
+.ti -1c
+.RI "\fBLogLevel\fP \fBmin_level\fP = \fBDEBUG\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB17\fP of file \fBlogging\&.hpp\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void logging::logger::debug (const char * format,  \&.\&.\&.) const"
+
+.PP
+Definition at line \fB10\fP of file \fBlogging\&.cpp\fP\&..PP
+.nf
+10                                                        {
+11   if (!this\->on || this\->min_level > DEBUG)
+12     return;
+13   std::va_list va;
+14   time_t now = time(nullptr);
+15   
+16   std::string msg = ctime(&now);
+17   msg = msg\&.substr(0, msg\&.size() \- 2);
+18   msg\&.append(": [DEBUG]");
+19   msg\&.append(" [");
+20   msg\&.append(name);
+21   msg\&.append("] ");
+22   msg\&.append(format);
+23   msg\&.append("\\n\\r");
+24   
+25   va_start(va, format);
+26   vfprintf(stdout, msg\&.c_str(), va);
+27   va_end(va);
+28   fflush(stdout);
+29 }
+.fi
+
+.SS "void logging::logger::error (const char * format,  \&.\&.\&.) const"
+
+.PP
+Definition at line \fB73\fP of file \fBlogging\&.cpp\fP\&..PP
+.nf
+73                                                        {
+74   if (!this\->on || this\->min_level > ERROR)
+75     return;
+76   va_list va;
+77   time_t now = time(nullptr);
+78   
+79   std::string msg = ctime(&now);
+80   msg = msg\&.substr(0, msg\&.size() \- 2);
+81   msg\&.append(": [ERROR]");
+82   msg\&.append(" [");
+83   msg\&.append(name);
+84   msg\&.append("] ");
+85   msg\&.append(format);
+86   msg\&.append("\\n\\r");
+87   
+88   va_start(va, format);
+89   vfprintf(stderr, msg\&.c_str(), va);
+90   va_end(va);
+91   fflush(stderr);
+92 }
+.fi
+
+.SS "void logging::logger::info (const char * format,  \&.\&.\&.) const"
+
+.PP
+Definition at line \fB31\fP of file \fBlogging\&.cpp\fP\&..PP
+.nf
+31                                                       {
+32   if (!this\->on || this\->min_level > INFO)
+33     return;
+34   va_list va;
+35   time_t now = time(nullptr);
+36   
+37   std::string msg = ctime(&now);
+38   msg = msg\&.substr(0, msg\&.size() \- 2);
+39   msg\&.append(": [INFO] ");
+40   msg\&.append(" [");
+41   msg\&.append(name);
+42   msg\&.append("] ");
+43   msg\&.append(format);
+44   msg\&.append("\\n\\r");
+45   
+46   va_start(va, format);
+47   vfprintf(stdout, msg\&.c_str(), va);
+48   va_end(va);
+49   fflush(stdout);
+50 }
+.fi
+
+.SS "void logging::logger::warn (const char * format,  \&.\&.\&.) const"
+
+.PP
+Definition at line \fB52\fP of file \fBlogging\&.cpp\fP\&..PP
+.nf
+52                                                       {
+53   if (!this\->on || this\->min_level > WARN)
+54     return;
+55   va_list va;
+56   time_t now = time(nullptr);
+57   
+58   std::string msg = ctime(&now);
+59   msg = msg\&.substr(0, msg\&.size() \- 2);
+60   msg\&.append(": [WARN] ");
+61   msg\&.append(" [");
+62   msg\&.append(name);
+63   msg\&.append("] ");
+64   msg\&.append(format);
+65   msg\&.append("\\n\\r");
+66   
+67   va_start(va, format);
+68   vfprintf(stdout, msg\&.c_str(), va);
+69   va_end(va);
+70   fflush(stdout);
+71 }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBLogLevel\fP logging::logger::min_level = \fBDEBUG\fP"
+
+.PP
+Definition at line \fB20\fP of file \fBlogging\&.hpp\fP\&.
+.SS "const char* logging::logger::name = 'log_task'"
+
+.PP
+Definition at line \fB18\fP of file \fBlogging\&.hpp\fP\&.
+.SS "bool logging::logger::on = true"
+
+.PP
+Definition at line \fB19\fP of file \fBlogging\&.hpp\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -1,0 +1,169 @@
+.TH "include/core/component_attributes.h" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/core/component_attributes.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'dimensions\&.hpp'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBattribute_i\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_x< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_y< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_w< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_h< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_margin_top< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_margin_bottom< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_margin_left< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_margin_right< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_padding_top< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_padding_bottom< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_padding_left< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_padding_right< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_content< E >\fP"
+.br
+.ti -1c
+.RI "struct \fBattrs_margin< T >\fP"
+.br
+.ti -1c
+.RI "struct \fBattrs_padding< T >\fP"
+.br
+.ti -1c
+.RI "struct \fBattrs_dimensions< T >\fP"
+.br
+.ti -1c
+.RI "struct \fBattrs_component< T >\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCOMPONENT_ATTRIBUTE\fP(TYPE,  NAME,  DEFAULT)"
+.br
+.ti -1c
+.RI "#define \fBCOMPONENT_ATTRIBUTE_W_MONITOR\fP(TYPE,  NAME,  DEFAULT)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "using \fBcontent\fP = std::vector< \fBcydui::components::component_holder_t\fP >"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define COMPONENT_ATTRIBUTE(TYPE, NAME, DEFAULT)"
+\fBValue:\fP.PP
+.nf
+    template<typename E>                         \\
+    struct attr_##NAME: public attribute_i {     \\
+      inline E &NAME(auto& _##NAME##_) {         \\
+        this\->_##NAME = _##NAME##_;              \\
+        return *(E*)this;                        \\
+      }                                          \\
+      inline E &NAME(auto&& _##NAME##_) {   \\
+        this\->_##NAME = _##NAME##_;              \\
+        return *(E*)this;                        \\
+      }                                          \\
+      TYPE _##NAME = DEFAULT;                    \\
+    }
+.fi
+
+.PP
+Definition at line \fB12\fP of file \fBcomponent_attributes\&.h\fP\&..PP
+.nf
+14                       : public attribute_i {     \\
+15       inline E &NAME(auto& _##NAME##_) {         \\
+16         this\->_##NAME = _##NAME##_;              \\
+17         return *(E*)this;                        \\
+18       }                                          \\
+19       inline E &NAME(auto&& _##NAME##_) {   \\
+20         this\->_##NAME = _##NAME##_;              \\
+21         return *(E*)this;                        \\
+22       }                                          \\
+23       TYPE _##NAME = DEFAULT;                    \\
+24     }
+.fi
+
+.SS "#define COMPONENT_ATTRIBUTE_W_MONITOR(TYPE, NAME, DEFAULT)"
+\fBValue:\fP.PP
+.nf
+    template<typename E>                                   \\
+    struct attr_##NAME: public attribute_i {               \\
+      inline E &NAME(auto& _##NAME##_) {                   \\
+        this\->_##NAME = _##NAME##_;                        \\
+        this\->_##NAME##_has_changed = true;                \\
+        return *(E*)this;                                  \\
+      }                                                    \\
+      inline E &NAME(auto&& _##NAME##_) {             \\
+        this\->_##NAME = _##NAME##_;                        \\
+        this\->_##NAME##_has_changed = true;                \\
+        return *(E*)this;                                  \\
+      }                                                    \\
+      TYPE _##NAME = DEFAULT;                              \\
+      bool _##NAME##_has_changed = false;                  \\
+    }
+.fi
+
+.PP
+Definition at line \fB26\fP of file \fBcomponent_attributes\&.h\fP\&..PP
+.nf
+28                       : public attribute_i {               \\
+29       inline E &NAME(auto& _##NAME##_) {                   \\
+30         this\->_##NAME = _##NAME##_;                        \\
+31         this\->_##NAME##_has_changed = true;                \\
+32         return *(E*)this;                                  \\
+33       }                                                    \\
+34       inline E &NAME(auto&& _##NAME##_) {             \\
+35         this\->_##NAME = _##NAME##_;                        \\
+36         this\->_##NAME##_has_changed = true;                \\
+37         return *(E*)this;                                  \\
+38       }                                                    \\
+39       TYPE _##NAME = DEFAULT;                              \\
+40       bool _##NAME##_has_changed = false;                  \\
+41     }
+.fi
+
+.SH "Typedef Documentation"
+.PP 
+.SS "using \fBcontent\fP =  std::vector<\fBcydui::components::component_holder_t\fP>"
+
+.PP
+Definition at line \fB58\fP of file \fBcomponent_attributes\&.h\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

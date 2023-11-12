@@ -1,0 +1,47 @@
+\doxysection{lazy\+\_\+alloc.\+h}
+\hypertarget{lazy__alloc_8h_source}{}\label{lazy__alloc_8h_source}\index{include/cydstd/lazy\_alloc.h@{include/cydstd/lazy\_alloc.h}}
+\mbox{\hyperlink{lazy__alloc_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 10/26/23.}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ CYD\_UI\_LAZY\_ALLOC\_H}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00006}00006\ \textcolor{preprocessor}{\#define\ CYD\_UI\_LAZY\_ALLOC\_H}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00010}00010\ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}},\ \textcolor{keyword}{typename}\ ...Args>}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00011}\mbox{\hyperlink{structlazy__alloc}{00011}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structlazy__alloc}{lazy\_alloc}}\ \{}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00012}\mbox{\hyperlink{structlazy__alloc_ad98c836c0c9f2649f4b8cbc4a1d6790a}{00012}}\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structlazy__alloc_ad98c836c0c9f2649f4b8cbc4a1d6790a}{lazy\_alloc}}(Args...\ args)\ \{}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00013}00013\ \ \ \ \ \mbox{\hyperlink{structlazy__alloc_acad7e139eb64855825e75a16f5d22717}{init}}\ =\ [args...](\mbox{\hyperlink{structlazy__alloc}{lazy\_alloc}}\ \&self)\ \{}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00014}00014\ \ \ \ \ \ \ self.val\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ \{args...\};}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00015}00015\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00016}00016\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00017}\mbox{\hyperlink{structlazy__alloc_a9c1f74b2467ff53bfd607299105265b5}{00017}}\ \ \ \mbox{\hyperlink{structlazy__alloc_a9c1f74b2467ff53bfd607299105265b5}{\string~lazy\_alloc}}()\ \{}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00018}00018\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}};}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00019}00019\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00020}00020\ \ \ }
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00021}\mbox{\hyperlink{structlazy__alloc_a564d9dda62f95e2bd83c775e317a68ae}{00021}}\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}*\ \mbox{\hyperlink{structlazy__alloc_a564d9dda62f95e2bd83c775e317a68ae}{operator-\/>}}()\ \{}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ ==\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}})\ \{}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00023}00023\ \ \ \ \ \ \ \mbox{\hyperlink{structlazy__alloc_acad7e139eb64855825e75a16f5d22717}{init}}(*\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00024}00024\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00025}00025\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}};}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00026}00026\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00027}00027\ \ \ }
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00028}\mbox{\hyperlink{structlazy__alloc_a8e68e31f1296f1276f016b219803bc94}{00028}}\ \ \ \textcolor{keyword}{operator}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}*()\ \{}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ ==\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}})\ \{}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00030}00030\ \ \ \ \ \ \ \mbox{\hyperlink{structlazy__alloc_acad7e139eb64855825e75a16f5d22717}{init}}(*\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00031}00031\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00032}00032\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}};}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00033}00033\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00034}00034\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00035}\mbox{\hyperlink{structlazy__alloc_acad7e139eb64855825e75a16f5d22717}{00035}}\ \ \ std::function<void(\mbox{\hyperlink{structlazy__alloc}{lazy\_alloc}}\ \&)>\ \mbox{\hyperlink{structlazy__alloc_acad7e139eb64855825e75a16f5d22717}{init}}\ =\ [](\mbox{\hyperlink{structlazy__alloc}{lazy\_alloc}}\ \&self)\ \{}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00036}00036\ \ \ \ \ self.val\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ \{\};}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00037}00037\ \ \ \};}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00038}\mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{00038}}\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}*\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00039}00039\ \};}
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{lazy__alloc_8h_source_l00041}00041\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_LAZY\_ALLOC\_H}}
+
+\end{DoxyCode}

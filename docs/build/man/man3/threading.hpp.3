@@ -1,0 +1,45 @@
+.TH "include/threading.hpp" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/threading.hpp
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <thread>\fP
+.br
+\fC#include <chrono>\fP
+.br
+\fC#include 'cydstd/cydstd\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcydui::threading::thread_t\fP"
+.br
+.in -1c
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBcydui\fP"
+.br
+.ti -1c
+.RI "namespace \fBcydui::threading\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBthread_t\fP * \fBcydui::threading::new_thread\fP (void(task)(\fBthread_t\fP *this_thread))"
+.br
+.ti -1c
+.RI "\fBthread_t\fP * \fBcydui::threading::new_thread\fP (void(task)(\fBthread_t\fP *this_thread), void *data)"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

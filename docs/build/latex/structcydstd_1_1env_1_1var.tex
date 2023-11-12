@@ -1,0 +1,104 @@
+\doxysection{cydstd\+::env\+::var Struct Reference}
+\hypertarget{structcydstd_1_1env_1_1var}{}\label{structcydstd_1_1env_1_1var}\index{cydstd::env::var@{cydstd::env::var}}
+
+
+{\ttfamily \#include $<$env.\+h$>$}
+
+
+
+Collaboration diagram for cydstd\+::env\+::var\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=174pt]{structcydstd_1_1env_1_1var__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structcydstd_1_1env_1_1var_ac572fa943315350385ed81b8a59e6bbf}{operator std\+::string}} ()
+\item 
+\mbox{\hyperlink{structcydstd_1_1env_1_1var}{var}} \& \mbox{\hyperlink{structcydstd_1_1env_1_1var_a8921ae8df3c1b7a8172c61cf82cd2a64}{operator=}} (const std\+::string \&VALUE)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::string \& \mbox{\hyperlink{structcydstd_1_1env_1_1var_ae7e5f4aad8e481716502f66012c85619}{ENVVAR}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{env_8h_source_l00039}{39}} of file \mbox{\hyperlink{env_8h_source}{env.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcydstd_1_1env_1_1var_ac572fa943315350385ed81b8a59e6bbf}\label{structcydstd_1_1env_1_1var_ac572fa943315350385ed81b8a59e6bbf} 
+\index{cydstd::env::var@{cydstd::env::var}!operator std::string@{operator std::string}}
+\index{operator std::string@{operator std::string}!cydstd::env::var@{cydstd::env::var}}
+\doxysubsubsection{\texorpdfstring{operator std::string()}{operator std::string()}}
+{\footnotesize\ttfamily cydstd\+::env\+::var\+::operator std\+::string (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{env_8h_source_l00042}{42}} of file \mbox{\hyperlink{env_8h_source}{env.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacecydstd_1_1env_a076b748f233e643db93b64d26b24bbe0}{env::get}}(\mbox{\hyperlink{structcydstd_1_1env_1_1var_ae7e5f4aad8e481716502f66012c85619}{ENVVAR}});}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=319pt]{structcydstd_1_1env_1_1var_ac572fa943315350385ed81b8a59e6bbf_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structcydstd_1_1env_1_1var_a8921ae8df3c1b7a8172c61cf82cd2a64}\label{structcydstd_1_1env_1_1var_a8921ae8df3c1b7a8172c61cf82cd2a64} 
+\index{cydstd::env::var@{cydstd::env::var}!operator=@{operator=}}
+\index{operator=@{operator=}!cydstd::env::var@{cydstd::env::var}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structcydstd_1_1env_1_1var}{var}} \& cydstd\+::env\+::var\+::operator= (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{VALUE }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{env_8h_source_l00046}{46}} of file \mbox{\hyperlink{env_8h_source}{env.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydstd_1_1env_a1334f7b58004d8553c3a153c2b4e506b}{env::set}}(\mbox{\hyperlink{structcydstd_1_1env_1_1var_ae7e5f4aad8e481716502f66012c85619}{ENVVAR}},\ VALUE);}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structcydstd_1_1env_1_1var_a8921ae8df3c1b7a8172c61cf82cd2a64_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structcydstd_1_1env_1_1var_ae7e5f4aad8e481716502f66012c85619}\label{structcydstd_1_1env_1_1var_ae7e5f4aad8e481716502f66012c85619} 
+\index{cydstd::env::var@{cydstd::env::var}!ENVVAR@{ENVVAR}}
+\index{ENVVAR@{ENVVAR}!cydstd::env::var@{cydstd::env::var}}
+\doxysubsubsection{\texorpdfstring{ENVVAR}{ENVVAR}}
+{\footnotesize\ttfamily const std\+::string\& cydstd\+::env\+::var\+::\+ENVVAR}
+
+
+
+Definition at line \mbox{\hyperlink{env_8h_source_l00040}{40}} of file \mbox{\hyperlink{env_8h_source}{env.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/cydstd/\mbox{\hyperlink{env_8h}{env.\+h}}\end{DoxyCompactItemize}

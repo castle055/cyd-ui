@@ -1,0 +1,91 @@
+.TH "vg::group" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vg::group
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <vg\&.h>\fP
+.PP
+Inherits \fBvg::vg_element_t\fP, attr_cx< group >, attrs_core< group >, attrs_fill< ellipse >, attrs_stroke< ellipse >, and \fBvg::accepts_content< line >\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBapply_to\fP (\fBpixelmap_editor_t\fP &editor) const override"
+.br
+.ti -1c
+.RI "\fBfootprint\fP \fBget_footprint\fP () const override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::vg_element_t\fP
+.in +1c
+.ti -1c
+.RI "void \fB_internal_set_origin\fP (int x, int y)"
+.br
+.ti -1c
+.RI "virtual \fB~vg_element_t\fP ()=default"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::accepts_content< line >\fP
+.in +1c
+.ti -1c
+.RI "\fBaccepts_content\fP & \fBwith\fP (std::vector< std::variant< T\&.\&.\&. > > _content_)"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Public Attributes inherited from \fBvg::vg_element_t\fP
+.in +1c
+.ti -1c
+.RI "int \fBorigin_x\fP = 0"
+.br
+.ti -1c
+.RI "int \fBorigin_y\fP = 0"
+.br
+.in -1c
+
+Public Attributes inherited from \fBvg::accepts_content< line >\fP
+.in +1c
+.ti -1c
+.RI "std::vector< std::variant< T\&.\&.\&. > > \fBcontent\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB382\fP of file \fBvg\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void vg::group::apply_to (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBvg::vg_element_t\fP\&.
+.PP
+Definition at line \fB389\fP of file \fBvg\&.h\fP\&..PP
+.nf
+389                                                               {
+390         apply_stroke(editor);
+391       }
+.fi
+
+.SS "\fBfootprint\fP vg::group::get_footprint () const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBvg::vg_element_t\fP\&.
+.PP
+Definition at line \fB393\fP of file \fBvg\&.h\fP\&..PP
+.nf
+393                                                {
+394         return {};
+395       }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

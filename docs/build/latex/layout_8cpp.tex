@@ -1,0 +1,230 @@
+\doxysection{src/layout/layout.cpp File Reference}
+\hypertarget{layout_8cpp}{}\label{layout_8cpp}\index{src/layout/layout.cpp@{src/layout/layout.cpp}}
+{\ttfamily \#include "{}core/layout.\+h"{}}\newline
+Include dependency graph for layout.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{layout_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(DIM)
+\item 
+\#define \mbox{\hyperlink{layout_8cpp_a4d37894e2a9a85ddba1ddf20272f251d}{INSTANCE\+\_\+\+EV\+\_\+\+HANDLER}}(STATE\+\_\+\+PTR)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static bool \mbox{\hyperlink{layout_8cpp_a57bf7c427c75639b801bb27dcc702561}{compute\+\_\+dimensions}} (\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*}rt)
+\item 
+static \mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t}{event\+\_\+handler\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{layout_8cpp_a7056d4e64622c3777ba53d6c35e6e872}{get\+\_\+instance\+\_\+ev\+\_\+handler}} (\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*}component\+\_\+state)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structlogging_1_1logger}{logging\+::logger}} \mbox{\hyperlink{layout_8cpp_aa1d4ffb373d38428543746c1396630b2}{log\+\_\+lay}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}\label{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb} 
+\index{layout.cpp@{layout.cpp}!COMPUTE@{COMPUTE}}
+\index{COMPUTE@{COMPUTE}!layout.cpp@{layout.cpp}}
+\doxysubsubsection{\texorpdfstring{COMPUTE}{COMPUTE}}
+{\footnotesize\ttfamily \#define COMPUTE(\begin{DoxyParamCaption}\item[{}]{DIM }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{if}\ (!dimension\_t::compute(DIM))\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{layout_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00013\ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{layout_8cpp_a4d37894e2a9a85ddba1ddf20272f251d}\label{layout_8cpp_a4d37894e2a9a85ddba1ddf20272f251d} 
+\index{layout.cpp@{layout.cpp}!INSTANCE\_EV\_HANDLER@{INSTANCE\_EV\_HANDLER}}
+\index{INSTANCE\_EV\_HANDLER@{INSTANCE\_EV\_HANDLER}!layout.cpp@{layout.cpp}}
+\doxysubsubsection{\texorpdfstring{INSTANCE\_EV\_HANDLER}{INSTANCE\_EV\_HANDLER}}
+{\footnotesize\ttfamily \#define INSTANCE\+\_\+\+EV\+\_\+\+HANDLER(\begin{DoxyParamCaption}\item[{}]{STATE\+\_\+\+PTR }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{if}\ (STATE\_PTR-\/>component\_instance.has\_value())\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ STATE\_PTR-\/>component\_instance.value()-\/>event\_handler()}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{layout_8cpp_source_l00162}{162}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{layout_8cpp_a57bf7c427c75639b801bb27dcc702561}\label{layout_8cpp_a57bf7c427c75639b801bb27dcc702561} 
+\index{layout.cpp@{layout.cpp}!compute\_dimensions@{compute\_dimensions}}
+\index{compute\_dimensions@{compute\_dimensions}!layout.cpp@{layout.cpp}}
+\doxysubsubsection{\texorpdfstring{compute\_dimensions()}{compute\_dimensions()}}
+{\footnotesize\ttfamily static bool compute\+\_\+dimensions (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{rt }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+COMPUTE SOME VALUES
+
+COMPUTE CHILDREN ORIGIN POINT (cx, cy)
+
+COMPUTE SIZE
+
+COMPUTE DIMENSIONS FOR CHILDREN RECURSIVELY
+
+Definition at line \mbox{\hyperlink{layout_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespacecydui_1_1dimensions}{cydui::dimensions}};}
+\DoxyCodeLine{00020\ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t}{component\_dimensional\_relations\_t}}\ dim\ =\ rt-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a635bfee6c00b80d785b3b8490158e3ed}{get\_dimensional\_relations}}();}
+\DoxyCodeLine{00021\ \ \ }
+\DoxyCodeLine{00023\ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a5a1367b149c7cc4d3b58f103c97bda80}{x}})}
+\DoxyCodeLine{00024\ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.y)}
+\DoxyCodeLine{00025\ \ \ }
+\DoxyCodeLine{00026\ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.margin\_top)}
+\DoxyCodeLine{00027\ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.margin\_right)}
+\DoxyCodeLine{00028\ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.margin\_bottom)}
+\DoxyCodeLine{00029\ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.margin\_left)}
+\DoxyCodeLine{00030\ \ \ }
+\DoxyCodeLine{00031\ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.padding\_top)}
+\DoxyCodeLine{00032\ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.padding\_right)}
+\DoxyCodeLine{00033\ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.padding\_bottom)}
+\DoxyCodeLine{00034\ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.padding\_left)}
+\DoxyCodeLine{00035\ \ \ }
+\DoxyCodeLine{00037\ \ \ if\ (rt-\/>parent.has\_value())\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t}{component\_dimensional\_relations\_t}}\ parent\_dim\ =\ rt-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_ace69ebb59763f0ac0f41a8ea1143299e}{parent}}.value()-\/>get\_dimensional\_relations();}
+\DoxyCodeLine{00039\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a51ed6280a31a3a42835229e704c9e072}{cx}}\ =\ parent\_dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a51ed6280a31a3a42835229e704c9e072}{cx}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a5a1367b149c7cc4d3b58f103c97bda80}{x}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_ac8ccffebbb36cf2106712acd85bdfa7f}{margin\_left}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a9ec521935697c5f831a15a51c6addede}{padding\_left}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
+\DoxyCodeLine{00043\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_abee4877cfc0362b06c353bf4e1282497}{cy}}\ =\ parent\_dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_abee4877cfc0362b06c353bf4e1282497}{cy}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a8906e0044bdbd590d28d0f460f3c641d}{y}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a3f370609f52a256853778654e4e07ff6}{margin\_top}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_acaf0b5f7160c47ea0f54723c602e49c7}{padding\_top}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
+\DoxyCodeLine{00047\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a51ed6280a31a3a42835229e704c9e072}{cx}}\ =\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a5a1367b149c7cc4d3b58f103c97bda80}{x}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_ac8ccffebbb36cf2106712acd85bdfa7f}{margin\_left}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a9ec521935697c5f831a15a51c6addede}{padding\_left}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
+\DoxyCodeLine{00049\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_abee4877cfc0362b06c353bf4e1282497}{cy}}\ =\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a8906e0044bdbd590d28d0f460f3c641d}{y}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a3f370609f52a256853778654e4e07ff6}{margin\_top}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_acaf0b5f7160c47ea0f54723c602e49c7}{padding\_top}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
+\DoxyCodeLine{00050\ \ \ \}}
+\DoxyCodeLine{00051\ \ \ }
+\DoxyCodeLine{00053\ \ \ \textcolor{keywordflow}{if}\ (!dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_ae0d8d94eda50243fbeeff43a3b5b8bbf}{fixed\_w}})\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a34f13357a75e88dd763dfc6cfaa49d2e}{w}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a09d648cb67171a9331413b2ec56ece27}{unknown}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00055\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a34f13357a75e88dd763dfc6cfaa49d2e}{w}})}
+\DoxyCodeLine{00057\ \ \ \ \ dim.cw\ =\ dim.w.val()\ -\/\ dim.padding\_left.val()\ -\/\ dim.padding\_right.val()}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ -\/\ dim.margin\_left.val()\ -\/\ dim.margin\_right.val();}
+\DoxyCodeLine{00059\ \ \ \}}
+\DoxyCodeLine{00060\ \ \ if\ (!dim.fixed\_h)\ \{}
+\DoxyCodeLine{00061\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a7bd14ea576daf6a453189fd5f73085a2}{h}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a09d648cb67171a9331413b2ec56ece27}{unknown}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00062\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00063\ \ \ \ \ \mbox{\hyperlink{layout_8cpp_a8e5f1dea7cdd444970b7026aca4de9cb}{COMPUTE}}(dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a7bd14ea576daf6a453189fd5f73085a2}{h}})}
+\DoxyCodeLine{00064\ \ \ \ \ dim.ch\ =\ dim.h.val()\ -\/\ dim.padding\_top.val()\ -\/\ dim.padding\_bottom.val()}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ -\/\ dim.margin\_top.val()\ -\/\ dim.margin\_bottom.val();}
+\DoxyCodeLine{00066\ \ \ \}}
+\DoxyCodeLine{00067\ \ \ }
+\DoxyCodeLine{00069\ \ \ std::vector<\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*>\ pending;}
+\DoxyCodeLine{00070\ \ \ }
+\DoxyCodeLine{00071\ \ \ \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\_value\_t}}\ total\_w\ =\ 0;}
+\DoxyCodeLine{00072\ \ \ \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\_value\_t}}\ total\_h\ =\ 0;}
+\DoxyCodeLine{00073\ \ \ for\ (auto\ \&child:\ rt-\/>children)\ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//compute\_dimensions(child);}}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{comment}{//\ if\ error\ (circular\ dependency),\ skip\ for\ now,\ and\ then\ recalculate}}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{layout_8cpp_a57bf7c427c75639b801bb27dcc702561}{compute\_dimensions}}(child))\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t}{component\_dimensional\_relations\_t}}\ c\_dim\ =\ child-\/>get\_dimensional\_relations();}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\_value\_t}}\ child\_max\_w\ =\ c\_dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a5a1367b149c7cc4d3b58f103c97bda80}{x}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ c\_dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a34f13357a75e88dd763dfc6cfaa49d2e}{w}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\_value\_t}}\ child\_max\_h\ =\ c\_dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a8906e0044bdbd590d28d0f460f3c641d}{y}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ c\_dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a7bd14ea576daf6a453189fd5f73085a2}{h}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ total\_w\ =\ std::max(total\_w,\ child\_max\_w);}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ total\_h\ =\ std::max(total\_h,\ child\_max\_h);}
+\DoxyCodeLine{00082\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ pending.push\_back(child);}
+\DoxyCodeLine{00084\ \ \ \ \ \}}
+\DoxyCodeLine{00085\ \ \ \}}
+\DoxyCodeLine{00086\ \ \ }
+\DoxyCodeLine{00087\ \ \ \textcolor{keywordflow}{if}\ (!dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_ae0d8d94eda50243fbeeff43a3b5b8bbf}{fixed\_w}})\ \{\textcolor{comment}{//\ If\ not\ given,\ or\ given\ has\ error\ (ie:\ circular\ dep)}}
+\DoxyCodeLine{00088\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a30bd770b9eb5b07b7ed13b186fdacb28}{cw}}\ =\ total\_w;}
+\DoxyCodeLine{00089\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a34f13357a75e88dd763dfc6cfaa49d2e}{w}}\ =\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a30bd770b9eb5b07b7ed13b186fdacb28}{cw}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a9ec521935697c5f831a15a51c6addede}{padding\_left}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_afa0da8b7f86c4ef5179a3d8ef30fc8c8}{padding\_right}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_ac8ccffebbb36cf2106712acd85bdfa7f}{margin\_left}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_af1a7ecccce31a5f1fbe8d020c6a40248}{margin\_right}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
+\DoxyCodeLine{00091\ \ \ \}}
+\DoxyCodeLine{00092\ \ \ }
+\DoxyCodeLine{00093\ \ \ \textcolor{keywordflow}{if}\ (!dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a6abe4895b6aec040ff3b582801d9bf30}{fixed\_h}})\ \{\textcolor{comment}{//\ If\ not\ given,\ or\ given\ has\ error\ (ie:\ circular\ dep)}}
+\DoxyCodeLine{00094\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_af353dece6c84f4d770718988d591226d}{ch}}\ =\ total\_h;}
+\DoxyCodeLine{00095\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a7bd14ea576daf6a453189fd5f73085a2}{h}}\ =\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_af353dece6c84f4d770718988d591226d}{ch}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_acaf0b5f7160c47ea0f54723c602e49c7}{padding\_top}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a4dd2293dd174116a4a689b1ae4851eae}{padding\_bottom}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a3f370609f52a256853778654e4e07ff6}{margin\_top}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}()\ +\ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a8efe73435369d0f76180815e25df3d25}{margin\_bottom}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
+\DoxyCodeLine{00097\ \ \ \}}
+\DoxyCodeLine{00098\ \ \ }
+\DoxyCodeLine{00099\ \ \ \textcolor{keywordflow}{return}\ std::all\_of(pending.begin(),\ pending.end(),\ \mbox{\hyperlink{layout_8cpp_a57bf7c427c75639b801bb27dcc702561}{compute\_dimensions}});}
+\DoxyCodeLine{00100\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=342pt]{layout_8cpp_a57bf7c427c75639b801bb27dcc702561_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=347pt]{layout_8cpp_a57bf7c427c75639b801bb27dcc702561_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{layout_8cpp_a7056d4e64622c3777ba53d6c35e6e872}\label{layout_8cpp_a7056d4e64622c3777ba53d6c35e6e872} 
+\index{layout.cpp@{layout.cpp}!get\_instance\_ev\_handler@{get\_instance\_ev\_handler}}
+\index{get\_instance\_ev\_handler@{get\_instance\_ev\_handler}!layout.cpp@{layout.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_instance\_ev\_handler()}{get\_instance\_ev\_handler()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t}{event\+\_\+handler\+\_\+t}} \texorpdfstring{$\ast$}{*} get\+\_\+instance\+\_\+ev\+\_\+handler (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{component\+\_\+state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{layout_8cpp_source_l00158}{158}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{layout_8cpp_aa1d4ffb373d38428543746c1396630b2}\label{layout_8cpp_aa1d4ffb373d38428543746c1396630b2} 
+\index{layout.cpp@{layout.cpp}!log\_lay@{log\_lay}}
+\index{log\_lay@{log\_lay}!layout.cpp@{layout.cpp}}
+\doxysubsubsection{\texorpdfstring{log\_lay}{log\_lay}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlogging_1_1logger}{logging\+::logger}} log\+\_\+lay}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ .name\ =\ \textcolor{stringliteral}{"{}LAYOUT"{}},\ .on\ =\ \textcolor{keyword}{true},\ .min\_level\ =\ \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416a599d39352a6b7a4d371ea9e27bd22562}{logging::INFO}}\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{layout_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00007\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00008\ \ \ .name\ =\ \textcolor{stringliteral}{"{}LAYOUT"{}},\ .on\ =\ \textcolor{keyword}{true},\ .min\_level\ =\ \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416a599d39352a6b7a4d371ea9e27bd22562}{logging::INFO}}\};}
+
+\end{DoxyCode}

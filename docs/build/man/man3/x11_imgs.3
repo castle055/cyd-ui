@@ -1,0 +1,105 @@
+.TH "x11::imgs" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+x11::imgs
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBimg_data\fP"
+.br
+.ti -1c
+.RI "struct \fBjpg_err_mgr\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBjpg_error_exit\fP (j_common_ptr cinfo)"
+.br
+.ti -1c
+.RI "\fBimg_data\fP \fBread_jpg\fP (str path)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "x11::imgs::jpg_error_exit (j_common_ptr cinfo)"
+
+.PP
+Definition at line \fB17\fP of file \fBimages\&.h\fP\&..PP
+.nf
+17                                        {
+18       (*cinfo\->err\->output_message)(cinfo);
+19     }
+.fi
+
+.SS "\fBimg_data\fP x11::imgs::read_jpg (str path)\fC [inline]\fP"
+
+.PP
+Definition at line \fB28\fP of file \fBimages\&.h\fP\&..PP
+.nf
+28                                        {
+29       FILE* infile;
+30       JSAMPARRAY buffer;
+31       jpeg_decompress_struct cinfo {};
+32       jpg_err_mgr jerr {};
+33       
+34       if ((infile = fopen(path\&.c_str(), "rb")) == nullptr) {
+35         return {};
+36       }
+37       
+38       cinfo\&.err = jpeg_std_error(&jerr\&.pub);
+39       jerr\&.pub\&.error_exit = jpg_error_exit;
+40       
+41       jpeg_create_decompress(&cinfo);
+42       jpeg_stdio_src(&cinfo, infile);
+43       jpeg_read_header(&cinfo, TRUE);
+44       
+45       jpeg_start_decompress(&cinfo);
+46       JDIMENSION row_stride = cinfo\&.output_width * cinfo\&.output_components;
+47       buffer = (*cinfo\&.mem\->alloc_sarray)(
+48         (j_common_ptr) &cinfo,
+49         JPOOL_IMAGE,
+50         row_stride,
+51         1
+52       );
+53       
+54       logging::logger logg {};
+55       auto* data = (unsigned char*) malloc(cinfo\&.output_height * cinfo\&.output_width * 4);
+56       
+57       while (cinfo\&.output_scanline < cinfo\&.output_height) {
+58         jpeg_read_scanlines(&cinfo, buffer, 1);
+59         for (uint i = 0; i < row_stride; i += cinfo\&.output_components) {
+60           unsigned char c1 = buffer[0][i];
+61           unsigned char c2 = buffer[0][i + 1];
+62           unsigned char c3 = buffer[0][i + 2];
+63           uint r = cinfo\&.output_width * 4 * (cinfo\&.output_scanline \- 1);
+64           data[r + (4 * i / 3) + 0] = c3;
+65           data[r + (4 * i / 3) + 1] = c2;
+66           data[r + (4 * i / 3) + 2] = c1;
+67           data[r + (4 * i / 3) + 3] = 5;
+68         }
+69       }
+70       
+71       
+72       jpeg_finish_decompress(&cinfo);
+73       jpeg_destroy_decompress(&cinfo);
+74       fclose(infile);
+75       
+76       return {
+77         cinfo\&.output_width,
+78         cinfo\&.output_height,
+79         4,
+80         (char*) data,
+81       };
+82     }
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

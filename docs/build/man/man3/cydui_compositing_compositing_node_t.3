@@ -1,0 +1,109 @@
+.TH "cydui::compositing::compositing_node_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::compositing::compositing_node_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <compositing\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB~compositing_node_t\fP ()"
+.br
+.ti -1c
+.RI "\fBcompositing_node_t\fP * \fBfind_by_id\fP (unsigned long _id)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "unsigned long \fBid\fP = 0"
+.br
+.ti -1c
+.RI "\fBcompositing_operation_t\fP \fBop\fP {}"
+.br
+.ti -1c
+.RI "std::deque< \fBcompositing_node_t\fP * > \fBchildren\fP {}"
+.br
+.ti -1c
+.RI "\fBvg_fragment_t\fP \fBgraphics\fP {}"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB33\fP of file \fBcompositing\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "cydui::compositing::compositing_node_t::~compositing_node_t ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB39\fP of file \fBcompositing\&.h\fP\&..PP
+.nf
+39                             {
+40         for (auto &item: children) {
+41           delete item;
+42         }
+43       }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBcompositing_node_t\fP * cydui::compositing::compositing_node_t::find_by_id (unsigned long _id)\fC [inline]\fP"
+
+.PP
+Definition at line \fB51\fP of file \fBcompositing\&.h\fP\&..PP
+.nf
+51                                                         {
+52         if (id == _id) {
+53           return this;
+54         } else {
+55           for (auto &item: children) {
+56             auto* res = item\->find_by_id(_id);
+57             if (nullptr != res) {
+58               return res;
+59             }
+60           }
+61           return nullptr;
+62         }
+63       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "std::deque<\fBcompositing_node_t\fP*> cydui::compositing::compositing_node_t::children {}"
+
+.PP
+Definition at line \fB36\fP of file \fBcompositing\&.h\fP\&..PP
+.nf
+36 {};
+.fi
+
+.SS "\fBvg_fragment_t\fP cydui::compositing::compositing_node_t::graphics {}"
+
+.PP
+Definition at line \fB37\fP of file \fBcompositing\&.h\fP\&..PP
+.nf
+37 {};
+.fi
+
+.SS "unsigned long cydui::compositing::compositing_node_t::id = 0"
+
+.PP
+Definition at line \fB34\fP of file \fBcompositing\&.h\fP\&.
+.SS "\fBcompositing_operation_t\fP cydui::compositing::compositing_node_t::op {}"
+
+.PP
+Definition at line \fB35\fP of file \fBcompositing\&.h\fP\&..PP
+.nf
+35 {};
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

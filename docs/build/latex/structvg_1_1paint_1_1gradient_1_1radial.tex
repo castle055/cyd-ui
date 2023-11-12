@@ -1,0 +1,177 @@
+\doxysection{vg\+::paint\+::gradient\+::radial Struct Reference}
+\hypertarget{structvg_1_1paint_1_1gradient_1_1radial}{}\label{structvg_1_1paint_1_1gradient_1_1radial}\index{vg::paint::gradient::radial@{vg::paint::gradient::radial}}
+
+
+{\ttfamily \#include $<$vg\+\_\+attributes.\+h$>$}
+
+
+
+Inheritance diagram for vg\+::paint\+::gradient\+::radial\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=174pt]{structvg_1_1paint_1_1gradient_1_1radial__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for vg\+::paint\+::gradient\+::radial\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=280pt]{structvg_1_1paint_1_1gradient_1_1radial__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_a23269ca9b124f7fb14b64aa4908cabd9}{radial}} (std\+::pair$<$ int, int $>$ start, int \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_a5f1faa7da7d6ef3b6449c97f61757c0e}{r0}}, std\+::pair$<$ int, int $>$ end, int \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_abb91670d827a2f193b99a95dbcccaa53}{r1}}, const std\+::vector$<$ std\+::pair$<$ double, color\+::\+Color $>$ $>$ \&\+\_\+color\+\_\+stops)
+\item 
+void \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_a7f5fc2639ac0e05df7481e559c76c851}{apply\+\_\+to\+\_\+source}} (\mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\+\_\+editor\+\_\+t}} \&editor, double opacity) const override
+\item 
+color\+::\+Color \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_adb2ad74562d7b84d5dceb3265d742474}{sample}} (int x, int y) const override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_a5f1faa7da7d6ef3b6449c97f61757c0e}{r0}}
+\item 
+int \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_abb91670d827a2f193b99a95dbcccaa53}{r1}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i}{vg\+::paint\+::gradient\+::base\+\_\+i}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ Cairo\+::\+Color\+Stop $>$ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_ad544f05360c266abec9c4e9ca2acec65}{color\+\_\+stops}} \{\}
+\item 
+int \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_aacb8451e354538273a2c6dd9324fa993}{x0}}
+\item 
+int \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_a944f90de7752b385c5539bacf0f5ee2e}{y0}}
+\item 
+int \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_a61d6cb58c666972746ebfd78fcaf5484}{x1}}
+\item 
+int \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_a23323762b0bfb27c64a2e10cad4153e1}{y1}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{vg__attributes_8h_source_l00083}{83}} of file \mbox{\hyperlink{vg__attributes_8h_source}{vg\+\_\+attributes.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structvg_1_1paint_1_1gradient_1_1radial_a23269ca9b124f7fb14b64aa4908cabd9}\label{structvg_1_1paint_1_1gradient_1_1radial_a23269ca9b124f7fb14b64aa4908cabd9} 
+\index{vg::paint::gradient::radial@{vg::paint::gradient::radial}!radial@{radial}}
+\index{radial@{radial}!vg::paint::gradient::radial@{vg::paint::gradient::radial}}
+\doxysubsubsection{\texorpdfstring{radial()}{radial()}}
+{\footnotesize\ttfamily vg\+::paint\+::gradient\+::radial\+::radial (\begin{DoxyParamCaption}\item[{std\+::pair$<$ int, int $>$}]{start,  }\item[{int}]{r0,  }\item[{std\+::pair$<$ int, int $>$}]{end,  }\item[{int}]{r1,  }\item[{const std\+::vector$<$ std\+::pair$<$ double, color\+::\+Color $>$ $>$ \&}]{\+\_\+color\+\_\+stops }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{vg__attributes_8h_source_l00086}{86}} of file \mbox{\hyperlink{vg__attributes_8h_source}{vg\+\_\+attributes.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_aacb8451e354538273a2c6dd9324fa993}{x0}}\ =\ \mbox{\hyperlink{namespacex11_1_1events_a810967d43ea3ace068c1af0b4159a5e6}{start}}.first;}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_a944f90de7752b385c5539bacf0f5ee2e}{y0}}\ =\ \mbox{\hyperlink{namespacex11_1_1events_a810967d43ea3ace068c1af0b4159a5e6}{start}}.second;}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_a5f1faa7da7d6ef3b6449c97f61757c0e}{r0}}\ =\ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_a5f1faa7da7d6ef3b6449c97f61757c0e}{r0}};}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_a61d6cb58c666972746ebfd78fcaf5484}{x1}}\ =\ end.first;}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_a23323762b0bfb27c64a2e10cad4153e1}{y1}}\ =\ end.second;}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_abb91670d827a2f193b99a95dbcccaa53}{r1}}\ =\ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_abb91670d827a2f193b99a95dbcccaa53}{r1}};}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ \_color\_stops)\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_ad544f05360c266abec9c4e9ca2acec65}{color\_stops}}.push\_back(\{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .offset\ =\ item.first,}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .red\ =\ item.second.r,}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .green\ =\ item.second.g,}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .blue\ =\ item.second.b,}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .alpha\ =\ item.second.a,}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structvg_1_1paint_1_1gradient_1_1radial_a7f5fc2639ac0e05df7481e559c76c851}\label{structvg_1_1paint_1_1gradient_1_1radial_a7f5fc2639ac0e05df7481e559c76c851} 
+\index{vg::paint::gradient::radial@{vg::paint::gradient::radial}!apply\_to\_source@{apply\_to\_source}}
+\index{apply\_to\_source@{apply\_to\_source}!vg::paint::gradient::radial@{vg::paint::gradient::radial}}
+\doxysubsubsection{\texorpdfstring{apply\_to\_source()}{apply\_to\_source()}}
+{\footnotesize\ttfamily void vg\+::paint\+::gradient\+::radial\+::apply\+\_\+to\+\_\+source (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\+\_\+editor\+\_\+t}} \&}]{editor,  }\item[{double}]{opacity }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structvg_1_1paint_1_1base__i_a1352dcffee9193870754ed49f9d0328e}{vg\+::paint\+::base\+\_\+i}}.
+
+
+
+Definition at line \mbox{\hyperlink{vg__attributes_8h_source_l00108}{108}} of file \mbox{\hyperlink{vg__attributes_8h_source}{vg\+\_\+attributes.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ lg\ =\ Cairo::RadialGradient::create(\mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_aacb8451e354538273a2c6dd9324fa993}{x0}},\ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_a944f90de7752b385c5539bacf0f5ee2e}{y0}},\ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_a5f1faa7da7d6ef3b6449c97f61757c0e}{r0}},\ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_a61d6cb58c666972746ebfd78fcaf5484}{x1}},\ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_a23323762b0bfb27c64a2e10cad4153e1}{y1}},\ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1radial_abb91670d827a2f193b99a95dbcccaa53}{r1}});}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ \mbox{\hyperlink{structvg_1_1paint_1_1gradient_1_1base__i_ad544f05360c266abec9c4e9ca2acec65}{color\_stops}})\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lg-\/>add\_color\_stop\_rgba(}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ item.offset,}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ item.red,}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ item.green,}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ item.blue,}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ item.alpha}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ editor-\/>set\_source(lg);}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structvg_1_1paint_1_1gradient_1_1radial_adb2ad74562d7b84d5dceb3265d742474}\label{structvg_1_1paint_1_1gradient_1_1radial_adb2ad74562d7b84d5dceb3265d742474} 
+\index{vg::paint::gradient::radial@{vg::paint::gradient::radial}!sample@{sample}}
+\index{sample@{sample}!vg::paint::gradient::radial@{vg::paint::gradient::radial}}
+\doxysubsubsection{\texorpdfstring{sample()}{sample()}}
+{\footnotesize\ttfamily color\+::\+Color vg\+::paint\+::gradient\+::radial\+::sample (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structvg_1_1paint_1_1base__i_a4d717c5de063eb563a50b9fe39d9f295}{vg\+::paint\+::base\+\_\+i}}.
+
+
+
+Definition at line \mbox{\hyperlink{vg__attributes_8h_source_l00121}{121}} of file \mbox{\hyperlink{vg__attributes_8h_source}{vg\+\_\+attributes.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{stringliteral}{"{}\#00000000"{}}\_color;}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structvg_1_1paint_1_1gradient_1_1radial_a5f1faa7da7d6ef3b6449c97f61757c0e}\label{structvg_1_1paint_1_1gradient_1_1radial_a5f1faa7da7d6ef3b6449c97f61757c0e} 
+\index{vg::paint::gradient::radial@{vg::paint::gradient::radial}!r0@{r0}}
+\index{r0@{r0}!vg::paint::gradient::radial@{vg::paint::gradient::radial}}
+\doxysubsubsection{\texorpdfstring{r0}{r0}}
+{\footnotesize\ttfamily int vg\+::paint\+::gradient\+::radial\+::r0}
+
+
+
+Definition at line \mbox{\hyperlink{vg__attributes_8h_source_l00084}{84}} of file \mbox{\hyperlink{vg__attributes_8h_source}{vg\+\_\+attributes.\+h}}.
+
+\Hypertarget{structvg_1_1paint_1_1gradient_1_1radial_abb91670d827a2f193b99a95dbcccaa53}\label{structvg_1_1paint_1_1gradient_1_1radial_abb91670d827a2f193b99a95dbcccaa53} 
+\index{vg::paint::gradient::radial@{vg::paint::gradient::radial}!r1@{r1}}
+\index{r1@{r1}!vg::paint::gradient::radial@{vg::paint::gradient::radial}}
+\doxysubsubsection{\texorpdfstring{r1}{r1}}
+{\footnotesize\ttfamily int vg\+::paint\+::gradient\+::radial\+::r1}
+
+
+
+Definition at line \mbox{\hyperlink{vg__attributes_8h_source_l00084}{84}} of file \mbox{\hyperlink{vg__attributes_8h_source}{vg\+\_\+attributes.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/graphics/\mbox{\hyperlink{vg__attributes_8h}{vg\+\_\+attributes.\+h}}\end{DoxyCompactItemize}

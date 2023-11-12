@@ -1,0 +1,169 @@
+\doxysection{cydui\+::compositing\+::compositing\+\_\+node\+\_\+t Struct Reference}
+\hypertarget{structcydui_1_1compositing_1_1compositing__node__t}{}\label{structcydui_1_1compositing_1_1compositing__node__t}\index{cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}}
+
+
+{\ttfamily \#include $<$compositing.\+h$>$}
+
+
+
+Collaboration diagram for cydui\+::compositing\+::compositing\+\_\+node\+\_\+t\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structcydui_1_1compositing_1_1compositing__node__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_a1610a6814cefba4bf21282244e7fab1b}{\texorpdfstring{$\sim$}{\string~}compositing\+\_\+node\+\_\+t}} ()
+\item 
+\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t}{compositing\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_af49c1ce325e0aa49870741404f4f3547}{find\+\_\+by\+\_\+id}} (unsigned long \+\_\+id)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+unsigned long \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_a5580d49177a116a40c74586c3ae04fc9}{id}} = 0
+\item 
+\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__operation__t}{compositing\+\_\+operation\+\_\+t}} \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_adb3336329c15c1967f82a6c9b52cfe80}{op}} \{\}
+\item 
+std\+::deque$<$ \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t}{compositing\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_a47895b484d48bd5011bc40ea99f36391}{children}} \{\}
+\item 
+\mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1vg__fragment__t}{vg\+\_\+fragment\+\_\+t}} \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_ab225f17632dfd1bad8743451d9fdacf7}{graphics}} \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{compositing_8h_source_l00033}{33}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structcydui_1_1compositing_1_1compositing__node__t_a1610a6814cefba4bf21282244e7fab1b}\label{structcydui_1_1compositing_1_1compositing__node__t_a1610a6814cefba4bf21282244e7fab1b} 
+\index{cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}!````~compositing\_node\_t@{\texorpdfstring{$\sim$}{\string~}compositing\_node\_t}}
+\index{````~compositing\_node\_t@{\texorpdfstring{$\sim$}{\string~}compositing\_node\_t}!cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}compositing\_node\_t()}{\string~compositing\_node\_t()}}
+{\footnotesize\ttfamily cydui\+::compositing\+::compositing\+\_\+node\+\_\+t\+::\texorpdfstring{$\sim$}{\string~}compositing\+\_\+node\+\_\+t (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{compositing_8h_source_l00039}{39}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_a47895b484d48bd5011bc40ea99f36391}{children}})\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ item;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcydui_1_1compositing_1_1compositing__node__t_af49c1ce325e0aa49870741404f4f3547}\label{structcydui_1_1compositing_1_1compositing__node__t_af49c1ce325e0aa49870741404f4f3547} 
+\index{cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}!find\_by\_id@{find\_by\_id}}
+\index{find\_by\_id@{find\_by\_id}!cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}}
+\doxysubsubsection{\texorpdfstring{find\_by\_id()}{find\_by\_id()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t}{compositing\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*} cydui\+::compositing\+::compositing\+\_\+node\+\_\+t\+::find\+\_\+by\+\_\+id (\begin{DoxyParamCaption}\item[{unsigned long}]{\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{compositing_8h_source_l00051}{51}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keywordtype}{id}\ ==\ \_id)\ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{this};}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_a47895b484d48bd5011bc40ea99f36391}{children}})\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ res\ =\ item-\/>find\_by\_id(\_id);}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ !=\ res)\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=189pt]{structcydui_1_1compositing_1_1compositing__node__t_af49c1ce325e0aa49870741404f4f3547_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=330pt]{structcydui_1_1compositing_1_1compositing__node__t_af49c1ce325e0aa49870741404f4f3547_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structcydui_1_1compositing_1_1compositing__node__t_a47895b484d48bd5011bc40ea99f36391}\label{structcydui_1_1compositing_1_1compositing__node__t_a47895b484d48bd5011bc40ea99f36391} 
+\index{cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}!children@{children}}
+\index{children@{children}!cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}}
+\doxysubsubsection{\texorpdfstring{children}{children}}
+{\footnotesize\ttfamily std\+::deque$<$\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t}{compositing\+\_\+node\+\_\+t}}\texorpdfstring{$\ast$}{*}$>$ cydui\+::compositing\+::compositing\+\_\+node\+\_\+t\+::children \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{compositing_8h_source_l00036}{36}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00036\ \{\};}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1compositing_1_1compositing__node__t_ab225f17632dfd1bad8743451d9fdacf7}\label{structcydui_1_1compositing_1_1compositing__node__t_ab225f17632dfd1bad8743451d9fdacf7} 
+\index{cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}!graphics@{graphics}}
+\index{graphics@{graphics}!cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}}
+\doxysubsubsection{\texorpdfstring{graphics}{graphics}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1vg__fragment__t}{vg\+\_\+fragment\+\_\+t}} cydui\+::compositing\+::compositing\+\_\+node\+\_\+t\+::graphics \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{compositing_8h_source_l00037}{37}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037\ \{\};}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1compositing_1_1compositing__node__t_a5580d49177a116a40c74586c3ae04fc9}\label{structcydui_1_1compositing_1_1compositing__node__t_a5580d49177a116a40c74586c3ae04fc9} 
+\index{cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}!id@{id}}
+\index{id@{id}!cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily unsigned long cydui\+::compositing\+::compositing\+\_\+node\+\_\+t\+::id = 0}
+
+
+
+Definition at line \mbox{\hyperlink{compositing_8h_source_l00034}{34}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
+
+\Hypertarget{structcydui_1_1compositing_1_1compositing__node__t_adb3336329c15c1967f82a6c9b52cfe80}\label{structcydui_1_1compositing_1_1compositing__node__t_adb3336329c15c1967f82a6c9b52cfe80} 
+\index{cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}!op@{op}}
+\index{op@{op}!cydui::compositing::compositing\_node\_t@{cydui::compositing::compositing\_node\_t}}
+\doxysubsubsection{\texorpdfstring{op}{op}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__operation__t}{compositing\+\_\+operation\+\_\+t}} cydui\+::compositing\+::compositing\+\_\+node\+\_\+t\+::op \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{compositing_8h_source_l00035}{35}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035\ \{\};}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/graphics/\mbox{\hyperlink{compositing_8h}{compositing.\+h}}\end{DoxyCompactItemize}

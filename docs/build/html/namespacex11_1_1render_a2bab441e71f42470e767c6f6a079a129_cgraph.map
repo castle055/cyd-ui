@@ -1,0 +1,33 @@
+<map id="x11::render::start" name="x11::render::start">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,94,125,120"/>
+<area shape="rect" id="Node000002" href="$structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84" title=" " alt="" coords="378,27,526,54"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="76,91,115,52,142,33,172,18,229,5,288,4,344,10,392,20,391,25,343,15,288,9,230,10,174,23,144,37,118,56,79,95"/>
+<area shape="rect" id="Node000003" href="$namespacecydui_1_1threading.html#ab51f5bf48b28c9022460156c207217f5" title=" " alt="" coords="179,56,324,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="125,95,163,89,164,94,125,100"/>
+<area shape="rect" id="Node000004" href="$render_8cpp.html#a912e5e13a2361939b93713a8862c228f" title=" " alt="" coords="207,123,296,150"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="125,114,192,124,191,129,125,119"/>
+<area shape="rect" id="Node000014" href="$structcydui_1_1threading_1_1thread__t.html#aa740ecb2c3aec2371e86fca90b115600" title=" " alt="" coords="173,174,330,216"/>
+<area shape="poly" id="edge17_Node000001_Node000014" title=" " alt="" coords="94,118,174,159,185,164,183,169,172,164,91,123"/>
+<area shape="poly" id="edge3_Node000003_Node000003" title=" " alt="" coords="215,56,214,46,220,37,233,32,251,30,272,32,284,38,281,43,270,37,251,35,234,37,223,41,219,47,221,55"/>
+<area shape="poly" id="edge5_Node000004_Node000002" title=" " alt="" coords="296,121,329,108,375,85,416,60,419,65,378,89,331,113,298,126"/>
+<area shape="rect" id="Node000005" href="$render_8cpp.html#af098c7565dcab42f6f984ca26d81f0ca" title=" " alt="" coords="411,123,493,150"/>
+<area shape="poly" id="edge6_Node000004_Node000005" title=" " alt="" coords="297,134,395,134,395,139,297,139"/>
+<area shape="rect" id="Node000006" href="$namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5" title=" " alt="" coords="786,22,919,48"/>
+<area shape="poly" id="edge7_Node000005_Node000006" title=" " alt="" coords="468,120,513,88,543,71,573,58,623,44,675,36,770,30,770,35,675,41,624,49,575,63,545,76,516,92,471,125"/>
+<area shape="rect" id="Node000009" href="$namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7" title=" " alt="" coords="574,72,725,99"/>
+<area shape="poly" id="edge10_Node000005_Node000009" title=" " alt="" coords="493,123,579,101,581,106,495,128"/>
+<area shape="rect" id="Node000010" href="$structpixelmap__t.html#aa70c0fa0014f555358a2d07198b00f69" title=" " alt="" coords="586,123,713,150"/>
+<area shape="poly" id="edge13_Node000005_Node000010" title=" " alt="" coords="494,134,570,134,570,139,494,139"/>
+<area shape="rect" id="Node000011" href="$structprof_1_1context__t.html#a1be702fd81e660750ae54216bc14ed80" title=" " alt="" coords="575,174,724,216"/>
+<area shape="poly" id="edge14_Node000005_Node000011" title=" " alt="" coords="495,146,562,166,560,171,493,151"/>
+<area shape="rect" id="Node000013" href="$structpixelmap__t.html#afd28dda06874905136d50de6911a0242" title=" " alt="" coords="588,240,711,267"/>
+<area shape="poly" id="edge16_Node000005_Node000013" title=" " alt="" coords="470,148,516,186,576,226,587,232,585,236,573,230,512,190,467,152"/>
+<area shape="rect" id="Node000007" href="$structlogging_1_1logger.html#ae412f4d42c6e53803201856b5ceba5aa" title=" " alt="" coords="980,22,1119,48"/>
+<area shape="poly" id="edge8_Node000006_Node000007" title=" " alt="" coords="919,32,964,32,964,38,919,38"/>
+<area shape="rect" id="Node000008" href="$structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b" title=" " alt="" coords="983,72,1117,99"/>
+<area shape="poly" id="edge9_Node000006_Node000008" title=" " alt="" coords="908,46,981,65,979,70,907,51"/>
+<area shape="poly" id="edge11_Node000009_Node000006" title=" " alt="" coords="705,69,781,50,782,55,707,74"/>
+<area shape="poly" id="edge12_Node000009_Node000008" title=" " alt="" coords="725,83,967,83,967,88,725,88"/>
+<area shape="rect" id="Node000012" href="$structprof_1_1context__t.html#ac55bb716357698723f15704b418995be" title=" " alt="" coords="773,182,932,208"/>
+<area shape="poly" id="edge15_Node000011_Node000012" title=" " alt="" coords="724,192,757,192,757,198,724,198"/>
+</map>

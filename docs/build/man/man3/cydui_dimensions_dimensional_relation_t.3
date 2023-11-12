@@ -1,0 +1,112 @@
+.TH "cydui::dimensions::dimensional_relation_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::dimensions::dimensional_relation_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <dimensions\&.hpp>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBdimensional_relation_t\fP (std::function< \fBdimension_value_t\fP()> \fBbinding\fP, std::unordered_set< \fBdimension_t\fP * > \fBdeps\fP)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP (\fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP (\fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBoperator dimension_value_t\fP () const"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::unordered_set< \fBdimension_t\fP * > \fBdeps\fP = {}"
+.br
+.ti -1c
+.RI "std::function< \fBdimension_value_t\fP()> \fBbinding\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB18\fP of file \fBdimensions\&.hpp\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "dimensions::dimensional_relation_t::dimensional_relation_t (std::function< \fBdimension_value_t\fP()> binding, std::unordered_set< \fBdimension_t\fP * > deps)"
+
+.PP
+Definition at line \fB27\fP of file \fBdimensions\&.cpp\fP\&..PP
+.nf
+30  : deps(std::move(_deps)), binding(std::move(_binding)) { }
+.fi
+
+.SS "dimensions::dimensional_relation_t::dimensional_relation_t (\fBdimensions::dimension_value_t\fP val)"
+
+.PP
+Definition at line \fB32\fP of file \fBdimensions\&.cpp\fP\&..PP
+.nf
+33                                      {
+34   this\->binding = [val]() { return val; };
+35 }
+.fi
+
+.SS "dimensions::dimensional_relation_t::dimensional_relation_t (\fBdimensions::dimension_t\fP & dim)"
+
+.PP
+Definition at line \fB37\fP of file \fBdimensions\&.cpp\fP\&..PP
+.nf
+38                               {
+39   this\->deps = {&dim};
+40   this\->binding = [&dim]() { return dim\&.val(); };
+41 }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "cydui::dimensions::dimensional_relation_t::operator \fBdimension_value_t\fP () const\fC [inline]\fP"
+
+.PP
+Definition at line \fB37\fP of file \fBdimensions\&.hpp\fP\&..PP
+.nf
+37                                          {
+38         return this\->binding();
+39       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "std::function<\fBdimension_value_t\fP()> cydui::dimensions::dimensional_relation_t::binding"
+\fBInitial value:\fP.PP
+.nf
+= []() {
+        return 0;
+      }
+.fi
+
+.PP
+Definition at line \fB20\fP of file \fBdimensions\&.hpp\fP\&..PP
+.nf
+20                                                       {
+21         return 0;
+22       };
+.fi
+
+.SS "std::unordered_set<\fBdimension_t\fP*> cydui::dimensions::dimensional_relation_t::deps = {}"
+
+.PP
+Definition at line \fB19\fP of file \fBdimensions\&.hpp\fP\&..PP
+.nf
+19 {};
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

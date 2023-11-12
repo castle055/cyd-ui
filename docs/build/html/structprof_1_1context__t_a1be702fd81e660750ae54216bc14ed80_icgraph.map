@@ -1,0 +1,20 @@
+<map id="prof::context_t::scope_event" name="prof::context_t::scope_event">
+<area shape="rect" id="Node000001" title=" " alt="" coords="769,51,917,93"/>
+<area shape="rect" id="Node000002" href="$classcydui_1_1compositing_1_1LayoutCompositor.html#a6963756199e05569cf36f7ce8cd896fd" title=" " alt="" coords="215,5,358,64"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="753,54,720,49,622,41,524,36,358,35,358,30,524,31,623,35,721,44,754,49"/>
+<area shape="rect" id="Node000004" href="$namespacex11_1_1render.html#a69153a2a848d57aef839a05e0982a76a" title=" " alt="" coords="599,59,721,85"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="753,75,721,75,721,69,753,69"/>
+<area shape="rect" id="Node000006" href="$render_8cpp.html#af098c7565dcab42f6f984ca26d81f0ca" title=" " alt="" coords="619,109,701,136"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="754,99,702,114,701,109,753,94"/>
+<area shape="rect" id="Node000003" href="$classcydui_1_1compositing_1_1LayoutCompositor.html#a292f229815bc05bbcf95cf3f2e90877b" title=" " alt="" coords="14,5,158,64"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="199,37,158,37,158,32,199,32"/>
+<area shape="rect" id="Node000005" href="$namespacecydui_1_1graphics.html#a183658b9bd88610ff0e5767ae04c55d5" title=" " alt="" coords="406,59,551,85"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="584,75,552,75,552,69,584,69"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="391,58,358,51,359,46,392,53"/>
+<area shape="rect" id="Node000007" href="$render_8cpp.html#a912e5e13a2361939b93713a8862c228f" title=" " alt="" coords="434,109,523,136"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="603,125,524,125,524,120,603,120"/>
+<area shape="rect" id="Node000008" href="$namespacex11_1_1render.html#a2bab441e71f42470e767c6f6a079a129" title=" " alt="" coords="227,109,346,136"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="418,125,347,125,347,120,418,120"/>
+<area shape="rect" id="Node000009" href="$structcydui_1_1graphics_1_1window__t.html#a2e7c0a722f210b4271bc3815f2229e32" title=" " alt="" coords="5,101,167,144"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="211,125,167,125,167,120,211,120"/>
+</map>

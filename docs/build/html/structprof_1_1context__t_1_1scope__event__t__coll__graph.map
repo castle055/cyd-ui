@@ -1,0 +1,16 @@
+<map id="prof::context_t::scope_event_t" name="prof::context_t::scope_event_t">
+<area shape="rect" id="Node000001" title=" " alt="" coords="211,523,359,565"/>
+<area shape="rect" id="Node000002" href="$structprof_1_1context__t.html" title=" " alt="" coords="177,432,283,459"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="247,471,275,521,271,523,242,473"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,325,135,352"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="103,358,212,429,209,434,100,363"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="158,309,302,368"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="233,383,233,432,227,432,227,383"/>
+<area shape="rect" id="Node000005" href="$structprof_1_1thread__context__t.html" title=" " alt="" coords="153,219,302,245"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="231,261,232,309,227,309,225,261"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="138,96,304,155"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="226,170,229,218,224,218,221,170"/>
+<area shape="rect" id="Node000007" href="$structprof_1_1event__t.html" title=" " alt="" coords="234,5,328,32"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="313,41,324,55,340,87,343,124,343,447,340,469,331,490,307,524,303,521,327,487,335,467,338,446,338,124,335,89,320,57,309,44"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="268,47,239,97,235,94,264,44"/>
+</map>

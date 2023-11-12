@@ -1,0 +1,95 @@
+\doxysection{Thread\+Timeline.\+h}
+\hypertarget{ThreadTimeline_8h_source}{}\label{ThreadTimeline_8h_source}\index{include/tools/profiler/ThreadTimeline.h@{include/tools/profiler/ThreadTimeline.h}}
+\mbox{\hyperlink{ThreadTimeline_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 10/19/23.}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ CYD\_UI\_THREADTIMELINE\_H}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00006}00006\ \textcolor{preprocessor}{\#define\ CYD\_UI\_THREADTIMELINE\_H}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <ranges>}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}../../cydui.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00012}\mbox{\hyperlink{structThreadTimelineState}{00012}}\ \mbox{\hyperlink{component__macros_8h_adf82c38b14cc6c67209d8252e8a9199e}{STATE}}(\mbox{\hyperlink{structThreadTimeline}{ThreadTimeline}})\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00013}\mbox{\hyperlink{structThreadTimelineState_acd803b8d95f700d0064b325bbf3807b7}{00013}}\ \ \ \mbox{\hyperlink{structThreadTimelineState_acd803b8d95f700d0064b325bbf3807b7}{INIT\_STATE}}(\mbox{\hyperlink{structThreadTimeline}{ThreadTimeline}})\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00014}00014\ \ \ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00015}00015\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00016}00016\ \};}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00018}\mbox{\hyperlink{structThreadTimelineEventHandlerData_a679c934f99fd0fc0bdc9a5c7ca5c6560}{00018}}\ \mbox{\hyperlink{component__macros_8h_a815d8178754c2fcbbb661c6ac8f9fb1f}{COMPONENT}}(\mbox{\hyperlink{structThreadTimeline}{ThreadTimeline}})\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00019}\mbox{\hyperlink{structThreadTimelineEventHandler_a4624c28ab2c2c50f9faca00495b1e72e}{00019}}\ \ \ \mbox{\hyperlink{structThreadTimelineEventHandler_a4624c28ab2c2c50f9faca00495b1e72e}{PROPS}}(\{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{structprof_1_1context__t}{prof::context\_t}}\ \&ctx;}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00021}00021\ \ \ \ \ std::thread::id\ thd\_id;}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00022}00022\ \ \ \ \ \mbox{\hyperlink{namespaceprof_a2a9caf65a453a1e71532f1607f921353}{prof::time\_point}}\ now;}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00023}00023\ \ \ \ \ \textcolor{keywordtype}{double}\ time\_scale\ =\ 1.0;}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00024}00024\ \ \ \ \ \textcolor{keywordtype}{int}\ point\_event\_radius\ =\ 6;}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00025}00025\ \ \ \})}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00026}00026\ \ \ INIT(\mbox{\hyperlink{structThreadTimeline}{ThreadTimeline}})\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00027}00027\ \ \ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00028}00028\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00029}00029\ \ \ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00030}\mbox{\hyperlink{structThreadTimelineEventHandler_a345687be27c69940f67eec98c8b6597e}{00030}}\ \ \ REDRAW\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00031}00031\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00032}00032\ \ \ \ \ add(\{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00033}00033\ \ \ \ \ \ \ COMP(Canvas)(\{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ .props\ =\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ .draw\ =\ [\textcolor{keyword}{this}](\mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1vg__fragment__t}{vg::vg\_fragment\_t}}\ \&frag)\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&thd\_ctx\ =\ props.ctx.threads[props.thd\_id];}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Paint\ timeline}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ frag.append(}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1line}{vg::line}}\ \{\}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1attr__stroke_ab4810663e8be4871c74958b1868f32ab}{stroke}}(\{.color\ =\ \textcolor{stringliteral}{"{}\#FCAE1E"{}}\_color\})}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .x1(0)}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .y1(dim-\/>ch.val()\ /\ 2)}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .x2(dim-\/>cw.val())}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .y2(dim-\/>ch.val()\ /\ 2)}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Paint\ events}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ x\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ w\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&ev:\ std::ranges::reverse\_view(thd\_ctx.timeline))\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ ==\ ev.description\ ||\ \textcolor{charliteral}{'\(\backslash\)0'}\ ==\ *ev.description)\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ x\ =\ dim-\/>cw.val()\ -\/\ (int)\ ((\textcolor{keywordtype}{double})\ prof::duration\_cast<prof::microseconds>(}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ props.now\ -\/\ ev.t0).count()\ *\ props.time\_scale);}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ev.t1.has\_value())\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ w\ =\ (int)\ (((\textcolor{keywordtype}{double})\ prof::duration\_cast<prof::microseconds>(}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ev.t1.value()\ -\/\ ev.t0).count())\ *\ props.time\_scale);}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ +\ w\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frag.append(}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1rect}{vg::rect}}\ \{\}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1attr__x_afcf9bc9a28e61f665856ab41b715c7e4}{x}}(x)}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1attr__y_a7a7853afbce6cc2b0156976c9b4fe234}{y}}(0)}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .width(\textcolor{keywordtype}{int}\ \{std::max(w,\ 1)\})}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .height(dim-\/>ch.val())}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .fill(\{.color\ =\ \textcolor{stringliteral}{"{}\#FCAE1E"{}}\_color\})}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ +\ w\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ frag.append(}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1circle}{vg::circle}}\ \{\}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1attr__cx_a309bc766a7b7e3baf5116bfe0f2a69db}{cx}}((x\ <\ 0\ ?\ 0\ :\ x)\ -\/\ props.point\_event\_radius)}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1attr__cy_a5366c403c7864ea61f7e375d6e350f74}{cy}}((dim-\/>ch.val()\ /\ 2)\ -\/\ props.point\_event\_radius)}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{structcydui_1_1graphics_1_1vg_1_1attr__r_ab510b5a329cfaf70d91cc00b00639250}{r}}(\textcolor{keywordtype}{int}\ \{props.point\_event\_radius\})}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .fill(\{.color\ =\ \textcolor{stringliteral}{"{}\#00CFCC"{}}\_color\})}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00082}00082\ \ \ \ \ \ \ \ \ .w\ =\ dim-\/>cw,}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ .h\ =\ dim-\/>ch,}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00084}00084\ \ \ \ \ \ \ \})}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00085}00085\ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00086}00086\ \ \ \};}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00087}00087\ \};}
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{ThreadTimeline_8h_source_l00089}00089\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_THREADTIMELINE\_H}}
+
+\end{DoxyCode}

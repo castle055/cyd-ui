@@ -1,0 +1,391 @@
+\doxysection{include/events/cydui\+\_\+events.h File Reference}
+\hypertarget{cydui__events_8h}{}\label{cydui__events_8h}\index{include/events/cydui\_events.h@{include/events/cydui\_events.h}}
+{\ttfamily \#include "{}change\+\_\+events.\+h"{}}\newline
+Include dependency graph for cydui\+\_\+events.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cydui__events_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{cydui__events_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structRedrawEvent}{Redraw\+Event}}
+\item 
+struct \mbox{\hyperlink{structRedrawEvent_1_1DataType}{Redraw\+Event\+::\+Data\+Type}}
+\item 
+struct \mbox{\hyperlink{structButtonEvent}{Button\+Event}}
+\item 
+struct \mbox{\hyperlink{structButtonEvent_1_1DataType}{Button\+Event\+::\+Data\+Type}}
+\item 
+struct \mbox{\hyperlink{structScrollEvent}{Scroll\+Event}}
+\item 
+struct \mbox{\hyperlink{structScrollEvent_1_1DataType}{Scroll\+Event\+::\+Data\+Type}}
+\item 
+struct \mbox{\hyperlink{structMotionEvent}{Motion\+Event}}
+\item 
+struct \mbox{\hyperlink{structMotionEvent_1_1DataType}{Motion\+Event\+::\+Data\+Type}}
+\item 
+struct \mbox{\hyperlink{structResizeEvent}{Resize\+Event}}
+\item 
+struct \mbox{\hyperlink{structResizeEvent_1_1DataType}{Resize\+Event\+::\+Data\+Type}}
+\item 
+struct \mbox{\hyperlink{structKeyEvent}{Key\+Event}}
+\item 
+struct \mbox{\hyperlink{structKeyEvent_1_1DataType}{Key\+Event\+::\+Data\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum class \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0}{Button}} \{ \newline
+\mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a428429ba9ea83e4841036fb0508fd6dc}{PRIMARY}} = 1
+, \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a371b09d93ca01e09a42fbd5a2a423f8e}{SECONDARY}} = 2
+, \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a0f0dd2bcb848ba94248d660bada66b34}{WHEEL}} = 3
+, \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a39ef626649e9e14c6561411867e50f00}{BUTTON1}} = PRIMARY
+, \newline
+\mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a752441e0500e1807164a5f758ed93a8c}{BUTTON2}} = SECONDARY
+, \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a86707c1d7552f48007cc25b77a2db21b}{BUTTON3}} = WHEEL
+ \}
+\item 
+enum class \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73}{Key}} \{ \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a696b031073e74bf2cb98e5ef201d4aa3}{UNKNOWN}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a7fc56270e7a70fa81a5935b72eacbe29}{A}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a9d5ed678fe57bcca610140957afab571}{B}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257}{C}}
+, \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a800618943025315f869e4e1f09471012}{F}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73adfcf28d0734569a6a693bc8194de62bf}{G}}
+, \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ac1d9f50f86825a1a2302ec2449c17196}{H}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73add7536794b63bf90eccfd37f9b147d7f}{I}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73aff44570aca8241914870afbc310cdb85}{J}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73aa5f3c6a11b03839d46af9fb43c97c188}{K}}
+, \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ad20caec3b48a1eef164cb4ca81ba2587}{L}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a69691c7bdcc3ce6d5d8a1361f22d04ac}{M}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a8d9c307cb7f3c4a32822a51922d1ceaa}{N}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af186217753c37b9b9f958d906208506e}{O}}
+, \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a44c29edb103a2872f519ad0c9a0fdaaa}{P}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af09564c9ca56850d4cd6b3319e541aee}{Q}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ae1e1d3d40573127e9ee0480caf1283d6}{R}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}{S}}
+, \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a4c614360da93c0a041b22e537de151eb}{U}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5206560a306a2e085a437fd258eb57ce}{V}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a61e9c06ea9a85a5088a499df6458d276}{W}}
+, \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a02129bb861061d1a052c592e2dc6b383}{X}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a57cec4137b614c87cb4e24a3d003a3e0}{Y}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a21c2e59531c8710156d34a3c30ac81d5}{Z}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6506ae39fdca9845e3a6de3865183e57}{SPACE}}
+, \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a331b3100a485d8cacff1d3df8e9b0c13}{ENTER}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6f5d8e41084b4d3d47fa621c459eede1}{BACKSPACE}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a32f68a60cef40faedbc6af20298c1a1e}{DELETE}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6351aefd1e5e1b62c76f8580116964be}{ESC}}
+, \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a684d325a7303f52e64011467ff5c5758}{LEFT}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a21507b40c80068eda19865706fdc2403}{RIGHT}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73afbaedde498cdead4f2780217646e9ba1}{UP}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ac4e0e4e3118472beeb2ae75827450f1f}{DOWN}}
+, \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73affb9e89ff97d76c880529410df342f99}{LEFT\+\_\+\+CTRL}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ad10ea8504186cd7d30b296fdba4f4bf6}{RIGHT\+\_\+\+CTRL}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab6c7e6204e97690efd79d6f513ed5613}{LEFT\+\_\+\+SHIFT}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a63a707029860972efa1c44ac6016e098}{RIGHT\+\_\+\+SHIFT}}
+, \newline
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73afd816cf0346d4939b4cf3bed78dd7fde}{LEFT\+\_\+\+SUPER}}
+, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a8825bb5d58b44b72465799553acb964d}{RIGHT\+\_\+\+SUPER}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0}\label{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0} 
+\index{cydui\_events.h@{cydui\_events.h}!Button@{Button}}
+\index{Button@{Button}!cydui\_events.h@{cydui\_events.h}}
+\doxysubsubsection{\texorpdfstring{Button}{Button}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0}{Button}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PRIMARY@{PRIMARY}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!PRIMARY@{PRIMARY}}}\Hypertarget{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a428429ba9ea83e4841036fb0508fd6dc}\label{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a428429ba9ea83e4841036fb0508fd6dc} 
+PRIMARY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SECONDARY@{SECONDARY}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!SECONDARY@{SECONDARY}}}\Hypertarget{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a371b09d93ca01e09a42fbd5a2a423f8e}\label{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a371b09d93ca01e09a42fbd5a2a423f8e} 
+SECONDARY&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{WHEEL@{WHEEL}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!WHEEL@{WHEEL}}}\Hypertarget{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a0f0dd2bcb848ba94248d660bada66b34}\label{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a0f0dd2bcb848ba94248d660bada66b34} 
+WHEEL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BUTTON1@{BUTTON1}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!BUTTON1@{BUTTON1}}}\Hypertarget{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a39ef626649e9e14c6561411867e50f00}\label{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a39ef626649e9e14c6561411867e50f00} 
+BUTTON1&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BUTTON2@{BUTTON2}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!BUTTON2@{BUTTON2}}}\Hypertarget{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a752441e0500e1807164a5f758ed93a8c}\label{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a752441e0500e1807164a5f758ed93a8c} 
+BUTTON2&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BUTTON3@{BUTTON3}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!BUTTON3@{BUTTON3}}}\Hypertarget{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a86707c1d7552f48007cc25b77a2db21b}\label{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a86707c1d7552f48007cc25b77a2db21b} 
+BUTTON3&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{cydui__events_8h_source_l00047}{47}} of file \mbox{\hyperlink{cydui__events_8h_source}{cydui\+\_\+events.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a428429ba9ea83e4841036fb0508fd6dc}{PRIMARY}}\ =\ 1,}
+\DoxyCodeLine{00049\ \ \ \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a371b09d93ca01e09a42fbd5a2a423f8e}{SECONDARY}}\ =\ 2,}
+\DoxyCodeLine{00050\ \ \ \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a0f0dd2bcb848ba94248d660bada66b34}{WHEEL}}\ =\ 3,}
+\DoxyCodeLine{00051\ \ \ \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a39ef626649e9e14c6561411867e50f00}{BUTTON1}}\ =\ \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a428429ba9ea83e4841036fb0508fd6dc}{PRIMARY}},}
+\DoxyCodeLine{00052\ \ \ \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a752441e0500e1807164a5f758ed93a8c}{BUTTON2}}\ =\ \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a371b09d93ca01e09a42fbd5a2a423f8e}{SECONDARY}},}
+\DoxyCodeLine{00053\ \ \ \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a86707c1d7552f48007cc25b77a2db21b}{BUTTON3}}\ =\ \mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0a0f0dd2bcb848ba94248d660bada66b34}{WHEEL}},}
+\DoxyCodeLine{00054\ \};}
+
+\end{DoxyCode}
+\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73} 
+\index{cydui\_events.h@{cydui\_events.h}!Key@{Key}}
+\index{Key@{Key}!cydui\_events.h@{cydui\_events.h}}
+\doxysubsubsection{\texorpdfstring{Key}{Key}}
+{\footnotesize\ttfamily enum class \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73}{Key}}\hspace{0.3cm}{\ttfamily [strong]}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UNKNOWN@{UNKNOWN}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!UNKNOWN@{UNKNOWN}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a696b031073e74bf2cb98e5ef201d4aa3}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a696b031073e74bf2cb98e5ef201d4aa3} 
+UNKNOWN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{A@{A}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!A@{A}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a7fc56270e7a70fa81a5935b72eacbe29}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a7fc56270e7a70fa81a5935b72eacbe29} 
+A&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{B@{B}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!B@{B}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a9d5ed678fe57bcca610140957afab571}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a9d5ed678fe57bcca610140957afab571} 
+B&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{C@{C}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!C@{C}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257} 
+C&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{D@{D}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!D@{D}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5} 
+D&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{E@{E}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!E@{E}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da} 
+E&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{F@{F}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!F@{F}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a800618943025315f869e4e1f09471012}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a800618943025315f869e4e1f09471012} 
+F&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{G@{G}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!G@{G}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73adfcf28d0734569a6a693bc8194de62bf}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73adfcf28d0734569a6a693bc8194de62bf} 
+G&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{H@{H}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!H@{H}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ac1d9f50f86825a1a2302ec2449c17196}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ac1d9f50f86825a1a2302ec2449c17196} 
+H&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{I@{I}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!I@{I}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73add7536794b63bf90eccfd37f9b147d7f}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73add7536794b63bf90eccfd37f9b147d7f} 
+I&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{J@{J}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!J@{J}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73aff44570aca8241914870afbc310cdb85}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73aff44570aca8241914870afbc310cdb85} 
+J&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{K@{K}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!K@{K}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73aa5f3c6a11b03839d46af9fb43c97c188}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73aa5f3c6a11b03839d46af9fb43c97c188} 
+K&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{L@{L}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!L@{L}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ad20caec3b48a1eef164cb4ca81ba2587}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ad20caec3b48a1eef164cb4ca81ba2587} 
+L&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{M@{M}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!M@{M}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a69691c7bdcc3ce6d5d8a1361f22d04ac}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a69691c7bdcc3ce6d5d8a1361f22d04ac} 
+M&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{N@{N}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!N@{N}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a8d9c307cb7f3c4a32822a51922d1ceaa}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a8d9c307cb7f3c4a32822a51922d1ceaa} 
+N&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{O@{O}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!O@{O}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af186217753c37b9b9f958d906208506e}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af186217753c37b9b9f958d906208506e} 
+O&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{P@{P}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!P@{P}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a44c29edb103a2872f519ad0c9a0fdaaa}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a44c29edb103a2872f519ad0c9a0fdaaa} 
+P&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Q@{Q}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!Q@{Q}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af09564c9ca56850d4cd6b3319e541aee}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af09564c9ca56850d4cd6b3319e541aee} 
+Q&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{R@{R}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!R@{R}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ae1e1d3d40573127e9ee0480caf1283d6}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ae1e1d3d40573127e9ee0480caf1283d6} 
+R&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S@{S}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!S@{S}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e} 
+S&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{T@{T}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!T@{T}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3} 
+T&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{U@{U}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!U@{U}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a4c614360da93c0a041b22e537de151eb}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a4c614360da93c0a041b22e537de151eb} 
+U&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{V@{V}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!V@{V}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5206560a306a2e085a437fd258eb57ce}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5206560a306a2e085a437fd258eb57ce} 
+V&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{W@{W}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!W@{W}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a61e9c06ea9a85a5088a499df6458d276}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a61e9c06ea9a85a5088a499df6458d276} 
+W&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{X@{X}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!X@{X}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a02129bb861061d1a052c592e2dc6b383}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a02129bb861061d1a052c592e2dc6b383} 
+X&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Y@{Y}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!Y@{Y}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a57cec4137b614c87cb4e24a3d003a3e0}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a57cec4137b614c87cb4e24a3d003a3e0} 
+Y&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{Z@{Z}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!Z@{Z}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a21c2e59531c8710156d34a3c30ac81d5}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a21c2e59531c8710156d34a3c30ac81d5} 
+Z&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SPACE@{SPACE}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!SPACE@{SPACE}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6506ae39fdca9845e3a6de3865183e57}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6506ae39fdca9845e3a6de3865183e57} 
+SPACE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ENTER@{ENTER}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!ENTER@{ENTER}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a331b3100a485d8cacff1d3df8e9b0c13}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a331b3100a485d8cacff1d3df8e9b0c13} 
+ENTER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BACKSPACE@{BACKSPACE}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!BACKSPACE@{BACKSPACE}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6f5d8e41084b4d3d47fa621c459eede1}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6f5d8e41084b4d3d47fa621c459eede1} 
+BACKSPACE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DELETE@{DELETE}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!DELETE@{DELETE}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a32f68a60cef40faedbc6af20298c1a1e}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a32f68a60cef40faedbc6af20298c1a1e} 
+DELETE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ESC@{ESC}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!ESC@{ESC}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6351aefd1e5e1b62c76f8580116964be}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6351aefd1e5e1b62c76f8580116964be} 
+ESC&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LEFT@{LEFT}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!LEFT@{LEFT}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a684d325a7303f52e64011467ff5c5758}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a684d325a7303f52e64011467ff5c5758} 
+LEFT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RIGHT@{RIGHT}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!RIGHT@{RIGHT}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a21507b40c80068eda19865706fdc2403}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a21507b40c80068eda19865706fdc2403} 
+RIGHT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UP@{UP}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!UP@{UP}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73afbaedde498cdead4f2780217646e9ba1}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73afbaedde498cdead4f2780217646e9ba1} 
+UP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DOWN@{DOWN}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!DOWN@{DOWN}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ac4e0e4e3118472beeb2ae75827450f1f}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ac4e0e4e3118472beeb2ae75827450f1f} 
+DOWN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LEFT\_CTRL@{LEFT\_CTRL}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!LEFT\_CTRL@{LEFT\_CTRL}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73affb9e89ff97d76c880529410df342f99}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73affb9e89ff97d76c880529410df342f99} 
+LEFT\+\_\+\+CTRL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RIGHT\_CTRL@{RIGHT\_CTRL}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!RIGHT\_CTRL@{RIGHT\_CTRL}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ad10ea8504186cd7d30b296fdba4f4bf6}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ad10ea8504186cd7d30b296fdba4f4bf6} 
+RIGHT\+\_\+\+CTRL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LEFT\_SHIFT@{LEFT\_SHIFT}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!LEFT\_SHIFT@{LEFT\_SHIFT}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab6c7e6204e97690efd79d6f513ed5613}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab6c7e6204e97690efd79d6f513ed5613} 
+LEFT\+\_\+\+SHIFT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RIGHT\_SHIFT@{RIGHT\_SHIFT}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!RIGHT\_SHIFT@{RIGHT\_SHIFT}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a63a707029860972efa1c44ac6016e098}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a63a707029860972efa1c44ac6016e098} 
+RIGHT\+\_\+\+SHIFT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{LEFT\_SUPER@{LEFT\_SUPER}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!LEFT\_SUPER@{LEFT\_SUPER}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73afd816cf0346d4939b4cf3bed78dd7fde}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73afd816cf0346d4939b4cf3bed78dd7fde} 
+LEFT\+\_\+\+SUPER&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{RIGHT\_SUPER@{RIGHT\_SUPER}!cydui\_events.h@{cydui\_events.h}}\index{cydui\_events.h@{cydui\_events.h}!RIGHT\_SUPER@{RIGHT\_SUPER}}}\Hypertarget{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a8825bb5d58b44b72465799553acb964d}\label{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a8825bb5d58b44b72465799553acb964d} 
+RIGHT\+\_\+\+SUPER&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{cydui__events_8h_source_l00056}{56}} of file \mbox{\hyperlink{cydui__events_8h_source}{cydui\+\_\+events.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00057\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a696b031073e74bf2cb98e5ef201d4aa3}{UNKNOWN}},}
+\DoxyCodeLine{00058\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a7fc56270e7a70fa81a5935b72eacbe29}{A}},}
+\DoxyCodeLine{00059\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a9d5ed678fe57bcca610140957afab571}{B}},}
+\DoxyCodeLine{00060\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257}{C}},}
+\DoxyCodeLine{00061\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}},}
+\DoxyCodeLine{00062\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}},}
+\DoxyCodeLine{00063\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a800618943025315f869e4e1f09471012}{F}},}
+\DoxyCodeLine{00064\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73adfcf28d0734569a6a693bc8194de62bf}{G}},}
+\DoxyCodeLine{00065\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ac1d9f50f86825a1a2302ec2449c17196}{H}},}
+\DoxyCodeLine{00066\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73add7536794b63bf90eccfd37f9b147d7f}{I}},}
+\DoxyCodeLine{00067\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73aff44570aca8241914870afbc310cdb85}{J}},}
+\DoxyCodeLine{00068\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73aa5f3c6a11b03839d46af9fb43c97c188}{K}},}
+\DoxyCodeLine{00069\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ad20caec3b48a1eef164cb4ca81ba2587}{L}},}
+\DoxyCodeLine{00070\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a69691c7bdcc3ce6d5d8a1361f22d04ac}{M}},}
+\DoxyCodeLine{00071\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a8d9c307cb7f3c4a32822a51922d1ceaa}{N}},}
+\DoxyCodeLine{00072\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af186217753c37b9b9f958d906208506e}{O}},}
+\DoxyCodeLine{00073\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a44c29edb103a2872f519ad0c9a0fdaaa}{P}},}
+\DoxyCodeLine{00074\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af09564c9ca56850d4cd6b3319e541aee}{Q}},}
+\DoxyCodeLine{00075\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ae1e1d3d40573127e9ee0480caf1283d6}{R}},}
+\DoxyCodeLine{00076\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}{S}},}
+\DoxyCodeLine{00077\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}},}
+\DoxyCodeLine{00078\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a4c614360da93c0a041b22e537de151eb}{U}},}
+\DoxyCodeLine{00079\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5206560a306a2e085a437fd258eb57ce}{V}},}
+\DoxyCodeLine{00080\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a61e9c06ea9a85a5088a499df6458d276}{W}},}
+\DoxyCodeLine{00081\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a02129bb861061d1a052c592e2dc6b383}{X}},}
+\DoxyCodeLine{00082\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a57cec4137b614c87cb4e24a3d003a3e0}{Y}},}
+\DoxyCodeLine{00083\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a21c2e59531c8710156d34a3c30ac81d5}{Z}},}
+\DoxyCodeLine{00084\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6506ae39fdca9845e3a6de3865183e57}{SPACE}},}
+\DoxyCodeLine{00085\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a331b3100a485d8cacff1d3df8e9b0c13}{ENTER}},}
+\DoxyCodeLine{00086\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6f5d8e41084b4d3d47fa621c459eede1}{BACKSPACE}},}
+\DoxyCodeLine{00087\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a32f68a60cef40faedbc6af20298c1a1e}{DELETE}},}
+\DoxyCodeLine{00088\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a6351aefd1e5e1b62c76f8580116964be}{ESC}},}
+\DoxyCodeLine{00089\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a684d325a7303f52e64011467ff5c5758}{LEFT}},}
+\DoxyCodeLine{00090\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a21507b40c80068eda19865706fdc2403}{RIGHT}},}
+\DoxyCodeLine{00091\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73afbaedde498cdead4f2780217646e9ba1}{UP}},}
+\DoxyCodeLine{00092\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ac4e0e4e3118472beeb2ae75827450f1f}{DOWN}},}
+\DoxyCodeLine{00093\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73affb9e89ff97d76c880529410df342f99}{LEFT\_CTRL}},}
+\DoxyCodeLine{00094\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ad10ea8504186cd7d30b296fdba4f4bf6}{RIGHT\_CTRL}},}
+\DoxyCodeLine{00095\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab6c7e6204e97690efd79d6f513ed5613}{LEFT\_SHIFT}},}
+\DoxyCodeLine{00096\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a63a707029860972efa1c44ac6016e098}{RIGHT\_SHIFT}},}
+\DoxyCodeLine{00097\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73afd816cf0346d4939b4cf3bed78dd7fde}{LEFT\_SUPER}},}
+\DoxyCodeLine{00098\ \ \ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a8825bb5d58b44b72465799553acb964d}{RIGHT\_SUPER}},}
+\DoxyCodeLine{00099\ \};}
+
+\end{DoxyCode}

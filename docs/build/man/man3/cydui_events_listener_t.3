@@ -1,0 +1,143 @@
+.TH "cydui::events::listener_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::events::listener_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <events\&.hpp>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBlistener_t\fP ()"
+.br
+.ti -1c
+.RI "\fBlistener_t\fP (\fBListener\fP c)"
+.br
+.ti -1c
+.RI "long \fBget_id\fP () const"
+.br
+.ti -1c
+.RI "void \fBremove\fP ()"
+.br
+.ti -1c
+.RI "bool \fBis_active\fP () const"
+.br
+.ti -1c
+.RI "void \fBoperator()\fP (\fBEvent\fP *ev) const"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBstr\fP \fBevent_type\fP"
+.br
+.ti -1c
+.RI "\fBListener\fP \fBfunc\fP"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "long \fBID\fP"
+.br
+.ti -1c
+.RI "bool \fBactive\fP = true"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB166\fP of file \fBevents\&.hpp\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "cydui::events::listener_t::listener_t ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB171\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+171                    {
+172         ID = 0;
+173         active = false;
+174       }
+.fi
+
+.SS "cydui::events::listener_t::listener_t (\fBListener\fP c)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line \fB176\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+176                                      : func(std::move(c)) {
+177         ID = (long) new u8;
+178       }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "long cydui::events::listener_t::get_id () const\fC [inline]\fP"
+
+.PP
+Definition at line \fB184\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+184                                         {
+185         return ID;
+186       }
+.fi
+
+.SS "bool cydui::events::listener_t::is_active () const\fC [inline]\fP"
+
+.PP
+Definition at line \fB196\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+196                              {
+197         return active;
+198       }
+.fi
+
+.SS "void cydui::events::listener_t::operator() (\fBEvent\fP * ev) const\fC [inline]\fP"
+
+.PP
+Definition at line \fB200\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+200                                        {
+201         func(ev);
+202       }
+.fi
+
+.SS "void cydui::events::listener_t::remove ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB191\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+191                     {
+192         cydui::events::remove_listener(event_type, *this);
+193         active = false;
+194       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "bool cydui::events::listener_t::active = true\fC [private]\fP"
+
+.PP
+Definition at line \fB169\fP of file \fBevents\&.hpp\fP\&.
+.SS "\fBstr\fP cydui::events::listener_t::event_type"
+
+.PP
+Definition at line \fB188\fP of file \fBevents\&.hpp\fP\&.
+.SS "\fBListener\fP cydui::events::listener_t::func"
+
+.PP
+Definition at line \fB189\fP of file \fBevents\&.hpp\fP\&.
+.SS "long cydui::events::listener_t::ID\fC [private]\fP"
+
+.PP
+Definition at line \fB168\fP of file \fBevents\&.hpp\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

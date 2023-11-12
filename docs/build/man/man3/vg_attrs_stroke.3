@@ -1,0 +1,227 @@
+.TH "vg::attrs_stroke< T >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vg::attrs_stroke< T >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <vg_attributes\&.h>\fP
+.PP
+Inherits \fBvg::attr_stroke< T >\fP, \fBvg::attr_stroke_width< T >\fP, \fBvg::attr_stroke_opacity< T >\fP, \fBvg::attr_stroke_miterlimit< T >\fP, \fBvg::attr_stroke_dasharray< T >\fP, \fBvg::attr_stroke_dashoffset< T >\fP, \fBvg::attr_stroke_linejoin< T >\fP, and \fBvg::attr_stroke_linecap< T >\fP\&.
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBapply_stroke\fP (\fBpixelmap_editor_t\fP &editor) const"
+.br
+.ti -1c
+.RI "void \fBset_source_to_stroke\fP (\fBpixelmap_editor_t\fP &editor) const"
+.br
+.ti -1c
+.RI "color::Color \fBsample_stroke\fP (int x, int y) const"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Public Member Functions inherited from \fBvg::attr_stroke< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::solid\fP &_stroke_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::solid\fP &&_stroke_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::gradient::linear\fP &_stroke_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::gradient::linear\fP &&_stroke_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::gradient::radial\fP &_stroke_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::gradient::radial\fP &&_stroke_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::attr_stroke_width< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_width\fP (auto &_stroke_width_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_width\fP (auto &&_stroke_width_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::attr_stroke_opacity< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_opacity\fP (float &_stroke_opacity_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_opacity\fP (float &&_stroke_opacity_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::attr_stroke_miterlimit< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_miterlimit\fP (int &_stroke_miterlimit_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_miterlimit\fP (int &&_stroke_miterlimit_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::attr_stroke_dasharray< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_dasharray\fP (std::vector< double > &_stroke_dasharray_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_dasharray\fP (std::vector< double > &&_stroke_dasharray_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::attr_stroke_dashoffset< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_dashoffset\fP (double &_stroke_dashoffset_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_dashoffset\fP (double &&_stroke_dashoffset_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::attr_stroke_linejoin< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_linejoin\fP (\fBstroke_linejoin_e\fP &_stroke_linejoin_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_linejoin\fP (\fBstroke_linejoin_e\fP &&_stroke_linejoin_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::attr_stroke_linecap< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_linecap\fP (\fBstroke_linecap_e\fP &_stroke_linecap_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_linecap\fP (\fBstroke_linecap_e\fP &&_stroke_linecap_)"
+.br
+.in -1c
+
+Public Attributes inherited from \fBvg::attr_stroke< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBvg::paint::type\fP \fB_stroke\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBvg::attr_stroke_width< T >\fP
+.in +1c
+.ti -1c
+.RI "int \fB_stroke_width\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBvg::attr_stroke_opacity< T >\fP
+.in +1c
+.ti -1c
+.RI "float \fB_stroke_opacity\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBvg::attr_stroke_miterlimit< T >\fP
+.in +1c
+.ti -1c
+.RI "int \fB_stroke_miterlimit\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBvg::attr_stroke_dasharray< T >\fP
+.in +1c
+.ti -1c
+.RI "std::vector< double > \fB_stroke_dasharray\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBvg::attr_stroke_dashoffset< T >\fP
+.in +1c
+.ti -1c
+.RI "double \fB_stroke_dashoffset\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBvg::attr_stroke_linejoin< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBstroke_linejoin_e\fP \fB_stroke_linejoin\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBvg::attr_stroke_linecap< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBstroke_linecap_e\fP \fB_stroke_linecap\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename \fBT\fP>
+.br
+struct vg::attrs_stroke< T >"
+.PP
+Definition at line \fB355\fP of file \fBvg_attributes\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename \fBT\fP > void \fBvg::attrs_stroke\fP< \fBT\fP >::apply_stroke (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line \fB365\fP of file \fBvg_attributes\&.h\fP\&..PP
+.nf
+365                                                          {
+366         editor\->set_line_width(this\->_stroke_width);
+367         editor\->set_line_cap(this\->_stroke_linecap);
+368         editor\->set_line_join(this\->_stroke_linejoin);
+369         editor\->set_dash(this\->_stroke_dasharray, this\->_stroke_dashoffset);
+370         editor\->set_miter_limit(this\->_stroke_miterlimit);
+371       }
+.fi
+
+.SS "template<typename \fBT\fP > color::Color \fBvg::attrs_stroke\fP< \fBT\fP >::sample_stroke (int x, int y) const\fC [inline]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line \fB380\fP of file \fBvg_attributes\&.h\fP\&..PP
+.nf
+380                                                    {
+381         return std::visit([&](auto &&f) \-> color::Color {
+382           return f\&.sample(x, y);
+383         }, this\->_stroke);
+384       }
+.fi
+
+.SS "template<typename \fBT\fP > void \fBvg::attrs_stroke\fP< \fBT\fP >::set_source_to_stroke (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line \fB373\fP of file \fBvg_attributes\&.h\fP\&..PP
+.nf
+373                                                                  {
+374         std::visit([&](auto &&s) {
+375           s\&.apply_to_source(editor, this\->_stroke_opacity);
+376         }, this\->_stroke);
+377       }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

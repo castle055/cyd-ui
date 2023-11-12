@@ -1,0 +1,115 @@
+.TH "render" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+render
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBRenderThreadData\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBstart\fP (\fBcydui::graphics::window_t\fP *win)"
+.br
+.ti -1c
+.RI "void \fBresize\fP (\fBpixelmap_t\fP *target, int w, int h)"
+.br
+.ti -1c
+.RI "void \fBflush\fP (\fBcydui::graphics::window_t\fP *win)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void render::flush (\fBcydui::graphics::window_t\fP * win)"
+
+.PP
+Definition at line \fB203\fP of file \fBrender\&.cpp\fP\&..PP
+.nf
+203                                              {
+204   std::lock_guard lk {win\->render_mtx};
+205   auto _pev = win\->profiler\->scope_event("render::flush");
+206   
+207   auto* tmp = win\->render_target;
+208   win\->render_target = win\->staging_target;
+209   win\->staging_target = tmp;
+210   
+211   win\->dirty = true;
+212 }
+.fi
+
+.SS "void render::resize (\fBpixelmap_t\fP * target, int w, int h)"
+
+.PP
+Definition at line \fB163\fP of file \fBrender\&.cpp\fP\&..PP
+.nf
+163                                                     {
+164   //if (w != target\->w || h != target\->h) {
+165   //  Drawable new_drw = XCreatePixmap(state::get_dpy(),
+166   //    target\->win\->xwin,
+167   //    w,
+168   //    h,
+169   //    DefaultDepth(state::get_dpy(), state::get_screen()));
+170   //  XSetForeground(state::get_dpy(),
+171   //    target\->gc,
+172   //    BlackPixel(state::get_dpy(), state::get_screen()));
+173   //  XFillRectangle(state::get_dpy(), new_drw, target\->gc, 0, 0, w, h);
+174   //
+175   //  //target\->win\->x_mtx\&.lock();
+176   //  XCopyArea(state::get_dpy(),
+177   //    target\->drawable,
+178   //    new_drw,
+179   //    target\->gc,
+180   //    0,
+181   //    0,
+182   //    target\->w,
+183   //    target\->h,
+184   //    0,
+185   //    0);
+186   //
+187   //  XFreePixmap(state::get_dpy(), target\->drawable);
+188   //  XFreeGC(state::get_dpy(), target\->gc);
+189   //
+190   //  target\->drawable = new_drw;
+191   //  target\->gc = XCreateGC(state::get_dpy(), target\->drawable, 0, NULL);
+192   //
+193   //  //target\->win\->x_mtx\&.unlock();
+194   //
+195   //  XFlush(state::get_dpy());
+196   //
+197   //  target\->w = w;
+198   //  target\->h = h;
+199   //  render::flush(target\->win);
+200   //}
+201 }
+.fi
+
+.SS "void render::start (\fBcydui::graphics::window_t\fP * win)"
+
+.PP
+Definition at line \fB77\fP of file \fBrender\&.cpp\fP\&..PP
+.nf
+77                                              {
+78   if (win\->render_thd && win\->render_thd\->running)
+79     return;
+80   xlog_ctrl\&.debug("Starting render thread");
+81   
+82   delete (RenderThreadData*) win\->render_data;
+83   win\->render_data = new RenderThreadData {
+84     \&.win = win,
+85   };
+86   win\->render_thd = cydui::threading::new_thread(render_task, win\->render_data)
+87     \->set_name("RENDER_THD");
+88 }
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

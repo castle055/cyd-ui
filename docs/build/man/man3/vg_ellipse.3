@@ -1,0 +1,91 @@
+.TH "vg::ellipse" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vg::ellipse
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <vg\&.h>\fP
+.PP
+Inherits \fBvg::vg_element_t\fP, attrs_core< ellipse >, attrs_fill< ellipse >, attrs_stroke< ellipse >, attr_cx< ellipse >, attr_cy< ellipse >, attr_rx< ellipse >, and attr_ry< ellipse >\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBapply_to\fP (\fBpixelmap_editor_t\fP &editor) const override"
+.br
+.ti -1c
+.RI "\fBfootprint\fP \fBget_footprint\fP () const override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::vg_element_t\fP
+.in +1c
+.ti -1c
+.RI "void \fB_internal_set_origin\fP (int x, int y)"
+.br
+.ti -1c
+.RI "virtual \fB~vg_element_t\fP ()=default"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Public Attributes inherited from \fBvg::vg_element_t\fP
+.in +1c
+.ti -1c
+.RI "int \fBorigin_x\fP = 0"
+.br
+.ti -1c
+.RI "int \fBorigin_y\fP = 0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB348\fP of file \fBvg\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void vg::ellipse::apply_to (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBvg::vg_element_t\fP\&.
+.PP
+Definition at line \fB357\fP of file \fBvg\&.h\fP\&..PP
+.nf
+357                                                               {
+358         apply_stroke(editor);
+359         apply_fill(editor);
+360         
+361         editor\->save();
+362         editor\->translate(origin_x + _cx, origin_y + _cy);
+363         editor\->scale(_rx, _ry);
+364         editor\->arc(0\&.0, 0\&.0, 1\&.0, 0\&.0, 2 * M_PI);
+365         
+366         set_source_to_stroke(editor);
+367         editor\->stroke_preserve();
+368         
+369         set_source_to_fill(editor);
+370         editor\->fill();
+371         
+372         editor\->restore();
+373       }
+.fi
+
+.SS "\fBfootprint\fP vg::ellipse::get_footprint () const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBvg::vg_element_t\fP\&.
+.PP
+Definition at line \fB375\fP of file \fBvg\&.h\fP\&..PP
+.nf
+375                                                {
+376         return {};
+377       }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

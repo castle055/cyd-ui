@@ -1,0 +1,350 @@
+\doxysection{md\+\_\+buffer\+\_\+t\texorpdfstring{$<$}{<} E, D \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structmd__buffer__t}{}\label{structmd__buffer__t}\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+
+
+{\ttfamily \#include $<$multidim\+\_\+data.\+h$>$}
+
+
+
+Collaboration diagram for md\+\_\+buffer\+\_\+t\texorpdfstring{$<$}{<} E, D \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=195pt]{structmd__buffer__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structmd__buffer__t_aa76df2922d47dc9c4d58fd44de4a7e8f}{md\+\_\+buffer\+\_\+t}} (std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$ \mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}})
+\item 
+\mbox{\hyperlink{structmd__buffer__t_acf2cb8ef2e9fcdabbaf505fb90d5c6d3}{\texorpdfstring{$\sim$}{\string~}md\+\_\+buffer\+\_\+t}} ()
+\item 
+void \mbox{\hyperlink{structmd__buffer__t_a50e27c4acab4822976cf83ff1c79c3bd}{resize}} (std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$ new\+\_\+size)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmd__buffer__t_af1576cdb3b6c949dc23c225c0815035f}{get}} (std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$ coords)
+\item 
+void \mbox{\hyperlink{structmd__buffer__t_a6560dc1e02f3fcb52aac771d70b84e09}{set}} (std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$ coords, const \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} \&value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$ \mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}} = nullptr
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} \mbox{\hyperlink{structmd__buffer__t_a7d72263f4be2579b75030b5394aa48a1}{compute\+\_\+total\+\_\+size}} (std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$ s) const
+\item 
+\mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} \mbox{\hyperlink{structmd__buffer__t_a53b16899b3fc07a1343d6df197a58c81}{compute\+\_\+index}} (std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$ coords) const
+\item 
+void \mbox{\hyperlink{structmd__buffer__t_ab4bb794a2634cc89e2fbf6fb162403ca}{copy\+\_\+from}} (const \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} \texorpdfstring{$\ast$}{*}source, std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$ src\+\_\+coords, std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$ dst\+\_\+coords, std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$ \+\_\+size)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$\newline
+struct md\+\_\+buffer\+\_\+t$<$ E, D $>$}
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00018}{18}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structmd__buffer__t_aa76df2922d47dc9c4d58fd44de4a7e8f}\label{structmd__buffer__t_aa76df2922d47dc9c4d58fd44de4a7e8f} 
+\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}!md\_buffer\_t@{md\_buffer\_t}}
+\index{md\_buffer\_t@{md\_buffer\_t}!md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+\doxysubsubsection{\texorpdfstring{md\_buffer\_t()}{md\_buffer\_t()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} , \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$ \\
+\mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$\mbox{\hyperlink{structmd__buffer__t}{\+::md\+\_\+buffer\+\_\+t}} (\begin{DoxyParamCaption}\item[{std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$}]{size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00022}{22}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}}(\mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}})\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ total\_size\ =\ \mbox{\hyperlink{structmd__buffer__t_a7d72263f4be2579b75030b5394aa48a1}{compute\_total\_size}}(this-\/>\mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}});}
+\DoxyCodeLine{00024\ \ \ \ \ \mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}}\ =\ (\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\ calloc(1,\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}})\ *\ total\_size);}
+\DoxyCodeLine{00025\ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structmd__buffer__t_aa76df2922d47dc9c4d58fd44de4a7e8f_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structmd__buffer__t_acf2cb8ef2e9fcdabbaf505fb90d5c6d3}\label{structmd__buffer__t_acf2cb8ef2e9fcdabbaf505fb90d5c6d3} 
+\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}!````~md\_buffer\_t@{\texorpdfstring{$\sim$}{\string~}md\_buffer\_t}}
+\index{````~md\_buffer\_t@{\texorpdfstring{$\sim$}{\string~}md\_buffer\_t}!md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}md\_buffer\_t()}{\string~md\_buffer\_t()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} , \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$ \\
+\mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00027}{27}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \ \ free(\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}});}
+\DoxyCodeLine{00029\ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structmd__buffer__t_a53b16899b3fc07a1343d6df197a58c81}\label{structmd__buffer__t_a53b16899b3fc07a1343d6df197a58c81} 
+\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}!compute\_index@{compute\_index}}
+\index{compute\_index@{compute\_index}!md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+\doxysubsubsection{\texorpdfstring{compute\_index()}{compute\_index()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} , \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$ \\
+\mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} \mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$\+::compute\+\_\+index (\begin{DoxyParamCaption}\item[{std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$}]{coords }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00073}{73}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{comment}{//\ i\ =\ x\ +\ X*y\ +\ X*Y*z\ +\ ...}}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{auto}\ iter\ =\ coords.begin();}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ index\ =\ *iter;}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ multiplier\ =\ \mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}}[0];}
+\DoxyCodeLine{00078\ \ \ \ \ iter\ =\ std::next(iter);}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 1;\ i\ <\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}};\ ++i)\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ index\ +=\ multiplier\ *\ *iter;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ multiplier\ *=\ \mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}}[i];}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ iter\ =\ std::next(iter);}
+\DoxyCodeLine{00083\ \ \ \ \ \}}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{return}\ index;}
+\DoxyCodeLine{00085\ \ \ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structmd__buffer__t_a53b16899b3fc07a1343d6df197a58c81_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structmd__buffer__t_a7d72263f4be2579b75030b5394aa48a1}\label{structmd__buffer__t_a7d72263f4be2579b75030b5394aa48a1} 
+\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}!compute\_total\_size@{compute\_total\_size}}
+\index{compute\_total\_size@{compute\_total\_size}!md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+\doxysubsubsection{\texorpdfstring{compute\_total\_size()}{compute\_total\_size()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} , \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$ \\
+\mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} \mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$\+::compute\+\_\+total\+\_\+size (\begin{DoxyParamCaption}\item[{std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$}]{s }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00065}{65}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ total\_size\ =\ 1;}
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}};\ ++i)\ \{}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ total\_size\ *=\ s[i];}
+\DoxyCodeLine{00069\ \ \ \ \ \}}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{return}\ total\_size;}
+\DoxyCodeLine{00071\ \ \ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structmd__buffer__t_a7d72263f4be2579b75030b5394aa48a1_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structmd__buffer__t_ab4bb794a2634cc89e2fbf6fb162403ca}\label{structmd__buffer__t_ab4bb794a2634cc89e2fbf6fb162403ca} 
+\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}!copy\_from@{copy\_from}}
+\index{copy\_from@{copy\_from}!md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+\doxysubsubsection{\texorpdfstring{copy\_from()}{copy\_from()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} , \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$ \\
+void \mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$\+::copy\+\_\+from (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} \texorpdfstring{$\ast$}{*}}]{source,  }\item[{std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$}]{src\+\_\+coords,  }\item[{std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$}]{dst\+\_\+coords,  }\item[{std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$}]{\+\_\+size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00087}{87}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00092\ \ \ \ \ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ stride\ =\ \_size[0];}
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ total\_strides\ =\ \mbox{\hyperlink{structmd__buffer__t_a7d72263f4be2579b75030b5394aa48a1}{compute\_total\_size}}(\_size)\ /\ stride;}
+\DoxyCodeLine{00095\ \ \ \ \ std::array<size\_t,\ D>\ d\_pos\ =\ dst\_coords;}
+\DoxyCodeLine{00096\ \ \ \ \ std::array<size\_t,\ D>\ s\_pos\ =\ src\_coords;}
+\DoxyCodeLine{00097\ \ \ \ \ }
+\DoxyCodeLine{00098\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ d\_abs\_index;}
+\DoxyCodeLine{00099\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ s\_abs\_index;}
+\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ total\_strides;\ ++i)\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ d\_abs\_index\ =\ \mbox{\hyperlink{structmd__buffer__t_a53b16899b3fc07a1343d6df197a58c81}{compute\_index}}(d\_pos);}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ s\_abs\_index\ =\ \mbox{\hyperlink{structmd__buffer__t_a53b16899b3fc07a1343d6df197a58c81}{compute\_index}}(s\_pos);}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ memcpy(\&this-\/>\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}}[d\_abs\_index],\ \&source[s\_abs\_index],\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}})\ *\ stride);}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ }
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ d\ =\ 1;\ d\ <\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}};\ ++d)\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (0\ ==\ (i\ +\ 1)\ \%\ \_size[d])\ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ d\_pos[d]++;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ s\_pos[d]++;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \}}
+\DoxyCodeLine{00112\ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=345pt]{structmd__buffer__t_ab4bb794a2634cc89e2fbf6fb162403ca_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structmd__buffer__t_af1576cdb3b6c949dc23c225c0815035f}\label{structmd__buffer__t_af1576cdb3b6c949dc23c225c0815035f} 
+\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}!get@{get}}
+\index{get@{get}!md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} , \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$ \\
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$\+::get (\begin{DoxyParamCaption}\item[{std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$}]{coords }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00052}{52}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ index\ =\ \mbox{\hyperlink{structmd__buffer__t_a53b16899b3fc07a1343d6df197a58c81}{compute\_index}}(coords);}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{return}\ \&\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}}[index];}
+\DoxyCodeLine{00055\ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=313pt]{structmd__buffer__t_af1576cdb3b6c949dc23c225c0815035f_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structmd__buffer__t_a50e27c4acab4822976cf83ff1c79c3bd}\label{structmd__buffer__t_a50e27c4acab4822976cf83ff1c79c3bd} 
+\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}!resize@{resize}}
+\index{resize@{resize}!md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+\doxysubsubsection{\texorpdfstring{resize()}{resize()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} , \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$ \\
+void \mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$\+::resize (\begin{DoxyParamCaption}\item[{std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$}]{new\+\_\+size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00031}{31}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ same\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}};\ ++i)\ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}}[i]\ !=\ new\_size[i])\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ same\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00038\ \ \ \ \ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordflow}{if}\ (same)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00040\ \ \ \ \ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ total\_size\ =\ \mbox{\hyperlink{structmd__buffer__t_a7d72263f4be2579b75030b5394aa48a1}{compute\_total\_size}}(this-\/>\mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}});}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ total\_new\_size\ =\ \mbox{\hyperlink{structmd__buffer__t_a7d72263f4be2579b75030b5394aa48a1}{compute\_total\_size}}(new\_size);}
+\DoxyCodeLine{00043\ \ \ \ \ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{comment}{//auto*\ old\_data\ =\ this-\/>data;}}
+\DoxyCodeLine{00045\ \ \ \ \ this-\/>\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}}\ =\ (\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\ realloc(this-\/>\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}},\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}})\ *\ total\_new\_size);}
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{comment}{//this-\/>data\ =\ (E*)\ calloc(1,\ sizeof(E)\ *\ total\_new\_size);}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{comment}{//this-\/>copy\_from(old\_data,\ \{0,\ 0\},\ \{0,\ 0\},\ total\_size\ >\ total\_new\_size\ ?\ new\_size\ :\ size);}}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{comment}{//free(old\_data);}}
+\DoxyCodeLine{00049\ \ \ \ \ \mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}}\ =\ new\_size;}
+\DoxyCodeLine{00050\ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=326pt]{structmd__buffer__t_a50e27c4acab4822976cf83ff1c79c3bd_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structmd__buffer__t_a50e27c4acab4822976cf83ff1c79c3bd_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structmd__buffer__t_a6560dc1e02f3fcb52aac771d70b84e09}\label{structmd__buffer__t_a6560dc1e02f3fcb52aac771d70b84e09} 
+\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}!set@{set}}
+\index{set@{set}!md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} , \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$ \\
+void \mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$\+::set (\begin{DoxyParamCaption}\item[{std\+::array$<$ \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$}]{coords,  }\item[{const \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} \&}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00057}{57}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ index\ =\ \mbox{\hyperlink{structmd__buffer__t_a53b16899b3fc07a1343d6df197a58c81}{compute\_index}}(coords);}
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordflow}{if}\ (index\ <\ \mbox{\hyperlink{structmd__buffer__t_a7d72263f4be2579b75030b5394aa48a1}{compute\_total\_size}}(\mbox{\hyperlink{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}{size}}))\ \{}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}}[index]\ =\ value;}
+\DoxyCodeLine{00061\ \ \ \ \ \}}
+\DoxyCodeLine{00062\ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=313pt]{structmd__buffer__t_a6560dc1e02f3fcb52aac771d70b84e09_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=301pt]{structmd__buffer__t_a6560dc1e02f3fcb52aac771d70b84e09_icgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}\label{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30} 
+\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}!data@{data}}
+\index{data@{data}!md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} , \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$ \\
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$\+::data = nullptr}
+
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00020}{20}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+\Hypertarget{structmd__buffer__t_a147252074800a876158911f44a1f3ef0}\label{structmd__buffer__t_a147252074800a876158911f44a1f3ef0} 
+\index{md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}!size@{size}}
+\index{size@{size}!md\_buffer\_t$<$ E, D $>$@{md\_buffer\_t$<$ E, D $>$}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}} , \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} D$>$ \\
+std\+::array$<$\mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}}$>$ \mbox{\hyperlink{structmd__buffer__t}{md\+\_\+buffer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}, \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73af623e75af30e62bbd73d6df5b50bb7b5}{D}} $>$\+::size}
+
+
+
+Definition at line \mbox{\hyperlink{multidim__data_8h_source_l00019}{19}} of file \mbox{\hyperlink{multidim__data_8h_source}{multidim\+\_\+data.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/cydstd/\mbox{\hyperlink{multidim__data_8h}{multidim\+\_\+data.\+h}}\end{DoxyCompactItemize}

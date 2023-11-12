@@ -1,0 +1,197 @@
+.TH "cydui::tasks::task_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::tasks::task_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tasks\&.h>\fP
+.PP
+Inherited by \fBcydui::tasks::simple_task_w_result_t< A, NoResult >\fP, and \fBcydui::tasks::simple_task_w_result_t< A, R >\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBexec\fP ()"
+.br
+.ti -1c
+.RI "\fBtask_id\fP \fBget_id\fP ()"
+.br
+.ti -1c
+.RI "bool \fBreset\fP ()"
+.br
+.ti -1c
+.RI "int \fBget_progress\fP ()"
+.br
+.ti -1c
+.RI "bool \fBis_running\fP ()"
+.br
+.ti -1c
+.RI "bool \fBis_complete\fP ()"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual void \fBmain\fP ()=0"
+.br
+.ti -1c
+.RI "void \fBset_progress\fP (int p)"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBtask_id\fP \fBid\fP"
+.br
+.ti -1c
+.RI "std::mutex \fBtask_mutex\fP"
+.br
+.ti -1c
+.RI "int \fBprogress\fP = 0"
+.br
+.ti -1c
+.RI "bool \fBrunning\fP = false"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB14\fP of file \fBtasks\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "bool cydui::tasks::task_t::exec ()"
+
+.PP
+Definition at line \fB135\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+135                             {
+136   this\->task_mutex\&.lock();
+137   if (!this\->running) {
+138     this\->progress = 1;
+139     this\->running = true;
+140     this\->task_mutex\&.unlock();
+141     this\->main();
+142     this\->task_mutex\&.lock();
+143     this\->progress = 100;
+144     this\->running = false;
+145     this\->task_mutex\&.unlock();
+146     return true;
+147   } else {
+148     this\->task_mutex\&.unlock();
+149     return false;
+150   }
+151 }
+.fi
+
+.SS "\fBcydui::tasks::task_id\fP cydui::tasks::task_t::get_id ()"
+
+.PP
+Definition at line \fB131\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+131                                            {
+132   return this\->id;
+133 }
+.fi
+
+.SS "int cydui::tasks::task_t::get_progress ()"
+
+.PP
+Definition at line \fB173\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+173                                    {
+174   this\->task_mutex\&.lock();
+175   int p = this\->progress;
+176   this\->task_mutex\&.unlock();
+177   return p;
+178 }
+.fi
+
+.SS "bool cydui::tasks::task_t::is_complete ()"
+
+.PP
+Definition at line \fB187\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+187                                    {
+188   this\->task_mutex\&.lock();
+189   int p = this\->progress;
+190   int r = this\->running;
+191   this\->task_mutex\&.unlock();
+192   return p > 0 && !r;
+193 }
+.fi
+
+.SS "bool cydui::tasks::task_t::is_running ()"
+
+.PP
+Definition at line \fB180\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+180                                   {
+181   this\->task_mutex\&.lock();
+182   int r = this\->running;
+183   this\->task_mutex\&.unlock();
+184   return r;
+185 }
+.fi
+
+.SS "virtual void cydui::tasks::task_t::main ()\fC [protected]\fP, \fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBcydui::tasks::simple_task_w_result_t< A, R >\fP, and \fBcydui::tasks::simple_task_w_result_t< A, NoResult >\fP\&.
+.SS "bool cydui::tasks::task_t::reset ()"
+
+.PP
+Definition at line \fB153\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+153                              {
+154   this\->task_mutex\&.lock();
+155   if (!this\->running) {
+156     this\->progress = 0;
+157     this\->running = false;
+158     this\->task_mutex\&.unlock();
+159     return true;
+160   } else {
+161     this\->task_mutex\&.unlock();
+162     return false;
+163   }
+164 }
+.fi
+
+.SS "void cydui::tasks::task_t::set_progress (int p)\fC [protected]\fP"
+
+.PP
+Definition at line \fB166\fP of file \fBtasks\&.cpp\fP\&..PP
+.nf
+166                                          {
+167   this\->task_mutex\&.lock();
+168   this\->progress = p;
+169   this\->task_mutex\&.unlock();
+170   cydui::events::emit<RedrawEvent>({});
+171 }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBtask_id\fP cydui::tasks::task_t::id\fC [private]\fP"
+
+.PP
+Definition at line \fB15\fP of file \fBtasks\&.h\fP\&.
+.SS "int cydui::tasks::task_t::progress = 0\fC [private]\fP"
+
+.PP
+Definition at line \fB18\fP of file \fBtasks\&.h\fP\&.
+.SS "bool cydui::tasks::task_t::running = false\fC [private]\fP"
+
+.PP
+Definition at line \fB19\fP of file \fBtasks\&.h\fP\&.
+.SS "std::mutex cydui::tasks::task_t::task_mutex\fC [private]\fP"
+
+.PP
+Definition at line \fB16\fP of file \fBtasks\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

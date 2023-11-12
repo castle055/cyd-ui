@@ -1,0 +1,165 @@
+.TH "cydui::tasks::simple_task_w_result_t< A, R >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::tasks::simple_task_w_result_t< A, R >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <tasks\&.h>\fP
+.PP
+Inherits \fBcydui::tasks::task_t\fP\&.
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBA\fP \fBArgs\fP"
+.br
+.ti -1c
+.RI "typedef \fBR\fP \fBResult\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBrun\fP (\fBArgs\fP _args)"
+.br
+.ti -1c
+.RI "void \fBmain\fP () override"
+.br
+.ti -1c
+.RI "\fBResult\fP * \fBres\fP ()"
+.br
+.ti -1c
+.RI "void \fBset_args\fP (\fBArgs\fP _args)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::tasks::task_t\fP
+.in +1c
+.ti -1c
+.RI "bool \fBexec\fP ()"
+.br
+.ti -1c
+.RI "\fBtask_id\fP \fBget_id\fP ()"
+.br
+.ti -1c
+.RI "bool \fBreset\fP ()"
+.br
+.ti -1c
+.RI "int \fBget_progress\fP ()"
+.br
+.ti -1c
+.RI "bool \fBis_running\fP ()"
+.br
+.ti -1c
+.RI "bool \fBis_complete\fP ()"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBArgs\fP \fBargs\fP"
+.br
+.ti -1c
+.RI "\fBResult\fP \fBresult\fP"
+.br
+.ti -1c
+.RI "\fBResult\fP \fBdefault_result\fP"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Protected Member Functions inherited from \fBcydui::tasks::task_t\fP
+.in +1c
+.ti -1c
+.RI "void \fBset_progress\fP (int p)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename \fBA\fP, typename \fBR\fP>
+.br
+class cydui::tasks::simple_task_w_result_t< A, R >"
+.PP
+Definition at line \fB70\fP of file \fBtasks\&.h\fP\&.
+.SH "Member Typedef Documentation"
+.PP 
+.SS "template<typename \fBA\fP , typename \fBR\fP > typedef \fBA\fP \fBcydui::tasks::simple_task_w_result_t\fP< \fBA\fP, \fBR\fP >::Args"
+
+.PP
+Definition at line \fB72\fP of file \fBtasks\&.h\fP\&.
+.SS "template<typename \fBA\fP , typename \fBR\fP > typedef \fBR\fP \fBcydui::tasks::simple_task_w_result_t\fP< \fBA\fP, \fBR\fP >::Result"
+
+.PP
+Definition at line \fB73\fP of file \fBtasks\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename \fBA\fP , typename \fBR\fP > void \fBcydui::tasks::simple_task_w_result_t\fP< \fBA\fP, \fBR\fP >::main ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBcydui::tasks::task_t\fP\&.
+.PP
+Definition at line \fB88\fP of file \fBtasks\&.h\fP\&..PP
+.nf
+88                            {
+89       
+90       }
+.fi
+
+.SS "template<typename \fBA\fP , typename \fBR\fP > \fBResult\fP * \fBcydui::tasks::simple_task_w_result_t\fP< \fBA\fP, \fBR\fP >::res ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB92\fP of file \fBtasks\&.h\fP\&..PP
+.nf
+92                     {
+93         if (is_complete())
+94           return &result;
+95         else return &default_result;
+96       }
+.fi
+
+.SS "template<typename \fBA\fP , typename \fBR\fP > void \fBcydui::tasks::simple_task_w_result_t\fP< \fBA\fP, \fBR\fP >::run (\fBArgs\fP _args)\fC [inline]\fP"
+
+.PP
+Definition at line \fB83\fP of file \fBtasks\&.h\fP\&..PP
+.nf
+83                            {
+84         this\->args = _args;
+85         start(this);
+86       }
+.fi
+
+.SS "template<typename \fBA\fP , typename \fBR\fP > void \fBcydui::tasks::simple_task_w_result_t\fP< \fBA\fP, \fBR\fP >::set_args (\fBArgs\fP _args)\fC [inline]\fP"
+
+.PP
+Definition at line \fB98\fP of file \fBtasks\&.h\fP\&..PP
+.nf
+98                                 {
+99         this\->args = _args;
+100       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "template<typename \fBA\fP , typename \fBR\fP > \fBArgs\fP \fBcydui::tasks::simple_task_w_result_t\fP< \fBA\fP, \fBR\fP >::args\fC [protected]\fP"
+
+.PP
+Definition at line \fB78\fP of file \fBtasks\&.h\fP\&.
+.SS "template<typename \fBA\fP , typename \fBR\fP > \fBResult\fP \fBcydui::tasks::simple_task_w_result_t\fP< \fBA\fP, \fBR\fP >::default_result\fC [protected]\fP"
+
+.PP
+Definition at line \fB80\fP of file \fBtasks\&.h\fP\&.
+.SS "template<typename \fBA\fP , typename \fBR\fP > \fBResult\fP \fBcydui::tasks::simple_task_w_result_t\fP< \fBA\fP, \fBR\fP >::result\fC [protected]\fP"
+
+.PP
+Definition at line \fB79\fP of file \fBtasks\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

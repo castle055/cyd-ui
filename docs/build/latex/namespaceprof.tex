@@ -1,0 +1,95 @@
+\doxysection{prof Namespace Reference}
+\hypertarget{namespaceprof}{}\label{namespaceprof}\index{prof@{prof}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structprof_1_1context__t}{context\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structprof_1_1event__t}{event\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structprof_1_1thread__context__t}{thread\+\_\+context\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespaceprof_a3e8def5b3b1505ce7e335f538917f003}{PROFILING\+\_\+\+CLOCK}} = std\+::chrono\+::steady\+\_\+clock
+\item 
+using \mbox{\hyperlink{namespaceprof_a2a9caf65a453a1e71532f1607f921353}{time\+\_\+point}} = std\+::chrono\+::time\+\_\+point$<$ \mbox{\hyperlink{namespaceprof_a3e8def5b3b1505ce7e335f538917f003}{PROFILING\+\_\+\+CLOCK}} $>$
+\item 
+using \mbox{\hyperlink{namespaceprof_ac75bf20a8d0bc38232a60323de3248df}{duration}} = std\+::chrono\+::duration$<$ \mbox{\hyperlink{namespaceprof_a3e8def5b3b1505ce7e335f538917f003}{PROFILING\+\_\+\+CLOCK}} $>$
+\item 
+using \mbox{\hyperlink{namespaceprof_a834539a76e5545901863a6b773fb8d64}{thread\+\_\+timeline\+\_\+t}} = std\+::array$<$ \mbox{\hyperlink{structprof_1_1event__t}{event\+\_\+t}}, \mbox{\hyperlink{namespaceprof_a69706c94d0693e53fed29cd292bff567}{PROFILING\+\_\+\+TIMELINE\+\_\+\+SIZE}} $>$
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+constexpr std\+::size\+\_\+t \mbox{\hyperlink{namespaceprof_a491d7d71df090852666b543a979cc77d}{PROFILING\+\_\+\+THREAD\+\_\+\+NAME\+\_\+\+SIZE}} = 32
+\item 
+constexpr std\+::size\+\_\+t \mbox{\hyperlink{namespaceprof_a69706c94d0693e53fed29cd292bff567}{PROFILING\+\_\+\+TIMELINE\+\_\+\+SIZE}} = 10000
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespaceprof_ac75bf20a8d0bc38232a60323de3248df}\label{namespaceprof_ac75bf20a8d0bc38232a60323de3248df} 
+\index{prof@{prof}!duration@{duration}}
+\index{duration@{duration}!prof@{prof}}
+\doxysubsubsection{\texorpdfstring{duration}{duration}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespaceprof_ac75bf20a8d0bc38232a60323de3248df}{prof\+::duration}} = typedef std\+::chrono\+::duration$<$\mbox{\hyperlink{namespaceprof_a3e8def5b3b1505ce7e335f538917f003}{PROFILING\+\_\+\+CLOCK}}$>$}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00029}{29}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+\Hypertarget{namespaceprof_a3e8def5b3b1505ce7e335f538917f003}\label{namespaceprof_a3e8def5b3b1505ce7e335f538917f003} 
+\index{prof@{prof}!PROFILING\_CLOCK@{PROFILING\_CLOCK}}
+\index{PROFILING\_CLOCK@{PROFILING\_CLOCK}!prof@{prof}}
+\doxysubsubsection{\texorpdfstring{PROFILING\_CLOCK}{PROFILING\_CLOCK}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespaceprof_a3e8def5b3b1505ce7e335f538917f003}{prof\+::\+PROFILING\+\_\+\+CLOCK}} = typedef std\+::chrono\+::steady\+\_\+clock}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00024}{24}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+\Hypertarget{namespaceprof_a834539a76e5545901863a6b773fb8d64}\label{namespaceprof_a834539a76e5545901863a6b773fb8d64} 
+\index{prof@{prof}!thread\_timeline\_t@{thread\_timeline\_t}}
+\index{thread\_timeline\_t@{thread\_timeline\_t}!prof@{prof}}
+\doxysubsubsection{\texorpdfstring{thread\_timeline\_t}{thread\_timeline\_t}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespaceprof_a834539a76e5545901863a6b773fb8d64}{prof\+::thread\+\_\+timeline\+\_\+t}} = typedef std\+::array$<$\mbox{\hyperlink{structprof_1_1event__t}{event\+\_\+t}}, \mbox{\hyperlink{namespaceprof_a69706c94d0693e53fed29cd292bff567}{PROFILING\+\_\+\+TIMELINE\+\_\+\+SIZE}}$>$}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00049}{49}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+\Hypertarget{namespaceprof_a2a9caf65a453a1e71532f1607f921353}\label{namespaceprof_a2a9caf65a453a1e71532f1607f921353} 
+\index{prof@{prof}!time\_point@{time\_point}}
+\index{time\_point@{time\_point}!prof@{prof}}
+\doxysubsubsection{\texorpdfstring{time\_point}{time\_point}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{namespaceprof_a2a9caf65a453a1e71532f1607f921353}{prof\+::time\+\_\+point}} = typedef std\+::chrono\+::time\+\_\+point$<$\mbox{\hyperlink{namespaceprof_a3e8def5b3b1505ce7e335f538917f003}{PROFILING\+\_\+\+CLOCK}}$>$}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00028}{28}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{namespaceprof_a491d7d71df090852666b543a979cc77d}\label{namespaceprof_a491d7d71df090852666b543a979cc77d} 
+\index{prof@{prof}!PROFILING\_THREAD\_NAME\_SIZE@{PROFILING\_THREAD\_NAME\_SIZE}}
+\index{PROFILING\_THREAD\_NAME\_SIZE@{PROFILING\_THREAD\_NAME\_SIZE}!prof@{prof}}
+\doxysubsubsection{\texorpdfstring{PROFILING\_THREAD\_NAME\_SIZE}{PROFILING\_THREAD\_NAME\_SIZE}}
+{\footnotesize\ttfamily constexpr std\+::size\+\_\+t prof\+::\+PROFILING\+\_\+\+THREAD\+\_\+\+NAME\+\_\+\+SIZE = 32\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00021}{21}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+\Hypertarget{namespaceprof_a69706c94d0693e53fed29cd292bff567}\label{namespaceprof_a69706c94d0693e53fed29cd292bff567} 
+\index{prof@{prof}!PROFILING\_TIMELINE\_SIZE@{PROFILING\_TIMELINE\_SIZE}}
+\index{PROFILING\_TIMELINE\_SIZE@{PROFILING\_TIMELINE\_SIZE}!prof@{prof}}
+\doxysubsubsection{\texorpdfstring{PROFILING\_TIMELINE\_SIZE}{PROFILING\_TIMELINE\_SIZE}}
+{\footnotesize\ttfamily constexpr std\+::size\+\_\+t prof\+::\+PROFILING\+\_\+\+TIMELINE\+\_\+\+SIZE = 10000\hspace{0.3cm}{\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00022}{22}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+

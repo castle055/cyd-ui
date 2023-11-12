@@ -1,0 +1,170 @@
+.TH "component_base_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+component_base_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <component\&.h>\fP
+.PP
+Inherited by \fBcomponent_t< ThreadTimelineEventHandler, ThreadTimeline >\fP, and \fBcomponent_t< EVH, T >\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual \fB~component_base_t\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBsubscribe_events\fP ()=0"
+.br
+.ti -1c
+.RI "virtual void \fBclear_children\fP ()=0"
+.br
+.ti -1c
+.RI "virtual event_handler_t * \fBevent_handler\fP ()=0"
+.br
+.ti -1c
+.RI "virtual void \fBredraw\fP (\fBcydui::layout::Layout\fP *layout, \fBcydui::compositing::compositing_node_t\fP *compositing_node)=0"
+.br
+.ti -1c
+.RI "virtual \fBcomponent_state_t\fP * \fBcreate_state_instance\fP ()=0"
+.br
+.ti -1c
+.RI "virtual \fBcomponent_base_t\fP * \fBfind_by_coords\fP (int x, int y)=0"
+.br
+.ti -1c
+.RI "virtual component_dimensional_relations_t \fBget_dimensional_relations\fP ()=0"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::optional< \fBcomponent_state_t\fP * > \fBstate\fP = std::nullopt"
+.br
+.ti -1c
+.RI "std::optional< \fBcomponent_base_t\fP * > \fBparent\fP = std::nullopt"
+.br
+.ti -1c
+.RI "std::vector< \fBcomponent_base_t\fP * > \fBchildren\fP {}"
+.br
+.ti -1c
+.RI "std::vector< \fBcydui::events::listener_t\fP > \fBsubscribed_listeners\fP {}"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBadd_event_listeners\fP (const std::unordered_map< std::string, event_handler_t::listener_data_t > &listeners)"
+.br
+.ti -1c
+.RI "void \fBclear_subscribed_listeners\fP ()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB43\fP of file \fBcomponent\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "virtual component_base_t::~component_base_t ()\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+Definition at line \fB50\fP of file \fBcomponent\&.h\fP\&..PP
+.nf
+50                               {
+51     clear_subscribed_listeners();
+52     if (state\&.has_value()) {
+53       state\&.value()\->component_instance = std::nullopt;
+54     }
+55   }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void component_base_t::add_event_listeners (const std::unordered_map< std::string, event_handler_t::listener_data_t > & listeners)\fC [inline]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line \fB70\fP of file \fBcomponent\&.h\fP\&..PP
+.nf
+70                                                                                                          {
+71     for (auto &l: listeners) {
+72       auto &[ev_type, handler] = l;
+73       subscribed_listeners\&.push_back(cydui::events::on_event_raw(ev_type, handler\&.handler));
+74     }
+75   }
+.fi
+
+.SS "virtual void component_base_t::clear_children ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBcomponent_t< EVH, T >\fP, and \fBcomponent_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+.SS "void component_base_t::clear_subscribed_listeners ()\fC [inline]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line \fB76\fP of file \fBcomponent\&.h\fP\&..PP
+.nf
+76                                     {
+77     for (auto &item: subscribed_listeners) {
+78       item\&.remove();
+79     }
+80     subscribed_listeners\&.clear();
+81   }
+.fi
+
+.SS "virtual \fBcomponent_state_t\fP * component_base_t::create_state_instance ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBcomponent_t< EVH, T >\fP, and \fBcomponent_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+.SS "virtual event_handler_t * component_base_t::event_handler ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBcomponent_t< EVH, T >\fP, and \fBcomponent_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+.SS "virtual \fBcomponent_base_t\fP * component_base_t::find_by_coords (int x, int y)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBcomponent_t< EVH, T >\fP, and \fBcomponent_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+.SS "virtual component_dimensional_relations_t component_base_t::get_dimensional_relations ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBcomponent_t< EVH, T >\fP, and \fBcomponent_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+.SS "virtual void component_base_t::redraw (\fBcydui::layout::Layout\fP * layout, \fBcydui::compositing::compositing_node_t\fP * compositing_node)\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBcomponent_t< EVH, T >\fP, and \fBcomponent_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+.SS "virtual void component_base_t::subscribe_events ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBcomponent_t< EVH, T >\fP, and \fBcomponent_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "std::vector<\fBcomponent_base_t\fP*> component_base_t::children {}"
+
+.PP
+Definition at line \fB46\fP of file \fBcomponent\&.h\fP\&..PP
+.nf
+46 {};
+.fi
+
+.SS "std::optional<\fBcomponent_base_t\fP*> component_base_t::parent = std::nullopt"
+
+.PP
+Definition at line \fB45\fP of file \fBcomponent\&.h\fP\&.
+.SS "std::optional<\fBcomponent_state_t\fP*> component_base_t::state = std::nullopt"
+
+.PP
+Definition at line \fB44\fP of file \fBcomponent\&.h\fP\&.
+.SS "std::vector<\fBcydui::events::listener_t\fP> component_base_t::subscribed_listeners {}"
+
+.PP
+Definition at line \fB48\fP of file \fBcomponent\&.h\fP\&..PP
+.nf
+48 {};
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -1,0 +1,161 @@
+\doxysection{include/tools/tasks.h File Reference}
+\hypertarget{tasks_8h}{}\label{tasks_8h}\index{include/tools/tasks.h@{include/tools/tasks.h}}
+{\ttfamily \#include "{}../events/cydui\+\_\+events.\+h"{}}\newline
+Include dependency graph for tasks.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tasks_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{tasks_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcydui_1_1tasks_1_1task__t}{cydui\+::tasks\+::task\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t}{cydui\+::tasks\+::\+\_\+timer\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1tasks_1_1NoResult}{cydui\+::tasks\+::\+No\+Result}}
+\item 
+class \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__task__w__result__t}{cydui\+::tasks\+::simple\+\_\+task\+\_\+w\+\_\+result\+\_\+t$<$ A, R $>$}}
+\item 
+class \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__t}{cydui\+::tasks\+::simple\+\_\+t$<$ A $>$}}
+\item 
+class \mbox{\hyperlink{classcydui_1_1tasks_1_1timer__t}{cydui\+::tasks\+::timer\+\_\+t$<$ T $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecydui}{cydui}}
+\item 
+namespace \mbox{\hyperlink{namespacecydui_1_1tasks}{cydui\+::tasks}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{conceptcydui_1_1tasks_1_1TaskType}{cydui\+::tasks\+::\+Task\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{tasks_8h_a573f9a539779efe5d25fb6690863d66f}{SIMPLE\+\_\+\+TASK\+\_\+\+W\+\_\+\+RESULT}}(NAME,  ARGS,  RESULT,  BLOCK)
+\item 
+\#define \mbox{\hyperlink{tasks_8h_a05a59cb9a17308fe5b616810169a7779}{TASK\+\_\+\+W\+\_\+\+RESULT}}(NAME,  ARGS,  RESULT,  BLOCK)
+\item 
+\#define \mbox{\hyperlink{tasks_8h_a04175eef1bc0a9c7c8483fb7f345c279}{SIMPLE\+\_\+\+TASK}}(NAME,  ARGS,  BLOCK)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned long \mbox{\hyperlink{namespacecydui_1_1tasks_a9244bf26223cec4c452ff4c6caa1215b}{cydui\+::tasks\+::task\+\_\+id}}
+\item 
+typedef unsigned long \mbox{\hyperlink{namespacecydui_1_1tasks_aa51666ee79214dba3c782fa9b4c5f17c}{cydui\+::tasks\+::timer\+\_\+id}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespacecydui_1_1tasks_a140665688151903af11a0eca227228b1}{cydui\+::tasks\+::start\+\_\+thd}} ()
+\item 
+void \mbox{\hyperlink{namespacecydui_1_1tasks_a91d911b5a376c05c46747653781d33e2}{cydui\+::tasks\+::start}} (\mbox{\hyperlink{classcydui_1_1tasks_1_1task__t}{task\+\_\+t}} \texorpdfstring{$\ast$}{*}task)
+\item 
+void \mbox{\hyperlink{namespacecydui_1_1tasks_ad46099bf2399af453ddd1d3affd9cab9}{cydui\+::tasks\+::start\+\_\+timer}} (\mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t}{\+\_\+timer\+\_\+t}} \texorpdfstring{$\ast$}{*}timer)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{tasks_8h_a04175eef1bc0a9c7c8483fb7f345c279}\label{tasks_8h_a04175eef1bc0a9c7c8483fb7f345c279} 
+\index{tasks.h@{tasks.h}!SIMPLE\_TASK@{SIMPLE\_TASK}}
+\index{SIMPLE\_TASK@{SIMPLE\_TASK}!tasks.h@{tasks.h}}
+\doxysubsubsection{\texorpdfstring{SIMPLE\_TASK}{SIMPLE\_TASK}}
+{\footnotesize\ttfamily \#define SIMPLE\+\_\+\+TASK(\begin{DoxyParamCaption}\item[{}]{NAME,  }\item[{}]{ARGS,  }\item[{}]{BLOCK }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{struct\ }NAME\#\#Args\ ARGS;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{class\ }NAME:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__t}{cydui::tasks::simple\_t}}<NAME\#\#Args>\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\ \{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\ \};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{protected}:\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__task__w__result__t_a3593f7260da1662055ed7a1a45d8ec0d}{main}}()\ override\ BLOCK\ \(\backslash\)}
+\DoxyCodeLine{\ \ \};}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{tasks_8h_source_l00106}{106}} of file \mbox{\hyperlink{tasks_8h_source}{tasks.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__t}{cydui::tasks::simple\_t<NAME\#\#Args>}}\ \{\ \(\backslash\)}
+\DoxyCodeLine{00109\ \ \ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\ \{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\ \};\ \(\backslash\)}
+\DoxyCodeLine{00110\ \ \ \textcolor{keyword}{protected}:\ \(\backslash\)}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordtype}{void}\ main()\ override\ BLOCK\ \(\backslash\)}
+\DoxyCodeLine{00112\ \ \ \};}
+
+\end{DoxyCode}
+\Hypertarget{tasks_8h_a573f9a539779efe5d25fb6690863d66f}\label{tasks_8h_a573f9a539779efe5d25fb6690863d66f} 
+\index{tasks.h@{tasks.h}!SIMPLE\_TASK\_W\_RESULT@{SIMPLE\_TASK\_W\_RESULT}}
+\index{SIMPLE\_TASK\_W\_RESULT@{SIMPLE\_TASK\_W\_RESULT}!tasks.h@{tasks.h}}
+\doxysubsubsection{\texorpdfstring{SIMPLE\_TASK\_W\_RESULT}{SIMPLE\_TASK\_W\_RESULT}}
+{\footnotesize\ttfamily \#define SIMPLE\+\_\+\+TASK\+\_\+\+W\+\_\+\+RESULT(\begin{DoxyParamCaption}\item[{}]{NAME,  }\item[{}]{ARGS,  }\item[{}]{RESULT,  }\item[{}]{BLOCK }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{struct\ }NAME\#\#Args\ ARGS;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{struct\ }NAME\#\#Result\ RESULT;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{class\ }NAME:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__task__w__result__t}{cydui::tasks::simple\_task\_w\_result\_t}}<NAME\#\#Args,\ NAME\#\#Result>\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\ \{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\ \};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{protected}:\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__task__w__result__t_a3593f7260da1662055ed7a1a45d8ec0d}{main}}()\ override\ BLOCK\ \(\backslash\)}
+\DoxyCodeLine{\ \ \};}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{tasks_8h_source_l00051}{51}} of file \mbox{\hyperlink{tasks_8h_source}{tasks.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__task__w__result__t}{cydui::tasks::simple\_task\_w\_result\_t<NAME\#\#Args,\ NAME\#\#Result>}}\ \{\ \(\backslash\)}
+\DoxyCodeLine{00055\ \ \ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\ \{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\ \};\ \(\backslash\)}
+\DoxyCodeLine{00056\ \ \ \textcolor{keyword}{protected}:\ \(\backslash\)}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}\ main()\ override\ BLOCK\ \(\backslash\)}
+\DoxyCodeLine{00058\ \ \ \};}
+
+\end{DoxyCode}
+\Hypertarget{tasks_8h_a05a59cb9a17308fe5b616810169a7779}\label{tasks_8h_a05a59cb9a17308fe5b616810169a7779} 
+\index{tasks.h@{tasks.h}!TASK\_W\_RESULT@{TASK\_W\_RESULT}}
+\index{TASK\_W\_RESULT@{TASK\_W\_RESULT}!tasks.h@{tasks.h}}
+\doxysubsubsection{\texorpdfstring{TASK\_W\_RESULT}{TASK\_W\_RESULT}}
+{\footnotesize\ttfamily \#define TASK\+\_\+\+W\+\_\+\+RESULT(\begin{DoxyParamCaption}\item[{}]{NAME,  }\item[{}]{ARGS,  }\item[{}]{RESULT,  }\item[{}]{BLOCK }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keyword}{struct\ }NAME\#\#Args\ ARGS;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{struct\ }NAME\#\#Result\ RESULT;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{class\ }NAME:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__task__w__result__t}{cydui::tasks::simple\_task\_w\_result\_t}}<NAME\#\#Args,\ NAME\#\#Result>\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\ \{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\ \};\ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keyword}{protected}:\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__task__w__result__t_a3593f7260da1662055ed7a1a45d8ec0d}{main}}()\ override\ BLOCK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ private:}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{tasks_8h_source_l00060}{60}} of file \mbox{\hyperlink{tasks_8h_source}{tasks.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classcydui_1_1tasks_1_1simple__task__w__result__t}{cydui::tasks::simple\_task\_w\_result\_t<NAME\#\#Args,\ NAME\#\#Result>}}\ \{\ \(\backslash\)}
+\DoxyCodeLine{00064\ \ \ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\ \{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\ \};\ \(\backslash\)}
+\DoxyCodeLine{00065\ \ \ \textcolor{keyword}{protected}:\ \(\backslash\)}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ main()\ override\ BLOCK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00067\ \ \ private:}
+
+\end{DoxyCode}

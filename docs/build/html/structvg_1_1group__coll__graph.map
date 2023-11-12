@@ -1,0 +1,17 @@
+<map id="vg::group" name="vg::group">
+<area shape="rect" id="Node000001" title=" " alt="" coords="461,132,537,159"/>
+<area shape="rect" id="Node000002" href="$structvg_1_1vg__element__t.html" title=" " alt="" coords="276,5,397,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="405,37,414,42,439,63,461,87,492,130,487,133,457,90,435,67,410,46,402,41"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="278,56,395,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="399,86,413,92,478,129,476,134,411,97,396,91"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="269,107,404,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="420,130,462,137,461,142,419,136"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="272,157,401,184"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="415,156,460,149,461,154,416,161"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="261,208,412,235"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="396,200,411,194,476,157,478,162,413,198,399,205"/>
+<area shape="rect" id="Node000007" href="$structvg_1_1accepts__content.html" title=" " alt="" coords="267,259,406,301"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="405,248,410,245,434,223,456,200,487,158,491,161,460,203,438,227,414,249,408,253"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="5,259,166,301"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="181,277,266,277,266,283,181,283"/>
+</map>

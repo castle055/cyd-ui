@@ -1,0 +1,77 @@
+.TH "include/cydstd/profiling.h" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/cydstd/profiling.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <chrono>\fP
+.br
+\fC#include <optional>\fP
+.br
+\fC#include <unordered_map>\fP
+.br
+\fC#include <thread>\fP
+.br
+\fC#include <mutex>\fP
+.br
+\fC#include <shared_mutex>\fP
+.br
+\fC#include <cstring>\fP
+.br
+\fC#include <utility>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBprof::event_t\fP"
+.br
+.ti -1c
+.RI "struct \fBprof::thread_context_t\fP"
+.br
+.ti -1c
+.RI "struct \fBprof::context_t\fP"
+.br
+.ti -1c
+.RI "struct \fBprof::context_t::scope_event_t\fP"
+.br
+.in -1c
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBprof\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "using \fBprof::PROFILING_CLOCK\fP = std::chrono::steady_clock"
+.br
+.ti -1c
+.RI "using \fBprof::time_point\fP = std::chrono::time_point< \fBPROFILING_CLOCK\fP >"
+.br
+.ti -1c
+.RI "using \fBprof::duration\fP = std::chrono::duration< \fBPROFILING_CLOCK\fP >"
+.br
+.ti -1c
+.RI "using \fBprof::thread_timeline_t\fP = std::array< \fBevent_t\fP, \fBPROFILING_TIMELINE_SIZE\fP >"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "constexpr std::size_t \fBprof::PROFILING_THREAD_NAME_SIZE\fP = 32"
+.br
+.ti -1c
+.RI "constexpr std::size_t \fBprof::PROFILING_TIMELINE_SIZE\fP = 10000"
+.br
+.in -1c
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

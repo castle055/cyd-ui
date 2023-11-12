@@ -1,0 +1,20 @@
+<map id="cydui::events::start" name="cydui::events::start">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,139,56"/>
+<area shape="rect" id="Node000002" href="$structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84" title=" " alt="" coords="707,54,855,81"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,26,186,14,319,4,423,6,527,18,659,38,710,48,709,53,658,43,526,24,423,11,319,9,187,19,125,31"/>
+<area shape="rect" id="Node000003" href="$events_2events_8cpp.html#ad8d7fea6443e738a3a00c073f0eecbf8" title=" " alt="" coords="223,29,308,56"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="139,40,207,40,207,45,139,45"/>
+<area shape="rect" id="Node000008" href="$structcydui_1_1threading_1_1thread__t.html#aa740ecb2c3aec2371e86fca90b115600" title=" " alt="" coords="187,80,344,122"/>
+<area shape="poly" id="edge10_Node000001_Node000008" title=" " alt="" coords="119,54,179,72,178,77,118,59"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="309,42,691,60,691,66,309,47"/>
+<area shape="rect" id="Node000004" href="$events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e" title=" " alt="" coords="392,130,498,157"/>
+<area shape="poly" id="edge4_Node000003_Node000004" title=" " alt="" coords="310,51,345,65,386,91,420,118,416,122,382,95,343,70,308,56"/>
+<area shape="poly" id="edge7_Node000004_Node000002" title=" " alt="" coords="498,127,546,116,697,82,698,87,547,121,499,132"/>
+<area shape="rect" id="Node000005" href="$events_2events_8cpp.html#a3b66d20341dae5b5e069324eb44a5bf2" title=" " alt="" coords="546,130,659,157"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="499,141,530,141,530,146,499,146"/>
+<area shape="rect" id="Node000006" href="$events_2events_8cpp.html#a4bc4775e3a9a86d814664a5bd28c52da" title=" " alt="" coords="547,181,658,208"/>
+<area shape="poly" id="edge8_Node000004_Node000006" title=" " alt="" coords="490,155,545,173,544,178,488,160"/>
+<area shape="rect" id="Node000007" href="$events_2events_8cpp.html#a46ba5413ac7afeebd2faf94a01883f55" title=" " alt="" coords="563,232,642,258"/>
+<area shape="poly" id="edge9_Node000004_Node000007" title=" " alt="" coords="464,155,501,185,548,217,556,222,553,227,545,222,498,189,460,159"/>
+<area shape="poly" id="edge6_Node000005_Node000002" title=" " alt="" coords="635,127,733,85,735,90,637,132"/>
+</map>

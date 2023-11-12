@@ -1,0 +1,212 @@
+.TH "md_buffer_t< E, D >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+md_buffer_t< E, D >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <multidim_data\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBmd_buffer_t\fP (std::array< \fBsize_t\fP, \fBD\fP > \fBsize\fP)"
+.br
+.ti -1c
+.RI "\fB~md_buffer_t\fP ()"
+.br
+.ti -1c
+.RI "void \fBresize\fP (std::array< \fBsize_t\fP, \fBD\fP > new_size)"
+.br
+.ti -1c
+.RI "\fBE\fP * \fBget\fP (std::array< \fBsize_t\fP, \fBD\fP > coords)"
+.br
+.ti -1c
+.RI "void \fBset\fP (std::array< \fBsize_t\fP, \fBD\fP > coords, const \fBE\fP &value)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::array< \fBsize_t\fP, \fBD\fP > \fBsize\fP"
+.br
+.ti -1c
+.RI "\fBE\fP * \fBdata\fP = nullptr"
+.br
+.in -1c
+.SS "Private Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBsize_t\fP \fBcompute_total_size\fP (std::array< \fBsize_t\fP, \fBD\fP > s) const"
+.br
+.ti -1c
+.RI "\fBsize_t\fP \fBcompute_index\fP (std::array< \fBsize_t\fP, \fBD\fP > coords) const"
+.br
+.ti -1c
+.RI "void \fBcopy_from\fP (const \fBE\fP *source, std::array< \fBsize_t\fP, \fBD\fP > src_coords, std::array< \fBsize_t\fP, \fBD\fP > dst_coords, std::array< \fBsize_t\fP, \fBD\fP > _size)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename \fBE\fP, \fBsize_t\fP D>
+.br
+struct md_buffer_t< E, D >"
+.PP
+Definition at line \fB18\fP of file \fBmultidim_data\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename \fBE\fP , \fBsize_t\fP D> \fBmd_buffer_t\fP< \fBE\fP, \fBD\fP >\fB::md_buffer_t\fP (std::array< \fBsize_t\fP, \fBD\fP > size)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line \fB22\fP of file \fBmultidim_data\&.h\fP\&..PP
+.nf
+22                                                 : size(size) {
+23     size_t total_size = compute_total_size(this\->size);
+24     data = (E*) calloc(1, sizeof(E) * total_size);
+25   }
+.fi
+
+.SS "template<typename \fBE\fP , \fBsize_t\fP D> \fBmd_buffer_t\fP< \fBE\fP, \fBD\fP >::~\fBmd_buffer_t\fP ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB27\fP of file \fBmultidim_data\&.h\fP\&..PP
+.nf
+27                  {
+28     free(data);
+29   }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename \fBE\fP , \fBsize_t\fP D> \fBsize_t\fP \fBmd_buffer_t\fP< \fBE\fP, \fBD\fP >::compute_index (std::array< \fBsize_t\fP, \fBD\fP > coords) const\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+Definition at line \fB73\fP of file \fBmultidim_data\&.h\fP\&..PP
+.nf
+73                                                          {
+74     // i = x + X*y + X*Y*z + \&.\&.\&.
+75     auto iter = coords\&.begin();
+76     size_t index = *iter;
+77     size_t multiplier = size[0];
+78     iter = std::next(iter);
+79     for (size_t i = 1; i < D; ++i) {
+80       index += multiplier * *iter;
+81       multiplier *= size[i];
+82       iter = std::next(iter);
+83     }
+84     return index;
+85   }
+.fi
+
+.SS "template<typename \fBE\fP , \fBsize_t\fP D> \fBsize_t\fP \fBmd_buffer_t\fP< \fBE\fP, \fBD\fP >::compute_total_size (std::array< \fBsize_t\fP, \fBD\fP > s) const\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+Definition at line \fB65\fP of file \fBmultidim_data\&.h\fP\&..PP
+.nf
+65                                                          {
+66     size_t total_size = 1;
+67     for (size_t i = 0; i < D; ++i) {
+68       total_size *= s[i];
+69     }
+70     return total_size;
+71   }
+.fi
+
+.SS "template<typename \fBE\fP , \fBsize_t\fP D> void \fBmd_buffer_t\fP< \fBE\fP, \fBD\fP >::copy_from (const \fBE\fP * source, std::array< \fBsize_t\fP, \fBD\fP > src_coords, std::array< \fBsize_t\fP, \fBD\fP > dst_coords, std::array< \fBsize_t\fP, \fBD\fP > _size)\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+Definition at line \fB87\fP of file \fBmultidim_data\&.h\fP\&..PP
+.nf
+92     {
+93     size_t stride = _size[0];
+94     size_t total_strides = compute_total_size(_size) / stride;
+95     std::array<size_t, D> d_pos = dst_coords;
+96     std::array<size_t, D> s_pos = src_coords;
+97     
+98     size_t d_abs_index;
+99     size_t s_abs_index;
+100     for (size_t i = 0; i < total_strides; ++i) {
+101       d_abs_index = compute_index(d_pos);
+102       s_abs_index = compute_index(s_pos);
+103       memcpy(&this\->data[d_abs_index], &source[s_abs_index], sizeof(E) * stride);
+104       
+105       for (size_t d = 1; d < D; ++d) {
+106         if (0 == (i + 1) % _size[d]) {
+107           d_pos[d]++;
+108           s_pos[d]++;
+109         }
+110       }
+111     }
+112   }
+.fi
+
+.SS "template<typename \fBE\fP , \fBsize_t\fP D> \fBE\fP * \fBmd_buffer_t\fP< \fBE\fP, \fBD\fP >::get (std::array< \fBsize_t\fP, \fBD\fP > coords)\fC [inline]\fP"
+
+.PP
+Definition at line \fB52\fP of file \fBmultidim_data\&.h\fP\&..PP
+.nf
+52                                      {
+53     size_t index = compute_index(coords);
+54     return &data[index];
+55   }
+.fi
+
+.SS "template<typename \fBE\fP , \fBsize_t\fP D> void \fBmd_buffer_t\fP< \fBE\fP, \fBD\fP >::resize (std::array< \fBsize_t\fP, \fBD\fP > new_size)\fC [inline]\fP"
+
+.PP
+Definition at line \fB31\fP of file \fBmultidim_data\&.h\fP\&..PP
+.nf
+31                                             {
+32     bool same = true;
+33     for (size_t i = 0; i < D; ++i) {
+34       if (size[i] != new_size[i]) {
+35         same = false;
+36         break;
+37       }
+38     }
+39     if (same) return;
+40     
+41     size_t total_size = compute_total_size(this\->size);
+42     size_t total_new_size = compute_total_size(new_size);
+43     
+44     //auto* old_data = this\->data;
+45     this\->data = (E*) realloc(this\->data, sizeof(E) * total_new_size);
+46     //this\->data = (E*) calloc(1, sizeof(E) * total_new_size);
+47     //this\->copy_from(old_data, {0, 0}, {0, 0}, total_size > total_new_size ? new_size : size);
+48     //free(old_data);
+49     size = new_size;
+50   }
+.fi
+
+.SS "template<typename \fBE\fP , \fBsize_t\fP D> void \fBmd_buffer_t\fP< \fBE\fP, \fBD\fP >::set (std::array< \fBsize_t\fP, \fBD\fP > coords, const \fBE\fP & value)\fC [inline]\fP"
+
+.PP
+Definition at line \fB57\fP of file \fBmultidim_data\&.h\fP\&..PP
+.nf
+57                                                        {
+58     size_t index = compute_index(coords);
+59     if (index < compute_total_size(size)) {
+60       data[index] = value;
+61     }
+62   }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "template<typename \fBE\fP , \fBsize_t\fP D> \fBE\fP* \fBmd_buffer_t\fP< \fBE\fP, \fBD\fP >::data = nullptr"
+
+.PP
+Definition at line \fB20\fP of file \fBmultidim_data\&.h\fP\&.
+.SS "template<typename \fBE\fP , \fBsize_t\fP D> std::array<\fBsize_t\fP, \fBD\fP> \fBmd_buffer_t\fP< \fBE\fP, \fBD\fP >::size"
+
+.PP
+Definition at line \fB19\fP of file \fBmultidim_data\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

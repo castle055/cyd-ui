@@ -1,0 +1,85 @@
+.TH "vg::circle" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vg::circle
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <vg\&.h>\fP
+.PP
+Inherits \fBvg::vg_element_t\fP, attrs_core< circle >, attrs_fill< circle >, attrs_stroke< circle >, attr_cx< circle >, attr_cy< circle >, and attr_r< circle >\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBapply_to\fP (\fBpixelmap_editor_t\fP &editor) const override"
+.br
+.ti -1c
+.RI "\fBfootprint\fP \fBget_footprint\fP () const override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::vg_element_t\fP
+.in +1c
+.ti -1c
+.RI "void \fB_internal_set_origin\fP (int x, int y)"
+.br
+.ti -1c
+.RI "virtual \fB~vg_element_t\fP ()=default"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Public Attributes inherited from \fBvg::vg_element_t\fP
+.in +1c
+.ti -1c
+.RI "int \fBorigin_x\fP = 0"
+.br
+.ti -1c
+.RI "int \fBorigin_y\fP = 0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB322\fP of file \fBvg\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void vg::circle::apply_to (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBvg::vg_element_t\fP\&.
+.PP
+Definition at line \fB330\fP of file \fBvg\&.h\fP\&..PP
+.nf
+330                                                               {
+331         apply_stroke(editor);
+332         apply_fill(editor);
+333         
+334         editor\->arc(origin_x + _cx, origin_y + _cy, _r, 0, 2 * M_PI);
+335         set_source_to_stroke(editor);
+336         editor\->stroke_preserve();
+337         
+338         set_source_to_fill(editor);
+339         editor\->fill();
+340       }
+.fi
+
+.SS "\fBfootprint\fP vg::circle::get_footprint () const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBvg::vg_element_t\fP\&.
+.PP
+Definition at line \fB342\fP of file \fBvg\&.h\fP\&..PP
+.nf
+342                                                {
+343         return {_cx \- _r, _cy \- _r, 2 * _r, 2 * _r};
+344       }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

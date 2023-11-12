@@ -1,0 +1,92 @@
+.TH "cydui::events::Event" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::events::Event
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <events\&.hpp>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "template<typename \fBT\fP > 
+.br
+requires EventType<\fBT\fP>\fBParsedEvent\fP< \fBT\fP > \fBparse\fP ()"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBstr\fP \fBtype\fP"
+.br
+.ti -1c
+.RI "\fBEventStatus\fP \fBstatus\fP = \fBPENDING\fP"
+.br
+.ti -1c
+.RI "void * \fBev\fP"
+.br
+.ti -1c
+.RI "std::mutex \fBev_mtx\fP"
+.br
+.ti -1c
+.RI "bool \fBmanaged\fP = false"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB109\fP of file \fBevents\&.hpp\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename \fBT\fP > 
+.br
+requires EventType<\fBT\fP>\fBParsedEvent\fP< \fBT\fP > cydui::events::Event::parse ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB121\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+121                              {
+122         str matchName = T::type;
+123         if (matchName == type) {
+124           return ParsedEvent<T> {
+125             \&.type = type,
+126             \&.data = (typename T::DataType*) ev,
+127           };
+128         } else {
+129           return ParsedEvent<T> {
+130             \&.type = type,
+131             \&.data = nullptr,
+132           };
+133         }
+134       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "void* cydui::events::Event::ev"
+
+.PP
+Definition at line \fB112\fP of file \fBevents\&.hpp\fP\&.
+.SS "std::mutex cydui::events::Event::ev_mtx"
+
+.PP
+Definition at line \fB114\fP of file \fBevents\&.hpp\fP\&.
+.SS "bool cydui::events::Event::managed = false"
+
+.PP
+Definition at line \fB117\fP of file \fBevents\&.hpp\fP\&.
+.SS "\fBEventStatus\fP cydui::events::Event::status = \fBPENDING\fP"
+
+.PP
+Definition at line \fB111\fP of file \fBevents\&.hpp\fP\&.
+.SS "\fBstr\fP cydui::events::Event::type"
+
+.PP
+Definition at line \fB110\fP of file \fBevents\&.hpp\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -1,0 +1,70 @@
+.TH "state" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+state
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "Display * \fBget_dpy\fP ()"
+.br
+.ti -1c
+.RI "int \fBget_screen\fP ()"
+.br
+.ti -1c
+.RI "Window \fBget_root\fP ()"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "Display * state::get_dpy ()"
+
+.PP
+Definition at line \fB13\fP of file \fBstate\&.cpp\fP\&..PP
+.nf
+13                         {
+14   if (dpy)
+15     return dpy;
+16   if ((dpy = XOpenDisplay(nullptr))) {
+17     log_task\&.info("dpy = %lX", (unsigned long) dpy);
+18     return dpy;
+19   } else {
+20     log_task\&.error("Could not open display");
+21     return nullptr;
+22   }
+23 }
+.fi
+
+.SS "Window state::get_root ()"
+
+.PP
+Definition at line \fB33\fP of file \fBstate\&.cpp\fP\&..PP
+.nf
+33                        {
+34   Window root = XRootWindow(get_dpy(), get_screen());
+35   log_task\&.info("root = %lu", root);
+36   return root;
+37 }
+.fi
+
+.SS "int state::get_screen ()"
+
+.PP
+Definition at line \fB25\fP of file \fBstate\&.cpp\fP\&..PP
+.nf
+25                       {
+26   if (screen != \-1)
+27     return screen;
+28   screen = DefaultScreen(get_dpy());
+29   log_task\&.info("screen = %d", screen);
+30   return screen;
+31 }
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

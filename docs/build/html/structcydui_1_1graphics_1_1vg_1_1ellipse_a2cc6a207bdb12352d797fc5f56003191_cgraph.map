@@ -1,0 +1,11 @@
+<map id="cydui::graphics::vg::ellipse::apply_to" name="cydui::graphics::vg::ellipse::apply_to">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,137,137,180"/>
+<area shape="rect" id="Node000002" href="$structcydui_1_1graphics_1_1vg_1_1attrs__fill.html#af1feaf9cc6caaa3e84c04be049830a73" title=" " alt="" coords="202,5,334,64"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,135,183,74,190,70,193,74,186,78,101,139"/>
+<area shape="rect" id="Node000003" href="$structcydui_1_1graphics_1_1vg_1_1attrs__stroke.html#a0efc09cf26d329c1225dc4b9b9a9acdc" title=" " alt="" coords="194,88,342,147"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="136,142,179,133,180,139,138,148"/>
+<area shape="rect" id="Node000004" href="$structcydui_1_1graphics_1_1vg_1_1attrs__fill.html#a9f1f03b465b8f4211c14a1c112de0438" title=" " alt="" coords="196,171,340,229"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="138,170,182,179,181,184,136,175"/>
+<area shape="rect" id="Node000005" href="$structcydui_1_1graphics_1_1vg_1_1attrs__stroke.html#aeb5ece8fa5dae24e850c927919a4e67e" title=" " alt="" coords="185,253,351,312"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="101,178,186,239,193,243,190,248,183,244,98,183"/>
+</map>

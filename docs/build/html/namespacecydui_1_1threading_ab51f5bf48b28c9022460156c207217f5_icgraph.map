@@ -1,0 +1,12 @@
+<map id="cydui::threading::new_thread" name="cydui::threading::new_thread">
+<area shape="rect" id="Node000001" title=" " alt="" coords="385,39,530,81"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="487,25,476,20,458,17,441,19,431,24,426,30,428,38,423,38,421,29,427,20,439,14,458,12,477,14,489,21"/>
+<area shape="rect" id="Node000002" href="$namespacex11_1_1events.html#a810967d43ea3ace068c1af0b4159a5e6" title=" " alt="" coords="215,17,337,44"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="369,48,337,43,338,38,370,43"/>
+<area shape="rect" id="Node000004" href="$namespacex11_1_1render.html#a2bab441e71f42470e767c6f6a079a129" title=" " alt="" coords="216,72,336,99"/>
+<area shape="poly" id="edge4_Node000001_Node000004" title=" " alt="" coords="370,75,336,80,335,74,369,70"/>
+<area shape="rect" id="Node000003" href="$namespacecydui_1_1graphics.html#a7704ec7880a056e09470957824f7d995" title=" " alt="" coords="9,5,163,48"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="199,32,163,31,163,26,199,26"/>
+<area shape="rect" id="Node000005" href="$structcydui_1_1graphics_1_1window__t.html#a2e7c0a722f210b4271bc3815f2229e32" title=" " alt="" coords="5,72,167,115"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="201,91,167,93,167,87,200,86"/>
+</map>

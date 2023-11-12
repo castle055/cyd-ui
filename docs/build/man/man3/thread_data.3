@@ -1,0 +1,64 @@
+.TH "thread_data" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+thread_data
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "bool \fBpending\fP = false"
+.br
+.ti -1c
+.RI "std::deque< \fBcydui::events::Event\fP * > * \fBevent_queue\fP"
+.br
+.ti -1c
+.RI "std::unordered_map< \fBstr\fP, std::deque< \fBcydui::events::listener_t\fP > > * \fBevent_listeners\fP"
+.br
+.ti -1c
+.RI "std::unordered_map< \fBstr\fP, \fBcydui::events::Event\fP * > * \fBstate_events\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB21\fP of file \fBevents\&.cpp\fP\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "std::unordered_map< \fBstr\fP, std::deque<\fBcydui::events::listener_t\fP> >* thread_data::event_listeners"
+\fBInitial value:\fP.PP
+.nf
+=
+    new std::unordered_map<str, std::deque<cydui::events::listener_t>>
+.fi
+
+.PP
+Definition at line \fB28\fP of file \fBevents\&.cpp\fP\&.
+.SS "std::deque<\fBcydui::events::Event\fP*>* thread_data::event_queue"
+\fBInitial value:\fP.PP
+.nf
+=
+    new std::deque<cydui::events::Event*>
+.fi
+
+.PP
+Definition at line \fB23\fP of file \fBevents\&.cpp\fP\&.
+.SS "bool thread_data::pending = false"
+
+.PP
+Definition at line \fB22\fP of file \fBevents\&.cpp\fP\&.
+.SS "std::unordered_map<\fBstr\fP, \fBcydui::events::Event\fP*>* thread_data::state_events"
+\fBInitial value:\fP.PP
+.nf
+=
+    new std::unordered_map<str, cydui::events::Event*>
+.fi
+
+.PP
+Definition at line \fB31\fP of file \fBevents\&.cpp\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

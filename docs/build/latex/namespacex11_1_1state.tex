@@ -1,0 +1,121 @@
+\doxysection{x11\+::state Namespace Reference}
+\hypertarget{namespacex11_1_1state}{}\label{namespacex11_1_1state}\index{x11::state@{x11::state}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+Display \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{get\+\_\+dpy}} ()
+\item 
+int \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{get\+\_\+screen}} ()
+\item 
+Window \mbox{\hyperlink{namespacex11_1_1state_aa84ba9257575606e735f96a9e16ac069}{get\+\_\+root}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}\label{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5} 
+\index{x11::state@{x11::state}!get\_dpy@{get\_dpy}}
+\index{get\_dpy@{get\_dpy}!x11::state@{x11::state}}
+\doxysubsubsection{\texorpdfstring{get\_dpy()}{get\_dpy()}}
+{\footnotesize\ttfamily Display \texorpdfstring{$\ast$}{*} x11\+::state\+::get\+\_\+dpy (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{state_8cpp_source_l00015}{15}} of file \mbox{\hyperlink{state_8cpp_source}{state.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00016\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{state_8cpp_a7d43b3edf58f8d85a89852ab95b740f6}{dpy}})}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{state_8cpp_a7d43b3edf58f8d85a89852ab95b740f6}{dpy}};}
+\DoxyCodeLine{00018\ \ \ \textcolor{keywordflow}{if}\ ((\mbox{\hyperlink{state_8cpp_a7d43b3edf58f8d85a89852ab95b740f6}{dpy}}\ =\ XOpenDisplay(\textcolor{keyword}{nullptr})))\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \mbox{\hyperlink{state_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_a546a4589ce11ce9882e22594a517fc0b}{info}}(\textcolor{stringliteral}{"{}dpy\ =\ \%lX"{}},\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long})\ \mbox{\hyperlink{state_8cpp_a7d43b3edf58f8d85a89852ab95b740f6}{dpy}});}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{state_8cpp_a7d43b3edf58f8d85a89852ab95b740f6}{dpy}};}
+\DoxyCodeLine{00021\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{state_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}}(\textcolor{stringliteral}{"{}Could\ not\ open\ display"{}});}
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00024\ \ \ \}}
+\DoxyCodeLine{00025\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=320pt]{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespacex11_1_1state_aa84ba9257575606e735f96a9e16ac069}\label{namespacex11_1_1state_aa84ba9257575606e735f96a9e16ac069} 
+\index{x11::state@{x11::state}!get\_root@{get\_root}}
+\index{get\_root@{get\_root}!x11::state@{x11::state}}
+\doxysubsubsection{\texorpdfstring{get\_root()}{get\_root()}}
+{\footnotesize\ttfamily Window x11\+::state\+::get\+\_\+root (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{state_8cpp_source_l00035}{35}} of file \mbox{\hyperlink{state_8cpp_source}{state.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00036\ \ \ Window\ root\ =\ XRootWindow(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{get\_screen}}());}
+\DoxyCodeLine{00037\ \ \ \mbox{\hyperlink{state_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_a546a4589ce11ce9882e22594a517fc0b}{info}}(\textcolor{stringliteral}{"{}root\ =\ \%lu"{}},\ root);}
+\DoxyCodeLine{00038\ \ \ \textcolor{keywordflow}{return}\ root;}
+\DoxyCodeLine{00039\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacex11_1_1state_aa84ba9257575606e735f96a9e16ac069_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=331pt]{namespacex11_1_1state_aa84ba9257575606e735f96a9e16ac069_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}\label{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7} 
+\index{x11::state@{x11::state}!get\_screen@{get\_screen}}
+\index{get\_screen@{get\_screen}!x11::state@{x11::state}}
+\doxysubsubsection{\texorpdfstring{get\_screen()}{get\_screen()}}
+{\footnotesize\ttfamily int x11\+::state\+::get\+\_\+screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{state_8cpp_source_l00027}{27}} of file \mbox{\hyperlink{state_8cpp_source}{state.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{state_8cpp_a3109b0889cec9f0de874a2bdc1f84372}{screen}}\ !=\ -\/1)}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{state_8cpp_a3109b0889cec9f0de874a2bdc1f84372}{screen}};}
+\DoxyCodeLine{00030\ \ \ \mbox{\hyperlink{state_8cpp_a3109b0889cec9f0de874a2bdc1f84372}{screen}}\ =\ DefaultScreen(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{get\_dpy}}());}
+\DoxyCodeLine{00031\ \ \ \mbox{\hyperlink{state_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_a546a4589ce11ce9882e22594a517fc0b}{info}}(\textcolor{stringliteral}{"{}screen\ =\ \%d"{}},\ \mbox{\hyperlink{state_8cpp_a3109b0889cec9f0de874a2bdc1f84372}{screen}});}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{state_8cpp_a3109b0889cec9f0de874a2bdc1f84372}{screen}};}
+\DoxyCodeLine{00033\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7_icgraph}
+\end{center}
+\end{figure}

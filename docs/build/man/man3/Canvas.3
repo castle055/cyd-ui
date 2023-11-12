@@ -1,0 +1,181 @@
+.TH "Canvas" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Canvas
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <component\&.h>\fP
+.PP
+Inherits \fBcomponent_t< CanvasEventHandler, Canvas >\fP\&.
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBprops_t\fP"
+.br
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "using \fBstate_t\fP = \fBCanvasState\fP"
+.br
+.ti -1c
+.RI "using \fBevent_handler_t\fP = \fBCanvasEventHandler\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCanvas\fP ()=default"
+.br
+.ti -1c
+.RI "\fBCanvas\fP (\fBprops_t\fP \fBprops\fP)"
+.br
+.ti -1c
+.RI "\fBCanvas\fP & \fBoperator()\fP (const std::function< \fBvg::vg_fragment_t\fP()> &render)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcomponent_t< CanvasEventHandler, Canvas >\fP
+.in +1c
+.ti -1c
+.RI "\fBevent_handler_t\fP * \fBevent_handler\fP () override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_x< E >\fP
+.in +1c
+.ti -1c
+.RI "\fBE\fP & \fBx\fP (int &_x_)"
+.br
+.ti -1c
+.RI "\fBE\fP & \fBx\fP (int &&_x_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_y< E >\fP
+.in +1c
+.ti -1c
+.RI "\fBE\fP & \fBy\fP (int &_y_)"
+.br
+.ti -1c
+.RI "\fBE\fP & \fBy\fP (int &&_y_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_w< E >\fP
+.in +1c
+.ti -1c
+.RI "\fBE\fP & \fBw\fP (int &_w_)"
+.br
+.ti -1c
+.RI "\fBE\fP & \fBw\fP (int &&_w_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_h< E >\fP
+.in +1c
+.ti -1c
+.RI "\fBE\fP & \fBh\fP (int &_h_)"
+.br
+.ti -1c
+.RI "\fBE\fP & \fBh\fP (int &&_h_)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBCanvas::props_t\fP \fBprops\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_x< E >\fP
+.in +1c
+.ti -1c
+.RI "int \fB_x\fP = 0"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_y< E >\fP
+.in +1c
+.ti -1c
+.RI "int \fB_y\fP = 0"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_w< E >\fP
+.in +1c
+.ti -1c
+.RI "int \fB_w\fP = 0"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_h< E >\fP
+.in +1c
+.ti -1c
+.RI "int \fB_h\fP = 0"
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static constexpr std::string \fBNAME\fP = 'Canvas'"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB70\fP of file \fBcomponent\&.h\fP\&.
+.SH "Member Typedef Documentation"
+.PP 
+.SS "using \fBCanvas::event_handler_t\fP =  \fBCanvasEventHandler\fP"
+
+.PP
+Definition at line \fB74\fP of file \fBcomponent\&.h\fP\&.
+.SS "using \fBCanvas::state_t\fP =  \fBCanvasState\fP"
+
+.PP
+Definition at line \fB73\fP of file \fBcomponent\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Canvas::Canvas ()\fC [default]\fP"
+
+.SS "Canvas::Canvas (\fBprops_t\fP props)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line \fB80\fP of file \fBcomponent\&.h\fP\&..PP
+.nf
+80 : props(props) { }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBCanvas\fP & Canvas::operator() (const std::function< \fBvg::vg_fragment_t\fP()> & render)\fC [inline]\fP"
+
+.PP
+Definition at line \fB82\fP of file \fBcomponent\&.h\fP\&..PP
+.nf
+82                                                                    {
+83     auto frag = render();
+84     return *this;
+85   }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "constexpr std::string Canvas::NAME = 'Canvas'\fC [static]\fP, \fC [constexpr]\fP"
+
+.PP
+Definition at line \fB72\fP of file \fBcomponent\&.h\fP\&.
+.SS "struct \fBCanvas::props_t\fP Canvas::props"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

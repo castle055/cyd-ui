@@ -1,0 +1,11 @@
+<map id="cydui::components::Component" name="cydui::components::Component">
+<area shape="rect" id="Node000001" title=" " alt="" coords="100,5,240,48"/>
+<area shape="rect" id="Node000002" href="$structHBox.html" title=" " alt="" coords="5,96,60,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="123,59,55,98,53,93,120,54"/>
+<area shape="rect" id="Node000003" href="$structProfiler.html" title=" " alt="" coords="84,96,146,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="149,63,126,97,122,94,145,60"/>
+<area shape="rect" id="Node000004" href="$structThreadTimeline.html" title=" " alt="" coords="171,96,281,123"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="195,59,219,94,215,97,191,62"/>
+<area shape="rect" id="Node000005" href="$structVBox.html" title=" " alt="" coords="305,96,358,123"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="226,53,307,93,305,98,224,58"/>
+</map>

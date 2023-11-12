@@ -1,0 +1,232 @@
+\doxysection{logging\+::logger Struct Reference}
+\hypertarget{structlogging_1_1logger}{}\label{structlogging_1_1logger}\index{logging::logger@{logging::logger}}
+
+
+{\ttfamily \#include $<$logging.\+hpp$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{debug}} (const char \texorpdfstring{$\ast$}{*}format,...) const \mbox{\hyperlink{pixelmap_8h_a324a2aece7791981fcebe05b41297790}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}}((format(printf
+\item 
+void void \mbox{\hyperlink{structlogging_1_1logger_a546a4589ce11ce9882e22594a517fc0b}{info}} (const char \texorpdfstring{$\ast$}{*}format,...) const \mbox{\hyperlink{pixelmap_8h_a324a2aece7791981fcebe05b41297790}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}}((format(printf
+\item 
+void void void \mbox{\hyperlink{structlogging_1_1logger_aac089754626fca18b5ace327c78321b6}{warn}} (const char \texorpdfstring{$\ast$}{*}format,...) const \mbox{\hyperlink{pixelmap_8h_a324a2aece7791981fcebe05b41297790}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}}((format(printf
+\item 
+void void void void \mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}} (const char \texorpdfstring{$\ast$}{*}format,...) const \mbox{\hyperlink{pixelmap_8h_a324a2aece7791981fcebe05b41297790}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}}((format(printf
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}} = "{}log\+\_\+task"{}
+\item 
+bool \mbox{\hyperlink{structlogging_1_1logger_a47c405c3a35bfe8ee6b66f3948e7e643}{on}} = true
+\item 
+\mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416}{Log\+Level}} \mbox{\hyperlink{structlogging_1_1logger_a52495a82a5eeac5506f15b8d62df574a}{min\+\_\+level}} = \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416a682501b7fb187303796e3f533735b51f}{DEBUG}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{logging_8hpp_source_l00017}{17}} of file \mbox{\hyperlink{logging_8hpp_source}{logging.\+hpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}\label{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84} 
+\index{logging::logger@{logging::logger}!debug@{debug}}
+\index{debug@{debug}!logging::logger@{logging::logger}}
+\doxysubsubsection{\texorpdfstring{debug()}{debug()}}
+{\footnotesize\ttfamily void logging\+::logger\+::debug (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{format,  }\item[{}]{... }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{logging_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{logging_8cpp_source}{logging.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00011\ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{structlogging_1_1logger_a47c405c3a35bfe8ee6b66f3948e7e643}{on}}\ ||\ this-\/>\mbox{\hyperlink{structlogging_1_1logger_a52495a82a5eeac5506f15b8d62df574a}{min\_level}}\ >\ \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416a682501b7fb187303796e3f533735b51f}{DEBUG}})}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00013\ \ \ std::va\_list\ va;}
+\DoxyCodeLine{00014\ \ \ time\_t\ now\ =\ time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00015\ \ \ }
+\DoxyCodeLine{00016\ \ \ std::string\ msg\ =\ ctime(\&now);}
+\DoxyCodeLine{00017\ \ \ msg\ =\ msg.substr(0,\ msg.size()\ -\/\ 2);}
+\DoxyCodeLine{00018\ \ \ msg.append(\textcolor{stringliteral}{"{}:\ [DEBUG]"{}});}
+\DoxyCodeLine{00019\ \ \ msg.append(\textcolor{stringliteral}{"{}\ ["{}});}
+\DoxyCodeLine{00020\ \ \ msg.append(\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}});}
+\DoxyCodeLine{00021\ \ \ msg.append(\textcolor{stringliteral}{"{}]\ "{}});}
+\DoxyCodeLine{00022\ \ \ msg.append(format);}
+\DoxyCodeLine{00023\ \ \ msg.append(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)r"{}});}
+\DoxyCodeLine{00024\ \ \ }
+\DoxyCodeLine{00025\ \ \ va\_start(va,\ format);}
+\DoxyCodeLine{00026\ \ \ vfprintf(stdout,\ msg.c\_str(),\ va);}
+\DoxyCodeLine{00027\ \ \ va\_end(va);}
+\DoxyCodeLine{00028\ \ \ fflush(stdout);}
+\DoxyCodeLine{00029\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}\label{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa} 
+\index{logging::logger@{logging::logger}!error@{error}}
+\index{error@{error}!logging::logger@{logging::logger}}
+\doxysubsubsection{\texorpdfstring{error()}{error()}}
+{\footnotesize\ttfamily void logging\+::logger\+::error (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{format,  }\item[{}]{... }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{logging_8cpp_source_l00073}{73}} of file \mbox{\hyperlink{logging_8cpp_source}{logging.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{structlogging_1_1logger_a47c405c3a35bfe8ee6b66f3948e7e643}{on}}\ ||\ this-\/>\mbox{\hyperlink{structlogging_1_1logger_a52495a82a5eeac5506f15b8d62df574a}{min\_level}}\ >\ \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416abef691e55fd1813b7540614e718ab7f1}{ERROR}})}
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00076\ \ \ va\_list\ va;}
+\DoxyCodeLine{00077\ \ \ time\_t\ now\ =\ time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00078\ \ \ }
+\DoxyCodeLine{00079\ \ \ std::string\ msg\ =\ ctime(\&now);}
+\DoxyCodeLine{00080\ \ \ msg\ =\ msg.substr(0,\ msg.size()\ -\/\ 2);}
+\DoxyCodeLine{00081\ \ \ msg.append(\textcolor{stringliteral}{"{}:\ [ERROR]"{}});}
+\DoxyCodeLine{00082\ \ \ msg.append(\textcolor{stringliteral}{"{}\ ["{}});}
+\DoxyCodeLine{00083\ \ \ msg.append(\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}});}
+\DoxyCodeLine{00084\ \ \ msg.append(\textcolor{stringliteral}{"{}]\ "{}});}
+\DoxyCodeLine{00085\ \ \ msg.append(format);}
+\DoxyCodeLine{00086\ \ \ msg.append(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)r"{}});}
+\DoxyCodeLine{00087\ \ \ }
+\DoxyCodeLine{00088\ \ \ va\_start(va,\ format);}
+\DoxyCodeLine{00089\ \ \ vfprintf(stderr,\ msg.c\_str(),\ va);}
+\DoxyCodeLine{00090\ \ \ va\_end(va);}
+\DoxyCodeLine{00091\ \ \ fflush(stderr);}
+\DoxyCodeLine{00092\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structlogging_1_1logger_a546a4589ce11ce9882e22594a517fc0b}\label{structlogging_1_1logger_a546a4589ce11ce9882e22594a517fc0b} 
+\index{logging::logger@{logging::logger}!info@{info}}
+\index{info@{info}!logging::logger@{logging::logger}}
+\doxysubsubsection{\texorpdfstring{info()}{info()}}
+{\footnotesize\ttfamily void logging\+::logger\+::info (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{format,  }\item[{}]{... }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{logging_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{logging_8cpp_source}{logging.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00032\ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{structlogging_1_1logger_a47c405c3a35bfe8ee6b66f3948e7e643}{on}}\ ||\ this-\/>\mbox{\hyperlink{structlogging_1_1logger_a52495a82a5eeac5506f15b8d62df574a}{min\_level}}\ >\ \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416a599d39352a6b7a4d371ea9e27bd22562}{INFO}})}
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00034\ \ \ va\_list\ va;}
+\DoxyCodeLine{00035\ \ \ time\_t\ now\ =\ time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00036\ \ \ }
+\DoxyCodeLine{00037\ \ \ std::string\ msg\ =\ ctime(\&now);}
+\DoxyCodeLine{00038\ \ \ msg\ =\ msg.substr(0,\ msg.size()\ -\/\ 2);}
+\DoxyCodeLine{00039\ \ \ msg.append(\textcolor{stringliteral}{"{}:\ [INFO]\ "{}});}
+\DoxyCodeLine{00040\ \ \ msg.append(\textcolor{stringliteral}{"{}\ ["{}});}
+\DoxyCodeLine{00041\ \ \ msg.append(\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}});}
+\DoxyCodeLine{00042\ \ \ msg.append(\textcolor{stringliteral}{"{}]\ "{}});}
+\DoxyCodeLine{00043\ \ \ msg.append(format);}
+\DoxyCodeLine{00044\ \ \ msg.append(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)r"{}});}
+\DoxyCodeLine{00045\ \ \ }
+\DoxyCodeLine{00046\ \ \ va\_start(va,\ format);}
+\DoxyCodeLine{00047\ \ \ vfprintf(stdout,\ msg.c\_str(),\ va);}
+\DoxyCodeLine{00048\ \ \ va\_end(va);}
+\DoxyCodeLine{00049\ \ \ fflush(stdout);}
+\DoxyCodeLine{00050\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structlogging_1_1logger_a546a4589ce11ce9882e22594a517fc0b_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structlogging_1_1logger_aac089754626fca18b5ace327c78321b6}\label{structlogging_1_1logger_aac089754626fca18b5ace327c78321b6} 
+\index{logging::logger@{logging::logger}!warn@{warn}}
+\index{warn@{warn}!logging::logger@{logging::logger}}
+\doxysubsubsection{\texorpdfstring{warn()}{warn()}}
+{\footnotesize\ttfamily void logging\+::logger\+::warn (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{format,  }\item[{}]{... }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{logging_8cpp_source_l00052}{52}} of file \mbox{\hyperlink{logging_8cpp_source}{logging.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{structlogging_1_1logger_a47c405c3a35bfe8ee6b66f3948e7e643}{on}}\ ||\ this-\/>\mbox{\hyperlink{structlogging_1_1logger_a52495a82a5eeac5506f15b8d62df574a}{min\_level}}\ >\ \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416aa00f075d3e980cd854510e52ec60e5e3}{WARN}})}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00055\ \ \ va\_list\ va;}
+\DoxyCodeLine{00056\ \ \ time\_t\ now\ =\ time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00057\ \ \ }
+\DoxyCodeLine{00058\ \ \ std::string\ msg\ =\ ctime(\&now);}
+\DoxyCodeLine{00059\ \ \ msg\ =\ msg.substr(0,\ msg.size()\ -\/\ 2);}
+\DoxyCodeLine{00060\ \ \ msg.append(\textcolor{stringliteral}{"{}:\ [WARN]\ "{}});}
+\DoxyCodeLine{00061\ \ \ msg.append(\textcolor{stringliteral}{"{}\ ["{}});}
+\DoxyCodeLine{00062\ \ \ msg.append(\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}});}
+\DoxyCodeLine{00063\ \ \ msg.append(\textcolor{stringliteral}{"{}]\ "{}});}
+\DoxyCodeLine{00064\ \ \ msg.append(format);}
+\DoxyCodeLine{00065\ \ \ msg.append(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)r"{}});}
+\DoxyCodeLine{00066\ \ \ }
+\DoxyCodeLine{00067\ \ \ va\_start(va,\ format);}
+\DoxyCodeLine{00068\ \ \ vfprintf(stdout,\ msg.c\_str(),\ va);}
+\DoxyCodeLine{00069\ \ \ va\_end(va);}
+\DoxyCodeLine{00070\ \ \ fflush(stdout);}
+\DoxyCodeLine{00071\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structlogging_1_1logger_a52495a82a5eeac5506f15b8d62df574a}\label{structlogging_1_1logger_a52495a82a5eeac5506f15b8d62df574a} 
+\index{logging::logger@{logging::logger}!min\_level@{min\_level}}
+\index{min\_level@{min\_level}!logging::logger@{logging::logger}}
+\doxysubsubsection{\texorpdfstring{min\_level}{min\_level}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416}{Log\+Level}} logging\+::logger\+::min\+\_\+level = \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416a682501b7fb187303796e3f533735b51f}{DEBUG}}}
+
+
+
+Definition at line \mbox{\hyperlink{logging_8hpp_source_l00020}{20}} of file \mbox{\hyperlink{logging_8hpp_source}{logging.\+hpp}}.
+
+\Hypertarget{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}\label{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d} 
+\index{logging::logger@{logging::logger}!name@{name}}
+\index{name@{name}!logging::logger@{logging::logger}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily const char\texorpdfstring{$\ast$}{*} logging\+::logger\+::name = "{}log\+\_\+task"{}}
+
+
+
+Definition at line \mbox{\hyperlink{logging_8hpp_source_l00018}{18}} of file \mbox{\hyperlink{logging_8hpp_source}{logging.\+hpp}}.
+
+\Hypertarget{structlogging_1_1logger_a47c405c3a35bfe8ee6b66f3948e7e643}\label{structlogging_1_1logger_a47c405c3a35bfe8ee6b66f3948e7e643} 
+\index{logging::logger@{logging::logger}!on@{on}}
+\index{on@{on}!logging::logger@{logging::logger}}
+\doxysubsubsection{\texorpdfstring{on}{on}}
+{\footnotesize\ttfamily bool logging\+::logger\+::on = true}
+
+
+
+Definition at line \mbox{\hyperlink{logging_8hpp_source_l00019}{19}} of file \mbox{\hyperlink{logging_8hpp_source}{logging.\+hpp}}.
+
+
+
+The documentation for this struct was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/cydstd/\mbox{\hyperlink{logging_8hpp}{logging.\+hpp}}\item 
+src/\mbox{\hyperlink{logging_8cpp}{logging.\+cpp}}\end{DoxyCompactItemize}

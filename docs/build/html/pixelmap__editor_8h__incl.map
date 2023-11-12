@@ -1,0 +1,19 @@
+<map id="include/graphics/pixelmap_editor.h" name="include/graphics/pixelmap_editor.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="184,5,355,48"/>
+<area shape="rect" id="Node000002" href="$pixelmap_8h.html" title=" " alt="" coords="155,104,240,131"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="255,50,219,93,215,90,251,47"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="264,96,419,139"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="288,47,317,82,313,86,284,50"/>
+<area shape="rect" id="Node000003" href="$multidim__data_8h.html" title=" " alt="" coords="119,187,276,213"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="200,131,200,171,195,171,195,131"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,261,70,288"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="171,216,80,257,78,252,169,211"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="94,261,144,288"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="186,216,145,253,142,249,182,212"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="168,261,227,288"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="200,214,200,246,195,246,195,214"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="252,261,309,288"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="214,212,256,249,253,253,210,216"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="333,261,393,288"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="227,211,321,252,319,257,225,216"/>
+</map>

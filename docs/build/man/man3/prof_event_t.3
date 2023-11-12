@@ -1,0 +1,89 @@
+.TH "prof::event_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+prof::event_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <profiling\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBmark_start\fP ()"
+.br
+.ti -1c
+.RI "void \fBmark\fP ()"
+.br
+.ti -1c
+.RI "void \fBmark_end\fP ()"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "const char * \fBdescription\fP"
+.br
+.ti -1c
+.RI "\fBtime_point\fP \fBt0\fP"
+.br
+.ti -1c
+.RI "std::optional< \fBtime_point\fP > \fBt1\fP = std::nullopt"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB31\fP of file \fBprofiling\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void prof::event_t::mark ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB40\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+40                          {
+41         mark_start();
+42       }
+.fi
+
+.SS "void prof::event_t::mark_end ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB44\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+44                              {
+45         t1 = PROFILING_CLOCK::now();
+46       }
+.fi
+
+.SS "void prof::event_t::mark_start ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB36\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+36                                {
+37         t0 = PROFILING_CLOCK::now();
+38       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "const char* prof::event_t::description"
+
+.PP
+Definition at line \fB32\fP of file \fBprofiling\&.h\fP\&.
+.SS "\fBtime_point\fP prof::event_t::t0"
+
+.PP
+Definition at line \fB33\fP of file \fBprofiling\&.h\fP\&.
+.SS "std::optional<\fBtime_point\fP> prof::event_t::t1 = std::nullopt"
+
+.PP
+Definition at line \fB34\fP of file \fBprofiling\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

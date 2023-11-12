@@ -1,0 +1,431 @@
+\doxysection{components.\+hpp}
+\hypertarget{components_8hpp_source}{}\label{components_8hpp_source}\index{include/core/components.hpp@{include/core/components.hpp}}
+\mbox{\hyperlink{components_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 8/21/22.}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ CYD\_UI\_COMPONENTS\_HPP}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00006}00006\ \textcolor{preprocessor}{\#define\ CYD\_UI\_COMPONENTS\_HPP}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}../events/cydui\_events.h"{}}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{children__state__collection_8hpp}{children\_state\_collection.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}../core/dimensions.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}../graphics/graphics.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}../core/drag\_n\_drop.h"{}}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00014}\mbox{\hyperlink{namespacecydui_1_1layout}{00014}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecydui_1_1layout}{cydui::layout}}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00015}00015\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcydui_1_1layout_1_1Layout}{Layout}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00016}00016\ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00018}\mbox{\hyperlink{namespacecydui_1_1components}{00018}}\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecydui_1_1components}{cydui::components}}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00019}00019\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00020}00020\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00021}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentBorder}{00021}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcydui_1_1components_1_1ComponentBorder}{ComponentBorder}}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00022}00022\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00023}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentBorder_a7a949440cc7892f1a3f6a9d53991cd2d}{00023}}\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentBorder_a7a949440cc7892f1a3f6a9d53991cd2d}{enabled}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00024}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentBorder_a04e72a0ab4d19397db32eb7017c924d2}{00024}}\ \ \ \ \ \ \ \mbox{\hyperlink{structcolor_1_1Color}{color::Color}}\ \mbox{\hyperlink{namespacecolor}{color}}\ =\ \textcolor{stringliteral}{"{}\#FCAE1E"{}}\_color;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00025}00025\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00026}00026\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00027}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{00027}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{ComponentState}}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00028}00028\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00029}00029\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ae267829320111f7e5ceb6ba99e0ea188}{ComponentState}}();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00030}00030\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00031}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a5d0930964bfeedc40efa3252616fd30b}{00031}}\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a5d0930964bfeedc40efa3252616fd30b}{component\_instance}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00032}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_afb85581e30fcd8df24b42ad1ebab63c8}{00032}}\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_afb85581e30fcd8df24b42ad1ebab63c8}{stateless\_comp}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00033}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a29ea4e3fb804ec962d77efd10797092f}{00033}}\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a29ea4e3fb804ec962d77efd10797092f}{focused}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00034}00034\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00035}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_aeaf2fdda83362fd3025bb11c6a675479}{00035}}\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_aeaf2fdda83362fd3025bb11c6a675479}{\_dirty}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00036}00036\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00037}00037\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a8838a467d5497085e521439078d5c2c8}{dirty}}();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00038}00038\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00039}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a22663d9fb3a8d0e2df27f2fba6fc9b6f}{00039}}\ \ \ \ \ \ \ \mbox{\hyperlink{classnullable}{nullable<cydui::graphics::window\_t*>}}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a22663d9fb3a8d0e2df27f2fba6fc9b6f}{win}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00040}00040\ \ \ \ \ \ \ \textcolor{comment}{//nullable<cydui::graphics::render\_target\_t*>\ sub\_render\_target;}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00041}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ac9bf8be7d17680309d9535bf5f02942e}{00041}}\ \ \ \ \ \ \ std::pair<int,\ int>\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ac9bf8be7d17680309d9535bf5f02942e}{sub\_render\_event\_offset}}\ =\ \{0,\ 0\};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00042}00042\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00043}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ad453aee15d64390717f849206677733b}{00043}}\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1dimensions_1_1component__dimensions__t}{cydui::dimensions::component\_dimensions\_t}}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ad453aee15d64390717f849206677733b}{dim}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00044}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_af15028c12e647be4958ed1f6df942161}{00044}}\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentBorder}{ComponentBorder}}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_af15028c12e647be4958ed1f6df942161}{border}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00045}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_af26fe10a9d4a93c3516682eb07457fc3}{00045}}\ \ \ \ \ \ \ \mbox{\hyperlink{classChildrenStateCollection}{ChildrenStateCollection}}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_af26fe10a9d4a93c3516682eb07457fc3}{children}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00046}00046\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00047}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ad3df77236459573c0dc6042714e938b2}{00047}}\ \ \ \ \ \ \ std::vector\ <drag\_n\_drop::draggable\_source\_t>\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ad3df77236459573c0dc6042714e938b2}{draggable\_sources}}\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00048}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a7b28b1a66b65a0a283a177516c5bdc00}{00048}}\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1drag__n__drop_1_1dragging__context__t}{drag\_n\_drop::dragging\_context\_t}}*\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a7b28b1a66b65a0a283a177516c5bdc00}{dragging\_context}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00049}00049\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00050}00050\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00051}00051\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ c>}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00052}\mbox{\hyperlink{conceptcydui_1_1components_1_1ComponentConcept}{00052}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptcydui_1_1components_1_1ComponentConcept}{ComponentConcept}}\ =\ \textcolor{keyword}{requires}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00053}00053\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ c::Props;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00054}00054\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ c::State;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00055}00055\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00056}00056\ \ \ \ \ \ \ c::props}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00057}00057\ \ \ \ \ \ \ \}\ -\/>\ std::convertible\_to<typename\ c::Props>;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00058}00058\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00059}00059\ \ \ \ \ \ \ c::Name}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00060}00060\ \ \ \ \ \ \ \}\ -\/>\ std::convertible\_to<const\ char*>;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00061}00061\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00062}00062\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00063}\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{00063}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00064}00064\ \ \ \ \ \ \ \textcolor{comment}{//\ Geometric\ constraints}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00065}\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a01050f1d3af70fadcd52c20ed65dc11f}{00065}}\ \ \ \ \ \ \ std::optional\ <cydui::dimensions::dimensional\_relation\_t>\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a01050f1d3af70fadcd52c20ed65dc11f}{x}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00066}\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a1d90a39b558fd910e4a3a415dabfbb48}{00066}}\ \ \ \ \ \ \ std::optional\ <cydui::dimensions::dimensional\_relation\_t>\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a1d90a39b558fd910e4a3a415dabfbb48}{y}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00067}\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a7084680d6c0f99f35d33f1936e7ded9c}{00067}}\ \ \ \ \ \ \ std::optional\ <cydui::dimensions::dimensional\_relation\_t>\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a7084680d6c0f99f35d33f1936e7ded9c}{w}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00068}\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_aa459acfb5e17fe0fb03ff4dfa409ccf9}{00068}}\ \ \ \ \ \ \ std::optional\ <cydui::dimensions::dimensional\_relation\_t>\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_aa459acfb5e17fe0fb03ff4dfa409ccf9}{h}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00069}00069\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00070}\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a0ab9514d974f5ddeb5cdfd3f9c64f7c6}{00070}}\ \ \ \ \ \ \ std::function<\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*(\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}})>\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a0ab9514d974f5ddeb5cdfd3f9c64f7c6}{build}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00071}00071\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00072}00072\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00073}00073\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ c>\ \textcolor{keyword}{requires}\ \mbox{\hyperlink{conceptcydui_1_1components_1_1ComponentConcept}{ComponentConcept<c>}}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00074}\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t}{00074}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t}{c\_init\_t}}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00075}\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a7d3f4b0190e47fddbcb7c64d20a2fdd1}{00075}}\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ c::State**\ \mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a7d3f4b0190e47fddbcb7c64d20a2fdd1}{ref}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00076}\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a07fab7ca6747c1482e8056a03dd08ac4}{00076}}\ \ \ \ \ \ \ \textcolor{keyword}{typename}\ c::Props\ \mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a07fab7ca6747c1482e8056a03dd08ac4}{props}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00077}00077\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00078}00078\ \ \ \ \ \ \ \textcolor{comment}{//\ Geometric\ constraints}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00079}\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a457b7080b9a440ad73301b6e63b0d548}{00079}}\ \ \ \ \ \ \ std::optional\ <cydui::dimensions::dimensional\_relation\_t>\ \mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a457b7080b9a440ad73301b6e63b0d548}{x}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00080}\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a9aae36035e7be116f7a56d4824e92f34}{00080}}\ \ \ \ \ \ \ std::optional\ <cydui::dimensions::dimensional\_relation\_t>\ \mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a9aae36035e7be116f7a56d4824e92f34}{y}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00081}\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_ac6a9756b560bc901aad41e8a49e43edf}{00081}}\ \ \ \ \ \ \ std::optional\ <cydui::dimensions::dimensional\_relation\_t>\ \mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_ac6a9756b560bc901aad41e8a49e43edf}{w}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00082}\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_ab2479aa4fd4683f335e403313faf17fb}{00082}}\ \ \ \ \ \ \ std::optional\ <cydui::dimensions::dimensional\_relation\_t>\ \mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_ab2479aa4fd4683f335e403313faf17fb}{h}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00083}00083\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00084}\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a6ad9e4a27373c5c51b3e660123a64a54}{00084}}\ \ \ \ \ \ \ std::vector\ <component\_builder\_t>\ \mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a6ad9e4a27373c5c51b3e660123a64a54}{inner}}\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00085}00085\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00086}\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a69502c15696fed67c1ee196733bdb0f9}{00086}}\ \ \ \ \ \ \ std::function<void(c*)>\ \mbox{\hyperlink{structcydui_1_1components_1_1c__init__t_a69502c15696fed67c1ee196733bdb0f9}{init}}\ =\ [](c*)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00087}00087\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00088}00088\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00089}00089\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00090}\mbox{\hyperlink{classcydui_1_1components_1_1Component}{00090}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00091}00091\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00092}\mbox{\hyperlink{classcydui_1_1components_1_1Component_abc5014f93d921de9d77bc5da01643880}{00092}}\ \ \ \ \ \ \ std::function<void(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*)>\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_abc5014f93d921de9d77bc5da01643880}{inner\_redraw}}\ =\ [](\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00093}00093\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00094}00094\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00095}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a27ecfb2b448b26ac086684f971933401}{00095}}\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a27ecfb2b448b26ac086684f971933401}{is\_group}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00096}00096\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00097}00097\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00098}00098\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ c>}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00099}00099\ \ \ \ \ \ \ \textcolor{keyword}{requires}\ \mbox{\hyperlink{conceptcydui_1_1components_1_1ComponentConcept}{ComponentConcept<c>}}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00100}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a11c62b9261b81a8d0a53f06459273dbc}{00100}}\ \ \ \ \ \ \ \textcolor{keyword}{static}\ std::function<void(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*)>\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a11c62b9261b81a8d0a53f06459273dbc}{get\_init\_function}}(\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t}{c\_init\_t<c>}}\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}},\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ \&spec)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ [\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}},\ spec](\mbox{\hyperlink{classcydui_1_1components_1_1Component}{cydui::components::Component}}*\ \_\_raw\_local\_)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ local\ =\ (c*)\ \_\_raw\_local\_;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \_\_raw\_local\_-\/>state.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{ComponentState}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spec.\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a01050f1d3af70fadcd52c20ed65dc11f}{x}}.has\_value())}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ad453aee15d64390717f849206677733b}{dim}}.\mbox{\hyperlink{structcydui_1_1dimensions_1_1component__dimensions__t_a5507c7bdb9754c3ea6be6bfc80d30960}{x}}\ =\ spec.\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a01050f1d3af70fadcd52c20ed65dc11f}{x}}.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.x.has\_value())}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.x\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.x.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spec.\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a1d90a39b558fd910e4a3a415dabfbb48}{y}}.has\_value())}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.y\ =\ spec.\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a1d90a39b558fd910e4a3a415dabfbb48}{y}}.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.y.has\_value())}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.y\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.y.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spec.\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a7084680d6c0f99f35d33f1936e7ded9c}{w}}.has\_value())\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.w\ =\ spec.\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a7084680d6c0f99f35d33f1936e7ded9c}{w}}.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.given\_w\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.w.has\_value())\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.w\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.w.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.given\_w\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (spec.\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_aa459acfb5e17fe0fb03ff4dfa409ccf9}{h}}.has\_value())\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.h\ =\ spec.\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_aa459acfb5e17fe0fb03ff4dfa409ccf9}{h}}.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.given\_h\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.h.has\_value())\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.h\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.h.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.given\_h\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ local-\/>add(\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.inner);}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.init(local);}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00134}00134\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00135}00135\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00136}00136\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00138}\mbox{\hyperlink{components_8hpp_a4a19c3c5b086497e1246dce4e5b93ba5}{00138}}\ \textcolor{preprocessor}{\#define\ SET\_REFERENCE\ if\ (init.ref)\ *(init.ref)\ =}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00139}\mbox{\hyperlink{components_8hpp_ad9d9be5efdce424d098c09b994fdb7e7}{00139}}\ \textcolor{preprocessor}{\#define\ SET\_WINDOW(STATE)\ (STATE)-\/>win\ =\ it-\/>win}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00140}\mbox{\hyperlink{components_8hpp_a61d111eca82deef93de019e68a2184b8}{00140}}\ \textcolor{preprocessor}{\#define\ INSTANTIATE\_COMP(STATE)\ new\ c(STATE,\ init.props,\ get\_init\_function(init))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00141}00141\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00142}00142\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ c,\ \textcolor{keywordtype}{int}\ ID>}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00143}00143\ \ \ \ \ \ \ \textcolor{keyword}{requires}\ \mbox{\hyperlink{conceptComponentConcept}{ComponentConcept<c>}}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00144}\mbox{\hyperlink{classcydui_1_1components_1_1Component_ad153680ef842607600800f2fcb79ef9c}{00144}}\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_ad153680ef842607600800f2fcb79ef9c}{create}}(\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t}{c\_init\_t<c>}}\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}})\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a01050f1d3af70fadcd52c20ed65dc11f}{x}}\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.x,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ .y\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.y,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ .w\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.w,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ .h\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.h,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ .build\ =\ *(\mbox{\hyperlink{namespacestate}{state}}.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{ComponentState}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ \mbox{\hyperlink{graphics_2x11_2events_2events_8cpp_a40ec3d037ad718b949c55cc17a98d840}{st}}\ =\ (\textcolor{keyword}{typename}\ c::State*)\ (it-\/>children.contains(ID)}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ (it-\/>children[ID])}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ (it-\/>children.add(ID,\ \textcolor{keyword}{new}\ \textcolor{keyword}{typename}\ c::State())));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{graphics_2x11_2events_2events_8cpp_a40ec3d037ad718b949c55cc17a98d840}{st}}-\/>\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a22663d9fb3a8d0e2df27f2fba6fc9b6f}{win}}\ =\ it-\/>win;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{graphics_2x11_2events_2events_8cpp_a40ec3d037ad718b949c55cc17a98d840}{st}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \})).let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\textcolor{keyword}{typename}\ c::State*,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_a4a19c3c5b086497e1246dce4e5b93ba5}{SET\_REFERENCE}}\ it;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ [=](\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ spec)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ \_c\ =\ \textcolor{keyword}{new}\ c(it,\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.props,\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a11c62b9261b81a8d0a53f06459273dbc}{get\_init\_function}}(\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}},\ spec));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \_c;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \})).unwrap())}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00164}00164\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00165}00165\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00166}00166\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ c,\ \textcolor{keywordtype}{int}\ ID,\ \textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00167}00167\ \ \ \ \ \ \ \textcolor{keyword}{requires}\ \mbox{\hyperlink{conceptcydui_1_1components_1_1ComponentConcept}{ComponentConcept<c>}}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00168}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a7abde771f5ed3d801447304bb4dfdfd3}{00168}}\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a7abde771f5ed3d801447304bb4dfdfd3}{create\_for}}(}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ \&iter,\ std::function<\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t}{c\_init\_t<c>}}(\textcolor{keyword}{const}\ \textcolor{keyword}{typename}\ T::value\_type\ \&)>\ block}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00170}00170\ \ \ \ \ \ \ )\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00171}00171\ \ \ \ \ \ \ \ \ std::vector<typename\ c::State*>\ states\ =\ \{\};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacestate}{state}}.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{ComponentState}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ k\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ a\ =\ iter.begin();\ a\ !=\ iter.end();\ ++a,\ ++k)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ \mbox{\hyperlink{graphics_2x11_2events_2events_8cpp_a40ec3d037ad718b949c55cc17a98d840}{st}}\ =}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (\textcolor{keyword}{typename}\ c::State*)\ (it-\/>children.contains(ID,\ k)}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ (it-\/>children.get\_list(ID,\ k))}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ (it-\/>children.add\_list(ID,\ k,\ \textcolor{keyword}{new}\ \textcolor{keyword}{typename}\ c::State())));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{graphics_2x11_2events_2events_8cpp_a40ec3d037ad718b949c55cc17a98d840}{st}}-\/>\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a22663d9fb3a8d0e2df27f2fba6fc9b6f}{win}}\ =\ it-\/>win;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ states.push\_back(\mbox{\hyperlink{graphics_2x11_2events_2events_8cpp_a40ec3d037ad718b949c55cc17a98d840}{st}});}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00183}00183\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ .x\ =\ std::nullopt,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ .y\ =\ std::nullopt,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ .w\ =\ std::nullopt,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ .h\ =\ std::nullopt,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ .build\ =\ [iter,\ block,\ states](\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ spec)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ temp\_c\ =\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a893cd850cda5ddcef688da444584b9d8}{Component::new\_group}}();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ a\ =\ iter.begin();\ a\ !=\ iter.end();\ ++a,\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1components_1_1c__init__t}{c\_init\_t<c>}}\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}\ =\ block(*a);}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_a4a19c3c5b086497e1246dce4e5b93ba5}{SET\_REFERENCE}}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp\_c-\/>children.push\_back(}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{new}\ c(states[i],\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.props,\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a11c62b9261b81a8d0a53f06459273dbc}{get\_init\_function}}(\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}},\ spec))}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ temp\_c;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00202}00202\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00203}00203\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00204}\mbox{\hyperlink{classcydui_1_1components_1_1Component_af794148bbdfbb8f19c3d66e0b07b9499}{00204}}\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_af794148bbdfbb8f19c3d66e0b07b9499}{create\_group}}(std::vector\ <component\_builder\_t>\ \_children)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t_a0ab9514d974f5ddeb5cdfd3f9c64f7c6}{build}}\ =\ [\_children](\textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ \&)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ group\ =\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a893cd850cda5ddcef688da444584b9d8}{Component::new\_group}}();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ \ \ group-\/>add(\_children);}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ group;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00212}00212\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00213}00213\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00214}00214\ \textcolor{preprocessor}{\#undef\ SET\_REFERENCE}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00215}00215\ \textcolor{preprocessor}{\#undef\ SET\_WINDOW}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00216}00216\ \textcolor{preprocessor}{\#undef\ INSTANTIATE\_COMP}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00218}00218\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00219}\mbox{\hyperlink{components_8hpp_a8b1c1ef9ed6b91e691f2f0abeece77c5}{00219}}\ \textcolor{preprocessor}{\#define\ NULLCOMP\ \ \ \ \ \ \ \ \ \ \ \ \{.x\ =\ std::nullopt,\ .y\ =\ std::nullopt,\ .w\ =\ std::nullopt,\ .h\ =\ std::nullopt,\ .build\ =\ [](component\_builder\_t)\{\ return\ Component::new\_group();\ \}\ \}}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00220}00220\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00221}\mbox{\hyperlink{components_8hpp_aa61d85e9939290ac062813948eba95f9}{00221}}\ \textcolor{preprocessor}{\#define\ COMP(COMPONENT)\ create<COMPONENT,\ \_\_COUNTER\_\_>}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00222}00222\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00223}\mbox{\hyperlink{components_8hpp_a5f6b617b45eb12646bb651ecf77f6dcd}{00223}}\ \textcolor{preprocessor}{\#define\ GROUP\ create\_group}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00225}\mbox{\hyperlink{components_8hpp_ae3eec34eadd1c4812dec851f53b1ac37}{00225}}\ \textcolor{preprocessor}{\#define\ IF(CONDITION)\ [\&,this]()-\/>component\_builder\_t\ \{\ if\ (CONDITION)\ return}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00226}\mbox{\hyperlink{components_8hpp_a0a70ee0cbf5b1738be4c9463c529ce72}{00226}}\ \textcolor{preprocessor}{\#define\ ELSE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else\ return}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00227}\mbox{\hyperlink{components_8hpp_abebb7d1ed5c8d626d3aeb1515eb36958}{00227}}\ \textcolor{preprocessor}{\#define\ ELSE\_IF(CONDITION)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ else\ if(CONDITION)\ return}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00228}00228\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00229}\mbox{\hyperlink{components_8hpp_a09cb7168d6451f531ab31a4e4fafd7e4}{00229}}\ \textcolor{preprocessor}{\#define\ WHEN(VARIABLE)\ [\&,this]()-\/>component\_builder\_t\ \{\ auto\ value\ =\ VARIABLE;}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00230}\mbox{\hyperlink{components_8hpp_a883c090377fb09fc1f8ec65d0830cb57}{00230}}\ \textcolor{preprocessor}{\#define\ CASE(VALUE)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ (value\ ==\ VALUE)\ return}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00231}\mbox{\hyperlink{components_8hpp_a29fd18bed01c4d836c7ebfe73a125c3f}{00231}}\ \textcolor{preprocessor}{\#define\ END\ \ \ \ \ \ \ \ \ \ \ return\ NULLCOMP;\ \}()}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00232}00232\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00233}\mbox{\hyperlink{components_8hpp_a8f7e3f03172000718275a1aed314e27e}{00233}}\ \textcolor{preprocessor}{\#define\ FOR\_EACH(COMPONENT)\ create\_for<COMPONENT,\ \_\_COUNTER\_\_>}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00234}00234\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00235}00235\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00236}00236\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00237}00237\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component}}*\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a893cd850cda5ddcef688da444584b9d8}{new\_group}}();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00238}00238\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00239}00239\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component}}();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00240}00240\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00241}00241\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component}}(std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component}}*)>\ inner);}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00242}00242\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00243}00243\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component}}(ComponentState*\ \mbox{\hyperlink{namespacestate}{state}});}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00244}00244\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00245}00245\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component}}(ComponentState*\ \mbox{\hyperlink{namespacestate}{state}},\ std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component}}*)>\ inner);}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00246}00246\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00247}00247\ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_ab8378fa275af98e568a7e91d33d867af}{\string~Component}}();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00248}00248\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00249}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a2a8be4efd3e5d8d0f3bb2dd52feb4553}{00249}}\ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ \mbox{\hyperlink{classnullable}{nullable<Component*>}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a2a8be4efd3e5d8d0f3bb2dd52feb4553}{parent}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00250}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a6b9fa9fc13544536654aecb9a03d5f97}{00250}}\ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ \mbox{\hyperlink{classnullable}{nullable<ComponentState*>}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a6b9fa9fc13544536654aecb9a03d5f97}{state}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00251}\mbox{\hyperlink{classcydui_1_1components_1_1Component_ad81b5e6247f54cd028209c3e1b7ba719}{00251}}\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1dimensions_1_1component__dimensions__t}{cydui::dimensions::component\_dimensions\_t}}*\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_ad81b5e6247f54cd028209c3e1b7ba719}{dim}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00252}00252\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00253}00253\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a51dc9d2b1e81015c2100812b6e05ecb1}{add}}(\textcolor{keyword}{const}\ std::vector\ <component\_builder\_t>\ \&ichildren,\ \textcolor{keywordtype}{bool}\ prepend\ =\ \textcolor{keyword}{false})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00254}00254\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00255}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{00255}}\ \ \ \ \ \ \ \textcolor{keyword}{mutable}\ std::deque<Component*>\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00256}00256\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00257}00257\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a420ebdbc96cb8fcf1714f8b484b3a6c7}{redraw}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout}{cydui::layout::Layout}}*\ layout);}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00258}00258\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00259}00259\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacerender}{render}}(\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t}{cydui::compositing::compositing\_node\_t}}*\ node)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00260}00260\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00261}00261\ \ \ \ \ \ \ \mbox{\hyperlink{classnullable}{nullable<Component*>}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a85c9cc77ad4199521d65708517277cf3}{get\_parent}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00262}00262\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00263}00263\ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a4189345fd97be0de73b55292b2b1db7b}{is\_drawable}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00264}00264\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00265}\mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{00265}}\ \textcolor{preprocessor}{\#define\ COMP\_EVENT\_HANDLER(EV,\ ARGS)\ virtual\ void\ on\_\#\#EV\ ARGS\ const}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00266}\mbox{\hyperlink{components_8hpp_a3d34254096680d6118fe635667e62793}{00266}}\ \textcolor{preprocessor}{\#define\ COMP\_EVENT\_HANDLER\_OVERRIDE(EV,\ ARGS)\ virtual\ void\ on\_\#\#EV\ ARGS\ const\ override}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00267}00267\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00268}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a6610941fe8bf2b7e885fd4d1c049650f}{00268}}\ \ \ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{typename}\ \mbox{\hyperlink{structKeyEvent_1_1DataType}{KeyEvent::DataType}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a6610941fe8bf2b7e885fd4d1c049650f}{KeyData}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00269}00269\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00270}00270\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component_a420ebdbc96cb8fcf1714f8b484b3a6c7}{redraw}},\ ());}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00271}00271\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00272}00272\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(\mbox{\hyperlink{namespacerender}{render}},\ (\mbox{\hyperlink{structvg_1_1vg__fragment__t}{vg::vg\_fragment\_t}}\ \&\ graphics));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00273}00273\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00274}00274\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(mouse\_enter,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00275}00275\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00276}00276\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(mouse\_exit,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00277}00277\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00278}00278\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(mouse\_motion,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00279}00279\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00280}00280\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(mouse\_click,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ button));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00281}00281\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00282}00282\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(drag\_start,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00283}00283\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00284}00284\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(drag\_motion,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00285}00285\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00286}00286\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(drag\_finish,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00287}00287\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00288}00288\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(scroll,\ (\textcolor{keywordtype}{int}\ dx,\ \textcolor{keywordtype}{int}\ dy));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00289}00289\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00290}00290\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(key\_press,\ (\mbox{\hyperlink{structKeyEvent_1_1DataType}{KeyData}}\ key));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00291}00291\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00292}00292\ \ \ \ \ \ \ \mbox{\hyperlink{components_8hpp_aea496645a5e54024477b8e77b636d003}{COMP\_EVENT\_HANDLER}}(key\_release,\ (\mbox{\hyperlink{structKeyEvent_1_1DataType}{KeyData}}\ key));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00293}00293\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00294}\mbox{\hyperlink{components_8hpp_a650a1a2f440bbad11ce0086420e1dcdb}{00294}}\ \textcolor{preprocessor}{\#define\ REDRAW\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ COMP\_EVENT\_HANDLER\_OVERRIDE(redraw,\ ())}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00295}\mbox{\hyperlink{components_8hpp_ada165dd53c6f81f42de99c903e5eece0}{00295}}\ \textcolor{preprocessor}{\#define\ RENDER\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ virtual\ bool\ is\_drawable()\ const\ override\ \{return\ true;\}\ COMP\_EVENT\_HANDLER\_OVERRIDE(render,\ (vg::vg\_fragment\_t\&\ graphics))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00296}\mbox{\hyperlink{components_8hpp_a2e5d3b7c5a1e17c44ba34a608d9982f0}{00296}}\ \textcolor{preprocessor}{\#define\ ON\_KEY\_RELEASE(KEY)\ \ \ \ \ COMP\_EVENT\_HANDLER\_OVERRIDE(key\_release,\ (KeyData\ (KEY)))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00297}\mbox{\hyperlink{components_8hpp_a6a5f527a71511b61cd3de3967bd92b02}{00297}}\ \textcolor{preprocessor}{\#define\ ON\_KEY\_PRESS(KEY)\ \ \ \ \ \ \ COMP\_EVENT\_HANDLER\_OVERRIDE(key\_press,\ (KeyData\ (KEY)))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00298}\mbox{\hyperlink{components_8hpp_a37da1a64e342fdecac8605a657bb40e6}{00298}}\ \textcolor{preprocessor}{\#define\ ON\_SCROLL(DX,\ DY)\ \ \ \ \ \ \ COMP\_EVENT\_HANDLER\_OVERRIDE(scroll,\ (int\ (DX),\ int\ (DY)))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00299}\mbox{\hyperlink{components_8hpp_a41e4c7fbea07a2204e9d91ba17e07810}{00299}}\ \textcolor{preprocessor}{\#define\ ON\_CLICK(X,\ Y,\ BUTTON)\ \ COMP\_EVENT\_HANDLER\_OVERRIDE(mouse\_click,\ \ (int\ (X),\ int\ (Y),\ int\ (BUTTON)))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00300}\mbox{\hyperlink{components_8hpp_a473ffc6545cd5e614c4eaf090c603d58}{00300}}\ \textcolor{preprocessor}{\#define\ ON\_MOUSE\_MOTION(X,\ Y)\ \ \ COMP\_EVENT\_HANDLER\_OVERRIDE(mouse\_motion,\ (int\ (X),\ int\ (Y)))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00301}\mbox{\hyperlink{components_8hpp_a9baa4044b3c2838410281697a1339b86}{00301}}\ \textcolor{preprocessor}{\#define\ ON\_MOUSE\_EXIT(X,\ Y)\ \ \ \ \ COMP\_EVENT\_HANDLER\_OVERRIDE(mouse\_exit,\ \ \ (int\ (X),\ int\ (Y)))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00302}\mbox{\hyperlink{components_8hpp_a34ef0ed15f32462a76fa51efe95aff25}{00302}}\ \textcolor{preprocessor}{\#define\ ON\_MOUSE\_ENTER(X,\ Y)\ \ \ \ COMP\_EVENT\_HANDLER\_OVERRIDE(mouse\_enter,\ \ (int\ (X),\ int\ (Y)))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00303}\mbox{\hyperlink{components_8hpp_a87b2156a2957febd4c8594639de14f0e}{00303}}\ \textcolor{preprocessor}{\#define\ ON\_DRAG\_START(X,\ Y)\ \ \ COMP\_EVENT\_HANDLER\_OVERRIDE(drag\_start,\ (int\ (X),\ int\ (Y)))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00304}\mbox{\hyperlink{components_8hpp_a69d0c4d36f9f03eccbda10c05d5a2016}{00304}}\ \textcolor{preprocessor}{\#define\ ON\_DRAG\_MOTION(X,\ Y)\ \ \ COMP\_EVENT\_HANDLER\_OVERRIDE(drag\_motion,\ (int\ (X),\ int\ (Y)))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00305}\mbox{\hyperlink{components_8hpp_a171ea8f5058e4fb23c9e14f658a952c8}{00305}}\ \textcolor{preprocessor}{\#define\ ON\_DRAG\_FINISH(X,\ Y)\ \ \ COMP\_EVENT\_HANDLER\_OVERRIDE(drag\_finish,\ (int\ (X),\ int\ (Y)))}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00306}00306\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00307}00307\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00308}00308\ \ \ \ \ \textcolor{comment}{//\ Dynamic\ Builder\ for\ when\ you\ need\ an\ extra\ bit\ of\ flexibility}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00309}00309\ \ \ \ \ \textcolor{comment}{//\ They\ can\ keep\ building\ components\ and\ states\ forever,\ and\ it\ remembers\ which\ kind!}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00310}00310\ \ \ \ \ \textcolor{keyword}{template}<components::ComponentConcept\ C>}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00311}00311\ \ \ \ \ \textcolor{keyword}{struct\ }dynamic\_builder\_impl\_t;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00312}00312\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00313}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t}{00313}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t}{dynamic\_builder\_t}}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00314}00314\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00315}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a6b2723cdb603e44c272f9f9fe78d0c24}{00315}}\ \ \ \ \ \ \ std::function<void(\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t}{dynamic\_builder\_t}}*)>\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a6b2723cdb603e44c272f9f9fe78d0c24}{destroyer}}\ =\ [](\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t}{dynamic\_builder\_t}}*\ it)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00316}00316\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ it;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00317}00317\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00318}00318\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00319}00319\ \ \ \ \ \ \ \textcolor{keyword}{template}<components::ComponentConcept\ C>}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00320}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a020ef0b1995b38ee7d172d90777c24eb}{00320}}\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t}{dynamic\_builder\_t}}*\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a020ef0b1995b38ee7d172d90777c24eb}{create}}()\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t}{dynamic\_builder\_t}}*\ db\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__impl__t}{dynamic\_builder\_impl\_t<C>}};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00322}00322\ \ \ \ \ \ \ \ \ db-\/>\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a6b2723cdb603e44c272f9f9fe78d0c24}{destroyer}}\ =\ [](\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t}{dynamic\_builder\_t}}*\ it)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ (dynamic\_builder\_impl\_t\ <C>*)\ it;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00324}00324\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00325}00325\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ db;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00326}00326\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00327}00327\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00328}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_aa68c5f88a99dcce405d435d73b0f2308}{00328}}\ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_aa68c5f88a99dcce405d435d73b0f2308}{\string~dynamic\_builder\_t}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00329}00329\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00330}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a87c02a2e336ce2a7f6a6d75643868a41}{00330}}\ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a87c02a2e336ce2a7f6a6d75643868a41}{destroy}}(\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t}{dynamic\_builder\_t}}*\ builder)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00331}00331\ \ \ \ \ \ \ \ \ builder-\/>\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a6b2723cdb603e44c272f9f9fe78d0c24}{destroyer}}(builder);}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00332}00332\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00333}00333\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00334}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a829f30ea48aa227cae1c7e08a6fe2d03}{00334}}\ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{components::ComponentState}}*\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a829f30ea48aa227cae1c7e08a6fe2d03}{build\_state}}()\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00335}00335\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00336}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t}{00336}}\ \ \ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t}{comp\_init\_t}}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00337}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_a14e96ea53dbbe77de8bd4de7a90851a0}{00337}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{components::ComponentState}}*\ \mbox{\hyperlink{namespacestate}{state}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00338}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_af6d485f0ad885c4a2b469dcbb841678b}{00338}}\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}*\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_af6d485f0ad885c4a2b469dcbb841678b}{props\_ptr}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00339}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_a4527dfbee89760aeb2bb0b33cfd724be}{00339}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{cydui::dimensions::dimensional\_relation\_t}}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_a4527dfbee89760aeb2bb0b33cfd724be}{x}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00340}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_aca4f24e9786f7fc1e093cbca6b440a7b}{00340}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{cydui::dimensions::dimensional\_relation\_t}}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_aca4f24e9786f7fc1e093cbca6b440a7b}{y}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00341}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_a76cf997714d280712bcb3d4357b74a09}{00341}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{cydui::dimensions::dimensional\_relation\_t}}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_a76cf997714d280712bcb3d4357b74a09}{w}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00342}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_af45542ee721f434b14de012fdb11360f}{00342}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{cydui::dimensions::dimensional\_relation\_t}}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_af45542ee721f434b14de012fdb11360f}{h}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00343}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_a200a93e5666591caae42061625b6907a}{00343}}\ \ \ \ \ \ \ \ \ std::function<void(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{components::Component}}*)>\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t_a200a93e5666591caae42061625b6907a}{init}}\ =\ [](\mbox{\hyperlink{classcydui_1_1components_1_1Component}{components::Component}}*)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00344}00344\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00345}00345\ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00346}00346\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00347}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a11424fdac9bcc52492cb2e13659b9bd7}{00347}}\ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_a11424fdac9bcc52492cb2e13659b9bd7}{build\_component}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t}{comp\_init\_t}}\ \&\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}})\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00348}00348\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00349}00349\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00350}00350\ \ \ \ \ \textcolor{keyword}{template}<components::ComponentConcept\ C>}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00351}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__impl__t}{00351}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__impl__t}{dynamic\_builder\_impl\_t}}:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t}{dynamic\_builder\_t}}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00352}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__impl__t_a2cf96126b1fa4f703b5ad2c30b0faf16}{00352}}\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__impl__t_a2cf96126b1fa4f703b5ad2c30b0faf16}{\string~dynamic\_builder\_impl\_t}}()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00353}00353\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00354}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__impl__t_a1b78daa2c57700fda83a380a218f94f8}{00354}}\ \ \ \ \ \ \ C::State*\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__impl__t_a1b78daa2c57700fda83a380a218f94f8}{build\_state}}()\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00355}00355\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ C::State();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00356}00356\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00357}00357\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00358}\mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__impl__t_acfbc1e4e9da3ec88c201dc0cc5ac40b8}{00358}}\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__impl__t_acfbc1e4e9da3ec88c201dc0cc5ac40b8}{build\_component}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1components_1_1dynamic__builder__t_1_1comp__init__t}{comp\_init\_t}}\ \&\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}})\textcolor{keyword}{\ override\ }\{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \textcolor{keyword}{typename}\ C::Props\ props\ =\ (\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.props\_ptr\ ==\ \textcolor{keyword}{nullptr})\ ?\ \textcolor{keyword}{typename}\ C::Props()\ :\ *(\textcolor{keyword}{typename}\ C::Props*)\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.props\_ptr;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.props\_ptr\ !=\ \textcolor{keyword}{nullptr})\ \textcolor{keyword}{delete}\ (\textcolor{keyword}{typename}\ C::Props*)\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.props\_ptr;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00362}00362\ \ \ \ \ \ \ \ \ \ \ .x\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.x,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \ \ .y\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.y,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00364}00364\ \ \ \ \ \ \ \ \ \ \ .w\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.w,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00365}00365\ \ \ \ \ \ \ \ \ \ \ .h\ =\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.h,}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00366}00366\ \ \ \ \ \ \ \ \ \ \ .build\ =\ [props,\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}](\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\_builder\_t}}\ spec)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00367}00367\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257}{C}}((\textcolor{keyword}{typename}\ C::State*)\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.state,\ props,\ [spec,\ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}](\mbox{\hyperlink{classcydui_1_1components_1_1Component}{components::Component}}*\ \_\_c)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00368}00368\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_\_c-\/>state.let(\_(ComponentState\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.given\_h\ =\ true;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.given\_w\ =\ true;}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.x\ =\ spec.x.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.y\ =\ spec.y.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00373}00373\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.w\ =\ spec.w.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00374}00374\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ it-\/>dim.h\ =\ spec.h.value();}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00375}00375\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}.init(\_\_c);}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00379}00379\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00380}00380\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00381}00381\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00382}00382\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00383}00383\ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00384}00384\ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00385}00385\ \}\textcolor{comment}{//\ namespace\ cydui::components}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00386}00386\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00387}00387\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00388}\mbox{\hyperlink{components_8hpp_adf82c38b14cc6c67209d8252e8a9199e}{00388}}\ \textcolor{preprocessor}{\#define\ STATE(NAME)\ struct\ NAME\#\#State:\ public\ cydui::components::ComponentState}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00389}00389\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00390}\mbox{\hyperlink{components_8hpp_aa091076c684d51346a35cde26fa69849}{00390}}\ \textcolor{preprocessor}{\#define\ INIT\_STATE(NAME)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00391}00391\ \textcolor{preprocessor}{\ \ explicit\ NAME\#\#State():\ cydui::components::ComponentState()}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00392}00392\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00393}\mbox{\hyperlink{components_8hpp_af253027cd7575ccec2b48facdb5d8126}{00393}}\ \textcolor{preprocessor}{\#define\ COMPONENT(NAME)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00394}00394\ \textcolor{preprocessor}{\ \ }\textcolor{comment}{/*using\ namespace\ primitives;*/}\textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00395}00395\ \textcolor{preprocessor}{\ \ struct\ NAME:\ public\ cydui::components::Component}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00396}00396\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00397}\mbox{\hyperlink{components_8hpp_a64dc3be4390858f34e722d597d90692c}{00397}}\ \textcolor{preprocessor}{\#define\ DISABLE\_LOG\ this-\/>log.on\ =\ false;}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00398}\mbox{\hyperlink{components_8hpp_a32f68db9aa38758243c8485d9a057725}{00398}}\ \textcolor{preprocessor}{\#define\ ENABLE\_LOG\ \ this-\/>log.on\ =\ true;}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00399}00399\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00400}\mbox{\hyperlink{components_8hpp_afbae829fadb4860fb079efc6cd6d0f8f}{00400}}\ \textcolor{preprocessor}{\#define\ PROPS(...)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00401}00401\ \textcolor{preprocessor}{\ \ struct\ Props\ \_\_VA\_ARGS\_\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00402}00402\ \textcolor{preprocessor}{\ \ Props\ props;}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00403}00403\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00404}\mbox{\hyperlink{components_8hpp_a794b63597e5bc4bed34fe60ded18b487}{00404}}\ \textcolor{preprocessor}{\#define\ NO\_PROPS\ PROPS(\{\})}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00405}00405\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00406}\mbox{\hyperlink{components_8hpp_a2059770c8a5f4da863cac1803a8994da}{00406}}\ \textcolor{preprocessor}{\#define\ INIT(NAME)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00407}00407\ \textcolor{preprocessor}{\ \ typedef\ NAME\#\#State\ State;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00408}00408\ \textcolor{preprocessor}{\ \ NAME\#\#State*\ state\ \ =\ nullptr;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00409}00409\ \textcolor{preprocessor}{\ \ static\ constexpr\ const\ char*\ Name\ =\ \#NAME;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00410}00410\ \textcolor{preprocessor}{\ \ logging::logger\ log\ =\ \{.name\ =\ \#NAME,\ .on\ =\ false\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00411}00411\ \textcolor{preprocessor}{\ \ explicit\ NAME(NAME\#\#State*\ state,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00412}00412\ \textcolor{preprocessor}{\ \ \ \ \ \ Props\ props,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00413}00413\ \textcolor{preprocessor}{\ \ \ \ \ \ const\ std::function<void(cydui::components::Component*)>\&\ inner)\ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00414}00414\ \textcolor{preprocessor}{\ \ \ \ \ \ :\ cydui::components::Component(state,\ inner),\ props(std::move(props)),\ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00415}00415\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ state(state)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00416}00416\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00417}\mbox{\hyperlink{components_8hpp_a339276349015c1cbcd181eb5ec1c07c6}{00417}}\ \textcolor{preprocessor}{\#define\ REFRESH\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00418}00418\ \textcolor{preprocessor}{if\ (state-\/>win)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00419}00419\ \textcolor{preprocessor}{\ \ events::emit<RedrawEvent>(\{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00420}00420\ \textcolor{preprocessor}{\ \ \ \ .win\ =\ (unsigned\ int)(*state-\/>win.unwrap())-\/>xwin,\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00421}00421\ \textcolor{preprocessor}{\ \ \});\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00422}00422\ \textcolor{preprocessor}{\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00423}00423\ \textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00424}00424\ }
+\DoxyCodeLine{\Hypertarget{components_8hpp_source_l00425}00425\ \textcolor{preprocessor}{\#endif}\textcolor{comment}{//CYD\_UI\_COMPONENTS\_HPP}}
+
+\end{DoxyCode}

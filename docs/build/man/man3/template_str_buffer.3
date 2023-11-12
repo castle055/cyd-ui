@@ -1,0 +1,82 @@
+.TH "template_str_buffer< length >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+template_str_buffer< length >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <template_str_buffer\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "consteval \fBtemplate_str_buffer\fP (const char(&str)[length]) noexcept"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "char \fBdata\fP [length] = {0}"
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static constexpr \fBsize_t\fP \fBcount\fP = length \- sizeof(char)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<std::size_t length>
+.br
+struct template_str_buffer< length >"Used in consteval literal operators implemented for strings, that way both the length and the contends of the string can be used with static_assert to raise compile-time errors\&.
+.PP
+CYD-UI uses this type for color declaration:
+.PP
+auto c = '#FCAE1E'_color; // Ok auto c1 = '#FCAE1Eaaaa'_color; // Compile-time error, invalid length
+.PP
+\fBTemplate Parameters\fP
+.RS 4
+\fIlength\fP 
+.RE
+.PP
+
+.PP
+Definition at line \fB22\fP of file \fBtemplate_str_buffer\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<std::size_t length> consteval \fBtemplate_str_buffer\fP< length >\fB::template_str_buffer\fP (const char(&) str[length])\fC [inline]\fP, \fC [noexcept]\fP"
+
+.PP
+Definition at line \fB27\fP of file \fBtemplate_str_buffer\&.h\fP\&..PP
+.nf
+27                                                                    {
+28     for (std::size_t i = 0; i < length; ++i) {
+29       data[i] = str[i];
+30     }
+31   }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "template<std::size_t length> constexpr \fBsize_t\fP \fBtemplate_str_buffer\fP< length >::count = length \- sizeof(char)\fC [static]\fP, \fC [constexpr]\fP"
+
+.PP
+Definition at line \fB36\fP of file \fBtemplate_str_buffer\&.h\fP\&.
+.SS "template<std::size_t length> char \fBtemplate_str_buffer\fP< length >::data[length] = {0}"
+
+.PP
+Definition at line \fB35\fP of file \fBtemplate_str_buffer\&.h\fP\&..PP
+.nf
+35 {0};
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -1,0 +1,154 @@
+.TH "include/core/with_specialization.h" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/core/with_specialization.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'component_holder\&.h'\fP
+.br
+\fC#include <functional>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcydui::components::with::with< bool >\fP"
+.br
+.ti -1c
+.RI "struct \fBcydui::components::with::map_to_result_t\fP"
+.br
+.ti -1c
+.RI "struct \fBcydui::components::with::with< I >\fP"
+.br
+.ti -1c
+.RI "struct \fBcydui::components::with::with< int >\fP"
+.br
+.in -1c
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBcydui\fP"
+.br
+.ti -1c
+.RI "namespace \fBcydui::components\fP"
+.br
+.ti -1c
+.RI "namespace \fBcydui::components::with\fP"
+.br
+.in -1c
+.SS "Concepts"
+
+.in +1c
+.ti -1c
+.RI "concept \fBcydui::components::with::IterableContainer\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBthen\fP(\&.\&.\&.)"
+.br
+.ti -1c
+.RI "#define \fBor_else\fP(\&.\&.\&.)"
+.br
+.ti -1c
+.RI "#define \fBmap_to\fP(\&.\&.\&.)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define map_to( \&.\&.\&.)"
+\fBValue:\fP.PP
+.nf
+  _Pragma("clang diagnostic push") \\
+  _Pragma("clang diagnostic ignored \\"\-Wunused\-lambda\-capture\\"") \\
+  map_to( __VA_ARGS__ ) \\
+  _Pragma("clang diagnostic pop")
+.fi
+
+.PP
+Definition at line \fB132\fP of file \fBwith_specialization\&.h\fP\&..PP
+.nf
+141                     : public with_data_t<int> {
+142       with<int> &eq() {
+143         return *this;
+144       }
+145       
+146       with<int> &for_each(const std::function<map_to_result_t(int &value)> &transform) {
+147         std::string id;
+148         std::size_t j = 0;
+149         std::string index_suffix;
+150         std::string jndex_suffix;
+151         for (int i = 0; i < val; ++i) {
+152           index_suffix = ":";
+153           index_suffix\&.append(std::to_string(i));
+154           auto cs = transform(i);
+155           for (const auto &item1: cs\&.result) {
+156             jndex_suffix = ":";
+157             jndex_suffix\&.append(std::to_string(j));
+158             
+159             for (const auto &component_pair: item1\&.get_components()) {
+160               auto [_, component] = component_pair;
+161               // make copy of id for modification
+162               id = component_pair\&.first;
+163               id\&.append(jndex_suffix);
+164               if (cs\&.id\&.empty()) {
+165                 id\&.append(index_suffix);
+166               } else {
+167                 id\&.append(":");
+168                 id\&.append(cs\&.id);
+169               }
+170               id\&.append(":map_to");
+171               this\->selection[id] = component;
+172             }
+173             ++j;
+174           }
+175         }
+176         return *this;
+177       }
+178     };
+179 }
+180 
+181 #endif //CYD_UI_WITH_SPECIALIZATION_H
+.fi
+
+.SS "#define or_else( \&.\&.\&.)"
+\fBValue:\fP.PP
+.nf
+  _Pragma("clang diagnostic push") \\
+  _Pragma("clang diagnostic ignored \\"\-Wunused\-lambda\-capture\\"") \\
+  or_else([this]{ return std::vector<component_holder_t> __VA_ARGS__ ; }) \\
+  _Pragma("clang diagnostic pop")
+.fi
+
+.PP
+Definition at line \fB72\fP of file \fBwith_specialization\&.h\fP\&..PP
+.nf
+75                 { return std::vector<component_holder_t> __VA_ARGS__ ; }) \\
+76   _Pragma("clang diagnostic pop")
+.fi
+
+.SS "#define then( \&.\&.\&.)"
+\fBValue:\fP.PP
+.nf
+  _Pragma("clang diagnostic push") \\
+  _Pragma("clang diagnostic ignored \\"\-Wunused\-lambda\-capture\\"") \\
+  then([this]{ return std::vector<component_holder_t> __VA_ARGS__ ; }) \\
+  _Pragma("clang diagnostic pop")
+.fi
+
+.PP
+Definition at line \fB41\fP of file \fBwith_specialization\&.h\fP\&..PP
+.nf
+44              { return std::vector<component_holder_t> __VA_ARGS__ ; }) \\
+45   _Pragma("clang diagnostic pop")
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -1,0 +1,41 @@
+\doxysection{colors.\+cpp}
+\hypertarget{colors_8cpp_source}{}\label{colors_8cpp_source}\index{src/graphics/color/colors.cpp@{src/graphics/color/colors.cpp}}
+\mbox{\hyperlink{colors_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 8/24/22.}}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{color_8h}{graphics/color.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{logging_8hpp}{cydstd/logging.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00010}00010\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespacecydui_1_1graphics_1_1color}{cydui::graphics::color}};}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00011}00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecydui_1_1graphics_1_1color}{color}}\ =\ \mbox{\hyperlink{namespacecydui_1_1graphics_1_1color}{cydui::graphics::color}};}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00013}\mbox{\hyperlink{colors_8cpp_a2545ccd7b824ac18e5311a4489af01fa}{00013}}\ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ \mbox{\hyperlink{colors_8cpp_a2545ccd7b824ac18e5311a4489af01fa}{logg}}\ \{.\mbox{\hyperlink{structlogging_1_1logger_a47c405c3a35bfe8ee6b66f3948e7e643}{on}}\ =\ \textcolor{keyword}{false}\};}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00015}\mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_a9748ec288a221741f042ee3f87f3dcd2}{00015}}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_a9748ec288a221741f042ee3f87f3dcd2}{Color::to\_string}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00016}00016\ \ \ std::ostringstream\ oss;}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00017}00017\ \ \ oss\ <<\ \textcolor{charliteral}{'\#'};}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00018}00018\ \ \ oss\ <<\ std::setfill('0')\ <<\ std::setw(2)\ <<\ std::hex\ <<\ static\_cast<int>(\mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_aae0f43012e43ed5cc777635660c246f4}{r}}\ *\ 255.0);}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00019}00019\ \ \ oss\ <<\ std::setfill('0')\ <<\ std::setw(2)\ <<\ std::hex\ <<\ static\_cast<int>(\mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_a226f1ebb36ab3bbe829801bdfeeca27f}{g}}\ *\ 255.0);}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00020}00020\ \ \ oss\ <<\ std::setfill('0')\ <<\ std::setw(2)\ <<\ std::hex\ <<\ static\_cast<int>(\mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_a8775dfe641fe42c193377c681e730cba}{b}}\ *\ 255.0);}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00021}00021\ \ \ \mbox{\hyperlink{colors_8cpp_a2545ccd7b824ac18e5311a4489af01fa}{logg}}.\mbox{\hyperlink{structlogging_1_1logger_a546a4589ce11ce9882e22594a517fc0b}{info}}(\textcolor{stringliteral}{"{}Color\ (\%f,\%f,\%f)\ -\/>\ \%s"{}},\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_aae0f43012e43ed5cc777635660c246f4}{r}},\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_a226f1ebb36ab3bbe829801bdfeeca27f}{g}},\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_a8775dfe641fe42c193377c681e730cba}{b}},\ oss.str().c\_str());}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00022}00022\ \ \ \textcolor{keywordflow}{return}\ oss.str();}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00023}00023\ \}}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00025}\mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_a64acc3600aed3b7057735070cc1e10b7}{00025}}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ac8db3a4667f052ca03c96f9a66539545}{u32}}\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_a64acc3600aed3b7057735070cc1e10b7}{Color::to\_id}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00026}00026\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ac8db3a4667f052ca03c96f9a66539545}{u32}}\ \textcolor{keywordtype}{id}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00027}00027\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keywordtype}{id}\ |\ ((\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ac8db3a4667f052ca03c96f9a66539545}{u32}})\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_aae0f43012e43ed5cc777635660c246f4}{r}}\ <<\ 16)\ |\ ((\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ac8db3a4667f052ca03c96f9a66539545}{u32}})\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_a226f1ebb36ab3bbe829801bdfeeca27f}{g}}\ <<\ 8)\ |\ (\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ac8db3a4667f052ca03c96f9a66539545}{u32}})\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color_a8775dfe641fe42c193377c681e730cba}{b}};}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00028}00028\ \}}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00030}\mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_aa4c593e359fb6022b6c00c2ae9f6ed6c}{00030}}\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color}{Color}}\ \mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_aa4c593e359fb6022b6c00c2ae9f6ed6c}{color::White}}\ =\ \textcolor{stringliteral}{"{}\#FFFFFF"{}}\_color;}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00031}\mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_ae55824985b4fe2d54c422cb283dcc38c}{00031}}\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color}{Color}}\ \mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_ae55824985b4fe2d54c422cb283dcc38c}{color::Black}}\ =\ \textcolor{stringliteral}{"{}\#000000"{}}\_color;}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00032}\mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_a67626957d20869bcd4ee05e1a4491e27}{00032}}\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color}{Color}}\ \mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_a67626957d20869bcd4ee05e1a4491e27}{color::Red}}\ =\ \textcolor{stringliteral}{"{}\#FF0000"{}}\_color;}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00033}\mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_af897d44d7de147ba98d762fb19325814}{00033}}\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color}{Color}}\ \mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_af897d44d7de147ba98d762fb19325814}{color::Green}}\ =\ \textcolor{stringliteral}{"{}\#00FF00"{}}\_color;}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00034}\mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_a8ab3b9fa7ae476c85baeb3f4d091d693}{00034}}\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color}{Color}}\ \mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_a8ab3b9fa7ae476c85baeb3f4d091d693}{color::Blue}}\ =\ \textcolor{stringliteral}{"{}\#0000FF"{}}\_color;}
+\DoxyCodeLine{\Hypertarget{colors_8cpp_source_l00035}\mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_a7e8e57139839e2eac2e949040687161e}{00035}}\ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color}{Color}}\ \mbox{\hyperlink{namespacecydui_1_1graphics_1_1color_a7e8e57139839e2eac2e949040687161e}{color::Transparent}}\ =\ \textcolor{stringliteral}{"{}\#00000000"{}}\_color;}
+
+\end{DoxyCode}

@@ -1,0 +1,50 @@
+.TH "include/cydstd/nullable.h" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/cydstd/nullable.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <functional>\fP
+.br
+\fC#include <stdexcept>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBnullable< T >\fP"
+.br
+.in -1c
+.SS "Concepts"
+
+.in +1c
+.ti -1c
+.RI "concept \fBCCCC\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_\fP(ARG, \&.\&.\&.)   (std::function([&](ARG it) {__VA_ARGS__} ))"
+.br
+.ti -1c
+.RI "#define \fB__\fP(ARG,  BLOCK)   (std::function([&]ARG {BLOCK} ))"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _(ARG,  \&.\&.\&.)   (std::function([&](ARG it) {__VA_ARGS__} ))"
+
+.PP
+Definition at line \fB194\fP of file \fBnullable\&.h\fP\&.
+.SS "#define __(ARG, BLOCK)   (std::function([&]ARG {BLOCK} ))"
+
+.PP
+Definition at line \fB195\fP of file \fBnullable\&.h\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

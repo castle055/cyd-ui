@@ -1,0 +1,147 @@
+.TH "cydui::events::change_ev::DataMonitor< T >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::events::change_ev::DataMonitor< T >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <change_events\&.h>\fP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef std::function< bool(typename T::DataType &, typename T::DataType &)> \fBchange_predicate_t\fP"
+.br
+.ti -1c
+.RI "typedef std::function< void(typename T::DataType &)> \fBcompletion_callback_t\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDataMonitor\fP (\fBchange_predicate_t\fP \fBpredicate\fP, \fBcompletion_callback_t\fP \fBcompletion_callback\fP=[](typename T::DataType &) { })"
+.br
+.ti -1c
+.RI "void \fBupdate\fP (typename T::DataType new_data)"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBEvent\fP * \fBev\fP = nullptr"
+.br
+.ti -1c
+.RI "\fBcompletion_callback_t\fP \fBcompletion_callback\fP"
+.br
+.ti -1c
+.RI "\fBchange_predicate_t\fP \fBpredicate\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<EventType T>
+.br
+class cydui::events::change_ev::DataMonitor< T >"
+.PP
+Definition at line \fB15\fP of file \fBchange_events\&.h\fP\&.
+.SH "Member Typedef Documentation"
+.PP 
+.SS "template<EventType T> typedef std::function<bool(typename T::DataType &, typename T::DataType &)> \fBcydui::events::change_ev::DataMonitor\fP< \fBT\fP >::change_predicate_t"
+
+.PP
+Definition at line \fB19\fP of file \fBchange_events\&.h\fP\&.
+.SS "template<EventType T> typedef std::function<void(typename T::DataType &)> \fBcydui::events::change_ev::DataMonitor\fP< \fBT\fP >::completion_callback_t"
+
+.PP
+Definition at line \fB20\fP of file \fBchange_events\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<EventType T> \fBcydui::events::change_ev::DataMonitor\fP< \fBT\fP >::DataMonitor (\fBchange_predicate_t\fP predicate, \fBcompletion_callback_t\fP completion_callback = \fC[](typename T::DataType &) { }\fP)\fC [inline]\fP"
+
+.PP
+Definition at line \fB22\fP of file \fBchange_events\&.h\fP\&..PP
+.nf
+24                                                                              { }
+25       ) {
+26         this\->predicate = predicate;
+27         this\->completion_callback = completion_callback;
+28         this\->ev = new Event {
+29           \&.type = T::type,
+30           \&.ev = new T,
+31           \&.managed = true,
+32         };
+33         chev_log\&.debug("EMITTING event: (0x%lX) %s", (unsigned long) this\->ev, this\->ev\->type\&.c_str());
+34         emit_raw(this\->ev);
+35       }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "template<EventType T> void \fBcydui::events::change_ev::DataMonitor\fP< \fBT\fP >::update (typename T::DataType new_data)\fC [inline]\fP"
+
+.PP
+Definition at line \fB37\fP of file \fBchange_events\&.h\fP\&..PP
+.nf
+37                                                {
+38         this\->ev\->ev_mtx\&.lock();
+39         if (this\->ev\->status == CONSUMED) {
+40           this\->ev\->ev_mtx\&.unlock();
+41           completion_callback(((T*) this\->ev\->ev)\->data);
+42         } else {
+43           this\->ev\->ev_mtx\&.unlock();
+44         }
+45         
+46         if (predicate(((T*) this\->ev\->ev)\->data, new_data)) {
+47           this\->ev\->ev_mtx\&.lock();
+48           ((T*) this\->ev\->ev)\->data = new_data;
+49           this\->ev\->ev_mtx\&.unlock();
+50           chev_log\&.debug("UPDATE\&. ev(0x%lX)[%s] ev\->status = %d", (unsigned long) this\->ev, this\->ev\->type\&.c_str(),
+51             this\->ev\->status);
+52           this\->ev\->ev_mtx\&.lock();
+53           if (this\->ev\->status == CONSUMED) {
+54             chev_log\&.debug("RE\-EMITTING event: (0x%lX) %s", (unsigned long) this\->ev, this\->ev\->type\&.c_str());
+55             this\->ev\->status = PENDING;
+56             this\->ev\->ev_mtx\&.unlock();
+57             emit_raw(this\->ev);
+58           } else {
+59             this\->ev\->ev_mtx\&.unlock();
+60           }
+61         }
+62       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "template<EventType T> \fBcompletion_callback_t\fP \fBcydui::events::change_ev::DataMonitor\fP< \fBT\fP >::completion_callback\fC [private]\fP"
+
+.PP
+Definition at line \fB65\fP of file \fBchange_events\&.h\fP\&.
+.SS "template<EventType T> \fBEvent\fP* \fBcydui::events::change_ev::DataMonitor\fP< \fBT\fP >::ev = nullptr\fC [private]\fP"
+
+.PP
+Definition at line \fB16\fP of file \fBchange_events\&.h\fP\&.
+.SS "template<EventType T> \fBchange_predicate_t\fP \fBcydui::events::change_ev::DataMonitor\fP< \fBT\fP >::predicate\fC [private]\fP"
+\fBInitial value:\fP.PP
+.nf
+= [](typename T::DataType &, typename T::DataType &) {
+        return true;
+      }
+.fi
+
+.PP
+Definition at line \fB66\fP of file \fBchange_events\&.h\fP\&..PP
+.nf
+66                                                                                     {
+67         return true;
+68       };
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

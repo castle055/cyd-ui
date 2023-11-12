@@ -1,0 +1,7 @@
+<map id="cydui::graphics::vg::path::apply_to" name="cydui::graphics::vg::path::apply_to">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,137,97"/>
+<area shape="rect" id="Node000002" href="$structcydui_1_1graphics_1_1vg_1_1attrs__fill.html#af1feaf9cc6caaa3e84c04be049830a73" title=" " alt="" coords="187,5,318,64"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,58,171,50,173,56,137,64"/>
+<area shape="rect" id="Node000003" href="$structcydui_1_1graphics_1_1vg_1_1attrs__stroke.html#a0efc09cf26d329c1225dc4b9b9a9acdc" title=" " alt="" coords="185,88,320,147"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="137,88,170,96,169,101,136,94"/>
+</map>

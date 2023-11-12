@@ -1,0 +1,228 @@
+\doxysection{components.\+cpp}
+\hypertarget{components_8cpp_source}{}\label{components_8cpp_source}\index{src/layout/components/components.cpp@{src/layout/components/components.cpp}}
+\mbox{\hyperlink{components_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 8/22/22.}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{components_8hpp}{core/components.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{layout_8h}{core/layout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00010}00010\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespacecydui_1_1components}{cydui::components}};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00012}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ae267829320111f7e5ceb6ba99e0ea188}{00012}}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ae267829320111f7e5ceb6ba99e0ea188}{ComponentState::ComponentState}}()\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00013}00013\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00015}\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a8838a467d5497085e521439078d5c2c8}{00015}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a8838a467d5497085e521439078d5c2c8}{ComponentState::dirty}}()\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00016}00016\ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_aeaf2fdda83362fd3025bb11c6a675479}{\_dirty}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00017}00017\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00019}00019\ \textcolor{comment}{//=====\ COMPONENTS}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00020}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{00020}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component::Component}}():\ \mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}([](\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00021}00021\ \})\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00022}00022\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00024}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a96c6abffe351a64554217b65b3717f18}{00024}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component::Component}}(std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*)>\ inner)}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00025}00025\ \ \ :\ \mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}(new\ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{ComponentState}}(),\ inner)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00026}00026\ \ \ (*\mbox{\hyperlink{namespacestate}{state}}.unwrap())-\/>stateless\_comp\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00027}00027\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00029}\mbox{\hyperlink{classcydui_1_1components_1_1Component_ac241524675b9fb727bb3b67ea0c1384f}{00029}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component::Component}}(\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{ComponentState}}*\ \mbox{\hyperlink{namespacestate}{state}})}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00030}00030\ \ \ :\ \mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}(\mbox{\hyperlink{namespacestate}{state}},\ [](\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00031}00031\ \})\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00032}00032\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00034}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a3b6d9919848070daa5ff735871a7c5a0}{00034}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component::Component}}(}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00035}00035\ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{ComponentState}}*\ \mbox{\hyperlink{namespacestate}{state}},\ std::function<\textcolor{keywordtype}{void}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*)>\ inner}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00036}00036\ )}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00037}00037\ \ \ :\ \mbox{\hyperlink{namespacestate}{state}}(\mbox{\hyperlink{namespacestate}{state}}),\ dim(\&\mbox{\hyperlink{namespacestate}{state}}-\/>dim)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00038}00038\ \ \ (*this-\/>state.unwrap())-\/>component\_instance\ =\ \textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00039}00039\ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_abc5014f93d921de9d77bc5da01643880}{inner\_redraw}}\ =\ std::move(inner);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00040}00040\ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a2a8be4efd3e5d8d0f3bb2dd52feb4553}{parent}}.set\_null();}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00041}00041\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00043}00043\ \textcolor{comment}{//==\ Destructor}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00044}\mbox{\hyperlink{classcydui_1_1components_1_1Component_ab8378fa275af98e568a7e91d33d867af}{00044}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_ab8378fa275af98e568a7e91d33d867af}{Component::\string~Component}}()\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00045}00045\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&child:\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}})}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00046}00046\ \ \ \ \ \textcolor{keyword}{delete}\ child;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00047}00047\ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}}.clear();}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00048}00048\ \ \ \textcolor{comment}{//for\ (auto\ \&child:\ param\_children)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00049}00049\ \ \ \textcolor{comment}{//\ \ delete\ child;}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00050}00050\ \ \ \textcolor{comment}{//param\_children.clear();}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00051}00051\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{namespacestate}{state}}.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{ComponentState}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00052}00052\ \ \ \ \ it-\/>\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a5d0930964bfeedc40efa3252616fd30b}{component\_instance}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{return}\ it-\/>stateless\_comp;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00054}00054\ \ \ \}))\ or\ \textcolor{keyword}{false})\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00055}00055\ \ \ \ \ \mbox{\hyperlink{namespacestate}{state}}.set\_null();}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00056}00056\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00057}00057\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00059}00059\ \textcolor{comment}{//==\ API\ for\ subclasses}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00060}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a893cd850cda5ddcef688da444584b9d8}{00060}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a893cd850cda5ddcef688da444584b9d8}{Component::new\_group}}()\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00061}00061\ \ \ \textcolor{keyword}{auto}*\ c\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component}}();}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00062}00062\ \ \ c-\/>is\_group\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00063}00063\ \ \ \textcolor{keywordflow}{return}\ c;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00064}00064\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00066}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a51dc9d2b1e81015c2100812b6e05ecb1}{00066}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a51dc9d2b1e81015c2100812b6e05ecb1}{Component::add}}(}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00067}00067\ \ \ \textcolor{keyword}{const}\ std::vector<component\_builder\_t>\ \&ichildren,\ \textcolor{keywordtype}{bool}\ prepend}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00068}00068\ )\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00069}00069\ \ \ \textcolor{comment}{//\ TODO\ -\/\ Needs\ to\ be\ recursive\ when\ flattening\ groups,\ not\ just\ first\ layer}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00070}00070\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ ichildren)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00071}00071\ \ \ \ \ \textcolor{keyword}{auto}*\ child\ =\ item.build(item);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{if}\ (child\ ==\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00073}00073\ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00074}00074\ \ \ \ \ \textcolor{keywordflow}{if}\ (child-\/>is\_group)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00075}00075\ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&subitem:\ child-\/>children)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (subitem\ ==\ \textcolor{keyword}{nullptr}\ ||\ !subitem-\/>state)}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ subitem-\/>parent\ =\ (\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*)\ \textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ (*subitem-\/>state.unwrap())-\/>win\ =\ (*\mbox{\hyperlink{namespacestate}{state}}.unwrap())-\/>win;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (prepend)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}}.push\_front(subitem);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}}.push\_back(subitem);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00085}00085\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00086}00086\ \ \ \ \ \ \ child-\/>children.clear();}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00087}00087\ \ \ \ \ \ \ \textcolor{keyword}{delete}\ child;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00088}00088\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00089}00089\ \ \ \ \ \ \ child-\/>parent\ =\ (\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}*)\ \textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00090}00090\ \ \ \ \ \ \ (*child-\/>state.unwrap())-\/>win\ =\ (*\mbox{\hyperlink{namespacestate}{state}}.unwrap())-\/>win;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00091}00091\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (prepend)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}}.push\_front(child);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00093}00093\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}}.push\_back(child);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00095}00095\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00096}00096\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00097}00097\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00098}00098\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00100}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a420ebdbc96cb8fcf1714f8b484b3a6c7}{00100}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a420ebdbc96cb8fcf1714f8b484b3a6c7}{Component::redraw}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout}{cydui::layout::Layout}}*\ layout)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00101}00101\ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component_abc5014f93d921de9d77bc5da01643880}{inner\_redraw}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00102}00102\ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component_aa5dc7df3b82a1959209e36f866551452}{on\_redraw}}();}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00103}00103\ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00104}00104\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&child:\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}})\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00105}00105\ \ \ \ \ child-\/>redraw(layout);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00106}00106\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00107}00107\ \ \ \mbox{\hyperlink{namespacestate}{state}}.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{ComponentState}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00108}00108\ \ \ \ \ it-\/>\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a7b28b1a66b65a0a283a177516c5bdc00}{dragging\_context}}\ =\ \&layout-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_acbe41314b0d855aad59150746f15a08e}{dragging\_context}};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00109}00109\ \ \ \ \ it-\/>\_dirty\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00110}00110\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00111}00111\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00113}\mbox{\hyperlink{classcydui_1_1components_1_1Component_aac1aa82cd73ae42fedb29ea28a0c1fc6}{00113}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_aac1aa82cd73ae42fedb29ea28a0c1fc6}{Component::render}}(\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t}{cydui::compositing::compositing\_node\_t}}*\ node)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00114}00114\ \ \ node-\/>\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_a5580d49177a116a40c74586c3ae04fc9}{id}}\ =\ (\textcolor{keywordtype}{unsigned}\ long)\ (*this-\/>state.unwrap());}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00115}00115\ \ \ node-\/>\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_adb3336329c15c1967f82a6c9b52cfe80}{op}}\ =\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00116}00116\ \ \ \ \ .\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__operation__t_a00b24b704155b2abdf63dce913cbd021}{x}}\ =\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_ad81b5e6247f54cd028209c3e1b7ba719}{dim}}-\/>\mbox{\hyperlink{structcydui_1_1dimensions_1_1component__dimensions__t_a5507c7bdb9754c3ea6be6bfc80d30960}{x}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}(),}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00117}00117\ \ \ \ \ .y\ =\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_ad81b5e6247f54cd028209c3e1b7ba719}{dim}}-\/>\mbox{\hyperlink{structcydui_1_1dimensions_1_1component__dimensions__t_a5a71bd8fff1ba2ca450a56cc3a27ffe8}{y}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}(),}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00118}00118\ \ \ \ \ .w\ =\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_ad81b5e6247f54cd028209c3e1b7ba719}{dim}}-\/>\mbox{\hyperlink{structcydui_1_1dimensions_1_1component__dimensions__t_afd080af278a53ad58d72951ad744e26d}{w}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}(),}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00119}00119\ \ \ \ \ .h\ =\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_ad81b5e6247f54cd028209c3e1b7ba719}{dim}}-\/>\mbox{\hyperlink{structcydui_1_1dimensions_1_1component__dimensions__t_a37e67243ca8d760d3edcef88ef8eab8c}{h}}.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}(),}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00120}00120\ \ \ \ \ .rot\ =\ 0.0,\ \textcolor{comment}{//\ dim-\/>rot.val(),}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00121}00121\ \ \ \ \ .scale\_x\ =\ 1.0,\ \textcolor{comment}{//\ dim-\/>scale\_x.val(),}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00122}00122\ \ \ \ \ .scale\_y\ =\ 1.0,\ \textcolor{comment}{//\ dim-\/>scale\_y.val(),}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00123}00123\ \ \ \};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00124}00124\ \ \ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00125}00125\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1components_1_1Component_a4189345fd97be0de73b55292b2b1db7b}{is\_drawable}}())\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00126}00126\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a9a67738af941cb3f378ee63758ba7d13}{on\_render}}(node-\/>\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_ab225f17632dfd1bad8743451d9fdacf7}{graphics}});}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00127}00127\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00128}00128\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&child:\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}})\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00129}00129\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (child)\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}*\ c\_node\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t}{compositing::compositing\_node\_t}}();}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ node-\/>\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t_a47895b484d48bd5011bc40ea99f36391}{children}}.push\_back(c\_node);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ child-\/>render(c\_node);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00133}00133\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00134}00134\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00135}00135\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00136}00136\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00138}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a4189345fd97be0de73b55292b2b1db7b}{00138}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a4189345fd97be0de73b55292b2b1db7b}{cydui::components::Component::is\_drawable}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00139}00139\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00140}00140\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00142}\mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{00142}}\ \textcolor{preprocessor}{\#define\ COMP\_EVENT\_HANDLER\_IMPL(EV,\ ARGS)\ void\ Component::on\_\#\#EV\ ARGS\ const}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00143}\mbox{\hyperlink{components_8cpp_a3212f3e7a4bdeb6d56ceac3c602fbf2a}{00143}}\ \textcolor{preprocessor}{\#define\ RECURSIVE}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00145}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a9a67738af941cb3f378ee63758ba7d13}{00145}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(\mbox{\hyperlink{namespacerender}{render}},\ (\mbox{\hyperlink{structvg_1_1vg__fragment__t}{vg::vg\_fragment\_t}}\ \&\ graphics))\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00146}00146\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00148}\mbox{\hyperlink{classcydui_1_1components_1_1Component_aa5dc7df3b82a1959209e36f866551452}{00148}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(redraw,\ ())\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00149}00149\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00151}\mbox{\hyperlink{classcydui_1_1components_1_1Component_ae08be4b98ba626179acd5a4a5ec4bf48}{00151}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(key\_press,\ (\mbox{\hyperlink{structKeyEvent_1_1DataType}{KeyData}}\ key))\ \{\ \textcolor{comment}{//\ NOLINT(misc-\/no-\/recursion)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00152}00152\ \ \ parent.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00153}00153\ \ \ \ \ it-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_ae08be4b98ba626179acd5a4a5ec4bf48}{on\_key\_press}}(key);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00154}00154\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00155}00155\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00157}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a34346c0a5d575f28220c0196bf30e286}{00157}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(key\_release,\ (\mbox{\hyperlink{structKeyEvent_1_1DataType}{KeyData}}\ key))\ \{\ \textcolor{comment}{//\ NOLINT(misc-\/no-\/recursion)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00158}00158\ \ \ parent.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00159}00159\ \ \ \ \ it-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a34346c0a5d575f28220c0196bf30e286}{on\_key\_release}}(key);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00160}00160\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00161}00161\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00163}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a835ae030ace5a7ee854e6035ca84fccd}{00163}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(mouse\_enter,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y))\ \{\ \textcolor{comment}{//\ NOLINT(misc-\/no-\/recursion)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00164}00164\ \ \ parent.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00165}00165\ \ \ \ \ \textcolor{keyword}{auto}\ \&p\ =\ it;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00166}00166\ \ \ \ \ p-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a835ae030ace5a7ee854e6035ca84fccd}{on\_mouse\_enter}}(x\ +\ dim-\/>x.val(),\ y\ +\ dim-\/>y.val());}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00167}00167\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00168}00168\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00170}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a6a8e601805902a5e982536d1837303b4}{00170}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(mouse\_click,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y,\ \textcolor{keywordtype}{int}\ button))\ \{\ \textcolor{comment}{//\ NOLINT(misc-\/no-\/recursion)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00171}00171\ \ \ parent.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00172}00172\ \ \ \ \ \textcolor{keyword}{auto}\ \&p\ =\ it;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00173}00173\ \ \ \ \ p-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a6a8e601805902a5e982536d1837303b4}{on\_mouse\_click}}(x\ +\ dim-\/>x.val(),\ y\ +\ dim-\/>y.val(),\ button);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00174}00174\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00175}00175\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00176}00176\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00177}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a716572193261a957ab20f57a64576c89}{00177}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(mouse\_exit,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y))\ \{\ \textcolor{comment}{//\ NOLINT(misc-\/no-\/recursion)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00178}00178\ \ \ parent.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00179}00179\ \ \ \ \ \textcolor{keyword}{auto}\ \&p\ =\ it;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00180}00180\ \ \ \ \ p-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a716572193261a957ab20f57a64576c89}{on\_mouse\_exit}}(x\ +\ dim-\/>x.val(),\ y\ +\ dim-\/>y.val());}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00181}00181\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00182}00182\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00184}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a35ea4bd23dd08b4fcdfc817d0e807b02}{00184}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(mouse\_motion,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y))\ \{\ \textcolor{comment}{//\ NOLINT(misc-\/no-\/recursion)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00185}00185\ \ \ parent.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00186}00186\ \ \ \ \ \textcolor{keyword}{auto}\ \&p\ =\ it;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00187}00187\ \ \ \ \ p-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a35ea4bd23dd08b4fcdfc817d0e807b02}{on\_mouse\_motion}}(x\ +\ dim-\/>x.val(),\ y\ +\ dim-\/>y.val());}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00188}00188\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00189}00189\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00190}00190\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00191}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a60b3bcdae6ad05c1efce9730abf5cdf2}{00191}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(drag\_start,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y))\ \{\ \textcolor{comment}{//\ NOLINT(misc-\/no-\/recursion)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00192}00192\ \ \ parent.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00193}00193\ \ \ \ \ \textcolor{keyword}{auto}\ \&p\ =\ it;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00194}00194\ \ \ \ \ p-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a60b3bcdae6ad05c1efce9730abf5cdf2}{on\_drag\_start}}(x\ +\ dim-\/>x.val(),\ y\ +\ dim-\/>y.val());}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00195}00195\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00196}00196\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00198}\mbox{\hyperlink{classcydui_1_1components_1_1Component_ae77dde43002de0098108e232b8d36975}{00198}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(drag\_motion,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y))\ \{\ \textcolor{comment}{//\ NOLINT(misc-\/no-\/recursion)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00199}00199\ \ \ parent.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00200}00200\ \ \ \ \ \textcolor{keyword}{auto}\ \&p\ =\ it;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00201}00201\ \ \ \ \ p-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_ae77dde43002de0098108e232b8d36975}{on\_drag\_motion}}(x\ +\ dim-\/>x.val(),\ y\ +\ dim-\/>y.val());}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00202}00202\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00203}00203\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00205}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a26277a0a6bef341975e0cd2398df5212}{00205}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(drag\_finish,\ (\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y))\ \{\ \textcolor{comment}{//\ NOLINT(misc-\/no-\/recursion)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00206}00206\ \ \ parent.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00207}00207\ \ \ \ \ \textcolor{keyword}{auto}\ \&p\ =\ it;}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00208}00208\ \ \ \ \ p-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_a26277a0a6bef341975e0cd2398df5212}{on\_drag\_finish}}(x\ +\ dim-\/>x.val(),\ y\ +\ dim-\/>y.val());}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00209}00209\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00210}00210\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00212}\mbox{\hyperlink{classcydui_1_1components_1_1Component_ac0bd813af0b8b61c2504dcdd6c04f8d6}{00212}}\ \mbox{\hyperlink{components_8cpp_a74aa318c4737cfd41ea4956c368e6c91}{COMP\_EVENT\_HANDLER\_IMPL}}(scroll,\ (\textcolor{keywordtype}{int}\ dx,\ \textcolor{keywordtype}{int}\ dy))\ \{\ \textcolor{comment}{//\ NOLINT(misc-\/no-\/recursion)}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00213}00213\ \ \ parent.let(\mbox{\hyperlink{nullable_8h_a9b80f718034f6837df7dfe30367721cb}{\_}}(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}}\ *,\ \{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00214}00214\ \ \ \ \ it-\/>\mbox{\hyperlink{classcydui_1_1components_1_1Component_ac0bd813af0b8b61c2504dcdd6c04f8d6}{on\_scroll}}(dx,\ dy);}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00215}00215\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00216}00216\ \}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00218}00218\ \textcolor{preprocessor}{\#undef\ COMP\_EVENT\_HANDLER\_IMPL}}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00220}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a85c9cc77ad4199521d65708517277cf3}{00220}}\ \mbox{\hyperlink{classnullable}{nullable<Component*>}}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a85c9cc77ad4199521d65708517277cf3}{Component::get\_parent}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00221}00221\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a2a8be4efd3e5d8d0f3bb2dd52feb4553}{parent}};}
+\DoxyCodeLine{\Hypertarget{components_8cpp_source_l00222}00222\ \}}
+
+\end{DoxyCode}

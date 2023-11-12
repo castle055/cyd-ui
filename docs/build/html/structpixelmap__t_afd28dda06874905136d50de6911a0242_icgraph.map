@@ -1,0 +1,28 @@
+<map id="pixelmap_t::width" name="pixelmap_t::width">
+<area shape="rect" id="Node000001" title=" " alt="" coords="794,180,917,207"/>
+<area shape="rect" id="Node000002" href="$structcydui_1_1graphics_1_1vg_1_1pixel.html#a92e45ad0db4ba5e3d91ecd7cd4d110e0" title=" " alt="" coords="608,5,740,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="835,168,797,116,772,87,744,62,727,51,730,46,747,58,776,84,801,112,840,165"/>
+<area shape="rect" id="Node000003" href="$classcydui_1_1layout_1_1Layout.html#a4ec466f6250b29670fc625bf251d659b" title=" " alt="" coords="603,72,745,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="819,173,744,129,722,118,725,113,747,124,821,169"/>
+<area shape="rect" id="Node000005" href="$classpixelmap__editor__t.html#ac66e48470b32095095595563cc4cfde6" title=" " alt="" coords="608,139,740,181"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="777,182,740,175,741,170,778,177"/>
+<area shape="rect" id="Node000006" href="$classpixelmap__editor__t.html#ae97a3fce81f1fc9271407839a3585e9b" title=" " alt="" coords="608,205,740,248"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="778,210,741,217,740,212,777,205"/>
+<area shape="rect" id="Node000007" href="$render_8cpp.html#af098c7565dcab42f6f984ca26d81f0ca" title=" " alt="" coords="633,272,715,299"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="823,218,747,262,717,275,715,270,744,258,820,213"/>
+<area shape="rect" id="Node000011" href="$classcydui_1_1compositing_1_1LayoutCompositor.html#a04edfbdbc1b9d60bbbf342a3fcb9182c" title=" " alt="" coords="602,347,746,405"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="834,220,748,313,710,348,707,344,744,309,830,217"/>
+<area shape="rect" id="Node000004" href="$namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="406,80,554,107"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="587,96,555,96,555,91,587,91"/>
+<area shape="rect" id="Node000008" href="$render_8cpp.html#a912e5e13a2361939b93713a8862c228f" title=" " alt="" coords="436,272,525,299"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="617,288,525,288,525,283,617,283"/>
+<area shape="rect" id="Node000009" href="$namespacex11_1_1render.html#a2bab441e71f42470e767c6f6a079a129" title=" " alt="" coords="227,272,346,299"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="420,288,347,288,347,283,420,283"/>
+<area shape="rect" id="Node000010" href="$structcydui_1_1graphics_1_1window__t.html#a2e7c0a722f210b4271bc3815f2229e32" title=" " alt="" coords="5,264,167,307"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="211,288,167,288,167,283,211,283"/>
+<area shape="poly" id="edge13_Node000011_Node000011" title=" " alt="" coords="702,334,691,328,674,325,658,327,648,332,643,338,643,347,638,346,638,336,645,328,657,322,674,320,693,323,705,330"/>
+<area shape="rect" id="Node000012" href="$classcydui_1_1compositing_1_1LayoutCompositor.html#a6963756199e05569cf36f7ce8cd896fd" title=" " alt="" coords="409,347,552,405"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="587,379,552,379,552,373,587,373"/>
+<area shape="rect" id="Node000013" href="$classcydui_1_1compositing_1_1LayoutCompositor.html#a292f229815bc05bbcf95cf3f2e90877b" title=" " alt="" coords="215,347,358,405"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="393,379,359,379,359,373,393,373"/>
+</map>

@@ -1,0 +1,50 @@
+\doxysection{window.\+cpp}
+\hypertarget{window_8cpp_source}{}\label{window_8cpp_source}\index{src/window/window.cpp@{src/window/window.cpp}}
+\mbox{\hyperlink{window_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 8/21/22.}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{window_8h}{core/window.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{layout_8h}{core/layout.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00009}00009\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespacecydui_1_1window}{cydui::window}};}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00011}\mbox{\hyperlink{window_8cpp_a5161037059401de73c79e880c763948a}{00011}}\ \textcolor{keyword}{static}\ std::vector<CWindow*>\ \mbox{\hyperlink{window_8cpp_a5161037059401de73c79e880c763948a}{windows}};}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00013}\mbox{\hyperlink{namespacecydui_1_1window_a7a6979b2904a74aa3456f320746e78b6}{00013}}\ \mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{CWindow}}*\ \mbox{\hyperlink{namespacecydui_1_1window_a7a6979b2904a74aa3456f320746e78b6}{cydui::window::create}}(}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00014}00014\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout}{layout::Layout}}*\ layout,}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00015}00015\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ title,}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00016}00016\ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ wclass,}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00017}00017\ \ \ \textcolor{keywordtype}{int}\ x,}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00018}00018\ \ \ \textcolor{keywordtype}{int}\ y,}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00019}00019\ \ \ \textcolor{keywordtype}{int}\ w,}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00020}00020\ \ \ \textcolor{keywordtype}{int}\ h,}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00021}00021\ \ \ \textcolor{keywordtype}{bool}\ override\_redirect}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00022}00022\ )\ \{}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00023}00023\ \ \ \textcolor{keyword}{auto}\ win\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{CWindow}}();}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00024}00024\ \ \ \textcolor{keyword}{auto}*\ win\_ref\ =\ graphics::create\_window(\&win-\/>profiling\_ctx,\ title,\ wclass,\ x,\ y,\ w,\ h,\ override\_redirect);}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00025}00025\ \ \ win-\/>layout\ =\ layout;}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00026}00026\ \ \ }
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00027}00027\ \ \ win-\/>win\_ref\ =\ win\_ref;}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00028}00028\ \ \ \textcolor{comment}{//graphics::set\_background(win\_ref);}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00029}00029\ \ \ }
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00030}00030\ \ \ layout-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ec466f6250b29670fc625bf251d659b}{bind\_window}}(win);}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00031}00031\ \ \ }
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00032}00032\ \ \ \mbox{\hyperlink{window_8cpp_a5161037059401de73c79e880c763948a}{windows}}.push\_back(win);}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00033}00033\ \ \ }
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00034}00034\ \ \ events::start();}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00035}00035\ \ \ }
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00036}00036\ \ \ \textcolor{comment}{//\ Once\ all\ threads\ have\ started\ and\ everything\ is\ set\ up\ for\ this\ window}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00037}00037\ \ \ \textcolor{comment}{//\ force\ a\ complete\ redraw}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00038}00038\ \ \ \textcolor{comment}{//events::emit<RedrawEvent>(\{.win\ =\ (unsigned\ int)\ win\_ref-\/>xwin\});}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00039}00039\ \ \ \textcolor{comment}{//events::emit<RedrawEvent>(\{\ \});}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00040}00040\ \ \ \textcolor{comment}{//events::emit<RedrawEvent>(\{.win\ =\ get\_id(win\_ref)\});}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00041}00041\ \ \ }
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00042}00042\ \ \ \textcolor{keywordflow}{return}\ win;}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00043}00043\ \}}
+\DoxyCodeLine{\Hypertarget{window_8cpp_source_l00044}00044\ }
+
+\end{DoxyCode}

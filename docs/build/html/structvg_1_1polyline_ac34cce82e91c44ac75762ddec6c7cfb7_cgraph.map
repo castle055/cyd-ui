@@ -1,0 +1,11 @@
+<map id="vg::polyline::apply_to" name="vg::polyline::apply_to">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,113,150,140"/>
+<area shape="rect" id="Node000002" href="$structvg_1_1attrs__fill.html#a039c0e64fa7827bd429f90d345005d4a" title=" " alt="" coords="209,5,355,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,110,196,58,208,52,211,57,199,62,103,115"/>
+<area shape="rect" id="Node000003" href="$structvg_1_1attrs__stroke.html#abf33eeee6c7f262277a3d9ac732b8861" title=" " alt="" coords="198,72,366,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="149,112,182,107,183,112,150,118"/>
+<area shape="rect" id="Node000004" href="$structvg_1_1attrs__fill.html#a41b4db81e10b970a1d21c328e84d8ad1" title=" " alt="" coords="209,139,355,181"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="150,136,194,143,193,148,149,141"/>
+<area shape="rect" id="Node000005" href="$structvg_1_1attrs__stroke.html#a174502e4280dae89a4f9490fddb19178" title=" " alt="" coords="198,205,366,248"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="103,138,199,191,211,196,208,201,196,196,100,143"/>
+</map>

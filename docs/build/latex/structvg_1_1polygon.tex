@@ -1,0 +1,146 @@
+\doxysection{vg\+::polygon Struct Reference}
+\hypertarget{structvg_1_1polygon}{}\label{structvg_1_1polygon}\index{vg::polygon@{vg::polygon}}
+
+
+{\ttfamily \#include $<$vg.\+h$>$}
+
+
+
+Inheritance diagram for vg\+::polygon\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{structvg_1_1polygon__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for vg\+::polygon\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=302pt]{structvg_1_1polygon__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structvg_1_1polygon_ac189c46a3db67b5b3293d9c2332af6fe}{apply\+\_\+to}} (\mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\+\_\+editor\+\_\+t}} \&editor) const override
+\item 
+\mbox{\hyperlink{structvg_1_1vg__element__t_1_1footprint}{footprint}} \mbox{\hyperlink{structvg_1_1polygon_ad608a723f018b7636526f3efcb6279e9}{get\+\_\+footprint}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structvg_1_1vg__element__t}{vg\+::vg\+\_\+element\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structvg_1_1vg__element__t_a4b6333568b6b06d7657afb902e6b45d6}{\+\_\+internal\+\_\+set\+\_\+origin}} (int x, int y)
+\item 
+virtual \mbox{\hyperlink{structvg_1_1vg__element__t_aa2a033ec04ad8994213cc0d0140b3838}{\texorpdfstring{$\sim$}{\string~}vg\+\_\+element\+\_\+t}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structvg_1_1vg__element__t}{vg\+::vg\+\_\+element\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022}{origin\+\_\+x}} = 0
+\item 
+int \mbox{\hyperlink{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59}{origin\+\_\+y}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00138}{138}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structvg_1_1polygon_ac189c46a3db67b5b3293d9c2332af6fe}\label{structvg_1_1polygon_ac189c46a3db67b5b3293d9c2332af6fe} 
+\index{vg::polygon@{vg::polygon}!apply\_to@{apply\_to}}
+\index{apply\_to@{apply\_to}!vg::polygon@{vg::polygon}}
+\doxysubsubsection{\texorpdfstring{apply\_to()}{apply\_to()}}
+{\footnotesize\ttfamily void vg\+::polygon\+::apply\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\+\_\+editor\+\_\+t}} \&}]{editor }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structvg_1_1vg__element__t_a34e274817a70ba1e3ff8d551797bac25}{vg\+::vg\+\_\+element\+\_\+t}}.
+
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00144}{144}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ apply\_stroke(editor);}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ apply\_fill(editor);}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ first\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&p:\ \_points)\ \{}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (first)\ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \ \ \ \ editor-\/>move\_to(\mbox{\hyperlink{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022}{origin\_x}}\ +\ p[0],\ \mbox{\hyperlink{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59}{origin\_y}}\ +\ p[1]);}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ first\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ editor-\/>line\_to(\mbox{\hyperlink{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022}{origin\_x}}\ +\ p[0],\ \mbox{\hyperlink{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59}{origin\_y}}\ +\ p[1]);}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Close\ the\ polygon}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ editor-\/>close\_path();}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ set\_source\_to\_stroke(editor);}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ editor-\/>stroke\_preserve();}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ set\_source\_to\_fill(editor);}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ editor-\/>fill();}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structvg_1_1polygon_ad608a723f018b7636526f3efcb6279e9}\label{structvg_1_1polygon_ad608a723f018b7636526f3efcb6279e9} 
+\index{vg::polygon@{vg::polygon}!get\_footprint@{get\_footprint}}
+\index{get\_footprint@{get\_footprint}!vg::polygon@{vg::polygon}}
+\doxysubsubsection{\texorpdfstring{get\_footprint()}{get\_footprint()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structvg_1_1vg__element__t_1_1footprint}{footprint}} vg\+::polygon\+::get\+\_\+footprint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structvg_1_1vg__element__t_a5574fb0a7fb4afb3748da1cbee21f6b8}{vg\+::vg\+\_\+element\+\_\+t}}.
+
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00167}{167}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\_points.empty())\ \{}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{0,\ 0,\ 0,\ 0\};}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ min\_x\ =\ \_points[0][0];}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ min\_y\ =\ \_points[0][1];}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ max\_x\ =\ \_points[0][0];}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ max\_y\ =\ \_points[0][1];}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ x,\ y;}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (std::size\_t\ i\ =\ 1;\ i\ <\ \_points.size();\ ++i)\ \{}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \ \ x\ =\ \_points[i][0];}
+\DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \ \ y\ =\ \_points[i][1];}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ <\ min\_x)\ min\_x\ =\ x;}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x\ >\ max\_x)\ max\_x\ =\ x;}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (y\ <\ min\_y)\ min\_y\ =\ y;}
+\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (y\ >\ max\_y)\ max\_y\ =\ y;}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \ \ min\_x,}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ min\_y,}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \ \ max\_x\ -\/\ min\_x,}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \ \ max\_y\ -\/\ min\_y,}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/graphics/\mbox{\hyperlink{vg_8h}{vg.\+h}}\end{DoxyCompactItemize}

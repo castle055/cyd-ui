@@ -1,0 +1,138 @@
+.TH "prof::context_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+prof::context_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <profiling\&.h>\fP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBscope_event_t\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBmark_event\fP (const char *ev_desc)"
+.br
+.ti -1c
+.RI "\fBevent_t\fP \fBstart_event\fP (const char *ev_desc)"
+.br
+.ti -1c
+.RI "void \fBend_event\fP (\fBevent_t\fP ev)"
+.br
+.ti -1c
+.RI "\fBscope_event_t\fP \fBscope_event\fP (const char *ev_desc)"
+.br
+.ti -1c
+.RI "void \fBadd_thd\fP (std::thread::id id)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::shared_mutex \fBmtx\fP"
+.br
+.ti -1c
+.RI "std::unordered_map< std::thread::id, \fBthread_context_t\fP > \fBthreads\fP {}"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB68\fP of file \fBprofiling\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void prof::context_t::add_thd (std::thread::id id)\fC [inline]\fP"
+
+.PP
+Definition at line \fB122\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+122                                           {
+123         std::unique_lock lk {mtx};
+124         if (!threads\&.contains(id)) {
+125           threads[id] = {};
+126         }
+127       }
+.fi
+
+.SS "void prof::context_t::end_event (\fBevent_t\fP ev)\fC [inline]\fP"
+
+.PP
+Definition at line \fB89\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+89                                         {
+90         ev\&.mark_end();
+91         std::shared_lock lk {mtx};
+92         threads[std::this_thread::get_id()]\&.add_event(ev);
+93       }
+.fi
+
+.SS "void prof::context_t::mark_event (const char * ev_desc)\fC [inline]\fP"
+
+.PP
+Definition at line \fB69\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+69                                                   {
+70         event_t ev;
+71         ev\&.description = ev_desc;
+72         ev\&.mark();
+73         
+74         auto id = std::this_thread::get_id();
+75         add_thd(id);
+76         std::shared_lock lk {mtx};
+77         threads[id]\&.add_event(ev);
+78       }
+.fi
+
+.SS "\fBscope_event_t\fP prof::context_t::scope_event (const char * ev_desc)\fC [inline]\fP"
+
+.PP
+Definition at line \fB116\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+116                                                             {
+117         auto id = std::this_thread::get_id();
+118         add_thd(id);
+119         return {this, ev_desc};
+120       }
+.fi
+
+.SS "\fBevent_t\fP prof::context_t::start_event (const char * ev_desc)\fC [inline]\fP"
+
+.PP
+Definition at line \fB80\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+80                                                       {
+81         event_t ev;
+82         ev\&.description = ev_desc;
+83         ev\&.mark_start();
+84         auto id = std::this_thread::get_id();
+85         add_thd(id);
+86         return ev;
+87       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "std::shared_mutex prof::context_t::mtx"
+
+.PP
+Definition at line \fB129\fP of file \fBprofiling\&.h\fP\&.
+.SS "std::unordered_map<std::thread::id, \fBthread_context_t\fP> prof::context_t::threads {}"
+
+.PP
+Definition at line \fB130\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+130 {};
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

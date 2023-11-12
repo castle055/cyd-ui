@@ -1,0 +1,216 @@
+\doxysection{cydui\+::events\+::listener\+\_\+t Struct Reference}
+\hypertarget{structcydui_1_1events_1_1listener__t}{}\label{structcydui_1_1events_1_1listener__t}\index{cydui::events::listener\_t@{cydui::events::listener\_t}}
+
+
+{\ttfamily \#include $<$events.\+hpp$>$}
+
+
+
+Collaboration diagram for cydui\+::events\+::listener\+\_\+t\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=200pt]{structcydui_1_1events_1_1listener__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa4738ea6d20e54db9da4effa01a1254e}{listener\+\_\+t}} ()
+\item 
+\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a9abc780b85a06be01a8b66793503f3ae}{listener\+\_\+t}} (\mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}} c)
+\item 
+long \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a62126b951712f8710fb9b41037ed1b57}{get\+\_\+id}} () const
+\item 
+void \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a9323c358738542305a449d913e912911}{remove}} ()
+\item 
+bool \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a13dbb59580167e689ca95ac22581edad}{is\+\_\+active}} () const
+\item 
+void \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a6c2442a05bb1538ae71bb4052fd3e556}{operator()}} (\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}} \texorpdfstring{$\ast$}{*}ev) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a}{event\+\_\+type}}
+\item 
+\mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}} \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a75f63d36af643792a3d83a78ddff7aa6}{func}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+long \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}}
+\item 
+bool \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}} = true
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00166}{166}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structcydui_1_1events_1_1listener__t_aa4738ea6d20e54db9da4effa01a1254e}\label{structcydui_1_1events_1_1listener__t_aa4738ea6d20e54db9da4effa01a1254e} 
+\index{cydui::events::listener\_t@{cydui::events::listener\_t}!listener\_t@{listener\_t}}
+\index{listener\_t@{listener\_t}!cydui::events::listener\_t@{cydui::events::listener\_t}}
+\doxysubsubsection{\texorpdfstring{listener\_t()}{listener\_t()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily cydui\+::events\+::listener\+\_\+t\+::listener\+\_\+t (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00171}{171}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}}\ =\ 0;}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1events_1_1listener__t_a9abc780b85a06be01a8b66793503f3ae}\label{structcydui_1_1events_1_1listener__t_a9abc780b85a06be01a8b66793503f3ae} 
+\index{cydui::events::listener\_t@{cydui::events::listener\_t}!listener\_t@{listener\_t}}
+\index{listener\_t@{listener\_t}!cydui::events::listener\_t@{cydui::events::listener\_t}}
+\doxysubsubsection{\texorpdfstring{listener\_t()}{listener\_t()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily cydui\+::events\+::listener\+\_\+t\+::listener\+\_\+t (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}}}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00176}{176}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a75f63d36af643792a3d83a78ddff7aa6}{func}}(std::move(c))\ \{}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}}\ =\ (long)\ \textcolor{keyword}{new}\ \mbox{\hyperlink{multidim__data_8h_ad24825e11b71d87e40f5c0e88dd980a0}{u8}};}
+\DoxyCodeLine{00178\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcydui_1_1events_1_1listener__t_a62126b951712f8710fb9b41037ed1b57}\label{structcydui_1_1events_1_1listener__t_a62126b951712f8710fb9b41037ed1b57} 
+\index{cydui::events::listener\_t@{cydui::events::listener\_t}!get\_id@{get\_id}}
+\index{get\_id@{get\_id}!cydui::events::listener\_t@{cydui::events::listener\_t}}
+\doxysubsubsection{\texorpdfstring{get\_id()}{get\_id()}}
+{\footnotesize\ttfamily long cydui\+::events\+::listener\+\_\+t\+::get\+\_\+id (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00184}{184}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}};}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1events_1_1listener__t_a13dbb59580167e689ca95ac22581edad}\label{structcydui_1_1events_1_1listener__t_a13dbb59580167e689ca95ac22581edad} 
+\index{cydui::events::listener\_t@{cydui::events::listener\_t}!is\_active@{is\_active}}
+\index{is\_active@{is\_active}!cydui::events::listener\_t@{cydui::events::listener\_t}}
+\doxysubsubsection{\texorpdfstring{is\_active()}{is\_active()}}
+{\footnotesize\ttfamily bool cydui\+::events\+::listener\+\_\+t\+::is\+\_\+active (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00196}{196}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}};}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1events_1_1listener__t_a6c2442a05bb1538ae71bb4052fd3e556}\label{structcydui_1_1events_1_1listener__t_a6c2442a05bb1538ae71bb4052fd3e556} 
+\index{cydui::events::listener\_t@{cydui::events::listener\_t}!operator()@{operator()}}
+\index{operator()@{operator()}!cydui::events::listener\_t@{cydui::events::listener\_t}}
+\doxysubsubsection{\texorpdfstring{operator()()}{operator()()}}
+{\footnotesize\ttfamily void cydui\+::events\+::listener\+\_\+t\+::operator() (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}} \texorpdfstring{$\ast$}{*}}]{ev }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00200}{200}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a75f63d36af643792a3d83a78ddff7aa6}{func}}(ev);}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1events_1_1listener__t_a9323c358738542305a449d913e912911}\label{structcydui_1_1events_1_1listener__t_a9323c358738542305a449d913e912911} 
+\index{cydui::events::listener\_t@{cydui::events::listener\_t}!remove@{remove}}
+\index{remove@{remove}!cydui::events::listener\_t@{cydui::events::listener\_t}}
+\doxysubsubsection{\texorpdfstring{remove()}{remove()}}
+{\footnotesize\ttfamily void cydui\+::events\+::listener\+\_\+t\+::remove (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00191}{191}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc}{cydui::events::remove\_listener}}(\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a}{event\_type}},\ *\textcolor{keyword}{this});}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=341pt]{structcydui_1_1events_1_1listener__t_a9323c358738542305a449d913e912911_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}\label{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27} 
+\index{cydui::events::listener\_t@{cydui::events::listener\_t}!active@{active}}
+\index{active@{active}!cydui::events::listener\_t@{cydui::events::listener\_t}}
+\doxysubsubsection{\texorpdfstring{active}{active}}
+{\footnotesize\ttfamily bool cydui\+::events\+::listener\+\_\+t\+::active = true\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00169}{169}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+\Hypertarget{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a}\label{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a} 
+\index{cydui::events::listener\_t@{cydui::events::listener\_t}!event\_type@{event\_type}}
+\index{event\_type@{event\_type}!cydui::events::listener\_t@{cydui::events::listener\_t}}
+\doxysubsubsection{\texorpdfstring{event\_type}{event\_type}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} cydui\+::events\+::listener\+\_\+t\+::event\+\_\+type}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00188}{188}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+\Hypertarget{structcydui_1_1events_1_1listener__t_a75f63d36af643792a3d83a78ddff7aa6}\label{structcydui_1_1events_1_1listener__t_a75f63d36af643792a3d83a78ddff7aa6} 
+\index{cydui::events::listener\_t@{cydui::events::listener\_t}!func@{func}}
+\index{func@{func}!cydui::events::listener\_t@{cydui::events::listener\_t}}
+\doxysubsubsection{\texorpdfstring{func}{func}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}} cydui\+::events\+::listener\+\_\+t\+::func}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00189}{189}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+\Hypertarget{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}\label{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af} 
+\index{cydui::events::listener\_t@{cydui::events::listener\_t}!ID@{ID}}
+\index{ID@{ID}!cydui::events::listener\_t@{cydui::events::listener\_t}}
+\doxysubsubsection{\texorpdfstring{ID}{ID}}
+{\footnotesize\ttfamily long cydui\+::events\+::listener\+\_\+t\+::\+ID\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00168}{168}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/events/\mbox{\hyperlink{include_2events_2events_8hpp}{events.\+hpp}}\end{DoxyCompactItemize}

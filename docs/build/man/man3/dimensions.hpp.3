@@ -1,0 +1,250 @@
+.TH "include/core/dimensions.hpp" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/core/dimensions.hpp
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <functional>\fP
+.br
+\fC#include <unordered_set>\fP
+.br
+\fC#include <vector>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcydui::dimensions::dimensional_relation_t\fP"
+.br
+.ti -1c
+.RI "class \fBcydui::dimensions::dimension_t\fP"
+.br
+.ti -1c
+.RI "struct \fBcydui::dimensions::four_sided_dimension_t\fP"
+.br
+.ti -1c
+.RI "struct \fBcydui::dimensions::component_dimensions_t\fP"
+.br
+.in -1c
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBcydui\fP"
+.br
+.ti -1c
+.RI "namespace \fBcydui::dimensions\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDIMENSION_OPERATOR_H\fP(OP)"
+.br
+.ti -1c
+.RI "#define \fBDIMENSION_REL_OPERATOR_H\fP(OP)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef int \fBcydui::dimensions::dimension_value_t\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator+\fP (const \fBdimension_t\fP &dim, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator+\fP (const \fBdimension_t\fP &dim, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator+\fP (\fBdimension_value_t\fP value, \fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator+\fP (const \fBdimension_t\fP &dim, const \fBdimensional_relation_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator\-\fP (const \fBdimension_t\fP &dim, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator\-\fP (const \fBdimension_t\fP &dim, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator\-\fP (\fBdimension_value_t\fP value, \fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator\-\fP (const \fBdimension_t\fP &dim, const \fBdimensional_relation_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator*\fP (const \fBdimension_t\fP &dim, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator*\fP (const \fBdimension_t\fP &dim, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator*\fP (\fBdimension_value_t\fP value, \fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator*\fP (const \fBdimension_t\fP &dim, const \fBdimensional_relation_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator/\fP (const \fBdimension_t\fP &dim, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator/\fP (const \fBdimension_t\fP &dim, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator/\fP (\fBdimension_value_t\fP value, \fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator/\fP (const \fBdimension_t\fP &dim, const \fBdimensional_relation_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator%\fP (const \fBdimension_t\fP &dim, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator%\fP (const \fBdimension_t\fP &dim, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator%\fP (\fBdimension_value_t\fP value, \fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator%\fP (const \fBdimension_t\fP &dim, const \fBdimensional_relation_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator+\fP (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator+\fP (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator+\fP (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator+\fP (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator\-\fP (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator\-\fP (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator\-\fP (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator\-\fP (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator*\fP (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator*\fP (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator*\fP (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator*\fP (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator/\fP (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator/\fP (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator/\fP (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator/\fP (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator%\fP (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator%\fP (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator%\fP (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBcydui::dimensions::operator%\fP (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DIMENSION_OPERATOR_H(OP)"
+\fBValue:\fP.PP
+.nf
+  dimensional_relation_t operator OP( \\
+      const dimension_t& dim, dimension_t& value); \\
+  dimensional_relation_t operator OP( \\
+      const dimension_t& dim, dimension_value_t value); \\
+  dimensional_relation_t operator OP( \\
+      dimension_value_t value, dimension_t& dim);  \\
+  dimensional_relation_t operator OP( \\
+      const dimension_t& dim, const dimensional_relation_t& value);
+.fi
+
+.PP
+Definition at line \fB80\fP of file \fBdimensions\&.hpp\fP\&..PP
+.nf
+126                                   {
+127       dimension_t top = 0;
+128       dimension_t right = 0;
+129       dimension_t bottom = 0;
+130       dimension_t left = 0;
+131       
+132       four_sided_dimension_t &operator=(dimension_value_t val);
+133     };
+134     
+135     struct component_dimensions_t {
+136       dimension_t x = 0;
+137       dimension_t y = 0;
+138       dimension_t w = 0;
+139       dimension_t h = 0;
+140       
+141       bool given_w = false;
+142       bool given_h = false;
+143       
+144       dimension_t cx = 0;
+145       dimension_t cy = 0;
+146       dimension_t cw = 0;
+147       dimension_t ch = 0;
+148       
+149       four_sided_dimension_t margin;
+150       four_sided_dimension_t padding;
+151     };
+152 }// namespace cydui::dimensions
+153 
+154 
+155 #endif//CYD_UI_DIMENSIONS_HPP
+.fi
+
+.SS "#define DIMENSION_REL_OPERATOR_H(OP)"
+\fBValue:\fP.PP
+.nf
+  dimensional_relation_t operator OP(\\
+      const dimensional_relation_t r, dimension_t& value); \\
+  dimensional_relation_t operator OP(\\
+      const dimensional_relation_t r, dimension_value_t value); \\
+  dimensional_relation_t operator OP(\\
+      dimension_value_t value, dimensional_relation_t r);  \\
+  dimensional_relation_t operator OP(\\
+      const dimensional_relation_t r, const dimensional_relation_t value);
+.fi
+
+.PP
+Definition at line \fB103\fP of file \fBdimensions\&.hpp\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

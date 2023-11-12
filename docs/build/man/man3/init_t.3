@@ -1,0 +1,36 @@
+.TH "init_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+init_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <component_test\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "template<typename Func > \fBinit_t\fP (Func &&fun)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB79\fP of file \fBcomponent_test\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename Func > init_t::init_t (Func && fun)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line \fB81\fP of file \fBcomponent_test\&.h\fP\&..PP
+.nf
+81                               {
+82     fun();
+83   }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

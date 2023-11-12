@@ -1,0 +1,45 @@
+<map id="cydui::graphics::vg::attr_style_class&lt; E &gt;" name="cydui::graphics::vg::attr_style_class&lt; E &gt;">
+<area shape="rect" id="Node000001" title="class" alt="" coords="185,305,339,348"/>
+<area shape="rect" id="Node000003" href="$structcydui_1_1graphics_1_1vg_1_1attrs__core.html" title=" " alt="" coords="394,5,536,48"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="269,289,283,239,307,177,340,114,361,85,385,58,400,47,403,51,389,62,365,88,345,117,312,180,288,240,274,291"/>
+<area shape="rect" id="Node000005" href="$structcydui_1_1graphics_1_1vg_1_1attrs__core.html" title=" " alt="" coords="391,72,539,115"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="275,290,292,252,317,208,348,164,385,125,402,113,405,117,389,129,352,167,321,211,297,255,280,293"/>
+<area shape="rect" id="Node000007" href="$structcydui_1_1graphics_1_1vg_1_1attrs__core.html" title=" " alt="" coords="394,139,537,181"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="286,291,329,241,385,191,405,180,408,184,389,195,333,245,290,295"/>
+<area shape="rect" id="Node000009" href="$structcydui_1_1graphics_1_1vg_1_1attrs__core.html" title=" " alt="" coords="400,205,531,248"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="314,295,386,258,411,246,413,251,388,262,316,300"/>
+<area shape="rect" id="Node000011" href="$structcydui_1_1graphics_1_1vg_1_1attrs__core.html" title=" " alt="" coords="397,272,533,315"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="354,309,396,302,397,307,355,314"/>
+<area shape="rect" id="Node000013" href="$structcydui_1_1graphics_1_1vg_1_1attrs__core.html" title=" " alt="" coords="396,339,534,381"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="355,339,396,346,395,351,354,344"/>
+<area shape="rect" id="Node000015" href="$structcydui_1_1graphics_1_1vg_1_1attrs__core.html" title=" " alt="" coords="387,405,543,448"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="316,353,388,391,413,402,411,407,386,396,314,358"/>
+<area shape="rect" id="Node000017" href="$structcydui_1_1graphics_1_1vg_1_1attrs__core.html" title=" " alt="" coords="388,472,543,515"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="290,359,333,409,389,458,408,469,405,474,385,462,329,413,286,362"/>
+<area shape="rect" id="Node000019" href="$structcydui_1_1graphics_1_1vg_1_1attrs__core.html" title=" " alt="" coords="399,539,532,581"/>
+<area shape="poly" id="edge18_Node000001_Node000019" title=" " alt="" coords="280,361,297,398,321,442,352,486,389,525,405,536,402,540,385,529,348,489,317,445,292,401,275,363"/>
+<area shape="rect" id="Node000021" href="$structcydui_1_1graphics_1_1vg_1_1attrs__core.html" title=" " alt="" coords="399,605,532,648"/>
+<area shape="poly" id="edge20_Node000001_Node000021" title=" " alt="" coords="274,362,288,413,312,474,345,536,365,565,389,591,403,603,400,607,385,595,361,569,340,539,307,476,283,415,269,364"/>
+<area shape="rect" id="Node000002" href="$structcydui_1_1graphics_1_1vg_1_1attribute__i.html" title=" " alt="" coords="5,305,137,348"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,324,185,324,185,329,152,329"/>
+<area shape="rect" id="Node000004" href="$structcydui_1_1graphics_1_1vg_1_1circle.html" title=" " alt="" coords="591,5,723,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="552,24,591,24,591,29,552,29"/>
+<area shape="rect" id="Node000006" href="$structcydui_1_1graphics_1_1vg_1_1ellipse.html" title=" " alt="" coords="591,72,723,115"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="555,91,591,91,591,96,555,96"/>
+<area shape="rect" id="Node000008" href="$structcydui_1_1graphics_1_1vg_1_1group.html" title=" " alt="" coords="591,139,723,181"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="553,157,591,157,591,163,553,163"/>
+<area shape="rect" id="Node000010" href="$structcydui_1_1graphics_1_1vg_1_1line.html" title=" " alt="" coords="591,205,723,248"/>
+<area shape="poly" id="edge9_Node000009_Node000010" title=" " alt="" coords="546,224,591,224,591,229,546,229"/>
+<area shape="rect" id="Node000012" href="$structcydui_1_1graphics_1_1vg_1_1path.html" title=" " alt="" coords="591,272,723,315"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="549,291,591,291,591,296,549,296"/>
+<area shape="rect" id="Node000014" href="$structcydui_1_1graphics_1_1vg_1_1pixel.html" title=" " alt="" coords="591,339,723,381"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="550,357,591,357,591,363,550,363"/>
+<area shape="rect" id="Node000016" href="$structcydui_1_1graphics_1_1vg_1_1polygon.html" title=" " alt="" coords="591,405,723,448"/>
+<area shape="poly" id="edge15_Node000015_Node000016" title=" " alt="" coords="559,424,591,424,591,429,559,429"/>
+<area shape="rect" id="Node000018" href="$structcydui_1_1graphics_1_1vg_1_1polyline.html" title=" " alt="" coords="591,472,723,515"/>
+<area shape="poly" id="edge17_Node000017_Node000018" title=" " alt="" coords="559,491,591,491,591,496,559,496"/>
+<area shape="rect" id="Node000020" href="$structcydui_1_1graphics_1_1vg_1_1rect.html" title=" " alt="" coords="591,539,723,581"/>
+<area shape="poly" id="edge19_Node000019_Node000020" title=" " alt="" coords="547,557,591,557,591,563,547,563"/>
+<area shape="rect" id="Node000022" href="$structcydui_1_1graphics_1_1vg_1_1text.html" title=" " alt="" coords="591,605,723,648"/>
+<area shape="poly" id="edge21_Node000021_Node000022" title=" " alt="" coords="547,624,591,624,591,629,547,629"/>
+</map>
