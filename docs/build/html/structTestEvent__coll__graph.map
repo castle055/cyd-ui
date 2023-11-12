@@ -1,0 +1,9 @@
+<map id="TestEvent" name="TestEvent">
+<area shape="rect" id="Node000001" title=" " alt="" coords="37,279,118,305"/>
+<area shape="rect" id="Node000002" href="$structTestEvent_1_1DataType.html" title=" " alt="" coords="5,188,150,215"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="80,230,80,278,75,278,75,230"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="38,97,117,124"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="80,140,80,187,75,187,75,140"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="15,5,140,48"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="80,64,80,97,75,97,75,64"/>
+</map>

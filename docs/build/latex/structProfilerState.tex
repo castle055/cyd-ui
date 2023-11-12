@@ -1,0 +1,123 @@
+\doxysection{Profiler\+State Struct Reference}
+\hypertarget{structProfilerState}{}\label{structProfilerState}\index{ProfilerState@{ProfilerState}}
+
+
+{\ttfamily \#include $<$Profiler.\+h$>$}
+
+
+
+Inheritance diagram for Profiler\+State\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=185pt]{structProfilerState__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Profiler\+State\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structProfilerState__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structProfilerState_ab97f27908826c18e9be569756771c1f4}{Profiler\+State}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{cydui\+::components\+::\+Component\+State}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ae267829320111f7e5ceb6ba99e0ea188}{Component\+State}} ()
+\item 
+void \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a8838a467d5497085e521439078d5c2c8}{dirty}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespaceprof_a2a9caf65a453a1e71532f1607f921353}{prof\+::time\+\_\+point}} \mbox{\hyperlink{structProfilerState_aeed5c6bef1f42324cf04c93c3c741143}{now}} = prof\+::\+PROFILING\+\_\+\+CLOCK\+::now()
+\item 
+double \mbox{\hyperlink{structProfilerState_acfb427e6224187bc674018971b01fee3}{time\+\_\+scale}} = 1.\+0 / 10000.\+0
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{cydui\+::components\+::\+Component\+State}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a5d0930964bfeedc40efa3252616fd30b}{component\+\_\+instance}}
+\item 
+bool \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_afb85581e30fcd8df24b42ad1ebab63c8}{stateless\+\_\+comp}} = false
+\item 
+bool \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a29ea4e3fb804ec962d77efd10797092f}{focused}} = false
+\item 
+bool \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_aeaf2fdda83362fd3025bb11c6a675479}{\+\_\+dirty}} = false
+\item 
+\mbox{\hyperlink{classnullable}{nullable}}$<$ \mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a22663d9fb3a8d0e2df27f2fba6fc9b6f}{win}}
+\item 
+std\+::pair$<$ int, int $>$ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ac9bf8be7d17680309d9535bf5f02942e}{sub\+\_\+render\+\_\+event\+\_\+offset}} = \{0, 0\}
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1component__dimensions__t}{cydui\+::dimensions\+::component\+\_\+dimensions\+\_\+t}} \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ad453aee15d64390717f849206677733b}{dim}}
+\item 
+\mbox{\hyperlink{classcydui_1_1components_1_1ComponentBorder}{Component\+Border}} \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_af15028c12e647be4958ed1f6df942161}{border}}
+\item 
+\mbox{\hyperlink{classChildrenStateCollection}{Children\+State\+Collection}} \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_af26fe10a9d4a93c3516682eb07457fc3}{children}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structcydui_1_1drag__n__drop_1_1draggable__source__t}{drag\+\_\+n\+\_\+drop\+::draggable\+\_\+source\+\_\+t}} $>$ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_ad3df77236459573c0dc6042714e938b2}{draggable\+\_\+sources}} = \{\}
+\item 
+\mbox{\hyperlink{structcydui_1_1drag__n__drop_1_1dragging__context__t}{drag\+\_\+n\+\_\+drop\+::dragging\+\_\+context\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState_a7b28b1a66b65a0a283a177516c5bdc00}{dragging\+\_\+context}} = nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{Profiler_8h_source_l00012}{12}} of file \mbox{\hyperlink{Profiler_8h_source}{Profiler.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structProfilerState_ab97f27908826c18e9be569756771c1f4}\label{structProfilerState_ab97f27908826c18e9be569756771c1f4} 
+\index{ProfilerState@{ProfilerState}!ProfilerState@{ProfilerState}}
+\index{ProfilerState@{ProfilerState}!ProfilerState@{ProfilerState}}
+\doxysubsubsection{\texorpdfstring{ProfilerState()}{ProfilerState()}}
+{\footnotesize\ttfamily Profiler\+State\+::\+Profiler\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{Profiler_8h_source_l00016}{16}} of file \mbox{\hyperlink{Profiler_8h_source}{Profiler.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00017\ \ \ }
+\DoxyCodeLine{00018\ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structProfilerState_aeed5c6bef1f42324cf04c93c3c741143}\label{structProfilerState_aeed5c6bef1f42324cf04c93c3c741143} 
+\index{ProfilerState@{ProfilerState}!now@{now}}
+\index{now@{now}!ProfilerState@{ProfilerState}}
+\doxysubsubsection{\texorpdfstring{now}{now}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceprof_a2a9caf65a453a1e71532f1607f921353}{prof\+::time\+\_\+point}} Profiler\+State\+::now = prof\+::\+PROFILING\+\_\+\+CLOCK\+::now()}
+
+
+
+Definition at line \mbox{\hyperlink{Profiler_8h_source_l00013}{13}} of file \mbox{\hyperlink{Profiler_8h_source}{Profiler.\+h}}.
+
+\Hypertarget{structProfilerState_acfb427e6224187bc674018971b01fee3}\label{structProfilerState_acfb427e6224187bc674018971b01fee3} 
+\index{ProfilerState@{ProfilerState}!time\_scale@{time\_scale}}
+\index{time\_scale@{time\_scale}!ProfilerState@{ProfilerState}}
+\doxysubsubsection{\texorpdfstring{time\_scale}{time\_scale}}
+{\footnotesize\ttfamily double Profiler\+State\+::time\+\_\+scale = 1.\+0 / 10000.\+0}
+
+
+
+Definition at line \mbox{\hyperlink{Profiler_8h_source_l00014}{14}} of file \mbox{\hyperlink{Profiler_8h_source}{Profiler.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/tools/profiler/\mbox{\hyperlink{Profiler_8h}{Profiler.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,234 @@
+.TH "include/events/cydui_events.h" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/events/cydui_events.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'change_events\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBRedrawEvent\fP"
+.br
+.ti -1c
+.RI "struct \fBRedrawEvent::DataType\fP"
+.br
+.ti -1c
+.RI "struct \fBButtonEvent\fP"
+.br
+.ti -1c
+.RI "struct \fBButtonEvent::DataType\fP"
+.br
+.ti -1c
+.RI "struct \fBScrollEvent\fP"
+.br
+.ti -1c
+.RI "struct \fBScrollEvent::DataType\fP"
+.br
+.ti -1c
+.RI "struct \fBMotionEvent\fP"
+.br
+.ti -1c
+.RI "struct \fBMotionEvent::DataType\fP"
+.br
+.ti -1c
+.RI "struct \fBResizeEvent\fP"
+.br
+.ti -1c
+.RI "struct \fBResizeEvent::DataType\fP"
+.br
+.ti -1c
+.RI "struct \fBKeyEvent\fP"
+.br
+.ti -1c
+.RI "struct \fBKeyEvent::DataType\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum class \fBButton\fP { \fBPRIMARY\fP = 1, \fBSECONDARY\fP = 2, \fBWHEEL\fP = 3, \fBBUTTON1\fP = PRIMARY, \fBBUTTON2\fP = SECONDARY, \fBBUTTON3\fP = WHEEL }"
+.br
+.ti -1c
+.RI "enum class \fBKey\fP { \fBUNKNOWN\fP, \fBA\fP, \fBB\fP, \fBC\fP, \fBD\fP, \fBE\fP, \fBF\fP, \fBG\fP, \fBH\fP, \fBI\fP, \fBJ\fP, \fBK\fP, \fBL\fP, \fBM\fP, \fBN\fP, \fBO\fP, \fBP\fP, \fBQ\fP, \fBR\fP, \fBS\fP, \fBT\fP, \fBU\fP, \fBV\fP, \fBW\fP, \fBX\fP, \fBY\fP, \fBZ\fP, \fBSPACE\fP, \fBENTER\fP, \fBBACKSPACE\fP, \fBDELETE\fP, \fBESC\fP, \fBLEFT\fP, \fBRIGHT\fP, \fBUP\fP, \fBDOWN\fP, \fBLEFT_CTRL\fP, \fBRIGHT_CTRL\fP, \fBLEFT_SHIFT\fP, \fBRIGHT_SHIFT\fP, \fBLEFT_SUPER\fP, \fBRIGHT_SUPER\fP }"
+.br
+.in -1c
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum class \fBButton\fP\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIPRIMARY \fP\fP
+.TP
+\fB\fISECONDARY \fP\fP
+.TP
+\fB\fIWHEEL \fP\fP
+.TP
+\fB\fIBUTTON1 \fP\fP
+.TP
+\fB\fIBUTTON2 \fP\fP
+.TP
+\fB\fIBUTTON3 \fP\fP
+.PP
+Definition at line \fB47\fP of file \fBcydui_events\&.h\fP\&..PP
+.nf
+47                   {
+48   PRIMARY = 1,
+49   SECONDARY = 2,
+50   WHEEL = 3,
+51   BUTTON1 = PRIMARY,
+52   BUTTON2 = SECONDARY,
+53   BUTTON3 = WHEEL,
+54 };
+.fi
+
+.SS "enum class \fBKey\fP\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIUNKNOWN \fP\fP
+.TP
+\fB\fIA \fP\fP
+.TP
+\fB\fIB \fP\fP
+.TP
+\fB\fIC \fP\fP
+.TP
+\fB\fID \fP\fP
+.TP
+\fB\fIE \fP\fP
+.TP
+\fB\fIF \fP\fP
+.TP
+\fB\fIG \fP\fP
+.TP
+\fB\fIH \fP\fP
+.TP
+\fB\fII \fP\fP
+.TP
+\fB\fIJ \fP\fP
+.TP
+\fB\fIK \fP\fP
+.TP
+\fB\fIL \fP\fP
+.TP
+\fB\fIM \fP\fP
+.TP
+\fB\fIN \fP\fP
+.TP
+\fB\fIO \fP\fP
+.TP
+\fB\fIP \fP\fP
+.TP
+\fB\fIQ \fP\fP
+.TP
+\fB\fIR \fP\fP
+.TP
+\fB\fIS \fP\fP
+.TP
+\fB\fIT \fP\fP
+.TP
+\fB\fIU \fP\fP
+.TP
+\fB\fIV \fP\fP
+.TP
+\fB\fIW \fP\fP
+.TP
+\fB\fIX \fP\fP
+.TP
+\fB\fIY \fP\fP
+.TP
+\fB\fIZ \fP\fP
+.TP
+\fB\fISPACE \fP\fP
+.TP
+\fB\fIENTER \fP\fP
+.TP
+\fB\fIBACKSPACE \fP\fP
+.TP
+\fB\fIDELETE \fP\fP
+.TP
+\fB\fIESC \fP\fP
+.TP
+\fB\fILEFT \fP\fP
+.TP
+\fB\fIRIGHT \fP\fP
+.TP
+\fB\fIUP \fP\fP
+.TP
+\fB\fIDOWN \fP\fP
+.TP
+\fB\fILEFT_CTRL \fP\fP
+.TP
+\fB\fIRIGHT_CTRL \fP\fP
+.TP
+\fB\fILEFT_SHIFT \fP\fP
+.TP
+\fB\fIRIGHT_SHIFT \fP\fP
+.TP
+\fB\fILEFT_SUPER \fP\fP
+.TP
+\fB\fIRIGHT_SUPER \fP\fP
+.PP
+Definition at line \fB56\fP of file \fBcydui_events\&.h\fP\&..PP
+.nf
+56                {
+57   UNKNOWN,
+58   A,
+59   B,
+60   C,
+61   D,
+62   E,
+63   F,
+64   G,
+65   H,
+66   I,
+67   J,
+68   K,
+69   L,
+70   M,
+71   N,
+72   O,
+73   P,
+74   Q,
+75   R,
+76   S,
+77   T,
+78   U,
+79   V,
+80   W,
+81   X,
+82   Y,
+83   Z,
+84   SPACE,
+85   ENTER,
+86   BACKSPACE,
+87   DELETE,
+88   ESC,
+89   LEFT,
+90   RIGHT,
+91   UP,
+92   DOWN,
+93   LEFT_CTRL,
+94   RIGHT_CTRL,
+95   LEFT_SHIFT,
+96   RIGHT_SHIFT,
+97   LEFT_SUPER,
+98   RIGHT_SUPER,
+99 };
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

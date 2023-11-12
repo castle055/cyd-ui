@@ -1,0 +1,34 @@
+\doxysection{template\+\_\+str\+\_\+buffer.\+h}
+\hypertarget{template__str__buffer_8h_source}{}\label{template__str__buffer_8h_source}\index{include/cydstd/template\_str\_buffer.h@{include/cydstd/template\_str\_buffer.h}}
+\mbox{\hyperlink{template__str__buffer_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 6/17/23.}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ CYD\_UI\_TEMPLATE\_STR\_BUFFER\_H}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00006}00006\ \textcolor{preprocessor}{\#define\ CYD\_UI\_TEMPLATE\_STR\_BUFFER\_H}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00021}00021\ \textcolor{keyword}{template}<std::\textcolor{keywordtype}{size\_t}\ length>}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00022}\mbox{\hyperlink{structtemplate__str__buffer}{00022}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structtemplate__str__buffer}{template\_str\_buffer}}\ \{}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00023}00023\ \textcolor{preprocessor}{\#pragma\ clang\ diagnostic\ push}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00024}00024\ \textcolor{preprocessor}{\#pragma\ ide\ diagnostic\ ignored\ "{}google-\/explicit-\/constructor"{}}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00025}00025\ \ \ }
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00026}00026\ \ \ \textcolor{comment}{//\ Needs\ to\ be\ implicit\ if\ it's\ to\ work\ with\ literal\ operators}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00027}\mbox{\hyperlink{structtemplate__str__buffer_a98274c86919055242f50bc414af48231}{00027}}\ \ \ \textcolor{keyword}{consteval}\ \mbox{\hyperlink{structtemplate__str__buffer_a98274c86919055242f50bc414af48231}{template\_str\_buffer}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}(\&str)[length])\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00028}00028\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::size\_t\ i\ =\ 0;\ i\ <\ length;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00029}00029\ \ \ \ \ \ \ \mbox{\hyperlink{structtemplate__str__buffer_abb56fbf2da63c33fc3897cff0ad6e9bd}{data}}[i]\ =\ str[i];}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00030}00030\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00031}00031\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00033}00033\ \textcolor{preprocessor}{\#pragma\ clang\ diagnostic\ pop}}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00034}00034\ \ \ }
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00035}\mbox{\hyperlink{structtemplate__str__buffer_abb56fbf2da63c33fc3897cff0ad6e9bd}{00035}}\ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{structtemplate__str__buffer_abb56fbf2da63c33fc3897cff0ad6e9bd}{data}}[length]\ =\ \{0\};}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00036}\mbox{\hyperlink{structtemplate__str__buffer_afe9dbedb60bf851441a3638922ee0010}{00036}}\ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{structtemplate__str__buffer_afe9dbedb60bf851441a3638922ee0010}{count}}\ =\ length\ -\/\ \textcolor{keyword}{sizeof}(char);}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00037}00037\ \};}
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{template__str__buffer_8h_source_l00039}00039\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_TEMPLATE\_STR\_BUFFER\_H}}
+
+\end{DoxyCode}

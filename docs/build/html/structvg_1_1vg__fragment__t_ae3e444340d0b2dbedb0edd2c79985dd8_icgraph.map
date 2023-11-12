@@ -1,0 +1,10 @@
+<map id="vg::vg_fragment_t::empty" name="vg::vg_fragment_t::empty">
+<area shape="rect" id="Node000001" title=" " alt="" coords="579,37,714,80"/>
+<area shape="rect" id="Node000002" href="$classcydui_1_1compositing_1_1LayoutCompositor.html#a04edfbdbc1b9d60bbbf342a3fcb9182c" title=" " alt="" coords="388,29,531,88"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="563,61,532,61,532,56,563,56"/>
+<area shape="poly" id="edge4_Node000002_Node000002" title=" " alt="" coords="489,17,478,10,460,8,444,10,433,14,428,21,428,29,422,29,423,19,430,10,442,5,460,3,479,5,492,12"/>
+<area shape="rect" id="Node000003" href="$classcydui_1_1compositing_1_1LayoutCompositor.html#a6963756199e05569cf36f7ce8cd896fd" title=" " alt="" coords="197,29,340,88"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="372,61,340,61,340,56,372,56"/>
+<area shape="rect" id="Node000004" href="$classcydui_1_1compositing_1_1LayoutCompositor.html#a292f229815bc05bbcf95cf3f2e90877b" title=" " alt="" coords="5,29,149,88"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="181,61,149,61,149,56,181,56"/>
+</map>

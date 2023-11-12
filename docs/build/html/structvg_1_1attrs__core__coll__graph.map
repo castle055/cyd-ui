@@ -1,0 +1,23 @@
+<map id="vg::attrs_core&lt; T &gt;" name="vg::attrs_core&lt; T &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="870,80,1003,107"/>
+<area shape="rect" id="Node000002" href="$structvg_1_1attr__id.html" title=" " alt="" coords="683,5,793,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="802,35,822,42,907,77,904,82,820,46,801,40"/>
+<area shape="rect" id="Node000003" href="$structvg_1_1attribute__i.html" title=" " alt="" coords="397,77,497,104"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="511,71,553,60,681,29,683,34,554,65,513,76"/>
+<area shape="rect" id="Node000006" href="$structvg_1_1attr__style__class.html" title=" " alt="" coords="655,157,821,184"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="512,106,687,154,686,159,511,111"/>
+<area shape="rect" id="Node000008" href="$structvg_1_1attr__hidden.html" title=" " alt="" coords="669,107,807,133"/>
+<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="513,95,669,110,668,116,512,100"/>
+<area shape="rect" id="Node000009" href="$structvg_1_1attr__opacity.html" title=" " alt="" coords="667,56,809,83"/>
+<area shape="poly" id="edge12_Node000009_Node000003" title=" " alt="" coords="512,83,666,72,666,77,512,89"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="180,56,259,83"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="275,61,553,33,682,21,682,26,554,39,275,66"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="364,153,530,180"/>
+<area shape="poly" id="edge8_Node000007_Node000004" title=" " alt="" coords="268,87,415,150,412,155,266,92"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="5,48,131,91"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="146,67,179,67,179,72,146,72"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="802,149,820,143,906,105,909,110,822,148,803,154"/>
+<area shape="poly" id="edge7_Node000006_Node000007" title=" " alt="" coords="545,175,554,176,654,175,654,180,554,181,545,181"/>
+<area shape="poly" id="edge9_Node000001_Node000008" title=" " alt="" coords="822,106,870,100,870,105,823,111"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="825,77,870,83,870,88,824,82"/>
+</map>

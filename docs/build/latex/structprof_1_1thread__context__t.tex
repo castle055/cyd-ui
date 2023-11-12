@@ -1,0 +1,111 @@
+\doxysection{prof\+::thread\+\_\+context\+\_\+t Struct Reference}
+\hypertarget{structprof_1_1thread__context__t}{}\label{structprof_1_1thread__context__t}\index{prof::thread\_context\_t@{prof::thread\_context\_t}}
+
+
+{\ttfamily \#include $<$profiling.\+h$>$}
+
+
+
+Collaboration diagram for prof\+::thread\+\_\+context\+\_\+t\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=205pt]{structprof_1_1thread__context__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structprof_1_1thread__context__t_a244b0045abb03d555c9c45a11c0aa7ea}{add\+\_\+event}} (\mbox{\hyperlink{structprof_1_1event__t}{event\+\_\+t}} ev)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{structprof_1_1thread__context__t_a880fba1c27cfa01b65bca4689c5eab93}{name}} \mbox{[}\mbox{\hyperlink{namespaceprof_a491d7d71df090852666b543a979cc77d}{PROFILING\+\_\+\+THREAD\+\_\+\+NAME\+\_\+\+SIZE}}\mbox{]} \{\}
+\item 
+\mbox{\hyperlink{namespaceprof_a834539a76e5545901863a6b773fb8d64}{thread\+\_\+timeline\+\_\+t}} \mbox{\hyperlink{structprof_1_1thread__context__t_a8fef1e3f7f284777c674d8ea29389c32}{timeline}} \{\}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::size\+\_\+t \mbox{\hyperlink{structprof_1_1thread__context__t_ab219650937e7e3608ee71b5bdb89d5db}{insert\+\_\+index}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00051}{51}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structprof_1_1thread__context__t_a244b0045abb03d555c9c45a11c0aa7ea}\label{structprof_1_1thread__context__t_a244b0045abb03d555c9c45a11c0aa7ea} 
+\index{prof::thread\_context\_t@{prof::thread\_context\_t}!add\_event@{add\_event}}
+\index{add\_event@{add\_event}!prof::thread\_context\_t@{prof::thread\_context\_t}}
+\doxysubsubsection{\texorpdfstring{add\_event()}{add\_event()}}
+{\footnotesize\ttfamily void prof\+::thread\+\_\+context\+\_\+t\+::add\+\_\+event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structprof_1_1event__t}{event\+\_\+t}}}]{ev }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00054}{54}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structprof_1_1thread__context__t_a8fef1e3f7f284777c674d8ea29389c32}{timeline}}[\mbox{\hyperlink{structprof_1_1thread__context__t_ab219650937e7e3608ee71b5bdb89d5db}{insert\_index}}]\ =\ ev;}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structprof_1_1thread__context__t_ab219650937e7e3608ee71b5bdb89d5db}{insert\_index}}\ =\ \mbox{\hyperlink{structprof_1_1thread__context__t_ab219650937e7e3608ee71b5bdb89d5db}{insert\_index}}\ +\ 1;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structprof_1_1thread__context__t_ab219650937e7e3608ee71b5bdb89d5db}{insert\_index}}\ >=\ \mbox{\hyperlink{namespaceprof_a69706c94d0693e53fed29cd292bff567}{PROFILING\_TIMELINE\_SIZE}})\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structprof_1_1thread__context__t_ab219650937e7e3608ee71b5bdb89d5db}{insert\_index}}\ =\ 0;}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structprof_1_1thread__context__t_ab219650937e7e3608ee71b5bdb89d5db}\label{structprof_1_1thread__context__t_ab219650937e7e3608ee71b5bdb89d5db} 
+\index{prof::thread\_context\_t@{prof::thread\_context\_t}!insert\_index@{insert\_index}}
+\index{insert\_index@{insert\_index}!prof::thread\_context\_t@{prof::thread\_context\_t}}
+\doxysubsubsection{\texorpdfstring{insert\_index}{insert\_index}}
+{\footnotesize\ttfamily std\+::size\+\_\+t prof\+::thread\+\_\+context\+\_\+t\+::insert\+\_\+index = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00065}{65}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+\Hypertarget{structprof_1_1thread__context__t_a880fba1c27cfa01b65bca4689c5eab93}\label{structprof_1_1thread__context__t_a880fba1c27cfa01b65bca4689c5eab93} 
+\index{prof::thread\_context\_t@{prof::thread\_context\_t}!name@{name}}
+\index{name@{name}!prof::thread\_context\_t@{prof::thread\_context\_t}}
+\doxysubsubsection{\texorpdfstring{name}{name}}
+{\footnotesize\ttfamily char prof\+::thread\+\_\+context\+\_\+t\+::name\mbox{[}\mbox{\hyperlink{namespaceprof_a491d7d71df090852666b543a979cc77d}{PROFILING\+\_\+\+THREAD\+\_\+\+NAME\+\_\+\+SIZE}}\mbox{]} \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00052}{52}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052\ \{\};}
+
+\end{DoxyCode}
+\Hypertarget{structprof_1_1thread__context__t_a8fef1e3f7f284777c674d8ea29389c32}\label{structprof_1_1thread__context__t_a8fef1e3f7f284777c674d8ea29389c32} 
+\index{prof::thread\_context\_t@{prof::thread\_context\_t}!timeline@{timeline}}
+\index{timeline@{timeline}!prof::thread\_context\_t@{prof::thread\_context\_t}}
+\doxysubsubsection{\texorpdfstring{timeline}{timeline}}
+{\footnotesize\ttfamily \mbox{\hyperlink{namespaceprof_a834539a76e5545901863a6b773fb8d64}{thread\+\_\+timeline\+\_\+t}} prof\+::thread\+\_\+context\+\_\+t\+::timeline \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00062}{62}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00062\ \{\};}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/cydstd/\mbox{\hyperlink{profiling_8h}{profiling.\+h}}\end{DoxyCompactItemize}

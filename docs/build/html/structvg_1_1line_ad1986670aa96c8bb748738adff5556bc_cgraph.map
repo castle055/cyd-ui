@@ -1,0 +1,7 @@
+<map id="vg::line::apply_to" name="vg::line::apply_to">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,47,126,73"/>
+<area shape="rect" id="Node000002" href="$structvg_1_1attrs__stroke.html#abf33eeee6c7f262277a3d9ac732b8861" title=" " alt="" coords="185,5,329,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="126,47,169,39,170,45,126,52"/>
+<area shape="rect" id="Node000003" href="$structvg_1_1attrs__stroke.html#a174502e4280dae89a4f9490fddb19178" title=" " alt="" coords="174,72,340,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="126,68,159,74,158,79,126,73"/>
+</map>

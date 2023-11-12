@@ -1,0 +1,147 @@
+\doxysection{cydui\+::component\+\_\+holder\+\_\+t Struct Reference}
+\hypertarget{structcydui_1_1component__holder__t}{}\label{structcydui_1_1component__holder__t}\index{cydui::component\_holder\_t@{cydui::component\_holder\_t}}
+
+
+{\ttfamily \#include $<$component\+\_\+holder.\+h$>$}
+
+
+
+Collaboration diagram for cydui\+::component\+\_\+holder\+\_\+t\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structcydui_1_1component__holder__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$Component\+Concept C$>$ }\\\mbox{\hyperlink{structcydui_1_1component__holder__t_a588e104bf0235c2cd6549e7233d2e156}{component\+\_\+holder\+\_\+t}} (\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257}{C}} \&\&comp)
+\item 
+{\footnotesize template$<$Component\+Concept C$>$ }\\\mbox{\hyperlink{structcydui_1_1component__holder__t_a7415ac0bdf9acf1ddcde070612a21b87}{component\+\_\+holder\+\_\+t}} (\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257}{C}} \&comp)
+\item 
+{\footnotesize template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ }\\\mbox{\hyperlink{structcydui_1_1component__holder__t_afb168c9d5b0622ad6b37c74d26603d8f}{component\+\_\+holder\+\_\+t}} (\mbox{\hyperlink{structwith}{with}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \&\+\_\+with)
+\item 
+const auto \& \mbox{\hyperlink{structcydui_1_1component__holder__t_a6d77096e8897adacc0ef7ead3a88dae8}{get\+\_\+components}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{structcydui_1_1component__base__t}{component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1component__holder__t_a8a31002965fbf428b29ac63475e45d90}{components}} \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{component__holder_8h_source_l00011}{11}} of file \mbox{\hyperlink{component__holder_8h_source}{component\+\_\+holder.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structcydui_1_1component__holder__t_a588e104bf0235c2cd6549e7233d2e156}\label{structcydui_1_1component__holder__t_a588e104bf0235c2cd6549e7233d2e156} 
+\index{cydui::component\_holder\_t@{cydui::component\_holder\_t}!component\_holder\_t@{component\_holder\_t}}
+\index{component\_holder\_t@{component\_holder\_t}!cydui::component\_holder\_t@{cydui::component\_holder\_t}}
+\doxysubsubsection{\texorpdfstring{component\_holder\_t()}{component\_holder\_t()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily template$<$Component\+Concept C$>$ \\
+cydui\+::component\+\_\+holder\+\_\+t\+::component\+\_\+holder\+\_\+t (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257}{C}} \&\&}]{comp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{component__holder_8h_source_l00013}{13}} of file \mbox{\hyperlink{component__holder_8h_source}{component\+\_\+holder.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1component__holder__t_a8a31002965fbf428b29ac63475e45d90}{components}}[\textcolor{stringliteral}{"{}"{}}]\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257}{C}}\ \{comp\};}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1component__holder__t_a7415ac0bdf9acf1ddcde070612a21b87}\label{structcydui_1_1component__holder__t_a7415ac0bdf9acf1ddcde070612a21b87} 
+\index{cydui::component\_holder\_t@{cydui::component\_holder\_t}!component\_holder\_t@{component\_holder\_t}}
+\index{component\_holder\_t@{component\_holder\_t}!cydui::component\_holder\_t@{cydui::component\_holder\_t}}
+\doxysubsubsection{\texorpdfstring{component\_holder\_t()}{component\_holder\_t()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily template$<$Component\+Concept C$>$ \\
+cydui\+::component\+\_\+holder\+\_\+t\+::component\+\_\+holder\+\_\+t (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257}{C}} \&}]{comp }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{component__holder_8h_source_l00018}{18}} of file \mbox{\hyperlink{component__holder_8h_source}{component\+\_\+holder.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1component__holder__t_a8a31002965fbf428b29ac63475e45d90}{components}}[\textcolor{stringliteral}{"{}"{}}]\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a0d61f8370cad1d412f80b84d143e1257}{C}}\ \{comp\};}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1component__holder__t_afb168c9d5b0622ad6b37c74d26603d8f}\label{structcydui_1_1component__holder__t_afb168c9d5b0622ad6b37c74d26603d8f} 
+\index{cydui::component\_holder\_t@{cydui::component\_holder\_t}!component\_holder\_t@{component\_holder\_t}}
+\index{component\_holder\_t@{component\_holder\_t}!cydui::component\_holder\_t@{cydui::component\_holder\_t}}
+\doxysubsubsection{\texorpdfstring{component\_holder\_t()}{component\_holder\_t()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \\
+cydui\+::component\+\_\+holder\+\_\+t\+::component\+\_\+holder\+\_\+t (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structwith}{with}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \&}]{\+\_\+with }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{component__holder_8h_source_l00023}{23}} of file \mbox{\hyperlink{component__holder_8h_source}{component\+\_\+holder.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&item:\ \_with.get\_selection())\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1component__holder__t_a8a31002965fbf428b29ac63475e45d90}{components}}[item.first]\ =\ item.second;}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structcydui_1_1component__holder__t_afb168c9d5b0622ad6b37c74d26603d8f_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcydui_1_1component__holder__t_a6d77096e8897adacc0ef7ead3a88dae8}\label{structcydui_1_1component__holder__t_a6d77096e8897adacc0ef7ead3a88dae8} 
+\index{cydui::component\_holder\_t@{cydui::component\_holder\_t}!get\_components@{get\_components}}
+\index{get\_components@{get\_components}!cydui::component\_holder\_t@{cydui::component\_holder\_t}}
+\doxysubsubsection{\texorpdfstring{get\_components()}{get\_components()}}
+{\footnotesize\ttfamily const auto \& cydui\+::component\+\_\+holder\+\_\+t\+::get\+\_\+components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{component__holder_8h_source_l00029}{29}} of file \mbox{\hyperlink{component__holder_8h_source}{component\+\_\+holder.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structcydui_1_1component__holder__t_a8a31002965fbf428b29ac63475e45d90}{components}};}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structcydui_1_1component__holder__t_a8a31002965fbf428b29ac63475e45d90}\label{structcydui_1_1component__holder__t_a8a31002965fbf428b29ac63475e45d90} 
+\index{cydui::component\_holder\_t@{cydui::component\_holder\_t}!components@{components}}
+\index{components@{components}!cydui::component\_holder\_t@{cydui::component\_holder\_t}}
+\doxysubsubsection{\texorpdfstring{components}{components}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{structcydui_1_1component__base__t}{component\+\_\+base\+\_\+t}}\texorpdfstring{$\ast$}{*}$>$ cydui\+::component\+\_\+holder\+\_\+t\+::components \{\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{component__holder_8h_source_l00033}{33}} of file \mbox{\hyperlink{component__holder_8h_source}{component\+\_\+holder.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033\ \{\};}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/core/\mbox{\hyperlink{component__holder_8h}{component\+\_\+holder.\+h}}\end{DoxyCompactItemize}

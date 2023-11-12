@@ -1,0 +1,77 @@
+.TH "prof::context_t::scope_event_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+prof::context_t::scope_event_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <profiling\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBscope_event_t\fP (\fBcontext_t\fP *\fBctx\fP, const char *ev_desc)"
+.br
+.ti -1c
+.RI "\fB~scope_event_t\fP ()"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBcontext_t\fP * \fBctx\fP"
+.br
+.ti -1c
+.RI "\fBevent_t\fP \fBev\fP {}"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB95\fP of file \fBprofiling\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "prof::context_t::scope_event_t::scope_event_t (\fBcontext_t\fP * ctx, const char * ev_desc)\fC [inline]\fP"
+
+.PP
+Definition at line \fB96\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+99          : ctx(ctx) {
+100           ev\&.description = ev_desc;
+101           ev\&.mark_start();
+102         }
+.fi
+
+.SS "prof::context_t::scope_event_t::~scope_event_t ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB104\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+104                          {
+105           ev\&.mark_end();
+106           auto id = std::this_thread::get_id();
+107           std::shared_lock lk {ctx\->mtx};
+108           ctx\->threads[id]\&.add_event(ev);
+109         }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBcontext_t\fP* prof::context_t::scope_event_t::ctx\fC [private]\fP"
+
+.PP
+Definition at line \fB112\fP of file \fBprofiling\&.h\fP\&.
+.SS "\fBevent_t\fP prof::context_t::scope_event_t::ev {}\fC [private]\fP"
+
+.PP
+Definition at line \fB113\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+113 {};
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

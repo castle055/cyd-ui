@@ -1,0 +1,35 @@
+<map id="vg::attr_stroke_miterlimit&lt; E &gt;" name="vg::attr_stroke_miterlimit&lt; E &gt;">
+<area shape="rect" id="Node000001" title="stroke&#45;miterlimit" alt="" coords="154,208,352,235"/>
+<area shape="rect" id="Node000003" href="$structvg_1_1attrs__stroke.html" title=" " alt="" coords="407,31,574,57"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="277,195,331,146,398,92,460,56,463,60,402,97,335,150,281,199"/>
+<area shape="rect" id="Node000005" href="$structvg_1_1attrs__stroke.html" title=" " alt="" coords="404,107,577,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="289,198,340,170,399,143,433,131,434,136,401,148,343,175,292,202"/>
+<area shape="rect" id="Node000008" href="$structvg_1_1attrs__stroke.html" title=" " alt="" coords="413,157,569,184"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="333,202,424,182,425,187,334,207"/>
+<area shape="rect" id="Node000010" href="$structvg_1_1attrs__stroke.html" title=" " alt="" coords="410,208,571,235"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="368,219,410,219,410,224,368,224"/>
+<area shape="rect" id="Node000012" href="$structvg_1_1attrs__stroke.html" title=" " alt="" coords="400,259,581,285"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="334,236,425,255,424,261,333,241"/>
+<area shape="rect" id="Node000014" href="$structvg_1_1attrs__stroke.html" title=" " alt="" coords="401,309,581,336"/>
+<area shape="poly" id="edge13_Node000001_Node000014" title=" " alt="" coords="292,240,343,268,401,295,434,306,433,311,399,300,340,273,289,245"/>
+<area shape="rect" id="Node000016" href="$structvg_1_1attrs__stroke.html" title=" " alt="" coords="412,360,570,387"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="278,244,331,296,365,323,401,346,428,357,426,362,399,350,362,327,328,300,274,248"/>
+<area shape="rect" id="Node000002" href="$structvg_1_1attribute__i.html" title=" " alt="" coords="5,208,106,235"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,219,153,219,153,224,121,224"/>
+<area shape="rect" id="Node000004" href="$structvg_1_1circle.html" title=" " alt="" coords="636,5,711,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="589,28,635,21,636,26,590,33"/>
+<area shape="rect" id="Node000006" href="$structvg_1_1ellipse.html" title=" " alt="" coords="633,56,714,83"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="556,99,632,78,634,83,557,104"/>
+<area shape="rect" id="Node000007" href="$structvg_1_1group.html" title=" " alt="" coords="636,107,711,133"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="593,117,635,117,635,123,593,123"/>
+<area shape="rect" id="Node000009" href="$structvg_1_1line.html" title=" " alt="" coords="642,157,705,184"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="584,168,641,168,641,173,584,173"/>
+<area shape="rect" id="Node000011" href="$structvg_1_1path.html" title=" " alt="" coords="639,208,708,235"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="587,219,639,219,639,224,587,224"/>
+<area shape="rect" id="Node000013" href="$structvg_1_1polygon.html" title=" " alt="" coords="629,259,718,285"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="597,269,629,269,629,275,597,275"/>
+<area shape="rect" id="Node000015" href="$structvg_1_1polyline.html" title=" " alt="" coords="630,309,717,336"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="596,320,629,320,629,325,596,325"/>
+<area shape="rect" id="Node000017" href="$structvg_1_1rect.html" title=" " alt="" coords="641,360,706,387"/>
+<area shape="poly" id="edge16_Node000016_Node000017" title=" " alt="" coords="586,371,640,371,640,376,586,376"/>
+</map>

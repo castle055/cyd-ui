@@ -1,0 +1,156 @@
+.TH "include/tools/tasks.h" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/tools/tasks.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&.\&./events/cydui_events\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBcydui::tasks::task_t\fP"
+.br
+.ti -1c
+.RI "struct \fBcydui::tasks::_timer_t\fP"
+.br
+.ti -1c
+.RI "struct \fBcydui::tasks::NoResult\fP"
+.br
+.ti -1c
+.RI "class \fBcydui::tasks::simple_task_w_result_t< A, R >\fP"
+.br
+.ti -1c
+.RI "class \fBcydui::tasks::simple_t< A >\fP"
+.br
+.ti -1c
+.RI "class \fBcydui::tasks::timer_t< T >\fP"
+.br
+.in -1c
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBcydui\fP"
+.br
+.ti -1c
+.RI "namespace \fBcydui::tasks\fP"
+.br
+.in -1c
+.SS "Concepts"
+
+.in +1c
+.ti -1c
+.RI "concept \fBcydui::tasks::TaskType\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSIMPLE_TASK_W_RESULT\fP(NAME,  ARGS,  RESULT,  BLOCK)"
+.br
+.ti -1c
+.RI "#define \fBTASK_W_RESULT\fP(NAME,  ARGS,  RESULT,  BLOCK)"
+.br
+.ti -1c
+.RI "#define \fBSIMPLE_TASK\fP(NAME,  ARGS,  BLOCK)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef unsigned long \fBcydui::tasks::task_id\fP"
+.br
+.ti -1c
+.RI "typedef unsigned long \fBcydui::tasks::timer_id\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBcydui::tasks::start_thd\fP ()"
+.br
+.ti -1c
+.RI "void \fBcydui::tasks::start\fP (\fBtask_t\fP *task)"
+.br
+.ti -1c
+.RI "void \fBcydui::tasks::start_timer\fP (\fB_timer_t\fP *timer)"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SIMPLE_TASK(NAME, ARGS, BLOCK)"
+\fBValue:\fP.PP
+.nf
+  struct NAME##Args ARGS; \\
+  class NAME: public cydui::tasks::simple_t<NAME##Args> { \\
+    logging::logger log {\&.name = #NAME }; \\
+  protected: \\
+    void main() override BLOCK \\
+  };
+.fi
+
+.PP
+Definition at line \fB106\fP of file \fBtasks\&.h\fP\&..PP
+.nf
+108             : public cydui::tasks::simple_t<NAME##Args> { \\
+109     logging::logger log {\&.name = #NAME }; \\
+110   protected: \\
+111     void main() override BLOCK \\
+112   };
+.fi
+
+.SS "#define SIMPLE_TASK_W_RESULT(NAME, ARGS, RESULT, BLOCK)"
+\fBValue:\fP.PP
+.nf
+  struct NAME##Args ARGS; \\
+  struct NAME##Result RESULT; \\
+  class NAME: public cydui::tasks::simple_task_w_result_t<NAME##Args, NAME##Result> { \\
+    logging::logger log {\&.name = #NAME }; \\
+  protected: \\
+    void main() override BLOCK \\
+  };
+.fi
+
+.PP
+Definition at line \fB51\fP of file \fBtasks\&.h\fP\&..PP
+.nf
+54             : public cydui::tasks::simple_task_w_result_t<NAME##Args, NAME##Result> { \\
+55     logging::logger log {\&.name = #NAME }; \\
+56   protected: \\
+57     void main() override BLOCK \\
+58   };
+.fi
+
+.SS "#define TASK_W_RESULT(NAME, ARGS, RESULT, BLOCK)"
+\fBValue:\fP.PP
+.nf
+  struct NAME##Args ARGS; \\
+  struct NAME##Result RESULT; \\
+  class NAME: public cydui::tasks::simple_task_w_result_t<NAME##Args, NAME##Result> { \\
+    logging::logger log {\&.name = #NAME }; \\
+  protected: \\
+    void main() override BLOCK                   \\
+  private:
+.fi
+
+.PP
+Definition at line \fB60\fP of file \fBtasks\&.h\fP\&..PP
+.nf
+63             : public cydui::tasks::simple_task_w_result_t<NAME##Args, NAME##Result> { \\
+64     logging::logger log {\&.name = #NAME }; \\
+65   protected: \\
+66     void main() override BLOCK                   \\
+67   private:
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

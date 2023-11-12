@@ -1,0 +1,79 @@
+.TH "vg::path" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vg::path
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <vg\&.h>\fP
+.PP
+Inherits \fBvg::vg_element_t\fP, attrs_core< path >, attrs_fill< path >, attrs_stroke< path >, and attr_path_str< path >\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBapply_to\fP (\fBpixelmap_editor_t\fP &editor) const override"
+.br
+.ti -1c
+.RI "\fBfootprint\fP \fBget_footprint\fP () const override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::vg_element_t\fP
+.in +1c
+.ti -1c
+.RI "void \fB_internal_set_origin\fP (int x, int y)"
+.br
+.ti -1c
+.RI "virtual \fB~vg_element_t\fP ()=default"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Public Attributes inherited from \fBvg::vg_element_t\fP
+.in +1c
+.ti -1c
+.RI "int \fBorigin_x\fP = 0"
+.br
+.ti -1c
+.RI "int \fBorigin_y\fP = 0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB250\fP of file \fBvg\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void vg::path::apply_to (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBvg::vg_element_t\fP\&.
+.PP
+Definition at line \fB256\fP of file \fBvg\&.h\fP\&..PP
+.nf
+256                                                               {
+257         apply_stroke(editor);
+258         apply_fill(editor);
+259         
+260       }
+.fi
+
+.SS "\fBfootprint\fP vg::path::get_footprint () const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBvg::vg_element_t\fP\&.
+.PP
+Definition at line \fB262\fP of file \fBvg\&.h\fP\&..PP
+.nf
+262                                                {
+263         return {};
+264       }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

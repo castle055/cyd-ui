@@ -1,0 +1,107 @@
+.TH "include/graphics/color.h" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/graphics/color.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <charconv>\fP
+.br
+\fC#include '\&.\&./cydstd/cydstd\&.h'\fP
+.br
+\fC#include '\&.\&./cydstd/template_str_buffer\&.h'\fP
+.br
+\fC#include '\&.\&./cydstd/assert\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcydui::graphics::color::Color\fP"
+.br
+.in -1c
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBcydui\fP"
+.br
+.ti -1c
+.RI "namespace \fBcydui::graphics\fP"
+.br
+.ti -1c
+.RI "namespace \fBcydui::graphics::color\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "template<\fBtemplate_str_buffer\fP data> consteval \fBcydui::graphics::color::Color\fP \fBoperator''_color\fP ()"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBColor\fP \fBcydui::graphics::color::White\fP = '#FFFFFF'_color"
+.br
+.ti -1c
+.RI "\fBColor\fP \fBcydui::graphics::color::Black\fP = '#000000'_color"
+.br
+.ti -1c
+.RI "\fBColor\fP \fBcydui::graphics::color::Red\fP = '#FF0000'_color"
+.br
+.ti -1c
+.RI "\fBColor\fP \fBcydui::graphics::color::Green\fP = '#00FF00'_color"
+.br
+.ti -1c
+.RI "\fBColor\fP \fBcydui::graphics::color::Blue\fP = '#0000FF'_color"
+.br
+.ti -1c
+.RI "\fBColor\fP \fBcydui::graphics::color::Transparent\fP = '#00000000'_color"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "template<\fBtemplate_str_buffer\fP data> consteval \fBcydui::graphics::color::Color\fP operator''_color ()"
+
+.PP
+Definition at line \fB35\fP of file \fBcolor\&.h\fP\&..PP
+.nf
+35                                                       {
+36   static_assert(data\&.count == 7 || data\&.count == 9, "Invalid Color, wrong length");
+37   static_assert(data\&.data[0] == '#', "Invalid Color, must begin with '#'");
+38   
+39   STATIC_ASSERT_IS_HEX(data\&.data[1]);
+40   STATIC_ASSERT_IS_HEX(data\&.data[2]);
+41   STATIC_ASSERT_IS_HEX(data\&.data[3]);
+42   STATIC_ASSERT_IS_HEX(data\&.data[4]);
+43   STATIC_ASSERT_IS_HEX(data\&.data[5]);
+44   STATIC_ASSERT_IS_HEX(data\&.data[6]);
+45   if constexpr (data\&.count == 9) {
+46     STATIC_ASSERT_IS_HEX(data\&.data[7]);
+47     STATIC_ASSERT_IS_HEX(data\&.data[8]);
+48   }
+49   
+50   uint8_t r = 0U;
+51   (void) std::from_chars(&data\&.data[1], &data\&.data[3], r, 16);
+52   uint8_t g = 0U;
+53   (void) std::from_chars(&data\&.data[3], &data\&.data[5], g, 16);
+54   uint8_t b = 0U;
+55   (void) std::from_chars(&data\&.data[5], &data\&.data[7], b, 16);
+56   if (data\&.count == 9) {
+57     uint8_t a = 0U;
+58     (void) std::from_chars(&data\&.data[7], &data\&.data[9], a, 16);
+59     return {(double) r / 255\&.0, (double) g / 255\&.0, (double) b / 255\&.0, (double) a / 255\&.0};
+60   } else {
+61     return {(double) r / 255\&.0, (double) g / 255\&.0, (double) b / 255\&.0, 1\&.0};
+62   }
+63 }
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -1,0 +1,209 @@
+\doxysection{cydui\+::components\+::component\+\_\+state\+\_\+t Struct Reference}
+\hypertarget{structcydui_1_1components_1_1component__state__t}{}\label{structcydui_1_1components_1_1component__state__t}\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+
+
+{\ttfamily \#include $<$component.\+h$>$}
+
+
+
+Inheritance diagram for cydui\+::components\+::component\+\_\+state\+\_\+t\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=186pt]{structcydui_1_1components_1_1component__state__t__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for cydui\+::components\+::component\+\_\+state\+\_\+t\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structcydui_1_1components_1_1component__state__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a6e52ed7487c61640ad4a8edd0689906f}{mark\+\_\+dirty}} ()
+\begin{DoxyCompactList}\small\item\em Marks this component state as needing to be redrawn. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{cydui\+::events\+::\+Event\+Type}} T$>$ }\\void \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a9b47e276ec9c6e55128c90f935609fde}{emit}} (typename T\+::\+Data\+Type ev)
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a11cac671896d7f3399bfe676c5669c41}{force\+\_\+redraw}} ()
+\begin{DoxyCompactList}\small\item\em Emits a \doxylink{structRedrawEvent}{Redraw\+Event} for this component. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{window\+::\+CWindow}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a805629d2279bd32a8423246e3ca72e53}{win}}
+\item 
+std\+::optional$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_ae9b274be1a4e0046f33e6785cd4bb5cc}{parent}} = std\+::nullopt
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa091bf4653b4921f45bdebb2ce782582}{children\+\_\+states}} \{\}
+\item 
+bool \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_ad320de01c5767207075d22a2d48be7bf}{\+\_\+dirty}} = false
+\item 
+bool \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c}{focused}} = false
+\item 
+bool \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82}{hovering}} = false
+\item 
+std\+::optional$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\+\_\+instance}} = std\+::nullopt
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00025}{25}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structcydui_1_1components_1_1component__state__t_a9b47e276ec9c6e55128c90f935609fde}\label{structcydui_1_1components_1_1component__state__t_a9b47e276ec9c6e55128c90f935609fde} 
+\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}!emit@{emit}}
+\index{emit@{emit}!cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+\doxysubsubsection{\texorpdfstring{emit()}{emit()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{cydui\+::events\+::\+Event\+Type}} T$>$ \\
+void cydui\+::components\+::component\+\_\+state\+\_\+t\+::emit (\begin{DoxyParamCaption}\item[{typename T\+::\+Data\+Type}]{ev }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00055}{55}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ ev.win\ =\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(this-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a805629d2279bd32a8423246e3ca72e53}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}});}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ cydui::events::emit<T>(ev);}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1components_1_1component__state__t_a11cac671896d7f3399bfe676c5669c41}\label{structcydui_1_1components_1_1component__state__t_a11cac671896d7f3399bfe676c5669c41} 
+\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}!force\_redraw@{force\_redraw}}
+\index{force\_redraw@{force\_redraw}!cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+\doxysubsubsection{\texorpdfstring{force\_redraw()}{force\_redraw()}}
+{\footnotesize\ttfamily void cydui\+::components\+::component\+\_\+state\+\_\+t\+::force\+\_\+redraw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Emits a \doxylink{structRedrawEvent}{Redraw\+Event} for this component. 
+
+\begin{DoxyWarning}{Warning}
+This is only meant to be called from custom event handlers. Event handlers for events declared in {\ttfamily \doxylink{cydui__events_8h}{cydui\+\_\+events.\+h}} automatically trigger a redraw if {\ttfamily state-\/\texorpdfstring{$>$}{>}\doxylink{structcydui_1_1components_1_1component__state__t_a6e52ed7487c61640ad4a8edd0689906f}{mark\+\_\+dirty()}} gets called. Use that instead. 
+\end{DoxyWarning}
+
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00068}{68}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ emit<RedrawEvent>(\{.component\ =\ \textcolor{keyword}{this}\});}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1components_1_1component__state__t_a6e52ed7487c61640ad4a8edd0689906f}\label{structcydui_1_1components_1_1component__state__t_a6e52ed7487c61640ad4a8edd0689906f} 
+\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}!mark\_dirty@{mark\_dirty}}
+\index{mark\_dirty@{mark\_dirty}!cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+\doxysubsubsection{\texorpdfstring{mark\_dirty()}{mark\_dirty()}}
+{\footnotesize\ttfamily void cydui\+::components\+::component\+\_\+state\+\_\+t\+::mark\+\_\+dirty (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Marks this component state as needing to be redrawn. 
+
+Events declared in {\ttfamily \doxylink{cydui__events_8h}{cydui\+\_\+events.\+h}} are dispatched automatically by the layout, which then checks for any {\ttfamily dirty} components that need redrawing.
+
+It is due diligence of the component developer to appropriately mark the component as dirty when appropriate. As a baseline, any mutation to the state of a component should mark it dirty if said mutation affects how the component, or its children, are rendered. 
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00050}{50}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_ad320de01c5767207075d22a2d48be7bf}{\_dirty}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structcydui_1_1components_1_1component__state__t_ad320de01c5767207075d22a2d48be7bf}\label{structcydui_1_1components_1_1component__state__t_ad320de01c5767207075d22a2d48be7bf} 
+\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}!\_dirty@{\_dirty}}
+\index{\_dirty@{\_dirty}!cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+\doxysubsubsection{\texorpdfstring{\_dirty}{\_dirty}}
+{\footnotesize\ttfamily bool cydui\+::components\+::component\+\_\+state\+\_\+t\+::\+\_\+dirty = false}
+
+
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00031}{31}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+\Hypertarget{structcydui_1_1components_1_1component__state__t_aa091bf4653b4921f45bdebb2ce782582}\label{structcydui_1_1components_1_1component__state__t_aa091bf4653b4921f45bdebb2ce782582} 
+\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}!children\_states@{children\_states}}
+\index{children\_states@{children\_states}!cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+\doxysubsubsection{\texorpdfstring{children\_states}{children\_states}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}}\texorpdfstring{$\ast$}{*}$>$ cydui\+::components\+::component\+\_\+state\+\_\+t\+::children\+\_\+states \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00029}{29}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00029\ \{\};}
+
+\end{DoxyCode}
+\Hypertarget{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}\label{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3} 
+\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}!component\_instance@{component\_instance}}
+\index{component\_instance@{component\_instance}!cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+\doxysubsubsection{\texorpdfstring{component\_instance}{component\_instance}}
+{\footnotesize\ttfamily std\+::optional$<$\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\+\_\+base\+\_\+t}}\texorpdfstring{$\ast$}{*}$>$ cydui\+::components\+::component\+\_\+state\+\_\+t\+::component\+\_\+instance = std\+::nullopt}
+
+
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00036}{36}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+\Hypertarget{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c}\label{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c} 
+\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}!focused@{focused}}
+\index{focused@{focused}!cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+\doxysubsubsection{\texorpdfstring{focused}{focused}}
+{\footnotesize\ttfamily bool cydui\+::components\+::component\+\_\+state\+\_\+t\+::focused = false}
+
+
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00033}{33}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+\Hypertarget{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82}\label{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82} 
+\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}!hovering@{hovering}}
+\index{hovering@{hovering}!cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+\doxysubsubsection{\texorpdfstring{hovering}{hovering}}
+{\footnotesize\ttfamily bool cydui\+::components\+::component\+\_\+state\+\_\+t\+::hovering = false}
+
+
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00034}{34}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+\Hypertarget{structcydui_1_1components_1_1component__state__t_ae9b274be1a4e0046f33e6785cd4bb5cc}\label{structcydui_1_1components_1_1component__state__t_ae9b274be1a4e0046f33e6785cd4bb5cc} 
+\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}!parent@{parent}}
+\index{parent@{parent}!cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+\doxysubsubsection{\texorpdfstring{parent}{parent}}
+{\footnotesize\ttfamily std\+::optional$<$\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}}\texorpdfstring{$\ast$}{*}$>$ cydui\+::components\+::component\+\_\+state\+\_\+t\+::parent = std\+::nullopt}
+
+
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00028}{28}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+\Hypertarget{structcydui_1_1components_1_1component__state__t_a805629d2279bd32a8423246e3ca72e53}\label{structcydui_1_1components_1_1component__state__t_a805629d2279bd32a8423246e3ca72e53} 
+\index{cydui::components::component\_state\_t@{cydui::components::component\_state\_t}!win@{win}}
+\index{win@{win}!cydui::components::component\_state\_t@{cydui::components::component\_state\_t}}
+\doxysubsubsection{\texorpdfstring{win}{win}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{window\+::\+CWindow}}\texorpdfstring{$\ast$}{*} cydui\+::components\+::component\+\_\+state\+\_\+t\+::win}
+
+
+
+Definition at line \mbox{\hyperlink{component_8h_source_l00026}{26}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/core/\mbox{\hyperlink{component_8h}{component.\+h}}\end{DoxyCompactItemize}

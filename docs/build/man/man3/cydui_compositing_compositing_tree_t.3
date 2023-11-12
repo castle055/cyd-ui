@@ -1,0 +1,53 @@
+.TH "cydui::compositing::compositing_tree_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::compositing::compositing_tree_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <compositing\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBcompositing_node_t\fP * \fBfind_by_id\fP (unsigned long _id)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBcompositing_node_t\fP \fBroot\fP {}"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB66\fP of file \fBcompositing\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBcompositing_node_t\fP * cydui::compositing::compositing_tree_t::find_by_id (unsigned long _id)\fC [inline]\fP"
+
+.PP
+Definition at line \fB73\fP of file \fBcompositing\&.h\fP\&..PP
+.nf
+73                                                         {
+74         return root\&.find_by_id(_id);
+75       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBcompositing_node_t\fP cydui::compositing::compositing_tree_t::root {}"
+
+.PP
+Definition at line \fB67\fP of file \fBcompositing\&.h\fP\&..PP
+.nf
+67 {};
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

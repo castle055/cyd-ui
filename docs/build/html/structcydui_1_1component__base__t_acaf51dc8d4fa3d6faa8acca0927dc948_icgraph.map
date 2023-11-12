@@ -1,0 +1,12 @@
+<map id="cydui::component_base_t::get_dimensional_relations" name="cydui::component_base_t::get_dimensional_relations">
+<area shape="rect" id="Node000001" title=" " alt="" coords="409,47,599,89"/>
+<area shape="rect" id="Node000002" href="$classcydui_1_1layout_1_1Layout.html#a4ec466f6250b29670fc625bf251d659b" title=" " alt="" coords="218,5,360,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="394,49,360,43,361,38,395,44"/>
+<area shape="rect" id="Node000004" href="$layout_8cpp.html#a57bf7c427c75639b801bb27dcc702561" title=" " alt="" coords="217,96,361,123"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="395,92,362,98,361,93,394,86"/>
+<area shape="rect" id="Node000003" href="$namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="13,13,161,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="202,29,162,29,162,24,202,24"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="323,83,311,77,289,75,268,77,256,81,254,87,259,94,255,97,248,87,253,78,266,71,289,69,313,72,326,78"/>
+<area shape="rect" id="Node000005" href="$classcydui_1_1layout_1_1Layout.html#a5b102c151210c88660690540b265978a" title=" " alt="" coords="5,88,169,131"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="201,112,169,112,169,107,201,107"/>
+</map>

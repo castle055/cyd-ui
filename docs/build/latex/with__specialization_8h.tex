@@ -1,0 +1,166 @@
+\doxysection{include/core/with\+\_\+specialization.h File Reference}
+\hypertarget{with__specialization_8h}{}\label{with__specialization_8h}\index{include/core/with\_specialization.h@{include/core/with\_specialization.h}}
+{\ttfamily \#include "{}component\+\_\+holder.\+h"{}}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+Include dependency graph for with\+\_\+specialization.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{with__specialization_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{with__specialization_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1components_1_1with_1_1with_3_01bool_01_4}{cydui\+::components\+::with\+::with$<$ bool $>$}}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1components_1_1with_1_1map__to__result__t}{cydui\+::components\+::with\+::map\+\_\+to\+\_\+result\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1components_1_1with_1_1with_3_01I_01_4}{cydui\+::components\+::with\+::with$<$ I $>$}}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1components_1_1with_1_1with_3_01int_01_4}{cydui\+::components\+::with\+::with$<$ int $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecydui}{cydui}}
+\item 
+namespace \mbox{\hyperlink{namespacecydui_1_1components}{cydui\+::components}}
+\item 
+namespace \mbox{\hyperlink{namespacecydui_1_1components_1_1with}{cydui\+::components\+::with}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{conceptcydui_1_1components_1_1with_1_1IterableContainer}{cydui\+::components\+::with\+::\+Iterable\+Container}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{with__specialization_8h_a2844a2c793572e3373fc912c8e85c6f7}{then}}(...)
+\item 
+\#define \mbox{\hyperlink{with__specialization_8h_a1ad62f92a4352407b0e088182a857422}{or\+\_\+else}}(...)
+\item 
+\#define \mbox{\hyperlink{with__specialization_8h_a716777172841d0397154e72bfa7b99fd}{map\+\_\+to}}(...)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{with__specialization_8h_a716777172841d0397154e72bfa7b99fd}\label{with__specialization_8h_a716777172841d0397154e72bfa7b99fd} 
+\index{with\_specialization.h@{with\_specialization.h}!map\_to@{map\_to}}
+\index{map\_to@{map\_to}!with\_specialization.h@{with\_specialization.h}}
+\doxysubsubsection{\texorpdfstring{map\_to}{map\_to}}
+{\footnotesize\ttfamily \#define map\+\_\+to(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ push"{}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ ignored\ \(\backslash\)"{}-\/Wunused-\/lambda-\/capture\(\backslash\)"{}"{}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ map\_to(\ \_\_VA\_ARGS\_\_\ )\ \(\backslash\)}
+\DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ pop"{}})}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{with__specialization_8h_source_l00132}{132}} of file \mbox{\hyperlink{with__specialization_8h_source}{with\+\_\+specialization.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ with\_data\_t<int>\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ with<int>\ \&eq()\ \{}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ }
+\DoxyCodeLine{00146\ \ \ \ \ \ \ with<int>\ \&for\_each(\textcolor{keyword}{const}\ std::function<map\_to\_result\_t(\textcolor{keywordtype}{int}\ \&value)>\ \&transform)\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ std::string\ id;}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ std::size\_t\ j\ =\ 0;}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ std::string\ index\_suffix;}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ std::string\ jndex\_suffix;}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ val;\ ++i)\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ index\_suffix\ =\ \textcolor{stringliteral}{"{}:"{}};}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ index\_suffix.append(std::to\_string(i));}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ cs\ =\ transform(i);}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&item1:\ cs.result)\ \{}
+\DoxyCodeLine{00156\ \ \ \ \ \ \ \ \ \ \ \ \ jndex\_suffix\ =\ \textcolor{stringliteral}{"{}:"{}};}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \ \ \ \ jndex\_suffix.append(std::to\_string(j));}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&component\_pair:\ item1.get\_components())\ \{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ [\_,\ component]\ =\ component\_pair;}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ make\ copy\ of\ id\ for\ modification}}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}\ =\ component\_pair.first;}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}.append(jndex\_suffix);}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (cs.id.empty())\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}.append(index\_suffix);}
+\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}.append(\textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}.append(cs.id);}
+\DoxyCodeLine{00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{id}.append(\textcolor{stringliteral}{"{}:map\_to"{}});}
+\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>selection[id]\ =\ component;}
+\DoxyCodeLine{00172\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \ \ \ \ ++j;}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00175\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00176\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00177\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00178\ \ \ \ \ \};}
+\DoxyCodeLine{00179\ \}}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_WITH\_SPECIALIZATION\_H}}
+
+\end{DoxyCode}
+\Hypertarget{with__specialization_8h_a1ad62f92a4352407b0e088182a857422}\label{with__specialization_8h_a1ad62f92a4352407b0e088182a857422} 
+\index{with\_specialization.h@{with\_specialization.h}!or\_else@{or\_else}}
+\index{or\_else@{or\_else}!with\_specialization.h@{with\_specialization.h}}
+\doxysubsubsection{\texorpdfstring{or\_else}{or\_else}}
+{\footnotesize\ttfamily \#define or\+\_\+else(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ push"{}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ ignored\ \(\backslash\)"{}-\/Wunused-\/lambda-\/capture\(\backslash\)"{}"{}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ or\_else([\textcolor{keyword}{this}]\{\ \textcolor{keywordflow}{return}\ std::vector<component\_holder\_t>\ \_\_VA\_ARGS\_\_\ ;\ \})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ pop"{}})}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{with__specialization_8h_source_l00072}{72}} of file \mbox{\hyperlink{with__specialization_8h_source}{with\+\_\+specialization.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ std::vector<component\_holder\_t>\ \_\_VA\_ARGS\_\_\ ;\ \})\ \(\backslash\)}
+\DoxyCodeLine{00076\ \ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ pop"{}})}
+
+\end{DoxyCode}
+\Hypertarget{with__specialization_8h_a2844a2c793572e3373fc912c8e85c6f7}\label{with__specialization_8h_a2844a2c793572e3373fc912c8e85c6f7} 
+\index{with\_specialization.h@{with\_specialization.h}!then@{then}}
+\index{then@{then}!with\_specialization.h@{with\_specialization.h}}
+\doxysubsubsection{\texorpdfstring{then}{then}}
+{\footnotesize\ttfamily \#define then(\begin{DoxyParamCaption}\item[{}]{... }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ push"{}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ ignored\ \(\backslash\)"{}-\/Wunused-\/lambda-\/capture\(\backslash\)"{}"{}})\ \(\backslash\)}
+\DoxyCodeLine{\ \ then([\textcolor{keyword}{this}]\{\ \textcolor{keywordflow}{return}\ std::vector<component\_holder\_t>\ \_\_VA\_ARGS\_\_\ ;\ \})\ \(\backslash\)}
+\DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ pop"{}})}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{with__specialization_8h_source_l00041}{41}} of file \mbox{\hyperlink{with__specialization_8h_source}{with\+\_\+specialization.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \textcolor{keywordflow}{return}\ std::vector<component\_holder\_t>\ \_\_VA\_ARGS\_\_\ ;\ \})\ \(\backslash\)}
+\DoxyCodeLine{00045\ \ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ pop"{}})}
+
+\end{DoxyCode}

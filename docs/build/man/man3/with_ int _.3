@@ -1,0 +1,109 @@
+.TH "with< int >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+with< int >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <with_specialization\&.h>\fP
+.PP
+Inherits \fBwith_data_t< int >\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBwith\fP< int > & \fBeq\fP ()"
+.br
+.ti -1c
+.RI "\fBwith\fP< int > & \fBfor_each\fP (const std::function< \fBmap_to_result_t\fP(int &value)> &transform)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBwith_data_t< int >\fP
+.in +1c
+.ti -1c
+.RI "\fBwith_data_t\fP (int &\fBval\fP)"
+.br
+.ti -1c
+.RI "\fBwith_data_t\fP (int &&\fBval\fP)"
+.br
+.ti -1c
+.RI "const auto & \fBget_selection\fP () const"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Public Attributes inherited from \fBwith_data_t< int >\fP
+.in +1c
+.ti -1c
+.RI "int & \fBval\fP"
+.br
+.in -1c
+
+Protected Attributes inherited from \fBwith_data_t< int >\fP
+.in +1c
+.ti -1c
+.RI "std::unordered_map< std::string, cydui::component_base_t * > \fBselection\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB139\fP of file \fBwith_specialization\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBwith\fP< int > & \fBwith\fP< int >::eq ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB140\fP of file \fBwith_specialization\&.h\fP\&..PP
+.nf
+140                   {
+141     return *this;
+142   }
+.fi
+
+.SS "\fBwith\fP< int > & \fBwith\fP< int >::for_each (const std::function< \fBmap_to_result_t\fP(int &value)> & transform)\fC [inline]\fP"
+
+.PP
+Definition at line \fB144\fP of file \fBwith_specialization\&.h\fP\&..PP
+.nf
+144                                                                                  {
+145     std::string id;
+146     std::size_t j = 0;
+147     std::string index_suffix;
+148     std::string jndex_suffix;
+149     for (int i = 0; i < val; ++i) {
+150       index_suffix = ":";
+151       index_suffix\&.append(std::to_string(i));
+152       auto cs = transform(i);
+153       for (const auto &item1: cs\&.result) {
+154         jndex_suffix = ":";
+155         jndex_suffix\&.append(std::to_string(j));
+156         
+157         for (const auto &component_pair: item1\&.get_components()) {
+158           auto [_, component] = component_pair;
+159           // make copy of id for modification
+160           id = component_pair\&.first;
+161           id\&.append(jndex_suffix);
+162           if (cs\&.id\&.empty()) {
+163             id\&.append(index_suffix);
+164           } else {
+165             id\&.append(":");
+166             id\&.append(cs\&.id);
+167           }
+168           id\&.append(":map_to");
+169           this\->selection[id] = component;
+170         }
+171         ++j;
+172       }
+173     }
+174     return *this;
+175   }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -1,0 +1,107 @@
+.TH "cydui::components::dynamic_builder_impl_t< C >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::components::dynamic_builder_impl_t< C >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <components\&.hpp>\fP
+.PP
+Inherits \fBcydui::components::dynamic_builder_t\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB~dynamic_builder_impl_t\fP () override=default"
+.br
+.ti -1c
+.RI "C::State * \fBbuild_state\fP () override"
+.br
+.ti -1c
+.RI "\fBcomponent_builder_t\fP \fBbuild_component\fP (const \fBcomp_init_t\fP &\fBinit\fP) override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::components::dynamic_builder_t\fP
+.in +1c
+.ti -1c
+.RI "virtual \fB~dynamic_builder_t\fP ()=default"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Static Public Member Functions inherited from \fBcydui::components::dynamic_builder_t\fP
+.in +1c
+.ti -1c
+.RI "template<components::ComponentConcept C> static \fBdynamic_builder_t\fP * \fBcreate\fP ()"
+.br
+.ti -1c
+.RI "static void \fBdestroy\fP (\fBdynamic_builder_t\fP *builder)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<components::ComponentConcept C>
+.br
+struct cydui::components::dynamic_builder_impl_t< C >"
+.PP
+Definition at line \fB351\fP of file \fBcomponents\&.hpp\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<components::ComponentConcept C> \fBcydui::components::dynamic_builder_impl_t\fP< \fBC\fP >::~\fBdynamic_builder_impl_t\fP ()\fC [override]\fP, \fC [default]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "template<components::ComponentConcept C> \fBcomponent_builder_t\fP \fBcydui::components::dynamic_builder_impl_t\fP< \fBC\fP >::build_component (const \fBcomp_init_t\fP & init)\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBcydui::components::dynamic_builder_t\fP\&.
+.PP
+Definition at line \fB358\fP of file \fBcomponents\&.hpp\fP\&..PP
+.nf
+358                                                                             {
+359         typename C::Props props = (init\&.props_ptr == nullptr) ? typename C::Props() : *(typename C::Props*) init\&.props_ptr;
+360         if (init\&.props_ptr != nullptr) delete (typename C::Props*) init\&.props_ptr;
+361         return {
+362           \&.x = init\&.x,
+363           \&.y = init\&.y,
+364           \&.w = init\&.w,
+365           \&.h = init\&.h,
+366           \&.build = [props, init](component_builder_t spec) {
+367             return new C((typename C::State*) init\&.state, props, [spec, init](components::Component* __c) {
+368               __c\->state\&.let(_(ComponentState *, {
+369                 it\->dim\&.given_h = true;
+370                 it\->dim\&.given_w = true;
+371                 it\->dim\&.x = spec\&.x\&.value();
+372                 it\->dim\&.y = spec\&.y\&.value();
+373                 it\->dim\&.w = spec\&.w\&.value();
+374                 it\->dim\&.h = spec\&.h\&.value();
+375               }));
+376               
+377               init\&.init(__c);
+378             });
+379           }
+380         };
+381       }
+.fi
+
+.SS "template<components::ComponentConcept C> C::State * \fBcydui::components::dynamic_builder_impl_t\fP< \fBC\fP >::build_state ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBcydui::components::dynamic_builder_t\fP\&.
+.PP
+Definition at line \fB354\fP of file \fBcomponents\&.hpp\fP\&..PP
+.nf
+354                                      {
+355         return new C::State();
+356       }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

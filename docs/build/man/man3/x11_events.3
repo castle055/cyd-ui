@@ -1,0 +1,34 @@
+.TH "x11::events" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+x11::events
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBstart\fP ()"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "void x11::events::start ()"
+
+.PP
+Definition at line \fB318\fP of file \fBevents\&.cpp\fP\&..PP
+.nf
+318                       {
+319   if (x11_thread && x11_thread\->native_thread != nullptr)
+320     return;
+321   x11_evlog\&.debug("starting x11_thread");
+322   x11_thread = cydui::threading::new_thread(x11_event_emitter_task)
+323     \->set_name("X11_EV_THD");
+324 }
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

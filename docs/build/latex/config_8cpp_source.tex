@@ -1,0 +1,37 @@
+\doxysection{config.\+cpp}
+\hypertarget{config_8cpp_source}{}\label{config_8cpp_source}\index{src/config/config.cpp@{src/config/config.cpp}}
+\mbox{\hyperlink{config_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 1/4/23.}}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{config_8hpp}{tools/config.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#ifndef\ CYD\_UI\_CONFIG\_HPP}}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00009}00009\ \textcolor{keyword}{using\ namespace\ }cydui::config;}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00011}00011\ ConfigManager::ConfigManager(std::string\ path)}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00012}00012\ \ \ :\ path(std::move(path))\ \{}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00013}00013\ \}}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00015}00015\ \textcolor{keywordtype}{void}\ ConfigManager::parse\_raw()\ \{}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00016}00016\ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keyword}{auto}\ file\ =\ YAML::LoadFile(path);}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00018}00018\ \ \ \ \ deserialize(file);}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00019}00019\ \ \ \}\ \textcolor{keywordflow}{catch}\ (YAML::BadFile\ \&e)\ \{}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00020}00020\ \ \ }
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00021}00021\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00022}00022\ \}}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00024}00024\ \textcolor{keywordtype}{void}\ ConfigManager::refresh()\ \{}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00025}00025\ \ \ parse\_raw();}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00026}00026\ \}}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00028}00028\ \textcolor{keywordtype}{void}\ ConfigManager::update\_config\_file()\ \{}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00030}00030\ \}}
+\DoxyCodeLine{\Hypertarget{config_8cpp_source_l00031}00031\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_CONFIG\_HPP}}
+
+\end{DoxyCode}

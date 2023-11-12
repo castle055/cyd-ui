@@ -1,0 +1,95 @@
+.TH "cydui::components::with::with_data_t< T >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::components::with::with_data_t< T >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <with_template\&.h>\fP
+.PP
+Inherited by \fBcydui::components::with::with< T >\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBwith_data_t\fP (\fBT\fP &\fBval\fP)"
+.br
+.ti -1c
+.RI "\fBwith_data_t\fP (\fBT\fP &&\fBval\fP)"
+.br
+.ti -1c
+.RI "const auto & \fBget_selection\fP () const"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBval\fP"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::unordered_map< std::string, \fBcomponent_base_t\fP * > \fBselection\fP {}"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename \fBT\fP>
+.br
+struct cydui::components::with::with_data_t< T >"
+.PP
+Definition at line \fB15\fP of file \fBwith_template\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename \fBT\fP > \fBcydui::components::with::with_data_t\fP< \fBT\fP >::with_data_t (\fBT\fP & val)\fC [inline]\fP"
+
+.PP
+Definition at line \fB18\fP of file \fBwith_template\&.h\fP\&..PP
+.nf
+18 : val(val) { }
+.fi
+
+.SS "template<typename \fBT\fP > \fBcydui::components::with::with_data_t\fP< \fBT\fP >::with_data_t (\fBT\fP && val)\fC [inline]\fP"
+
+.PP
+Definition at line \fB19\fP of file \fBwith_template\&.h\fP\&..PP
+.nf
+19 : val(val) { }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename \fBT\fP > const auto & \fBcydui::components::with::with_data_t\fP< \fBT\fP >::get_selection () const\fC [inline]\fP"
+
+.PP
+Definition at line \fB21\fP of file \fBwith_template\&.h\fP\&..PP
+.nf
+21                                         {
+22         return selection;
+23       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "template<typename \fBT\fP > std::unordered_map<std::string, \fBcomponent_base_t\fP*> \fBcydui::components::with::with_data_t\fP< \fBT\fP >::selection {}\fC [protected]\fP"
+
+.PP
+Definition at line \fB25\fP of file \fBwith_template\&.h\fP\&..PP
+.nf
+25 {};
+.fi
+
+.SS "template<typename \fBT\fP > \fBT\fP& \fBcydui::components::with::with_data_t\fP< \fBT\fP >::val"
+
+.PP
+Definition at line \fB16\fP of file \fBwith_template\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

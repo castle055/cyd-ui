@@ -1,0 +1,113 @@
+\doxysection{env Namespace Reference}
+\hypertarget{namespaceenv}{}\label{namespaceenv}\index{env@{env}}
+
+
+Process environmental variables interface.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structenv_1_1var}{var}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{namespaceenv_abca9bc7353cff0b42cd398c29347ba34}{get}} (const std\+::string \&ENVVAR)
+\begin{DoxyCompactList}\small\item\em Get the value of the environmental variable with name {\ttfamily ENVVAR} \end{DoxyCompactList}\item 
+std\+::string \mbox{\hyperlink{namespaceenv_a9e8dc70a7c190769d019cc1836c3c719}{set}} (const std\+::string \&ENVVAR, const std\+::string \&VALUE)
+\begin{DoxyCompactList}\small\item\em Set the value of the environmental variable with name {\ttfamily ENVVAR} to {\ttfamily VALUE} \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Process environmental variables interface. 
+
+This namespace provides an abstraction over environmental variables. 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespaceenv_abca9bc7353cff0b42cd398c29347ba34}\label{namespaceenv_abca9bc7353cff0b42cd398c29347ba34} 
+\index{env@{env}!get@{get}}
+\index{get@{get}!env@{env}}
+\doxysubsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily std\+::string env\+::get (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{ENVVAR }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Get the value of the environmental variable with name {\ttfamily ENVVAR} 
+
+\begin{DoxyReturn}{Returns}
+{\ttfamily std\+::string} containing the value of the variable 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ENVVAR} & Variable name \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{env_8h_source_l00021}{21}} of file \mbox{\hyperlink{env_8h_source}{env.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::getenv(ENVVAR.c\_str());}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespaceenv_abca9bc7353cff0b42cd398c29347ba34_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespaceenv_a9e8dc70a7c190769d019cc1836c3c719}\label{namespaceenv_a9e8dc70a7c190769d019cc1836c3c719} 
+\index{env@{env}!set@{set}}
+\index{set@{set}!env@{env}}
+\doxysubsubsection{\texorpdfstring{set()}{set()}}
+{\footnotesize\ttfamily std\+::string env\+::set (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{ENVVAR,  }\item[{const std\+::string \&}]{VALUE }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Set the value of the environmental variable with name {\ttfamily ENVVAR} to {\ttfamily VALUE} 
+
+\begin{DoxyNote}{Note}
+This function {\bfseries{overwrites}} the old value of the variable 
+\end{DoxyNote}
+\begin{DoxyReturn}{Returns}
+{\ttfamily std\+::string} containing the {\bfseries{old value}} of the variable 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em ENVVAR} & Variable name  \\
+\hline
+\mbox{\texttt{ in}}  & {\em VALUE} & New value \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{env_8h_source_l00030}{30}} of file \mbox{\hyperlink{env_8h_source}{env.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ std::string\ prev\ =\ \mbox{\hyperlink{namespaceenv_abca9bc7353cff0b42cd398c29347ba34}{get}}(ENVVAR);}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ setenv(ENVVAR.c\_str(),\ VALUE.c\_str(),\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ prev;}
+\DoxyCodeLine{00037\ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=219pt]{namespaceenv_a9e8dc70a7c190769d019cc1836c3c719_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=266pt]{namespaceenv_a9e8dc70a7c190769d019cc1836c3c719_icgraph}
+\end{center}
+\end{figure}

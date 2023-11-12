@@ -1,0 +1,17 @@
+<map id="include/core/component_types.h" name="include/core/component_types.h">
+<area shape="rect" id="Node000001" title=" " alt="" coords="114,5,273,48"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,96,88,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="157,51,84,91,81,86,154,46"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="112,96,186,123"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="184,50,166,83,161,81,179,47"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="211,96,264,123"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="207,47,225,81,221,83,202,50"/>
+<area shape="rect" id="Node000005" href="$dimensions_8hpp.html" title=" " alt="" coords="288,96,400,123"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="233,46,308,86,306,91,231,51"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="191,171,268,197"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="325,125,264,164,261,160,322,121"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="292,171,396,197"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="347,123,347,155,341,155,341,123"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="419,171,477,197"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="363,121,419,159,416,164,360,125"/>
+</map>

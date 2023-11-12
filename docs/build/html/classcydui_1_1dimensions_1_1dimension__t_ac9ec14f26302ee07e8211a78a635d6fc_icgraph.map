@@ -1,0 +1,18 @@
+<map id="cydui::dimensions::dimension_t::val" name="cydui::dimensions::dimension_t::val">
+<area shape="rect" id="Node000001" title=" " alt="" coords="445,155,579,197"/>
+<area shape="rect" id="Node000002" href="$classcydui_1_1layout_1_1Layout.html#a4ec466f6250b29670fc625bf251d659b" title=" " alt="" coords="236,5,378,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="483,144,444,102,396,62,375,51,377,46,398,58,448,98,487,141"/>
+<area shape="rect" id="Node000004" href="$layout_8cpp.html#a57bf7c427c75639b801bb27dcc702561" title=" " alt="" coords="235,96,379,123"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="438,152,396,137,359,126,360,121,398,132,440,147"/>
+<area shape="rect" id="Node000006" href="$structcydui_1_1dimensions_1_1dimensional__relation__t.html#acd103546110900b4a82eaadcdbf46fa1" title=" " alt="" coords="222,147,392,205"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="429,179,392,179,392,173,429,173"/>
+<area shape="rect" id="Node000007" href="$structcydui_1_1components_1_1component__t.html#af60e04880b486c0007d587f2492a20da" title=" " alt="" coords="234,229,380,288"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="444,206,382,232,380,227,442,201"/>
+<area shape="rect" id="Node000008" href="$structcydui_1_1components_1_1component__t.html#a66895726989b817053f31d78eb5f7074" title=" " alt="" coords="217,312,397,355"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="489,212,450,258,399,302,378,314,375,309,395,298,446,254,485,208"/>
+<area shape="rect" id="Node000003" href="$namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="13,13,161,40"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="220,29,161,29,161,24,220,24"/>
+<area shape="poly" id="edge4_Node000004_Node000004" title=" " alt="" coords="342,83,330,77,307,75,285,77,274,81,271,87,276,94,272,97,266,87,270,78,284,71,307,69,331,72,344,78"/>
+<area shape="rect" id="Node000005" href="$classcydui_1_1layout_1_1Layout.html#a6ecf040da2e67472abe8c0096319fe10" title=" " alt="" coords="5,88,169,131"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="219,112,169,112,169,107,219,107"/>
+</map>

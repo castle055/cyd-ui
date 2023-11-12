@@ -1,0 +1,150 @@
+\doxysection{x11\+::render Namespace Reference}
+\hypertarget{namespacex11_1_1render}{}\label{namespacex11_1_1render}\index{x11::render@{x11::render}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structx11_1_1render_1_1RenderThreadData}{Render\+Thread\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespacex11_1_1render_a2bab441e71f42470e767c6f6a079a129}{start}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}win)
+\item 
+void \mbox{\hyperlink{namespacex11_1_1render_a99ca4e1290cd749fd3fb12635d8e69f7}{resize}} (\mbox{\hyperlink{structpixelmap__t}{pixelmap\+\_\+t}} \texorpdfstring{$\ast$}{*}target, int w, int h)
+\item 
+void \mbox{\hyperlink{namespacex11_1_1render_a69153a2a848d57aef839a05e0982a76a}{flush}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}win)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacex11_1_1render_a69153a2a848d57aef839a05e0982a76a}\label{namespacex11_1_1render_a69153a2a848d57aef839a05e0982a76a} 
+\index{x11::render@{x11::render}!flush@{flush}}
+\index{flush@{flush}!x11::render@{x11::render}}
+\doxysubsubsection{\texorpdfstring{flush()}{flush()}}
+{\footnotesize\ttfamily void x11\+::render\+::flush (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{win }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{render_8cpp_source_l00205}{205}} of file \mbox{\hyperlink{render_8cpp_source}{render.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00206\ \ \ std::lock\_guard\ lk\ \{win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ada7b7df437402a71353d45d05ef32065}{render\_mtx}}\};}
+\DoxyCodeLine{00207\ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_aeaaac77ccd1cbcb50a36ce5236d0f0d4}{profiler}}-\/>\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}render::flush"{}});}
+\DoxyCodeLine{00208\ \ \ }
+\DoxyCodeLine{00209\ \ \ \textcolor{keyword}{auto}*\ tmp\ =\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_aac71ce31fada0d62b259b3099d06727a}{render\_target}};}
+\DoxyCodeLine{00210\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_aac71ce31fada0d62b259b3099d06727a}{render\_target}}\ =\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ad72eebf095eba2d7a2f42d16e90ed522}{staging\_target}};}
+\DoxyCodeLine{00211\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ad72eebf095eba2d7a2f42d16e90ed522}{staging\_target}}\ =\ tmp;}
+\DoxyCodeLine{00212\ \ \ }
+\DoxyCodeLine{00213\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_acb63b36da8b18c305f4df398e2b0cb98}{dirty}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00214\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacex11_1_1render_a69153a2a848d57aef839a05e0982a76a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacex11_1_1render_a69153a2a848d57aef839a05e0982a76a_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespacex11_1_1render_a99ca4e1290cd749fd3fb12635d8e69f7}\label{namespacex11_1_1render_a99ca4e1290cd749fd3fb12635d8e69f7} 
+\index{x11::render@{x11::render}!resize@{resize}}
+\index{resize@{resize}!x11::render@{x11::render}}
+\doxysubsubsection{\texorpdfstring{resize()}{resize()}}
+{\footnotesize\ttfamily void x11\+::render\+::resize (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structpixelmap__t}{pixelmap\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{target,  }\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{render_8cpp_source_l00165}{165}} of file \mbox{\hyperlink{render_8cpp_source}{render.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00166\ \ \ \textcolor{comment}{//if\ (w\ !=\ target-\/>w\ ||\ h\ !=\ target-\/>h)\ \{}}
+\DoxyCodeLine{00167\ \ \ \textcolor{comment}{//\ \ Drawable\ new\_drw\ =\ XCreatePixmap(state::get\_dpy(),}}
+\DoxyCodeLine{00168\ \ \ \textcolor{comment}{//\ \ \ \ target-\/>win-\/>xwin,}}
+\DoxyCodeLine{00169\ \ \ \textcolor{comment}{//\ \ \ \ w,}}
+\DoxyCodeLine{00170\ \ \ \textcolor{comment}{//\ \ \ \ h,}}
+\DoxyCodeLine{00171\ \ \ \textcolor{comment}{//\ \ \ \ DefaultDepth(state::get\_dpy(),\ state::get\_screen()));}}
+\DoxyCodeLine{00172\ \ \ \textcolor{comment}{//\ \ XSetForeground(state::get\_dpy(),}}
+\DoxyCodeLine{00173\ \ \ \textcolor{comment}{//\ \ \ \ target-\/>gc,}}
+\DoxyCodeLine{00174\ \ \ \textcolor{comment}{//\ \ \ \ BlackPixel(state::get\_dpy(),\ state::get\_screen()));}}
+\DoxyCodeLine{00175\ \ \ \textcolor{comment}{//\ \ XFillRectangle(state::get\_dpy(),\ new\_drw,\ target-\/>gc,\ 0,\ 0,\ w,\ h);}}
+\DoxyCodeLine{00176\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00177\ \ \ \textcolor{comment}{//\ \ //target-\/>win-\/>x\_mtx.lock();}}
+\DoxyCodeLine{00178\ \ \ \textcolor{comment}{//\ \ XCopyArea(state::get\_dpy(),}}
+\DoxyCodeLine{00179\ \ \ \textcolor{comment}{//\ \ \ \ target-\/>drawable,}}
+\DoxyCodeLine{00180\ \ \ \textcolor{comment}{//\ \ \ \ new\_drw,}}
+\DoxyCodeLine{00181\ \ \ \textcolor{comment}{//\ \ \ \ target-\/>gc,}}
+\DoxyCodeLine{00182\ \ \ \textcolor{comment}{//\ \ \ \ 0,}}
+\DoxyCodeLine{00183\ \ \ \textcolor{comment}{//\ \ \ \ 0,}}
+\DoxyCodeLine{00184\ \ \ \textcolor{comment}{//\ \ \ \ target-\/>w,}}
+\DoxyCodeLine{00185\ \ \ \textcolor{comment}{//\ \ \ \ target-\/>h,}}
+\DoxyCodeLine{00186\ \ \ \textcolor{comment}{//\ \ \ \ 0,}}
+\DoxyCodeLine{00187\ \ \ \textcolor{comment}{//\ \ \ \ 0);}}
+\DoxyCodeLine{00188\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00189\ \ \ \textcolor{comment}{//\ \ XFreePixmap(state::get\_dpy(),\ target-\/>drawable);}}
+\DoxyCodeLine{00190\ \ \ \textcolor{comment}{//\ \ XFreeGC(state::get\_dpy(),\ target-\/>gc);}}
+\DoxyCodeLine{00191\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00192\ \ \ \textcolor{comment}{//\ \ target-\/>drawable\ =\ new\_drw;}}
+\DoxyCodeLine{00193\ \ \ \textcolor{comment}{//\ \ target-\/>gc\ =\ XCreateGC(state::get\_dpy(),\ target-\/>drawable,\ 0,\ NULL);}}
+\DoxyCodeLine{00194\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00195\ \ \ \textcolor{comment}{//\ \ //target-\/>win-\/>x\_mtx.unlock();}}
+\DoxyCodeLine{00196\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00197\ \ \ \textcolor{comment}{//\ \ XFlush(state::get\_dpy());}}
+\DoxyCodeLine{00198\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00199\ \ \ \textcolor{comment}{//\ \ target-\/>w\ =\ w;}}
+\DoxyCodeLine{00200\ \ \ \textcolor{comment}{//\ \ target-\/>h\ =\ h;}}
+\DoxyCodeLine{00201\ \ \ \textcolor{comment}{//\ \ render::flush(target-\/>win);}}
+\DoxyCodeLine{00202\ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00203\ \}}
+
+\end{DoxyCode}
+\Hypertarget{namespacex11_1_1render_a2bab441e71f42470e767c6f6a079a129}\label{namespacex11_1_1render_a2bab441e71f42470e767c6f6a079a129} 
+\index{x11::render@{x11::render}!start@{start}}
+\index{start@{start}!x11::render@{x11::render}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void x11\+::render\+::start (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{win }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{render_8cpp_source_l00079}{79}} of file \mbox{\hyperlink{render_8cpp_source}{render.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00080\ \ \ \textcolor{keywordflow}{if}\ (win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}\ \&\&\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}-\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a230c1adb68eeb06a399359ebb1fac07b}{running}})}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00082\ \ \ \mbox{\hyperlink{render_8cpp_a366be6f40b16667228908e3b2cf09e8a}{xlog\_ctrl}}.\mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{debug}}(\textcolor{stringliteral}{"{}Starting\ render\ thread"{}});}
+\DoxyCodeLine{00083\ \ \ }
+\DoxyCodeLine{00084\ \ \ \textcolor{keyword}{delete}\ (\mbox{\hyperlink{structx11_1_1render_1_1RenderThreadData}{RenderThreadData}}*)\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a5c085ddb9167ec08dad256a39cf46123}{render\_data}};}
+\DoxyCodeLine{00085\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a5c085ddb9167ec08dad256a39cf46123}{render\_data}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{structx11_1_1render_1_1RenderThreadData}{RenderThreadData}}\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ .\mbox{\hyperlink{structx11_1_1render_1_1RenderThreadData_a698181e5f3b8a6a840e5f1ed59fc9c8f}{win}}\ =\ win,}
+\DoxyCodeLine{00087\ \ \ \};}
+\DoxyCodeLine{00088\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}\ =\ \mbox{\hyperlink{namespacecydui_1_1threading_ab51f5bf48b28c9022460156c207217f5}{cydui::threading::new\_thread}}(\mbox{\hyperlink{render_8cpp_a912e5e13a2361939b93713a8862c228f}{render\_task}},\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a5c085ddb9167ec08dad256a39cf46123}{render\_data}})}
+\DoxyCodeLine{00089\ \ \ \ \ -\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_aa740ecb2c3aec2371e86fca90b115600}{set\_name}}(\textcolor{stringliteral}{"{}RENDER\_THD"{}});}
+\DoxyCodeLine{00090\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacex11_1_1render_a2bab441e71f42470e767c6f6a079a129_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=327pt]{namespacex11_1_1render_a2bab441e71f42470e767c6f6a079a129_icgraph}
+\end{center}
+\end{figure}

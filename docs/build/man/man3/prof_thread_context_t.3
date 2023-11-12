@@ -1,0 +1,79 @@
+.TH "prof::thread_context_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+prof::thread_context_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <profiling\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBadd_event\fP (\fBevent_t\fP ev)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "char \fBname\fP [\fBPROFILING_THREAD_NAME_SIZE\fP] {}"
+.br
+.ti -1c
+.RI "\fBthread_timeline_t\fP \fBtimeline\fP {}"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::size_t \fBinsert_index\fP = 0"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB51\fP of file \fBprofiling\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void prof::thread_context_t::add_event (\fBevent_t\fP ev)\fC [inline]\fP"
+
+.PP
+Definition at line \fB54\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+54                                         {
+55         timeline[insert_index] = ev;
+56         insert_index = insert_index + 1;
+57         if (insert_index >= PROFILING_TIMELINE_SIZE) {
+58           insert_index = 0;
+59         }
+60       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "std::size_t prof::thread_context_t::insert_index = 0\fC [private]\fP"
+
+.PP
+Definition at line \fB65\fP of file \fBprofiling\&.h\fP\&.
+.SS "char prof::thread_context_t::name[\fBPROFILING_THREAD_NAME_SIZE\fP] {}"
+
+.PP
+Definition at line \fB52\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+52 {};
+.fi
+
+.SS "\fBthread_timeline_t\fP prof::thread_context_t::timeline {}"
+
+.PP
+Definition at line \fB62\fP of file \fBprofiling\&.h\fP\&..PP
+.nf
+62 {};
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

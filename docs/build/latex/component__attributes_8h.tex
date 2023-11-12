@@ -1,0 +1,172 @@
+\doxysection{include/core/component\+\_\+attributes.h File Reference}
+\hypertarget{component__attributes_8h}{}\label{component__attributes_8h}\index{include/core/component\_attributes.h@{include/core/component\_attributes.h}}
+{\ttfamily \#include "{}dimensions.\+hpp"{}}\newline
+Include dependency graph for component\+\_\+attributes.\+h\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=295pt]{component__attributes_8h__incl}
+\end{center}
+\end{figure}
+This graph shows which files directly or indirectly include this file\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{component__attributes_8h__dep__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structattribute__i}{attribute\+\_\+i}}
+\item 
+struct \mbox{\hyperlink{structattr__x}{attr\+\_\+x$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__y}{attr\+\_\+y$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__w}{attr\+\_\+w$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__h}{attr\+\_\+h$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__margin__top}{attr\+\_\+margin\+\_\+top$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__margin__bottom}{attr\+\_\+margin\+\_\+bottom$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__margin__left}{attr\+\_\+margin\+\_\+left$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__margin__right}{attr\+\_\+margin\+\_\+right$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__padding__top}{attr\+\_\+padding\+\_\+top$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__padding__bottom}{attr\+\_\+padding\+\_\+bottom$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__padding__left}{attr\+\_\+padding\+\_\+left$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__padding__right}{attr\+\_\+padding\+\_\+right$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattr__content}{attr\+\_\+content$<$ E $>$}}
+\item 
+struct \mbox{\hyperlink{structattrs__margin}{attrs\+\_\+margin$<$ T $>$}}
+\item 
+struct \mbox{\hyperlink{structattrs__padding}{attrs\+\_\+padding$<$ T $>$}}
+\item 
+struct \mbox{\hyperlink{structattrs__dimensions}{attrs\+\_\+dimensions$<$ T $>$}}
+\item 
+struct \mbox{\hyperlink{structattrs__component}{attrs\+\_\+component$<$ T $>$}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{component__attributes_8h_ab4b075619d5e3e53e0e862f761625752}{COMPONENT\+\_\+\+ATTRIBUTE}}(TYPE,  NAME,  DEFAULT)
+\item 
+\#define \mbox{\hyperlink{component__attributes_8h_a3416f2a52a4de9af8b6e0af0e56389de}{COMPONENT\+\_\+\+ATTRIBUTE\+\_\+\+W\+\_\+\+MONITOR}}(TYPE,  NAME,  DEFAULT)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{component__attributes_8h_a433f1845478577b631417df1354fac68}{content}} = std\+::vector$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__holder__t}{cydui\+::components\+::component\+\_\+holder\+\_\+t}} $>$
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{component__attributes_8h_ab4b075619d5e3e53e0e862f761625752}\label{component__attributes_8h_ab4b075619d5e3e53e0e862f761625752} 
+\index{component\_attributes.h@{component\_attributes.h}!COMPONENT\_ATTRIBUTE@{COMPONENT\_ATTRIBUTE}}
+\index{COMPONENT\_ATTRIBUTE@{COMPONENT\_ATTRIBUTE}!component\_attributes.h@{component\_attributes.h}}
+\doxysubsubsection{\texorpdfstring{COMPONENT\_ATTRIBUTE}{COMPONENT\_ATTRIBUTE}}
+{\footnotesize\ttfamily \#define COMPONENT\+\_\+\+ATTRIBUTE(\begin{DoxyParamCaption}\item[{}]{TYPE,  }\item[{}]{NAME,  }\item[{}]{DEFAULT }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ E>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }attr\_\#\#NAME:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structattribute__i}{attribute\_i}}\ \{\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ TYPE\ \_\#\#NAME\ =\ DEFAULT;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{component__attributes_8h_source_l00012}{12}} of file \mbox{\hyperlink{component__attributes_8h_source}{component\+\_\+attributes.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structattribute__i}{attribute\_i}}\ \{\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \(\backslash\)}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ TYPE\ \_\#\#NAME\ =\ DEFAULT;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00024\ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{component__attributes_8h_a3416f2a52a4de9af8b6e0af0e56389de}\label{component__attributes_8h_a3416f2a52a4de9af8b6e0af0e56389de} 
+\index{component\_attributes.h@{component\_attributes.h}!COMPONENT\_ATTRIBUTE\_W\_MONITOR@{COMPONENT\_ATTRIBUTE\_W\_MONITOR}}
+\index{COMPONENT\_ATTRIBUTE\_W\_MONITOR@{COMPONENT\_ATTRIBUTE\_W\_MONITOR}!component\_attributes.h@{component\_attributes.h}}
+\doxysubsubsection{\texorpdfstring{COMPONENT\_ATTRIBUTE\_W\_MONITOR}{COMPONENT\_ATTRIBUTE\_W\_MONITOR}}
+{\footnotesize\ttfamily \#define COMPONENT\+\_\+\+ATTRIBUTE\+\_\+\+W\+\_\+\+MONITOR(\begin{DoxyParamCaption}\item[{}]{TYPE,  }\item[{}]{NAME,  }\item[{}]{DEFAULT }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ E>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }attr\_\#\#NAME:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structattribute__i}{attribute\_i}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ TYPE\ \_\#\#NAME\ =\ DEFAULT;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{component__attributes_8h_source_l00026}{26}} of file \mbox{\hyperlink{component__attributes_8h_source}{component\+\_\+attributes.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structattribute__i}{attribute\_i}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ TYPE\ \_\#\#NAME\ =\ DEFAULT;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00041\ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{component__attributes_8h_a433f1845478577b631417df1354fac68}\label{component__attributes_8h_a433f1845478577b631417df1354fac68} 
+\index{component\_attributes.h@{component\_attributes.h}!content@{content}}
+\index{content@{content}!component\_attributes.h@{component\_attributes.h}}
+\doxysubsubsection{\texorpdfstring{content}{content}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{component__attributes_8h_a433f1845478577b631417df1354fac68}{content}} =  std\+::vector$<$\mbox{\hyperlink{structcydui_1_1components_1_1component__holder__t}{cydui\+::components\+::component\+\_\+holder\+\_\+t}}$>$}
+
+
+
+Definition at line \mbox{\hyperlink{component__attributes_8h_source_l00058}{58}} of file \mbox{\hyperlink{component__attributes_8h_source}{component\+\_\+attributes.\+h}}.
+

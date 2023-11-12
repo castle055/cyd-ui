@@ -1,0 +1,398 @@
+.TH "cydui::layout::Layout" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::layout::Layout
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <layout\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBbind_window\fP (\fBwindow::CWindow\fP *_win)"
+.br
+.in -1c
+.SS "Private Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBcomponents::component_base_t\fP * \fBfind_by_coords\fP (int x, int y)"
+.br
+.ti -1c
+.RI "bool \fBrender_if_dirty\fP (\fBcomponents::component_base_t\fP *c)"
+.br
+.ti -1c
+.RI "\fBLayout\fP (\fBcomponents::component_state_t\fP *_root_state, \fBcomponents::component_base_t\fP *_root)"
+.br
+.ti -1c
+.RI "void \fBredraw_component\fP (\fBcomponents::component_base_t\fP *target)"
+.br
+.ti -1c
+.RI "void \fBrecompute_dimensions\fP (\fBcomponents::component_base_t\fP *start_from)"
+.br
+.ti -1c
+.RI "void \fBrecompose_layout\fP ()"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBwindow::CWindow\fP * \fBwin\fP = nullptr"
+.br
+.ti -1c
+.RI "\fBcompositing::LayoutCompositor\fP \fBcompositor\fP {}"
+.br
+.ti -1c
+.RI "\fBcomponents::component_state_t\fP * \fBroot_state\fP"
+.br
+.ti -1c
+.RI "\fBcomponents::component_base_t\fP * \fBroot\fP"
+.br
+.ti -1c
+.RI "\fBcomponents::component_state_t\fP * \fBhovering\fP = nullptr"
+.br
+.ti -1c
+.RI "\fBcomponents::component_state_t\fP * \fBfocused\fP = nullptr"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "template<components::ComponentConcept C> \fBLayout\fP * \fBcydui::layout::create\fP (\fBC\fP &&root_component)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB21\fP of file \fBlayout\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "cydui::layout::Layout::Layout (\fBcomponents::component_state_t\fP * _root_state, \fBcomponents::component_base_t\fP * _root)\fC [inline]\fP, \fC [private]\fP"
+
+.PP
+Definition at line \fB37\fP of file \fBlayout\&.h\fP\&..PP
+.nf
+38         : root_state(_root_state), root(_root), focused(_root_state) {
+39         focused\->focused = true;
+40       }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void cydui::layout::Layout::bind_window (\fBwindow::CWindow\fP * _win)"
+Configure root component
+.PP
+Definition at line \fB167\fP of file \fBlayout\&.cpp\fP\&..PP
+.nf
+167                                                             {
+168   this\->win = _win;
+169   compositor\&.set_render_target(this\->win\->win_ref, &this\->win\->profiling_ctx);
+170   {
+171     root_state\->win = this\->win;
+172     
+173     auto dim = root\->get_dimensional_relations();
+174     dim\&.w = get_frame(win\->win_ref)\->width();
+175     dim\&.h = get_frame(win\->win_ref)\->height();
+176     dim\&.fixed_w = true;
+177     dim\&.fixed_h = true;
+178     root\->subscribe_events();
+179   }
+180   
+181   listen(RedrawEvent, {
+182     if (it\&.data\->win != 0 && it\&.data\->win != get_id(win\->win_ref))
+183       return;
+184     auto _pev = this\->win\->profiling_ctx\&.scope_event("Redraw");
+185     if (it\&.data\->component) {
+186       component_state_t* target_state =
+187         ((component_state_t*) it\&.data\->component);
+188       if (target_state\->component_instance\&.has_value()) {
+189         redraw_component(target_state\->component_instance\&.value());
+190       }
+191     } else {
+192       redraw_component(root);
+193     }
+194   });
+195   listen(KeyEvent, {
+196     if (it\&.data\->win != get_id(win\->win_ref))
+197       return;
+198     auto _pev = this\->win\->profiling_ctx\&.scope_event("Key");
+199     if (focused && focused\->component_instance) {
+200       if (focused\->focused) {
+201         if (it\&.data\->pressed) {
+202           INSTANCE_EV_HANDLER(focused)\->on_key_press(*it\&.data);
+203         } else if (it\&.data\->released) {
+204           INSTANCE_EV_HANDLER(focused)\->on_key_release(*it\&.data);
+205         }
+206       } else {
+207         focused = nullptr;
+208       }
+209     }
+210   });
+211   listen(ButtonEvent, {
+212     if (it\&.data\->win != get_id(win\->win_ref))
+213       return;
+214     auto _pev = this\->win\->profiling_ctx\&.scope_event("Button");
+215     
+216     component_base_t* target = root;
+217     component_base_t* specified_target = find_by_coords(it\&.data\->x, it\&.data\->y);
+218     if (specified_target) {
+219       target = specified_target;
+220     }
+221     
+222     auto dim = target\->get_dimensional_relations();
+223     int rel_x = it\&.data\->x \- dim\&.cx\&.val();
+224     int rel_y = it\&.data\->y \- dim\&.cy\&.val();
+225     
+226     if (focused != target\->state\&.value()) {
+227       if (focused) {
+228         if (focused\->component_instance\&.has_value()) {
+229           focused\->component_instance\&.value()
+230             \->event_handler()
+231             \->on_button_release((Button) it\&.data\->button, 0, 0);
+232         }
+233         focused\->focused = false;
+234         focused = nullptr;
+235       }
+236       focused = target\->state\&.value();
+237       focused\->focused = true;
+238     }
+239     
+240     if (it\&.data\->pressed) {
+241       target\->event_handler()\->on_button_press((Button) it\&.data\->button, rel_x, rel_y);
+242     } else {
+243       target\->event_handler()\->on_button_release((Button) it\&.data\->button, rel_x, rel_y);
+244     }
+245     render_if_dirty(root);
+246   });
+247   listen(ScrollEvent, {
+248     if (it\&.data\->win != get_id(win\->win_ref))
+249       return;
+250     auto _pev = this\->win\->profiling_ctx\&.scope_event("Scroll");
+251     component_base_t* target = root;
+252     component_base_t* specified_target = find_by_coords(it\&.data\->x, it\&.data\->y);
+253     if (specified_target) {
+254       target = specified_target;
+255     }
+256     
+257     target\->event_handler()\->on_scroll(it\&.data\->dx, it\&.data\->dy);
+258     
+259     render_if_dirty(root);
+260   });
+261   listen(MotionEvent, {
+262     if (it\&.data\->win != get_id(win\->win_ref))
+263       return;
+264     auto _pev = this\->win\->profiling_ctx\&.scope_event("Motion");
+265     
+266     if (it\&.data\->x == \-1 && it\&.data\->y == \-1) {
+267       if (hovering && hovering\->component_instance\&.has_value()) {
+268         int exit_rel_x = 0;
+269         int exit_rel_y = 0;
+270         hovering\->hovering = false;
+271         hovering\->component_instance\&.value()
+272           \->event_handler()\->on_mouse_exit(0, 0);
+273         hovering = nullptr;
+274       }
+275     } else {
+276       component_base_t* target = root;
+277       component_base_t* specified_target = find_by_coords(it\&.data\->x, it\&.data\->y);
+278       if (specified_target)
+279         target = specified_target;
+280       
+281       auto dim = target\->get_dimensional_relations();
+282       int rel_x = it\&.data\->x \- dim\&.cx\&.val();
+283       int rel_y = it\&.data\->y \- dim\&.cy\&.val();
+284       
+285       if (hovering != target\->state\&.value()) {
+286         if (hovering && hovering\->component_instance\&.has_value()) {
+287           auto h_dim = hovering\->component_instance\&.value()\->get_dimensional_relations();
+288           int exit_rel_x = it\&.data\->x \- h_dim\&.cx\&.val();
+289           int exit_rel_y = it\&.data\->y \- h_dim\&.cy\&.val();
+290           hovering\->hovering = false;
+291           hovering\->component_instance\&.value()
+292             \->event_handler()\->on_mouse_exit(exit_rel_x, exit_rel_y);
+293           hovering = nullptr;
+294         }
+295         hovering = target\->state\&.value();
+296         hovering\->hovering = true;
+297         
+298         target\->event_handler()\->on_mouse_enter(rel_x, rel_y);
+299       } else {
+300         target\->event_handler()\->on_mouse_motion(rel_x, rel_y);
+301       }
+302     }
+303     
+304     // Calling 'Drag' related event handlers
+305     //cydui::components::Component* target = root;
+306     //cydui::components::Component* specified_target =
+307     //  find_by_coords(root, it\&.data\->x, it\&.data\->y);
+308     //if (specified_target)
+309     //  target = specified_target;
+310     //
+311     //if (it\&.data\->dragging) {
+312     //  if (dragging_context\&.dragging) {
+313     //    int rel_x = it\&.data\->x \- (*target\->state\&.unwrap())\->dim\&.cx\&.val();
+314     //    int rel_y = it\&.data\->y \- (*target\->state\&.unwrap())\->dim\&.cy\&.val();
+315     //    dragging_context\&.dragging_item\&.drag_move(dragging_context\&.dragging_item, rel_x, rel_y);
+316     //    target\->on_drag_motion(rel_x, rel_y);
+317     //  } else {
+318     //    int rel_x = it\&.data\->x \- (*target\->state\&.unwrap())\->dim\&.cx\&.val();
+319     //    int rel_y = it\&.data\->y \- (*target\->state\&.unwrap())\->dim\&.cy\&.val();
+320     //    target\->state\&.let(_(components::ComponentState * , {
+321     //      for (auto &item : it\->draggable_sources) {
+322     //        if (item\&.x \- 10 <= rel_x && rel_x <= item\&.x + 10
+323     //          && item\&.y \- 10 <= rel_y && rel_y <= item\&.y + 10) {
+324     //          dragging_context\&.dragging_item = item\&.start_drag(rel_x, rel_y);
+325     //          break;
+326     //        }
+327     //      }
+328     //    }));
+329     //    target\->on_drag_start(rel_x, rel_y);
+330     //    dragging_context\&.dragging = true;
+331     //  }
+332     //} else if (dragging_context\&.dragging) {
+333     //  int rel_x = it\&.data\->x \- (*target\->state\&.unwrap())\->dim\&.cx\&.val();
+334     //  int rel_y = it\&.data\->y \- (*target\->state\&.unwrap())\->dim\&.cy\&.val();
+335     //  dragging_context\&.dragging_item\&.drag_end(dragging_context\&.dragging_item, rel_x, rel_y);
+336     //  target\->on_drag_finish(rel_x, rel_y);
+337     //  dragging_context\&.dragging = false;
+338     //  dragging_context\&.dragging_item = drag_n_drop::draggable_t {};
+339     //}
+340     
+341     render_if_dirty(root);
+342   });
+343   listen(ResizeEvent, {
+344     if (it\&.data\->win != get_id(win\->win_ref))
+345       return;
+346     auto _pev = this\->win\->profiling_ctx\&.scope_event("Resize");
+347     log_lay\&.debug("RESIZE w=%d, h=%d", it\&.data\->w, it\&.data\->h);
+348     
+349     auto dim = root\->get_dimensional_relations();
+350     dim\&.w = it\&.data\->w;
+351     dim\&.h = it\&.data\->h;
+352     dim\&.fixed_w = true;
+353     dim\&.fixed_h = true;
+354     
+355     redraw_component(root);
+356   });
+357 }
+.fi
+
+.SS "\fBcomponent_base_t\fP * cydui::layout::Layout::find_by_coords (int x, int y)\fC [private]\fP"
+
+.PP
+Definition at line \fB154\fP of file \fBlayout\&.cpp\fP\&..PP
+.nf
+154                                                                 {
+155   return root\->find_by_coords(x, y);
+156 }
+.fi
+
+.SS "void cydui::layout::Layout::recompose_layout ()\fC [private]\fP"
+
+.SS "void cydui::layout::Layout::recompute_dimensions (\fBcomponents::component_base_t\fP * start_from)\fC [private]\fP"
+
+.PP
+Definition at line \fB104\fP of file \fBlayout\&.cpp\fP\&..PP
+.nf
+106   {
+107   if (!compute_dimensions(start_from) && start_from\->parent\&.has_value()) {
+108     component_base_t* c = start_from\->parent\&.value();
+109     while (c && !compute_dimensions(c)) {
+110       if (!c\->parent\&.has_value()) {
+111         log_lay\&.error("Could not compute dimensions");
+112         // TODO \- Catch dimensional error
+113       }
+114       c = c\->parent\&.value();
+115     }
+116   }
+117 }
+.fi
+
+.SS "void cydui::layout::Layout::redraw_component (\fBcomponents::component_base_t\fP * target)\fC [private]\fP"
+
+.PP
+Definition at line \fB119\fP of file \fBlayout\&.cpp\fP\&..PP
+.nf
+119                                                                  {
+120   log_lay\&.debug("REDRAW");
+121   //auto t0 = std::chrono::system_clock::now()\&.time_since_epoch();
+122   // Clear render area of component instances
+123   auto* compositing_tree = new compositing::compositing_tree_t;
+124   
+125   // TODO \- For now the entire screen is redraw everytime, in the future it
+126   // would be interesting to implement a diff algorithm that could redraw
+127   // subsections of the screen\&.
+128   target\->clear_children();
+129   // Recreate those instances with redraw(), this set all size hints relationships
+130   target\->redraw(this);
+131   
+132   recompute_dimensions(root);
+133   
+134   root\->get_fragment(this, &compositing_tree\->root);
+135   //compositing_tree\->fix_dimensions();
+136   
+137   compositor\&.compose(compositing_tree);
+138 }
+.fi
+
+.SS "bool cydui::layout::Layout::render_if_dirty (\fBcomponents::component_base_t\fP * c)\fC [private]\fP"
+
+.PP
+Definition at line \fB141\fP of file \fBlayout\&.cpp\fP\&..PP
+.nf
+141                                                            {
+142   if (c\->state\&.value()\->_dirty) {
+143     redraw_component(c);
+144     return true;
+145   } else {
+146     bool any = false;
+147     for (auto &item: c\->children)
+148       any = render_if_dirty(item) || any;// ! F**K, order here matters
+149     // ? render_if_dirty() needs to be called before `any` is checked\&.
+150     return any;
+151   }
+152 }
+.fi
+
+.SH "Friends And Related Symbol Documentation"
+.PP 
+.SS "template<components::ComponentConcept C> \fBLayout\fP * \fBcydui::layout::create\fP (\fBC\fP && root_component)\fC [friend]\fP"
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBcompositing::LayoutCompositor\fP cydui::layout::Layout::compositor {}\fC [private]\fP"
+
+.PP
+Definition at line \fB24\fP of file \fBlayout\&.h\fP\&..PP
+.nf
+24 {};
+.fi
+
+.SS "\fBcomponents::component_state_t\fP* cydui::layout::Layout::focused = nullptr\fC [private]\fP"
+
+.PP
+Definition at line \fB30\fP of file \fBlayout\&.h\fP\&.
+.SS "\fBcomponents::component_state_t\fP* cydui::layout::Layout::hovering = nullptr\fC [private]\fP"
+
+.PP
+Definition at line \fB29\fP of file \fBlayout\&.h\fP\&.
+.SS "\fBcomponents::component_base_t\fP* cydui::layout::Layout::root\fC [private]\fP"
+
+.PP
+Definition at line \fB27\fP of file \fBlayout\&.h\fP\&.
+.SS "\fBcomponents::component_state_t\fP* cydui::layout::Layout::root_state\fC [private]\fP"
+
+.PP
+Definition at line \fB26\fP of file \fBlayout\&.h\fP\&.
+.SS "\fBwindow::CWindow\fP* cydui::layout::Layout::win = nullptr\fC [private]\fP"
+
+.PP
+Definition at line \fB22\fP of file \fBlayout\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

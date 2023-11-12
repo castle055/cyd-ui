@@ -1,0 +1,225 @@
+\chapter{CYD-\/\+UI}
+\hypertarget{index}{}\label{index}\index{CYD-\/UI@{CYD-\/UI}}
+\label{index_md_README}%
+\Hypertarget{index_md_README}%
+\doxysection*{~\newline
+  ~\newline
+ CYD UI ~\newline
+ }
+
+\doxyparagraph*{A C++ library for building native user interfaces}
+
+
+
+    
+
+
+
+\href{\#key-features}{\texttt{ Key Features}} • \href{\#installation}{\texttt{ Installation}} • \href{\#how-to-use}{\texttt{ How To Use}} • \href{\#code-architecture}{\texttt{ Code Architecture}} • \href{\#credits}{\texttt{ Credits}} • \href{\#license}{\texttt{ License}} 
+
+\begin{quote}
+{\bfseries{NOTE\+:}} Currently, only {\bfseries{Linux}} with the {\bfseries{X11 Window System}} is supported. \end{quote}
+\hypertarget{index_autotoc_md0}{}\doxysubsection{\texorpdfstring{Key Features}{Key Features}}\label{index_autotoc_md0}
+
+\begin{DoxyItemize}
+\item {\bfseries{Declarative}} -\/ Or as close as it can get with c++ syntax and macros
+\item {\bfseries{Event Driven}} -\/ Built-\/in event bus extensible with custom events
+\item {\bfseries{Component Oriented}} -\/ Declare encapsulated components and reuse them anywhere
+\item {\bfseries{Header-\/only UIs}} -\/ A single component in a header file is renderable UI
+\item {\bfseries{Reactive sizing of components}} -\/ Relations can be established between different dimensions
+\item {\bfseries{Multi-\/threaded}} -\/ Separate event and render threads as well as a custom task runner
+\end{DoxyItemize}\hypertarget{index_autotoc_md1}{}\doxysubsubsection{\texorpdfstring{Road map}{Road map}}\label{index_autotoc_md1}
+
+\begin{DoxyItemize}
+\item Better abstraction for component styling
+\begin{DoxyItemize}
+\item Integrate with CSS (or similar)
+\end{DoxyItemize}
+\item Cross-\/platform
+\begin{DoxyItemize}
+\item Windows, mac\+OS and Linux ready.
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{index_autotoc_md2}{}\doxysubsection{\texorpdfstring{Installation}{Installation}}\label{index_autotoc_md2}
+Everything needed in order to use this library is located inside {\ttfamily dist/}, header files to be included in the project are in {\ttfamily dist/include}.
+
+Make sure the binary {\ttfamily dist/libcyd\+\_\+ui.\+a} is linked to the project and that the header files are included\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ ...}
+\DoxyCodeLine{}
+\DoxyCodeLine{include\_directories(<PATH\ TO\ HEADER\ FILES\ DIRECTORY>)}
+\DoxyCodeLine{target\_link\_libraries(<EXECUTABLE>\ PUBLIC\ <PATH\ TO\ BINARY\ libcyd\_ui.a>)}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md3}{}\doxysubsubsection{\texorpdfstring{Dependencies}{Dependencies}}\label{index_autotoc_md3}
+Any project using this library must also link against the following libraries\+:
+
+
+\begin{DoxyItemize}
+\item X11
+\item Xft
+\item Xrender
+\item fontconfig
+\item yaml-\/cpp
+\item jpeg
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\#\ ...}
+\DoxyCodeLine{}
+\DoxyCodeLine{\#\ On\ some\ systems,\ it\ may\ be\ needed\ to\ include\ the\ headers\ directory}
+\DoxyCodeLine{\#\ for\ freetype2.\ On\ Arch\ Linux:\ /usr/include/freetype2}
+\DoxyCodeLine{include\_directories(<PATH\ TO\ FREETYPE2\ HEADERS>)}
+\DoxyCodeLine{}
+\DoxyCodeLine{target\_link\_libraries(<EXECUTABLE>\ PUBLIC\ X11\ Xft\ Xrender)}
+\DoxyCodeLine{target\_link\_libraries(<EXECUTABLE>\ PUBLIC\ fontconfig)}
+\DoxyCodeLine{target\_link\_libraries(<EXECUTABLE>\ PUBLIC\ yaml-\/cpp)}
+\DoxyCodeLine{target\_link\_libraries(<EXECUTABLE>\ PUBLIC\ jpeg)}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md4}{}\doxysubsection{\texorpdfstring{How To Use}{How To Use}}\label{index_autotoc_md4}
+Each component must have a declaration for a state class and a component class. This is done with the {\ttfamily \doxylink{component__macros_8h_adf82c38b14cc6c67209d8252e8a9199e}{STATE(\+NAME)}\{\}} and {\ttfamily \doxylink{component__macros_8h_a815d8178754c2fcbbb661c6ac8f9fb1f}{COMPONENT(\+NAME)}\{\}} macros.
+
+The name must be a valid class name.\hypertarget{index_autotoc_md5}{}\doxysubsubsection{\texorpdfstring{Example Component}{Example Component}}\label{index_autotoc_md5}
+This example declares a component that displays an orange rectangle with black text inside. A third component is added 40 pixels down from the top.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ SomeComponent.hpp}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cydui_8hpp}{cydui.hpp}}"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Declare\ STATE\ class\ for\ component}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ This\ one\ persists\ across\ renders}}
+\DoxyCodeLine{\mbox{\hyperlink{component__macros_8h_adf82c38b14cc6c67209d8252e8a9199e}{STATE}}(SomeComponent)\ \{\ \textcolor{comment}{//\ Expands\ to\ 'SomeComponentState'}}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ Color\ instances}}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color}{color::Color}}\ fg\_color\ =\ \textcolor{stringliteral}{"{}\#FCAE1E"{}}\_color;}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{structcydui_1_1graphics_1_1color_1_1Color}{color::Color}}\ fg\_inv\_color\ =\ \textcolor{stringliteral}{"{}\#000000"{}}\_color;}
+\DoxyCodeLine{\ \ }
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ Font\ specification}}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{structcydui_1_1graphics_1_1font_1_1Font}{font::Font}}\ \mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}\ \{}
+\DoxyCodeLine{\ \ \ \ .name\ =\ \textcolor{stringliteral}{"{}Fira\ Code\ Retina"{}},}
+\DoxyCodeLine{\ \ \ \ .size\ =\ 10,}
+\DoxyCodeLine{\ \ \};}
+\DoxyCodeLine{\ \ }
+\DoxyCodeLine{\ \ INIT\_STATE(SomeComponent)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Optional\ initialization\ code...}}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ Declare\ COMPONENT\ class\ for\ component}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ This\ one\ may\ be\ created\ or\ destroyed\ at\ any\ moment}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ In\ general,\ if\ it's\ not\ on\ screen\ it's\ not\ here\ either}}
+\DoxyCodeLine{\mbox{\hyperlink{component__macros_8h_a815d8178754c2fcbbb661c6ac8f9fb1f}{COMPONENT}}(SomeComponent)\ \{}
+\DoxyCodeLine{\ \ PROPS(\{\ \textcolor{comment}{//\ Passed\ from\ parent\ on\ each\ render}}
+\DoxyCodeLine{\ \ \ \ std::string\ label;}
+\DoxyCodeLine{\ \ \})}
+\DoxyCodeLine{\ \ }
+\DoxyCodeLine{\ \ INIT(SomeComponent)\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Optional\ initialization\ code...}}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\ \ }
+\DoxyCodeLine{\ \ REDRAW\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Declare\ contents\ of\ this\ component}}
+\DoxyCodeLine{\ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ 'props'\ Holds\ the\ properties\ for\ this\ render\ as\ the\ type\ declared}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ above\ with\ PROPS(\{...\}).}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ 'state'\ Is\ a\ reference\ to\ the\ relevant\ SomeComponentState\ instance.}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ 'dim'\ \ \ Contains\ the\ dimensions\ of\ this\ instance\ of\ SomeComponent.}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ x/y\ \ \ -\/\ position\ relative\ to\ parent}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ cx/cy\ -\/\ absolute\ position\ relative\ to\ top-\/left\ corner\ of\ the\ window}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ w/h\ \ \ -\/\ absolute\ size}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ cw/ch\ -\/\ content\ size,\ accounting\ for\ padding\ and\ margin}}
+\DoxyCodeLine{\ \ \ \ add(\{}
+\DoxyCodeLine{\ \ \ \ \ \ COMP(Rectangle)(\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .props\ =\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ properties\ of\ children\ component}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ .color\ =\ state-\/>fg\_color,\ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ .filled\ =\ \textcolor{keyword}{true},\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .w\ =\ dim-\/>cw,\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ dimensional\ relations\ (x,y,w,h)}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .h\ =\ state-\/>font.size\ *\ 2,\ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\ \ \ \ \ \ \}),}
+\DoxyCodeLine{\ \ \ \ \ \ COMP(Text)(\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .props\ =\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ .color\ =\ state-\/>fg\_inv\_color,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ .font\ =\ \&state-\/>font,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ .text\ =\ props.label,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .y\ =\ state-\/>font.size\ /\ 2,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Optionally,\ you\ can\ provide\ an\ initialization\ function}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .init\ =\ [\textcolor{keyword}{this}](Text*\ text)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ text-\/>dim-\/>x\ =\ dim-\/>cw\ +\ (-\/1\ *\ text-\/>dim-\/>w)\ -\/\ 5;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \}),}
+\DoxyCodeLine{\ \ \ \ \ \ COMP(OtherComponent)(\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .props\ =\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ .label\ =\ \textcolor{stringliteral}{"{}Hello\ there..."{}}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .x\ =\ 3,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .y\ =\ 40,}
+\DoxyCodeLine{\ \ \ \ \ \ \}),}
+\DoxyCodeLine{\ \ \ \ \});}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Rectangle\ and\ Text\ are\ Component\ primitives\ included\ in\ the\ library}}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ OtherComponent\ would\ be\ another\ component\ declared\ similar\ to\ SomeComponent}}
+\DoxyCodeLine{\ \ \}}
+\DoxyCodeLine{\};}
+
+\end{DoxyCode}
+
+
+In order to show the component on the screen, it must be instantiated along with its state. Then a layout is created with the component as the root. Finally, a window is constructed.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{//\ main.cpp}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}SomeComponent.hpp"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ main()\ \{}
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ Instantiate\ a\ layout\ to\ hold\ the\ root\ component\ and\ handle\ events}}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout}{cydui::layout::Layout}}*\ layout\ =\ cydui::layout::create<SomeComponent>(\{}
+\DoxyCodeLine{\ \ \ \ .props\ =\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ .label\ =\ \textcolor{stringliteral}{"{}Hello,\ World!"{}},}
+\DoxyCodeLine{\ \ \ \ \},}
+\DoxyCodeLine{\ \ \});}
+\DoxyCodeLine{\ \ }
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ Create\ the\ window\ that\ will\ display\ the\ layout}}
+\DoxyCodeLine{\ \ \mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{cydui::window::CWindow}}*\ win\ =\ \mbox{\hyperlink{namespacecydui_1_1window_a7a6979b2904a74aa3456f320746e78b6}{cydui::window::create}}(}
+\DoxyCodeLine{\ \ \ \ layout,}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}Example\ Window\ Title"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}example-\/window-\/class"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ 0,\ \ \ 0,\ \textcolor{comment}{//\ X,\ Y\ of\ the\ window}}
+\DoxyCodeLine{\ \ \ \ 800,\ 800\ \ \textcolor{comment}{//\ W,\ H\ of\ the\ window}}
+\DoxyCodeLine{\ \ );}
+\DoxyCodeLine{\ \ }
+\DoxyCodeLine{\ \ \textcolor{comment}{//\ Hold\ main\ thread\ in\ a\ loop\ of\ do\ something\ else...}}
+\DoxyCodeLine{\ \ \textcolor{comment}{//while\ (1);}}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+This will start the window on a separate thread.\hypertarget{index_autotoc_md6}{}\doxysubsection{\texorpdfstring{Code Architecture}{Code Architecture}}\label{index_autotoc_md6}
+\hypertarget{index_autotoc_md7}{}\doxysubsubsection{\texorpdfstring{Include Graph}{Include Graph}}\label{index_autotoc_md7}
+\hypertarget{index_autotoc_md8}{}\doxysubsection{\texorpdfstring{Credits}{Credits}}\label{index_autotoc_md8}
+This software uses the following open source projects\+:
+
+
+\begin{DoxyItemize}
+\item \href{https://xorg.freedesktop.org}{\texttt{ X11, Xft, Xrender}}
+\item \href{http://www.freedesktop.org/wiki/Software/fontconfig}{\texttt{ Fontconfig}}
+\item \href{https://github.com/jbeder/yaml-cpp}{\texttt{ Yaml-\/cpp}}
+\item \href{https://libjpeg-turbo.org}{\texttt{ Jpeg}}
+\end{DoxyItemize}\hypertarget{index_autotoc_md9}{}\doxysubsection{\texorpdfstring{License}{License}}\label{index_autotoc_md9}
+GPL 3.\+0
+
+\doxysectlink{md_LICENSE}{LICENSE.md}{0}
+
+\DoxyHorRuler{0}
+
+
+\begin{quote}
+Git\+Hub \href{https://github.com/castle055}{\texttt{ @castle055}} ~\textperiodcentered{}~ \end{quote}

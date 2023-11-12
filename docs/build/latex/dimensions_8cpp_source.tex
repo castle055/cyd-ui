@@ -1,0 +1,211 @@
+\doxysection{dimensions.\+cpp}
+\hypertarget{dimensions_8cpp_source}{}\label{dimensions_8cpp_source}\index{src/layout/dimensions.cpp@{src/layout/dimensions.cpp}}
+\mbox{\hyperlink{dimensions_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 1/23/23.}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{dimensions_8hpp}{core/dimensions.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00009}00009\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespacecydui}{cydui}};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00011}\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_af59a023fa693496e4a7188ff3125de44}{00011}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_af59a023fa693496e4a7188ff3125de44}{dimensions::dimension\_t::compute}}(\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimensions::dimension\_t}}\&\ dimension)\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00012}00012\ \ \ \textcolor{comment}{//\ Compute\ value\ for\ all\ dependencies\ recursively,\ catch\ circular\ deps}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00013}00013\ \ \ dimension.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a09d648cb67171a9331413b2ec56ece27}{unknown}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00014}00014\ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\&\ item:\ dimension.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a0098b789747b7ad03724b174cef4327d}{deps}})\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00015}00015\ \ \ \ \ \textcolor{keywordflow}{if}\ (item-\/>unknown\ ||\ !\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_af59a023fa693496e4a7188ff3125de44}{compute}}(*item))\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00016}00016\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00017}00017\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00018}00018\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00020}00020\ \ \ \textcolor{comment}{//\ Compute\ own\ value}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00021}00021\ \ \ dimension.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a89a341699e02020d36c1b5a6ef5ec031}{value}}\ \ \ =\ dimension.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_adaaa3cdf0c66f335be657467d0e55fdc}{binding}}();}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00022}00022\ \ \ dimension.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a09d648cb67171a9331413b2ec56ece27}{unknown}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00023}00023\ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00024}00024\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00026}00026\ \textcolor{comment}{//\ OPERATORS,\ CONSTRUCTORS\ AND\ UTILS}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00027}\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t_a0e1fd83a6d9fca8c47e17463e85c26bc}{00027}}\ \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t_a0e1fd83a6d9fca8c47e17463e85c26bc}{dimensions::dimensional\_relation\_t::dimensional\_relation\_t}}(}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ std::function<\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\_value\_t}}()>\ \_binding,}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ std::unordered\_set<dimension\_t*>\ \_deps}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00030}00030\ ):\ deps(std::move(\_deps)),\ binding(std::move(\_binding))\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00032}\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t_a88fee2a918134957799b93669f04f1eb}{00032}}\ \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t_a0e1fd83a6d9fca8c47e17463e85c26bc}{dimensions::dimensional\_relation\_t::dimensional\_relation\_t}}(}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00033}00033\ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimensions::dimension\_value\_t}}\ val)\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00034}00034\ \ \ this-\/>binding\ =\ [val]()\ \{\ \textcolor{keywordflow}{return}\ val;\ \};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00035}00035\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00037}\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t_acd103546110900b4a82eaadcdbf46fa1}{00037}}\ \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t_a0e1fd83a6d9fca8c47e17463e85c26bc}{dimensions::dimensional\_relation\_t::dimensional\_relation\_t}}(}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00038}00038\ \ \ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimensions::dimension\_t}}\ \&dim)\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00039}00039\ \ \ this-\/>deps\ =\ \{\&dim\};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00040}00040\ \ \ this-\/>binding\ =\ [\&dim]()\ \{\ \textcolor{keywordflow}{return}\ dim.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();\ \};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00041}00041\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00043}\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a5acf28bae2f15ab0b42c8e1504926130}{00043}}\ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ab26ae70cc24dd30a207343a530a5c88c}{dimensions::dimension\_t::dimension\_t}}(\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimensions::dimension\_value\_t}}\ val)\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00044}00044\ \ \ this-\/>value\ \ \ =\ val;}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00045}00045\ \ \ this-\/>binding\ =\ [val]()\ \{\ \textcolor{keywordflow}{return}\ val;\ \};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00046}00046\ \ \ this-\/>unknown\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00047}00047\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00049}00049\ \textcolor{comment}{//dimensions::dimension\_t::dimension\_t(dimensions::dimension\_t\ \&value)\ \{}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00050}00050\ \textcolor{comment}{//\ \ this-\/>deps.push\_back(\&value);}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00051}00051\ \textcolor{comment}{//\ \ this-\/>binding\ =\ [this]()\ \{\ return\ *(this-\/>deps[0]);\ \};}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00052}00052\ \textcolor{comment}{//\ \ this-\/>unknown\ =\ false;}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00053}00053\ \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00055}\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_af1750c93076d23f030934ed38f0b5aa0}{00055}}\ dimensions::dimension\_t::operator\ \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\_value\_t}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00056}00056\ \ \ \textcolor{keywordflow}{return}\ value;}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00057}00057\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00059}\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{00059}}\ \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimensions::dimension\_value\_t}}\ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{dimensions::dimension\_t::val}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00060}00060\ \ \ \textcolor{keywordflow}{return}\ value;}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00061}00061\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00063}\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a8e909709aeae61f2993018a6dfb790c6}{00063}}\ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimensions::dimension\_t}}\&\ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a8e909709aeae61f2993018a6dfb790c6}{dimensions::dimension\_t::operator=}}(}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00064}00064\ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\_value\_t}}\ val)\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00065}00065\ \ \ this-\/>deps.clear();}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00066}00066\ \ \ this-\/>value\ \ \ =\ val;}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00067}00067\ \ \ this-\/>binding\ =\ [val]()\ \{\ \textcolor{keywordflow}{return}\ val;\ \};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00068}00068\ \ \ this-\/>unknown\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00069}00069\ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00070}00070\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00072}\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a03f4f0a6bd40b7ddd1423fb804275761}{00072}}\ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimensions::dimension\_t}}\&\ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a8e909709aeae61f2993018a6dfb790c6}{dimensions::dimension\_t::operator=}}(}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimensions::dimension\_t}}\ \textcolor{keyword}{const}\&\ dim)\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00074}00074\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{this}\ ==\ \&dim)\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};\textcolor{comment}{//\ Is\ this\ really\ needed??}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00076}00076\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00077}00077\ \ \ \ \ this-\/>deps.clear();}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00078}00078\ \ \ \ \ this-\/>deps.insert((\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\_t}}*)\&dim);}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00079}00079\ \ \ \ \ this-\/>binding\ =\ [\&dim]()\ \{\ \textcolor{keywordflow}{return}\ dim;\ \};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00080}00080\ \ \ \ \ this-\/>unknown\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00083}00083\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00085}\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a8cbd6a25af9a3f58d0ae8845b5b6ed59}{00085}}\ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimensions::dimension\_t}}\&\ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a8e909709aeae61f2993018a6dfb790c6}{dimensions::dimension\_t::operator=}}(}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00086}00086\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t}{dimensional\_relation\_t}}\ val)\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00087}00087\ \ \ \ \ this-\/>deps.clear();}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00088}00088\ \ \ \ \ this-\/>deps\ \ \ \ =\ val.\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t_a5413c183b4248763faf56d092a20046b}{deps}};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00089}00089\ \ \ \ \ this-\/>binding\ =\ std::move(val.\mbox{\hyperlink{structcydui_1_1dimensions_1_1dimensional__relation__t_a554c606d5c0414b64fcdf5c012f92768}{binding}});}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00090}00090\ \ \ \ \ this-\/>unknown\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00091}00091\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00092}00092\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00094}\mbox{\hyperlink{structcydui_1_1dimensions_1_1four__sided__dimension__t_aec0b5ad00fc061f283ef434bb6dbcd3a}{00094}}\ \mbox{\hyperlink{structcydui_1_1dimensions_1_1four__sided__dimension__t}{dimensions::four\_sided\_dimension\_t}}\ \&\mbox{\hyperlink{structcydui_1_1dimensions_1_1four__sided__dimension__t_aec0b5ad00fc061f283ef434bb6dbcd3a}{dimensions::four\_sided\_dimension\_t::operator=}}(\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\_value\_t}}\ val)\ \{}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00095}00095\ \ \ \ \ this-\/>top\ =\ val;}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00096}00096\ \ \ \ \ this-\/>right\ =\ val;}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00097}00097\ \ \ \ \ this-\/>bottom\ =\ val;}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00098}00098\ \ \ \ \ this-\/>left\ =\ val;}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00100}00100\ \}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00102}\mbox{\hyperlink{dimensions_8cpp_a3adf92e255b76bd16dce420a05139934}{00102}}\ \textcolor{preprocessor}{\#define\ DIMENSION\_OPERATOR(OP)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00103}00103\ \textcolor{preprocessor}{\ \ dimensions::dimensional\_relation\_t\ dimensions::operator\ OP(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00104}00104\ \textcolor{preprocessor}{\ \ \ \ \ \ const\ dimension\_t\&\ dim,\ dimension\_value\_t\ val)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00105}00105\ \textcolor{preprocessor}{\ \ \ \ return\ dimensional\_relation\_t(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00106}00106\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ [\&dim,\ val]()\ \{\ return\ dim.val()\ OP\ val;\ \},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00107}00107\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \{(dimension\_t*)\&dim\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00108}00108\ \textcolor{preprocessor}{\ \ \ \ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00109}00109\ \textcolor{preprocessor}{\ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00110}00110\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00111}00111\ \textcolor{preprocessor}{\ \ dimensions::dimensional\_relation\_t\ dimensions::operator\ OP(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00112}00112\ \textcolor{preprocessor}{\ \ \ \ \ \ dimension\_value\_t\ val,\ dimension\_t\&\ dim)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00113}00113\ \textcolor{preprocessor}{\ \ \ \ return\ dimensional\_relation\_t(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00114}00114\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ [\&dim,\ val]()\ \{\ return\ dim.val()\ OP\ val;\ \},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00115}00115\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \{\&dim\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00116}00116\ \textcolor{preprocessor}{\ \ \ \ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00117}00117\ \textcolor{preprocessor}{\ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00118}00118\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00119}00119\ \textcolor{preprocessor}{\ \ dimensions::dimensional\_relation\_t\ dimensions::operator\ OP(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00120}00120\ \textcolor{preprocessor}{\ \ \ \ \ \ const\ dimension\_t\&\ dim,\ dimension\_t\&\ dim1)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00121}00121\ \textcolor{preprocessor}{\ \ \ \ return\ dimensional\_relation\_t(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00122}00122\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ [\&dim,\ \&dim1]()\ \{\ return\ dim.val()\ OP\ dim1.val();\ \},\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00123}00123\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \{(dimension\_t*)\&dim,\ (dimension\_t*)\&dim1\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00124}00124\ \textcolor{preprocessor}{\ \ \ \ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00125}00125\ \textcolor{preprocessor}{\ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00126}00126\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00127}00127\ \textcolor{preprocessor}{\ \ dimensions::dimensional\_relation\_t\ dimensions::operator\ OP(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00128}00128\ \textcolor{preprocessor}{\ \ \ \ \ \ const\ dimension\_t\&\ dim,\ const\ dimensional\_relation\_t\&\ val)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00129}00129\ \textcolor{preprocessor}{\ \ \ \ dimensional\_relation\_t\ rel(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00130}00130\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ [\&dim,\ val]()\ \{\ return\ dim.val()\ OP\ val.binding();\ \},\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00131}00131\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \{(dimension\_t*)\&dim\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00132}00132\ \textcolor{preprocessor}{\ \ \ \ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00133}00133\ \textcolor{preprocessor}{\ \ \ \ for\ (const\ auto\&\ item:\ val.deps)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00134}00134\ \textcolor{preprocessor}{\ \ \ \ \ \ rel.deps.insert(item);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00135}00135\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00136}00136\ \textcolor{preprocessor}{\ \ \ \ return\ rel;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00137}00137\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00139}\mbox{\hyperlink{namespacecydui_1_1dimensions_a435d25c762731f507c9de3f4645237f9}{00139}}\ \mbox{\hyperlink{dimensions_8cpp_a3adf92e255b76bd16dce420a05139934}{DIMENSION\_OPERATOR}}(+)}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00141}\mbox{\hyperlink{namespacecydui_1_1dimensions_aaa974217e3a0fdf69bd5331e19528c42}{00141}}\ \mbox{\hyperlink{dimensions_8cpp_a3adf92e255b76bd16dce420a05139934}{DIMENSION\_OPERATOR}}(-\/)}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00143}\mbox{\hyperlink{namespacecydui_1_1dimensions_acf451e0b3c8da287cd36529880ecfb2e}{00143}}\ \mbox{\hyperlink{dimensions_8cpp_a3adf92e255b76bd16dce420a05139934}{DIMENSION\_OPERATOR}}(*)}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00145}\mbox{\hyperlink{namespacecydui_1_1dimensions_a0e3f0ed378974dbf27f1bcb45258750c}{00145}}\ \mbox{\hyperlink{dimensions_8cpp_a3adf92e255b76bd16dce420a05139934}{DIMENSION\_OPERATOR}}(/)}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00147}\mbox{\hyperlink{namespacecydui_1_1dimensions_aab3a85b8707b4cf4aed724f8542bb919}{00147}}\ \mbox{\hyperlink{dimensions_8cpp_a3adf92e255b76bd16dce420a05139934}{DIMENSION\_OPERATOR}}(\%)}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00149}00149\ \textcolor{preprocessor}{\#undef\ DIMENSION\_OPERATOR}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00151}\mbox{\hyperlink{dimensions_8cpp_aacd539a28a480b07db7c6d200b963506}{00151}}\ \textcolor{preprocessor}{\#define\ DIMENSION\_REL\_OPERATOR(OP)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00152}00152\ \textcolor{preprocessor}{\ \ dimensions::dimensional\_relation\_t\ dimensions::operator\ OP(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00153}00153\ \textcolor{preprocessor}{\ \ \ \ \ \ const\ dimensional\_relation\_t\ r,\ dimension\_value\_t\ val)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00154}00154\ \textcolor{preprocessor}{\ \ \ \ return\ dimensional\_relation\_t(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00155}00155\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ [r,\ val]()\ \{\ return\ r.binding()\ OP\ val;\ \},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00156}00156\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ r.deps\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00157}00157\ \textcolor{preprocessor}{\ \ \ \ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00158}00158\ \textcolor{preprocessor}{\ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00159}00159\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00160}00160\ \textcolor{preprocessor}{\ \ dimensions::dimensional\_relation\_t\ dimensions::operator\ OP(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00161}00161\ \textcolor{preprocessor}{\ \ \ \ \ \ dimension\_value\_t\ val,\ dimensional\_relation\_t\ r)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00162}00162\ \textcolor{preprocessor}{\ \ \ \ return\ dimensional\_relation\_t(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00163}00163\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ [r,\ val]()\ \{\ return\ r.binding()\ OP\ val;\ \},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00164}00164\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ r.deps\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00165}00165\ \textcolor{preprocessor}{\ \ \ \ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00166}00166\ \textcolor{preprocessor}{\ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00167}00167\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00168}00168\ \textcolor{preprocessor}{\ \ dimensions::dimensional\_relation\_t\ dimensions::operator\ OP(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00169}00169\ \textcolor{preprocessor}{\ \ \ \ \ \ const\ dimensional\_relation\_t\ r,\ dimension\_t\&\ dim)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00170}00170\ \textcolor{preprocessor}{\ \ \ \ dimensional\_relation\_t\ rel(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00171}00171\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ [r,\ \&dim]()\ \{\ return\ r.binding()\ OP\ dim.val();\ \},\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00172}00172\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \{\&dim\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00173}00173\ \textcolor{preprocessor}{\ \ \ \ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00174}00174\ \textcolor{preprocessor}{\ \ \ \ for\ (const\ auto\&\ item:\ r.deps)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00175}00175\ \textcolor{preprocessor}{\ \ \ \ \ \ rel.deps.insert(item);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00176}00176\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00177}00177\ \textcolor{preprocessor}{\ \ \ \ return\ rel;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00178}00178\ \textcolor{preprocessor}{\ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00179}00179\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00180}00180\ \textcolor{preprocessor}{\ \ dimensions::dimensional\_relation\_t\ dimensions::operator\ OP(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00181}00181\ \textcolor{preprocessor}{\ \ \ \ \ \ const\ dimensional\_relation\_t\ r,\ const\ dimensional\_relation\_t\ val)\ \{\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00182}00182\ \textcolor{preprocessor}{\ \ \ \ dimensional\_relation\_t\ rel(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00183}00183\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ [r,\ val]()\ \{\ return\ r.binding()\ OP\ val.binding();\ \},\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00184}00184\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \{\}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00185}00185\ \textcolor{preprocessor}{\ \ \ \ );\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00186}00186\ \textcolor{preprocessor}{\ \ \ \ for\ (const\ auto\&\ item:\ r.deps)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00187}00187\ \textcolor{preprocessor}{\ \ \ \ \ \ rel.deps.insert(item);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00188}00188\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00189}00189\ \textcolor{preprocessor}{\ \ \ \ for\ (const\ auto\&\ item:\ val.deps)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00190}00190\ \textcolor{preprocessor}{\ \ \ \ \ \ rel.deps.insert(item);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00191}00191\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00192}00192\ \textcolor{preprocessor}{\ \ \ \ return\ rel;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00193}00193\ \textcolor{preprocessor}{\ \ \}}}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00194}00194\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00195}\mbox{\hyperlink{namespacecydui_1_1dimensions_a3686ee7ed8165f9808b5a44a4523c2a2}{00195}}\ \mbox{\hyperlink{dimensions_8cpp_aacd539a28a480b07db7c6d200b963506}{DIMENSION\_REL\_OPERATOR}}(+)}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00197}\mbox{\hyperlink{namespacecydui_1_1dimensions_af3fc7a01a084c9e0af5a995a91208620}{00197}}\ \mbox{\hyperlink{dimensions_8cpp_aacd539a28a480b07db7c6d200b963506}{DIMENSION\_REL\_OPERATOR}}(-\/)}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00198}00198\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00199}\mbox{\hyperlink{namespacecydui_1_1dimensions_a20c56f2842c976f24880908a1383accf}{00199}}\ \mbox{\hyperlink{dimensions_8cpp_aacd539a28a480b07db7c6d200b963506}{DIMENSION\_REL\_OPERATOR}}(*)}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00200}00200\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00201}\mbox{\hyperlink{namespacecydui_1_1dimensions_a2cb06b794f692aa37a0ad78907ac97f4}{00201}}\ \mbox{\hyperlink{dimensions_8cpp_aacd539a28a480b07db7c6d200b963506}{DIMENSION\_REL\_OPERATOR}}(/)}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00202}00202\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00203}\mbox{\hyperlink{namespacecydui_1_1dimensions_afdb73b4763db4f5ceaf1969f3f3b1455}{00203}}\ \mbox{\hyperlink{dimensions_8cpp_aacd539a28a480b07db7c6d200b963506}{DIMENSION\_REL\_OPERATOR}}(\%)}
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00204}00204\ }
+\DoxyCodeLine{\Hypertarget{dimensions_8cpp_source_l00205}00205\ \textcolor{preprocessor}{\#undef\ DIMENSION\_REL\_OPERATOR}}
+
+\end{DoxyCode}

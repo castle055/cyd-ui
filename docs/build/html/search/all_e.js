@@ -1,0 +1,27 @@
+var searchData=
+[
+  ['m_0',['m',['../cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73a69691c7bdcc3ce6d5d8a1361f22d04ac',1,'M:&#160;cydui_events.h'],['../classcydui_1_1compositing_1_1LayoutCompositor.html#a2a5e313aff23b76564f4ec0213a2c0b3',1,'cydui::compositing::LayoutCompositor::m']]],
+  ['main_1',['main',['../classcydui_1_1tasks_1_1simple__task__w__result__t.html#a3593f7260da1662055ed7a1a45d8ec0d',1,'cydui::tasks::simple_task_w_result_t::main()'],['../classcydui_1_1tasks_1_1task__t.html#ae7b332d0d6946bfa5844e97fe375eb57',1,'cydui::tasks::task_t::main()']]],
+  ['managed_2',['managed',['../structcydui_1_1events_1_1Event.html#a315eca418925693699125760b05984bb',1,'cydui::events::Event']]],
+  ['map_3',['Road map',['../index.html#autotoc_md1',1,'']]],
+  ['map_5fto_4',['map_to',['../structcydui_1_1components_1_1with_1_1with_3_01I_01_4.html#a2baab6e7a2540785320e56e4b1d36d7d',1,'cydui::components::with::with&lt; I &gt;::map_to()'],['../with__specialization_8h.html#a716777172841d0397154e72bfa7b99fd',1,'map_to:&#160;with_specialization.h']]],
+  ['map_5fto_5fresult_5ft_5',['map_to_result_t',['../structcydui_1_1components_1_1with_1_1map__to__result__t.html#ae0311dd785fe156f113a053ac6a18617',1,'cydui::components::with::map_to_result_t::map_to_result_t()'],['../structcydui_1_1components_1_1with_1_1map__to__result__t.html',1,'cydui::components::with::map_to_result_t']]],
+  ['margin_6',['margin',['../structcydui_1_1dimensions_1_1component__dimensions__t.html#a6037456fa87379a2c26a637d4c8ba525',1,'cydui::dimensions::component_dimensions_t']]],
+  ['margin_5fbottom_7',['margin_bottom',['../structcydui_1_1components_1_1component__dimensional__relations__t.html#a8efe73435369d0f76180815e25df3d25',1,'cydui::components::component_dimensional_relations_t::margin_bottom'],['../structattr__margin__bottom.html#a221f1e7c39153fba575bcfe9f911bb87',1,'attr_margin_bottom::margin_bottom(auto &amp;_margin_bottom_)'],['../structattr__margin__bottom.html#aeda8cf09d324fd54733d5e85e8d83186',1,'attr_margin_bottom::margin_bottom(auto &amp;&amp;_margin_bottom_)']]],
+  ['margin_5fleft_8',['margin_left',['../structcydui_1_1components_1_1component__dimensional__relations__t.html#ac8ccffebbb36cf2106712acd85bdfa7f',1,'cydui::components::component_dimensional_relations_t::margin_left'],['../structattr__margin__left.html#af5a69a683c61f6ea68c88dd6f9ca53ba',1,'attr_margin_left::margin_left(auto &amp;_margin_left_)'],['../structattr__margin__left.html#ab6c4fee006662dbf3a86f1899c80002b',1,'attr_margin_left::margin_left(auto &amp;&amp;_margin_left_)']]],
+  ['margin_5fright_9',['margin_right',['../structattr__margin__right.html#aff4f3f79d648d17c5fef77415923e2e9',1,'attr_margin_right::margin_right()'],['../structcydui_1_1components_1_1component__dimensional__relations__t.html#af1a7ecccce31a5f1fbe8d020c6a40248',1,'cydui::components::component_dimensional_relations_t::margin_right'],['../structattr__margin__right.html#aa9652a5454e28608e624cb8e9ac7c5c5',1,'attr_margin_right::margin_right()']]],
+  ['margin_5ftop_10',['margin_top',['../structcydui_1_1components_1_1component__dimensional__relations__t.html#a3f370609f52a256853778654e4e07ff6',1,'cydui::components::component_dimensional_relations_t::margin_top'],['../structattr__margin__top.html#ac03e2db7fdb4dcb35defc19913e1ad85',1,'attr_margin_top::margin_top(auto &amp;_margin_top_)'],['../structattr__margin__top.html#abd53bc5751a9e981918015c353781d37',1,'attr_margin_top::margin_top(auto &amp;&amp;_margin_top_)']]],
+  ['mark_11',['mark',['../structprof_1_1event__t.html#a76a61bf15db0a3c18dfc3af319b44dec',1,'prof::event_t']]],
+  ['mark_5fdirty_12',['mark_dirty',['../structcydui_1_1components_1_1component__state__t.html#a6e52ed7487c61640ad4a8edd0689906f',1,'cydui::components::component_state_t']]],
+  ['mark_5fend_13',['mark_end',['../structprof_1_1event__t.html#aefa17c9b04bf2cc39388dae7e79b373a',1,'prof::event_t']]],
+  ['mark_5fevent_14',['mark_event',['../structprof_1_1context__t.html#aac2969e9b88ec3856aad464beb145b4d',1,'prof::context_t']]],
+  ['mark_5fstart_15',['mark_start',['../structprof_1_1event__t.html#aaffa32beec73940cdfdc4a5a7af7ad62',1,'prof::event_t']]],
+  ['md_5fbuffer_5ft_16',['md_buffer_t',['../structmd__buffer__t.html',1,'md_buffer_t&lt; E, D &gt;'],['../structmd__buffer__t.html#aa76df2922d47dc9c4d58fd44de4a7e8f',1,'md_buffer_t::md_buffer_t()']]],
+  ['md_5fbuffer_5ft_3c_20pixel_5ft_2c_202_20_3e_17',['md_buffer_t&lt; pixel_t, 2 &gt;',['../structmd__buffer__t.html',1,'']]],
+  ['middle_18',['MIDDLE',['../namespacecydui_1_1graphics_1_1vg.html#a685facf7124964455c420c9fb86749aba43eedd8685eb86592022f8da962e3474',1,'cydui::graphics::vg']]],
+  ['min_5flevel_19',['min_level',['../structlogging_1_1logger.html#a52495a82a5eeac5506f15b8d62df574a',1,'logging::logger']]],
+  ['motionevent_20',['MotionEvent',['../structMotionEvent.html',1,'']]],
+  ['motioneventdatamonitor_21',['motionEventDataMonitor',['../graphics_2x11_2events_2events_8cpp.html#a855a89e149e6d6e3921518a5813357cc',1,'events.cpp']]],
+  ['mtx_22',['mtx',['../structprof_1_1context__t.html#a40c359aad2579eacb34eb52bd1e2d48e',1,'prof::context_t']]],
+  ['multidim_5fdata_2eh_23',['multidim_data.h',['../multidim__data_8h.html',1,'']]]
+];

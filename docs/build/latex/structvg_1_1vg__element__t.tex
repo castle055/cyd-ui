@@ -1,0 +1,123 @@
+\doxysection{vg\+::vg\+\_\+element\+\_\+t Struct Reference}
+\hypertarget{structvg_1_1vg__element__t}{}\label{structvg_1_1vg__element__t}\index{vg::vg\_element\_t@{vg::vg\_element\_t}}
+
+
+{\ttfamily \#include $<$vg.\+h$>$}
+
+
+
+Inheritance diagram for vg\+::vg\+\_\+element\+\_\+t\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=273pt]{structvg_1_1vg__element__t__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structvg_1_1vg__element__t_1_1footprint}{footprint}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structvg_1_1vg__element__t_a4b6333568b6b06d7657afb902e6b45d6}{\+\_\+internal\+\_\+set\+\_\+origin}} (int x, int y)
+\item 
+virtual \mbox{\hyperlink{structvg_1_1vg__element__t_aa2a033ec04ad8994213cc0d0140b3838}{\texorpdfstring{$\sim$}{\string~}vg\+\_\+element\+\_\+t}} ()=default
+\item 
+virtual void \mbox{\hyperlink{structvg_1_1vg__element__t_a34e274817a70ba1e3ff8d551797bac25}{apply\+\_\+to}} (\mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\+\_\+editor\+\_\+t}} \&editor) const =0
+\item 
+virtual \mbox{\hyperlink{structvg_1_1vg__element__t_1_1footprint}{footprint}} \mbox{\hyperlink{structvg_1_1vg__element__t_a5574fb0a7fb4afb3748da1cbee21f6b8}{get\+\_\+footprint}} () const =0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022}{origin\+\_\+x}} = 0
+\item 
+int \mbox{\hyperlink{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59}{origin\+\_\+y}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00014}{14}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structvg_1_1vg__element__t_aa2a033ec04ad8994213cc0d0140b3838}\label{structvg_1_1vg__element__t_aa2a033ec04ad8994213cc0d0140b3838} 
+\index{vg::vg\_element\_t@{vg::vg\_element\_t}!````~vg\_element\_t@{\texorpdfstring{$\sim$}{\string~}vg\_element\_t}}
+\index{````~vg\_element\_t@{\texorpdfstring{$\sim$}{\string~}vg\_element\_t}!vg::vg\_element\_t@{vg::vg\_element\_t}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}vg\_element\_t()}{\string~vg\_element\_t()}}
+{\footnotesize\ttfamily virtual vg\+::vg\+\_\+element\+\_\+t\+::\texorpdfstring{$\sim$}{\string~}vg\+\_\+element\+\_\+t (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structvg_1_1vg__element__t_a4b6333568b6b06d7657afb902e6b45d6}\label{structvg_1_1vg__element__t_a4b6333568b6b06d7657afb902e6b45d6} 
+\index{vg::vg\_element\_t@{vg::vg\_element\_t}!\_internal\_set\_origin@{\_internal\_set\_origin}}
+\index{\_internal\_set\_origin@{\_internal\_set\_origin}!vg::vg\_element\_t@{vg::vg\_element\_t}}
+\doxysubsubsection{\texorpdfstring{\_internal\_set\_origin()}{\_internal\_set\_origin()}}
+{\footnotesize\ttfamily void vg\+::vg\+\_\+element\+\_\+t\+::\+\_\+internal\+\_\+set\+\_\+origin (\begin{DoxyParamCaption}\item[{int}]{x,  }\item[{int}]{y }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00017}{17}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022}{origin\_x}}\ =\ x;}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59}{origin\_y}}\ =\ y;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structvg_1_1vg__element__t_a34e274817a70ba1e3ff8d551797bac25}\label{structvg_1_1vg__element__t_a34e274817a70ba1e3ff8d551797bac25} 
+\index{vg::vg\_element\_t@{vg::vg\_element\_t}!apply\_to@{apply\_to}}
+\index{apply\_to@{apply\_to}!vg::vg\_element\_t@{vg::vg\_element\_t}}
+\doxysubsubsection{\texorpdfstring{apply\_to()}{apply\_to()}}
+{\footnotesize\ttfamily virtual void vg\+::vg\+\_\+element\+\_\+t\+::apply\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\+\_\+editor\+\_\+t}} \&}]{editor }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{structvg_1_1pixel_a87c2d05fe484c90f97ab98f4ec96357f}{vg\+::pixel}}, \mbox{\hyperlink{structvg_1_1line_ad1986670aa96c8bb748738adff5556bc}{vg\+::line}}, \mbox{\hyperlink{structvg_1_1polygon_ac189c46a3db67b5b3293d9c2332af6fe}{vg\+::polygon}}, \mbox{\hyperlink{structvg_1_1polyline_ac34cce82e91c44ac75762ddec6c7cfb7}{vg\+::polyline}}, \mbox{\hyperlink{structvg_1_1path_abdbf2abc543a2eeb26b51d838a3c1669}{vg\+::path}}, \mbox{\hyperlink{structvg_1_1rect_a38954dd82bb674cabb5d203843330f0c}{vg\+::rect}}, \mbox{\hyperlink{structvg_1_1circle_aa06c5413a17d3a83a81ad792891c1f1c}{vg\+::circle}}, \mbox{\hyperlink{structvg_1_1ellipse_a4d709d208a0ec7ae0c2385cbb53e4d12}{vg\+::ellipse}}, \mbox{\hyperlink{structvg_1_1group_a3cdadfbded5c66a11a8894c01a7b0867}{vg\+::group}}, and \mbox{\hyperlink{structvg_1_1text_a224e09a3e97e1c1a7d1a3ced8d6246cf}{vg\+::text}}.
+
+\Hypertarget{structvg_1_1vg__element__t_a5574fb0a7fb4afb3748da1cbee21f6b8}\label{structvg_1_1vg__element__t_a5574fb0a7fb4afb3748da1cbee21f6b8} 
+\index{vg::vg\_element\_t@{vg::vg\_element\_t}!get\_footprint@{get\_footprint}}
+\index{get\_footprint@{get\_footprint}!vg::vg\_element\_t@{vg::vg\_element\_t}}
+\doxysubsubsection{\texorpdfstring{get\_footprint()}{get\_footprint()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{structvg_1_1vg__element__t_1_1footprint}{footprint}} vg\+::vg\+\_\+element\+\_\+t\+::get\+\_\+footprint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{structvg_1_1pixel_aa63efca5cdc01ce2624ab9a585f86455}{vg\+::pixel}}, \mbox{\hyperlink{structvg_1_1line_aca7b38cab68d37fcd4433846cd7277f7}{vg\+::line}}, \mbox{\hyperlink{structvg_1_1polygon_ad608a723f018b7636526f3efcb6279e9}{vg\+::polygon}}, \mbox{\hyperlink{structvg_1_1polyline_a147f6384251bfafda585b1363d29d2a2}{vg\+::polyline}}, \mbox{\hyperlink{structvg_1_1path_a050ab33f570608f84d6826a58d4c3594}{vg\+::path}}, \mbox{\hyperlink{structvg_1_1rect_ab0332615f56f1e05a87019b3c09d20ef}{vg\+::rect}}, \mbox{\hyperlink{structvg_1_1circle_ad73c1e230d078fb0a10aed99e65861e8}{vg\+::circle}}, \mbox{\hyperlink{structvg_1_1ellipse_a0d2eb14d4acc31a268e7dfcb79ffcaef}{vg\+::ellipse}}, \mbox{\hyperlink{structvg_1_1group_ad1a097d4b10edc6ecefac51f2bed1cb8}{vg\+::group}}, and \mbox{\hyperlink{structvg_1_1text_a9e430ba42e59fd9ba04d662871577613}{vg\+::text}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022}\label{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022} 
+\index{vg::vg\_element\_t@{vg::vg\_element\_t}!origin\_x@{origin\_x}}
+\index{origin\_x@{origin\_x}!vg::vg\_element\_t@{vg::vg\_element\_t}}
+\doxysubsubsection{\texorpdfstring{origin\_x}{origin\_x}}
+{\footnotesize\ttfamily int vg\+::vg\+\_\+element\+\_\+t\+::origin\+\_\+x = 0}
+
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00015}{15}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+\Hypertarget{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59}\label{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59} 
+\index{vg::vg\_element\_t@{vg::vg\_element\_t}!origin\_y@{origin\_y}}
+\index{origin\_y@{origin\_y}!vg::vg\_element\_t@{vg::vg\_element\_t}}
+\doxysubsubsection{\texorpdfstring{origin\_y}{origin\_y}}
+{\footnotesize\ttfamily int vg\+::vg\+\_\+element\+\_\+t\+::origin\+\_\+y = 0}
+
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00016}{16}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/graphics/\mbox{\hyperlink{vg_8h}{vg.\+h}}\end{DoxyCompactItemize}

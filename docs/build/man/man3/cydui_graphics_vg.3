@@ -1,0 +1,308 @@
+.TH "cydui::graphics::vg" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::graphics::vg
+.SH SYNOPSIS
+.br
+.PP
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBpaint\fP"
+.br
+.in -1c
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBaccepts_content\fP"
+.br
+.ti -1c
+.RI "struct \fBattr_cx\fP"
+.br
+.RI "cx - center x-axis coordinate "
+.ti -1c
+.RI "struct \fBattr_cy\fP"
+.br
+.RI "cy - center y-axis coordinate "
+.ti -1c
+.RI "struct \fBattr_fill\fP"
+.br
+.RI "fill "
+.ti -1c
+.RI "struct \fBattr_fill_opacity\fP"
+.br
+.RI "fill-opacity "
+.ti -1c
+.RI "struct \fBattr_fill_rule\fP"
+.br
+.RI "fill-rule "
+.ti -1c
+.RI "struct \fBattr_font_family\fP"
+.br
+.RI "font-family "
+.ti -1c
+.RI "struct \fBattr_font_size\fP"
+.br
+.RI "font-size "
+.ti -1c
+.RI "struct \fBattr_font_stretch\fP"
+.br
+.RI "font-stretch "
+.ti -1c
+.RI "struct \fBattr_font_style\fP"
+.br
+.RI "font-style "
+.ti -1c
+.RI "struct \fBattr_font_weight\fP"
+.br
+.RI "font-weight "
+.ti -1c
+.RI "struct \fBattr_h\fP"
+.br
+.RI "height "
+.ti -1c
+.RI "struct \fBattr_hidden\fP"
+.br
+.RI "hidden - replaces display='none' from SVG "
+.ti -1c
+.RI "struct \fBattr_id\fP"
+.br
+.RI "id "
+.ti -1c
+.RI "struct \fBattr_opacity\fP"
+.br
+.RI "opacity "
+.ti -1c
+.RI "struct \fBattr_path_str\fP"
+.br
+.RI "d - path str "
+.ti -1c
+.RI "struct \fBattr_points\fP"
+.br
+.RI "points "
+.ti -1c
+.RI "struct \fBattr_r\fP"
+.br
+.RI "r - radius "
+.ti -1c
+.RI "struct \fBattr_rx\fP"
+.br
+.RI "rx - radius in x-axis "
+.ti -1c
+.RI "struct \fBattr_ry\fP"
+.br
+.RI "ry - radius in y-axis "
+.ti -1c
+.RI "struct \fBattr_stroke\fP"
+.br
+.RI "stroke "
+.ti -1c
+.RI "struct \fBattr_stroke_dasharray\fP"
+.br
+.RI "stroke-dasharray "
+.ti -1c
+.RI "struct \fBattr_stroke_dashoffset\fP"
+.br
+.RI "stroke-dashoffset "
+.ti -1c
+.RI "struct \fBattr_stroke_linecap\fP"
+.br
+.RI "stroke-linecap "
+.ti -1c
+.RI "struct \fBattr_stroke_linejoin\fP"
+.br
+.RI "stroke-linejoin "
+.ti -1c
+.RI "struct \fBattr_stroke_miterlimit\fP"
+.br
+.RI "stroke-miterlimit "
+.ti -1c
+.RI "struct \fBattr_stroke_opacity\fP"
+.br
+.RI "stroke-opacity "
+.ti -1c
+.RI "struct \fBattr_stroke_width\fP"
+.br
+.RI "stroke-width "
+.ti -1c
+.RI "struct \fBattr_style_class\fP"
+.br
+.RI "class "
+.ti -1c
+.RI "struct \fBattr_text_anchor\fP"
+.br
+.RI "text-anchor "
+.ti -1c
+.RI "struct \fBattr_text_decoration\fP"
+.br
+.RI "text-decoration "
+.ti -1c
+.RI "struct \fBattr_w\fP"
+.br
+.RI "width "
+.ti -1c
+.RI "struct \fBattr_x\fP"
+.br
+.RI "x - x-axis coordinate "
+.ti -1c
+.RI "struct \fBattr_x1\fP"
+.br
+.RI "x1 - 1st point x-axis coordinate "
+.ti -1c
+.RI "struct \fBattr_x2\fP"
+.br
+.RI "x2 - 2nd point x-axis coordinate "
+.ti -1c
+.RI "struct \fBattr_y\fP"
+.br
+.RI "y - y-axis coordinate "
+.ti -1c
+.RI "struct \fBattr_y1\fP"
+.br
+.RI "y1 - 1st point y-axis coordinate "
+.ti -1c
+.RI "struct \fBattr_y2\fP"
+.br
+.RI "y2 - 2nd point y-axis coordinate "
+.ti -1c
+.RI "struct \fBattribute_i\fP"
+.br
+.ti -1c
+.RI "struct \fBattrs_core\fP"
+.br
+.ti -1c
+.RI "struct \fBattrs_fill\fP"
+.br
+.ti -1c
+.RI "struct \fBattrs_font\fP"
+.br
+.ti -1c
+.RI "struct \fBattrs_stroke\fP"
+.br
+.ti -1c
+.RI "struct \fBcircle\fP"
+.br
+.ti -1c
+.RI "struct \fBellipse\fP"
+.br
+.ti -1c
+.RI "struct \fBgroup\fP"
+.br
+.ti -1c
+.RI "struct \fBline\fP"
+.br
+.ti -1c
+.RI "struct \fBpath\fP"
+.br
+.ti -1c
+.RI "struct \fBpixel\fP"
+.br
+.ti -1c
+.RI "struct \fBpolygon\fP"
+.br
+.ti -1c
+.RI "struct \fBpolyline\fP"
+.br
+.ti -1c
+.RI "struct \fBrect\fP"
+.br
+.ti -1c
+.RI "struct \fBtext\fP"
+.br
+.ti -1c
+.RI "struct \fBtext_decoration_t\fP"
+.br
+.ti -1c
+.RI "struct \fBvg_element_t\fP"
+.br
+.ti -1c
+.RI "struct \fBvg_fragment_t\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "using \fBpoint_list_t\fP = std::vector< std::array< int, 2 > >"
+.br
+.ti -1c
+.RI "using \fBstroke_linecap_e\fP = Cairo::Context::LineCap"
+.br
+.ti -1c
+.RI "using \fBstroke_linejoin_e\fP = Cairo::Context::LineJoin"
+.br
+.ti -1c
+.RI "using \fBfont_style_e\fP = Cairo::ToyFontFace::Slant"
+.br
+.RI "UNUSED\&. "
+.ti -1c
+.RI "using \fBfont_weight_e\fP = Cairo::ToyFontFace::Weight"
+.br
+.ti -1c
+.RI "using \fBfill_rule_e\fP = Cairo::Context::FillRule"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum class \fBtext_anchor_e\fP { \fBSTART\fP, \fBMIDDLE\fP, \fBEND\fP }"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "using \fBcydui::graphics::vg::fill_rule_e\fP = typedef Cairo::Context::FillRule"
+
+.PP
+Definition at line \fB339\fP of file \fBvg_attributes\&.h\fP\&.
+.SS "using \fBcydui::graphics::vg::font_style_e\fP = typedef Cairo::ToyFontFace::Slant"
+
+.PP
+UNUSED\&. 
+.PP
+Definition at line \fB306\fP of file \fBvg_attributes\&.h\fP\&.
+.SS "using \fBcydui::graphics::vg::font_weight_e\fP = typedef Cairo::ToyFontFace::Weight"
+
+.PP
+Definition at line \fB310\fP of file \fBvg_attributes\&.h\fP\&.
+.SS "using \fBcydui::graphics::vg::point_list_t\fP = typedef std::vector<std::array<int, 2> >"
+
+.PP
+Definition at line \fB242\fP of file \fBvg_attributes\&.h\fP\&.
+.SS "using \fBcydui::graphics::vg::stroke_linecap_e\fP = typedef Cairo::Context::LineCap"
+
+.PP
+Definition at line \fB272\fP of file \fBvg_attributes\&.h\fP\&.
+.SS "using \fBcydui::graphics::vg::stroke_linejoin_e\fP = typedef Cairo::Context::LineJoin"
+
+.PP
+Definition at line \fB284\fP of file \fBvg_attributes\&.h\fP\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum class \fBcydui::graphics::vg::text_anchor_e\fP\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fISTART \fP\fP
+.TP
+\fB\fIMIDDLE \fP\fP
+.TP
+\fB\fIEND \fP\fP
+.PP
+Definition at line \fB314\fP of file \fBvg_attributes\&.h\fP\&..PP
+.nf
+314                              {
+315       START,
+316       MIDDLE,
+317       END,
+318     };
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -1,0 +1,257 @@
+\doxysection{cydui\+::events Namespace Reference}
+\hypertarget{namespacecydui_1_1events}{}\label{namespacecydui_1_1events}\index{cydui::events@{cydui::events}}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacecydui_1_1events_1_1change__ev}{change\+\_\+ev}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classcydui_1_1events_1_1Consumer}{Consumer}}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structcydui_1_1events_1_1ParsedEvent}{Parsed\+Event}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Concepts}
+\begin{DoxyCompactItemize}
+\item 
+concept \mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{Event\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::function$<$ void(\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}} \texorpdfstring{$\ast$}{*})$>$ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944}{Event\+Status}} \{ \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944a1647c5766793a7361ddb875b64f28b2c}{PENDING}}
+, \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944ab5dea4cc3c22655c93fd6aceeb67d908}{PROCESSING}}
+, \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520}{CONSUMED}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{namespacecydui_1_1events_abfd3c7106abd299bacc674ec3865de6a}{emit\+\_\+raw}} (\mbox{\hyperlink{structcydui_1_1events_1_1Event}{cydui\+::events\+::\+Event}} \texorpdfstring{$\ast$}{*}ev)
+\item 
+void \mbox{\hyperlink{namespacecydui_1_1events_a0dd46403db28d66d08ff9f0c61610fe7}{emit\+\_\+raw}} (const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&event\+\_\+type, void \texorpdfstring{$\ast$}{*}data)
+\item 
+{\footnotesize template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \newline
+requires Event\+Type$<$\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}$>$}\\void \mbox{\hyperlink{namespacecydui_1_1events_a64db03d0513c4d66801257e90c58b3a6}{emit}} (typename T\+::\+Data\+Type data)
+\item 
+void \mbox{\hyperlink{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc}{remove\+\_\+listener}} (const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&event\+\_\+type, const \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} \&listener)
+\item 
+\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1events_af4bd6d1ea80753200425f7457ddf2826}{on\+\_\+event\+\_\+raw}} (const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&event\+\_\+type, const \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}} \&l)
+\item 
+{\footnotesize template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \newline
+requires Event\+Type$<$\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}$>$}\\\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1events_aecd185c59b15b1d0299119e9a6825c26}{on\+\_\+event}} (\mbox{\hyperlink{classcydui_1_1events_1_1Consumer}{Consumer}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ c)
+\item 
+void \mbox{\hyperlink{namespacecydui_1_1events_ae57f3d691631bd72884ab4a6021387b9}{start}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}\label{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8} 
+\index{cydui::events@{cydui::events}!Listener@{Listener}}
+\index{Listener@{Listener}!cydui::events@{cydui::events}}
+\doxysubsubsection{\texorpdfstring{Listener}{Listener}}
+{\footnotesize\ttfamily typedef std\+::function$<$void(\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}}\texorpdfstring{$\ast$}{*})$>$ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{cydui\+::events\+::\+Listener}}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00161}{161}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944}\label{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944} 
+\index{cydui::events@{cydui::events}!EventStatus@{EventStatus}}
+\index{EventStatus@{EventStatus}!cydui::events@{cydui::events}}
+\doxysubsubsection{\texorpdfstring{EventStatus}{EventStatus}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944}{cydui\+::events\+::\+Event\+Status}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PENDING@{PENDING}!cydui::events@{cydui::events}}\index{cydui::events@{cydui::events}!PENDING@{PENDING}}}\Hypertarget{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944a1647c5766793a7361ddb875b64f28b2c}\label{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944a1647c5766793a7361ddb875b64f28b2c} 
+PENDING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{PROCESSING@{PROCESSING}!cydui::events@{cydui::events}}\index{cydui::events@{cydui::events}!PROCESSING@{PROCESSING}}}\Hypertarget{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944ab5dea4cc3c22655c93fd6aceeb67d908}\label{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944ab5dea4cc3c22655c93fd6aceeb67d908} 
+PROCESSING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{CONSUMED@{CONSUMED}!cydui::events@{cydui::events}}\index{cydui::events@{cydui::events}!CONSUMED@{CONSUMED}}}\Hypertarget{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520}\label{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520} 
+CONSUMED&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00103}{103}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944a1647c5766793a7361ddb875b64f28b2c}{PENDING}},}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944ab5dea4cc3c22655c93fd6aceeb67d908}{PROCESSING}},}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520}{CONSUMED}},}
+\DoxyCodeLine{00107\ \ \ \ \ \};}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespacecydui_1_1events_a64db03d0513c4d66801257e90c58b3a6}\label{namespacecydui_1_1events_a64db03d0513c4d66801257e90c58b3a6} 
+\index{cydui::events@{cydui::events}!emit@{emit}}
+\index{emit@{emit}!cydui::events@{cydui::events}}
+\doxysubsubsection{\texorpdfstring{emit()}{emit()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \newline
+requires Event\+Type$<$\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}$>$\\
+void cydui\+::events\+::emit (\begin{DoxyParamCaption}\item[{typename T\+::\+Data\+Type}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00143}{143}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_abfd3c7106abd299bacc674ec3865de6a}{emit\_raw}}(T::type,\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}(\{.data\ =\ data\}));}
+\DoxyCodeLine{00145\ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacecydui_1_1events_a64db03d0513c4d66801257e90c58b3a6_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespacecydui_1_1events_a0dd46403db28d66d08ff9f0c61610fe7}\label{namespacecydui_1_1events_a0dd46403db28d66d08ff9f0c61610fe7} 
+\index{cydui::events@{cydui::events}!emit\_raw@{emit\_raw}}
+\index{emit\_raw@{emit\_raw}!cydui::events@{cydui::events}}
+\doxysubsubsection{\texorpdfstring{emit\_raw()}{emit\_raw()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void cydui\+::events\+::emit\+\_\+raw (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&}]{event\+\_\+type,  }\item[{void \texorpdfstring{$\ast$}{*}}]{data }\end{DoxyParamCaption})}
+
+\Hypertarget{namespacecydui_1_1events_abfd3c7106abd299bacc674ec3865de6a}\label{namespacecydui_1_1events_abfd3c7106abd299bacc674ec3865de6a} 
+\index{cydui::events@{cydui::events}!emit\_raw@{emit\_raw}}
+\index{emit\_raw@{emit\_raw}!cydui::events@{cydui::events}}
+\doxysubsubsection{\texorpdfstring{emit\_raw()}{emit\_raw()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void cydui\+::events\+::emit\+\_\+raw (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1events_1_1Event}{cydui\+::events\+::\+Event}} \texorpdfstring{$\ast$}{*}}]{ev }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{events_2events_8cpp_source_l00123}{123}} of file \mbox{\hyperlink{events_2events_8cpp_source}{events.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00124\ \ \ \mbox{\hyperlink{events_2events_8cpp_a6773ba7cef843d0130f47a030af23b91}{push\_event}}(\mbox{\hyperlink{events_2events_8cpp_ac8f163a82cb2ef400f5bebab48c17c9c}{th\_data}},\ ev);}
+\DoxyCodeLine{00125\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacecydui_1_1events_abfd3c7106abd299bacc674ec3865de6a_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacecydui_1_1events_abfd3c7106abd299bacc674ec3865de6a_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespacecydui_1_1events_aecd185c59b15b1d0299119e9a6825c26}\label{namespacecydui_1_1events_aecd185c59b15b1d0299119e9a6825c26} 
+\index{cydui::events@{cydui::events}!on\_event@{on\_event}}
+\index{on\_event@{on\_event}!cydui::events@{cydui::events}}
+\doxysubsubsection{\texorpdfstring{on\_event()}{on\_event()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \newline
+requires Event\+Type$<$\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}$>$\\
+\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} cydui\+::events\+::on\+\_\+event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcydui_1_1events_1_1Consumer}{Consumer}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$}]{c }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00209}{209}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacecydui_1_1events_af4bd6d1ea80753200425f7457ddf2826}{cydui::events::on\_event\_raw}}(T::type,\ [c](\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}}*\ ev)\ \{}
+\DoxyCodeLine{00211\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ parsed\ =\ ev-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_ad8fbe3ea4366883699af10b5bbb0c312}{parse}}<\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}>();}
+\DoxyCodeLine{00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parsed.data)\ \{}
+\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ c(parsed);}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00216\ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacecydui_1_1events_aecd185c59b15b1d0299119e9a6825c26_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespacecydui_1_1events_af4bd6d1ea80753200425f7457ddf2826}\label{namespacecydui_1_1events_af4bd6d1ea80753200425f7457ddf2826} 
+\index{cydui::events@{cydui::events}!on\_event\_raw@{on\_event\_raw}}
+\index{on\_event\_raw@{on\_event\_raw}!cydui::events@{cydui::events}}
+\doxysubsubsection{\texorpdfstring{on\_event\_raw()}{on\_event\_raw()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} cydui\+::events\+::on\+\_\+event\+\_\+raw (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&}]{event\+\_\+type,  }\item[{const \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}} \&}]{l }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacecydui_1_1events_af4bd6d1ea80753200425f7457ddf2826_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc}\label{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc} 
+\index{cydui::events@{cydui::events}!remove\_listener@{remove\_listener}}
+\index{remove\_listener@{remove\_listener}!cydui::events@{cydui::events}}
+\doxysubsubsection{\texorpdfstring{remove\_listener()}{remove\_listener()}}
+{\footnotesize\ttfamily void cydui\+::events\+::remove\+\_\+listener (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&}]{event\+\_\+type,  }\item[{const \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} \&}]{listener }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=341pt]{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespacecydui_1_1events_ae57f3d691631bd72884ab4a6021387b9}\label{namespacecydui_1_1events_ae57f3d691631bd72884ab4a6021387b9} 
+\index{cydui::events@{cydui::events}!start@{start}}
+\index{start@{start}!cydui::events@{cydui::events}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily void cydui\+::events\+::start (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{events_2events_8cpp_source_l00113}{113}} of file \mbox{\hyperlink{events_2events_8cpp_source}{events.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00114\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{events_2events_8cpp_a5e3e24444280ea9e10126547b60a2701}{event\_thread}}\ \&\&\ \mbox{\hyperlink{events_2events_8cpp_a5e3e24444280ea9e10126547b60a2701}{event\_thread}}-\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a0133f1df15c19c50cdbb85b45bedf24b}{native\_thread}}\ !=\ \textcolor{keyword}{nullptr})}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00116\ \ \ \mbox{\hyperlink{events_2events_8cpp_afd5d7300be43f73f4cc09301c28b9c86}{log\_ctrl}}.\mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{debug}}(\textcolor{stringliteral}{"{}Starting\ event\_thread"{}});}
+\DoxyCodeLine{00117\ \ \ }
+\DoxyCodeLine{00118\ \ \ \mbox{\hyperlink{events_2events_8cpp_a5e3e24444280ea9e10126547b60a2701}{event\_thread}}\ =}
+\DoxyCodeLine{00119\ \ \ \ \ threading::new\_thread(\&\mbox{\hyperlink{events_2events_8cpp_ad8d7fea6443e738a3a00c073f0eecbf8}{event\_task}},\ \mbox{\hyperlink{events_2events_8cpp_ac8f163a82cb2ef400f5bebab48c17c9c}{th\_data}})}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ -\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_aa740ecb2c3aec2371e86fca90b115600}{set\_name}}(\textcolor{stringliteral}{"{}EV\_THD"{}});}
+\DoxyCodeLine{00121\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacecydui_1_1events_ae57f3d691631bd72884ab4a6021387b9_cgraph}
+\end{center}
+\end{figure}

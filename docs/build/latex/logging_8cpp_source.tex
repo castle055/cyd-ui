@@ -1,0 +1,98 @@
+\doxysection{logging.\+cpp}
+\hypertarget{logging_8cpp_source}{}\label{logging_8cpp_source}\index{src/logging.cpp@{src/logging.cpp}}
+\mbox{\hyperlink{logging_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 8/21/22.}}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{logging_8hpp}{cydstd/logging.hpp}}"{}}}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ <cstdarg>}}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ <ctime>}}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00010}\mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{00010}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{logging::logger::debug}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ format,\ ...)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00011}00011\ \ \ \textcolor{keywordflow}{if}\ (!this-\/>\mbox{\hyperlink{structlogging_1_1logger_a47c405c3a35bfe8ee6b66f3948e7e643}{on}}\ ||\ this-\/>\mbox{\hyperlink{structlogging_1_1logger_a52495a82a5eeac5506f15b8d62df574a}{min\_level}}\ >\ \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416a682501b7fb187303796e3f533735b51f}{DEBUG}})}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00012}00012\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00013}00013\ \ \ std::va\_list\ va;}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00014}00014\ \ \ time\_t\ now\ =\ time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00015}00015\ \ \ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00016}00016\ \ \ std::string\ msg\ =\ ctime(\&now);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00017}00017\ \ \ msg\ =\ msg.substr(0,\ msg.size()\ -\/\ 2);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00018}00018\ \ \ msg.append(\textcolor{stringliteral}{"{}:\ [DEBUG]"{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00019}00019\ \ \ msg.append(\textcolor{stringliteral}{"{}\ ["{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00020}00020\ \ \ msg.append(\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00021}00021\ \ \ msg.append(\textcolor{stringliteral}{"{}]\ "{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00022}00022\ \ \ msg.append(format);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00023}00023\ \ \ msg.append(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)r"{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00024}00024\ \ \ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00025}00025\ \ \ va\_start(va,\ format);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00026}00026\ \ \ vfprintf(stdout,\ msg.c\_str(),\ va);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00027}00027\ \ \ va\_end(va);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00028}00028\ \ \ fflush(stdout);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00029}00029\ \}}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00031}\mbox{\hyperlink{structlogging_1_1logger_a546a4589ce11ce9882e22594a517fc0b}{00031}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structlogging_1_1logger_a546a4589ce11ce9882e22594a517fc0b}{logging::logger::info}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ format,\ ...)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00032}00032\ \ \ \textcolor{keywordflow}{if}\ (!this-\/>on\ ||\ this-\/>min\_level\ >\ \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416a599d39352a6b7a4d371ea9e27bd22562}{INFO}})}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00034}00034\ \ \ va\_list\ va;}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00035}00035\ \ \ time\_t\ now\ =\ time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00036}00036\ \ \ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00037}00037\ \ \ std::string\ msg\ =\ ctime(\&now);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00038}00038\ \ \ msg\ =\ msg.substr(0,\ msg.size()\ -\/\ 2);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00039}00039\ \ \ msg.append(\textcolor{stringliteral}{"{}:\ [INFO]\ "{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00040}00040\ \ \ msg.append(\textcolor{stringliteral}{"{}\ ["{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00041}00041\ \ \ msg.append(name);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00042}00042\ \ \ msg.append(\textcolor{stringliteral}{"{}]\ "{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00043}00043\ \ \ msg.append(format);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00044}00044\ \ \ msg.append(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)r"{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00045}00045\ \ \ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00046}00046\ \ \ va\_start(va,\ format);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00047}00047\ \ \ vfprintf(stdout,\ msg.c\_str(),\ va);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00048}00048\ \ \ va\_end(va);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00049}00049\ \ \ fflush(stdout);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00050}00050\ \}}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00052}\mbox{\hyperlink{structlogging_1_1logger_aac089754626fca18b5ace327c78321b6}{00052}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structlogging_1_1logger_aac089754626fca18b5ace327c78321b6}{logging::logger::warn}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ format,\ ...)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00053}00053\ \ \ \textcolor{keywordflow}{if}\ (!this-\/>on\ ||\ this-\/>min\_level\ >\ \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416aa00f075d3e980cd854510e52ec60e5e3}{WARN}})}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00055}00055\ \ \ va\_list\ va;}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00056}00056\ \ \ time\_t\ now\ =\ time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00057}00057\ \ \ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00058}00058\ \ \ std::string\ msg\ =\ ctime(\&now);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00059}00059\ \ \ msg\ =\ msg.substr(0,\ msg.size()\ -\/\ 2);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00060}00060\ \ \ msg.append(\textcolor{stringliteral}{"{}:\ [WARN]\ "{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00061}00061\ \ \ msg.append(\textcolor{stringliteral}{"{}\ ["{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00062}00062\ \ \ msg.append(name);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00063}00063\ \ \ msg.append(\textcolor{stringliteral}{"{}]\ "{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00064}00064\ \ \ msg.append(format);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00065}00065\ \ \ msg.append(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)r"{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00066}00066\ \ \ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00067}00067\ \ \ va\_start(va,\ format);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00068}00068\ \ \ vfprintf(stdout,\ msg.c\_str(),\ va);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00069}00069\ \ \ va\_end(va);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00070}00070\ \ \ fflush(stdout);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00071}00071\ \}}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00073}\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{00073}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{logging::logger::error}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ format,\ ...)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00074}00074\ \ \ \textcolor{keywordflow}{if}\ (!this-\/>on\ ||\ this-\/>min\_level\ >\ \mbox{\hyperlink{namespacelogging_a12e05573477c76b8d6db5081863f4416abef691e55fd1813b7540614e718ab7f1}{ERROR}})}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00076}00076\ \ \ va\_list\ va;}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00077}00077\ \ \ time\_t\ now\ =\ time(\textcolor{keyword}{nullptr});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00078}00078\ \ \ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00079}00079\ \ \ std::string\ msg\ =\ ctime(\&now);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00080}00080\ \ \ msg\ =\ msg.substr(0,\ msg.size()\ -\/\ 2);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00081}00081\ \ \ msg.append(\textcolor{stringliteral}{"{}:\ [ERROR]"{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00082}00082\ \ \ msg.append(\textcolor{stringliteral}{"{}\ ["{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00083}00083\ \ \ msg.append(name);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00084}00084\ \ \ msg.append(\textcolor{stringliteral}{"{}]\ "{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00085}00085\ \ \ msg.append(format);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00086}00086\ \ \ msg.append(\textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)r"{}});}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00087}00087\ \ \ }
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00088}00088\ \ \ va\_start(va,\ format);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00089}00089\ \ \ vfprintf(stderr,\ msg.c\_str(),\ va);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00090}00090\ \ \ va\_end(va);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00091}00091\ \ \ fflush(stderr);}
+\DoxyCodeLine{\Hypertarget{logging_8cpp_source_l00092}00092\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,41 @@
+\doxysection{window.\+h}
+\hypertarget{window_8h_source}{}\label{window_8h_source}\index{include/core/window.h@{include/core/window.h}}
+\mbox{\hyperlink{window_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00001}00001\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00002}00002\ \textcolor{comment}{//\ Created\ by\ castle\ on\ 9/26/23.}}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00003}00003\ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00005}00005\ \textcolor{preprocessor}{\#ifndef\ CYD\_UI\_WINDOW\_H}}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00006}00006\ \textcolor{preprocessor}{\#define\ CYD\_UI\_WINDOW\_H}}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}../graphics/graphics.hpp"{}}}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}../cydstd/profiling.h"{}}}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00011}00011\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecydui_1_1layout}{cydui::layout}}\ \{}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00012}00012\ \ \ \ \ \textcolor{keyword}{class\ }Layout;}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00013}00013\ \}}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00014}00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecydui_1_1window}{cydui::window}}\ \{}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00015}\mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{00015}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{CWindow}}\ \{}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00016}00016\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00017}\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{00017}}\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{graphics::window\_t}}*\ \mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}};}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00018}\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_af32b41b038c63fce96811a97058e8c24}{00018}}\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout}{layout::Layout}}*\ \mbox{\hyperlink{classcydui_1_1window_1_1CWindow_af32b41b038c63fce96811a97058e8c24}{layout}};}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00019}00019\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00020}\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{00020}}\ \ \ \ \ \ \ \mbox{\hyperlink{structprof_1_1context__t}{prof::context\_t}}\ \mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}\ \{\};}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00021}00021\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00022}00022\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00023}00023\ \ \ \ \ CWindow*\ \mbox{\hyperlink{namespacecydui_1_1window_a7a6979b2904a74aa3456f320746e78b6}{create}}(}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00024}00024\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout}{layout::Layout}}*\ layout,}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00025}00025\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ title\ =\ \textcolor{stringliteral}{"{}CydUI"{}},}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00026}00026\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ wclass\ =\ \textcolor{stringliteral}{"{}cydui"{}},}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00027}00027\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ x\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00028}00028\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ y\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00029}00029\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ w\ =\ 640,}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00030}00030\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ h\ =\ 480,}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00031}00031\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ override\_redirect\ =\ \textcolor{keyword}{false}}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00032}00032\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00033}00033\ \}}
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{window_8h_source_l00035}00035\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_WINDOW\_H}}
+
+\end{DoxyCode}

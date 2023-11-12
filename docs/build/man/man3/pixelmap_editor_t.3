@@ -1,0 +1,109 @@
+.TH "pixelmap_editor_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+pixelmap_editor_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <pixelmap_editor\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBpixelmap_editor_t\fP (\fBpixelmap_t\fP &\fBimg\fP)"
+.br
+.ti -1c
+.RI "\fBpixelmap_editor_t\fP (\fBpixelmap_t\fP *\fBimg\fP)"
+.br
+.ti -1c
+.RI "Cairo::RefPtr< Cairo::Context > \fBoperator\->\fP ()"
+.br
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBpixelmap_t\fP & \fBimg\fP"
+.br
+.ti -1c
+.RI "Cairo::RefPtr< Cairo::Surface > \fBsurface\fP"
+.br
+.ti -1c
+.RI "Cairo::RefPtr< Cairo::Context > \fBctx\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB12\fP of file \fBpixelmap_editor\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "pixelmap_editor_t::pixelmap_editor_t (\fBpixelmap_t\fP & img)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line \fB19\fP of file \fBpixelmap_editor\&.h\fP\&..PP
+.nf
+19                                              : img(img) {
+20     surface = Cairo::ImageSurface::create(
+21       (unsigned char*) this\->img\&.data,
+22       Cairo::Surface::Format::ARGB32,
+23       (int) this\->img\&.width(), (int) this\->img\&.height(),
+24       cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, (int) this\->img\&.width())
+25     );
+26     ctx = Cairo::Context::create(surface);
+27   }
+.fi
+
+.SS "pixelmap_editor_t::pixelmap_editor_t (\fBpixelmap_t\fP * img)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line \fB29\fP of file \fBpixelmap_editor\&.h\fP\&..PP
+.nf
+29                                              : pixelmap_editor_t(*img) {
+30   }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void pixelmap_editor_t::clear ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB37\fP of file \fBpixelmap_editor\&.h\fP\&..PP
+.nf
+37                {
+38     memset(img\&.data, 0, img\&.width() * img\&.height() * sizeof(pixel_t));
+39   }
+.fi
+
+.SS "Cairo::RefPtr< Cairo::Context > pixelmap_editor_t::operator\-> ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB33\fP of file \fBpixelmap_editor\&.h\fP\&..PP
+.nf
+33                                          {
+34     return ctx;
+35   }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "Cairo::RefPtr<Cairo::Context> pixelmap_editor_t::ctx"
+
+.PP
+Definition at line \fB17\fP of file \fBpixelmap_editor\&.h\fP\&.
+.SS "\fBpixelmap_t\fP& pixelmap_editor_t::img"
+
+.PP
+Definition at line \fB14\fP of file \fBpixelmap_editor\&.h\fP\&.
+.SS "Cairo::RefPtr<Cairo::Surface> pixelmap_editor_t::surface"
+
+.PP
+Definition at line \fB16\fP of file \fBpixelmap_editor\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

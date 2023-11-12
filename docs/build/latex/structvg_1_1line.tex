@@ -1,0 +1,140 @@
+\doxysection{vg\+::line Struct Reference}
+\hypertarget{structvg_1_1line}{}\label{structvg_1_1line}\index{vg::line@{vg::line}}
+
+
+{\ttfamily \#include $<$vg.\+h$>$}
+
+
+
+Inheritance diagram for vg\+::line\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{structvg_1_1line__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for vg\+::line\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=264pt]{structvg_1_1line__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structvg_1_1line_abf1e3250208b08e47e5541deb58e2807}{line}} ()
+\item 
+void \mbox{\hyperlink{structvg_1_1line_ad1986670aa96c8bb748738adff5556bc}{apply\+\_\+to}} (\mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\+\_\+editor\+\_\+t}} \&editor) const override
+\item 
+\mbox{\hyperlink{structvg_1_1vg__element__t_1_1footprint}{footprint}} \mbox{\hyperlink{structvg_1_1line_aca7b38cab68d37fcd4433846cd7277f7}{get\+\_\+footprint}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structvg_1_1vg__element__t}{vg\+::vg\+\_\+element\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structvg_1_1vg__element__t_a4b6333568b6b06d7657afb902e6b45d6}{\+\_\+internal\+\_\+set\+\_\+origin}} (int x, int y)
+\item 
+virtual \mbox{\hyperlink{structvg_1_1vg__element__t_aa2a033ec04ad8994213cc0d0140b3838}{\texorpdfstring{$\sim$}{\string~}vg\+\_\+element\+\_\+t}} ()=default
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structvg_1_1vg__element__t}{vg\+::vg\+\_\+element\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022}{origin\+\_\+x}} = 0
+\item 
+int \mbox{\hyperlink{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59}{origin\+\_\+y}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00103}{103}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structvg_1_1line_abf1e3250208b08e47e5541deb58e2807}\label{structvg_1_1line_abf1e3250208b08e47e5541deb58e2807} 
+\index{vg::line@{vg::line}!line@{line}}
+\index{line@{line}!vg::line@{vg::line}}
+\doxysubsubsection{\texorpdfstring{line()}{line()}}
+{\footnotesize\ttfamily vg\+::line\+::line (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00111}{111}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ per\ element\ Defaults}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ this-\/>stroke\_width(1);}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structvg_1_1line_ad1986670aa96c8bb748738adff5556bc}\label{structvg_1_1line_ad1986670aa96c8bb748738adff5556bc} 
+\index{vg::line@{vg::line}!apply\_to@{apply\_to}}
+\index{apply\_to@{apply\_to}!vg::line@{vg::line}}
+\doxysubsubsection{\texorpdfstring{apply\_to()}{apply\_to()}}
+{\footnotesize\ttfamily void vg\+::line\+::apply\+\_\+to (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\+\_\+editor\+\_\+t}} \&}]{editor }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structvg_1_1vg__element__t_a34e274817a70ba1e3ff8d551797bac25}{vg\+::vg\+\_\+element\+\_\+t}}.
+
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00116}{116}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ apply\_stroke(editor);}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ set\_source\_to\_stroke(editor);}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ editor-\/>move\_to(\mbox{\hyperlink{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022}{origin\_x}}\ +\ \_x1,\ \mbox{\hyperlink{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59}{origin\_y}}\ +\ \_y1);}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ editor-\/>line\_to(\mbox{\hyperlink{structvg_1_1vg__element__t_a086bfc7dd9efee60aa764920ee85b022}{origin\_x}}\ +\ \_x2,\ \mbox{\hyperlink{structvg_1_1vg__element__t_a237e318f2630a3e1f5f24d6ad09dbb59}{origin\_y}}\ +\ \_y2);}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ editor-\/>stroke();}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{structvg_1_1line_aca7b38cab68d37fcd4433846cd7277f7}\label{structvg_1_1line_aca7b38cab68d37fcd4433846cd7277f7} 
+\index{vg::line@{vg::line}!get\_footprint@{get\_footprint}}
+\index{get\_footprint@{get\_footprint}!vg::line@{vg::line}}
+\doxysubsubsection{\texorpdfstring{get\_footprint()}{get\_footprint()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structvg_1_1vg__element__t_1_1footprint}{footprint}} vg\+::line\+::get\+\_\+footprint (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{structvg_1_1vg__element__t_a5574fb0a7fb4afb3748da1cbee21f6b8}{vg\+::vg\+\_\+element\+\_\+t}}.
+
+
+
+Definition at line \mbox{\hyperlink{vg_8h_source_l00127}{127}} of file \mbox{\hyperlink{vg_8h_source}{vg.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ std::min(\_x1,\ \_x2),}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ std::min(\_y1,\ \_y2),}
+\DoxyCodeLine{00131\ \ \ \ \ \ \ \ \ \ \ std::abs(\_x2\ -\/\ \_x1),}
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ std::abs(\_y2\ -\/\ \_y1),}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/graphics/\mbox{\hyperlink{vg_8h}{vg.\+h}}\end{DoxyCompactItemize}

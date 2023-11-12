@@ -1,0 +1,17 @@
+<map id="ThreadTimeline::on_redraw" name="ThreadTimeline::on_redraw">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,149,138,192"/>
+<area shape="rect" id="Node000002" href="$structvg_1_1attr__cx.html#aeb49a0b3000d070294c8bceebf688126" title=" " alt="" coords="208,5,313,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,147,126,95,153,66,184,42,193,37,195,41,187,46,157,70,130,98,89,150"/>
+<area shape="rect" id="Node000003" href="$structvg_1_1attr__cy.html#ac63bd5d7eb74761d3e8c143169cb8475" title=" " alt="" coords="208,56,313,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="99,147,139,119,184,92,197,86,200,91,187,97,141,124,102,151"/>
+<area shape="rect" id="Node000004" href="$structvg_1_1attr__r.html#aa9e2cc6f3d4793f5d702c5bf55c8f3bc" title=" " alt="" coords="218,107,303,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="137,150,202,133,204,138,139,156"/>
+<area shape="rect" id="Node000005" href="$structvg_1_1attr__stroke.html#ac6b5419f71db5e68d3069d048337e7a4" title=" " alt="" coords="186,157,335,184"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="138,168,170,168,170,173,138,173"/>
+<area shape="rect" id="Node000006" href="$structvg_1_1attr__width.html#ad69c34b6be255e9896184ad9e8f29835" title=" " alt="" coords="191,208,330,235"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="139,186,194,201,192,206,137,191"/>
+<area shape="rect" id="Node000007" href="$structvg_1_1attr__x.html#ae4bbd0e7be9defa5343e838a19601633" title=" " alt="" coords="215,259,306,285"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="102,190,141,218,187,244,201,251,199,256,184,249,139,222,99,195"/>
+<area shape="rect" id="Node000008" href="$structvg_1_1attr__y.html#a49abc3aa32309f0cb66b661d2cf363a0" title=" " alt="" coords="215,309,306,336"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="89,191,130,243,157,271,187,295,202,303,199,308,184,300,153,275,126,247,85,194"/>
+</map>

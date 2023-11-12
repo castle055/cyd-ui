@@ -1,0 +1,113 @@
+.TH "cydui::graphics::vg::vg_fragment_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::graphics::vg::vg_fragment_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <vg\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB~vg_fragment_t\fP ()"
+.br
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.ti -1c
+.RI "bool \fBempty\fP () const"
+.br
+.ti -1c
+.RI "void \fBappend\fP (std::initializer_list< \fBvg_element_t\fP * > _elements)"
+.br
+.ti -1c
+.RI "template<typename \&.\&.\&. T> void \fBappend\fP (T\&.\&.\&. _elements)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::vector< \fBvg_element_t\fP * > \fBelements\fP {}"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB32\fP of file \fBvg\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "cydui::graphics::vg::vg_fragment_t::~vg_fragment_t ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB35\fP of file \fBvg\&.h\fP\&..PP
+.nf
+35                        {
+36         clear();
+37       }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void cydui::graphics::vg::vg_fragment_t::append (std::initializer_list< \fBvg_element_t\fP * > _elements)\fC [inline]\fP"
+
+.PP
+Definition at line \fB50\fP of file \fBvg\&.h\fP\&..PP
+.nf
+50                                                                 {
+51         for (const auto &item: _elements) {
+52           elements\&.push_back(item);
+53         }
+54       }
+.fi
+
+.SS "template<typename \&.\&.\&. T> void cydui::graphics::vg::vg_fragment_t::append (T\&.\&.\&. _elements)\fC [inline]\fP"
+
+.PP
+Definition at line \fB57\fP of file \fBvg\&.h\fP\&..PP
+.nf
+57                                   {
+58         static_assert((std::derived_from<T, vg_element_t> && \&.\&.\&.), "Elements must derive from vg_element_t\&.");
+59         (elements\&.push_back(new T {_elements}), \&.\&.\&.);
+60       }
+.fi
+
+.SS "void cydui::graphics::vg::vg_fragment_t::clear ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB39\fP of file \fBvg\&.h\fP\&..PP
+.nf
+39                    {
+40         for (auto &item: elements) {
+41           delete item;
+42         }
+43         elements\&.clear();
+44       }
+.fi
+
+.SS "bool cydui::graphics::vg::vg_fragment_t::empty () const\fC [inline]\fP"
+
+.PP
+Definition at line \fB46\fP of file \fBvg\&.h\fP\&..PP
+.nf
+46                          {
+47         return elements\&.empty();
+48       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "std::vector<\fBvg_element_t\fP*> cydui::graphics::vg::vg_fragment_t::elements {}"
+
+.PP
+Definition at line \fB33\fP of file \fBvg\&.h\fP\&..PP
+.nf
+33 {};
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

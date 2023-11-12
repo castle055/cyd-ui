@@ -1,0 +1,55 @@
+.TH "cydui::threading" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::threading
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBthread_t\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBthread_t\fP * \fBnew_thread\fP (void(task)(\fBthread_t\fP *this_thread))"
+.br
+.ti -1c
+.RI "\fBthread_t\fP * \fBnew_thread\fP (void(task)(\fBthread_t\fP *this_thread), void *data)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBthread_t\fP * cydui::threading::new_thread (void(task)(\fBthread_t\fP *this_thread))"
+
+.PP
+Definition at line \fB12\fP of file \fBthreading\&.cpp\fP\&..PP
+.nf
+12                                                                       {
+13   return new_thread(task, nullptr);
+14 }
+.fi
+
+.SS "\fBthread_t\fP * cydui::threading::new_thread (void(task)(\fBthread_t\fP *this_thread), void * data)"
+
+.PP
+Definition at line \fB16\fP of file \fBthreading\&.cpp\fP\&..PP
+.nf
+18   {
+19   auto* arg = new thread_t();
+20   arg\->running = true;
+21   arg\->data = data;
+22   auto* thread = new std::thread(task, arg);
+23   arg\->native_thread = thread;
+24   return arg;
+25 }
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

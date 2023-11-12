@@ -1,0 +1,255 @@
+\doxysection{HBox Struct Reference}
+\hypertarget{structHBox}{}\label{structHBox}\index{HBox@{HBox}}
+
+
+{\ttfamily \#include $<$containers.\+hpp$>$}
+
+
+
+Inheritance diagram for HBox\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=185pt]{structHBox__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for HBox\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structHBox__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structHBox_1_1Props}{Props}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{structHBoxState}{HBox\+State}} \mbox{\hyperlink{structHBox_a531dfa04cdd57a1842f4b2970bc0e5ff}{State}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types inherited from \mbox{\hyperlink{classcydui_1_1components_1_1Component}{cydui\+::components\+::\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+typedef \mbox{\hyperlink{structKeyEvent_1_1DataType}{Key\+Event\+::\+Data\+Type}} \mbox{\hyperlink{classcydui_1_1components_1_1Component_a6610941fe8bf2b7e885fd4d1c049650f}{Key\+Data}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structHBox_a67e1723fdf1479158523dbfcb97b8653}{HBox}} (\mbox{\hyperlink{structHBoxState}{HBox\+State}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{structHBox_a21c408e30c2a0e241f236f874f8569cd}{state}}, \mbox{\hyperlink{structHBox_1_1Props}{Props}} \mbox{\hyperlink{structHBox_aa2f12b92a4138923417aa468664a3f9f}{props}}, const std\+::function$<$ void(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{cydui\+::components\+::\+Component}} \texorpdfstring{$\ast$}{*})$>$ \&inner)
+\item 
+virtual void \mbox{\hyperlink{structHBox_abe759e9cf9f24a9d19ed9644bd024659}{on\+\_\+redraw}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classcydui_1_1components_1_1Component}{cydui\+::components\+::\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component}} ()
+\item 
+\mbox{\hyperlink{classcydui_1_1components_1_1Component_a96c6abffe351a64554217b65b3717f18}{Component}} (std\+::function$<$ void(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}} \texorpdfstring{$\ast$}{*})$>$ inner)
+\item 
+\mbox{\hyperlink{classcydui_1_1components_1_1Component_ac241524675b9fb727bb3b67ea0c1384f}{Component}} (\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{Component\+State}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a6b9fa9fc13544536654aecb9a03d5f97}{state}})
+\item 
+\mbox{\hyperlink{classcydui_1_1components_1_1Component_a3b6d9919848070daa5ff735871a7c5a0}{Component}} (\mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{Component\+State}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classcydui_1_1components_1_1Component_a6b9fa9fc13544536654aecb9a03d5f97}{state}}, std\+::function$<$ void(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}} \texorpdfstring{$\ast$}{*})$>$ inner)
+\item 
+virtual \mbox{\hyperlink{classcydui_1_1components_1_1Component_ab8378fa275af98e568a7e91d33d867af}{\texorpdfstring{$\sim$}{\string~}\+Component}} ()
+\item 
+void \mbox{\hyperlink{classcydui_1_1components_1_1Component_a51dc9d2b1e81015c2100812b6e05ecb1}{add}} (const std\+::vector$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\+\_\+builder\+\_\+t}} $>$ \&ichildren, bool prepend=false) const
+\item 
+void \mbox{\hyperlink{classcydui_1_1components_1_1Component_a420ebdbc96cb8fcf1714f8b484b3a6c7}{redraw}} (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout}{cydui\+::layout\+::\+Layout}} \texorpdfstring{$\ast$}{*}layout)
+\item 
+void \mbox{\hyperlink{classcydui_1_1components_1_1Component_aac1aa82cd73ae42fedb29ea28a0c1fc6}{render}} (\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t}{cydui\+::compositing\+::compositing\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*}node) const
+\item 
+\mbox{\hyperlink{classnullable}{nullable}}$<$ \mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a85c9cc77ad4199521d65708517277cf3}{get\+\_\+parent}} () const
+\item 
+virtual bool \mbox{\hyperlink{classcydui_1_1components_1_1Component_a4189345fd97be0de73b55292b2b1db7b}{is\+\_\+drawable}} () const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_a9a67738af941cb3f378ee63758ba7d13}{on\+\_\+render}} (\mbox{\hyperlink{structvg_1_1vg__fragment__t}{vg\+::vg\+\_\+fragment\+\_\+t}} \&graphics) const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_a835ae030ace5a7ee854e6035ca84fccd}{on\+\_\+mouse\+\_\+enter}} (int x, int y) const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_a716572193261a957ab20f57a64576c89}{on\+\_\+mouse\+\_\+exit}} (int x, int y) const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_a35ea4bd23dd08b4fcdfc817d0e807b02}{on\+\_\+mouse\+\_\+motion}} (int x, int y) const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_a6a8e601805902a5e982536d1837303b4}{on\+\_\+mouse\+\_\+click}} (int x, int y, int button) const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_a60b3bcdae6ad05c1efce9730abf5cdf2}{on\+\_\+drag\+\_\+start}} (int x, int y) const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_ae77dde43002de0098108e232b8d36975}{on\+\_\+drag\+\_\+motion}} (int x, int y) const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_a26277a0a6bef341975e0cd2398df5212}{on\+\_\+drag\+\_\+finish}} (int x, int y) const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_ac0bd813af0b8b61c2504dcdd6c04f8d6}{on\+\_\+scroll}} (int dx, int dy) const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_ae08be4b98ba626179acd5a4a5ec4bf48}{on\+\_\+key\+\_\+press}} (\mbox{\hyperlink{classcydui_1_1components_1_1Component_a6610941fe8bf2b7e885fd4d1c049650f}{Key\+Data}} key) const
+\item 
+virtual void \mbox{\hyperlink{classcydui_1_1components_1_1Component_a34346c0a5d575f28220c0196bf30e286}{on\+\_\+key\+\_\+release}} (\mbox{\hyperlink{classcydui_1_1components_1_1Component_a6610941fe8bf2b7e885fd4d1c049650f}{Key\+Data}} key) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structHBox_1_1Props}{Props}} \mbox{\hyperlink{structHBox_aa2f12b92a4138923417aa468664a3f9f}{props}}
+\item 
+\mbox{\hyperlink{structHBoxState}{HBox\+State}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structHBox_a21c408e30c2a0e241f236f874f8569cd}{state}} = nullptr
+\item 
+\mbox{\hyperlink{structlogging_1_1logger}{logging\+::logger}} \mbox{\hyperlink{structHBox_a3cbfbf0ef6846bb4f3cc35e48e7c9ce2}{log}} = \{.name = "{}HBox"{}, .on = false\}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{classcydui_1_1components_1_1Component}{cydui\+::components\+::\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classnullable}{nullable}}$<$ \mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a2a8be4efd3e5d8d0f3bb2dd52feb4553}{parent}}
+\item 
+\mbox{\hyperlink{classnullable}{nullable}}$<$ \mbox{\hyperlink{classcydui_1_1components_1_1ComponentState}{Component\+State}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a6b9fa9fc13544536654aecb9a03d5f97}{state}}
+\item 
+\mbox{\hyperlink{structcydui_1_1dimensions_1_1component__dimensions__t}{cydui\+::dimensions\+::component\+\_\+dimensions\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcydui_1_1components_1_1Component_ad81b5e6247f54cd028209c3e1b7ba719}{dim}}
+\item 
+std\+::deque$<$ \mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structHBox_a86c9fd6f9a1a2629dc182e06981207f4}{Name}} = "{}HBox"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Static Public Member Functions inherited from \mbox{\hyperlink{classcydui_1_1components_1_1Component}{cydui\+::components\+::\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classcydui_1_1components_1_1Component}{Component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcydui_1_1components_1_1Component_a893cd850cda5ddcef688da444584b9d8}{new\+\_\+group}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classcydui_1_1components_1_1Component}{cydui\+::components\+::\+Component}}}
+\begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename c , int ID$>$ \newline
+requires \mbox{\hyperlink{conceptComponentConcept}{Component\+Concept}}$<$c$>$}\\\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\+\_\+builder\+\_\+t}} \mbox{\hyperlink{classcydui_1_1components_1_1Component_ad153680ef842607600800f2fcb79ef9c}{create}} (\mbox{\hyperlink{structcydui_1_1components_1_1c__init__t}{c\+\_\+init\+\_\+t}}$<$ c $>$ \mbox{\hyperlink{component__test_8h_ab3be942c3b0866c7abd6a4fbef49f6a7}{init}}) const
+\item 
+{\footnotesize template$<$typename c , int ID, typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \newline
+requires \mbox{\hyperlink{conceptComponentConcept}{Component\+Concept}}$<$c$>$}\\\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\+\_\+builder\+\_\+t}} \mbox{\hyperlink{classcydui_1_1components_1_1Component_a7abde771f5ed3d801447304bb4dfdfd3}{create\+\_\+for}} (const \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \&iter, std\+::function$<$ \mbox{\hyperlink{structcydui_1_1components_1_1c__init__t}{c\+\_\+init\+\_\+t}}$<$ c $>$(const typename T\+::value\+\_\+type \&)$>$ block) const
+\item 
+\mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\+\_\+builder\+\_\+t}} \mbox{\hyperlink{classcydui_1_1components_1_1Component_af794148bbdfbb8f19c3d66e0b07b9499}{create\+\_\+group}} (std\+::vector$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__builder__t}{component\+\_\+builder\+\_\+t}} $>$ \+\_\+children) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{containers_8hpp_source_l00032}{32}} of file \mbox{\hyperlink{containers_8hpp_source}{containers.\+hpp}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{structHBox_a531dfa04cdd57a1842f4b2970bc0e5ff}\label{structHBox_a531dfa04cdd57a1842f4b2970bc0e5ff} 
+\index{HBox@{HBox}!State@{State}}
+\index{State@{State}!HBox@{HBox}}
+\doxysubsubsection{\texorpdfstring{State}{State}}
+{\footnotesize\ttfamily typedef \mbox{\hyperlink{structHBoxState}{HBox\+State}} \mbox{\hyperlink{structHBox_a531dfa04cdd57a1842f4b2970bc0e5ff}{HBox\+::\+State}}}
+
+
+
+Definition at line \mbox{\hyperlink{containers_8hpp_source_l00037}{37}} of file \mbox{\hyperlink{containers_8hpp_source}{containers.\+hpp}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structHBox_a67e1723fdf1479158523dbfcb97b8653}\label{structHBox_a67e1723fdf1479158523dbfcb97b8653} 
+\index{HBox@{HBox}!HBox@{HBox}}
+\index{HBox@{HBox}!HBox@{HBox}}
+\doxysubsubsection{\texorpdfstring{HBox()}{HBox()}}
+{\footnotesize\ttfamily HBox\+::\+HBox (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structHBoxState}{HBox\+State}} \texorpdfstring{$\ast$}{*}}]{state,  }\item[{\mbox{\hyperlink{structHBox_1_1Props}{Props}}}]{props,  }\item[{const std\+::function$<$ void(\mbox{\hyperlink{classcydui_1_1components_1_1Component}{cydui\+::components\+::\+Component}} \texorpdfstring{$\ast$}{*})$>$ \&}]{inner }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{containers_8hpp_source_l00037}{37}} of file \mbox{\hyperlink{containers_8hpp_source}{containers.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00038\ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structHBox_abe759e9cf9f24a9d19ed9644bd024659}\label{structHBox_abe759e9cf9f24a9d19ed9644bd024659} 
+\index{HBox@{HBox}!on\_redraw@{on\_redraw}}
+\index{on\_redraw@{on\_redraw}!HBox@{HBox}}
+\doxysubsubsection{\texorpdfstring{on\_redraw()}{on\_redraw()}}
+{\footnotesize\ttfamily virtual void HBox\+::on\+\_\+redraw (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classcydui_1_1components_1_1Component_aa5dc7df3b82a1959209e36f866551452}{cydui\+::components\+::\+Component}}.
+
+
+
+Definition at line \mbox{\hyperlink{containers_8hpp_source_l00039}{39}} of file \mbox{\hyperlink{containers_8hpp_source}{containers.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a8775db6d1a2c1afc2e77cd3c8f39da6f}{Component}}*\ prev\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&ch:\ \mbox{\hyperlink{classcydui_1_1components_1_1Component_a575351a90406420864750e49e569781d}{children}})\ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ ch-\/>dim-\/>x\ =\ prev\ ==\ \textcolor{keyword}{nullptr}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ ?\ \mbox{\hyperlink{structHBox_aa2f12b92a4138923417aa468664a3f9f}{props}}.\mbox{\hyperlink{structHBox_1_1Props_a34844245c5feb8988e930351e6908693}{offset}}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ :\ prev-\/>dim-\/>x\ +\ prev-\/>dim-\/>w\ +\ \mbox{\hyperlink{structHBox_aa2f12b92a4138923417aa468664a3f9f}{props}}.\mbox{\hyperlink{structHBox_1_1Props_ad6564d1b13d714dbbf039cc2c5cea24e}{spacing}};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ prev\ =\ ch;}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structHBox_a3cbfbf0ef6846bb4f3cc35e48e7c9ce2}\label{structHBox_a3cbfbf0ef6846bb4f3cc35e48e7c9ce2} 
+\index{HBox@{HBox}!log@{log}}
+\index{log@{log}!HBox@{HBox}}
+\doxysubsubsection{\texorpdfstring{log}{log}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlogging_1_1logger}{logging\+::logger}} HBox\+::log = \{.name = "{}HBox"{}, .on = false\}}
+
+
+
+Definition at line \mbox{\hyperlink{containers_8hpp_source_l00037}{37}} of file \mbox{\hyperlink{containers_8hpp_source}{containers.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037\ \{}
+
+\end{DoxyCode}
+\Hypertarget{structHBox_a86c9fd6f9a1a2629dc182e06981207f4}\label{structHBox_a86c9fd6f9a1a2629dc182e06981207f4} 
+\index{HBox@{HBox}!Name@{Name}}
+\index{Name@{Name}!HBox@{HBox}}
+\doxysubsubsection{\texorpdfstring{Name}{Name}}
+{\footnotesize\ttfamily constexpr const char\texorpdfstring{$\ast$}{*} HBox\+::\+Name = "{}HBox"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{containers_8hpp_source_l00037}{37}} of file \mbox{\hyperlink{containers_8hpp_source}{containers.\+hpp}}.
+
+\Hypertarget{structHBox_aa2f12b92a4138923417aa468664a3f9f}\label{structHBox_aa2f12b92a4138923417aa468664a3f9f} 
+\index{HBox@{HBox}!props@{props}}
+\index{props@{props}!HBox@{HBox}}
+\doxysubsubsection{\texorpdfstring{props}{props}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structHBox_1_1Props}{Props}} HBox\+::props}
+
+
+
+Definition at line \mbox{\hyperlink{containers_8hpp_source_l00036}{36}} of file \mbox{\hyperlink{containers_8hpp_source}{containers.\+hpp}}.
+
+\Hypertarget{structHBox_a21c408e30c2a0e241f236f874f8569cd}\label{structHBox_a21c408e30c2a0e241f236f874f8569cd} 
+\index{HBox@{HBox}!state@{state}}
+\index{state@{state}!HBox@{HBox}}
+\doxysubsubsection{\texorpdfstring{state}{state}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structHBoxState}{HBox\+State}}\texorpdfstring{$\ast$}{*} HBox\+::state = nullptr}
+
+
+
+Definition at line \mbox{\hyperlink{containers_8hpp_source_l00037}{37}} of file \mbox{\hyperlink{containers_8hpp_source}{containers.\+hpp}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{containers_8hpp}{containers.\+hpp}}\end{DoxyCompactItemize}

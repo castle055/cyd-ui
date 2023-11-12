@@ -1,0 +1,208 @@
+\doxysection{cydui\+::events\+::change\+\_\+ev\+::Data\+Monitor\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcydui_1_1events_1_1change__ev_1_1DataMonitor}{}\label{classcydui_1_1events_1_1change__ev_1_1DataMonitor}\index{cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}}
+
+
+{\ttfamily \#include $<$change\+\_\+events.\+h$>$}
+
+
+
+Collaboration diagram for cydui\+::events\+::change\+\_\+ev\+::Data\+Monitor\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=237pt]{classcydui_1_1events_1_1change__ev_1_1DataMonitor__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+typedef std\+::function$<$ bool(typename T\+::\+Data\+Type \&, typename T\+::\+Data\+Type \&)$>$ \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_ac9bd51115701d9e60cf7d2c475a77876}{change\+\_\+predicate\+\_\+t}}
+\item 
+typedef std\+::function$<$ void(typename T\+::\+Data\+Type \&)$>$ \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a5f7264f2725f6ea1e7a90e3c038dbfe0}{completion\+\_\+callback\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a907f648d5b356e7d8be7e34e49ba180c}{Data\+Monitor}} (\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_ac9bd51115701d9e60cf7d2c475a77876}{change\+\_\+predicate\+\_\+t}} \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a461cb5e247d08122d234b96cdc799d6b}{predicate}}, \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a5f7264f2725f6ea1e7a90e3c038dbfe0}{completion\+\_\+callback\+\_\+t}} \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a7b3e07e8c372206a99e7d5400b88b7b3}{completion\+\_\+callback}}=\mbox{[}$\,$\mbox{]}(typename T\+::\+Data\+Type \&) \{ \})
+\item 
+void \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a0915e5576a8e08031e06c7cfdd943348}{update}} (typename T\+::\+Data\+Type new\+\_\+data)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}} = nullptr
+\item 
+\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a5f7264f2725f6ea1e7a90e3c038dbfe0}{completion\+\_\+callback\+\_\+t}} \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a7b3e07e8c372206a99e7d5400b88b7b3}{completion\+\_\+callback}}
+\item 
+\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_ac9bd51115701d9e60cf7d2c475a77876}{change\+\_\+predicate\+\_\+t}} \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a461cb5e247d08122d234b96cdc799d6b}{predicate}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$Event\+Type T$>$\newline
+class cydui\+::events\+::change\+\_\+ev\+::\+Data\+Monitor$<$ T $>$}
+
+
+Definition at line \mbox{\hyperlink{change__events_8h_source_l00015}{15}} of file \mbox{\hyperlink{change__events_8h_source}{change\+\_\+events.\+h}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{classcydui_1_1events_1_1change__ev_1_1DataMonitor_ac9bd51115701d9e60cf7d2c475a77876}\label{classcydui_1_1events_1_1change__ev_1_1DataMonitor_ac9bd51115701d9e60cf7d2c475a77876} 
+\index{cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}!change\_predicate\_t@{change\_predicate\_t}}
+\index{change\_predicate\_t@{change\_predicate\_t}!cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{change\_predicate\_t}{change\_predicate\_t}}
+{\footnotesize\ttfamily template$<$Event\+Type T$>$ \\
+typedef std\+::function$<$bool(typename T\+::\+Data\+Type \&, typename T\+::\+Data\+Type \&)$>$ \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor}{cydui\+::events\+::change\+\_\+ev\+::\+Data\+Monitor}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$\+::change\+\_\+predicate\+\_\+t}
+
+
+
+Definition at line \mbox{\hyperlink{change__events_8h_source_l00019}{19}} of file \mbox{\hyperlink{change__events_8h_source}{change\+\_\+events.\+h}}.
+
+\Hypertarget{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a5f7264f2725f6ea1e7a90e3c038dbfe0}\label{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a5f7264f2725f6ea1e7a90e3c038dbfe0} 
+\index{cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}!completion\_callback\_t@{completion\_callback\_t}}
+\index{completion\_callback\_t@{completion\_callback\_t}!cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{completion\_callback\_t}{completion\_callback\_t}}
+{\footnotesize\ttfamily template$<$Event\+Type T$>$ \\
+typedef std\+::function$<$void(typename T\+::\+Data\+Type \&)$>$ \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor}{cydui\+::events\+::change\+\_\+ev\+::\+Data\+Monitor}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$\+::completion\+\_\+callback\+\_\+t}
+
+
+
+Definition at line \mbox{\hyperlink{change__events_8h_source_l00020}{20}} of file \mbox{\hyperlink{change__events_8h_source}{change\+\_\+events.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a907f648d5b356e7d8be7e34e49ba180c}\label{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a907f648d5b356e7d8be7e34e49ba180c} 
+\index{cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}!DataMonitor@{DataMonitor}}
+\index{DataMonitor@{DataMonitor}!cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{DataMonitor()}{DataMonitor()}}
+{\footnotesize\ttfamily template$<$Event\+Type T$>$ \\
+\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor}{cydui\+::events\+::change\+\_\+ev\+::\+Data\+Monitor}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$\+::\+Data\+Monitor (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_ac9bd51115701d9e60cf7d2c475a77876}{change\+\_\+predicate\+\_\+t}}}]{predicate,  }\item[{\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a5f7264f2725f6ea1e7a90e3c038dbfe0}{completion\+\_\+callback\+\_\+t}}}]{completion\+\_\+callback = {\ttfamily \mbox{[}\mbox{]}(typename~T\+:\+:DataType~\&)~\{~\}} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{change__events_8h_source_l00022}{22}} of file \mbox{\hyperlink{change__events_8h_source}{change\+\_\+events.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \}}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ )\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a461cb5e247d08122d234b96cdc799d6b}{predicate}}\ =\ \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a461cb5e247d08122d234b96cdc799d6b}{predicate}};}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a7b3e07e8c372206a99e7d5400b88b7b3}{completion\_callback}}\ =\ \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a7b3e07e8c372206a99e7d5400b88b7b3}{completion\_callback}};}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}\ =\ \textcolor{keyword}{new}\ Event\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ .\mbox{\hyperlink{structcydui_1_1events_1_1Event_aada192a5dfd5c8804ddff645501c4fb5}{type}}\ =\ T::type,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ .ev\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}},}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ .managed\ =\ \textcolor{keyword}{true},}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{graphics_2x11_2events_2events_8cpp_ae51f9f611dd3a6cb0b1847e4337115eb}{chev\_log}}.\mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{debug}}(\textcolor{stringliteral}{"{}EMITTING\ event:\ (0x\%lX)\ \%s"{}},\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long})\ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}},\ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_aada192a5dfd5c8804ddff645501c4fb5}{type}}.c\_str());}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_abfd3c7106abd299bacc674ec3865de6a}{emit\_raw}}(this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}});}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a0915e5576a8e08031e06c7cfdd943348}\label{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a0915e5576a8e08031e06c7cfdd943348} 
+\index{cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}!update@{update}}
+\index{update@{update}!cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily template$<$Event\+Type T$>$ \\
+void \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor}{cydui\+::events\+::change\+\_\+ev\+::\+Data\+Monitor}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$\+::update (\begin{DoxyParamCaption}\item[{typename T\+::\+Data\+Type}]{new\+\_\+data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{change__events_8h_source_l00037}{37}} of file \mbox{\hyperlink{change__events_8h_source}{change\+\_\+events.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_acb7a776f885a47232c7e96889eb11186}{ev\_mtx}}.lock();}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_ab6437108b8194a2a1586fa204083bd46}{status}}\ ==\ \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520}{CONSUMED}})\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_acb7a776f885a47232c7e96889eb11186}{ev\_mtx}}.unlock();}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a7b3e07e8c372206a99e7d5400b88b7b3}{completion\_callback}}(((\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}*)\ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_ae6951f5e592e714433aa2deae8f387c7}{ev}})-\/>data);}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_acb7a776f885a47232c7e96889eb11186}{ev\_mtx}}.unlock();}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a461cb5e247d08122d234b96cdc799d6b}{predicate}}(((\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}*)\ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_ae6951f5e592e714433aa2deae8f387c7}{ev}})-\/>data,\ new\_data))\ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_acb7a776f885a47232c7e96889eb11186}{ev\_mtx}}.lock();}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}*)\ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_ae6951f5e592e714433aa2deae8f387c7}{ev}})-\/>data\ =\ new\_data;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_acb7a776f885a47232c7e96889eb11186}{ev\_mtx}}.unlock();}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{graphics_2x11_2events_2events_8cpp_ae51f9f611dd3a6cb0b1847e4337115eb}{chev\_log}}.\mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{debug}}(\textcolor{stringliteral}{"{}UPDATE.\ ev(0x\%lX)[\%s]\ ev-\/>status\ =\ \%d"{}},\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long})\ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}},\ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_aada192a5dfd5c8804ddff645501c4fb5}{type}}.c\_str(),}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_ab6437108b8194a2a1586fa204083bd46}{status}});}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_acb7a776f885a47232c7e96889eb11186}{ev\_mtx}}.lock();}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_ab6437108b8194a2a1586fa204083bd46}{status}}\ ==\ \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520}{CONSUMED}})\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{graphics_2x11_2events_2events_8cpp_ae51f9f611dd3a6cb0b1847e4337115eb}{chev\_log}}.\mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{debug}}(\textcolor{stringliteral}{"{}RE-\/EMITTING\ event:\ (0x\%lX)\ \%s"{}},\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long})\ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}},\ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_aada192a5dfd5c8804ddff645501c4fb5}{type}}.c\_str());}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_ab6437108b8194a2a1586fa204083bd46}{status}}\ =\ \mbox{\hyperlink{namespacecydui_1_1events_a835f7ecff6753ba3e359dc9958ef7944a1647c5766793a7361ddb875b64f28b2c}{PENDING}};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_acb7a776f885a47232c7e96889eb11186}{ev\_mtx}}.unlock();}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_abfd3c7106abd299bacc674ec3865de6a}{emit\_raw}}(this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}});}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}{ev}}-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_acb7a776f885a47232c7e96889eb11186}{ev\_mtx}}.unlock();}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a0915e5576a8e08031e06c7cfdd943348_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a7b3e07e8c372206a99e7d5400b88b7b3}\label{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a7b3e07e8c372206a99e7d5400b88b7b3} 
+\index{cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}!completion\_callback@{completion\_callback}}
+\index{completion\_callback@{completion\_callback}!cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{completion\_callback}{completion\_callback}}
+{\footnotesize\ttfamily template$<$Event\+Type T$>$ \\
+\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a5f7264f2725f6ea1e7a90e3c038dbfe0}{completion\+\_\+callback\+\_\+t}} \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor}{cydui\+::events\+::change\+\_\+ev\+::\+Data\+Monitor}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$\+::completion\+\_\+callback\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{change__events_8h_source_l00065}{65}} of file \mbox{\hyperlink{change__events_8h_source}{change\+\_\+events.\+h}}.
+
+\Hypertarget{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63}\label{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a38ec98a63f6be0743bf8bf460a592f63} 
+\index{cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}!ev@{ev}}
+\index{ev@{ev}!cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{ev}{ev}}
+{\footnotesize\ttfamily template$<$Event\+Type T$>$ \\
+\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor}{cydui\+::events\+::change\+\_\+ev\+::\+Data\+Monitor}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$\+::ev = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{change__events_8h_source_l00016}{16}} of file \mbox{\hyperlink{change__events_8h_source}{change\+\_\+events.\+h}}.
+
+\Hypertarget{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a461cb5e247d08122d234b96cdc799d6b}\label{classcydui_1_1events_1_1change__ev_1_1DataMonitor_a461cb5e247d08122d234b96cdc799d6b} 
+\index{cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}!predicate@{predicate}}
+\index{predicate@{predicate}!cydui::events::change\_ev::DataMonitor$<$ T $>$@{cydui::events::change\_ev::DataMonitor$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{predicate}{predicate}}
+{\footnotesize\ttfamily template$<$Event\+Type T$>$ \\
+\mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor_ac9bd51115701d9e60cf7d2c475a77876}{change\+\_\+predicate\+\_\+t}} \mbox{\hyperlink{classcydui_1_1events_1_1change__ev_1_1DataMonitor}{cydui\+::events\+::change\+\_\+ev\+::\+Data\+Monitor}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$\+::predicate\hspace{0.3cm}{\ttfamily [private]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ [](\textcolor{keyword}{typename}\ T::DataType\ \&,\ \textcolor{keyword}{typename}\ T::DataType\ \&)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{change__events_8h_source_l00066}{66}} of file \mbox{\hyperlink{change__events_8h_source}{change\+\_\+events.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \};}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/events/\mbox{\hyperlink{change__events_8h}{change\+\_\+events.\+h}}\end{DoxyCompactItemize}

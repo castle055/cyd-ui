@@ -1,0 +1,352 @@
+\doxysection{Thread\+Timeline Struct Reference}
+\hypertarget{structThreadTimeline}{}\label{structThreadTimeline}\index{ThreadTimeline@{ThreadTimeline}}
+
+
+{\ttfamily \#include $<$Thread\+Timeline.\+h$>$}
+
+
+
+Inheritance diagram for Thread\+Timeline\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structThreadTimeline__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Thread\+Timeline\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structThreadTimeline__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{structThreadTimeline_a365aef9eb23521a4ce3238e2b59dbb45}{state\+\_\+t}} = \mbox{\hyperlink{structThreadTimelineState}{Thread\+Timeline\+State}}
+\item 
+using \mbox{\hyperlink{structThreadTimeline_a5bac7c17d4c9975943bf712007b05182}{event\+\_\+handler\+\_\+t}} = \mbox{\hyperlink{structThreadTimelineEventHandler}{Thread\+Timeline\+Event\+Handler}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structThreadTimeline_a3a873a4ac8201baa479757cd0e0b680f}{Thread\+Timeline}} ()=default
+\item 
+\mbox{\hyperlink{structThreadTimeline_a56f76247afb50cbbc7af6943abec8c0f}{Thread\+Timeline}} (props\+\_\+t \mbox{\hyperlink{structThreadTimeline_ab941a2e6c00f7f324c44debb9edcf0a9}{props}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structcydui_1_1components_1_1component__t_a3e8d1a50acab161fdc2db9d40bc3225d}{\texorpdfstring{$\sim$}{\string~}component\+\_\+t}} () override=default
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a0fb18436618eba390371dd49b0e22052}{subscribe\+\_\+events}} () override
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af3950e3addefc4661bb97e584ce55bb9}{clear\+\_\+children}} () override
+\item 
+\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a4f7dfbf6f5dd02faf737f3654c492773}{create\+\_\+state\+\_\+instance}} () override
+\item 
+\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t}{event\+\_\+handler\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a55b9a13989b26837a5a858a3410ff02f}{event\+\_\+handler}} () override
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a68a33d980fca3160d421e4483f7558b6}{redraw}} (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout}{cydui\+::layout\+::\+Layout}} \texorpdfstring{$\ast$}{*}layout) override
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a66895726989b817053f31d78eb5f7074}{get\+\_\+fragment}} (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout}{cydui\+::layout\+::\+Layout}} \texorpdfstring{$\ast$}{*}layout, \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__node__t}{cydui\+::compositing\+::compositing\+\_\+node\+\_\+t}} \texorpdfstring{$\ast$}{*}compositing\+\_\+node) override
+\item 
+\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af60e04880b486c0007d587f2492a20da}{find\+\_\+by\+\_\+coords}} (int x, int y) override
+\item 
+\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t}{component\+\_\+dimensional\+\_\+relations\+\_\+t}} \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a1e07ccc5118d126161c14815f1dab4e5}{get\+\_\+dimensional\+\_\+relations}} () override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{cydui\+::components\+::component\+\_\+base\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a2fcd18d417da0bdd4ed6cafc7e9dd50e}{\texorpdfstring{$\sim$}{\string~}component\+\_\+base\+\_\+t}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__x}{attr\+\_\+x$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__x_a6b6f2232efe0ae705526933b22606749}{x}} (auto \&\+\_\+x\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__x_a4d9f813027f425d9ce25f1f99486bbd3}{x}} (auto \&\&\+\_\+x\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__y}{attr\+\_\+y$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__y_addfd3e002ed488e5a6bde01f94b3ae2a}{y}} (auto \&\+\_\+y\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__y_ab5b279731ec80c028371bf4519670f4a}{y}} (auto \&\&\+\_\+y\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__w}{attr\+\_\+w$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__w_a101f7243f1e4e69543b058e40955501b}{w}} (auto \&\+\_\+w\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__w_ab36c8729b878ae613f1b48e603dbba5e}{w}} (auto \&\&\+\_\+w\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__h}{attr\+\_\+h$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__h_a31557d5ccebd5415d5d74222bf6cbcc8}{h}} (auto \&\+\_\+h\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__h_a428d67e4f7526add403967593341cd18}{h}} (auto \&\&\+\_\+h\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__margin__top}{attr\+\_\+margin\+\_\+top$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__margin__top_ac03e2db7fdb4dcb35defc19913e1ad85}{margin\+\_\+top}} (auto \&\+\_\+margin\+\_\+top\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__margin__top_abd53bc5751a9e981918015c353781d37}{margin\+\_\+top}} (auto \&\&\+\_\+margin\+\_\+top\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__margin__bottom}{attr\+\_\+margin\+\_\+bottom$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__margin__bottom_a221f1e7c39153fba575bcfe9f911bb87}{margin\+\_\+bottom}} (auto \&\+\_\+margin\+\_\+bottom\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__margin__bottom_aeda8cf09d324fd54733d5e85e8d83186}{margin\+\_\+bottom}} (auto \&\&\+\_\+margin\+\_\+bottom\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__margin__left}{attr\+\_\+margin\+\_\+left$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__margin__left_af5a69a683c61f6ea68c88dd6f9ca53ba}{margin\+\_\+left}} (auto \&\+\_\+margin\+\_\+left\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__margin__left_ab6c4fee006662dbf3a86f1899c80002b}{margin\+\_\+left}} (auto \&\&\+\_\+margin\+\_\+left\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__margin__right}{attr\+\_\+margin\+\_\+right$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__margin__right_aa9652a5454e28608e624cb8e9ac7c5c5}{margin\+\_\+right}} (auto \&\+\_\+margin\+\_\+right\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__margin__right_aff4f3f79d648d17c5fef77415923e2e9}{margin\+\_\+right}} (auto \&\&\+\_\+margin\+\_\+right\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__padding__top}{attr\+\_\+padding\+\_\+top$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__padding__top_a7fea86e4b7546351645dcaa8e3a8594c}{padding\+\_\+top}} (auto \&\+\_\+padding\+\_\+top\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__padding__top_a02aa5429cd27ccefddcb6bc8337e9dd0}{padding\+\_\+top}} (auto \&\&\+\_\+padding\+\_\+top\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__padding__bottom}{attr\+\_\+padding\+\_\+bottom$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__padding__bottom_ac61fe3fa8669c96e5fd6a4703253bb17}{padding\+\_\+bottom}} (auto \&\+\_\+padding\+\_\+bottom\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__padding__bottom_a16c4c81eeaf9300ebebe00b2e9606d70}{padding\+\_\+bottom}} (auto \&\&\+\_\+padding\+\_\+bottom\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__padding__left}{attr\+\_\+padding\+\_\+left$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__padding__left_ae85fdc90c07bb6e4cafd9f9a23f38b50}{padding\+\_\+left}} (auto \&\+\_\+padding\+\_\+left\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__padding__left_ad9041022fe47125368b0ca27bcd11945}{padding\+\_\+left}} (auto \&\&\+\_\+padding\+\_\+left\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__padding__right}{attr\+\_\+padding\+\_\+right$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__padding__right_a81814b85d5f533292b66ca0a26146647}{padding\+\_\+right}} (auto \&\+\_\+padding\+\_\+right\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__padding__right_ac0b846ca37143210357fb778934b8d6e}{padding\+\_\+right}} (auto \&\&\+\_\+padding\+\_\+right\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structattr__content}{attr\+\_\+content$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__content_ad12049cf173a7bb9ce46b1bdcf76ad03}{operator()}} (auto \&\&\+\_\+content\+\_\+)
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \& \mbox{\hyperlink{structattr__content_ab12cf5db5e4464840f161f3591133168}{operator()}} (auto \&\+\_\+content\+\_\+)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structlogging_1_1logger}{logging\+::logger}} \mbox{\hyperlink{structThreadTimeline_ae9f91169097776d1bbb27c13ac2f03ac}{log}} \{.name = "{}Thread\+Timeline"{}\}
+\item 
+struct props\+\_\+t \mbox{\hyperlink{structThreadTimeline_ab941a2e6c00f7f324c44debb9edcf0a9}{props}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{cydui\+::components\+::component\+\_\+base\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::optional$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}} = std\+::nullopt
+\item 
+std\+::optional$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_ace69ebb59763f0ac0f41a8ea1143299e}{parent}} = std\+::nullopt
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_ab621df6e5a33785b4a4db8e9249229eb}{children}} \{\}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{cydui\+::events\+::listener\+\_\+t}} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a82c74bd5b61ca00c64fe5a07bdc7acf4}{subscribed\+\_\+listeners}} \{\}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__x}{attr\+\_\+x$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__x_acaed304acbc971f98341534fc6af7e3b}{\+\_\+x}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__y}{attr\+\_\+y$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__y_aefbc97786bab0484fd18c3a5100e7091}{\+\_\+y}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__w}{attr\+\_\+w$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__w_ada87f3d931dece9287062f618dd18b1b}{\+\_\+w}}
+\item 
+bool \mbox{\hyperlink{structattr__w_a771fe5b37074165383db44add8e21442}{\+\_\+w\+\_\+has\+\_\+changed}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__h}{attr\+\_\+h$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__h_a9b2310277733e114b5e1a27a4f1b17a2}{\+\_\+h}}
+\item 
+bool \mbox{\hyperlink{structattr__h_a2d58dec99d029667a77bb8838d1aaf48}{\+\_\+h\+\_\+has\+\_\+changed}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__margin__top}{attr\+\_\+margin\+\_\+top$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__margin__top_acfbc35932cad0c4f12148f4f64d8bf8a}{\+\_\+margin\+\_\+top}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__margin__bottom}{attr\+\_\+margin\+\_\+bottom$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__margin__bottom_a9582e62ddc1083ec886ed16a5d020488}{\+\_\+margin\+\_\+bottom}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__margin__left}{attr\+\_\+margin\+\_\+left$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__margin__left_ace1183dac9f44aaccd12f638b4a9f4a3}{\+\_\+margin\+\_\+left}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__margin__right}{attr\+\_\+margin\+\_\+right$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__margin__right_ae981f405d3c5d7454441ecef34259c71}{\+\_\+margin\+\_\+right}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__padding__top}{attr\+\_\+padding\+\_\+top$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__padding__top_a17c9624860b59de41f207f3ead52454d}{\+\_\+padding\+\_\+top}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__padding__bottom}{attr\+\_\+padding\+\_\+bottom$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__padding__bottom_a60bb4491d010a47eec1282c1ca98d1c1}{\+\_\+padding\+\_\+bottom}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__padding__left}{attr\+\_\+padding\+\_\+left$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__padding__left_a5695f4b8f386fd51de6e137c414dd759}{\+\_\+padding\+\_\+left}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__padding__right}{attr\+\_\+padding\+\_\+right$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{cydui\+::dimensions\+::dimension\+\_\+t}} \mbox{\hyperlink{structattr__padding__right_a8c4904d38839142951720aa6c695d5e2}{\+\_\+padding\+\_\+right}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structattr__content}{attr\+\_\+content$<$ T $>$}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::function$<$ \mbox{\hyperlink{component__attributes_8h_a433f1845478577b631417df1354fac68}{content}}()$>$ \mbox{\hyperlink{structattr__content_a258f5aaa0716450a7b0dc4c875e25fa7}{\+\_\+content}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structThreadTimeline_ae6f9b987deb07017c639bf427c5902b7}{NAME}} = "{}Thread\+Timeline"{}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{cydui\+::components\+::component\+\_\+base\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a07f6120d73007c4b804e67c39f38061d}{add\+\_\+event\+\_\+listeners}} (const std\+::unordered\+\_\+map$<$ std\+::string, event\+\_\+handler\+\_\+t\+::listener\+\_\+data\+\_\+t $>$ \&listeners)
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a6e3a63ecb81d9babc620d73d52b94a8c}{clear\+\_\+subscribed\+\_\+listeners}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{ThreadTimeline_8h_source_l00018}{18}} of file \mbox{\hyperlink{ThreadTimeline_8h_source}{Thread\+Timeline.\+h}}.
+
+
+
+\doxysubsection{Member Typedef Documentation}
+\Hypertarget{structThreadTimeline_a5bac7c17d4c9975943bf712007b05182}\label{structThreadTimeline_a5bac7c17d4c9975943bf712007b05182} 
+\index{ThreadTimeline@{ThreadTimeline}!event\_handler\_t@{event\_handler\_t}}
+\index{event\_handler\_t@{event\_handler\_t}!ThreadTimeline@{ThreadTimeline}}
+\doxysubsubsection{\texorpdfstring{event\_handler\_t}{event\_handler\_t}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{structThreadTimeline_a5bac7c17d4c9975943bf712007b05182}{Thread\+Timeline\+::event\+\_\+handler\+\_\+t}} =  \mbox{\hyperlink{structThreadTimelineEventHandler}{Thread\+Timeline\+Event\+Handler}}}
+
+
+
+Definition at line \mbox{\hyperlink{ThreadTimeline_8h_source_l00018}{18}} of file \mbox{\hyperlink{ThreadTimeline_8h_source}{Thread\+Timeline.\+h}}.
+
+\Hypertarget{structThreadTimeline_a365aef9eb23521a4ce3238e2b59dbb45}\label{structThreadTimeline_a365aef9eb23521a4ce3238e2b59dbb45} 
+\index{ThreadTimeline@{ThreadTimeline}!state\_t@{state\_t}}
+\index{state\_t@{state\_t}!ThreadTimeline@{ThreadTimeline}}
+\doxysubsubsection{\texorpdfstring{state\_t}{state\_t}}
+{\footnotesize\ttfamily using \mbox{\hyperlink{structThreadTimeline_a365aef9eb23521a4ce3238e2b59dbb45}{Thread\+Timeline\+::state\+\_\+t}} =  \mbox{\hyperlink{structThreadTimelineState}{Thread\+Timeline\+State}}}
+
+
+
+Definition at line \mbox{\hyperlink{ThreadTimeline_8h_source_l00018}{18}} of file \mbox{\hyperlink{ThreadTimeline_8h_source}{Thread\+Timeline.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structThreadTimeline_a3a873a4ac8201baa479757cd0e0b680f}\label{structThreadTimeline_a3a873a4ac8201baa479757cd0e0b680f} 
+\index{ThreadTimeline@{ThreadTimeline}!ThreadTimeline@{ThreadTimeline}}
+\index{ThreadTimeline@{ThreadTimeline}!ThreadTimeline@{ThreadTimeline}}
+\doxysubsubsection{\texorpdfstring{ThreadTimeline()}{ThreadTimeline()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Thread\+Timeline\+::\+Thread\+Timeline (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{structThreadTimeline_a56f76247afb50cbbc7af6943abec8c0f}\label{structThreadTimeline_a56f76247afb50cbbc7af6943abec8c0f} 
+\index{ThreadTimeline@{ThreadTimeline}!ThreadTimeline@{ThreadTimeline}}
+\index{ThreadTimeline@{ThreadTimeline}!ThreadTimeline@{ThreadTimeline}}
+\doxysubsubsection{\texorpdfstring{ThreadTimeline()}{ThreadTimeline()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Thread\+Timeline\+::\+Thread\+Timeline (\begin{DoxyParamCaption}\item[{props\+\_\+t}]{props }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+
+
+Definition at line \mbox{\hyperlink{ThreadTimeline_8h_source_l00018}{18}} of file \mbox{\hyperlink{ThreadTimeline_8h_source}{Thread\+Timeline.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \{}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structThreadTimeline_ae9f91169097776d1bbb27c13ac2f03ac}\label{structThreadTimeline_ae9f91169097776d1bbb27c13ac2f03ac} 
+\index{ThreadTimeline@{ThreadTimeline}!log@{log}}
+\index{log@{log}!ThreadTimeline@{ThreadTimeline}}
+\doxysubsubsection{\texorpdfstring{log}{log}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structlogging_1_1logger}{logging\+::logger}} Thread\+Timeline\+::log \{.name = "{}Thread\+Timeline"{}\}}
+
+
+
+Definition at line \mbox{\hyperlink{ThreadTimeline_8h_source_l00018}{18}} of file \mbox{\hyperlink{ThreadTimeline_8h_source}{Thread\+Timeline.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \{}
+
+\end{DoxyCode}
+\Hypertarget{structThreadTimeline_ae6f9b987deb07017c639bf427c5902b7}\label{structThreadTimeline_ae6f9b987deb07017c639bf427c5902b7} 
+\index{ThreadTimeline@{ThreadTimeline}!NAME@{NAME}}
+\index{NAME@{NAME}!ThreadTimeline@{ThreadTimeline}}
+\doxysubsubsection{\texorpdfstring{NAME}{NAME}}
+{\footnotesize\ttfamily constexpr const char\texorpdfstring{$\ast$}{*} Thread\+Timeline\+::\+NAME = "{}Thread\+Timeline"{}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{ThreadTimeline_8h_source_l00018}{18}} of file \mbox{\hyperlink{ThreadTimeline_8h_source}{Thread\+Timeline.\+h}}.
+
+\Hypertarget{structThreadTimeline_ab941a2e6c00f7f324c44debb9edcf0a9}\label{structThreadTimeline_ab941a2e6c00f7f324c44debb9edcf0a9} 
+\index{ThreadTimeline@{ThreadTimeline}!props@{props}}
+\index{props@{props}!ThreadTimeline@{ThreadTimeline}}
+\doxysubsubsection{\texorpdfstring{props}{props}}
+{\footnotesize\ttfamily struct props\+\_\+t Thread\+Timeline\+::props}
+
+
+
+Definition at line \mbox{\hyperlink{ThreadTimeline_8h_source_l00018}{18}} of file \mbox{\hyperlink{ThreadTimeline_8h_source}{Thread\+Timeline.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/tools/profiler/\mbox{\hyperlink{ThreadTimeline_8h}{Thread\+Timeline.\+h}}\end{DoxyCompactItemize}

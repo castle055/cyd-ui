@@ -1,0 +1,104 @@
+\doxysection{env\+::var Struct Reference}
+\hypertarget{structenv_1_1var}{}\label{structenv_1_1var}\index{env::var@{env::var}}
+
+
+{\ttfamily \#include $<$env.\+h$>$}
+
+
+
+Collaboration diagram for env\+::var\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=174pt]{structenv_1_1var__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structenv_1_1var_a98dbf09687b31e5e6782ff3b54208c41}{operator std\+::string}} ()
+\item 
+\mbox{\hyperlink{structenv_1_1var}{var}} \& \mbox{\hyperlink{structenv_1_1var_a1d750b55a9a84194af95ab6925f4bdad}{operator=}} (const std\+::string \&VALUE)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::string \& \mbox{\hyperlink{structenv_1_1var_a426a9439e59b643209ddbb26feb6ce7d}{ENVVAR}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{env_8h_source_l00039}{39}} of file \mbox{\hyperlink{env_8h_source}{env.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structenv_1_1var_a98dbf09687b31e5e6782ff3b54208c41}\label{structenv_1_1var_a98dbf09687b31e5e6782ff3b54208c41} 
+\index{env::var@{env::var}!operator std::string@{operator std::string}}
+\index{operator std::string@{operator std::string}!env::var@{env::var}}
+\doxysubsubsection{\texorpdfstring{operator std::string()}{operator std::string()}}
+{\footnotesize\ttfamily env\+::var\+::operator std\+::string (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{env_8h_source_l00042}{42}} of file \mbox{\hyperlink{env_8h_source}{env.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespaceenv_abca9bc7353cff0b42cd398c29347ba34}{env::get}}(\mbox{\hyperlink{structenv_1_1var_a426a9439e59b643209ddbb26feb6ce7d}{ENVVAR}});}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=249pt]{structenv_1_1var_a98dbf09687b31e5e6782ff3b54208c41_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structenv_1_1var_a1d750b55a9a84194af95ab6925f4bdad}\label{structenv_1_1var_a1d750b55a9a84194af95ab6925f4bdad} 
+\index{env::var@{env::var}!operator=@{operator=}}
+\index{operator=@{operator=}!env::var@{env::var}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structenv_1_1var}{var}} \& env\+::var\+::operator= (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{VALUE }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{env_8h_source_l00046}{46}} of file \mbox{\hyperlink{env_8h_source}{env.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespaceenv_a9e8dc70a7c190769d019cc1836c3c719}{env::set}}(\mbox{\hyperlink{structenv_1_1var_a426a9439e59b643209ddbb26feb6ce7d}{ENVVAR}},\ VALUE);}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structenv_1_1var_a1d750b55a9a84194af95ab6925f4bdad_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structenv_1_1var_a426a9439e59b643209ddbb26feb6ce7d}\label{structenv_1_1var_a426a9439e59b643209ddbb26feb6ce7d} 
+\index{env::var@{env::var}!ENVVAR@{ENVVAR}}
+\index{ENVVAR@{ENVVAR}!env::var@{env::var}}
+\doxysubsubsection{\texorpdfstring{ENVVAR}{ENVVAR}}
+{\footnotesize\ttfamily const std\+::string\& env\+::var\+::\+ENVVAR}
+
+
+
+Definition at line \mbox{\hyperlink{env_8h_source_l00040}{40}} of file \mbox{\hyperlink{env_8h_source}{env.\+h}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/cydstd/\mbox{\hyperlink{env_8h}{env.\+h}}\end{DoxyCompactItemize}

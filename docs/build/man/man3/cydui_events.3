@@ -1,0 +1,176 @@
+.TH "cydui::events" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::events
+.SH SYNOPSIS
+.br
+.PP
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBchange_ev\fP"
+.br
+.in -1c
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBConsumer\fP"
+.br
+.ti -1c
+.RI "struct \fBEvent\fP"
+.br
+.ti -1c
+.RI "struct \fBlistener_t\fP"
+.br
+.ti -1c
+.RI "struct \fBParsedEvent\fP"
+.br
+.in -1c
+.SS "Concepts"
+
+.in +1c
+.ti -1c
+.RI "concept \fBEventType\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef std::function< void(\fBEvent\fP *)> \fBListener\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBEventStatus\fP { \fBPENDING\fP, \fBPROCESSING\fP, \fBCONSUMED\fP }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBemit_raw\fP (\fBcydui::events::Event\fP *ev)"
+.br
+.ti -1c
+.RI "void \fBemit_raw\fP (const \fBstr\fP &event_type, void *data)"
+.br
+.ti -1c
+.RI "template<typename \fBT\fP > 
+.br
+requires EventType<\fBT\fP>void \fBemit\fP (typename T::DataType data)"
+.br
+.ti -1c
+.RI "void \fBremove_listener\fP (const \fBstr\fP &event_type, const \fBlistener_t\fP &listener)"
+.br
+.ti -1c
+.RI "\fBlistener_t\fP \fBon_event_raw\fP (const \fBstr\fP &event_type, const \fBListener\fP &l)"
+.br
+.ti -1c
+.RI "template<typename \fBT\fP > 
+.br
+requires EventType<\fBT\fP>\fBlistener_t\fP \fBon_event\fP (\fBConsumer\fP< \fBT\fP > c)"
+.br
+.ti -1c
+.RI "void \fBstart\fP ()"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef std::function<void(\fBEvent\fP*)> \fBcydui::events::Listener\fP"
+
+.PP
+Definition at line \fB161\fP of file \fBevents\&.hpp\fP\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBcydui::events::EventStatus\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIPENDING \fP\fP
+.TP
+\fB\fIPROCESSING \fP\fP
+.TP
+\fB\fICONSUMED \fP\fP
+.PP
+Definition at line \fB103\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+103                      {
+104       PENDING,
+105       PROCESSING,
+106       CONSUMED,
+107     };
+.fi
+
+.SH "Function Documentation"
+.PP 
+.SS "template<typename \fBT\fP > 
+.br
+requires EventType<\fBT\fP>void cydui::events::emit (typename T::DataType data)\fC [inline]\fP"
+
+.PP
+Definition at line \fB143\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+143                                               {
+144       emit_raw(T::type, new T({\&.data = data}));
+145     }
+.fi
+
+.SS "void cydui::events::emit_raw (const \fBstr\fP & event_type, void * data)"
+
+.SS "void cydui::events::emit_raw (\fBcydui::events::Event\fP * ev)"
+
+.PP
+Definition at line \fB123\fP of file \fBevents\&.cpp\fP\&..PP
+.nf
+123                                                {
+124   push_event(th_data, ev);
+125 }
+.fi
+
+.SS "template<typename \fBT\fP > 
+.br
+requires EventType<\fBT\fP>\fBlistener_t\fP cydui::events::on_event (\fBConsumer\fP< \fBT\fP > c)\fC [inline]\fP"
+
+.PP
+Definition at line \fB209\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+209                                               {
+210       return cydui::events::on_event_raw(T::type, [c](Event* ev) {
+211         auto parsed = ev\->parse<T>();
+212         if (parsed\&.data) {
+213           c(parsed);
+214         }
+215       });
+216     }
+.fi
+
+.SS "\fBlistener_t\fP cydui::events::on_event_raw (const \fBstr\fP & event_type, const \fBListener\fP & l)"
+
+.SS "void cydui::events::remove_listener (const \fBstr\fP & event_type, const \fBlistener_t\fP & listener)"
+
+.SS "void cydui::events::start ()"
+
+.PP
+Definition at line \fB113\fP of file \fBevents\&.cpp\fP\&..PP
+.nf
+113                         {
+114   if (event_thread && event_thread\->native_thread != nullptr)
+115     return;
+116   log_ctrl\&.debug("Starting event_thread");
+117   
+118   event_thread =
+119     threading::new_thread(&event_task, th_data)
+120       \->set_name("EV_THD");
+121 }
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

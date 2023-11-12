@@ -1,0 +1,227 @@
+.TH "cydui::graphics::vg::attrs_stroke< T >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::graphics::vg::attrs_stroke< T >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <vg_attributes\&.h>\fP
+.PP
+Inherits \fBcydui::graphics::vg::attr_stroke< T >\fP, \fBcydui::graphics::vg::attr_stroke_width< T >\fP, \fBcydui::graphics::vg::attr_stroke_opacity< T >\fP, \fBcydui::graphics::vg::attr_stroke_miterlimit< T >\fP, \fBcydui::graphics::vg::attr_stroke_dasharray< T >\fP, \fBcydui::graphics::vg::attr_stroke_dashoffset< T >\fP, \fBcydui::graphics::vg::attr_stroke_linejoin< T >\fP, and \fBcydui::graphics::vg::attr_stroke_linecap< T >\fP\&.
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBapply_stroke\fP (\fBpixelmap_editor_t\fP &editor) const"
+.br
+.ti -1c
+.RI "void \fBset_source_to_stroke\fP (\fBpixelmap_editor_t\fP &editor) const"
+.br
+.ti -1c
+.RI "\fBcolor::Color\fP \fBsample_stroke\fP (int x, int y) const"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Public Member Functions inherited from \fBcydui::graphics::vg::attr_stroke< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::solid\fP &_stroke_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::solid\fP &&_stroke_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::gradient::linear\fP &_stroke_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::gradient::linear\fP &&_stroke_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::gradient::radial\fP &_stroke_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke\fP (\fBvg::paint::gradient::radial\fP &&_stroke_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::graphics::vg::attr_stroke_width< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_width\fP (auto &_stroke_width_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_width\fP (auto &&_stroke_width_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::graphics::vg::attr_stroke_opacity< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_opacity\fP (float &_stroke_opacity_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_opacity\fP (float &&_stroke_opacity_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::graphics::vg::attr_stroke_miterlimit< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_miterlimit\fP (int &_stroke_miterlimit_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_miterlimit\fP (int &&_stroke_miterlimit_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::graphics::vg::attr_stroke_dasharray< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_dasharray\fP (std::vector< double > &_stroke_dasharray_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_dasharray\fP (std::vector< double > &&_stroke_dasharray_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::graphics::vg::attr_stroke_dashoffset< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_dashoffset\fP (double &_stroke_dashoffset_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_dashoffset\fP (double &&_stroke_dashoffset_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::graphics::vg::attr_stroke_linejoin< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_linejoin\fP (\fBstroke_linejoin_e\fP &_stroke_linejoin_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_linejoin\fP (\fBstroke_linejoin_e\fP &&_stroke_linejoin_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::graphics::vg::attr_stroke_linecap< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBT\fP & \fBstroke_linecap\fP (\fBstroke_linecap_e\fP &_stroke_linecap_)"
+.br
+.ti -1c
+.RI "\fBT\fP & \fBstroke_linecap\fP (\fBstroke_linecap_e\fP &&_stroke_linecap_)"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::graphics::vg::attr_stroke< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBvg::paint::type\fP \fB_stroke\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::graphics::vg::attr_stroke_width< T >\fP
+.in +1c
+.ti -1c
+.RI "int \fB_stroke_width\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::graphics::vg::attr_stroke_opacity< T >\fP
+.in +1c
+.ti -1c
+.RI "float \fB_stroke_opacity\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::graphics::vg::attr_stroke_miterlimit< T >\fP
+.in +1c
+.ti -1c
+.RI "int \fB_stroke_miterlimit\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::graphics::vg::attr_stroke_dasharray< T >\fP
+.in +1c
+.ti -1c
+.RI "std::vector< double > \fB_stroke_dasharray\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::graphics::vg::attr_stroke_dashoffset< T >\fP
+.in +1c
+.ti -1c
+.RI "double \fB_stroke_dashoffset\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::graphics::vg::attr_stroke_linejoin< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBstroke_linejoin_e\fP \fB_stroke_linejoin\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::graphics::vg::attr_stroke_linecap< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBstroke_linecap_e\fP \fB_stroke_linecap\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename \fBT\fP>
+.br
+struct cydui::graphics::vg::attrs_stroke< T >"
+.PP
+Definition at line \fB351\fP of file \fBvg_attributes\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename \fBT\fP > void \fBcydui::graphics::vg::attrs_stroke\fP< \fBT\fP >::apply_stroke (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line \fB361\fP of file \fBvg_attributes\&.h\fP\&..PP
+.nf
+361                                                          {
+362         editor\->set_line_width(this\->_stroke_width);
+363         editor\->set_line_cap(this\->_stroke_linecap);
+364         editor\->set_line_join(this\->_stroke_linejoin);
+365         editor\->set_dash(this\->_stroke_dasharray, this\->_stroke_dashoffset);
+366         editor\->set_miter_limit(this\->_stroke_miterlimit);
+367       }
+.fi
+
+.SS "template<typename \fBT\fP > \fBcolor::Color\fP \fBcydui::graphics::vg::attrs_stroke\fP< \fBT\fP >::sample_stroke (int x, int y) const\fC [inline]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line \fB376\fP of file \fBvg_attributes\&.h\fP\&..PP
+.nf
+376                                                    {
+377         return std::visit([&](auto &&f) \-> color::Color {
+378           return f\&.sample(x, y);
+379         }, this\->_stroke);
+380       }
+.fi
+
+.SS "template<typename \fBT\fP > void \fBcydui::graphics::vg::attrs_stroke\fP< \fBT\fP >::set_source_to_stroke (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [protected]\fP"
+
+.PP
+Definition at line \fB369\fP of file \fBvg_attributes\&.h\fP\&..PP
+.nf
+369                                                                  {
+370         std::visit([&](auto &&s) {
+371           s\&.apply_to_source(editor, this\->_stroke_opacity);
+372         }, this\->_stroke);
+373       }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

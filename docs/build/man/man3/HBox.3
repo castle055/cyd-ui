@@ -1,0 +1,238 @@
+.TH "HBox" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+HBox
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <containers\&.hpp>\fP
+.PP
+Inherits \fBcydui::components::Component\fP\&.
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBProps\fP"
+.br
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBHBoxState\fP \fBState\fP"
+.br
+.in -1c
+
+Public Types inherited from \fBcydui::components::Component\fP
+.in +1c
+.ti -1c
+.RI "typedef \fBKeyEvent::DataType\fP \fBKeyData\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBHBox\fP (\fBHBoxState\fP *\fBstate\fP, \fBProps\fP \fBprops\fP, const std::function< void(\fBcydui::components::Component\fP *)> &inner)"
+.br
+.ti -1c
+.RI "virtual void \fBon_redraw\fP () const override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::components::Component\fP
+.in +1c
+.ti -1c
+.RI "\fBComponent\fP ()"
+.br
+.ti -1c
+.RI "\fBComponent\fP (std::function< void(\fBComponent\fP *)> inner)"
+.br
+.ti -1c
+.RI "\fBComponent\fP (\fBComponentState\fP *\fBstate\fP)"
+.br
+.ti -1c
+.RI "\fBComponent\fP (\fBComponentState\fP *\fBstate\fP, std::function< void(\fBComponent\fP *)> inner)"
+.br
+.ti -1c
+.RI "virtual \fB~Component\fP ()"
+.br
+.ti -1c
+.RI "void \fBadd\fP (const std::vector< \fBcomponent_builder_t\fP > &ichildren, bool prepend=false) const"
+.br
+.ti -1c
+.RI "void \fBredraw\fP (\fBcydui::layout::Layout\fP *layout)"
+.br
+.ti -1c
+.RI "void \fBrender\fP (\fBcydui::compositing::compositing_node_t\fP *node) const"
+.br
+.ti -1c
+.RI "\fBnullable\fP< \fBComponent\fP * > \fBget_parent\fP () const"
+.br
+.ti -1c
+.RI "virtual bool \fBis_drawable\fP () const"
+.br
+.ti -1c
+.RI "virtual void \fBon_render\fP (\fBvg::vg_fragment_t\fP &graphics) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_enter\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_exit\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_motion\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_click\fP (int x, int y, int button) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_drag_start\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_drag_motion\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_drag_finish\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_scroll\fP (int dx, int dy) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_key_press\fP (\fBKeyData\fP key) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_key_release\fP (\fBKeyData\fP key) const"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBProps\fP \fBprops\fP"
+.br
+.ti -1c
+.RI "\fBHBoxState\fP * \fBstate\fP = nullptr"
+.br
+.ti -1c
+.RI "\fBlogging::logger\fP \fBlog\fP = {\&.name = 'HBox', \&.on = false}"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::components::Component\fP
+.in +1c
+.ti -1c
+.RI "\fBnullable\fP< \fBComponent\fP * > \fBparent\fP"
+.br
+.ti -1c
+.RI "\fBnullable\fP< \fBComponentState\fP * > \fBstate\fP"
+.br
+.ti -1c
+.RI "\fBcydui::dimensions::component_dimensions_t\fP * \fBdim\fP"
+.br
+.ti -1c
+.RI "std::deque< \fBComponent\fP * > \fBchildren\fP"
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static constexpr const char * \fBName\fP = 'HBox'"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Static Public Member Functions inherited from \fBcydui::components::Component\fP
+.in +1c
+.ti -1c
+.RI "static \fBComponent\fP * \fBnew_group\fP ()"
+.br
+.in -1c
+
+Protected Member Functions inherited from \fBcydui::components::Component\fP
+.in +1c
+.ti -1c
+.RI "template<typename c , int ID> 
+.br
+requires \fBComponentConcept\fP<c>\fBcomponent_builder_t\fP \fBcreate\fP (\fBc_init_t\fP< c > \fBinit\fP) const"
+.br
+.ti -1c
+.RI "template<typename c , int ID, typename \fBT\fP > 
+.br
+requires \fBComponentConcept\fP<c>\fBcomponent_builder_t\fP \fBcreate_for\fP (const \fBT\fP &iter, std::function< \fBc_init_t\fP< c >(const typename T::value_type &)> block) const"
+.br
+.ti -1c
+.RI "\fBcomponent_builder_t\fP \fBcreate_group\fP (std::vector< \fBcomponent_builder_t\fP > _children) const"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB32\fP of file \fBcontainers\&.hpp\fP\&.
+.SH "Member Typedef Documentation"
+.PP 
+.SS "typedef \fBHBoxState\fP \fBHBox::State\fP"
+
+.PP
+Definition at line \fB37\fP of file \fBcontainers\&.hpp\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "HBox::HBox (\fBHBoxState\fP * state, \fBProps\fP props, const std::function< void(\fBcydui::components::Component\fP *)> & inner)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line \fB37\fP of file \fBcontainers\&.hpp\fP\&..PP
+.nf
+37              {
+38   }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual void HBox::on_redraw () const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented from \fBcydui::components::Component\fP\&.
+.PP
+Definition at line \fB39\fP of file \fBcontainers\&.hpp\fP\&..PP
+.nf
+39          {
+40     Component* prev = nullptr;
+41     for (auto &ch: children) {
+42       ch\->dim\->x = prev == nullptr
+43         ? props\&.offset
+44         : prev\->dim\->x + prev\->dim\->w + props\&.spacing;
+45       prev = ch;
+46     }
+47   }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBlogging::logger\fP HBox::log = {\&.name = 'HBox', \&.on = false}"
+
+.PP
+Definition at line \fB37\fP of file \fBcontainers\&.hpp\fP\&..PP
+.nf
+37 {
+.fi
+
+.SS "constexpr const char* HBox::Name = 'HBox'\fC [static]\fP, \fC [constexpr]\fP"
+
+.PP
+Definition at line \fB37\fP of file \fBcontainers\&.hpp\fP\&.
+.SS "\fBProps\fP HBox::props"
+
+.PP
+Definition at line \fB36\fP of file \fBcontainers\&.hpp\fP\&.
+.SS "\fBHBoxState\fP* HBox::state = nullptr"
+
+.PP
+Definition at line \fB37\fP of file \fBcontainers\&.hpp\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

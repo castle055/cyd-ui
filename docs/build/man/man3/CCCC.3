@@ -1,0 +1,27 @@
+.TH "CCCC" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+CCCC
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <nullable\&.h>\fP
+.SH "Concept definition"
+.PP 
+.PP
+.nf
+template<typename F, typename T, typename R>
+concept CCCC =  requires(T t) {
+  {
+  F(t)
+  } \-> std::convertible_to<R>;
+}
+.fi
+.SH "Detailed Description"
+.PP 
+Definition at line \fB12\fP of file \fBnullable\&.h\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

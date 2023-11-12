@@ -1,0 +1,124 @@
+.TH "with< bool >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+with< bool >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <with_specialization\&.h>\fP
+.PP
+Inherits \fBwith_data_t< bool >\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBwith\fP< bool > & \fBthen\fP (std::function< std::vector< cydui::component_holder_t >()> components)"
+.br
+.ti -1c
+.RI "\fBwith\fP< bool > & \fBor_else\fP (std::function< std::vector< cydui::component_holder_t >()> components)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBwith_data_t< bool >\fP
+.in +1c
+.ti -1c
+.RI "\fBwith_data_t\fP (bool &\fBval\fP)"
+.br
+.ti -1c
+.RI "\fBwith_data_t\fP (bool &&\fBval\fP)"
+.br
+.ti -1c
+.RI "const auto & \fBget_selection\fP () const"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Public Attributes inherited from \fBwith_data_t< bool >\fP
+.in +1c
+.ti -1c
+.RI "bool & \fBval\fP"
+.br
+.in -1c
+
+Protected Attributes inherited from \fBwith_data_t< bool >\fP
+.in +1c
+.ti -1c
+.RI "std::unordered_map< std::string, cydui::component_base_t * > \fBselection\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB13\fP of file \fBwith_specialization\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBwith\fP< bool > & \fBwith\fP< bool >::or_else (std::function< std::vector< cydui::component_holder_t >()> components)\fC [inline]\fP"
+
+.PP
+Definition at line \fB45\fP of file \fBwith_specialization\&.h\fP\&..PP
+.nf
+45                                                                                     {
+46     if (!val) {
+47       selection\&.clear();
+48       auto cs = components();
+49       std::size_t i = 0;
+50       std::string index_suffix;
+51       std::string id;
+52       for (const auto &item: cs) {
+53         index_suffix = ":";
+54         index_suffix\&.append(std::to_string(i));
+55         
+56         for (const auto &component_pair: item\&.get_components()) {
+57           auto [_, component] = component_pair;
+58           // make copy of id for modification
+59           id = component_pair\&.first;
+60           id\&.append(index_suffix);
+61           id\&.append(":or_else");
+62           selection[id] = component;
+63         }
+64         
+65         ++i;
+66       }
+67     }
+68     return *this;
+69   }
+.fi
+
+.SS "\fBwith\fP< bool > & \fBwith\fP< bool >::then (std::function< std::vector< cydui::component_holder_t >()> components)\fC [inline]\fP"
+
+.PP
+Definition at line \fB14\fP of file \fBwith_specialization\&.h\fP\&..PP
+.nf
+14                                                                                  {
+15     if (val) {
+16       selection\&.clear();
+17       auto cs = components();
+18       std::size_t i = 0;
+19       std::string index_suffix;
+20       std::string id;
+21       for (const auto &item: cs) {
+22         index_suffix = ":";
+23         index_suffix\&.append(std::to_string(i));
+24         
+25         for (const auto &component_pair: item\&.get_components()) {
+26           auto [_, component] = component_pair;
+27           // make copy of id for modification
+28           id = component_pair\&.first;
+29           id\&.append(index_suffix);
+30           id\&.append(":then");
+31           selection[id] = component;
+32         }
+33         
+34         ++i;
+35       }
+36     }
+37     return *this;
+38   }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

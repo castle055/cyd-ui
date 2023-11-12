@@ -1,0 +1,131 @@
+\doxysection{cydui\+::tasks\+::timer\+\_\+t\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>} Class Template Reference}
+\hypertarget{classcydui_1_1tasks_1_1timer__t}{}\label{classcydui_1_1tasks_1_1timer__t}\index{cydui::tasks::timer\_t$<$ T $>$@{cydui::tasks::timer\_t$<$ T $>$}}
+
+
+{\ttfamily \#include $<$tasks.\+h$>$}
+
+
+
+Inheritance diagram for cydui\+::tasks\+::timer\+\_\+t\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=191pt]{classcydui_1_1tasks_1_1timer__t__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for cydui\+::tasks\+::timer\+\_\+t\texorpdfstring{$<$}{<} T \texorpdfstring{$>$}{>}\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=191pt]{classcydui_1_1tasks_1_1timer__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classcydui_1_1tasks_1_1timer__t_aa9b21697977fc1d20a9996fffb1ae07d}{start}} (typename T\+::\+Args \+\_\+args, std\+::chrono\+::duration$<$ long, std\+::nano $>$ \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a50f95fd195ce628bf3d68a08610f4af4}{period}}, int \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a97d82289f9d9ecc8288ee5e9beccd944}{count}}=-\/1, bool \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a55e04a87ea9bf3ba5efd338560ca7829}{run\+\_\+now}}=false)
+\item 
+T\+::\+Result \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcydui_1_1tasks_1_1timer__t_a1cc10697d04302f982dacea419a678d4}{res}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \mbox{\hyperlink{classcydui_1_1tasks_1_1timer__t_a53bcf04377a5200a9921d3562b7549f2}{\+\_\+task}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t}{cydui\+::tasks\+::\+\_\+timer\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::chrono\+::duration$<$ long, std\+::nano $>$ \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a6f0d9368dc8f35132cadca8002277cc7}{last\+\_\+time}} = std\+::chrono\+::system\+\_\+clock\+::now().time\+\_\+since\+\_\+epoch()
+\item 
+std\+::chrono\+::duration$<$ long, std\+::nano $>$ \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a50f95fd195ce628bf3d68a08610f4af4}{period}} = 1s
+\item 
+int \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a97d82289f9d9ecc8288ee5e9beccd944}{count}} = -\/1
+\item 
+bool \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a55e04a87ea9bf3ba5efd338560ca7829}{run\+\_\+now}} = false
+\item 
+\mbox{\hyperlink{classcydui_1_1tasks_1_1task__t}{task\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a02aab975ae52b19da13911c10f4b4e91}{task}} = nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}$>$\newline
+requires Task\+Type$<$\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}$>$\newline
+class cydui\+::tasks\+::timer\+\_\+t$<$ T $>$}
+
+
+Definition at line \mbox{\hyperlink{tasks_8h_source_l00128}{128}} of file \mbox{\hyperlink{tasks_8h_source}{tasks.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classcydui_1_1tasks_1_1timer__t_a1cc10697d04302f982dacea419a678d4}\label{classcydui_1_1tasks_1_1timer__t_a1cc10697d04302f982dacea419a678d4} 
+\index{cydui::tasks::timer\_t$<$ T $>$@{cydui::tasks::timer\_t$<$ T $>$}!res@{res}}
+\index{res@{res}!cydui::tasks::timer\_t$<$ T $>$@{cydui::tasks::timer\_t$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{res()}{res()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \\
+T\+::\+Result \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classcydui_1_1tasks_1_1timer__t}{cydui\+::tasks\+::timer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$\+::res (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{tasks_8h_source_l00146}{146}} of file \mbox{\hyperlink{tasks_8h_source}{tasks.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcydui_1_1tasks_1_1timer__t_a53bcf04377a5200a9921d3562b7549f2}{\_task}}.res();}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+\Hypertarget{classcydui_1_1tasks_1_1timer__t_aa9b21697977fc1d20a9996fffb1ae07d}\label{classcydui_1_1tasks_1_1timer__t_aa9b21697977fc1d20a9996fffb1ae07d} 
+\index{cydui::tasks::timer\_t$<$ T $>$@{cydui::tasks::timer\_t$<$ T $>$}!start@{start}}
+\index{start@{start}!cydui::tasks::timer\_t$<$ T $>$@{cydui::tasks::timer\_t$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{start()}{start()}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \\
+void \mbox{\hyperlink{classcydui_1_1tasks_1_1timer__t}{cydui\+::tasks\+::timer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$\+::start (\begin{DoxyParamCaption}\item[{typename T\+::\+Args}]{\+\_\+args,  }\item[{std\+::chrono\+::duration$<$ long, std\+::nano $>$}]{period,  }\item[{int}]{count = {\ttfamily -\/1},  }\item[{bool}]{run\+\_\+now = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{tasks_8h_source_l00131}{131}} of file \mbox{\hyperlink{tasks_8h_source}{tasks.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a50f95fd195ce628bf3d68a08610f4af4}{period}}\ =\ \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a50f95fd195ce628bf3d68a08610f4af4}{period}};}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a97d82289f9d9ecc8288ee5e9beccd944}{count}}\ =\ \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a97d82289f9d9ecc8288ee5e9beccd944}{count}};}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a55e04a87ea9bf3ba5efd338560ca7829}{run\_now}}\ =\ \mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a55e04a87ea9bf3ba5efd338560ca7829}{run\_now}};}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a6f0d9368dc8f35132cadca8002277cc7}{last\_time}}\ =\ std::chrono::system\_clock::now().time\_since\_epoch();}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1tasks_1_1timer__t_a53bcf04377a5200a9921d3562b7549f2}{\_task}}.set\_args(\_args);}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ this-\/>\mbox{\hyperlink{structcydui_1_1tasks_1_1__timer__t_a02aab975ae52b19da13911c10f4b4e91}{task}}\ =\ \&\mbox{\hyperlink{classcydui_1_1tasks_1_1timer__t_a53bcf04377a5200a9921d3562b7549f2}{\_task}};}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1tasks_ad46099bf2399af453ddd1d3affd9cab9}{start\_timer}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \};}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classcydui_1_1tasks_1_1timer__t_aa9b21697977fc1d20a9996fffb1ae07d_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classcydui_1_1tasks_1_1timer__t_a53bcf04377a5200a9921d3562b7549f2}\label{classcydui_1_1tasks_1_1timer__t_a53bcf04377a5200a9921d3562b7549f2} 
+\index{cydui::tasks::timer\_t$<$ T $>$@{cydui::tasks::timer\_t$<$ T $>$}!\_task@{\_task}}
+\index{\_task@{\_task}!cydui::tasks::timer\_t$<$ T $>$@{cydui::tasks::timer\_t$<$ T $>$}}
+\doxysubsubsection{\texorpdfstring{\_task}{\_task}}
+{\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \\
+\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \mbox{\hyperlink{classcydui_1_1tasks_1_1timer__t}{cydui\+::tasks\+::timer\+\_\+t}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$\+::\+\_\+task\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{tasks_8h_source_l00129}{129}} of file \mbox{\hyperlink{tasks_8h_source}{tasks.\+h}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/tools/\mbox{\hyperlink{tasks_8h}{tasks.\+h}}\end{DoxyCompactItemize}

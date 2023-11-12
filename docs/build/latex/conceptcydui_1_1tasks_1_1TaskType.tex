@@ -1,0 +1,24 @@
+\doxysection{cydui\+::tasks\+::Task\+Type Concept Reference}
+\hypertarget{conceptcydui_1_1tasks_1_1TaskType}{}\label{conceptcydui_1_1tasks_1_1TaskType}\index{cydui::tasks::TaskType@{cydui::tasks::TaskType}}
+
+
+{\ttfamily \#include $<$tasks.\+h$>$}
+
+\doxysubsection{Concept definition}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptcydui_1_1tasks_1_1TaskType}{cydui::tasks::TaskType}}\ =\ \ \textcolor{keyword}{requires}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{typename}\ T::Args;}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{typename}\ T::Result;}
+\DoxyCodeLine{\ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{tasks_8h_source_l00121}{121}} of file \mbox{\hyperlink{tasks_8h_source}{tasks.\+h}}.
+

@@ -1,0 +1,326 @@
+.TH "cydui::dimensions" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::dimensions
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBcomponent_dimensions_t\fP"
+.br
+.ti -1c
+.RI "class \fBdimension_t\fP"
+.br
+.ti -1c
+.RI "struct \fBdimensional_relation_t\fP"
+.br
+.ti -1c
+.RI "struct \fBfour_sided_dimension_t\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef int \fBdimension_value_t\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator+\fP (const \fBdimension_t\fP &dim, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator+\fP (const \fBdimension_t\fP &dim, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator+\fP (\fBdimension_value_t\fP value, \fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator+\fP (const \fBdimension_t\fP &dim, const \fBdimensional_relation_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator\-\fP (const \fBdimension_t\fP &dim, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator\-\fP (const \fBdimension_t\fP &dim, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator\-\fP (\fBdimension_value_t\fP value, \fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator\-\fP (const \fBdimension_t\fP &dim, const \fBdimensional_relation_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator*\fP (const \fBdimension_t\fP &dim, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator*\fP (const \fBdimension_t\fP &dim, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator*\fP (\fBdimension_value_t\fP value, \fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator*\fP (const \fBdimension_t\fP &dim, const \fBdimensional_relation_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator/\fP (const \fBdimension_t\fP &dim, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator/\fP (const \fBdimension_t\fP &dim, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator/\fP (\fBdimension_value_t\fP value, \fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator/\fP (const \fBdimension_t\fP &dim, const \fBdimensional_relation_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator%\fP (const \fBdimension_t\fP &dim, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator%\fP (const \fBdimension_t\fP &dim, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator%\fP (\fBdimension_value_t\fP value, \fBdimension_t\fP &dim)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator%\fP (const \fBdimension_t\fP &dim, const \fBdimensional_relation_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator+\fP (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator+\fP (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator+\fP (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator+\fP (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator\-\fP (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator\-\fP (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator\-\fP (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator\-\fP (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator*\fP (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator*\fP (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator*\fP (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator*\fP (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator/\fP (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator/\fP (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator/\fP (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator/\fP (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator%\fP (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP &value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator%\fP (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator%\fP (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+.br
+.ti -1c
+.RI "\fBdimensional_relation_t\fP \fBoperator%\fP (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef int \fBcydui::dimensions::dimension_value_t\fP"
+
+.PP
+Definition at line \fB14\fP of file \fBdimensions\&.hpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator% (const \fBdimension_t\fP & dim, const \fBdimensional_relation_t\fP & value)"
+
+.PP
+Definition at line \fB147\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator% (const \fBdimension_t\fP & dim, \fBdimension_t\fP & value)"
+
+.PP
+Definition at line \fB147\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator% (const \fBdimension_t\fP & dim, \fBdimension_value_t\fP value)"
+
+.PP
+Definition at line \fB147\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator% (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+
+.PP
+Definition at line \fB203\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator% (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP & value)"
+
+.PP
+Definition at line \fB203\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator% (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+
+.PP
+Definition at line \fB203\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator% (\fBdimension_value_t\fP value, \fBdimension_t\fP & dim)"
+
+.PP
+Definition at line \fB147\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator% (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+
+.PP
+Definition at line \fB203\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator* (const \fBdimension_t\fP & dim, const \fBdimensional_relation_t\fP & value)"
+
+.PP
+Definition at line \fB143\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator* (const \fBdimension_t\fP & dim, \fBdimension_t\fP & value)"
+
+.PP
+Definition at line \fB143\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator* (const \fBdimension_t\fP & dim, \fBdimension_value_t\fP value)"
+
+.PP
+Definition at line \fB143\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator* (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+
+.PP
+Definition at line \fB199\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator* (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP & value)"
+
+.PP
+Definition at line \fB199\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator* (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+
+.PP
+Definition at line \fB199\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator* (\fBdimension_value_t\fP value, \fBdimension_t\fP & dim)"
+
+.PP
+Definition at line \fB143\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator* (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+
+.PP
+Definition at line \fB199\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator+ (const \fBdimension_t\fP & dim, const \fBdimensional_relation_t\fP & value)"
+
+.PP
+Definition at line \fB139\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator+ (const \fBdimension_t\fP & dim, \fBdimension_t\fP & value)"
+
+.PP
+Definition at line \fB139\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator+ (const \fBdimension_t\fP & dim, \fBdimension_value_t\fP value)"
+
+.PP
+Definition at line \fB139\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator+ (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+
+.PP
+Definition at line \fB195\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator+ (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP & value)"
+
+.PP
+Definition at line \fB195\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator+ (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+
+.PP
+Definition at line \fB195\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator+ (\fBdimension_value_t\fP value, \fBdimension_t\fP & dim)"
+
+.PP
+Definition at line \fB139\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator+ (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+
+.PP
+Definition at line \fB195\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator\- (const \fBdimension_t\fP & dim, const \fBdimensional_relation_t\fP & value)"
+
+.PP
+Definition at line \fB141\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator\- (const \fBdimension_t\fP & dim, \fBdimension_t\fP & value)"
+
+.PP
+Definition at line \fB141\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator\- (const \fBdimension_t\fP & dim, \fBdimension_value_t\fP value)"
+
+.PP
+Definition at line \fB141\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator\- (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+
+.PP
+Definition at line \fB197\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator\- (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP & value)"
+
+.PP
+Definition at line \fB197\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator\- (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+
+.PP
+Definition at line \fB197\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator\- (\fBdimension_value_t\fP value, \fBdimension_t\fP & dim)"
+
+.PP
+Definition at line \fB141\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator\- (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+
+.PP
+Definition at line \fB197\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator/ (const \fBdimension_t\fP & dim, const \fBdimensional_relation_t\fP & value)"
+
+.PP
+Definition at line \fB145\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator/ (const \fBdimension_t\fP & dim, \fBdimension_t\fP & value)"
+
+.PP
+Definition at line \fB145\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator/ (const \fBdimension_t\fP & dim, \fBdimension_value_t\fP value)"
+
+.PP
+Definition at line \fB145\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator/ (const \fBdimensional_relation_t\fP r, const \fBdimensional_relation_t\fP value)"
+
+.PP
+Definition at line \fB201\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator/ (const \fBdimensional_relation_t\fP r, \fBdimension_t\fP & value)"
+
+.PP
+Definition at line \fB201\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator/ (const \fBdimensional_relation_t\fP r, \fBdimension_value_t\fP value)"
+
+.PP
+Definition at line \fB201\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator/ (\fBdimension_value_t\fP value, \fBdimension_t\fP & dim)"
+
+.PP
+Definition at line \fB145\fP of file \fBdimensions\&.cpp\fP\&.
+.SS "\fBdimensions::dimensional_relation_t\fP cydui::dimensions::operator/ (\fBdimension_value_t\fP value, \fBdimensional_relation_t\fP r)"
+
+.PP
+Definition at line \fB201\fP of file \fBdimensions\&.cpp\fP\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -1,0 +1,99 @@
+\doxysection{template\+\_\+str\+\_\+buffer\texorpdfstring{$<$}{<} length \texorpdfstring{$>$}{>} Struct Template Reference}
+\hypertarget{structtemplate__str__buffer}{}\label{structtemplate__str__buffer}\index{template\_str\_buffer$<$ length $>$@{template\_str\_buffer$<$ length $>$}}
+
+
+{\ttfamily \#include $<$template\+\_\+str\+\_\+buffer.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+consteval \mbox{\hyperlink{structtemplate__str__buffer_a98274c86919055242f50bc414af48231}{template\+\_\+str\+\_\+buffer}} (const char(\&str)\mbox{[}length\mbox{]}) noexcept
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+char \mbox{\hyperlink{structtemplate__str__buffer_abb56fbf2da63c33fc3897cff0ad6e9bd}{data}} \mbox{[}length\mbox{]} = \{0\}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static constexpr \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} \mbox{\hyperlink{structtemplate__str__buffer_afe9dbedb60bf851441a3638922ee0010}{count}} = length -\/ sizeof(char)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\subsubsection*{template$<$std\+::size\+\_\+t length$>$\newline
+struct template\+\_\+str\+\_\+buffer$<$ length $>$}
+Used in consteval literal operators implemented for strings, that way both the length and the contends of the string can be used with static\+\_\+assert to raise compile-\/time errors.
+
+CYD-\/\+UI uses this type for color declaration\+:
+
+auto c = "{}\#\+FCAE1\+E"{}\+\_\+color; // Ok auto c1 = "{}\#\+FCAE1\+Eaaaa"{}\+\_\+color; // Compile-\/time error, invalid length
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em length} & \\
+\hline
+\end{DoxyTemplParams}
+
+
+Definition at line \mbox{\hyperlink{template__str__buffer_8h_source_l00022}{22}} of file \mbox{\hyperlink{template__str__buffer_8h_source}{template\+\_\+str\+\_\+buffer.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{structtemplate__str__buffer_a98274c86919055242f50bc414af48231}\label{structtemplate__str__buffer_a98274c86919055242f50bc414af48231} 
+\index{template\_str\_buffer$<$ length $>$@{template\_str\_buffer$<$ length $>$}!template\_str\_buffer@{template\_str\_buffer}}
+\index{template\_str\_buffer@{template\_str\_buffer}!template\_str\_buffer$<$ length $>$@{template\_str\_buffer$<$ length $>$}}
+\doxysubsubsection{\texorpdfstring{template\_str\_buffer()}{template\_str\_buffer()}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t length$>$ \\
+consteval \mbox{\hyperlink{structtemplate__str__buffer}{template\+\_\+str\+\_\+buffer}}$<$ length $>$\mbox{\hyperlink{structtemplate__str__buffer}{\+::template\+\_\+str\+\_\+buffer}} (\begin{DoxyParamCaption}\item[{const char(\&)}]{str\mbox{[}length\mbox{]} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+
+
+Definition at line \mbox{\hyperlink{template__str__buffer_8h_source_l00027}{27}} of file \mbox{\hyperlink{template__str__buffer_8h_source}{template\+\_\+str\+\_\+buffer.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{for}\ (std::size\_t\ i\ =\ 0;\ i\ <\ length;\ ++i)\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \mbox{\hyperlink{structtemplate__str__buffer_abb56fbf2da63c33fc3897cff0ad6e9bd}{data}}[i]\ =\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}[i];}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structtemplate__str__buffer_afe9dbedb60bf851441a3638922ee0010}\label{structtemplate__str__buffer_afe9dbedb60bf851441a3638922ee0010} 
+\index{template\_str\_buffer$<$ length $>$@{template\_str\_buffer$<$ length $>$}!count@{count}}
+\index{count@{count}!template\_str\_buffer$<$ length $>$@{template\_str\_buffer$<$ length $>$}}
+\doxysubsubsection{\texorpdfstring{count}{count}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t length$>$ \\
+constexpr \mbox{\hyperlink{multidim__data_8h_a801d6a451a01953ef8cbae6feb6a3638}{size\+\_\+t}} \mbox{\hyperlink{structtemplate__str__buffer}{template\+\_\+str\+\_\+buffer}}$<$ length $>$\+::count = length -\/ sizeof(char)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [constexpr]}}
+
+
+
+Definition at line \mbox{\hyperlink{template__str__buffer_8h_source_l00036}{36}} of file \mbox{\hyperlink{template__str__buffer_8h_source}{template\+\_\+str\+\_\+buffer.\+h}}.
+
+\Hypertarget{structtemplate__str__buffer_abb56fbf2da63c33fc3897cff0ad6e9bd}\label{structtemplate__str__buffer_abb56fbf2da63c33fc3897cff0ad6e9bd} 
+\index{template\_str\_buffer$<$ length $>$@{template\_str\_buffer$<$ length $>$}!data@{data}}
+\index{data@{data}!template\_str\_buffer$<$ length $>$@{template\_str\_buffer$<$ length $>$}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily template$<$std\+::size\+\_\+t length$>$ \\
+char \mbox{\hyperlink{structtemplate__str__buffer}{template\+\_\+str\+\_\+buffer}}$<$ length $>$\+::data\mbox{[}length\mbox{]} = \{0\}}
+
+
+
+Definition at line \mbox{\hyperlink{template__str__buffer_8h_source_l00035}{35}} of file \mbox{\hyperlink{template__str__buffer_8h_source}{template\+\_\+str\+\_\+buffer.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035\ \{0\};}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/cydstd/\mbox{\hyperlink{template__str__buffer_8h}{template\+\_\+str\+\_\+buffer.\+h}}\end{DoxyCompactItemize}

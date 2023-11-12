@@ -1,0 +1,15 @@
+<map id="Canvas" name="Canvas">
+<area shape="rect" id="Node000001" title=" " alt="" coords="283,171,350,197"/>
+<area shape="rect" id="Node000002" href="$structcomponent__t.html" title=" " alt="" coords="223,80,410,123"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="319,139,319,170,314,170,314,139"/>
+<area shape="rect" id="Node000003" href="$structcomponent__base__t.html" title=" " alt="" coords="5,5,137,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="124,35,254,77,252,82,123,40"/>
+<area shape="rect" id="Node000004" href="$structattr__x.html" title=" " alt="" coords="161,5,248,32"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="236,39,289,77,286,82,233,43"/>
+<area shape="rect" id="Node000005" href="$structattr__y.html" title=" " alt="" coords="273,5,360,32"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="319,48,319,80,314,80,314,48"/>
+<area shape="rect" id="Node000006" href="$structattr__w.html" title=" " alt="" coords="385,5,475,32"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="401,43,347,82,344,77,398,39"/>
+<area shape="rect" id="Node000007" href="$structattr__h.html" title=" " alt="" coords="499,5,587,32"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="494,40,376,82,374,77,493,35"/>
+</map>

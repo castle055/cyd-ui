@@ -1,0 +1,97 @@
+.TH "cydui::compositing::compositing_operation_t" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+cydui::compositing::compositing_operation_t
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <compositing\&.h>\fP
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBx\fP"
+.br
+.ti -1c
+.RI "int \fBy\fP"
+.br
+.ti -1c
+.RI "int \fBorig_x\fP"
+.br
+.ti -1c
+.RI "int \fBorig_y\fP"
+.br
+.ti -1c
+.RI "int \fBw\fP"
+.br
+.ti -1c
+.RI "int \fBh\fP"
+.br
+.ti -1c
+.RI "double \fBrot\fP = 0\&.0"
+.br
+.ti -1c
+.RI "double \fBscale_x\fP = 1\&.0"
+.br
+.ti -1c
+.RI "double \fBscale_y\fP = 1\&.0"
+.br
+.ti -1c
+.RI "std::function< void(\fBcompositing_operation_t\fP &op)> \fB_fix_dimensions\fP = [](\fBcompositing_operation_t\fP &op) { }"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB19\fP of file \fBcompositing\&.h\fP\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "std::function<void(\fBcompositing_operation_t\fP &op)> cydui::compositing::compositing_operation_t::_fix_dimensions = [](\fBcompositing_operation_t\fP &op) { }"
+
+.PP
+Definition at line \fB25\fP of file \fBcompositing\&.h\fP\&..PP
+.nf
+25 { };
+.fi
+
+.SS "int cydui::compositing::compositing_operation_t::h"
+
+.PP
+Definition at line \fB20\fP of file \fBcompositing\&.h\fP\&.
+.SS "int cydui::compositing::compositing_operation_t::orig_x"
+
+.PP
+Definition at line \fB20\fP of file \fBcompositing\&.h\fP\&.
+.SS "int cydui::compositing::compositing_operation_t::orig_y"
+
+.PP
+Definition at line \fB20\fP of file \fBcompositing\&.h\fP\&.
+.SS "double cydui::compositing::compositing_operation_t::rot = 0\&.0"
+
+.PP
+Definition at line \fB21\fP of file \fBcompositing\&.h\fP\&.
+.SS "double cydui::compositing::compositing_operation_t::scale_x = 1\&.0"
+
+.PP
+Definition at line \fB22\fP of file \fBcompositing\&.h\fP\&.
+.SS "double cydui::compositing::compositing_operation_t::scale_y = 1\&.0"
+
+.PP
+Definition at line \fB23\fP of file \fBcompositing\&.h\fP\&.
+.SS "int cydui::compositing::compositing_operation_t::w"
+
+.PP
+Definition at line \fB20\fP of file \fBcompositing\&.h\fP\&.
+.SS "int cydui::compositing::compositing_operation_t::x"
+
+.PP
+Definition at line \fB20\fP of file \fBcompositing\&.h\fP\&.
+.SS "int cydui::compositing::compositing_operation_t::y"
+
+.PP
+Definition at line \fB20\fP of file \fBcompositing\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

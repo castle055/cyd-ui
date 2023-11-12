@@ -1,0 +1,8 @@
+<map id="compute_dimensions" name="compute_dimensions">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,59,150,85"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="44,60,38,50,42,40,55,34,78,32,101,35,114,41,111,46,100,40,77,37,57,39,46,44,43,49,48,57"/>
+<area shape="rect" id="Node000002" href="$structcydui_1_1components_1_1component__base__t.html#a635bfee6c00b80d785b3b8490158e3ed" title=" " alt="" coords="198,5,355,64"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="150,56,182,50,183,55,151,61"/>
+<area shape="rect" id="Node000003" href="$classcydui_1_1dimensions_1_1dimension__t.html#ac9ec14f26302ee07e8211a78a635d6fc" title=" " alt="" coords="209,88,344,131"/>
+<area shape="poly" id="edge3_Node000001_Node000003" title=" " alt="" coords="151,83,194,91,193,96,150,88"/>
+</map>

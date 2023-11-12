@@ -1,0 +1,194 @@
+.TH "vg::text" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vg::text
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <vg\&.h>\fP
+.PP
+Inherits \fBvg::vg_element_t\fP, attrs_core< text >, attrs_fill< text >, attrs_font< text >, \fBattr_x< text >\fP, \fBattr_y< text >\fP, \fBattr_w< text >\fP, and \fBattr_h< text >\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBtext\fP (std::string \fB_text\fP)"
+.br
+.ti -1c
+.RI "void \fBapply_to\fP (\fBpixelmap_editor_t\fP &editor) const override"
+.br
+.ti -1c
+.RI "\fBfootprint\fP \fBget_footprint\fP () const override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBvg::vg_element_t\fP
+.in +1c
+.ti -1c
+.RI "void \fB_internal_set_origin\fP (int x, int y)"
+.br
+.ti -1c
+.RI "virtual \fB~vg_element_t\fP ()=default"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_x< text >\fP
+.in +1c
+.ti -1c
+.RI "text & \fBx\fP (auto &_x_)"
+.br
+.ti -1c
+.RI "text & \fBx\fP (auto &&_x_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_y< text >\fP
+.in +1c
+.ti -1c
+.RI "text & \fBy\fP (auto &_y_)"
+.br
+.ti -1c
+.RI "text & \fBy\fP (auto &&_y_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_w< text >\fP
+.in +1c
+.ti -1c
+.RI "text & \fBw\fP (auto &_w_)"
+.br
+.ti -1c
+.RI "text & \fBw\fP (auto &&_w_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_h< text >\fP
+.in +1c
+.ti -1c
+.RI "text & \fBh\fP (auto &_h_)"
+.br
+.ti -1c
+.RI "text & \fBh\fP (auto &&_h_)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::string \fB_text\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBvg::vg_element_t\fP
+.in +1c
+.ti -1c
+.RI "int \fBorigin_x\fP = 0"
+.br
+.ti -1c
+.RI "int \fBorigin_y\fP = 0"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_x< text >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_x\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_y< text >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_y\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_w< text >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_w\fP"
+.br
+.ti -1c
+.RI "bool \fB_w_has_changed\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_h< text >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_h\fP"
+.br
+.ti -1c
+.RI "bool \fB_h_has_changed\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB400\fP of file \fBvg\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "vg::text::text (std::string _text)\fC [inline]\fP"
+
+.PP
+Definition at line \fB411\fP of file \fBvg\&.h\fP\&..PP
+.nf
+411 : _text(std::move(_text)) { }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void vg::text::apply_to (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBvg::vg_element_t\fP\&.
+.PP
+Definition at line \fB412\fP of file \fBvg\&.h\fP\&..PP
+.nf
+412                                                               {
+413         apply_font(editor);
+414         //apply_stroke(editor);
+415         apply_fill(editor);
+416         
+417         Cairo::FontExtents fextents;
+418         editor\->get_font_extents(fextents);
+419         
+420         Cairo::TextExtents extents;
+421         editor\->get_text_extents(_text, extents);
+422         
+423         
+424         set_source_to_fill(editor);
+425         editor\->move_to(origin_x + _x, origin_y + _y);
+426         editor\->show_text(_text);
+427         //editor\->move_to(origin_x + _x, origin_y + _y + fextents\&.ascent);
+428         //editor\->show_text(_text);
+429         //editor\->move_to(origin_x + _x + 5, origin_y + _y + fextents\&.height);
+430         //editor\->show_text(_text);
+431         //editor\->move_to(origin_x + _x + 10, origin_y + _y + extents\&.height);
+432         //editor\->show_text(_text);
+433       }
+.fi
+
+.SS "\fBfootprint\fP vg::text::get_footprint () const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBvg::vg_element_t\fP\&.
+.PP
+Definition at line \fB435\fP of file \fBvg\&.h\fP\&..PP
+.nf
+435                                                {
+436         return {};
+437       }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "std::string vg::text::_text"
+
+.PP
+Definition at line \fB410\fP of file \fBvg\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

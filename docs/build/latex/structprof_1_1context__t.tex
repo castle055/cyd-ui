@@ -1,0 +1,229 @@
+\doxysection{prof\+::context\+\_\+t Struct Reference}
+\hypertarget{structprof_1_1context__t}{}\label{structprof_1_1context__t}\index{prof::context\_t@{prof::context\_t}}
+
+
+{\ttfamily \#include $<$profiling.\+h$>$}
+
+
+
+Collaboration diagram for prof\+::context\+\_\+t\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=311pt]{structprof_1_1context__t__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structprof_1_1context__t_1_1scope__event__t}{scope\+\_\+event\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structprof_1_1context__t_aac2969e9b88ec3856aad464beb145b4d}{mark\+\_\+event}} (const char \texorpdfstring{$\ast$}{*}ev\+\_\+desc)
+\item 
+\mbox{\hyperlink{structprof_1_1event__t}{event\+\_\+t}} \mbox{\hyperlink{structprof_1_1context__t_a9b947c47b4c713d76fed2fc8c09fc1aa}{start\+\_\+event}} (const char \texorpdfstring{$\ast$}{*}ev\+\_\+desc)
+\item 
+void \mbox{\hyperlink{structprof_1_1context__t_aa3343b868b9771b5b8fe3198a941daa0}{end\+\_\+event}} (\mbox{\hyperlink{structprof_1_1event__t}{event\+\_\+t}} ev)
+\item 
+\mbox{\hyperlink{structprof_1_1context__t_1_1scope__event__t}{scope\+\_\+event\+\_\+t}} \mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\+\_\+event}} (const char \texorpdfstring{$\ast$}{*}ev\+\_\+desc)
+\item 
+void \mbox{\hyperlink{structprof_1_1context__t_ac55bb716357698723f15704b418995be}{add\+\_\+thd}} (std\+::thread\+::id id)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::shared\+\_\+mutex \mbox{\hyperlink{structprof_1_1context__t_a40c359aad2579eacb34eb52bd1e2d48e}{mtx}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::thread\+::id, \mbox{\hyperlink{structprof_1_1thread__context__t}{thread\+\_\+context\+\_\+t}} $>$ \mbox{\hyperlink{structprof_1_1context__t_a5535a3dba7821f77f3b9e09fa8bc5e31}{threads}} \{\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00068}{68}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structprof_1_1context__t_ac55bb716357698723f15704b418995be}\label{structprof_1_1context__t_ac55bb716357698723f15704b418995be} 
+\index{prof::context\_t@{prof::context\_t}!add\_thd@{add\_thd}}
+\index{add\_thd@{add\_thd}!prof::context\_t@{prof::context\_t}}
+\doxysubsubsection{\texorpdfstring{add\_thd()}{add\_thd()}}
+{\footnotesize\ttfamily void prof\+::context\+\_\+t\+::add\+\_\+thd (\begin{DoxyParamCaption}\item[{std\+::thread\+::id}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00122}{122}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ std::unique\_lock\ lk\ \{\mbox{\hyperlink{structprof_1_1context__t_a40c359aad2579eacb34eb52bd1e2d48e}{mtx}}\};}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!\mbox{\hyperlink{structprof_1_1context__t_a5535a3dba7821f77f3b9e09fa8bc5e31}{threads}}.contains(\textcolor{keywordtype}{id}))\ \{}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structprof_1_1context__t_a5535a3dba7821f77f3b9e09fa8bc5e31}{threads}}[id]\ =\ \{\};}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structprof_1_1context__t_ac55bb716357698723f15704b418995be_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structprof_1_1context__t_aa3343b868b9771b5b8fe3198a941daa0}\label{structprof_1_1context__t_aa3343b868b9771b5b8fe3198a941daa0} 
+\index{prof::context\_t@{prof::context\_t}!end\_event@{end\_event}}
+\index{end\_event@{end\_event}!prof::context\_t@{prof::context\_t}}
+\doxysubsubsection{\texorpdfstring{end\_event()}{end\_event()}}
+{\footnotesize\ttfamily void prof\+::context\+\_\+t\+::end\+\_\+event (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structprof_1_1event__t}{event\+\_\+t}}}]{ev }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00089}{89}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ ev.mark\_end();}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ std::shared\_lock\ lk\ \{\mbox{\hyperlink{structprof_1_1context__t_a40c359aad2579eacb34eb52bd1e2d48e}{mtx}}\};}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structprof_1_1context__t_a5535a3dba7821f77f3b9e09fa8bc5e31}{threads}}[std::this\_thread::get\_id()].add\_event(ev);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=336pt]{structprof_1_1context__t_aa3343b868b9771b5b8fe3198a941daa0_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structprof_1_1context__t_aac2969e9b88ec3856aad464beb145b4d}\label{structprof_1_1context__t_aac2969e9b88ec3856aad464beb145b4d} 
+\index{prof::context\_t@{prof::context\_t}!mark\_event@{mark\_event}}
+\index{mark\_event@{mark\_event}!prof::context\_t@{prof::context\_t}}
+\doxysubsubsection{\texorpdfstring{mark\_event()}{mark\_event()}}
+{\footnotesize\ttfamily void prof\+::context\+\_\+t\+::mark\+\_\+event (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{ev\+\_\+desc }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00069}{69}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ event\_t\ ev;}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ ev.description\ =\ ev\_desc;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ ev.mark();}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keywordtype}{id}\ =\ std::this\_thread::get\_id();}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structprof_1_1context__t_ac55bb716357698723f15704b418995be}{add\_thd}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ std::shared\_lock\ lk\ \{\mbox{\hyperlink{structprof_1_1context__t_a40c359aad2579eacb34eb52bd1e2d48e}{mtx}}\};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structprof_1_1context__t_a5535a3dba7821f77f3b9e09fa8bc5e31}{threads}}[id].add\_event(ev);}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structprof_1_1context__t_aac2969e9b88ec3856aad464beb145b4d_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}\label{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80} 
+\index{prof::context\_t@{prof::context\_t}!scope\_event@{scope\_event}}
+\index{scope\_event@{scope\_event}!prof::context\_t@{prof::context\_t}}
+\doxysubsubsection{\texorpdfstring{scope\_event()}{scope\_event()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structprof_1_1context__t_1_1scope__event__t}{scope\+\_\+event\+\_\+t}} prof\+::context\+\_\+t\+::scope\+\_\+event (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{ev\+\_\+desc }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00116}{116}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keywordtype}{id}\ =\ std::this\_thread::get\_id();}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structprof_1_1context__t_ac55bb716357698723f15704b418995be}{add\_thd}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\textcolor{keyword}{this},\ ev\_desc\};}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=347pt]{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{structprof_1_1context__t_a9b947c47b4c713d76fed2fc8c09fc1aa}\label{structprof_1_1context__t_a9b947c47b4c713d76fed2fc8c09fc1aa} 
+\index{prof::context\_t@{prof::context\_t}!start\_event@{start\_event}}
+\index{start\_event@{start\_event}!prof::context\_t@{prof::context\_t}}
+\doxysubsubsection{\texorpdfstring{start\_event()}{start\_event()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structprof_1_1event__t}{event\+\_\+t}} prof\+::context\+\_\+t\+::start\+\_\+event (\begin{DoxyParamCaption}\item[{const char \texorpdfstring{$\ast$}{*}}]{ev\+\_\+desc }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00080}{80}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ event\_t\ ev;}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ ev.description\ =\ ev\_desc;}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ ev.mark\_start();}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \textcolor{keywordtype}{id}\ =\ std::this\_thread::get\_id();}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structprof_1_1context__t_ac55bb716357698723f15704b418995be}{add\_thd}}(\textcolor{keywordtype}{id});}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ev;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=340pt]{structprof_1_1context__t_a9b947c47b4c713d76fed2fc8c09fc1aa_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structprof_1_1context__t_a40c359aad2579eacb34eb52bd1e2d48e}\label{structprof_1_1context__t_a40c359aad2579eacb34eb52bd1e2d48e} 
+\index{prof::context\_t@{prof::context\_t}!mtx@{mtx}}
+\index{mtx@{mtx}!prof::context\_t@{prof::context\_t}}
+\doxysubsubsection{\texorpdfstring{mtx}{mtx}}
+{\footnotesize\ttfamily std\+::shared\+\_\+mutex prof\+::context\+\_\+t\+::mtx}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00129}{129}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+\Hypertarget{structprof_1_1context__t_a5535a3dba7821f77f3b9e09fa8bc5e31}\label{structprof_1_1context__t_a5535a3dba7821f77f3b9e09fa8bc5e31} 
+\index{prof::context\_t@{prof::context\_t}!threads@{threads}}
+\index{threads@{threads}!prof::context\_t@{prof::context\_t}}
+\doxysubsubsection{\texorpdfstring{threads}{threads}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::thread\+::id, \mbox{\hyperlink{structprof_1_1thread__context__t}{thread\+\_\+context\+\_\+t}}$>$ prof\+::context\+\_\+t\+::threads \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{profiling_8h_source_l00130}{130}} of file \mbox{\hyperlink{profiling_8h_source}{profiling.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00130\ \{\};}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/cydstd/\mbox{\hyperlink{profiling_8h}{profiling.\+h}}\end{DoxyCompactItemize}

@@ -1,0 +1,88 @@
+\doxysection{Thread\+Timeline\+State Struct Reference}
+\hypertarget{structThreadTimelineState}{}\label{structThreadTimelineState}\index{ThreadTimelineState@{ThreadTimelineState}}
+
+
+{\ttfamily \#include $<$Thread\+Timeline.\+h$>$}
+
+
+
+Inheritance diagram for Thread\+Timeline\+State\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=186pt]{structThreadTimelineState__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Thread\+Timeline\+State\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structThreadTimelineState__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structThreadTimelineState_acd803b8d95f700d0064b325bbf3807b7}{INIT\+\_\+\+STATE}} (\mbox{\hyperlink{structThreadTimeline}{Thread\+Timeline}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui\+::components\+::component\+\_\+state\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a6e52ed7487c61640ad4a8edd0689906f}{mark\+\_\+dirty}} ()
+\begin{DoxyCompactList}\small\item\em Marks this component state as needing to be redrawn. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{cydui\+::events\+::\+Event\+Type}} T$>$ }\\void \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a9b47e276ec9c6e55128c90f935609fde}{emit}} (typename T\+::\+Data\+Type ev)
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a11cac671896d7f3399bfe676c5669c41}{force\+\_\+redraw}} ()
+\begin{DoxyCompactList}\small\item\em Emits a \doxylink{structRedrawEvent}{Redraw\+Event} for this component. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui\+::components\+::component\+\_\+state\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{window\+::\+CWindow}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a805629d2279bd32a8423246e3ca72e53}{win}}
+\item 
+std\+::optional$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_ae9b274be1a4e0046f33e6785cd4bb5cc}{parent}} = std\+::nullopt
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa091bf4653b4921f45bdebb2ce782582}{children\+\_\+states}} \{\}
+\item 
+bool \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_ad320de01c5767207075d22a2d48be7bf}{\+\_\+dirty}} = false
+\item 
+bool \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c}{focused}} = false
+\item 
+bool \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82}{hovering}} = false
+\item 
+std\+::optional$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\+\_\+instance}} = std\+::nullopt
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{ThreadTimeline_8h_source_l00012}{12}} of file \mbox{\hyperlink{ThreadTimeline_8h_source}{Thread\+Timeline.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{structThreadTimelineState_acd803b8d95f700d0064b325bbf3807b7}\label{structThreadTimelineState_acd803b8d95f700d0064b325bbf3807b7} 
+\index{ThreadTimelineState@{ThreadTimelineState}!INIT\_STATE@{INIT\_STATE}}
+\index{INIT\_STATE@{INIT\_STATE}!ThreadTimelineState@{ThreadTimelineState}}
+\doxysubsubsection{\texorpdfstring{INIT\_STATE()}{INIT\_STATE()}}
+{\footnotesize\ttfamily Thread\+Timeline\+State\+::\+INIT\+\_\+\+STATE (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structThreadTimeline}{Thread\+Timeline}}}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{ThreadTimeline_8h_source_l00013}{13}} of file \mbox{\hyperlink{ThreadTimeline_8h_source}{Thread\+Timeline.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ }
+\DoxyCodeLine{00015\ \ \ \}}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/tools/profiler/\mbox{\hyperlink{ThreadTimeline_8h}{Thread\+Timeline.\+h}}\end{DoxyCompactItemize}

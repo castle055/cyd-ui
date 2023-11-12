@@ -1,0 +1,385 @@
+\doxysection{src/graphics/x11/x11\+\_\+impl.cpp File Reference}
+\hypertarget{x11__impl_8cpp}{}\label{x11__impl_8cpp}\index{src/graphics/x11/x11\_impl.cpp@{src/graphics/x11/x11\_impl.cpp}}
+{\ttfamily \#include "{}cydstd/cydstd.\+h"{}}\newline
+{\ttfamily \#include "{}cydstd/logging.\+hpp"{}}\newline
+{\ttfamily \#include "{}images.\+h"{}}\newline
+{\ttfamily \#include "{}events/events.\+hpp"{}}\newline
+{\ttfamily \#include $<$X11/\+Xft/\+Xft.\+h$>$}\newline
+{\ttfamily \#include $<$X11/\+Xlib.\+h$>$}\newline
+{\ttfamily \#include $<$X11/\+Xutil.\+h$>$}\newline
+{\ttfamily \#include $<$png.\+h$>$}\newline
+{\ttfamily \#include "{}state/state.\+hpp"{}}\newline
+{\ttfamily \#include "{}render/render.\+hpp"{}}\newline
+Include dependency graph for x11\+\_\+impl.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{x11__impl_8cpp__incl}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{x11__impl_8cpp_a1586d4d3abd6f30b99d402d67d5b4545}{log\+\_\+error\+\_\+code}} (int err)
+\item 
+static Bool \mbox{\hyperlink{x11__impl_8cpp_a5bd9cbf037096fa3177866438f9165fd}{evpredicate}} ()
+\item 
+static int \mbox{\hyperlink{x11__impl_8cpp_a6348dff56bb3214034c8315319c5326e}{geom\+\_\+mask\+\_\+to\+\_\+gravity}} (int mask)
+\item 
+static \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \mbox{\hyperlink{x11__impl_8cpp_afb322b6dc3ff8a6f9cd2ae63971ad7cf}{to\+\_\+pattern}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1font_1_1Font}{font\+::\+Font}} \texorpdfstring{$\ast$}{*}font)
+\item 
+static \mbox{\hyperlink{structwindow__font}{window\+\_\+font}} \mbox{\hyperlink{x11__impl_8cpp_ac546a11b4489f7289660be79925ac4ff}{load\+\_\+font}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}win, \mbox{\hyperlink{structcydui_1_1graphics_1_1font_1_1Font}{font\+::\+Font}} \texorpdfstring{$\ast$}{*}font)
+\item 
+static void \mbox{\hyperlink{x11__impl_8cpp_a405715365c4be88d9e7d7d129ee1c876}{unload\+\_\+font}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}win, \mbox{\hyperlink{structcydui_1_1graphics_1_1font_1_1Font}{font\+::\+Font}} \texorpdfstring{$\ast$}{*}font)
+\item 
+static \mbox{\hyperlink{structwindow__image}{window\+\_\+image}} \mbox{\hyperlink{x11__impl_8cpp_a84e86b8e3ab956ee25728f5e242acbef}{load\+\_\+image}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}win, \mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t}{cydui\+::graphics\+::images\+::image\+\_\+t}} \texorpdfstring{$\ast$}{*}img)
+\item 
+static void \mbox{\hyperlink{x11__impl_8cpp_a6539d8d22582ecd24ab60d602915b880}{unload\+\_\+image}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}win, \mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t}{cydui\+::graphics\+::images\+::image\+\_\+t}} \texorpdfstring{$\ast$}{*}img)
+\item 
+std\+::pair$<$ int, int $>$ \mbox{\hyperlink{x11__impl_8cpp_a8c2932d636a0755fcdcdda52db87c162}{get\+\_\+text\+\_\+size}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1font_1_1Font}{font\+::\+Font}} \texorpdfstring{$\ast$}{*}font, const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&text)
+\item 
+std\+::pair$<$ int, int $>$ \mbox{\hyperlink{x11__impl_8cpp_aa68889137437b26b2dd089a4ac826cd3}{get\+\_\+image\+\_\+size}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t}{cydui\+::graphics\+::images\+::image\+\_\+t}} \texorpdfstring{$\ast$}{*}img)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+const \mbox{\hyperlink{structlogging_1_1logger}{logging\+::logger}} \mbox{\hyperlink{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\+\_\+task}} = \{.name = "{}X11\+\_\+\+IMPL"{}, .on = true\}
+\item 
+static std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}, Xft\+Font \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}{cached\+\_\+fonts}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{x11__impl_8cpp_a5bd9cbf037096fa3177866438f9165fd}\label{x11__impl_8cpp_a5bd9cbf037096fa3177866438f9165fd} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!evpredicate@{evpredicate}}
+\index{evpredicate@{evpredicate}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{evpredicate()}{evpredicate()}}
+{\footnotesize\ttfamily static Bool evpredicate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00027\ \ \ \textcolor{keywordflow}{return}\ True;}
+\DoxyCodeLine{00028\ \}}
+
+\end{DoxyCode}
+\Hypertarget{x11__impl_8cpp_a6348dff56bb3214034c8315319c5326e}\label{x11__impl_8cpp_a6348dff56bb3214034c8315319c5326e} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!geom\_mask\_to\_gravity@{geom\_mask\_to\_gravity}}
+\index{geom\_mask\_to\_gravity@{geom\_mask\_to\_gravity}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{geom\_mask\_to\_gravity()}{geom\_mask\_to\_gravity()}}
+{\footnotesize\ttfamily static int geom\+\_\+mask\+\_\+to\+\_\+gravity (\begin{DoxyParamCaption}\item[{int}]{mask }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00030}{30}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00031\ \ \ \textcolor{keywordflow}{switch}\ (mask\ \&\ (XNegative\ |\ YNegative))\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{case}\ 0:}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NorthWestGravity;}
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{case}\ XNegative:}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ NorthEastGravity;}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{case}\ YNegative:}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ SouthWestGravity;}
+\DoxyCodeLine{00038\ \ \ \}}
+\DoxyCodeLine{00039\ \ \ }
+\DoxyCodeLine{00040\ \ \ \textcolor{keywordflow}{return}\ SouthEastGravity;}
+\DoxyCodeLine{00041\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=348pt]{x11__impl_8cpp_a6348dff56bb3214034c8315319c5326e_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{x11__impl_8cpp_aa68889137437b26b2dd089a4ac826cd3}\label{x11__impl_8cpp_aa68889137437b26b2dd089a4ac826cd3} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!get\_image\_size@{get\_image\_size}}
+\index{get\_image\_size@{get\_image\_size}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_image\_size()}{get\_image\_size()}}
+{\footnotesize\ttfamily std\+::pair$<$ int, int $>$ get\+\_\+image\+\_\+size (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t}{cydui\+::graphics\+::images\+::image\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{img }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00279}{279}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00281\ \ \ \{}
+\DoxyCodeLine{00282\ \ \ \mbox{\hyperlink{structx11_1_1imgs_1_1img__data}{imgs::img\_data}}\ data\ =\ \mbox{\hyperlink{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094}{imgs::read\_jpg}}(img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}});}
+\DoxyCodeLine{00283\ \ \ \textcolor{keywordflow}{return}\ \{data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ab09e9269e3f6980425ee535e256a4ecb}{width}},\ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ade5590ff5608fc235412ec669f50856a}{height}}\};}
+\DoxyCodeLine{00284\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{x11__impl_8cpp_aa68889137437b26b2dd089a4ac826cd3_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{x11__impl_8cpp_a8c2932d636a0755fcdcdda52db87c162}\label{x11__impl_8cpp_a8c2932d636a0755fcdcdda52db87c162} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!get\_text\_size@{get\_text\_size}}
+\index{get\_text\_size@{get\_text\_size}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_text\_size()}{get\_text\_size()}}
+{\footnotesize\ttfamily std\+::pair$<$ int, int $>$ get\+\_\+text\+\_\+size (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1font_1_1Font}{font\+::\+Font}} \texorpdfstring{$\ast$}{*}}]{font,  }\item[{const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&}]{text }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00254}{254}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00256\ \ \ \{}
+\DoxyCodeLine{00257\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ font\_spec\ =\ \mbox{\hyperlink{x11__impl_8cpp_afb322b6dc3ff8a6f9cd2ae63971ad7cf}{to\_pattern}}(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}});}
+\DoxyCodeLine{00258\ \ \ XftFont*\ xfont;}
+\DoxyCodeLine{00259\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}{cached\_fonts}}.contains(font\_spec))\ \{}
+\DoxyCodeLine{00260\ \ \ \ \ xfont\ =\ \mbox{\hyperlink{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}{cached\_fonts}}[font\_spec];}
+\DoxyCodeLine{00261\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keywordflow}{if}\ (!(xfont\ =\ XftFontOpenName(}
+\DoxyCodeLine{00263\ \ \ \ \ \ \ \mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}(),\ font\_spec.c\_str())))\ \{}
+\DoxyCodeLine{00264\ \ \ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}}(\textcolor{stringliteral}{"{}Cannot\ load\ font\ from\ name\ \%s"{}},\ font\_spec.c\_str());}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00266\ \ \ \ \ \}}
+\DoxyCodeLine{00267\ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}{cached\_fonts}}[font\_spec]\ =\ xfont;}
+\DoxyCodeLine{00268\ \ \ \}}
+\DoxyCodeLine{00269\ \ \ XGlyphInfo\ x\_glyph\_info;}
+\DoxyCodeLine{00270\ \ \ XftTextExtentsUtf8(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),}
+\DoxyCodeLine{00271\ \ \ \ \ xfont,}
+\DoxyCodeLine{00272\ \ \ \ \ (XftChar8*)\ text.c\_str(),}
+\DoxyCodeLine{00273\ \ \ \ \ (\textcolor{keywordtype}{int})\ text.size(),}
+\DoxyCodeLine{00274\ \ \ \ \ \&x\_glyph\_info);}
+\DoxyCodeLine{00275\ \ \ \textcolor{comment}{//XftFontClose(state::get\_dpy(),\ xfont);}}
+\DoxyCodeLine{00276\ \ \ \textcolor{keywordflow}{return}\ \{x\_glyph\_info.xOff,\ x\_glyph\_info.y\};}
+\DoxyCodeLine{00277\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{x11__impl_8cpp_a8c2932d636a0755fcdcdda52db87c162_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{x11__impl_8cpp_ac546a11b4489f7289660be79925ac4ff}\label{x11__impl_8cpp_ac546a11b4489f7289660be79925ac4ff} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!load\_font@{load\_font}}
+\index{load\_font@{load\_font}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{load\_font()}{load\_font()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structwindow__font}{window\+\_\+font}} load\+\_\+font (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{win,  }\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1font_1_1Font}{font\+::\+Font}} \texorpdfstring{$\ast$}{*}}]{font }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00182}{182}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00184\ \ \ \{}
+\DoxyCodeLine{00185\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ font\_spec\ =\ \mbox{\hyperlink{x11__impl_8cpp_afb322b6dc3ff8a6f9cd2ae63971ad7cf}{to\_pattern}}(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}});}
+\DoxyCodeLine{00186\ \ \ \textcolor{keywordflow}{if}\ (win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ae9a0258e615446aff8ff354cf3415b2a}{loaded\_fonts}}.contains(font\_spec))}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordflow}{return}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ae9a0258e615446aff8ff354cf3415b2a}{loaded\_fonts}}[font\_spec];}
+\DoxyCodeLine{00188\ \ \ XftFont*\ xfont;}
+\DoxyCodeLine{00189\ \ \ FcPattern*\ pattern;}
+\DoxyCodeLine{00190\ \ \ }
+\DoxyCodeLine{00191\ \ \ \textcolor{keywordflow}{if}\ (!(xfont\ =\ XftFontOpenName(}
+\DoxyCodeLine{00192\ \ \ \ \ \mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}(),\ font\_spec.c\_str())))\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}}(\textcolor{stringliteral}{"{}Cannot\ load\ font\ from\ name\ \%s"{}},\ font\_spec.c\_str());}
+\DoxyCodeLine{00194\ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00195\ \ \ \}}
+\DoxyCodeLine{00196\ \ \ \textcolor{keywordflow}{if}\ (!(pattern\ =\ FcNameParse((FcChar8*)\ (font\_spec.c\_str()))))\ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}}(\textcolor{stringliteral}{"{}Cannot\ parse\ font\ name\ to\ pattern:\ \%s"{}},\ font\_spec.c\_str());}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00199\ \ \ \}}
+\DoxyCodeLine{00200\ \ \ }
+\DoxyCodeLine{00201\ \ \ \textcolor{keyword}{auto}\ f\ =\ \mbox{\hyperlink{structwindow__font}{window\_font}}\ \{.\mbox{\hyperlink{structwindow__font_a0d29e0080044034e42c98a7c18c77130}{xfont}}\ =\ xfont,\ .pattern\ =\ pattern\};}
+\DoxyCodeLine{00202\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ae9a0258e615446aff8ff354cf3415b2a}{loaded\_fonts}}[font\_spec]\ =\ f;}
+\DoxyCodeLine{00203\ \ \ \textcolor{keywordflow}{return}\ f;}
+\DoxyCodeLine{00204\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{x11__impl_8cpp_ac546a11b4489f7289660be79925ac4ff_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{x11__impl_8cpp_a84e86b8e3ab956ee25728f5e242acbef}\label{x11__impl_8cpp_a84e86b8e3ab956ee25728f5e242acbef} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!load\_image@{load\_image}}
+\index{load\_image@{load\_image}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{load\_image()}{load\_image()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{structwindow__image}{window\+\_\+image}} load\+\_\+image (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{win,  }\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t}{cydui\+::graphics\+::images\+::image\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00212}{212}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00214\ \ \ \{}
+\DoxyCodeLine{00215\ \ \ \textcolor{keywordflow}{if}\ (win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a65583fe018caf1a588cbd0b303fde833}{loaded\_images}}.contains(img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}}))}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordflow}{return}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a65583fe018caf1a588cbd0b303fde833}{loaded\_images}}[img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}}];}
+\DoxyCodeLine{00217\ \ \ }
+\DoxyCodeLine{00218\ \ \ XImage*\ image\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00219\ \ \ }
+\DoxyCodeLine{00220\ \ \ \textcolor{comment}{//if\ (img-\/>path.ends\_with("{}.jpg"{})}}
+\DoxyCodeLine{00221\ \ \ \textcolor{comment}{//\ \ ||\ img-\/>path.ends\_with("{}jpeg"{}))\ \{}}
+\DoxyCodeLine{00222\ \ \ \mbox{\hyperlink{structx11_1_1imgs_1_1img__data}{imgs::img\_data}}\ data\ =\ \mbox{\hyperlink{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094}{imgs::read\_jpg}}(img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}});}
+\DoxyCodeLine{00223\ \ \ }
+\DoxyCodeLine{00224\ \ \ image\ =\ XCreateImage(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),}
+\DoxyCodeLine{00225\ \ \ \ \ CopyFromParent,}
+\DoxyCodeLine{00226\ \ \ \ \ DisplayPlanes(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}()),}
+\DoxyCodeLine{00227\ \ \ \ \ ZPixmap,}
+\DoxyCodeLine{00228\ \ \ \ \ 0,}
+\DoxyCodeLine{00229\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_a8031e8fe029af09e4042f14330416ce9}{data}},}
+\DoxyCodeLine{00230\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ab09e9269e3f6980425ee535e256a4ecb}{width}},}
+\DoxyCodeLine{00231\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ade5590ff5608fc235412ec669f50856a}{height}},}
+\DoxyCodeLine{00232\ \ \ \ \ 8,}
+\DoxyCodeLine{00233\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ab09e9269e3f6980425ee535e256a4ecb}{width}}\ *\ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_a194d8541177ebcd68cadaf1411986dc5}{components}});}
+\DoxyCodeLine{00234\ \ \ \textcolor{comment}{//log\_task.info("{}STATUS\ =\ \%d"{},\ XInitImage(image));}}
+\DoxyCodeLine{00235\ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00236\ \ \ }
+\DoxyCodeLine{00237\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00238\ \ \ \textcolor{comment}{//auto\ f\ =\ window\_font\ \{.xfont\ =\ xfont,\ .pattern\ =\ pattern\};}}
+\DoxyCodeLine{00239\ \ \ \textcolor{comment}{//win-\/>loaded\_fonts[font\_spec]\ =\ f;}}
+\DoxyCodeLine{00240\ \ \ \textcolor{keyword}{auto}\ i\ =\ \mbox{\hyperlink{structwindow__image}{window\_image}}\ \{image\};}
+\DoxyCodeLine{00241\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a65583fe018caf1a588cbd0b303fde833}{loaded\_images}}[img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}}]\ =\ i;}
+\DoxyCodeLine{00242\ \ \ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{00243\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{x11__impl_8cpp_a84e86b8e3ab956ee25728f5e242acbef_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{x11__impl_8cpp_a1586d4d3abd6f30b99d402d67d5b4545}\label{x11__impl_8cpp_a1586d4d3abd6f30b99d402d67d5b4545} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!log\_error\_code@{log\_error\_code}}
+\index{log\_error\_code@{log\_error\_code}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{log\_error\_code()}{log\_error\_code()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} log\+\_\+error\+\_\+code (\begin{DoxyParamCaption}\item[{int}]{err }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00021\ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ buf[128];}
+\DoxyCodeLine{00022\ \ \ XGetErrorText(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ err,\ buf,\ 128);}
+\DoxyCodeLine{00023\ \ \ \textcolor{keywordflow}{return}\ buf;}
+\DoxyCodeLine{00024\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{x11__impl_8cpp_a1586d4d3abd6f30b99d402d67d5b4545_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{x11__impl_8cpp_afb322b6dc3ff8a6f9cd2ae63971ad7cf}\label{x11__impl_8cpp_afb322b6dc3ff8a6f9cd2ae63971ad7cf} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!to\_pattern@{to\_pattern}}
+\index{to\_pattern@{to\_pattern}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{to\_pattern()}{to\_pattern()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} to\+\_\+pattern (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1font_1_1Font}{font\+::\+Font}} \texorpdfstring{$\ast$}{*}}]{font }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00168}{168}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00169\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}};}
+\DoxyCodeLine{00170\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>name\ +\ \textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{00171\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}size="{}}\ +\ std::to\_string(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>size)\ +\ \textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{00172\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}antialias="{}});}
+\DoxyCodeLine{00173\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append((\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>antialias\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}}));}
+\DoxyCodeLine{00174\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{00175\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}autohint="{}});}
+\DoxyCodeLine{00176\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append((\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>autohint\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}}));}
+\DoxyCodeLine{00177\ \ \ \textcolor{comment}{//str.append("{}:"{});}}
+\DoxyCodeLine{00178\ \ \ }
+\DoxyCodeLine{00179\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}};}
+\DoxyCodeLine{00180\ \}}
+
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=250pt]{x11__impl_8cpp_afb322b6dc3ff8a6f9cd2ae63971ad7cf_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{x11__impl_8cpp_a405715365c4be88d9e7d7d129ee1c876}\label{x11__impl_8cpp_a405715365c4be88d9e7d7d129ee1c876} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!unload\_font@{unload\_font}}
+\index{unload\_font@{unload\_font}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{unload\_font()}{unload\_font()}}
+{\footnotesize\ttfamily static void unload\+\_\+font (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{win,  }\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1font_1_1Font}{font\+::\+Font}} \texorpdfstring{$\ast$}{*}}]{font }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00206}{206}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00208\ \ \ \{}
+\DoxyCodeLine{00209\ \ \ \textcolor{comment}{//\ TODO\ -\/\ Implement}}
+\DoxyCodeLine{00210\ \}}
+
+\end{DoxyCode}
+\Hypertarget{x11__impl_8cpp_a6539d8d22582ecd24ab60d602915b880}\label{x11__impl_8cpp_a6539d8d22582ecd24ab60d602915b880} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!unload\_image@{unload\_image}}
+\index{unload\_image@{unload\_image}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{unload\_image()}{unload\_image()}}
+{\footnotesize\ttfamily static void unload\+\_\+image (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui\+::graphics\+::window\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{win,  }\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t}{cydui\+::graphics\+::images\+::image\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{img }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00245}{245}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00248\ \ \ \{}
+\DoxyCodeLine{00249\ \ \ \textcolor{comment}{//\ TODO\ -\/\ Implement}}
+\DoxyCodeLine{00250\ \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}\label{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!cached\_fonts@{cached\_fonts}}
+\index{cached\_fonts@{cached\_fonts}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{cached\_fonts}{cached\_fonts}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}, Xft\+Font\texorpdfstring{$\ast$}{*}$>$ cached\+\_\+fonts\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00252}{252}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+\Hypertarget{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}\label{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a} 
+\index{x11\_impl.cpp@{x11\_impl.cpp}!log\_task@{log\_task}}
+\index{log\_task@{log\_task}!x11\_impl.cpp@{x11\_impl.cpp}}
+\doxysubsubsection{\texorpdfstring{log\_task}{log\_task}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structlogging_1_1logger}{logging\+::logger}} log\+\_\+task = \{.name = "{}X11\+\_\+\+IMPL"{}, .on = true\}}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018\ \{.name\ =\ \textcolor{stringliteral}{"{}X11\_IMPL"{}},\ .on\ =\ \textcolor{keyword}{true}\};}
+
+\end{DoxyCode}

@@ -1,0 +1,261 @@
+.TH "Profiler" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Profiler
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Profiler\&.h>\fP
+.PP
+Inherits \fBcydui::components::Component\fP\&.
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBProps\fP"
+.br
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "typedef \fBProfilerState\fP \fBState\fP"
+.br
+.in -1c
+
+Public Types inherited from \fBcydui::components::Component\fP
+.in +1c
+.ti -1c
+.RI "typedef \fBKeyEvent::DataType\fP \fBKeyData\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBProfiler\fP (\fBProfilerState\fP *\fBstate\fP, \fBProps\fP \fBprops\fP, const std::function< void(\fBcydui::components::Component\fP *)> &inner)"
+.br
+.ti -1c
+.RI "virtual void \fBon_redraw\fP () const override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::components::Component\fP
+.in +1c
+.ti -1c
+.RI "\fBComponent\fP ()"
+.br
+.ti -1c
+.RI "\fBComponent\fP (std::function< void(\fBComponent\fP *)> inner)"
+.br
+.ti -1c
+.RI "\fBComponent\fP (\fBComponentState\fP *\fBstate\fP)"
+.br
+.ti -1c
+.RI "\fBComponent\fP (\fBComponentState\fP *\fBstate\fP, std::function< void(\fBComponent\fP *)> inner)"
+.br
+.ti -1c
+.RI "virtual \fB~Component\fP ()"
+.br
+.ti -1c
+.RI "void \fBadd\fP (const std::vector< \fBcomponent_builder_t\fP > &ichildren, bool prepend=false) const"
+.br
+.ti -1c
+.RI "void \fBredraw\fP (\fBcydui::layout::Layout\fP *layout)"
+.br
+.ti -1c
+.RI "void \fBrender\fP (\fBcydui::compositing::compositing_node_t\fP *node) const"
+.br
+.ti -1c
+.RI "\fBnullable\fP< \fBComponent\fP * > \fBget_parent\fP () const"
+.br
+.ti -1c
+.RI "virtual bool \fBis_drawable\fP () const"
+.br
+.ti -1c
+.RI "virtual void \fBon_render\fP (\fBvg::vg_fragment_t\fP &graphics) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_enter\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_exit\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_motion\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_click\fP (int x, int y, int button) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_drag_start\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_drag_motion\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_drag_finish\fP (int x, int y) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_scroll\fP (int dx, int dy) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_key_press\fP (\fBKeyData\fP key) const"
+.br
+.ti -1c
+.RI "virtual void \fBon_key_release\fP (\fBKeyData\fP key) const"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBProps\fP \fBprops\fP"
+.br
+.ti -1c
+.RI "\fBProfilerState\fP * \fBstate\fP = nullptr"
+.br
+.ti -1c
+.RI "\fBlogging::logger\fP \fBlog\fP = {\&.name = 'Profiler', \&.on = false}"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::components::Component\fP
+.in +1c
+.ti -1c
+.RI "\fBnullable\fP< \fBComponent\fP * > \fBparent\fP"
+.br
+.ti -1c
+.RI "\fBnullable\fP< \fBComponentState\fP * > \fBstate\fP"
+.br
+.ti -1c
+.RI "\fBcydui::dimensions::component_dimensions_t\fP * \fBdim\fP"
+.br
+.ti -1c
+.RI "std::deque< \fBComponent\fP * > \fBchildren\fP"
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static constexpr const char * \fBName\fP = 'Profiler'"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Static Public Member Functions inherited from \fBcydui::components::Component\fP
+.in +1c
+.ti -1c
+.RI "static \fBComponent\fP * \fBnew_group\fP ()"
+.br
+.in -1c
+
+Protected Member Functions inherited from \fBcydui::components::Component\fP
+.in +1c
+.ti -1c
+.RI "template<typename c , int ID> 
+.br
+requires \fBComponentConcept\fP<c>\fBcomponent_builder_t\fP \fBcreate\fP (\fBc_init_t\fP< c > \fBinit\fP) const"
+.br
+.ti -1c
+.RI "template<typename c , int ID, typename \fBT\fP > 
+.br
+requires \fBComponentConcept\fP<c>\fBcomponent_builder_t\fP \fBcreate_for\fP (const \fBT\fP &iter, std::function< \fBc_init_t\fP< c >(const typename T::value_type &)> block) const"
+.br
+.ti -1c
+.RI "\fBcomponent_builder_t\fP \fBcreate_group\fP (std::vector< \fBcomponent_builder_t\fP > _children) const"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB21\fP of file \fBProfiler\&.h\fP\&.
+.SH "Member Typedef Documentation"
+.PP 
+.SS "typedef \fBProfilerState\fP \fBProfiler::State\fP"
+
+.PP
+Definition at line \fB25\fP of file \fBProfiler\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Profiler::Profiler (\fBProfilerState\fP * state, \fBProps\fP props, const std::function< void(\fBcydui::components::Component\fP *)> & inner)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line \fB25\fP of file \fBProfiler\&.h\fP\&..PP
+.nf
+25                  {
+26   
+27   }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual void Profiler::on_redraw () const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented from \fBcydui::components::Component\fP\&.
+.PP
+Definition at line \fB29\fP of file \fBProfiler\&.h\fP\&..PP
+.nf
+29          {
+30     if (prof::PROFILING_CLOCK::now() > state\->now) {
+31       state\->now = prof::PROFILING_CLOCK::now() + (25 * 16666us);
+32       state\->time_scale = dim\->cw\&.val() / (3 * 25\&.0 * 16666\&.0);
+33     }
+34     add({
+35       COMP(VBox)({
+36         \&.props = {
+37           \&.spacing = 5,
+38         },
+39         \&.x = 0,
+40         \&.y = 0,
+41         \&.w = dim\->w,
+42         \&.h = dim\->h,
+43         \&.inner = {
+44           FOR_EACH(ThreadTimeline)(props\&.ctx\&.threads, [this](auto &thd_data) {
+45             return cydui::components::c_init_t<ThreadTimeline> {
+46               \&.props = {
+47                 \&.ctx = props\&.ctx,
+48                 \&.thd_id = thd_data\&.first,
+49                 \&.now = state\->now,
+50                 \&.time_scale = state\->time_scale,
+51               },
+52               \&.w = dim\->w,
+53               \&.h = 50,
+54             };
+55           }),
+56         }
+57       }),
+58     });
+59   };
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBlogging::logger\fP Profiler::log = {\&.name = 'Profiler', \&.on = false}"
+
+.PP
+Definition at line \fB25\fP of file \fBProfiler\&.h\fP\&..PP
+.nf
+25 {
+.fi
+
+.SS "constexpr const char* Profiler::Name = 'Profiler'\fC [static]\fP, \fC [constexpr]\fP"
+
+.PP
+Definition at line \fB25\fP of file \fBProfiler\&.h\fP\&.
+.SS "\fBProps\fP Profiler::props"
+
+.PP
+Definition at line \fB24\fP of file \fBProfiler\&.h\fP\&.
+.SS "\fBProfilerState\fP* Profiler::state = nullptr"
+
+.PP
+Definition at line \fB25\fP of file \fBProfiler\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

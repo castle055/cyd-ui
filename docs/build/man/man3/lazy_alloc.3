@@ -1,0 +1,122 @@
+.TH "lazy_alloc< T, Args >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+lazy_alloc< T, Args >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <lazy_alloc\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBlazy_alloc\fP (Args\&.\&.\&. args)"
+.br
+.ti -1c
+.RI "\fB~lazy_alloc\fP ()"
+.br
+.ti -1c
+.RI "\fBT\fP * \fBoperator\->\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator T*\fP ()"
+.br
+.in -1c
+.SS "Private Attributes"
+
+.in +1c
+.ti -1c
+.RI "std::function< void(\fBlazy_alloc\fP &)> \fBinit\fP"
+.br
+.ti -1c
+.RI "\fBT\fP * \fBval\fP = nullptr"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename \fBT\fP, typename \&.\&.\&. Args>
+.br
+struct lazy_alloc< T, Args >"
+.PP
+Definition at line \fB11\fP of file \fBlazy_alloc\&.h\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBlazy_alloc\fP< \fBT\fP, Args >\fB::lazy_alloc\fP (Args\&.\&.\&. args)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line \fB12\fP of file \fBlazy_alloc\&.h\fP\&..PP
+.nf
+12                                     {
+13     init = [args\&.\&.\&.](lazy_alloc &self) {
+14       self\&.val = new T {args\&.\&.\&.};
+15     };
+16   }
+.fi
+
+.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBlazy_alloc\fP< \fBT\fP, Args >::~\fBlazy_alloc\fP ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB17\fP of file \fBlazy_alloc\&.h\fP\&..PP
+.nf
+17                 {
+18     delete val;
+19   }
+.fi
+
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBlazy_alloc\fP< \fBT\fP, Args >::operator \fBT\fP* ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB28\fP of file \fBlazy_alloc\&.h\fP\&..PP
+.nf
+28                 {
+29     if (nullptr == val) {
+30       init(*this);
+31     }
+32     return val;
+33   }
+.fi
+
+.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBT\fP * \fBlazy_alloc\fP< \fBT\fP, Args >::operator\-> ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB21\fP of file \fBlazy_alloc\&.h\fP\&..PP
+.nf
+21                   {
+22     if (nullptr == val) {
+23       init(*this);
+24     }
+25     return val;
+26   }
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> std::function<void(\fBlazy_alloc\fP &)> \fBlazy_alloc\fP< \fBT\fP, Args >::init\fC [private]\fP"
+\fBInitial value:\fP.PP
+.nf
+= [](lazy_alloc &self) {
+    self\&.val = new T {};
+  }
+.fi
+
+.PP
+Definition at line \fB35\fP of file \fBlazy_alloc\&.h\fP\&..PP
+.nf
+35                                                               {
+36     self\&.val = new T {};
+37   };
+.fi
+
+.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBT\fP* \fBlazy_alloc\fP< \fBT\fP, Args >::val = nullptr\fC [private]\fP"
+
+.PP
+Definition at line \fB38\fP of file \fBlazy_alloc\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.
