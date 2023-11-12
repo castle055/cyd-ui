@@ -34,6 +34,10 @@ namespace cydui::dimensions {
         dimension_t &dim
       );
       
+      operator dimension_value_t() const {
+        return this->binding();
+      }
+      
       //dimensional_relation_t(// NOLINT(google-explicit-constructor)
       //  dimensional_relation_t const &rel
       //) = default;
@@ -58,7 +62,13 @@ namespace cydui::dimensions {
       
       dimension_t(dimension_value_t value);// NOLINT(google-explicit-constructor)
       
-      dimension_t(dimension_t &value) = delete;
+      /* *
+       * Copy constructor comes in handy sometimes, so NOT deleting it
+       *
+       * HOWEVER, BE AWARE that if you have A depending on B and you copy A to C,
+       * B still depends on A and not C.
+       */
+      //dimension_t(dimension_t &value) = delete;
       
       dimension_t &operator=(dimension_value_t value);
       
@@ -67,14 +77,14 @@ namespace cydui::dimensions {
       dimension_t &operator=(dimensional_relation_t value);
     };
 
-#define DIMENSION_OPERATOR_H(OP)                                               \
-  dimensional_relation_t operator OP(                                          \
-      const dimension_t& dim, dimension_t& value);                             \
-  dimensional_relation_t operator OP(                                          \
-      const dimension_t& dim, dimension_value_t value);                        \
-  dimensional_relation_t operator OP(                                          \
-      dimension_value_t value, dimension_t& dim);                              \
-  dimensional_relation_t operator OP(                                          \
+#define DIMENSION_OPERATOR_H(OP) \
+  dimensional_relation_t operator OP( \
+      const dimension_t& dim, dimension_t& value); \
+  dimensional_relation_t operator OP( \
+      const dimension_t& dim, dimension_value_t value); \
+  dimensional_relation_t operator OP( \
+      dimension_value_t value, dimension_t& dim);  \
+  dimensional_relation_t operator OP( \
       const dimension_t& dim, const dimensional_relation_t& value);
     
     
@@ -90,14 +100,14 @@ namespace cydui::dimensions {
 
 #undef DIMENSION_OPERATOR_H
 
-#define DIMENSION_REL_OPERATOR_H(OP)                                           \
-  dimensional_relation_t operator OP(                                          \
-      const dimensional_relation_t r, dimension_t& value);                    \
-  dimensional_relation_t operator OP(                                          \
-      const dimensional_relation_t r, dimension_value_t value);               \
-  dimensional_relation_t operator OP(                                          \
-      dimension_value_t value, dimensional_relation_t r);                     \
-  dimensional_relation_t operator OP(                                          \
+#define DIMENSION_REL_OPERATOR_H(OP) \
+  dimensional_relation_t operator OP(\
+      const dimensional_relation_t r, dimension_t& value); \
+  dimensional_relation_t operator OP(\
+      const dimensional_relation_t r, dimension_value_t value); \
+  dimensional_relation_t operator OP(\
+      dimension_value_t value, dimensional_relation_t r);  \
+  dimensional_relation_t operator OP(\
       const dimensional_relation_t r, const dimensional_relation_t value);
     
     

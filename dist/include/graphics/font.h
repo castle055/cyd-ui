@@ -8,7 +8,7 @@
 #include "../cydstd/cydstd.h"
 #include "../cydstd/template_str_buffer.h"
 
-namespace font {
+namespace cydui::graphics::font {
     struct Font {
       str name;
       int size;
