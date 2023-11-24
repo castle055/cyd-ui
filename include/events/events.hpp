@@ -79,7 +79,7 @@
 
 namespace cydui::events {
     template<class T>
-    concept EventType = requires {
+    concept EventType = requires(T::DataType dt) {
       {
       T::type
       } -> std::convertible_to<str>;
@@ -87,9 +87,9 @@ namespace cydui::events {
       {
       T::data
       } -> std::convertible_to<typename T::DataType>;
-      {
-      T::DataType::win
-      } -> std::convertible_to<unsigned long>;
+      //{
+      //dt.win
+      //} -> std::convertible_to<unsigned long>;
     };
     
     template<typename T> requires EventType<T>
@@ -226,12 +226,16 @@ namespace cydui::events {
   cydui::events::on_event<EVENT>(cydui::events::Consumer<EVENT>(               \
       [=, this](const cydui::events::ParsedEvent<EVENT>& it) block))
 
+
+struct event_data_type_base_t {
+  unsigned long win = 0;
+};
 // TODO - In case of event name collision (it's possible), maybe append __FILE__ or __LINE__ to the `type`
 // variable to make the event type unique even if multiple translation units declare similarly named events.
 #define EVENT(NAME, DATA)                                                      \
   struct NAME {                                                                \
     constexpr static const char* type = #NAME;                                 \
-    struct DataType DATA data;                                                 \
+    struct DataType: public event_data_type_base_t DATA data;                  \
   };
 
 

@@ -1,5 +1,6 @@
 var NAVTREEINDEX2 =
 {
+"functions_vars_k.html":[4,3,2,10],
 "functions_vars_l.html":[4,3,2,11],
 "functions_vars_m.html":[4,3,2,12],
 "functions_vars_n.html":[4,3,2,13],
@@ -248,6 +249,5 @@ var NAVTREEINDEX2 =
 "namespaceprof.html#a69706c94d0693e53fed29cd292bff567":[2,6,3,8],
 "namespaceprof.html#a834539a76e5545901863a6b773fb8d64":[2,6,3,5],
 "namespaceprof.html#ac75bf20a8d0bc38232a60323de3248df":[2,6,3,3],
-"namespaces.html":[2,6],
-"namespacex11.html":[2,6,4]
+"namespaces.html":[2,6]
 };

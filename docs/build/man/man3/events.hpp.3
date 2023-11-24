@@ -1,146 +1,28 @@
-.TH "include/events/events.hpp" 3 "CYD-UI" \" -*- nroff -*-
+.TH "src/graphics/x11/events/events.hpp" 3 "CYD-UI" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-include/events/events.hpp
+src/graphics/x11/events/events.hpp
 .SH SYNOPSIS
 .br
 .PP
-\fC#include <functional>\fP
-.br
-\fC#include <mutex>\fP
-.br
-\fC#include <string>\fP
-.br
-\fC#include <utility>\fP
-.br
-\fC#include '\&.\&./cydstd/cydstd\&.h'\fP
-.br
-\fC#include '\&.\&./threading\&.hpp'\fP
-.br
-
-.SS "Classes"
-
-.in +1c
-.ti -1c
-.RI "struct \fBcydui::events::ParsedEvent< T >\fP"
-.br
-.ti -1c
-.RI "struct \fBcydui::events::Event\fP"
-.br
-.ti -1c
-.RI "class \fBcydui::events::Consumer< T >\fP"
-.br
-.ti -1c
-.RI "struct \fBcydui::events::listener_t\fP"
-.br
-.in -1c
 .SS "Namespaces"
 
 .in +1c
 .ti -1c
-.RI "namespace \fBcydui\fP"
+.RI "namespace \fBx11\fP"
 .br
 .ti -1c
-.RI "namespace \fBcydui::events\fP"
-.br
-.in -1c
-.SS "Concepts"
-
-.in +1c
-.ti -1c
-.RI "concept \fBcydui::events::EventType\fP"
-.br
-.in -1c
-.SS "Macros"
-
-.in +1c
-.ti -1c
-.RI "#define \fBconsumer\fP   [=](it)"
-.br
-.ti -1c
-.RI "#define \fBlisten\fP(\fBEVENT\fP,  block)"
-.br
-.ti -1c
-.RI "#define \fBEVENT\fP(NAME,  DATA)"
-.br
-.in -1c
-.SS "Typedefs"
-
-.in +1c
-.ti -1c
-.RI "typedef std::function< void(\fBEvent\fP *)> \fBcydui::events::Listener\fP"
-.br
-.in -1c
-.SS "Enumerations"
-
-.in +1c
-.ti -1c
-.RI "enum \fBcydui::events::EventStatus\fP { \fBcydui::events::PENDING\fP, \fBcydui::events::PROCESSING\fP, \fBcydui::events::CONSUMED\fP }"
+.RI "namespace \fBx11::events\fP"
 .br
 .in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "void \fBcydui::events::emit_raw\fP (\fBcydui::events::Event\fP *ev)"
-.br
-.ti -1c
-.RI "void \fBcydui::events::emit_raw\fP (const \fBstr\fP &event_type, void *data)"
-.br
-.ti -1c
-.RI "template<typename \fBT\fP > 
-.br
-requires EventType<\fBT\fP>void \fBcydui::events::emit\fP (typename T::DataType data)"
-.br
-.ti -1c
-.RI "void \fBcydui::events::remove_listener\fP (const \fBstr\fP &event_type, const \fBlistener_t\fP &listener)"
-.br
-.ti -1c
-.RI "\fBlistener_t\fP \fBcydui::events::on_event_raw\fP (const \fBstr\fP &event_type, const \fBListener\fP &l)"
-.br
-.ti -1c
-.RI "template<typename \fBT\fP > 
-.br
-requires EventType<\fBT\fP>\fBlistener_t\fP \fBcydui::events::on_event\fP (\fBConsumer\fP< \fBT\fP > c)"
-.br
-.ti -1c
-.RI "void \fBcydui::events::start\fP ()"
+.RI "void \fBx11::events::start\fP ()"
 .br
 .in -1c
-.SH "Macro Definition Documentation"
-.PP 
-.SS "#define consumer   [=](it)"
-
-.PP
-Definition at line \fB224\fP of file \fBevents\&.hpp\fP\&.
-.SS "#define EVENT(NAME, DATA)"
-\fBValue:\fP.PP
-.nf
-  struct NAME {                                                                \\
-    constexpr static const char* type = #NAME;                                 \\
-    struct DataType DATA data;                                                 \\
-  };
-.fi
-
-.PP
-Definition at line \fB231\fP of file \fBevents\&.hpp\fP\&..PP
-.nf
-232               {                                                                \\
-233     constexpr static const char* type = #NAME;                                 \\
-234     struct DataType DATA data;                                                 \\
-235   };
-.fi
-
-.SS "#define listen(\fBEVENT\fP, block)"
-\fBValue:\fP.PP
-.nf
-  cydui::events::on_event<EVENT>(cydui::events::Consumer<EVENT>(               \\
-      [=, this](const cydui::events::ParsedEvent<EVENT>& it) block))
-.fi
-
-.PP
-Definition at line \fB225\fP of file \fBevents\&.hpp\fP\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for CYD-UI from the source code\&.

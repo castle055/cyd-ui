@@ -60,10 +60,12 @@ struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
 
 
 // ?>
+#define SET_COMPONENT_TEMPLATE_DEFAULT SET_COMPONENT_TEMPLATE
+
 #define COMPONENT_TEMPLATE(NAME, ...) \
-template SET_COMPONENT_TEMPLATE       \
+template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct CYDUI_EV_HANDLER_NAME(NAME);   \
-template SET_COMPONENT_TEMPLATE       \
+template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct NAME:                          \
   public cydui::components::component_t<          \
     CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT, \
@@ -83,7 +85,7 @@ struct NAME:                          \
       >()                             \
       , props(std::move(props)) { }   \
 };                                    \
-template SET_COMPONENT_TEMPLATE       \
+template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \
   CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT* state = nullptr;  \
   NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = nullptr;\

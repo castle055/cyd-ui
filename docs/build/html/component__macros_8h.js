@@ -6,6 +6,7 @@ var component__macros_8h =
     [ "CYDUI_EV_HANDLER_DATA_NAME", "component__macros_8h.html#a36c71dcec93ad69b047ef37456dfc6cf", null ],
     [ "CYDUI_EV_HANDLER_NAME", "component__macros_8h.html#a1453acef8e4a8b8c3e571a83fa5b8218", null ],
     [ "CYDUI_STATE_NAME", "component__macros_8h.html#a8af56ccc638418125d0b5b16a292920f", null ],
+    [ "SET_COMPONENT_TEMPLATE_DEFAULT", "component__macros_8h.html#a46e36e84eb8985d2871adc7754004f73", null ],
     [ "STATE", "component__macros_8h.html#adf82c38b14cc6c67209d8252e8a9199e", null ],
     [ "STATE_TEMPLATE", "component__macros_8h.html#af4be5abe4cab4c12417ddecff17c1ee8", null ]
 ];

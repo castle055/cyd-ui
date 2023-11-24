@@ -53,6 +53,7 @@ namespace cydui::components {
       
       template<cydui::events::EventType T>
       void emit(typename T::DataType ev) {
+        if (nullptr == this->win) return;
         ev.win = get_id(this->win->win_ref);
         cydui::events::emit<T>(ev);
       }
@@ -83,6 +84,7 @@ namespace cydui::components {
           state.value()->component_instance = std::nullopt;
         }
       }
+      virtual void configure_event_handler() = 0;
       virtual void subscribe_events() = 0;
       virtual void clear_children() = 0;
       
@@ -126,10 +128,14 @@ namespace cydui::components {
       lazy_alloc<EVH> event_handler_ {};
     
     public:
-      ~component_t() override = default;
-      
-      void subscribe_events() override {
+      ~component_t() override {
         clear_subscribed_listeners();
+        if (state.has_value()) {
+          state.value()->component_instance = std::nullopt;
+        }
+      };
+      
+      void configure_event_handler() override {
         if (parent.has_value()) {
           event_handler_->parent = parent.value()->event_handler();
         } else {
@@ -140,6 +146,10 @@ namespace cydui::components {
         evh->props = &(((T*) this)->props);
         evh->attrs = (attrs_component<T>*) this;
         evh->get_dim = [this] {return get_dimensional_relations();};
+      }
+      void subscribe_events() override {
+        clear_subscribed_listeners();
+        EVH * evh = event_handler_.operator->();
         add_event_listeners(evh->get_event_listeners());
       }
       void clear_children() override {
@@ -188,11 +198,14 @@ namespace cydui::components {
             component->parent = this;
             children.push_back(component);
             
+            // Configure event handler
+            component->configure_event_handler();
+            
             // Subscribe child events
             component->subscribe_events();
-            
             // Redraw child
             component->redraw(layout);
+            
           }
           ++id_i;
         }

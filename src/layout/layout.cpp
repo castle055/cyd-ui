@@ -137,7 +137,6 @@ void cydui::layout::Layout::redraw_component(component_base_t* target) {
   compositor.compose(compositing_tree);
 }
 
-
 bool cydui::layout::Layout::render_if_dirty(component_base_t* c) {
   if (c->state.value()->_dirty) {
     redraw_component(c);
@@ -175,6 +174,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     dim.h = get_frame(win->win_ref)->height();
     dim.fixed_w = true;
     dim.fixed_h = true;
+    root->configure_event_handler();
     root->subscribe_events();
   }
   
