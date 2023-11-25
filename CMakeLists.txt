@@ -39,6 +39,7 @@ compiler_flags(
 
         "-Wliteral-suffix"
 
+        "-Wno-macro-redefine"
         "-Wno-unused-function"
         "-Wno-unused-parameter"
         "-Wno-unused-variable"
