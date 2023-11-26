@@ -213,27 +213,28 @@ Definition at line \mbox{\hyperlink{component__event__handler_8h_source_l00100}{
 \DoxyCodeLine{00180\ \textcolor{preprocessor}{std::unordered\_map<std::string,\ listener\_data\_t>\ get\_event\_listeners()\ override\ \{\ \(\backslash\)}}
 \DoxyCodeLine{00181\ \textcolor{preprocessor}{\ \ \_Pragma("{}clang\ diagnostic\ push"{})\ \(\backslash\)}}
 \DoxyCodeLine{00182\ \textcolor{preprocessor}{\ \ \_Pragma("{}clang\ diagnostic\ ignored\ \(\backslash\)"{}-\/Wunused-\/lambda-\/capture\(\backslash\)"{}"{})\ \(\backslash\)}}
-\DoxyCodeLine{00183\ \textcolor{preprocessor}{\ \ return\ \_\_VA\_ARGS\_\_\ ;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00183\ \textcolor{preprocessor}{\ \ return\ \{\ \_\_VA\_ARGS\_\_\ \};\ \ \ \ \ \(\backslash\)}}
 \DoxyCodeLine{00184\ \textcolor{preprocessor}{\ \ \_Pragma("{}clang\ diagnostic\ pop"{})\ \(\backslash\)}}
 \DoxyCodeLine{00185\ \textcolor{preprocessor}{\}}}
 \DoxyCodeLine{00186\ }
 \DoxyCodeLine{00187\ \textcolor{preprocessor}{\#define\ ON\_EVENT(EVENT,\ ...)\ \(\backslash\)}}
-\DoxyCodeLine{00188\ \textcolor{preprocessor}{\{\ EVENT\ ::type,\ \{[this](cydui::events::Event*\ ev)\ \{\ \(\backslash\)}}
-\DoxyCodeLine{00189\ \textcolor{preprocessor}{\ \ auto\ parsed\_event\ =\ ev-\/>parse<EVENT>();\ \(\backslash\)}}
-\DoxyCodeLine{00190\ \textcolor{preprocessor}{\ \ [this](const\ cydui::events::ParsedEvent<EVENT>::DataType*\ ev)\ \(\backslash\)}}
-\DoxyCodeLine{00191\ \textcolor{preprocessor}{\ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{00192\ \textcolor{preprocessor}{\ \ (parsed\_event.data);\ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{00193\ \textcolor{preprocessor}{\}\}\}}}
-\DoxyCodeLine{00194\ }
-\DoxyCodeLine{00195\ \textcolor{preprocessor}{\#define\ FRAGMENT\ \(\backslash\)}}
-\DoxyCodeLine{00196\ \textcolor{preprocessor}{\ \ void\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{00197\ \textcolor{preprocessor}{\ \ draw\_fragment\ \ \(\backslash\)}}
-\DoxyCodeLine{00198\ \textcolor{preprocessor}{\ \ (vg::vg\_fragment\_t\&\ fragment)\ \(\backslash\)}}
-\DoxyCodeLine{00199\ \textcolor{preprocessor}{\ \ override}}
-\DoxyCodeLine{00200\ \ \ }
-\DoxyCodeLine{00201\ \}}
-\DoxyCodeLine{00202\ }
-\DoxyCodeLine{00203\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_COMPONENT\_EVENT\_HANDLER\_H}}
+\DoxyCodeLine{00188\ \textcolor{preprocessor}{\{\ EVENT\ ::type,\ \{[\&](cydui::events::Event*\ ev)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{00189\ \textcolor{preprocessor}{\ \ if\ (nullptr\ ==\ state)\ return;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00190\ \textcolor{preprocessor}{\ \ auto\ parsed\_event\ =\ ev-\/>parse<EVENT>();\ \(\backslash\)}}
+\DoxyCodeLine{00191\ \textcolor{preprocessor}{\ \ [\&](const\ cydui::events::ParsedEvent<EVENT>::DataType*\ ev)\ \(\backslash\)}}
+\DoxyCodeLine{00192\ \textcolor{preprocessor}{\ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00193\ \textcolor{preprocessor}{\ \ (parsed\_event.data);\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00194\ \textcolor{preprocessor}{\}\}\}}}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \textcolor{preprocessor}{\#define\ FRAGMENT\ \(\backslash\)}}
+\DoxyCodeLine{00197\ \textcolor{preprocessor}{\ \ void\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00198\ \textcolor{preprocessor}{\ \ draw\_fragment\ \ \(\backslash\)}}
+\DoxyCodeLine{00199\ \textcolor{preprocessor}{\ \ (vg::vg\_fragment\_t\&\ fragment)\ \(\backslash\)}}
+\DoxyCodeLine{00200\ \textcolor{preprocessor}{\ \ override}}
+\DoxyCodeLine{00201\ \ \ }
+\DoxyCodeLine{00202\ \}}
+\DoxyCodeLine{00203\ }
+\DoxyCodeLine{00204\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_COMPONENT\_EVENT\_HANDLER\_H}}
 
 \end{DoxyCode}
 \Hypertarget{component__event__handler_8h_a8944ed7e6f552211129e269f968353c5}\label{component__event__handler_8h_a8944ed7e6f552211129e269f968353c5} 
@@ -520,7 +521,7 @@ Definition at line \mbox{\hyperlink{component__event__handler_8h_source_l00168}{
 \DoxyCodeLine{std::unordered\_map<std::string,\ listener\_data\_t>\ get\_event\_listeners()\textcolor{keyword}{\ override\ }\{\ \(\backslash\)}
 \DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ push"{}})\ \(\backslash\)}
 \DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ ignored\ \(\backslash\)"{}-\/Wunused-\/lambda-\/capture\(\backslash\)"{}"{}})\ \(\backslash\)}
-\DoxyCodeLine{\ \ \textcolor{keywordflow}{return}\ \_\_VA\_ARGS\_\_\ ;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{return}\ \{\ \_\_VA\_ARGS\_\_\ \};\ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \_Pragma(\textcolor{stringliteral}{"{}clang\ diagnostic\ pop"{}})\ \(\backslash\)}
 \DoxyCodeLine{\}}
 
@@ -533,9 +534,10 @@ Definition at line \mbox{\hyperlink{component__event__handler_8h_source_l00168}{
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\{\ EVENT\ ::type,\ \{[\textcolor{keyword}{this}](\mbox{\hyperlink{structcydui_1_1events_1_1Event}{cydui::events::Event}}*\ ev)\ \{\ \(\backslash\)}
+\DoxyCodeLine{\{\ EVENT\ ::type,\ \{[\&](\mbox{\hyperlink{structcydui_1_1events_1_1Event}{cydui::events::Event}}*\ ev)\ \{\ \(\backslash\)}
+\DoxyCodeLine{\ \ if\ (\textcolor{keyword}{nullptr}\ ==\ state)\ \textcolor{keywordflow}{return};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \textcolor{keyword}{auto}\ parsed\_event\ =\ ev-\/>parse<\mbox{\hyperlink{include_2events_2events_8hpp_a013e5c56ca9a52b77ec5c6fb71014df3}{EVENT}}>();\ \(\backslash\)}
-\DoxyCodeLine{\ \ [\textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1events_1_1ParsedEvent_a078c307afb407379c35222c95208d9c3}{cydui::events::ParsedEvent<EVENT>::DataType}}*\ ev)\ \(\backslash\)}
+\DoxyCodeLine{\ \ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1events_1_1ParsedEvent_a078c307afb407379c35222c95208d9c3}{cydui::events::ParsedEvent<EVENT>::DataType}}*\ ev)\ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ (parsed\_event.data);\ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\}\}\}}

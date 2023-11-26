@@ -138,49 +138,49 @@
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00137}00137\ \ \ compositor.compose(compositing\_tree);}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00138}00138\ \}}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00139}00139\ }
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00140}00140\ }
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00141}\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{00141}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{cydui::layout::Layout::render\_if\_dirty}}(\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ c)\ \{}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00142}00142\ \ \ \textcolor{keywordflow}{if}\ (c-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value()-\/>\_dirty)\ \{}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00143}00143\ \ \ \ \ redraw\_component(c);}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00144}00144\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00145}00145\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00146}00146\ \ \ \ \ \textcolor{keywordtype}{bool}\ any\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00147}00147\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ c-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_ab621df6e5a33785b4a4db8e9249229eb}{children}})}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00148}00148\ \ \ \ \ \ \ any\ =\ render\_if\_dirty(item)\ ||\ any;\textcolor{comment}{//\ !\ F**K,\ order\ here\ matters}}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00149}00149\ \ \ \ \ \textcolor{comment}{//\ ?\ render\_if\_dirty()\ needs\ to\ be\ called\ before\ \`{}any`\ is\ checked.}}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00150}00150\ \ \ \ \ \textcolor{keywordflow}{return}\ any;}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00151}00151\ \ \ \}}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00152}00152\ \}}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00153}00153\ }
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00154}\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ee8b05bc42235d0c3cbe8294471533f}{00154}}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ee8b05bc42235d0c3cbe8294471533f}{cydui::layout::Layout::find\_by\_coords}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\ \{}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00155}00155\ \ \ \textcolor{keywordflow}{return}\ root-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a4ca05092e1c0fa714df5a1ff9e7256b2}{find\_by\_coords}}(x,\ y);}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00156}00156\ \}}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00157}00157\ }
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00158}\mbox{\hyperlink{layout_8cpp_a7056d4e64622c3777ba53d6c35e6e872}{00158}}\ \textcolor{keyword}{static}\ \mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t}{event\_handler\_t}}*\ \mbox{\hyperlink{layout_8cpp_a7056d4e64622c3777ba53d6c35e6e872}{get\_instance\_ev\_handler}}(\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\_state\_t}}*\ component\_state)\ \{}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00159}00159\ }
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00160}00160\ \}}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00161}00161\ }
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00162}\mbox{\hyperlink{layout_8cpp_a4d37894e2a9a85ddba1ddf20272f251d}{00162}}\ \textcolor{preprocessor}{\#define\ INSTANCE\_EV\_HANDLER(STATE\_PTR)\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00163}00163\ \textcolor{preprocessor}{\ \ if\ (STATE\_PTR-\/>component\_instance.has\_value())\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00164}00164\ \textcolor{preprocessor}{\ \ \ \ STATE\_PTR-\/>component\_instance.value()-\/>event\_handler()}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00140}\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{00140}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{cydui::layout::Layout::render\_if\_dirty}}(\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ c)\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00141}00141\ \ \ \textcolor{keywordflow}{if}\ (c-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value()-\/>\_dirty)\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00142}00142\ \ \ \ \ redraw\_component(c);}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00143}00143\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00144}00144\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00145}00145\ \ \ \ \ \textcolor{keywordtype}{bool}\ any\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00146}00146\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ c-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_ab621df6e5a33785b4a4db8e9249229eb}{children}})}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00147}00147\ \ \ \ \ \ \ any\ =\ render\_if\_dirty(item)\ ||\ any;\textcolor{comment}{//\ !\ F**K,\ order\ here\ matters}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00148}00148\ \ \ \ \ \textcolor{comment}{//\ ?\ render\_if\_dirty()\ needs\ to\ be\ called\ before\ \`{}any`\ is\ checked.}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00149}00149\ \ \ \ \ \textcolor{keywordflow}{return}\ any;}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00150}00150\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00151}00151\ \}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00153}\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ee8b05bc42235d0c3cbe8294471533f}{00153}}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ee8b05bc42235d0c3cbe8294471533f}{cydui::layout::Layout::find\_by\_coords}}(\textcolor{keywordtype}{int}\ x,\ \textcolor{keywordtype}{int}\ y)\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00154}00154\ \ \ \textcolor{keywordflow}{return}\ root-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a4ca05092e1c0fa714df5a1ff9e7256b2}{find\_by\_coords}}(x,\ y);}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00155}00155\ \}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00157}\mbox{\hyperlink{layout_8cpp_a7056d4e64622c3777ba53d6c35e6e872}{00157}}\ \textcolor{keyword}{static}\ \mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t}{event\_handler\_t}}*\ \mbox{\hyperlink{layout_8cpp_a7056d4e64622c3777ba53d6c35e6e872}{get\_instance\_ev\_handler}}(\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\_state\_t}}*\ component\_state)\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00159}00159\ \}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00161}\mbox{\hyperlink{layout_8cpp_a4d37894e2a9a85ddba1ddf20272f251d}{00161}}\ \textcolor{preprocessor}{\#define\ INSTANCE\_EV\_HANDLER(STATE\_PTR)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00162}00162\ \textcolor{preprocessor}{\ \ if\ (STATE\_PTR-\/>component\_instance.has\_value())\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00163}00163\ \textcolor{preprocessor}{\ \ \ \ STATE\_PTR-\/>component\_instance.value()-\/>event\_handler()}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00164}00164\ }
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00165}00165\ }
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00166}00166\ }
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00167}\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ec466f6250b29670fc625bf251d659b}{00167}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ec466f6250b29670fc625bf251d659b}{cydui::layout::Layout::bind\_window}}(\mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{cydui::window::CWindow}}*\ \_win)\ \{}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00168}00168\ \ \ this-\/>win\ =\ \_win;}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00169}00169\ \ \ compositor.set\_render\_target(this-\/>win-\/>win\_ref,\ \&this-\/>win-\/>profiling\_ctx);}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00170}00170\ \ \ \{}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00171}00171\ \ \ \ \ root\_state-\/>win\ =\ this-\/>win;}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00172}00172\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00173}00173\ \ \ \ \ \textcolor{keyword}{auto}\ dim\ =\ root-\/>get\_dimensional\_relations();}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00174}00174\ \ \ \ \ dim.w\ =\ get\_frame(win-\/>win\_ref)-\/>\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}();}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00175}00175\ \ \ \ \ dim.h\ =\ get\_frame(win-\/>win\_ref)-\/>\mbox{\hyperlink{structpixelmap__t_aa70c0fa0014f555358a2d07198b00f69}{height}}();}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00176}00176\ \ \ \ \ dim.fixed\_w\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00177}00177\ \ \ \ \ dim.fixed\_h\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00166}\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ec466f6250b29670fc625bf251d659b}{00166}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ec466f6250b29670fc625bf251d659b}{cydui::layout::Layout::bind\_window}}(\mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{cydui::window::CWindow}}*\ \_win)\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00167}00167\ \ \ this-\/>win\ =\ \_win;}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00168}00168\ \ \ compositor.set\_render\_target(this-\/>win-\/>win\_ref,\ \&this-\/>win-\/>profiling\_ctx);}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00169}00169\ \ \ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00170}00170\ \ \ \ \ root\_state-\/>win\ =\ this-\/>win;}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00171}00171\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00172}00172\ \ \ \ \ \textcolor{keyword}{auto}\ dim\ =\ root-\/>get\_dimensional\_relations();}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00173}00173\ \ \ \ \ dim.w\ =\ get\_frame(this-\/>win-\/>win\_ref)-\/>\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}();}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00174}00174\ \ \ \ \ dim.h\ =\ get\_frame(this-\/>win-\/>win\_ref)-\/>\mbox{\hyperlink{structpixelmap__t_aa70c0fa0014f555358a2d07198b00f69}{height}}();}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00175}00175\ \ \ \ \ dim.fixed\_w\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00176}00176\ \ \ \ \ dim.fixed\_h\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00177}00177\ \ \ \ \ root-\/>configure\_event\_handler();}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00178}00178\ \ \ \ \ root-\/>subscribe\_events();}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00179}00179\ \ \ \}}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00180}00180\ \ \ }
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00181}00181\ \ \ \mbox{\hyperlink{include_2events_2events_8hpp_ab3850b31e5296658c9d8a88cb17f3688}{listen}}(\mbox{\hyperlink{structRedrawEvent}{RedrawEvent}},\ \{}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00182}00182\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ 0\ \&\&\ it.data-\/>win\ !=\ get\_id(win-\/>win\_ref))}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00181}00181\ \ \ listeners.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structRedrawEvent}{RedrawEvent}},\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00182}00182\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ get\_id(win-\/>win\_ref))}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00183}00183\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00184}00184\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>win-\/>profiling\_ctx.scope\_event(\textcolor{stringliteral}{"{}Redraw"{}});}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00185}00185\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>component)\ \{}
@@ -192,8 +192,8 @@
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00191}00191\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00192}00192\ \ \ \ \ \ \ redraw\_component(root);}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00193}00193\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00194}00194\ \ \ \});}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00195}00195\ \ \ \mbox{\hyperlink{include_2events_2events_8hpp_ab3850b31e5296658c9d8a88cb17f3688}{listen}}(\mbox{\hyperlink{structKeyEvent}{KeyEvent}},\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00194}00194\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00195}00195\ \ \ listeners.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structKeyEvent}{KeyEvent}},\ \{}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00196}00196\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ get\_id(win-\/>win\_ref))}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00197}00197\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00198}00198\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>win-\/>profiling\_ctx.scope\_event(\textcolor{stringliteral}{"{}Key"{}});}
@@ -208,8 +208,8 @@
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00207}00207\ \ \ \ \ \ \ \ \ focused\ =\ \textcolor{keyword}{nullptr};}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00208}00208\ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00209}00209\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00210}00210\ \ \ \});}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00211}00211\ \ \ \mbox{\hyperlink{include_2events_2events_8hpp_ab3850b31e5296658c9d8a88cb17f3688}{listen}}(\mbox{\hyperlink{structButtonEvent}{ButtonEvent}},\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00210}00210\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00211}00211\ \ \ listeners.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structButtonEvent}{ButtonEvent}},\ \{}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00212}00212\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ get\_id(win-\/>win\_ref))}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00213}00213\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00214}00214\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>win-\/>profiling\_ctx.scope\_event(\textcolor{stringliteral}{"{}Button"{}});}
@@ -226,11 +226,11 @@
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00225}00225\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00226}00226\ \ \ \ \ \textcolor{keywordflow}{if}\ (focused\ !=\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value())\ \{}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00227}00227\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (focused)\ \{}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (focused-\/>component\_instance.has\_value())\ \{}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \ \ focused-\/>component\_instance.value()}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ -\/>event\_handler()}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ -\/>on\_button\_release((\mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0}{Button}})\ it.data-\/>button,\ 0,\ 0);}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00228}00228\ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (focused-\/>component\_instance.has\_value())\ \{}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ focused-\/>component\_instance.value()}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ -\/>event\_handler()}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ -\/>on\_button\_release((Button)\ it.data-\/>button,\ 0,\ 0);}}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ focused-\/>focused\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ focused\ =\ \textcolor{keyword}{nullptr};}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00235}00235\ \ \ \ \ \ \ \}}
@@ -244,8 +244,8 @@
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00243}00243\ \ \ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_ac9f8c3e486db07e784c33c1646f1f2f8}{on\_button\_release}}((\mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0}{Button}})\ it.data-\/>button,\ rel\_x,\ rel\_y);}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00244}00244\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00245}00245\ \ \ \ \ render\_if\_dirty(root);}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00246}00246\ \ \ \});}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00247}00247\ \ \ \mbox{\hyperlink{include_2events_2events_8hpp_ab3850b31e5296658c9d8a88cb17f3688}{listen}}(\mbox{\hyperlink{structScrollEvent}{ScrollEvent}},\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00246}00246\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00247}00247\ \ \ listeners.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structScrollEvent}{ScrollEvent}},\ \{}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00248}00248\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ get\_id(win-\/>win\_ref))}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00249}00249\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00250}00250\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>win-\/>profiling\_ctx.scope\_event(\textcolor{stringliteral}{"{}Scroll"{}});}
@@ -258,8 +258,8 @@
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00257}00257\ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_a738e7b4883ab753c8f0f4d90d1d49a07}{on\_scroll}}(it.data-\/>dx,\ it.data-\/>dy);}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00258}00258\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00259}00259\ \ \ \ \ render\_if\_dirty(root);}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00260}00260\ \ \ \});}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00261}00261\ \ \ \mbox{\hyperlink{include_2events_2events_8hpp_ab3850b31e5296658c9d8a88cb17f3688}{listen}}(\mbox{\hyperlink{structMotionEvent}{MotionEvent}},\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00260}00260\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00261}00261\ \ \ listeners.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structMotionEvent}{MotionEvent}},\ \{}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00262}00262\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ get\_id(win-\/>win\_ref))}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00263}00263\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00264}00264\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>win-\/>profiling\_ctx.scope\_event(\textcolor{stringliteral}{"{}Motion"{}});}
@@ -340,8 +340,8 @@
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00339}00339\ \ \ \ \ \textcolor{comment}{//\}}}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00340}00340\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00341}00341\ \ \ \ \ render\_if\_dirty(root);}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00342}00342\ \ \ \});}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00343}00343\ \ \ \mbox{\hyperlink{include_2events_2events_8hpp_ab3850b31e5296658c9d8a88cb17f3688}{listen}}(\mbox{\hyperlink{structResizeEvent}{ResizeEvent}},\ \{}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00342}00342\ \ \ \}));}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00343}00343\ \ \ listeners.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structResizeEvent}{ResizeEvent}},\ \{}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00344}00344\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ get\_id(win-\/>win\_ref))}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00345}00345\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00346}00346\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>win-\/>profiling\_ctx.scope\_event(\textcolor{stringliteral}{"{}Resize"{}});}
@@ -354,7 +354,7 @@
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00353}00353\ \ \ \ \ dim.fixed\_h\ =\ \textcolor{keyword}{true};}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00354}00354\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00355}00355\ \ \ \ \ redraw\_component(root);}
-\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00356}00356\ \ \ \});}
+\DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00356}00356\ \ \ \}));}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00357}00357\ \}}
 \DoxyCodeLine{\Hypertarget{layout_8cpp_source_l00358}00358\ }
 

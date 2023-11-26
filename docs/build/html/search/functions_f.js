@@ -2,8 +2,8 @@ var searchData=
 [
   ['on_5fbutton_5fpress_0',['on_button_press',['../structcydui_1_1components_1_1event__handler__t.html#a5eab21f749c18af42527226e734667ad',1,'cydui::components::event_handler_t']]],
   ['on_5fbutton_5frelease_1',['on_button_release',['../structcydui_1_1components_1_1event__handler__t.html#ac9f8c3e486db07e784c33c1646f1f2f8',1,'cydui::components::event_handler_t']]],
-  ['on_5fevent_2',['on_event',['../namespacecydui_1_1events.html#aecd185c59b15b1d0299119e9a6825c26',1,'cydui::events']]],
-  ['on_5fevent_5fraw_3',['on_event_raw',['../namespacecydui_1_1events.html#af4bd6d1ea80753200425f7457ddf2826',1,'cydui::events']]],
+  ['on_5fevent_2',['on_event',['../namespacecydui_1_1events.html#af912b8c268e59712bb10aa38c681be41',1,'cydui::events']]],
+  ['on_5fevent_5fraw_3',['on_event_raw',['../namespacecydui_1_1events.html#a1fb9ac28468b1aa9a3c860745c0b95cd',1,'cydui::events']]],
   ['on_5fkey_5fpress_4',['on_key_press',['../structcydui_1_1components_1_1event__handler__t.html#af1e2969942cea6d3efb5f4f0614faaf5',1,'cydui::components::event_handler_t']]],
   ['on_5fkey_5frelease_5',['on_key_release',['../structcydui_1_1components_1_1event__handler__t.html#aee80a7f817d86348c9ea68f4a85876b0',1,'cydui::components::event_handler_t']]],
   ['on_5fmouse_5fenter_6',['on_mouse_enter',['../structcydui_1_1components_1_1event__handler__t.html#af27f89eb2fca3e6de4ba643281f16337',1,'cydui::components::event_handler_t']]],

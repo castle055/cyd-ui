@@ -1,7 +1,9 @@
 <map id="x11_event_emitter_task" name="x11_event_emitter_task">
-<area shape="rect" id="Node000001" title=" " alt="" coords="377,13,536,40"/>
-<area shape="rect" id="Node000002" href="$namespacex11_1_1events.html#a810967d43ea3ace068c1af0b4159a5e6" title=" " alt="" coords="207,13,329,40"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="361,29,330,29,330,24,361,24"/>
-<area shape="rect" id="Node000003" href="$namespacecydui_1_1graphics.html#a7704ec7880a056e09470957824f7d995" title=" " alt="" coords="5,5,159,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="191,29,159,29,159,24,191,24"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="573,13,733,40"/>
+<area shape="rect" id="Node000002" href="$namespacex11_1_1events.html#a810967d43ea3ace068c1af0b4159a5e6" title=" " alt="" coords="403,13,525,40"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="558,29,526,29,526,24,558,24"/>
+<area shape="rect" id="Node000003" href="$namespacecydui_1_1graphics.html#a7704ec7880a056e09470957824f7d995" title=" " alt="" coords="202,5,355,48"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="387,29,355,29,355,24,387,24"/>
+<area shape="rect" id="Node000004" href="$namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="5,13,154,40"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="186,29,154,29,154,24,186,24"/>
 </map>

@@ -31,3 +31,6 @@ thread_t* cydui::threading::thread_t::set_name(const str &name) {
   return this;
 }
 
+void cydui::threading::thread_t::join() const {
+  ((std::thread*) native_thread)->join();
+}

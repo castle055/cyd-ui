@@ -320,27 +320,28 @@ $(document).ready(function(){initNavTree('component__event__handler_8h_source.ht
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="preprocessor">std::unordered_map&lt;std::string, listener_data_t&gt; get_event_listeners() override { \</span></div>
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="preprocessor">  _Pragma(&quot;clang diagnostic push&quot;) \</span></div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="preprocessor">  _Pragma(&quot;clang diagnostic ignored \&quot;-Wunused-lambda-capture\&quot;&quot;) \</span></div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="preprocessor">  return __VA_ARGS__ ;                                                            \</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="preprocessor">  return { __VA_ARGS__ };     \</span></div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="preprocessor">  _Pragma(&quot;clang diagnostic pop&quot;) \</span></div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="preprocessor">}</span></div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="preprocessor">#define ON_EVENT(EVENT, ...) \</span></div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="preprocessor">{ EVENT ::type, {[this](cydui::events::Event* ev) { \</span></div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="preprocessor">  auto parsed_event = ev-&gt;parse&lt;EVENT&gt;(); \</span></div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span><span class="preprocessor">  [this](const cydui::events::ParsedEvent&lt;EVENT&gt;::DataType* ev) \</span></div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="preprocessor">    __VA_ARGS__              \</span></div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="preprocessor">  (parsed_event.data);       \</span></div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="preprocessor">}}}</span></div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="preprocessor">#define FRAGMENT \</span></div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="preprocessor">  void           \</span></div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="preprocessor">  draw_fragment  \</span></div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="preprocessor">  (vg::vg_fragment_t&amp; fragment) \</span></div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="preprocessor">  override</span></div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>  </div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>}</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="preprocessor">#endif </span><span class="comment">//CYD_UI_COMPONENT_EVENT_HANDLER_H</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span><span class="preprocessor">{ EVENT ::type, {[&amp;](cydui::events::Event* ev) { \</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span><span class="preprocessor">  if (nullptr == state) return;                     \</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span><span class="preprocessor">  auto parsed_event = ev-&gt;parse&lt;EVENT&gt;(); \</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="preprocessor">  [&amp;](const cydui::events::ParsedEvent&lt;EVENT&gt;::DataType* ev) \</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="preprocessor">    __VA_ARGS__              \</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="preprocessor">  (parsed_event.data);       \</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="preprocessor">}}}</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="preprocessor">#define FRAGMENT \</span></div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="preprocessor">  void           \</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="preprocessor">  draw_fragment  \</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="preprocessor">  (vg::vg_fragment_t&amp; fragment) \</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="preprocessor">  override</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>  </div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>}</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="preprocessor">#endif </span><span class="comment">//CYD_UI_COMPONENT_EVENT_HANDLER_H</span></div>
 <div class="ttc" id="acomponent__event__handler_8h_html_a1e26605d71b078992f57572457285442"><div class="ttname"><a href="component__event__handler_8h.html#a1e26605d71b078992f57572457285442">CYDUI_INTERNAL_EV_mouse_PROPAGATE</a></div><div class="ttdeci">#define CYDUI_INTERNAL_EV_mouse_PROPAGATE(NAME)</div><div class="ttdef"><b>Definition</b> <a href="component__event__handler_8h_source.html#l00103">component_event_handler.h:103</a></div></div>
 <div class="ttc" id="acomponent__event__handler_8h_html_a34800d9d91d81123dafe9e44b947516b"><div class="ttname"><a href="component__event__handler_8h.html#a34800d9d91d81123dafe9e44b947516b">CYDUI_INTERNAL_EV_HANDLER_DECL</a></div><div class="ttdeci">#define CYDUI_INTERNAL_EV_HANDLER_DECL(NAME)</div><div class="ttdef"><b>Definition</b> <a href="component__event__handler_8h_source.html#l00020">component_event_handler.h:20</a></div></div>
 <div class="ttc" id="acomponent__event__handler_8h_html_a4ea7ddfaa259ccc2dbefbb0938525a88"><div class="ttname"><a href="component__event__handler_8h.html#a4ea7ddfaa259ccc2dbefbb0938525a88">CYDUI_INTERNAL_EV_HANDLER_DIMENSION_MUTATOR</a></div><div class="ttdeci">#define CYDUI_INTERNAL_EV_HANDLER_DIMENSION_MUTATOR(NAME)</div><div class="ttdef"><b>Definition</b> <a href="component__event__handler_8h_source.html#l00048">component_event_handler.h:48</a></div></div>

@@ -175,7 +175,7 @@ Definition at line \mbox{\hyperlink{render_8cpp_source_l00018}{18}} of file \mbo
 \DoxyCodeLine{00028\ \ \ }
 \DoxyCodeLine{00029\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ada7b7df437402a71353d45d05ef32065}{render\_mtx}}.lock();}
 \DoxyCodeLine{00030\ \ \ \{}
-\DoxyCodeLine{00031\ \ \ \ \ image-\/>depth\ =\ DisplayPlanes(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}());}
+\DoxyCodeLine{00031\ \ \ \ \ image-\/>depth\ =\ 32;\textcolor{comment}{//DisplayPlanes(state::get\_dpy(),\ state::get\_screen());}}
 \DoxyCodeLine{00032\ \ \ \ \ image-\/>format\ =\ ZPixmap;}
 \DoxyCodeLine{00033\ \ \ \ \ image-\/>xoffset\ =\ 0;}
 \DoxyCodeLine{00034\ \ \ \ \ image-\/>data\ =\ (\textcolor{keywordtype}{char}*)\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_aac71ce31fada0d62b259b3099d06727a}{render\_target}}-\/>\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}};}

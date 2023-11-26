@@ -34,7 +34,10 @@ Inherits \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTi
 Public Member Functions inherited from \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP
 .in +1c
 .ti -1c
-.RI "\fB~component_t\fP () override=default"
+.RI "\fB~component_t\fP () override"
+.br
+.ti -1c
+.RI "void \fBconfigure_event_handler\fP () override"
 .br
 .ti -1c
 .RI "void \fBsubscribe_events\fP () override"
@@ -221,7 +224,7 @@ Public Attributes inherited from \fBcydui::components::component_base_t\fP
 .RI "std::vector< \fBcomponent_base_t\fP * > \fBchildren\fP {}"
 .br
 .ti -1c
-.RI "std::vector< \fBcydui::events::listener_t\fP > \fBsubscribed_listeners\fP {}"
+.RI "std::vector< \fBcydui::events::listener_t\fP * > \fBsubscribed_listeners\fP {}"
 .br
 .in -1c
 

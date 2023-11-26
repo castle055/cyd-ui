@@ -28,7 +28,7 @@ void render_sbr(cydui::graphics::window_t* win, XImage* image) {
   
   win->render_mtx.lock();
   {
-    image->depth = DisplayPlanes(state::get_dpy(), state::get_screen());
+    image->depth = 32;//DisplayPlanes(state::get_dpy(), state::get_screen());
     image->format = ZPixmap;
     image->xoffset = 0;
     image->data = (char*) win->render_target->data;
@@ -89,7 +89,7 @@ void render::start(cydui::graphics::window_t* win) {
     ->set_name("RENDER_THD");
 }
 
-static std::unordered_map<u32, XColor> xcolor_cache;
+static std::unordered_map <u32, XColor> xcolor_cache;
 
 struct xcolor_hot_cache_entry_t {
   u32 id;

@@ -8,7 +8,7 @@
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
-\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{cydui::events::EventType}}\ =\ \ \textcolor{keyword}{requires}\ \{}
+\DoxyCodeLine{\textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{cydui::events::EventType}}\ =\ \ \textcolor{keyword}{requires}(T::DataType\ dt)\ \{}
 \DoxyCodeLine{\ \ \ \ \ \ \{}
 \DoxyCodeLine{\ \ \ \ \ \ T::type}
 \DoxyCodeLine{\ \ \ \ \ \ \}\ -\/>\ std::convertible\_to<str>;}
@@ -16,9 +16,9 @@
 \DoxyCodeLine{\ \ \ \ \ \ \{}
 \DoxyCodeLine{\ \ \ \ \ \ T::data}
 \DoxyCodeLine{\ \ \ \ \ \ \}\ -\/>\ std::convertible\_to<typename\ T::DataType>;}
-\DoxyCodeLine{\ \ \ \ \ \ \{}
-\DoxyCodeLine{\ \ \ \ \ \ T::DataType::win}
-\DoxyCodeLine{\ \ \ \ \ \ \}\ -\/>\ std::convertible\_to<unsigned\ long>;}
+\DoxyCodeLine{\ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ }
+\DoxyCodeLine{\ \ \ \ \ \ }
 \DoxyCodeLine{\ \ \ \ \}}
 
 \end{DoxyCode}

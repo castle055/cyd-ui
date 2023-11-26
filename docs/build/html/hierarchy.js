@@ -645,18 +645,20 @@ var hierarchy =
     [ "prof::context_t", "structprof_1_1context__t.html", null ],
     [ "cydui::window::CWindow", "classcydui_1_1window_1_1CWindow.html", null ],
     [ "cydui::events::change_ev::DataMonitor< T >", "classcydui_1_1events_1_1change__ev_1_1DataMonitor.html", null ],
-    [ "ButtonEvent::DataType", "structButtonEvent_1_1DataType.html", null ],
-    [ "KeyEvent::DataType", "structKeyEvent_1_1DataType.html", null ],
-    [ "MotionEvent::DataType", "structMotionEvent_1_1DataType.html", null ],
-    [ "RedrawEvent::DataType", "structRedrawEvent_1_1DataType.html", null ],
-    [ "ResizeEvent::DataType", "structResizeEvent_1_1DataType.html", null ],
-    [ "ScrollEvent::DataType", "structScrollEvent_1_1DataType.html", null ],
     [ "cydui::dimensions::dimension_t", "classcydui_1_1dimensions_1_1dimension__t.html", null ],
     [ "cydui::dimensions::dimensional_relation_t", "structcydui_1_1dimensions_1_1dimensional__relation__t.html", null ],
     [ "cydui::drag_n_drop::draggable_source_t", "structcydui_1_1drag__n__drop_1_1draggable__source__t.html", null ],
     [ "cydui::drag_n_drop::draggable_t", "structcydui_1_1drag__n__drop_1_1draggable__t.html", null ],
     [ "cydui::drag_n_drop::dragging_context_t", "structcydui_1_1drag__n__drop_1_1dragging__context__t.html", null ],
     [ "cydui::events::Event", "structcydui_1_1events_1_1Event.html", null ],
+    [ "event_data_type_base_t", "structevent__data__type__base__t.html", [
+      [ "ButtonEvent::DataType", "structButtonEvent_1_1DataType.html", null ],
+      [ "KeyEvent::DataType", "structKeyEvent_1_1DataType.html", null ],
+      [ "MotionEvent::DataType", "structMotionEvent_1_1DataType.html", null ],
+      [ "RedrawEvent::DataType", "structRedrawEvent_1_1DataType.html", null ],
+      [ "ResizeEvent::DataType", "structResizeEvent_1_1DataType.html", null ],
+      [ "ScrollEvent::DataType", "structScrollEvent_1_1DataType.html", null ]
+    ] ],
     [ "cydui::components::event_handler_t", "structcydui_1_1components_1_1event__handler__t.html", [
       [ "ThreadTimelineEventHandler", "structThreadTimelineEventHandler.html", null ]
     ] ],
@@ -664,9 +666,6 @@ var hierarchy =
     [ "cydui::graphics::font::Font", "structcydui_1_1graphics_1_1font_1_1Font.html", null ],
     [ "cydui::graphics::vg::vg_element_t::footprint", "structcydui_1_1graphics_1_1vg_1_1vg__element__t_1_1footprint.html", null ],
     [ "cydui::dimensions::four_sided_dimension_t", "structcydui_1_1dimensions_1_1four__sided__dimension__t.html", null ],
-    [ "std::function", null, [
-      [ "cydui::events::Consumer< T >", "classcydui_1_1events_1_1Consumer.html", null ]
-    ] ],
     [ "cydui::graphics::images::image_t", "structcydui_1_1graphics_1_1images_1_1image__t.html", null ],
     [ "x11::imgs::img_data", "structx11_1_1imgs_1_1img__data.html", null ],
     [ "x11::imgs::jpg_err_mgr", "structx11_1_1imgs_1_1jpg__err__mgr.html", null ],

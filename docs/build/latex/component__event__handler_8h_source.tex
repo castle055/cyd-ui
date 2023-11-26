@@ -184,26 +184,27 @@
 \DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00180}00180\ \textcolor{preprocessor}{std::unordered\_map<std::string,\ listener\_data\_t>\ get\_event\_listeners()\ override\ \{\ \(\backslash\)}}
 \DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00181}00181\ \textcolor{preprocessor}{\ \ \_Pragma("{}clang\ diagnostic\ push"{})\ \(\backslash\)}}
 \DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00182}00182\ \textcolor{preprocessor}{\ \ \_Pragma("{}clang\ diagnostic\ ignored\ \(\backslash\)"{}-\/Wunused-\/lambda-\/capture\(\backslash\)"{}"{})\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00183}00183\ \textcolor{preprocessor}{\ \ return\ \_\_VA\_ARGS\_\_\ ;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00183}00183\ \textcolor{preprocessor}{\ \ return\ \{\ \_\_VA\_ARGS\_\_\ \};\ \ \ \ \ \(\backslash\)}}
 \DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00184}00184\ \textcolor{preprocessor}{\ \ \_Pragma("{}clang\ diagnostic\ pop"{})\ \(\backslash\)}}
 \DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00185}00185\ \textcolor{preprocessor}{\}}}
 \DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00186}00186\ }
 \DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00187}00187\ \textcolor{preprocessor}{\#define\ ON\_EVENT(EVENT,\ ...)\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00188}00188\ \textcolor{preprocessor}{\{\ EVENT\ ::type,\ \{[this](cydui::events::Event*\ ev)\ \{\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00189}00189\ \textcolor{preprocessor}{\ \ auto\ parsed\_event\ =\ ev-\/>parse<EVENT>();\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00190}00190\ \textcolor{preprocessor}{\ \ [this](const\ cydui::events::ParsedEvent<EVENT>::DataType*\ ev)\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00191}00191\ \textcolor{preprocessor}{\ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00192}00192\ \textcolor{preprocessor}{\ \ (parsed\_event.data);\ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00193}00193\ \textcolor{preprocessor}{\}\}\}}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00194}00194\ }
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00195}00195\ \textcolor{preprocessor}{\#define\ FRAGMENT\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00196}00196\ \textcolor{preprocessor}{\ \ void\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00197}00197\ \textcolor{preprocessor}{\ \ draw\_fragment\ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00198}00198\ \textcolor{preprocessor}{\ \ (vg::vg\_fragment\_t\&\ fragment)\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00199}00199\ \textcolor{preprocessor}{\ \ override}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00200}00200\ \ \ }
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00201}00201\ \}}
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00202}00202\ }
-\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00203}00203\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_COMPONENT\_EVENT\_HANDLER\_H}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00188}00188\ \textcolor{preprocessor}{\{\ EVENT\ ::type,\ \{[\&](cydui::events::Event*\ ev)\ \{\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00189}00189\ \textcolor{preprocessor}{\ \ if\ (nullptr\ ==\ state)\ return;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00190}00190\ \textcolor{preprocessor}{\ \ auto\ parsed\_event\ =\ ev-\/>parse<EVENT>();\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00191}00191\ \textcolor{preprocessor}{\ \ [\&](const\ cydui::events::ParsedEvent<EVENT>::DataType*\ ev)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00192}00192\ \textcolor{preprocessor}{\ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00193}00193\ \textcolor{preprocessor}{\ \ (parsed\_event.data);\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00194}00194\ \textcolor{preprocessor}{\}\}\}}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00196}00196\ \textcolor{preprocessor}{\#define\ FRAGMENT\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00197}00197\ \textcolor{preprocessor}{\ \ void\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00198}00198\ \textcolor{preprocessor}{\ \ draw\_fragment\ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00199}00199\ \textcolor{preprocessor}{\ \ (vg::vg\_fragment\_t\&\ fragment)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00200}00200\ \textcolor{preprocessor}{\ \ override}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00201}00201\ \ \ }
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00202}00202\ \}}
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00203}00203\ }
+\DoxyCodeLine{\Hypertarget{component__event__handler_8h_source_l00204}00204\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_COMPONENT\_EVENT\_HANDLER\_H}}
 
 \end{DoxyCode}

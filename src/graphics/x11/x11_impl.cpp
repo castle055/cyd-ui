@@ -52,16 +52,19 @@ cydui::graphics::window_t* cydui::graphics::create_window(
 ) {
   static int _ig = XInitThreads();
   
+  XVisualInfo vinfo;
+  XMatchVisualInfo(state::get_dpy(), state::get_screen(), 32, TrueColor, &vinfo);
   XSetWindowAttributes wa = {
-    .background_pixmap =
-    BlackPixel(state::get_dpy(), state::get_screen()),//ParentRelative,
+    .background_pixel = 0,//ParentRelative,
+    .border_pixel = 0,
     .bit_gravity = NorthWestGravity,
     .event_mask  = FocusChangeMask | KeyPressMask | KeyReleaseMask
       | VisibilityChangeMask | StructureNotifyMask | ButtonMotionMask
       | ButtonPressMask | ButtonReleaseMask | ExposureMask | FocusChangeMask
       | LeaveWindowMask | EnterWindowMask | PointerMotionMask,
     .override_redirect =
-    override_redirect// This makes it immutable across workspaces
+    override_redirect, // This makes it immutable across workspaces
+    .colormap = XCreateColormap(state::get_dpy(), state::get_root(), vinfo.visual, AllocNone),
   };
   str title_str = title;
   str wclass_str = wclass;
@@ -92,10 +95,10 @@ cydui::graphics::window_t* cydui::graphics::create_window(
     w,
     h,
     0,
-    DefaultDepth(state::get_dpy(), state::get_screen()),
+    vinfo.depth, //DefaultDepth(state::get_dpy(), state::get_screen()),
     InputOutput,
-    DefaultVisual(state::get_dpy(), state::get_screen()),
-    CWBorderPixel | CWBitGravity | CWColormap | CWBackPixmap | CWEventMask
+    vinfo.visual, //DefaultVisual(state::get_dpy(), state::get_screen()),
+    CWBorderPixel | CWBitGravity | CWColormap | CWBackPixel | CWEventMask
       | (override_redirect ? CWOverrideRedirect : 0U),
     &wa);
   XSetClassHint(state::get_dpy(), xwin, &ch);
@@ -289,4 +292,13 @@ pixelmap_t* cydui::graphics::get_frame(cydui::graphics::window_t* win) {
 
 unsigned long cydui::graphics::get_id(cydui::graphics::window_t* win) {
   return (unsigned int) win->xwin;
+}
+
+void cydui::graphics::terminate(cydui::graphics::window_t* win) {
+  XUnmapWindow(state::get_dpy(), win->xwin);
+  XDestroyWindow(state::get_dpy(), win->xwin);
+  delete win->staging_target;
+  delete win->render_target;
+  win->render_thd->running = false;
+  win->render_thd->join();
 }

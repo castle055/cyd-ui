@@ -159,7 +159,7 @@ Definition at line \fB18\fP of file \fBrender\&.cpp\fP\&..PP
 28   
 29   win\->render_mtx\&.lock();
 30   {
-31     image\->depth = DisplayPlanes(state::get_dpy(), state::get_screen());
+31     image\->depth = 32;//DisplayPlanes(state::get_dpy(), state::get_screen());
 32     image\->format = ZPixmap;
 33     image\->xoffset = 0;
 34     image\->data = (char*) win\->render_target\->data;

@@ -16,6 +16,8 @@ namespace cydui::threading {
       void* data = nullptr;
       
       thread_t* set_name(const str &name);
+      
+      void join() const;
     };
     
     thread_t* new_thread(void(task)(thread_t* this_thread));

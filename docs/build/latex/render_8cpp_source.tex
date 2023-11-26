@@ -32,7 +32,7 @@
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00028}00028\ \ \ }
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00029}00029\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ada7b7df437402a71353d45d05ef32065}{render\_mtx}}.lock();}
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00030}00030\ \ \ \{}
-\DoxyCodeLine{\Hypertarget{render_8cpp_source_l00031}00031\ \ \ \ \ image-\/>depth\ =\ DisplayPlanes(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}());}
+\DoxyCodeLine{\Hypertarget{render_8cpp_source_l00031}00031\ \ \ \ \ image-\/>depth\ =\ 32;\textcolor{comment}{//DisplayPlanes(state::get\_dpy(),\ state::get\_screen());}}
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00032}00032\ \ \ \ \ image-\/>format\ =\ ZPixmap;}
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00033}00033\ \ \ \ \ image-\/>xoffset\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00034}00034\ \ \ \ \ image-\/>data\ =\ (\textcolor{keywordtype}{char}*)\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_aac71ce31fada0d62b259b3099d06727a}{render\_target}}-\/>\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}};}
@@ -93,7 +93,7 @@
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00089}00089\ \ \ \ \ -\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_aa740ecb2c3aec2371e86fca90b115600}{set\_name}}(\textcolor{stringliteral}{"{}RENDER\_THD"{}});}
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00090}00090\ \}}
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00091}00091\ }
-\DoxyCodeLine{\Hypertarget{render_8cpp_source_l00092}\mbox{\hyperlink{render_8cpp_a530de18bc8cf7993ec9d2eef68d73287}{00092}}\ \textcolor{keyword}{static}\ std::unordered\_map<u32,\ XColor>\ \mbox{\hyperlink{render_8cpp_a530de18bc8cf7993ec9d2eef68d73287}{xcolor\_cache}};}
+\DoxyCodeLine{\Hypertarget{render_8cpp_source_l00092}\mbox{\hyperlink{render_8cpp_a530de18bc8cf7993ec9d2eef68d73287}{00092}}\ \textcolor{keyword}{static}\ std::unordered\_map\ <u32,\ XColor>\ \mbox{\hyperlink{render_8cpp_a530de18bc8cf7993ec9d2eef68d73287}{xcolor\_cache}};}
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00093}00093\ }
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00094}\mbox{\hyperlink{structxcolor__hot__cache__entry__t}{00094}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structxcolor__hot__cache__entry__t}{xcolor\_hot\_cache\_entry\_t}}\ \{}
 \DoxyCodeLine{\Hypertarget{render_8cpp_source_l00095}\mbox{\hyperlink{structxcolor__hot__cache__entry__t_a9cc389842e49cb4f1fef8adf1e0ddbd5}{00095}}\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ac8db3a4667f052ca03c96f9a66539545}{u32}}\ \mbox{\hyperlink{structxcolor__hot__cache__entry__t_a9cc389842e49cb4f1fef8adf1e0ddbd5}{id}};}

@@ -14,6 +14,9 @@ cydui::threading::thread_t
 .ti -1c
 .RI "\fBthread_t\fP * \fBset_name\fP (const \fBstr\fP &name)"
 .br
+.ti -1c
+.RI "void \fBjoin\fP () const"
+.br
 .in -1c
 .SS "Public Attributes"
 
@@ -33,6 +36,16 @@ cydui::threading::thread_t
 Definition at line \fB13\fP of file \fBthreading\&.hpp\fP\&.
 .SH "Member Function Documentation"
 .PP 
+.SS "void cydui::threading::thread_t::join () const"
+
+.PP
+Definition at line \fB34\fP of file \fBthreading\&.cpp\fP\&..PP
+.nf
+34                                         {
+35   ((std::thread*) native_thread)\->join();
+36 }
+.fi
+
 .SS "\fBthread_t\fP * cydui::threading::thread_t::set_name (const \fBstr\fP & name)"
 
 .PP

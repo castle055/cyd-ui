@@ -156,7 +156,7 @@ Variables</h2></td></tr>
 <tr class="separator:afd5d7300be43f73f4cc09301c28b9c86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e3e24444280ea9e10126547b60a2701" id="r_a5e3e24444280ea9e10126547b60a2701"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcydui_1_1threading_1_1thread__t.html">cydui::threading::thread_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="events_2events_8cpp.html#a5e3e24444280ea9e10126547b60a2701">event_thread</a></td></tr>
 <tr class="separator:a5e3e24444280ea9e10126547b60a2701"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8f163a82cb2ef400f5bebab48c17c9c" id="r_ac8f163a82cb2ef400f5bebab48c17c9c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structthread__data.html">thread_data</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="events_2events_8cpp.html#ac8f163a82cb2ef400f5bebab48c17c9c">th_data</a> = new <a class="el" href="structthread__data.html">thread_data</a></td></tr>
+<tr class="memitem:ac8f163a82cb2ef400f5bebab48c17c9c" id="r_ac8f163a82cb2ef400f5bebab48c17c9c"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structthread__data.html">thread_data</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="events_2events_8cpp.html#ac8f163a82cb2ef400f5bebab48c17c9c">th_data</a> = new <a class="el" href="structthread__data.html">thread_data</a></td></tr>
 <tr class="separator:ac8f163a82cb2ef400f5bebab48c17c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c0bff5d6e182f32fae3dc23a4661804" id="r_a3c0bff5d6e182f32fae3dc23a4661804"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804">event_mutex</a></td></tr>
 <tr class="separator:a3c0bff5d6e182f32fae3dc23a4661804"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -190,19 +190,19 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00075">75</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   75</span>                                                             {</div>
-<div class="line"><span class="lineno">   76</span>  <a class="code hl_variable" href="events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804">event_mutex</a>.lock();</div>
-<div class="line"><span class="lineno">   77</span>  data-&gt;<a class="code hl_variable" href="structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814">event_queue</a>-&gt;pop_front();</div>
-<div class="line"><span class="lineno">   78</span>  <span class="keywordflow">if</span> (data-&gt;<a class="code hl_variable" href="structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814">event_queue</a>-&gt;empty())</div>
-<div class="line"><span class="lineno">   79</span>    data-&gt;<a class="code hl_variable" href="structthread__data.html#aa8aba6b97a2602a994f4d5a0db913491">pending</a> = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">   80</span>  ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#acb7a776f885a47232c7e96889eb11186">ev_mtx</a>.lock();</div>
-<div class="line"><span class="lineno">   81</span>  ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#ab6437108b8194a2a1586fa204083bd46">status</a> = <a class="code hl_enumvalue" href="namespacecydui_1_1events.html#a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520">cydui::events::CONSUMED</a>;</div>
-<div class="line"><span class="lineno">   82</span>  ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#acb7a776f885a47232c7e96889eb11186">ev_mtx</a>.unlock();</div>
-<div class="line"><span class="lineno">   83</span>  <a class="code hl_variable" href="events_2events_8cpp.html#ad20c24e3b0c55726c1caca7947709dfe">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84">debug</a>(<span class="stringliteral">&quot;DONE WITH EVENT: %s %s&quot;</span>, ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#aada192a5dfd5c8804ddff645501c4fb5">type</a>.c_str(), ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#a315eca418925693699125760b05984bb">managed</a> ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot;[deleting]&quot;</span>);</div>
-<div class="line"><span class="lineno">   84</span>  <span class="keywordflow">if</span> (!ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#a315eca418925693699125760b05984bb">managed</a>) <span class="keyword">delete</span> ev;</div>
-<div class="line"><span class="lineno">   85</span>  <a class="code hl_variable" href="events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804">event_mutex</a>.unlock();</div>
-<div class="line"><span class="lineno">   86</span>}</div>
+<p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00086">86</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   86</span>                                                             {</div>
+<div class="line"><span class="lineno">   87</span>  <a class="code hl_variable" href="events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804">event_mutex</a>.lock();</div>
+<div class="line"><span class="lineno">   88</span>  data-&gt;<a class="code hl_variable" href="structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814">event_queue</a>-&gt;pop_front();</div>
+<div class="line"><span class="lineno">   89</span>  <span class="keywordflow">if</span> (data-&gt;<a class="code hl_variable" href="structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814">event_queue</a>-&gt;empty())</div>
+<div class="line"><span class="lineno">   90</span>    data-&gt;<a class="code hl_variable" href="structthread__data.html#aa8aba6b97a2602a994f4d5a0db913491">pending</a> = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   91</span>  ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#acb7a776f885a47232c7e96889eb11186">ev_mtx</a>.lock();</div>
+<div class="line"><span class="lineno">   92</span>  ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#ab6437108b8194a2a1586fa204083bd46">status</a> = <a class="code hl_enumvalue" href="namespacecydui_1_1events.html#a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520">cydui::events::CONSUMED</a>;</div>
+<div class="line"><span class="lineno">   93</span>  ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#acb7a776f885a47232c7e96889eb11186">ev_mtx</a>.unlock();</div>
+<div class="line"><span class="lineno">   94</span>  <a class="code hl_variable" href="events_2events_8cpp.html#ad20c24e3b0c55726c1caca7947709dfe">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84">debug</a>(<span class="stringliteral">&quot;DONE WITH EVENT: %s %s&quot;</span>, ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#aada192a5dfd5c8804ddff645501c4fb5">type</a>.c_str(), ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#a315eca418925693699125760b05984bb">managed</a> ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot;[deleting]&quot;</span>);</div>
+<div class="line"><span class="lineno">   95</span>  <span class="keywordflow">if</span> (!ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#a315eca418925693699125760b05984bb">managed</a>) <span class="keyword">delete</span> ev;</div>
+<div class="line"><span class="lineno">   96</span>  <a class="code hl_variable" href="events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804">event_mutex</a>.unlock();</div>
+<div class="line"><span class="lineno">   97</span>}</div>
 <div class="ttc" id="aevents_2events_8cpp_html_a3c0bff5d6e182f32fae3dc23a4661804"><div class="ttname"><a href="events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804">event_mutex</a></div><div class="ttdeci">std::mutex event_mutex</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00037">events.cpp:37</a></div></div>
 <div class="ttc" id="aevents_2events_8cpp_html_ad20c24e3b0c55726c1caca7947709dfe"><div class="ttname"><a href="events_2events_8cpp.html#ad20c24e3b0c55726c1caca7947709dfe">log_task</a></div><div class="ttdeci">logging::logger log_task</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00015">events.cpp:15</a></div></div>
 <div class="ttc" id="anamespacecydui_1_1events_html_a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520"><div class="ttname"><a href="namespacecydui_1_1events.html#a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520">cydui::events::CONSUMED</a></div><div class="ttdeci">@ CONSUMED</div><div class="ttdef"><b>Definition</b> <a href="include_2events_2events_8hpp_source.html#l00106">events.hpp:106</a></div></div>
@@ -232,13 +232,15 @@ Variables</h2></td></tr>
 <div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="events_2events_8cpp_a3b66d20341dae5b5e069324eb44a5bf2_icgraph.png" border="0" usemap="#aevents_2events_8cpp_a3b66d20341dae5b5e069324eb44a5bf2_icgraph" alt=""/></div>
 <map name="aevents_2events_8cpp_a3b66d20341dae5b5e069324eb44a5bf2_icgraph" id="aevents_2events_8cpp_a3b66d20341dae5b5e069324eb44a5bf2_icgraph">
-<area shape="rect" title=" " alt="" coords="474,5,587,32"/>
-<area shape="rect" href="events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e" title=" " alt="" coords="320,5,426,32"/>
-<area shape="poly" title=" " alt="" coords="458,21,427,21,427,16,458,16"/>
-<area shape="rect" href="events_2events_8cpp.html#ad8d7fea6443e738a3a00c073f0eecbf8" title=" " alt="" coords="187,5,272,32"/>
-<area shape="poly" title=" " alt="" coords="304,21,272,21,272,16,304,16"/>
-<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="5,5,139,32"/>
-<area shape="poly" title=" " alt="" coords="171,21,139,21,139,16,171,16"/>
+<area shape="rect" title=" " alt="" coords="671,5,783,32"/>
+<area shape="rect" href="events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e" title=" " alt="" coords="516,5,623,32"/>
+<area shape="poly" title=" " alt="" coords="655,21,623,21,623,16,655,16"/>
+<area shape="rect" href="events_2events_8cpp.html#ad8d7fea6443e738a3a00c073f0eecbf8" title=" " alt="" coords="383,5,468,32"/>
+<area shape="poly" title=" " alt="" coords="501,21,469,21,469,16,501,16"/>
+<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="202,5,335,32"/>
+<area shape="poly" title=" " alt="" coords="367,21,335,21,335,16,367,16"/>
+<area shape="rect" href="namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="5,5,154,32"/>
+<area shape="poly" title=" " alt="" coords="186,21,154,21,154,16,186,16"/>
 </map>
 </div>
 
@@ -260,17 +262,17 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00102">102</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  102</span>                                                     {</div>
-<div class="line"><span class="lineno">  103</span>  <a class="code hl_variable" href="events_2events_8cpp.html#ad20c24e3b0c55726c1caca7947709dfe">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84">debug</a>(<span class="stringliteral">&quot;Started event_task&quot;</span>);</div>
-<div class="line"><span class="lineno">  104</span>  <span class="keyword">auto</span> t0 = std::chrono::system_clock::now();</div>
-<div class="line"><span class="lineno">  105</span>  <span class="keywordflow">while</span> (this_thread-&gt;<a class="code hl_variable" href="structcydui_1_1threading_1_1thread__t.html#a230c1adb68eeb06a399359ebb1fac07b">running</a>) {</div>
-<div class="line"><span class="lineno">  106</span>    t0 = std::chrono::system_clock::now();</div>
-<div class="line"><span class="lineno">  107</span>    <a class="code hl_function" href="events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e">process_event</a>((<a class="code hl_struct" href="structthread__data.html">thread_data</a>*) (this_thread-&gt;<a class="code hl_variable" href="structcydui_1_1threading_1_1thread__t.html#a4ffcba2ceb7e17d4a78e07ce5a280433">data</a>));</div>
-<div class="line"><span class="lineno">  108</span>    std::this_thread::sleep_until(t0 + 100us);</div>
-<div class="line"><span class="lineno">  109</span>  }</div>
-<div class="line"><span class="lineno">  110</span>}</div>
-<div class="ttc" id="aevents_2events_8cpp_html_a10d9c1101d1579f813ba5adf43198b4e"><div class="ttname"><a href="events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e">process_event</a></div><div class="ttdeci">void process_event(thread_data *data)</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00088">events.cpp:88</a></div></div>
+<p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00113">113</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  113</span>                                                     {</div>
+<div class="line"><span class="lineno">  114</span>  <a class="code hl_variable" href="events_2events_8cpp.html#ad20c24e3b0c55726c1caca7947709dfe">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84">debug</a>(<span class="stringliteral">&quot;Started event_task&quot;</span>);</div>
+<div class="line"><span class="lineno">  115</span>  <span class="keyword">auto</span> t0 = std::chrono::system_clock::now();</div>
+<div class="line"><span class="lineno">  116</span>  <span class="keywordflow">while</span> (this_thread-&gt;<a class="code hl_variable" href="structcydui_1_1threading_1_1thread__t.html#a230c1adb68eeb06a399359ebb1fac07b">running</a>) {</div>
+<div class="line"><span class="lineno">  117</span>    t0 = std::chrono::system_clock::now();</div>
+<div class="line"><span class="lineno">  118</span>    <a class="code hl_function" href="events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e">process_event</a>((<a class="code hl_struct" href="structthread__data.html">thread_data</a>*) (this_thread-&gt;<a class="code hl_variable" href="structcydui_1_1threading_1_1thread__t.html#a4ffcba2ceb7e17d4a78e07ce5a280433">data</a>));</div>
+<div class="line"><span class="lineno">  119</span>    std::this_thread::sleep_until(t0 + 100us);</div>
+<div class="line"><span class="lineno">  120</span>  }</div>
+<div class="line"><span class="lineno">  121</span>}</div>
+<div class="ttc" id="aevents_2events_8cpp_html_a10d9c1101d1579f813ba5adf43198b4e"><div class="ttname"><a href="events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e">process_event</a></div><div class="ttdeci">void process_event(thread_data *data)</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00099">events.cpp:99</a></div></div>
 <div class="ttc" id="astructcydui_1_1threading_1_1thread__t_html_a230c1adb68eeb06a399359ebb1fac07b"><div class="ttname"><a href="structcydui_1_1threading_1_1thread__t.html#a230c1adb68eeb06a399359ebb1fac07b">cydui::threading::thread_t::running</a></div><div class="ttdeci">bool running</div><div class="ttdef"><b>Definition</b> <a href="threading_8hpp_source.html#l00015">threading.hpp:15</a></div></div>
 <div class="ttc" id="astructcydui_1_1threading_1_1thread__t_html_a4ffcba2ceb7e17d4a78e07ce5a280433"><div class="ttname"><a href="structcydui_1_1threading_1_1thread__t.html#a4ffcba2ceb7e17d4a78e07ce5a280433">cydui::threading::thread_t::data</a></div><div class="ttdeci">void * data</div><div class="ttdef"><b>Definition</b> <a href="threading_8hpp_source.html#l00016">threading.hpp:16</a></div></div>
 <div class="ttc" id="astructthread__data_html"><div class="ttname"><a href="structthread__data.html">thread_data</a></div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00021">events.cpp:21</a></div></div>
@@ -303,9 +305,11 @@ Variables</h2></td></tr>
 <div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="events_2events_8cpp_ad8d7fea6443e738a3a00c073f0eecbf8_icgraph.png" border="0" usemap="#aevents_2events_8cpp_ad8d7fea6443e738a3a00c073f0eecbf8_icgraph" alt=""/></div>
 <map name="aevents_2events_8cpp_ad8d7fea6443e738a3a00c073f0eecbf8_icgraph" id="aevents_2events_8cpp_ad8d7fea6443e738a3a00c073f0eecbf8_icgraph">
-<area shape="rect" title=" " alt="" coords="187,5,272,32"/>
-<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="5,5,139,32"/>
-<area shape="poly" title=" " alt="" coords="171,21,139,21,139,16,171,16"/>
+<area shape="rect" title=" " alt="" coords="383,5,468,32"/>
+<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="202,5,335,32"/>
+<area shape="poly" title=" " alt="" coords="367,21,335,21,335,16,367,16"/>
+<area shape="rect" href="namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="5,5,154,32"/>
+<area shape="poly" title=" " alt="" coords="186,21,154,21,154,16,186,16"/>
 </map>
 </div>
 
@@ -327,19 +331,19 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00062">62</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   62</span>                                                    {</div>
-<div class="line"><span class="lineno">   63</span>  <a class="code hl_struct" href="structcydui_1_1events_1_1Event.html">cydui::events::Event</a>* ev = <span class="keyword">nullptr</span>;</div>
-<div class="line"><span class="lineno">   64</span>  </div>
-<div class="line"><span class="lineno">   65</span>  <span class="comment">//event_mutex.lock();</span></div>
-<div class="line"><span class="lineno">   66</span>  <span class="keywordflow">if</span> (data-&gt;<a class="code hl_variable" href="structthread__data.html#aa8aba6b97a2602a994f4d5a0db913491">pending</a>) {</div>
-<div class="line"><span class="lineno">   67</span>    <span class="comment">//    log_task.info(&quot;EV QUEUE: %d&quot;, data-&gt;event_queue-&gt;size());</span></div>
-<div class="line"><span class="lineno">   68</span>    ev = data-&gt;<a class="code hl_variable" href="structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814">event_queue</a>-&gt;front();</div>
-<div class="line"><span class="lineno">   69</span>  }</div>
-<div class="line"><span class="lineno">   70</span>  <span class="comment">//event_mutex.unlock();</span></div>
-<div class="line"><span class="lineno">   71</span>  </div>
-<div class="line"><span class="lineno">   72</span>  <span class="keywordflow">return</span> ev;</div>
-<div class="line"><span class="lineno">   73</span>}</div>
+<p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00073">73</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>                                                    {</div>
+<div class="line"><span class="lineno">   74</span>  <a class="code hl_struct" href="structcydui_1_1events_1_1Event.html">cydui::events::Event</a>* ev = <span class="keyword">nullptr</span>;</div>
+<div class="line"><span class="lineno">   75</span>  </div>
+<div class="line"><span class="lineno">   76</span>  <span class="comment">//event_mutex.lock();</span></div>
+<div class="line"><span class="lineno">   77</span>  <span class="keywordflow">if</span> (data-&gt;<a class="code hl_variable" href="structthread__data.html#aa8aba6b97a2602a994f4d5a0db913491">pending</a>) {</div>
+<div class="line"><span class="lineno">   78</span>    <span class="comment">//    log_task.info(&quot;EV QUEUE: %d&quot;, data-&gt;event_queue-&gt;size());</span></div>
+<div class="line"><span class="lineno">   79</span>    ev = data-&gt;<a class="code hl_variable" href="structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814">event_queue</a>-&gt;front();</div>
+<div class="line"><span class="lineno">   80</span>  }</div>
+<div class="line"><span class="lineno">   81</span>  <span class="comment">//event_mutex.unlock();</span></div>
+<div class="line"><span class="lineno">   82</span>  </div>
+<div class="line"><span class="lineno">   83</span>  <span class="keywordflow">return</span> ev;</div>
+<div class="line"><span class="lineno">   84</span>}</div>
 <div class="ttc" id="astructcydui_1_1events_1_1Event_html"><div class="ttname"><a href="structcydui_1_1events_1_1Event.html">cydui::events::Event</a></div><div class="ttdef"><b>Definition</b> <a href="include_2events_2events_8hpp_source.html#l00109">events.hpp:109</a></div></div>
 </div><!-- fragment --><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
@@ -348,13 +352,15 @@ Variables</h2></td></tr>
 <div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="events_2events_8cpp_a4bc4775e3a9a86d814664a5bd28c52da_icgraph.png" border="0" usemap="#aevents_2events_8cpp_a4bc4775e3a9a86d814664a5bd28c52da_icgraph" alt=""/></div>
 <map name="aevents_2events_8cpp_a4bc4775e3a9a86d814664a5bd28c52da_icgraph" id="aevents_2events_8cpp_a4bc4775e3a9a86d814664a5bd28c52da_icgraph">
-<area shape="rect" title=" " alt="" coords="474,5,585,32"/>
-<area shape="rect" href="events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e" title=" " alt="" coords="320,5,426,32"/>
-<area shape="poly" title=" " alt="" coords="459,21,427,21,427,16,459,16"/>
-<area shape="rect" href="events_2events_8cpp.html#ad8d7fea6443e738a3a00c073f0eecbf8" title=" " alt="" coords="187,5,272,32"/>
-<area shape="poly" title=" " alt="" coords="304,21,272,21,272,16,304,16"/>
-<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="5,5,139,32"/>
-<area shape="poly" title=" " alt="" coords="171,21,139,21,139,16,171,16"/>
+<area shape="rect" title=" " alt="" coords="671,5,781,32"/>
+<area shape="rect" href="events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e" title=" " alt="" coords="516,5,623,32"/>
+<area shape="poly" title=" " alt="" coords="655,21,623,21,623,16,655,16"/>
+<area shape="rect" href="events_2events_8cpp.html#ad8d7fea6443e738a3a00c073f0eecbf8" title=" " alt="" coords="383,5,468,32"/>
+<area shape="poly" title=" " alt="" coords="501,21,469,21,469,16,501,16"/>
+<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="202,5,335,32"/>
+<area shape="poly" title=" " alt="" coords="367,21,335,21,335,16,367,16"/>
+<area shape="rect" href="namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="5,5,154,32"/>
+<area shape="poly" title=" " alt="" coords="186,21,154,21,154,16,186,16"/>
 </map>
 </div>
 
@@ -376,21 +382,21 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00088">88</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   88</span>                                      {</div>
-<div class="line"><span class="lineno">   89</span>  <span class="comment">//    log_task.debug(&quot;Processing next event&quot;);</span></div>
-<div class="line"><span class="lineno">   90</span>  </div>
-<div class="line"><span class="lineno">   91</span>  <a class="code hl_variable" href="events_2events_8cpp.html#ad20c24e3b0c55726c1caca7947709dfe">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84">debug</a>(<span class="stringliteral">&quot;EVENT COUNT: %ld&quot;</span>, data-&gt;<a class="code hl_variable" href="structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814">event_queue</a>-&gt;size());</div>
-<div class="line"><span class="lineno">   92</span>  <a class="code hl_struct" href="structcydui_1_1events_1_1Event.html">cydui::events::Event</a>* ev = <a class="code hl_function" href="events_2events_8cpp.html#a4bc4775e3a9a86d814664a5bd28c52da">get_next_event</a>(data);</div>
-<div class="line"><span class="lineno">   93</span>  </div>
-<div class="line"><span class="lineno">   94</span>  <span class="keywordflow">if</span> (ev != <span class="keyword">nullptr</span>) {</div>
-<div class="line"><span class="lineno">   95</span>    <a class="code hl_function" href="events_2events_8cpp.html#a46ba5413ac7afeebd2faf94a01883f55">run_event</a>(data, ev);</div>
-<div class="line"><span class="lineno">   96</span>    <a class="code hl_function" href="events_2events_8cpp.html#a3b66d20341dae5b5e069324eb44a5bf2">clean_up_event</a>(data, ev);</div>
-<div class="line"><span class="lineno">   97</span>  }</div>
-<div class="line"><span class="lineno">   98</span>}</div>
-<div class="ttc" id="aevents_2events_8cpp_html_a3b66d20341dae5b5e069324eb44a5bf2"><div class="ttname"><a href="events_2events_8cpp.html#a3b66d20341dae5b5e069324eb44a5bf2">clean_up_event</a></div><div class="ttdeci">void clean_up_event(thread_data *data, cydui::events::Event *ev)</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00075">events.cpp:75</a></div></div>
+<p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00099">99</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   99</span>                                      {</div>
+<div class="line"><span class="lineno">  100</span>  <span class="comment">//    log_task.debug(&quot;Processing next event&quot;);</span></div>
+<div class="line"><span class="lineno">  101</span>  </div>
+<div class="line"><span class="lineno">  102</span>  <a class="code hl_variable" href="events_2events_8cpp.html#ad20c24e3b0c55726c1caca7947709dfe">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84">debug</a>(<span class="stringliteral">&quot;EVENT COUNT: %ld&quot;</span>, data-&gt;<a class="code hl_variable" href="structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814">event_queue</a>-&gt;size());</div>
+<div class="line"><span class="lineno">  103</span>  <a class="code hl_struct" href="structcydui_1_1events_1_1Event.html">cydui::events::Event</a>* ev = <a class="code hl_function" href="events_2events_8cpp.html#a4bc4775e3a9a86d814664a5bd28c52da">get_next_event</a>(data);</div>
+<div class="line"><span class="lineno">  104</span>  </div>
+<div class="line"><span class="lineno">  105</span>  <span class="keywordflow">if</span> (ev != <span class="keyword">nullptr</span>) {</div>
+<div class="line"><span class="lineno">  106</span>    <a class="code hl_function" href="events_2events_8cpp.html#a46ba5413ac7afeebd2faf94a01883f55">run_event</a>(data, ev);</div>
+<div class="line"><span class="lineno">  107</span>    <a class="code hl_function" href="events_2events_8cpp.html#a3b66d20341dae5b5e069324eb44a5bf2">clean_up_event</a>(data, ev);</div>
+<div class="line"><span class="lineno">  108</span>  }</div>
+<div class="line"><span class="lineno">  109</span>}</div>
+<div class="ttc" id="aevents_2events_8cpp_html_a3b66d20341dae5b5e069324eb44a5bf2"><div class="ttname"><a href="events_2events_8cpp.html#a3b66d20341dae5b5e069324eb44a5bf2">clean_up_event</a></div><div class="ttdeci">void clean_up_event(thread_data *data, cydui::events::Event *ev)</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00086">events.cpp:86</a></div></div>
 <div class="ttc" id="aevents_2events_8cpp_html_a46ba5413ac7afeebd2faf94a01883f55"><div class="ttname"><a href="events_2events_8cpp.html#a46ba5413ac7afeebd2faf94a01883f55">run_event</a></div><div class="ttdeci">static void run_event(thread_data *data, cydui::events::Event *ev)</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00041">events.cpp:41</a></div></div>
-<div class="ttc" id="aevents_2events_8cpp_html_a4bc4775e3a9a86d814664a5bd28c52da"><div class="ttname"><a href="events_2events_8cpp.html#a4bc4775e3a9a86d814664a5bd28c52da">get_next_event</a></div><div class="ttdeci">cydui::events::Event * get_next_event(thread_data *data)</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00062">events.cpp:62</a></div></div>
+<div class="ttc" id="aevents_2events_8cpp_html_a4bc4775e3a9a86d814664a5bd28c52da"><div class="ttname"><a href="events_2events_8cpp.html#a4bc4775e3a9a86d814664a5bd28c52da">get_next_event</a></div><div class="ttdeci">cydui::events::Event * get_next_event(thread_data *data)</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00073">events.cpp:73</a></div></div>
 </div><!-- fragment --><div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-6-summary" class="dynsummary" style="display:block;">
@@ -417,11 +423,13 @@ Variables</h2></td></tr>
 <div id="dynsection-7-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="events_2events_8cpp_a10d9c1101d1579f813ba5adf43198b4e_icgraph.png" border="0" usemap="#aevents_2events_8cpp_a10d9c1101d1579f813ba5adf43198b4e_icgraph" alt=""/></div>
 <map name="aevents_2events_8cpp_a10d9c1101d1579f813ba5adf43198b4e_icgraph" id="aevents_2events_8cpp_a10d9c1101d1579f813ba5adf43198b4e_icgraph">
-<area shape="rect" title=" " alt="" coords="320,5,426,32"/>
-<area shape="rect" href="events_2events_8cpp.html#ad8d7fea6443e738a3a00c073f0eecbf8" title=" " alt="" coords="187,5,272,32"/>
-<area shape="poly" title=" " alt="" coords="304,21,272,21,272,16,304,16"/>
-<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="5,5,139,32"/>
-<area shape="poly" title=" " alt="" coords="171,21,139,21,139,16,171,16"/>
+<area shape="rect" title=" " alt="" coords="516,5,623,32"/>
+<area shape="rect" href="events_2events_8cpp.html#ad8d7fea6443e738a3a00c073f0eecbf8" title=" " alt="" coords="383,5,468,32"/>
+<area shape="poly" title=" " alt="" coords="501,21,469,21,469,16,501,16"/>
+<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="202,5,335,32"/>
+<area shape="poly" title=" " alt="" coords="367,21,335,21,335,16,367,16"/>
+<area shape="rect" href="namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="5,5,154,32"/>
+<area shape="poly" title=" " alt="" coords="186,21,154,21,154,16,186,16"/>
 </map>
 </div>
 
@@ -453,14 +461,14 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00054">54</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   54</span>                                                         {</div>
-<div class="line"><span class="lineno">   55</span>  <a class="code hl_variable" href="events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804">event_mutex</a>.lock();</div>
-<div class="line"><span class="lineno">   56</span>  data-&gt;<a class="code hl_variable" href="structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814">event_queue</a>-&gt;push_back(ev);</div>
-<div class="line"><span class="lineno">   57</span>  data-&gt;<a class="code hl_variable" href="structthread__data.html#aa8aba6b97a2602a994f4d5a0db913491">pending</a> = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   58</span>  <a class="code hl_variable" href="events_2events_8cpp.html#ad20c24e3b0c55726c1caca7947709dfe">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84">debug</a>(<span class="stringliteral">&quot;NEW EVENT: %s&quot;</span>, ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#aada192a5dfd5c8804ddff645501c4fb5">type</a>.c_str());</div>
-<div class="line"><span class="lineno">   59</span>  <a class="code hl_variable" href="events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804">event_mutex</a>.unlock();</div>
-<div class="line"><span class="lineno">   60</span>}</div>
+<p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00065">65</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   65</span>                                                         {</div>
+<div class="line"><span class="lineno">   66</span>  <a class="code hl_variable" href="events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804">event_mutex</a>.lock();</div>
+<div class="line"><span class="lineno">   67</span>  data-&gt;<a class="code hl_variable" href="structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814">event_queue</a>-&gt;push_back(ev);</div>
+<div class="line"><span class="lineno">   68</span>  data-&gt;<a class="code hl_variable" href="structthread__data.html#aa8aba6b97a2602a994f4d5a0db913491">pending</a> = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   69</span>  <a class="code hl_variable" href="events_2events_8cpp.html#ad20c24e3b0c55726c1caca7947709dfe">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84">debug</a>(<span class="stringliteral">&quot;NEW EVENT: %s&quot;</span>, ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#aada192a5dfd5c8804ddff645501c4fb5">type</a>.c_str());</div>
+<div class="line"><span class="lineno">   70</span>  <a class="code hl_variable" href="events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804">event_mutex</a>.unlock();</div>
+<div class="line"><span class="lineno">   71</span>}</div>
 </div><!-- fragment --><div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-8-summary" class="dynsummary" style="display:block;">
@@ -525,6 +533,8 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>Geniusly removing the insane edge case where a listener modifies the list of listeners for the SAME EVENT TYPE as it runs. Even more geniusly introduced the case where that problem is solved EXCEPT for when a listener adds AND removes the same amount of listeners.</p>
+<p>NOTE that the problem is modifying the list of listeners as it's being iterated on! This below is a crude way of checking if the list was changed</p>
 
 <p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00041">41</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   41</span>                                                               {</div>
@@ -532,17 +542,21 @@ Variables</h2></td></tr>
 <div class="line"><span class="lineno">   43</span>  ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#ab6437108b8194a2a1586fa204083bd46">status</a> = <a class="code hl_enumvalue" href="namespacecydui_1_1events.html#a835f7ecff6753ba3e359dc9958ef7944ab5dea4cc3c22655c93fd6aceeb67d908">cydui::events::PROCESSING</a>;</div>
 <div class="line"><span class="lineno">   44</span>  ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#acb7a776f885a47232c7e96889eb11186">ev_mtx</a>.unlock();</div>
 <div class="line"><span class="lineno">   45</span>  <a class="code hl_variable" href="events_2events_8cpp.html#abf3cb22f0b2087a2f6f6bce2d90531f0">listeners_mutex</a>.lock();</div>
-<div class="line"><span class="lineno">   46</span>  <span class="keywordflow">if</span> (data-&gt;<a class="code hl_variable" href="structthread__data.html#abecb89e8ef44a913bfd14b43a2a59a70">event_listeners</a>-&gt;contains(ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#aada192a5dfd5c8804ddff645501c4fb5">type</a>)) {</div>
-<div class="line"><span class="lineno">   47</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;listener: (*data-&gt;event_listeners)[ev-&gt;<a class="code hl_typedef" href="namespacecydui_1_1graphics_1_1vg_1_1paint.html#ac58e9254002b5db15ad56f964453ab36">type</a>]) {</div>
-<div class="line"><span class="lineno">   48</span>      listener(ev);</div>
-<div class="line"><span class="lineno">   49</span>    }</div>
-<div class="line"><span class="lineno">   50</span>  }</div>
-<div class="line"><span class="lineno">   51</span>  <a class="code hl_variable" href="events_2events_8cpp.html#abf3cb22f0b2087a2f6f6bce2d90531f0">listeners_mutex</a>.unlock();</div>
-<div class="line"><span class="lineno">   52</span>}</div>
+<div class="line"><span class="lineno">   46</span>  <span class="keywordflow">if</span> (data-&gt;<a class="code hl_variable" href="structthread__data.html#a0d90f618865c1246b6329b60b54ddd8a">event_listeners</a>-&gt;contains(ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#aada192a5dfd5c8804ddff645501c4fb5">type</a>)) {</div>
+<div class="line"><span class="lineno">   47</span>    <span class="keyword">auto</span> size_before = (*data-&gt;<a class="code hl_variable" href="structthread__data.html#a0d90f618865c1246b6329b60b54ddd8a">event_listeners</a>)[ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#aada192a5dfd5c8804ddff645501c4fb5">type</a>].size();</div>
+<div class="line"><span class="lineno">   48</span>    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> listener: (*data-&gt;event_listeners)[ev-&gt;<a class="code hl_typedef" href="namespacecydui_1_1graphics_1_1vg_1_1paint.html#ac58e9254002b5db15ad56f964453ab36">type</a>]) {</div>
+<div class="line"><span class="lineno">   49</span>      listener-&gt;operator()(ev);</div>
+<div class="line"><span class="lineno">   57</span>      <span class="keywordflow">if</span> ((*data-&gt;<a class="code hl_variable" href="structthread__data.html#a0d90f618865c1246b6329b60b54ddd8a">event_listeners</a>)[ev-&gt;<a class="code hl_variable" href="structcydui_1_1events_1_1Event.html#aada192a5dfd5c8804ddff645501c4fb5">type</a>].size() != size_before) {</div>
+<div class="line"><span class="lineno">   58</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">   59</span>      }</div>
+<div class="line"><span class="lineno">   60</span>    }</div>
+<div class="line"><span class="lineno">   61</span>  }</div>
+<div class="line"><span class="lineno">   62</span>  <a class="code hl_variable" href="events_2events_8cpp.html#abf3cb22f0b2087a2f6f6bce2d90531f0">listeners_mutex</a>.unlock();</div>
+<div class="line"><span class="lineno">   63</span>}</div>
 <div class="ttc" id="aevents_2events_8cpp_html_abf3cb22f0b2087a2f6f6bce2d90531f0"><div class="ttname"><a href="events_2events_8cpp.html#abf3cb22f0b2087a2f6f6bce2d90531f0">listeners_mutex</a></div><div class="ttdeci">std::mutex listeners_mutex</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00038">events.cpp:38</a></div></div>
 <div class="ttc" id="anamespacecydui_1_1events_html_a835f7ecff6753ba3e359dc9958ef7944ab5dea4cc3c22655c93fd6aceeb67d908"><div class="ttname"><a href="namespacecydui_1_1events.html#a835f7ecff6753ba3e359dc9958ef7944ab5dea4cc3c22655c93fd6aceeb67d908">cydui::events::PROCESSING</a></div><div class="ttdeci">@ PROCESSING</div><div class="ttdef"><b>Definition</b> <a href="include_2events_2events_8hpp_source.html#l00105">events.hpp:105</a></div></div>
 <div class="ttc" id="anamespacecydui_1_1graphics_1_1vg_1_1paint_html_ac58e9254002b5db15ad56f964453ab36"><div class="ttname"><a href="namespacecydui_1_1graphics_1_1vg_1_1paint.html#ac58e9254002b5db15ad56f964453ab36">cydui::graphics::vg::paint::type</a></div><div class="ttdeci">std::variant&lt; solid, gradient::linear, gradient::radial &gt; type</div><div class="ttdef"><b>Definition</b> <a href="vg__attributes_8h_source.html#l00133">vg_attributes.h:137</a></div></div>
-<div class="ttc" id="astructthread__data_html_abecb89e8ef44a913bfd14b43a2a59a70"><div class="ttname"><a href="structthread__data.html#abecb89e8ef44a913bfd14b43a2a59a70">thread_data::event_listeners</a></div><div class="ttdeci">std::unordered_map&lt; str, std::deque&lt; cydui::events::listener_t &gt; &gt; * event_listeners</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00028">events.cpp:28</a></div></div>
+<div class="ttc" id="astructthread__data_html_a0d90f618865c1246b6329b60b54ddd8a"><div class="ttname"><a href="structthread__data.html#a0d90f618865c1246b6329b60b54ddd8a">thread_data::event_listeners</a></div><div class="ttdeci">std::unordered_map&lt; str, std::deque&lt; cydui::events::listener_t * &gt; &gt; * event_listeners</div><div class="ttdef"><b>Definition</b> <a href="events_2events_8cpp_source.html#l00028">events.cpp:28</a></div></div>
 </div><!-- fragment --><div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-10-summary" class="dynsummary" style="display:block;">
@@ -550,13 +564,15 @@ Variables</h2></td></tr>
 <div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="events_2events_8cpp_a46ba5413ac7afeebd2faf94a01883f55_icgraph.png" border="0" usemap="#aevents_2events_8cpp_a46ba5413ac7afeebd2faf94a01883f55_icgraph" alt=""/></div>
 <map name="aevents_2events_8cpp_a46ba5413ac7afeebd2faf94a01883f55_icgraph" id="aevents_2events_8cpp_a46ba5413ac7afeebd2faf94a01883f55_icgraph">
-<area shape="rect" title=" " alt="" coords="474,5,553,32"/>
-<area shape="rect" href="events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e" title=" " alt="" coords="320,5,426,32"/>
-<area shape="poly" title=" " alt="" coords="459,21,427,21,427,16,459,16"/>
-<area shape="rect" href="events_2events_8cpp.html#ad8d7fea6443e738a3a00c073f0eecbf8" title=" " alt="" coords="187,5,272,32"/>
-<area shape="poly" title=" " alt="" coords="304,21,272,21,272,16,304,16"/>
-<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="5,5,139,32"/>
-<area shape="poly" title=" " alt="" coords="171,21,139,21,139,16,171,16"/>
+<area shape="rect" title=" " alt="" coords="671,5,749,32"/>
+<area shape="rect" href="events_2events_8cpp.html#a10d9c1101d1579f813ba5adf43198b4e" title=" " alt="" coords="516,5,623,32"/>
+<area shape="poly" title=" " alt="" coords="655,21,623,21,623,16,655,16"/>
+<area shape="rect" href="events_2events_8cpp.html#ad8d7fea6443e738a3a00c073f0eecbf8" title=" " alt="" coords="383,5,468,32"/>
+<area shape="poly" title=" " alt="" coords="501,21,469,21,469,16,501,16"/>
+<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="202,5,335,32"/>
+<area shape="poly" title=" " alt="" coords="367,21,335,21,335,16,367,16"/>
+<area shape="rect" href="namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="5,5,154,32"/>
+<area shape="poly" title=" " alt="" coords="186,21,154,21,154,16,186,16"/>
 </map>
 </div>
 
@@ -623,10 +639,11 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">  {.name = <span class="stringliteral">&quot;EV_CTRL&quot;</span>, .on = <span class="keyword">false</span>}</div>
+<div class="line">  {.name = <span class="stringliteral">&quot;EV_CTRL&quot;</span>, .on = <span class="keyword">true</span>, .min_level = <a class="code hl_enumvalue" href="namespacelogging.html#a12e05573477c76b8d6db5081863f4416abef691e55fd1813b7540614e718ab7f1">logging::ERROR</a>}</div>
+<div class="ttc" id="anamespacelogging_html_a12e05573477c76b8d6db5081863f4416abef691e55fd1813b7540614e718ab7f1"><div class="ttname"><a href="namespacelogging.html#a12e05573477c76b8d6db5081863f4416abef691e55fd1813b7540614e718ab7f1">logging::ERROR</a></div><div class="ttdeci">@ ERROR</div><div class="ttdef"><b>Definition</b> <a href="logging_8hpp_source.html#l00014">logging.hpp:14</a></div></div>
 </div><!-- fragment -->
 <p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00017">17</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   18</span>  {.name = <span class="stringliteral">&quot;EV_CTRL&quot;</span>, .on = <span class="keyword">false</span>};</div>
+<div class="fragment"><div class="line"><span class="lineno">   18</span>  {.name = <span class="stringliteral">&quot;EV_CTRL&quot;</span>, .on = <span class="keyword">true</span>, .min_level = <a class="code hl_enumvalue" href="namespacelogging.html#a12e05573477c76b8d6db5081863f4416abef691e55fd1813b7540614e718ab7f1">logging::ERROR</a>};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -655,11 +672,19 @@ Variables</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="structthread__data.html">thread_data</a>* th_data = new <a class="el" href="structthread__data.html">thread_data</a></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="events_2events_8cpp_source.html#l00034">34</a> of file <a class="el" href="events_2events_8cpp_source.html">events.cpp</a>.</p>

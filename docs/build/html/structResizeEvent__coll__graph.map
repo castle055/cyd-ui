@@ -1,5 +1,7 @@
 <map id="ResizeEvent" name="ResizeEvent">
-<area shape="rect" id="Node000001" title=" " alt="" coords="37,96,134,123"/>
-<area shape="rect" id="Node000002" href="$structResizeEvent_1_1DataType.html" title=" " alt="" coords="5,5,166,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="88,48,88,95,83,95,83,48"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="39,172,135,199"/>
+<area shape="rect" id="Node000002" href="$structResizeEvent_1_1DataType.html" title=" " alt="" coords="7,81,167,108"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="90,124,90,171,84,171,84,124"/>
+<area shape="rect" id="Node000003" href="$structevent__data__type__base__t.html" title=" " alt="" coords="5,5,169,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="90,47,90,81,84,81,84,47"/>
 </map>

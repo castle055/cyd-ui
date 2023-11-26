@@ -13,7 +13,7 @@ cydui::events::EventType
 .PP
 .nf
 template<class T>
-concept cydui::events::EventType =  requires {
+concept cydui::events::EventType =  requires(T::DataType dt) {
       {
       T::type
       } \-> std::convertible_to<str>;
@@ -21,9 +21,9 @@ concept cydui::events::EventType =  requires {
       {
       T::data
       } \-> std::convertible_to<typename T::DataType>;
-      {
-      T::DataType::win
-      } \-> std::convertible_to<unsigned long>;
+      
+      
+      
     }
 .fi
 .SH "Detailed Description"

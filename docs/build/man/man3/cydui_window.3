@@ -25,30 +25,28 @@ cydui::window
 .SS "\fBCWindow\fP * cydui::window::create (\fBlayout::Layout\fP * layout, const char * title = \fC'CydUI'\fP, const char * wclass = \fC'cydui'\fP, int x = \fC0\fP, int y = \fC0\fP, int w = \fC640\fP, int h = \fC480\fP, bool override_redirect = \fCfalse\fP)"
 
 .PP
-Definition at line \fB13\fP of file \fBwindow\&.cpp\fP\&..PP
+Definition at line \fB20\fP of file \fBwindow\&.cpp\fP\&..PP
 .nf
-22   {
-23   auto win = new CWindow();
-24   auto* win_ref = graphics::create_window(&win\->profiling_ctx, title, wclass, x, y, w, h, override_redirect);
-25   win\->layout = layout;
-26   
-27   win\->win_ref = win_ref;
-28   //graphics::set_background(win_ref);
-29   
-30   layout\->bind_window(win);
-31   
-32   windows\&.push_back(win);
-33   
-34   events::start();
-35   
-36   // Once all threads have started and everything is set up for this window
-37   // force a complete redraw
-38   //events::emit<RedrawEvent>({\&.win = (unsigned int) win_ref\->xwin});
-39   //events::emit<RedrawEvent>({ });
-40   //events::emit<RedrawEvent>({\&.win = get_id(win_ref)});
-41   
-42   return win;
-43 }
+29   {
+30   auto win = new CWindow();
+31   auto* win_ref = graphics::create_window(&win\->profiling_ctx, title, wclass, x, y, w, h, override_redirect);
+32   win\->layout = layout;
+33   win\->win_ref = win_ref;
+34   
+35   layout\->bind_window(win);
+36   
+37   //windows\&.push_back(win);
+38   
+39   events::start();
+40   
+41   // Once all threads have started and everything is set up for this window
+42   // force a complete redraw
+43   //events::emit<RedrawEvent>({\&.win = (unsigned int) win_ref\->xwin});
+44   //events::emit<RedrawEvent>({ });
+45   //events::emit<RedrawEvent>({\&.win = get_id(win_ref)});
+46   
+47   return win;
+48 }
 .fi
 
 .SH "Author"

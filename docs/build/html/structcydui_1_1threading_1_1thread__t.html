@@ -104,6 +104,8 @@ $(document).ready(function(){initNavTree('structcydui_1_1threading_1_1thread__t.
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aa740ecb2c3aec2371e86fca90b115600" id="r_aa740ecb2c3aec2371e86fca90b115600"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcydui_1_1threading_1_1thread__t.html">thread_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcydui_1_1threading_1_1thread__t.html#aa740ecb2c3aec2371e86fca90b115600">set_name</a> (const <a class="el" href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">str</a> &amp;name)</td></tr>
 <tr class="separator:aa740ecb2c3aec2371e86fca90b115600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6359aff6f4f5585d8cfee4b01fa995be" id="r_a6359aff6f4f5585d8cfee4b01fa995be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcydui_1_1threading_1_1thread__t.html#a6359aff6f4f5585d8cfee4b01fa995be">join</a> () const</td></tr>
+<tr class="separator:a6359aff6f4f5585d8cfee4b01fa995be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -118,6 +120,43 @@ Public Attributes</h2></td></tr>
 <div class="textblock">
 <p class="definition">Definition at line <a class="el" href="threading_8hpp_source.html#l00013">13</a> of file <a class="el" href="threading_8hpp_source.html">threading.hpp</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6359aff6f4f5585d8cfee4b01fa995be" name="a6359aff6f4f5585d8cfee4b01fa995be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6359aff6f4f5585d8cfee4b01fa995be">&#9670;&#160;</a></span>join()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cydui::threading::thread_t::join </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="threading_8cpp_source.html#l00034">34</a> of file <a class="el" href="threading_8cpp_source.html">threading.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   34</span>                                        {</div>
+<div class="line"><span class="lineno">   35</span>  ((std::thread*) <a class="code hl_variable" href="structcydui_1_1threading_1_1thread__t.html#a0133f1df15c19c50cdbb85b45bedf24b">native_thread</a>)-&gt;join();</div>
+<div class="line"><span class="lineno">   36</span>}</div>
+<div class="ttc" id="astructcydui_1_1threading_1_1thread__t_html_a0133f1df15c19c50cdbb85b45bedf24b"><div class="ttname"><a href="structcydui_1_1threading_1_1thread__t.html#a0133f1df15c19c50cdbb85b45bedf24b">cydui::threading::thread_t::native_thread</a></div><div class="ttdeci">void * native_thread</div><div class="ttdef"><b>Definition</b> <a href="threading_8hpp_source.html#l00014">threading.hpp:14</a></div></div>
+</div><!-- fragment --><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="structcydui_1_1threading_1_1thread__t_a6359aff6f4f5585d8cfee4b01fa995be_icgraph.png" border="0" usemap="#astructcydui_1_1threading_1_1thread__t_a6359aff6f4f5585d8cfee4b01fa995be_icgraph" alt=""/></div>
+<map name="astructcydui_1_1threading_1_1thread__t_a6359aff6f4f5585d8cfee4b01fa995be_icgraph" id="astructcydui_1_1threading_1_1thread__t_a6359aff6f4f5585d8cfee4b01fa995be_icgraph">
+<area shape="rect" title=" " alt="" coords="442,5,599,48"/>
+<area shape="rect" href="namespacecydui_1_1graphics.html#ac3ec912c904cf4d43e2615f86602884e" title=" " alt="" coords="223,13,394,40"/>
+<area shape="poly" title=" " alt="" coords="427,29,395,29,395,24,427,24"/>
+<area shape="rect" href="classcydui_1_1window_1_1CWindow.html#a44ea0a5067d50ec6af903a7fe62db448" title=" " alt="" coords="5,5,175,48"/>
+<area shape="poly" title=" " alt="" coords="207,29,175,29,175,24,207,24"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="aa740ecb2c3aec2371e86fca90b115600" name="aa740ecb2c3aec2371e86fca90b115600"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa740ecb2c3aec2371e86fca90b115600">&#9670;&#160;</a></span>set_name()</h2>
 
@@ -140,35 +179,37 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   30</span>  pthread_setname_np(pt, name.c_str());</div>
 <div class="line"><span class="lineno">   31</span>  <span class="keywordflow">return</span> <span class="keyword">this</span>;</div>
 <div class="line"><span class="lineno">   32</span>}</div>
-<div class="ttc" id="astructcydui_1_1threading_1_1thread__t_html_a0133f1df15c19c50cdbb85b45bedf24b"><div class="ttname"><a href="structcydui_1_1threading_1_1thread__t.html#a0133f1df15c19c50cdbb85b45bedf24b">cydui::threading::thread_t::native_thread</a></div><div class="ttdeci">void * native_thread</div><div class="ttdef"><b>Definition</b> <a href="threading_8hpp_source.html#l00014">threading.hpp:14</a></div></div>
-</div><!-- fragment --><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div><!-- fragment --><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="structcydui_1_1threading_1_1thread__t_aa740ecb2c3aec2371e86fca90b115600_icgraph.png" border="0" usemap="#astructcydui_1_1threading_1_1thread__t_aa740ecb2c3aec2371e86fca90b115600_icgraph" alt=""/></div>
 <map name="astructcydui_1_1threading_1_1thread__t_aa740ecb2c3aec2371e86fca90b115600_icgraph" id="astructcydui_1_1threading_1_1thread__t_aa740ecb2c3aec2371e86fca90b115600_icgraph">
-<area shape="rect" title=" " alt="" coords="608,73,766,116"/>
-<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="418,5,551,32"/>
-<area shape="poly" title=" " alt="" coords="618,70,559,46,527,35,529,30,561,42,620,65"/>
-<area shape="rect" href="namespacex11_1_1events.html#a810967d43ea3ace068c1af0b4159a5e6" title=" " alt="" coords="424,56,546,83"/>
-<area shape="poly" title=" " alt="" coords="592,86,546,80,546,74,593,80"/>
-<area shape="rect" href="namespacex11_1_1render.html#a2bab441e71f42470e767c6f6a079a129" title=" " alt="" coords="425,107,544,133"/>
-<area shape="poly" title=" " alt="" coords="593,109,545,115,544,110,593,104"/>
-<area shape="rect" href="namespacecydui_1_1tasks.html#a140665688151903af11a0eca227228b1" title=" " alt="" coords="409,165,560,192"/>
-<area shape="poly" title=" " alt="" coords="621,125,520,167,518,162,619,120"/>
-<area shape="rect" href="namespacecydui_1_1graphics.html#a7704ec7880a056e09470957824f7d995" title=" " alt="" coords="204,32,357,75"/>
-<area shape="poly" title=" " alt="" coords="408,66,357,62,358,57,409,61"/>
-<area shape="rect" href="structcydui_1_1graphics_1_1window__t.html#a2e7c0a722f210b4271bc3815f2229e32" title=" " alt="" coords="200,99,361,141"/>
-<area shape="poly" title=" " alt="" coords="409,123,362,123,362,117,409,117"/>
-<area shape="rect" href="namespacecydui_1_1tasks.html#a91d911b5a376c05c46747653781d33e2" title=" " alt="" coords="217,165,344,192"/>
-<area shape="poly" title=" " alt="" coords="394,181,344,181,344,176,394,176"/>
-<area shape="rect" href="namespacecydui_1_1tasks.html#ad46099bf2399af453ddd1d3affd9cab9" title=" " alt="" coords="217,217,344,260"/>
-<area shape="poly" title=" " alt="" coords="423,199,345,223,343,218,421,194"/>
-<area shape="rect" href="classcydui_1_1tasks_1_1simple__task__w__result__t.html#a43006dd209cdb11a5f0c43245053977d" title=" " alt="" coords="5,155,152,197"/>
-<area shape="poly" title=" " alt="" coords="201,180,152,180,152,174,201,175"/>
-<area shape="rect" href="classcydui_1_1tasks_1_1timer__t.html#aa9b21697977fc1d20a9996fffb1ae07d" title=" " alt="" coords="14,221,143,264"/>
-<area shape="poly" title=" " alt="" coords="202,243,144,244,144,239,201,238"/>
+<area shape="rect" title=" " alt="" coords="610,83,768,125"/>
+<area shape="rect" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9" title=" " alt="" coords="420,5,553,32"/>
+<area shape="poly" title=" " alt="" coords="623,79,561,52,521,35,523,30,563,47,625,74"/>
+<area shape="rect" href="namespacex11_1_1events.html#a810967d43ea3ace068c1af0b4159a5e6" title=" " alt="" coords="426,61,548,88"/>
+<area shape="poly" title=" " alt="" coords="594,93,548,86,548,81,595,88"/>
+<area shape="rect" href="namespacex11_1_1render.html#a2bab441e71f42470e767c6f6a079a129" title=" " alt="" coords="427,116,546,143"/>
+<area shape="poly" title=" " alt="" coords="595,118,547,125,546,119,595,113"/>
+<area shape="rect" href="namespacecydui_1_1tasks.html#a140665688151903af11a0eca227228b1" title=" " alt="" coords="411,183,562,209"/>
+<area shape="poly" title=" " alt="" coords="628,135,519,184,517,180,625,130"/>
+<area shape="rect" href="namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="5,28,154,55"/>
+<area shape="poly" title=" " alt="" coords="405,26,154,40,154,35,404,21"/>
+<area shape="rect" href="namespacecydui_1_1graphics.html#a7704ec7880a056e09470957824f7d995" title=" " alt="" coords="206,49,359,92"/>
+<area shape="poly" title=" " alt="" coords="410,76,359,75,360,70,410,71"/>
+<area shape="poly" title=" " alt="" coords="190,60,154,55,154,49,191,55"/>
+<area shape="rect" href="structcydui_1_1graphics_1_1window__t.html#a2e7c0a722f210b4271bc3815f2229e32" title=" " alt="" coords="202,116,363,159"/>
+<area shape="poly" title=" " alt="" coords="411,135,364,137,363,131,411,130"/>
+<area shape="rect" href="namespacecydui_1_1tasks.html#a91d911b5a376c05c46747653781d33e2" title=" " alt="" coords="219,183,346,209"/>
+<area shape="poly" title=" " alt="" coords="396,199,346,199,346,193,396,193"/>
+<area shape="rect" href="namespacecydui_1_1tasks.html#ad46099bf2399af453ddd1d3affd9cab9" title=" " alt="" coords="219,235,346,277"/>
+<area shape="poly" title=" " alt="" coords="425,217,347,240,345,235,423,212"/>
+<area shape="rect" href="classcydui_1_1tasks_1_1simple__task__w__result__t.html#a43006dd209cdb11a5f0c43245053977d" title=" " alt="" coords="6,172,153,215"/>
+<area shape="poly" title=" " alt="" coords="204,198,153,197,153,192,204,192"/>
+<area shape="rect" href="classcydui_1_1tasks_1_1timer__t.html#aa9b21697977fc1d20a9996fffb1ae07d" title=" " alt="" coords="15,239,144,281"/>
+<area shape="poly" title=" " alt="" coords="204,260,145,261,145,256,203,255"/>
 </map>
 </div>
 

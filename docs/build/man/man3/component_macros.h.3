@@ -31,6 +31,9 @@ include/core/component_macros.h
 .RI "#define \fBSTATE_TEMPLATE\fP(NAME)"
 .br
 .ti -1c
+.RI "#define \fBSET_COMPONENT_TEMPLATE_DEFAULT\fP   SET_COMPONENT_TEMPLATE"
+.br
+.ti -1c
 .RI "#define \fBCOMPONENT_TEMPLATE\fP(NAME, \&.\&.\&.)"
 .br
 .in -1c
@@ -96,38 +99,38 @@ Definition at line \fB29\fP of file \fBcomponent_macros\&.h\fP\&..PP
 .SS "#define COMPONENT_TEMPLATE(NAME,  \&.\&.\&.)"
 
 .PP
-Definition at line \fB63\fP of file \fBcomponent_macros\&.h\fP\&..PP
+Definition at line \fB65\fP of file \fBcomponent_macros\&.h\fP\&..PP
 .nf
-67            :                          \\
-68   public cydui::components::component_t<          \\
-69     CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT, \\
-70     NAME SET_COMPONENT_TEMPLATE_SHORT \\
-71   > {                                 \\
-72     CYDUI_COMPONENT_METADATA(NAME)    \\
-73     using state_t = CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \\
-74     using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \\
-75     struct props_t                    \\
-76       __VA_ARGS__                     \\
-77     props;                            \\
-78     NAME() = default;                 \\
-79     explicit NAME(props_t props)      \\
-80       : cydui::components::component_t<           \\
-81         CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT,        \\
-82         NAME SET_COMPONENT_TEMPLATE_SHORT                     \\
-83       >()                             \\
-84       , props(std::move(props)) { }   \\
-85 };                                    \\
-86 template SET_COMPONENT_TEMPLATE       \\
-87 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \\
-88   CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT* state = nullptr;  \\
-89   NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = nullptr;\\
-90   attrs_component<NAME SET_COMPONENT_TEMPLATE_SHORT>* attrs = nullptr;   \\
-91   logging::logger log{\&.name = #NAME}; \\
-92 };                                    \\
-93 template SET_COMPONENT_TEMPLATE       \\
-94 struct CYDUI_EV_HANDLER_NAME(NAME)    \\
-95   : public cydui::components::event_handler_t,    \\
-96     public CYDUI_EV_HANDLER_DATA_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT
+69            :                          \\
+70   public cydui::components::component_t<          \\
+71     CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT, \\
+72     NAME SET_COMPONENT_TEMPLATE_SHORT \\
+73   > {                                 \\
+74     CYDUI_COMPONENT_METADATA(NAME)    \\
+75     using state_t = CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \\
+76     using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \\
+77     struct props_t                    \\
+78       __VA_ARGS__                     \\
+79     props;                            \\
+80     NAME() = default;                 \\
+81     explicit NAME(props_t props)      \\
+82       : cydui::components::component_t<           \\
+83         CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT,        \\
+84         NAME SET_COMPONENT_TEMPLATE_SHORT                     \\
+85       >()                             \\
+86       , props(std::move(props)) { }   \\
+87 };                                    \\
+88 template SET_COMPONENT_TEMPLATE_DEFAULT \\
+89 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \\
+90   CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT* state = nullptr;  \\
+91   NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = nullptr;\\
+92   attrs_component<NAME SET_COMPONENT_TEMPLATE_SHORT>* attrs = nullptr;   \\
+93   logging::logger log{\&.name = #NAME}; \\
+94 };                                    \\
+95 template SET_COMPONENT_TEMPLATE       \\
+96 struct CYDUI_EV_HANDLER_NAME(NAME)    \\
+97   : public cydui::components::event_handler_t,    \\
+98     public CYDUI_EV_HANDLER_DATA_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT
 .fi
 
 .SS "#define CYDUI_COMPONENT_METADATA(NAME_)"
@@ -157,6 +160,10 @@ Definition at line \fB10\fP of file \fBcomponent_macros\&.h\fP\&.
 
 .PP
 Definition at line \fB9\fP of file \fBcomponent_macros\&.h\fP\&.
+.SS "#define SET_COMPONENT_TEMPLATE_DEFAULT   SET_COMPONENT_TEMPLATE"
+
+.PP
+Definition at line \fB63\fP of file \fBcomponent_macros\&.h\fP\&.
 .SS "#define STATE(NAME)   struct \fBCYDUI_STATE_NAME\fP(NAME): public \fBcydui::components::component_state_t\fP"
 
 .PP
