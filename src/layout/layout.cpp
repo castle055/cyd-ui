@@ -170,16 +170,16 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     root_state->win = this->win;
     
     auto dim = root->get_dimensional_relations();
-    dim.w = get_frame(win->win_ref)->width();
-    dim.h = get_frame(win->win_ref)->height();
+    dim.w = get_frame(this->win->win_ref)->width();
+    dim.h = get_frame(this->win->win_ref)->height();
     dim.fixed_w = true;
     dim.fixed_h = true;
     root->configure_event_handler();
     root->subscribe_events();
   }
   
-  listen(RedrawEvent, {
-    if (it.data->win != 0 && it.data->win != get_id(win->win_ref))
+  listeners.push_back(listen(RedrawEvent, {
+    if (it.data->win != get_id(win->win_ref))
       return;
     auto _pev = this->win->profiling_ctx.scope_event("Redraw");
     if (it.data->component) {
@@ -191,8 +191,8 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     } else {
       redraw_component(root);
     }
-  });
-  listen(KeyEvent, {
+  }));
+  listeners.push_back(listen(KeyEvent, {
     if (it.data->win != get_id(win->win_ref))
       return;
     auto _pev = this->win->profiling_ctx.scope_event("Key");
@@ -207,8 +207,8 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
         focused = nullptr;
       }
     }
-  });
-  listen(ButtonEvent, {
+  }));
+  listeners.push_back(listen(ButtonEvent, {
     if (it.data->win != get_id(win->win_ref))
       return;
     auto _pev = this->win->profiling_ctx.scope_event("Button");
@@ -225,11 +225,11 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     
     if (focused != target->state.value()) {
       if (focused) {
-        if (focused->component_instance.has_value()) {
-          focused->component_instance.value()
-            ->event_handler()
-            ->on_button_release((Button) it.data->button, 0, 0);
-        }
+        //if (focused->component_instance.has_value()) {
+        //  focused->component_instance.value()
+        //    ->event_handler()
+        //    ->on_button_release((Button) it.data->button, 0, 0);
+        //}
         focused->focused = false;
         focused = nullptr;
       }
@@ -243,8 +243,8 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       target->event_handler()->on_button_release((Button) it.data->button, rel_x, rel_y);
     }
     render_if_dirty(root);
-  });
-  listen(ScrollEvent, {
+  }));
+  listeners.push_back(listen(ScrollEvent, {
     if (it.data->win != get_id(win->win_ref))
       return;
     auto _pev = this->win->profiling_ctx.scope_event("Scroll");
@@ -257,8 +257,8 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     target->event_handler()->on_scroll(it.data->dx, it.data->dy);
     
     render_if_dirty(root);
-  });
-  listen(MotionEvent, {
+  }));
+  listeners.push_back(listen(MotionEvent, {
     if (it.data->win != get_id(win->win_ref))
       return;
     auto _pev = this->win->profiling_ctx.scope_event("Motion");
@@ -339,8 +339,8 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     //}
     
     render_if_dirty(root);
-  });
-  listen(ResizeEvent, {
+  }));
+  listeners.push_back(listen(ResizeEvent, {
     if (it.data->win != get_id(win->win_ref))
       return;
     auto _pev = this->win->profiling_ctx.scope_event("Resize");
@@ -353,6 +353,6 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     dim.fixed_h = true;
     
     redraw_component(root);
-  });
+  }));
 }
 

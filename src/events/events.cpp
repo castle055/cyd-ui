@@ -15,7 +15,7 @@
 logging::logger log_task =
   {.name = "EV_TASK", .on = true, .min_level = logging::INFO};
 logging::logger log_ctrl =
-  {.name = "EV_CTRL", .on = false};
+  {.name = "EV_CTRL", .on = true, .min_level = logging::ERROR};
 
 cydui::threading::thread_t* event_thread;
 struct thread_data {
@@ -24,14 +24,14 @@ struct thread_data {
     new std::deque<cydui::events::Event*>;
   std::unordered_map<
     str,
-    std::deque<cydui::events::listener_t>
+    std::deque<cydui::events::listener_t*>
   >* event_listeners =
-    new std::unordered_map<str, std::deque<cydui::events::listener_t>>;
+    new std::unordered_map<str, std::deque<cydui::events::listener_t*>>;
   
   std::unordered_map<str, cydui::events::Event*>* state_events =
     new std::unordered_map<str, cydui::events::Event*>;
 };
-thread_data* th_data = new thread_data;
+static thread_data* th_data = new thread_data;
 
 
 std::mutex event_mutex;
@@ -44,8 +44,19 @@ static void run_event(thread_data* data, cydui::events::Event* ev) {
   ev->ev_mtx.unlock();
   listeners_mutex.lock();
   if (data->event_listeners->contains(ev->type)) {
-    for (const auto &listener: (*data->event_listeners)[ev->type]) {
-      listener(ev);
+    auto size_before = (*data->event_listeners)[ev->type].size();
+    for (const auto listener: (*data->event_listeners)[ev->type]) {
+      listener->operator()(ev);
+      //! Geniusly removing the insane edge case where a listener modifies
+      //! the list of listeners for the SAME EVENT TYPE as it runs.
+      //! Even more geniusly introduced the case where that problem is solved
+      //! EXCEPT for when a listener adds AND removes the same amount of listeners.
+      //!
+      //! NOTE that the problem is modifying the list of listeners as it's being
+      //! iterated on! This below is a crude way of checking if the list was changed
+      if ((*data->event_listeners)[ev->type].size() != size_before) {
+        break;
+      }
     }
   }
   listeners_mutex.unlock();
@@ -133,10 +144,10 @@ void cydui::events::emit_raw(const str &event_type, void* data) {
   push_event(th_data, ev);
 }
 
-cydui::events::listener_t cydui::events::on_event_raw(const str &event_type, const Listener &c) {
+cydui::events::listener_t* cydui::events::on_event_raw(const str &event_type, const Listener &c) {
   if (!th_data->event_listeners->contains(event_type))
     (*th_data->event_listeners).insert({event_type, {}});
-  listener_t l(c);
+  auto* l = new listener_t {event_type, c};
   (*th_data->event_listeners)[event_type].push_back(l);
   return l;
 }
@@ -145,9 +156,9 @@ void cydui::events::remove_listener(const str &event_type, const listener_t &lis
   if (listener.get_id() == 0) return;
   if (th_data->event_listeners->contains(event_type)) {
     for (auto l = (*th_data->event_listeners)[event_type].begin(); l != (*th_data->event_listeners)[event_type].end(); l++) {
-      if (l->get_id() == listener.get_id()) {
+      if ((*l)->get_id() == listener.get_id()) {
         (*th_data->event_listeners)[event_type].erase(l);
-        delete (u8*) listener.get_id();
+        break;
       }
     }
   }

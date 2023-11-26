@@ -76,7 +76,7 @@ namespace cydui::components {
       std::optional<component_base_t*> parent = std::nullopt;
       std::vector<component_base_t*> children {};
       
-      std::vector<cydui::events::listener_t> subscribed_listeners {};
+      std::vector<cydui::events::listener_t*> subscribed_listeners {};
       
       virtual ~component_base_t() {
         clear_subscribed_listeners();
@@ -109,7 +109,8 @@ namespace cydui::components {
       }
       void clear_subscribed_listeners() {
         for (auto &item: subscribed_listeners) {
-          item.remove();
+          item->remove();
+          delete item;
         }
         subscribed_listeners.clear();
       }
@@ -141,7 +142,7 @@ namespace cydui::components {
         } else {
           event_handler_->parent = nullptr;
         }
-        EVH * evh = event_handler_.operator->();
+        EVH* evh = event_handler_.operator->();
         evh->state = (typename T::state_t*) state.value();
         evh->props = &(((T*) this)->props);
         evh->attrs = (attrs_component<T>*) this;
@@ -149,7 +150,7 @@ namespace cydui::components {
       }
       void subscribe_events() override {
         clear_subscribed_listeners();
-        EVH * evh = event_handler_.operator->();
+        EVH* evh = event_handler_.operator->();
         add_event_listeners(evh->get_event_listeners());
       }
       void clear_children() override {

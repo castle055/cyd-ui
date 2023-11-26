@@ -33,6 +33,8 @@ namespace cydui::graphics {
     void flush(window_t* win);
     
     unsigned long get_id(window_t* win);
+    
+    void terminate(window_t* win);
 }// namespace cydui::graphics
 
 #include "compositing.h"

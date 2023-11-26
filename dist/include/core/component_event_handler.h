@@ -180,14 +180,15 @@ namespace cydui::components {
 std::unordered_map<std::string, listener_data_t> get_event_listeners() override { \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Wunused-lambda-capture\"") \
-  return __VA_ARGS__ ;                                                            \
+  return { __VA_ARGS__ };     \
   _Pragma("clang diagnostic pop") \
 }
 
 #define ON_EVENT(EVENT, ...) \
-{ EVENT ::type, {[this](cydui::events::Event* ev) { \
+{ EVENT ::type, {[&](cydui::events::Event* ev) { \
+  if (nullptr == state) return;                     \
   auto parsed_event = ev->parse<EVENT>(); \
-  [this](const cydui::events::ParsedEvent<EVENT>::DataType* ev) \
+  [&](const cydui::events::ParsedEvent<EVENT>::DataType* ev) \
     __VA_ARGS__              \
   (parsed_event.data);       \
 }}}

@@ -293,3 +293,12 @@ pixelmap_t* cydui::graphics::get_frame(cydui::graphics::window_t* win) {
 unsigned long cydui::graphics::get_id(cydui::graphics::window_t* win) {
   return (unsigned int) win->xwin;
 }
+
+void cydui::graphics::terminate(cydui::graphics::window_t* win) {
+  XUnmapWindow(state::get_dpy(), win->xwin);
+  XDestroyWindow(state::get_dpy(), win->xwin);
+  delete win->staging_target;
+  delete win->render_target;
+  win->render_thd->running = false;
+  win->render_thd->join();
+}

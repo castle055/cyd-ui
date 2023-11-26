@@ -10,6 +10,13 @@ using namespace cydui::window;
 
 static std::vector<CWindow*> windows;
 
+void cydui::window::CWindow::terminate() {
+  delete layout;
+  graphics::terminate(win_ref);
+  delete win_ref;
+  win_ref = nullptr;
+}
+
 CWindow* cydui::window::create(
   layout::Layout* layout,
   const char* title,
@@ -23,13 +30,11 @@ CWindow* cydui::window::create(
   auto win = new CWindow();
   auto* win_ref = graphics::create_window(&win->profiling_ctx, title, wclass, x, y, w, h, override_redirect);
   win->layout = layout;
-  
   win->win_ref = win_ref;
-  //graphics::set_background(win_ref);
   
   layout->bind_window(win);
   
-  windows.push_back(win);
+  //windows.push_back(win);
   
   events::start();
   

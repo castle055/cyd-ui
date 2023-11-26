@@ -79,7 +79,7 @@
 
 namespace cydui::events {
     template<class T>
-    concept EventType = requires {
+    concept EventType = requires(T::DataType dt) {
       {
       T::type
       } -> std::convertible_to<str>;
@@ -87,9 +87,9 @@ namespace cydui::events {
       {
       T::data
       } -> std::convertible_to<typename T::DataType>;
-      {
-      T::DataType::win
-      } -> std::convertible_to<unsigned long>;
+      //{
+      //dt.win
+      //} -> std::convertible_to<unsigned long>;
     };
     
     template<typename T> requires EventType<T>
@@ -143,20 +143,9 @@ namespace cydui::events {
     inline void emit(typename T::DataType data) {
       emit_raw(T::type, new T({.data = data}));
     }
-    
-    template<typename T> requires EventType<T>
-    class Consumer: public std::function<void(const ParsedEvent<T> &)> {
-    public:
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "google-explicit-constructor"
-      
-      Consumer(std::function<void(const ParsedEvent<T> &)> c)
-        : std::function<void(const ParsedEvent<T> &)>(c) {
-      }
 
-#pragma clang diagnostic pop
-    };
-    
+    template<typename T> requires EventType<T>
+    using Consumer = std::function<void(const ParsedEvent<T>&)>;
     
     typedef std::function<void(Event*)> Listener;
     struct listener_t;
@@ -173,7 +162,7 @@ namespace cydui::events {
         active = false;
       }
       
-      explicit listener_t(Listener c): func(std::move(c)) {
+      explicit listener_t(str  type, Listener c): event_type(std::move(type)), func(new Listener {std::move(c)}) {
         ID = (long) new u8;
       }
       //
@@ -186,10 +175,14 @@ namespace cydui::events {
       }
       
       str event_type;
-      Listener func;
+      Listener* func = nullptr;
       
       void remove() {
         cydui::events::remove_listener(event_type, *this);
+        delete (u8*) ID;
+        delete func;
+        func = nullptr;
+        ID = 0;
         active = false;
       }
       
@@ -198,16 +191,18 @@ namespace cydui::events {
       }
       
       void operator()(Event* ev) const {
-        func(ev);
+        if (nullptr != func) {
+          func->operator()(ev);
+        }
       }
     };
     
-    listener_t on_event_raw(const str &event_type, const Listener &l);
+    listener_t* on_event_raw(const str &event_type, const Listener &l);
     
     template<typename T>
     requires EventType<T>
-    inline listener_t on_event(Consumer<T> c) {
-      return cydui::events::on_event_raw(T::type, [c](Event* ev) {
+    inline listener_t* on_event(Consumer<T> c) {
+      return cydui::events::on_event_raw(T::type, [&,c](Event* ev) {
         auto parsed = ev->parse<T>();
         if (parsed.data) {
           c(parsed);
@@ -222,16 +217,20 @@ namespace cydui::events {
 
 // MACROS
 #define consumer [=](it)
-#define listen(EVENT, block)                                                   \
-  cydui::events::on_event<EVENT>(cydui::events::Consumer<EVENT>(               \
-      [=, this](const cydui::events::ParsedEvent<EVENT>& it) block))
+#define listen(EVENT, ...) \
+  cydui::events::on_event<EVENT>(cydui::events::Consumer<EVENT>( \
+      [&](const cydui::events::ParsedEvent<EVENT>& it) __VA_ARGS__))
 
+
+struct event_data_type_base_t {
+  unsigned long win = 0;
+};
 // TODO - In case of event name collision (it's possible), maybe append __FILE__ or __LINE__ to the `type`
 // variable to make the event type unique even if multiple translation units declare similarly named events.
 #define EVENT(NAME, DATA)                                                      \
   struct NAME {                                                                \
     constexpr static const char* type = #NAME;                                 \
-    struct DataType DATA data;                                                 \
+    struct DataType: public event_data_type_base_t DATA data;                  \
   };
 
 

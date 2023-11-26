@@ -96,7 +96,7 @@ namespace cydui::compositing {
           std::unique_lock lk(compositor->m);
           if (nullptr != compositor->render_target) {
             compositor->cv.wait(lk, [&] {
-              return compositor->tree_dirty;
+              return compositor->tree_dirty || !compositor->running.test();
             });
             auto _pev = compositor->profiler->scope_event("COMPOSITING TASK");
             compositor->tree_dirty = false;
@@ -177,10 +177,13 @@ namespace cydui::compositing {
       LayoutCompositor() {
         running.test_and_set();
         compositing_thd = std::thread {&compositing_task, this};
+        pthread_t pt = compositing_thd.native_handle();
+        pthread_setname_np(pt, "COMPOSITING_THD");
       }
       
       ~LayoutCompositor() {
         running.clear();
+        cv.notify_all();
         compositing_thd.join();
       }
       

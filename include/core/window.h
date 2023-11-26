@@ -18,6 +18,8 @@ namespace cydui::window {
       layout::Layout* layout;
       
       prof::context_t profiling_ctx {};
+      
+      void terminate();
     };
     
     CWindow* create(

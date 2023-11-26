@@ -29,15 +29,16 @@ namespace cydui::layout {
       components::component_state_t* hovering = nullptr;
       components::component_state_t* focused = nullptr;
       
+      std::vector<events::listener_t*> listeners {};
       
       components::component_base_t* find_by_coords(int x, int y);
-      
-      bool render_if_dirty(components::component_base_t* c);
       
       Layout(components::component_state_t* _root_state, components::component_base_t* _root)
         : root_state(_root_state), root(_root), focused(_root_state) {
         focused->focused = true;
       }
+      
+      bool render_if_dirty(components::component_base_t* c);
       
       void redraw_component(components::component_base_t* target);
       
@@ -49,6 +50,13 @@ namespace cydui::layout {
       friend Layout* cydui::layout::create(C &&root_component);
     
     public:
+      ~Layout() {
+        for (auto &item: listeners) {
+          item->remove();
+          delete item;
+        }
+      }
+      
       //drag_n_drop::dragging_context_t dragging_context {};
       
       void bind_window(window::CWindow* _win);
