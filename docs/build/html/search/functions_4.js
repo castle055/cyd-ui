@@ -13,7 +13,7 @@ var searchData=
   ['compute_5fdimensions_10',['compute_dimensions',['../layout_8cpp.html#a57bf7c427c75639b801bb27dcc702561',1,'layout.cpp']]],
   ['compute_5findex_11',['compute_index',['../structmd__buffer__t.html#a53b16899b3fc07a1343d6df197a58c81',1,'md_buffer_t']]],
   ['compute_5ftotal_5fsize_12',['compute_total_size',['../structmd__buffer__t.html#a7d72263f4be2579b75030b5394aa48a1',1,'md_buffer_t']]],
-  ['consumer_13',['Consumer',['../classcydui_1_1events_1_1Consumer.html#a20be8d6afa2f5cdb9603a897ce7ac596',1,'cydui::events::Consumer']]],
+  ['configure_5fevent_5fhandler_13',['configure_event_handler',['../structcydui_1_1components_1_1component__t.html#aecf031904194d001776f56ae8042c9bc',1,'cydui::components::component_t::configure_event_handler()'],['../structcydui_1_1components_1_1component__base__t.html#a2329fd0d1c024dab910437c76ba78a64',1,'cydui::components::component_base_t::configure_event_handler()']]],
   ['copy_5ffrom_14',['copy_from',['../structmd__buffer__t.html#ab4bb794a2634cc89e2fbf6fb162403ca',1,'md_buffer_t']]],
   ['create_15',['create',['../namespacecydui_1_1layout.html#a539cbc530b78d384b9d4f078dbcaa622',1,'cydui::layout::create()'],['../namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6',1,'cydui::window::create()']]],
   ['create_5fstate_5finstance_16',['create_state_instance',['../structcydui_1_1components_1_1component__t.html#a4f7dfbf6f5dd02faf737f3654c492773',1,'cydui::components::component_t::create_state_instance()'],['../structcydui_1_1components_1_1component__base__t.html#aa242d6bff8bd221144c1a5644262757f',1,'cydui::components::component_base_t::create_state_instance()']]],

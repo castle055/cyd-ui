@@ -44,7 +44,6 @@ var annotated_dup =
         [ "change_ev", "namespacecydui_1_1events_1_1change__ev.html", [
           [ "DataMonitor", "classcydui_1_1events_1_1change__ev_1_1DataMonitor.html", "classcydui_1_1events_1_1change__ev_1_1DataMonitor" ]
         ] ],
-        [ "Consumer", "classcydui_1_1events_1_1Consumer.html", "classcydui_1_1events_1_1Consumer" ],
         [ "Event", "structcydui_1_1events_1_1Event.html", "structcydui_1_1events_1_1Event" ],
         [ "listener_t", "structcydui_1_1events_1_1listener__t.html", "structcydui_1_1events_1_1listener__t" ],
         [ "ParsedEvent", "structcydui_1_1events_1_1ParsedEvent.html", "structcydui_1_1events_1_1ParsedEvent" ]
@@ -185,6 +184,7 @@ var annotated_dup =
     [ "attrs_margin", "structattrs__margin.html", null ],
     [ "attrs_padding", "structattrs__padding.html", null ],
     [ "ButtonEvent", "structButtonEvent.html", "structButtonEvent" ],
+    [ "event_data_type_base_t", "structevent__data__type__base__t.html", "structevent__data__type__base__t" ],
     [ "KeyEvent", "structKeyEvent.html", "structKeyEvent" ],
     [ "lazy_alloc", "structlazy__alloc.html", "structlazy__alloc" ],
     [ "md_buffer_t", "structmd__buffer__t.html", "structmd__buffer__t" ],

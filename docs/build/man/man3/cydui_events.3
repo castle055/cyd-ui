@@ -17,9 +17,6 @@ cydui::events
 
 .in +1c
 .ti -1c
-.RI "class \fBConsumer\fP"
-.br
-.ti -1c
 .RI "struct \fBEvent\fP"
 .br
 .ti -1c
@@ -39,6 +36,9 @@ cydui::events
 .SS "Typedefs"
 
 .in +1c
+.ti -1c
+.RI "template<typename \fBT\fP > using \fBConsumer\fP = std::function< void(const \fBParsedEvent\fP< \fBT\fP > &)>"
+.br
 .ti -1c
 .RI "typedef std::function< void(\fBEvent\fP *)> \fBListener\fP"
 .br
@@ -68,12 +68,12 @@ requires EventType<\fBT\fP>void \fBemit\fP (typename T::DataType data)"
 .RI "void \fBremove_listener\fP (const \fBstr\fP &event_type, const \fBlistener_t\fP &listener)"
 .br
 .ti -1c
-.RI "\fBlistener_t\fP \fBon_event_raw\fP (const \fBstr\fP &event_type, const \fBListener\fP &l)"
+.RI "\fBlistener_t\fP * \fBon_event_raw\fP (const \fBstr\fP &event_type, const \fBListener\fP &l)"
 .br
 .ti -1c
 .RI "template<typename \fBT\fP > 
 .br
-requires EventType<\fBT\fP>\fBlistener_t\fP \fBon_event\fP (\fBConsumer\fP< \fBT\fP > c)"
+requires EventType<\fBT\fP>\fBlistener_t\fP * \fBon_event\fP (\fBConsumer\fP< \fBT\fP > c)"
 .br
 .ti -1c
 .RI "void \fBstart\fP ()"
@@ -81,10 +81,14 @@ requires EventType<\fBT\fP>\fBlistener_t\fP \fBon_event\fP (\fBConsumer\fP< \fBT
 .in -1c
 .SH "Typedef Documentation"
 .PP 
+.SS "template<typename \fBT\fP > using \fBcydui::events::Consumer\fP = typedef std::function<void(const \fBParsedEvent\fP<\fBT\fP>&)>"
+
+.PP
+Definition at line \fB148\fP of file \fBevents\&.hpp\fP\&.
 .SS "typedef std::function<void(\fBEvent\fP*)> \fBcydui::events::Listener\fP"
 
 .PP
-Definition at line \fB161\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB150\fP of file \fBevents\&.hpp\fP\&.
 .SH "Enumeration Type Documentation"
 .PP 
 .SS "enum \fBcydui::events::EventStatus\fP"
@@ -127,48 +131,48 @@ Definition at line \fB143\fP of file \fBevents\&.hpp\fP\&..PP
 .SS "void cydui::events::emit_raw (\fBcydui::events::Event\fP * ev)"
 
 .PP
-Definition at line \fB123\fP of file \fBevents\&.cpp\fP\&..PP
+Definition at line \fB134\fP of file \fBevents\&.cpp\fP\&..PP
 .nf
-123                                                {
-124   push_event(th_data, ev);
-125 }
+134                                                {
+135   push_event(th_data, ev);
+136 }
 .fi
 
 .SS "template<typename \fBT\fP > 
 .br
-requires EventType<\fBT\fP>\fBlistener_t\fP cydui::events::on_event (\fBConsumer\fP< \fBT\fP > c)\fC [inline]\fP"
+requires EventType<\fBT\fP>\fBlistener_t\fP * cydui::events::on_event (\fBConsumer\fP< \fBT\fP > c)\fC [inline]\fP"
 
 .PP
-Definition at line \fB209\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB204\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-209                                               {
-210       return cydui::events::on_event_raw(T::type, [c](Event* ev) {
-211         auto parsed = ev\->parse<T>();
-212         if (parsed\&.data) {
-213           c(parsed);
-214         }
-215       });
-216     }
+204                                                {
+205       return cydui::events::on_event_raw(T::type, [&,c](Event* ev) {
+206         auto parsed = ev\->parse<T>();
+207         if (parsed\&.data) {
+208           c(parsed);
+209         }
+210       });
+211     }
 .fi
 
-.SS "\fBlistener_t\fP cydui::events::on_event_raw (const \fBstr\fP & event_type, const \fBListener\fP & l)"
+.SS "\fBlistener_t\fP * cydui::events::on_event_raw (const \fBstr\fP & event_type, const \fBListener\fP & l)"
 
 .SS "void cydui::events::remove_listener (const \fBstr\fP & event_type, const \fBlistener_t\fP & listener)"
 
 .SS "void cydui::events::start ()"
 
 .PP
-Definition at line \fB113\fP of file \fBevents\&.cpp\fP\&..PP
+Definition at line \fB124\fP of file \fBevents\&.cpp\fP\&..PP
 .nf
-113                         {
-114   if (event_thread && event_thread\->native_thread != nullptr)
-115     return;
-116   log_ctrl\&.debug("Starting event_thread");
-117   
-118   event_thread =
-119     threading::new_thread(&event_task, th_data)
-120       \->set_name("EV_THD");
-121 }
+124                         {
+125   if (event_thread && event_thread\->native_thread != nullptr)
+126     return;
+127   log_ctrl\&.debug("Starting event_thread");
+128   
+129   event_thread =
+130     threading::new_thread(&event_task, th_data)
+131       \->set_name("EV_THD");
+132 }
 .fi
 
 .SH "Author"

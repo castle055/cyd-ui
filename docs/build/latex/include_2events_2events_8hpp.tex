@@ -27,9 +27,9 @@ struct \mbox{\hyperlink{structcydui_1_1events_1_1ParsedEvent}{cydui\+::events\+:
 \item 
 struct \mbox{\hyperlink{structcydui_1_1events_1_1Event}{cydui\+::events\+::\+Event}}
 \item 
-class \mbox{\hyperlink{classcydui_1_1events_1_1Consumer}{cydui\+::events\+::\+Consumer$<$ T $>$}}
-\item 
 struct \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{cydui\+::events\+::listener\+\_\+t}}
+\item 
+struct \mbox{\hyperlink{structevent__data__type__base__t}{event\+\_\+data\+\_\+type\+\_\+base\+\_\+t}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Namespaces}
 \begin{DoxyCompactItemize}
@@ -48,12 +48,14 @@ concept \mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{cydui\+::events\+:
 \item 
 \#define \mbox{\hyperlink{include_2events_2events_8hpp_aa0a366172261a71aeff0bd609de53d1c}{consumer}}~\mbox{[}=\mbox{]}(it)
 \item 
-\#define \mbox{\hyperlink{include_2events_2events_8hpp_ab3850b31e5296658c9d8a88cb17f3688}{listen}}(\mbox{\hyperlink{include_2events_2events_8hpp_a013e5c56ca9a52b77ec5c6fb71014df3}{EVENT}},  block)
+\#define \mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{include_2events_2events_8hpp_a013e5c56ca9a52b77ec5c6fb71014df3}{EVENT}}, ...)
 \item 
 \#define \mbox{\hyperlink{include_2events_2events_8hpp_a013e5c56ca9a52b77ec5c6fb71014df3}{EVENT}}(NAME,  DATA)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Typedefs}
 \begin{DoxyCompactItemize}
+\item 
+{\footnotesize template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ }\\using \mbox{\hyperlink{namespacecydui_1_1events_a8738c154e14a51805dbcab48b42cf0e6}{cydui\+::events\+::\+Consumer}} = std\+::function$<$ void(const \mbox{\hyperlink{structcydui_1_1events_1_1ParsedEvent}{Parsed\+Event}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \&)$>$
 \item 
 typedef std\+::function$<$ void(\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}} \texorpdfstring{$\ast$}{*})$>$ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{cydui\+::events\+::\+Listener}}
 \end{DoxyCompactItemize}
@@ -77,10 +79,10 @@ requires Event\+Type$<$\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9
 \item 
 void \mbox{\hyperlink{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc}{cydui\+::events\+::remove\+\_\+listener}} (const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&event\+\_\+type, const \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} \&listener)
 \item 
-\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1events_af4bd6d1ea80753200425f7457ddf2826}{cydui\+::events\+::on\+\_\+event\+\_\+raw}} (const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&event\+\_\+type, const \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}} \&l)
+\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespacecydui_1_1events_a1fb9ac28468b1aa9a3c860745c0b95cd}{cydui\+::events\+::on\+\_\+event\+\_\+raw}} (const \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}} \&event\+\_\+type, const \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}} \&l)
 \item 
 {\footnotesize template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \newline
-requires Event\+Type$<$\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}$>$}\\\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} \mbox{\hyperlink{namespacecydui_1_1events_aecd185c59b15b1d0299119e9a6825c26}{cydui\+::events\+::on\+\_\+event}} (\mbox{\hyperlink{classcydui_1_1events_1_1Consumer}{Consumer}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ c)
+requires Event\+Type$<$\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}$>$}\\\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{namespacecydui_1_1events_af912b8c268e59712bb10aa38c681be41}{cydui\+::events\+::on\+\_\+event}} (\mbox{\hyperlink{namespacecydui_1_1events_a8738c154e14a51805dbcab48b42cf0e6}{Consumer}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ c)
 \item 
 void \mbox{\hyperlink{namespacecydui_1_1events_ae57f3d691631bd72884ab4a6021387b9}{cydui\+::events\+::start}} ()
 \end{DoxyCompactItemize}
@@ -95,7 +97,7 @@ void \mbox{\hyperlink{namespacecydui_1_1events_ae57f3d691631bd72884ab4a6021387b9
 
 
 
-Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00224}{224}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00219}{219}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
 
 \Hypertarget{include_2events_2events_8hpp_a013e5c56ca9a52b77ec5c6fb71014df3}\label{include_2events_2events_8hpp_a013e5c56ca9a52b77ec5c6fb71014df3} 
 \index{events.hpp@{events.hpp}!EVENT@{EVENT}}
@@ -107,35 +109,35 @@ Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00224}{
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\ \ \textcolor{keyword}{struct\ }NAME\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ type\ =\ \#NAME;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }DataType\ DATA\ data;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }DataType:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structevent__data__type__base__t}{event\_data\_type\_base\_t}}\ DATA\ data;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \};}
 
 \end{DoxyCode}
 
 
-Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00231}{231}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00230}{230}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespacecydui_1_1graphics_1_1vg_1_1paint_ac58e9254002b5db15ad56f964453ab36}{type}}\ =\ \#NAME;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keyword}{struct\ }DataType\ DATA\ data;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00235\ \ \ \};}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00232\ \ \ \ \ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{namespacecydui_1_1graphics_1_1vg_1_1paint_ac58e9254002b5db15ad56f964453ab36}{type}}\ =\ \#NAME;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00233\ \ \ \ \ \textcolor{keyword}{struct\ }DataType:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structevent__data__type__base__t}{event\_data\_type\_base\_t}}\ DATA\ data;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00234\ \ \ \};}
 
 \end{DoxyCode}
-\Hypertarget{include_2events_2events_8hpp_ab3850b31e5296658c9d8a88cb17f3688}\label{include_2events_2events_8hpp_ab3850b31e5296658c9d8a88cb17f3688} 
+\Hypertarget{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}\label{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270} 
 \index{events.hpp@{events.hpp}!listen@{listen}}
 \index{listen@{listen}!events.hpp@{events.hpp}}
 \doxysubsubsection{\texorpdfstring{listen}{listen}}
-{\footnotesize\ttfamily \#define listen(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{include_2events_2events_8hpp_a013e5c56ca9a52b77ec5c6fb71014df3}{EVENT}},  }\item[{}]{block }\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \#define listen(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{include_2events_2events_8hpp_a013e5c56ca9a52b77ec5c6fb71014df3}{EVENT}},  }\item[{}]{... }\end{DoxyParamCaption})}
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{\ \ cydui::events::on\_event<EVENT>(\mbox{\hyperlink{classcydui_1_1events_1_1Consumer}{cydui::events::Consumer<EVENT>}}(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ [=,\ \textcolor{keyword}{this}](\textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1events_1_1ParsedEvent}{cydui::events::ParsedEvent<EVENT>}}\&\ it)\ block))}
+\DoxyCodeLine{\ \ cydui::events::on\_event<EVENT>(\mbox{\hyperlink{namespacecydui_1_1events_a8738c154e14a51805dbcab48b42cf0e6}{cydui::events::Consumer<EVENT>}}(\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ [\&](\textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1events_1_1ParsedEvent}{cydui::events::ParsedEvent<EVENT>}}\&\ it)\ \_\_VA\_ARGS\_\_))}
 
 \end{DoxyCode}
 
 
-Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00225}{225}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
+Definition at line \mbox{\hyperlink{include_2events_2events_8hpp_source_l00220}{220}} of file \mbox{\hyperlink{include_2events_2events_8hpp_source}{events.\+hpp}}.
 

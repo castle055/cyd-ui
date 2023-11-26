@@ -201,9 +201,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcydui_1_1events_1_1Event.html">cydui::events::Event</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classcydui_1_1events_1_1Consumer.html">cydui::events::Consumer&lt; T &gt;</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcydui_1_1events_1_1listener__t.html">cydui::events::listener_t</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structevent__data__type__base__t.html">event_data_type_base_t</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -222,13 +222,16 @@ Concepts</h2></td></tr>
 Macros</h2></td></tr>
 <tr class="memitem:aa0a366172261a71aeff0bd609de53d1c" id="r_aa0a366172261a71aeff0bd609de53d1c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2events_2events_8hpp.html#aa0a366172261a71aeff0bd609de53d1c">consumer</a>&#160;&#160;&#160;[=](it)</td></tr>
 <tr class="separator:aa0a366172261a71aeff0bd609de53d1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3850b31e5296658c9d8a88cb17f3688" id="r_ab3850b31e5296658c9d8a88cb17f3688"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2events_2events_8hpp.html#ab3850b31e5296658c9d8a88cb17f3688">listen</a>(<a class="el" href="include_2events_2events_8hpp.html#a013e5c56ca9a52b77ec5c6fb71014df3">EVENT</a>,  block)</td></tr>
-<tr class="separator:ab3850b31e5296658c9d8a88cb17f3688"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c9044321679cfc4fa596f42b0f2d270" id="r_a3c9044321679cfc4fa596f42b0f2d270"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2events_2events_8hpp.html#a3c9044321679cfc4fa596f42b0f2d270">listen</a>(<a class="el" href="include_2events_2events_8hpp.html#a013e5c56ca9a52b77ec5c6fb71014df3">EVENT</a>, ...)</td></tr>
+<tr class="separator:a3c9044321679cfc4fa596f42b0f2d270"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a013e5c56ca9a52b77ec5c6fb71014df3" id="r_a013e5c56ca9a52b77ec5c6fb71014df3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="include_2events_2events_8hpp.html#a013e5c56ca9a52b77ec5c6fb71014df3">EVENT</a>(NAME,  DATA)</td></tr>
 <tr class="separator:a013e5c56ca9a52b77ec5c6fb71014df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
+<tr class="memitem:a8738c154e14a51805dbcab48b42cf0e6" id="r_a8738c154e14a51805dbcab48b42cf0e6"><td class="memTemplParams" colspan="2">template&lt;typename <a class="el" href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a> &gt; </td></tr>
+<tr class="memitem:a8738c154e14a51805dbcab48b42cf0e6"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1events.html#a8738c154e14a51805dbcab48b42cf0e6">cydui::events::Consumer</a> = std::function&lt; void(const <a class="el" href="structcydui_1_1events_1_1ParsedEvent.html">ParsedEvent</a>&lt; <a class="el" href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a> &gt; &amp;)&gt;</td></tr>
+<tr class="separator:a8738c154e14a51805dbcab48b42cf0e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aafe7ad203fd40e022bae6950003804a8" id="r_aafe7ad203fd40e022bae6950003804a8"><td class="memItemLeft" align="right" valign="top">typedef std::function&lt; void(<a class="el" href="structcydui_1_1events_1_1Event.html">Event</a> *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1events.html#aafe7ad203fd40e022bae6950003804a8">cydui::events::Listener</a></td></tr>
 <tr class="separator:aafe7ad203fd40e022bae6950003804a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -252,12 +255,12 @@ requires EventType&lt;<a class="el" href="cydui__events_8h.html#ab3c7af4820830f9
 <tr class="separator:a64db03d0513c4d66801257e90c58b3a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a505fb93652ddea4a8e14f58589294fbc" id="r_a505fb93652ddea4a8e14f58589294fbc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1events.html#a505fb93652ddea4a8e14f58589294fbc">cydui::events::remove_listener</a> (const <a class="el" href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">str</a> &amp;event_type, const <a class="el" href="structcydui_1_1events_1_1listener__t.html">listener_t</a> &amp;listener)</td></tr>
 <tr class="separator:a505fb93652ddea4a8e14f58589294fbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af4bd6d1ea80753200425f7457ddf2826" id="r_af4bd6d1ea80753200425f7457ddf2826"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcydui_1_1events_1_1listener__t.html">listener_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1events.html#af4bd6d1ea80753200425f7457ddf2826">cydui::events::on_event_raw</a> (const <a class="el" href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">str</a> &amp;event_type, const <a class="el" href="namespacecydui_1_1events.html#aafe7ad203fd40e022bae6950003804a8">Listener</a> &amp;l)</td></tr>
-<tr class="separator:af4bd6d1ea80753200425f7457ddf2826"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecd185c59b15b1d0299119e9a6825c26" id="r_aecd185c59b15b1d0299119e9a6825c26"><td class="memTemplParams" colspan="2">template&lt;typename <a class="el" href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a> &gt; <br />
+<tr class="memitem:a1fb9ac28468b1aa9a3c860745c0b95cd" id="r_a1fb9ac28468b1aa9a3c860745c0b95cd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcydui_1_1events_1_1listener__t.html">listener_t</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1events.html#a1fb9ac28468b1aa9a3c860745c0b95cd">cydui::events::on_event_raw</a> (const <a class="el" href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">str</a> &amp;event_type, const <a class="el" href="namespacecydui_1_1events.html#aafe7ad203fd40e022bae6950003804a8">Listener</a> &amp;l)</td></tr>
+<tr class="separator:a1fb9ac28468b1aa9a3c860745c0b95cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af912b8c268e59712bb10aa38c681be41" id="r_af912b8c268e59712bb10aa38c681be41"><td class="memTemplParams" colspan="2">template&lt;typename <a class="el" href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a> &gt; <br />
 requires EventType&lt;<a class="el" href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a>&gt;</td></tr>
-<tr class="memitem:aecd185c59b15b1d0299119e9a6825c26"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structcydui_1_1events_1_1listener__t.html">listener_t</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1events.html#aecd185c59b15b1d0299119e9a6825c26">cydui::events::on_event</a> (<a class="el" href="classcydui_1_1events_1_1Consumer.html">Consumer</a>&lt; <a class="el" href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a> &gt; c)</td></tr>
-<tr class="separator:aecd185c59b15b1d0299119e9a6825c26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af912b8c268e59712bb10aa38c681be41"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structcydui_1_1events_1_1listener__t.html">listener_t</a> *&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1events.html#af912b8c268e59712bb10aa38c681be41">cydui::events::on_event</a> (<a class="el" href="namespacecydui_1_1events.html#a8738c154e14a51805dbcab48b42cf0e6">Consumer</a>&lt; <a class="el" href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a> &gt; c)</td></tr>
+<tr class="separator:af912b8c268e59712bb10aa38c681be41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae57f3d691631bd72884ab4a6021387b9" id="r_ae57f3d691631bd72884ab4a6021387b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1events.html#ae57f3d691631bd72884ab4a6021387b9">cydui::events::start</a> ()</td></tr>
 <tr class="separator:ae57f3d691631bd72884ab4a6021387b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -274,7 +277,7 @@ requires EventType&lt;<a class="el" href="cydui__events_8h.html#ab3c7af4820830f9
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2events_2events_8hpp_source.html#l00224">224</a> of file <a class="el" href="include_2events_2events_8hpp_source.html">events.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2events_2events_8hpp_source.html#l00219">219</a> of file <a class="el" href="include_2events_2events_8hpp_source.html">events.hpp</a>.</p>
 
 </div>
 </div>
@@ -305,20 +308,21 @@ requires EventType&lt;<a class="el" href="cydui__events_8h.html#ab3c7af4820830f9
 </div><div class="memdoc">
 <b>Value:</b><div class="fragment"><div class="line">  <span class="keyword">struct </span>NAME {                                                                \</div>
 <div class="line">    <span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* type = #NAME;                                 \</div>
-<div class="line">    <span class="keyword">struct </span>DataType DATA data;                                                 \</div>
+<div class="line">    <span class="keyword">struct </span>DataType: <span class="keyword">public</span> <a class="code hl_struct" href="structevent__data__type__base__t.html">event_data_type_base_t</a> DATA data;                  \</div>
 <div class="line">  };</div>
+<div class="ttc" id="astructevent__data__type__base__t_html"><div class="ttname"><a href="structevent__data__type__base__t.html">event_data_type_base_t</a></div><div class="ttdef"><b>Definition</b> <a href="include_2events_2events_8hpp_source.html#l00225">events.hpp:225</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="include_2events_2events_8hpp_source.html#l00231">231</a> of file <a class="el" href="include_2events_2events_8hpp_source.html">events.hpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  232</span>              {                                                                \</div>
-<div class="line"><span class="lineno">  233</span>    <span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code hl_typedef" href="namespacecydui_1_1graphics_1_1vg_1_1paint.html#ac58e9254002b5db15ad56f964453ab36">type</a> = #NAME;                                 \</div>
-<div class="line"><span class="lineno">  234</span>    <span class="keyword">struct </span>DataType DATA data;                                                 \</div>
-<div class="line"><span class="lineno">  235</span>  };</div>
+<p class="definition">Definition at line <a class="el" href="include_2events_2events_8hpp_source.html#l00230">230</a> of file <a class="el" href="include_2events_2events_8hpp_source.html">events.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  231</span>              {                                                                \</div>
+<div class="line"><span class="lineno">  232</span>    <span class="keyword">constexpr</span> <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code hl_typedef" href="namespacecydui_1_1graphics_1_1vg_1_1paint.html#ac58e9254002b5db15ad56f964453ab36">type</a> = #NAME;                                 \</div>
+<div class="line"><span class="lineno">  233</span>    <span class="keyword">struct </span>DataType: <span class="keyword">public</span> <a class="code hl_struct" href="structevent__data__type__base__t.html">event_data_type_base_t</a> DATA data;                  \</div>
+<div class="line"><span class="lineno">  234</span>  };</div>
 <div class="ttc" id="anamespacecydui_1_1graphics_1_1vg_1_1paint_html_ac58e9254002b5db15ad56f964453ab36"><div class="ttname"><a href="namespacecydui_1_1graphics_1_1vg_1_1paint.html#ac58e9254002b5db15ad56f964453ab36">cydui::graphics::vg::paint::type</a></div><div class="ttdeci">std::variant&lt; solid, gradient::linear, gradient::radial &gt; type</div><div class="ttdef"><b>Definition</b> <a href="vg__attributes_8h_source.html#l00133">vg_attributes.h:137</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="ab3850b31e5296658c9d8a88cb17f3688" name="ab3850b31e5296658c9d8a88cb17f3688"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3850b31e5296658c9d8a88cb17f3688">&#9670;&#160;</a></span>listen</h2>
+<a id="a3c9044321679cfc4fa596f42b0f2d270" name="a3c9044321679cfc4fa596f42b0f2d270"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3c9044321679cfc4fa596f42b0f2d270">&#9670;&#160;</a></span>listen</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -333,7 +337,7 @@ requires EventType&lt;<a class="el" href="cydui__events_8h.html#ab3c7af4820830f9
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname">block&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -342,12 +346,12 @@ requires EventType&lt;<a class="el" href="cydui__events_8h.html#ab3c7af4820830f9
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line">  cydui::events::on_event&lt;EVENT&gt;(<a class="code hl_class" href="classcydui_1_1events_1_1Consumer.html">cydui::events::Consumer&lt;EVENT&gt;</a>(               \</div>
-<div class="line">      [=, <span class="keyword">this</span>](<span class="keyword">const</span> <a class="code hl_struct" href="structcydui_1_1events_1_1ParsedEvent.html">cydui::events::ParsedEvent&lt;EVENT&gt;</a>&amp; it) block))</div>
-<div class="ttc" id="aclasscydui_1_1events_1_1Consumer_html"><div class="ttname"><a href="classcydui_1_1events_1_1Consumer.html">cydui::events::Consumer</a></div><div class="ttdef"><b>Definition</b> <a href="include_2events_2events_8hpp_source.html#l00148">events.hpp:148</a></div></div>
+<b>Value:</b><div class="fragment"><div class="line">  cydui::events::on_event&lt;EVENT&gt;(<a class="code hl_typedef" href="namespacecydui_1_1events.html#a8738c154e14a51805dbcab48b42cf0e6">cydui::events::Consumer&lt;EVENT&gt;</a>( \</div>
+<div class="line">      [&amp;](<span class="keyword">const</span> <a class="code hl_struct" href="structcydui_1_1events_1_1ParsedEvent.html">cydui::events::ParsedEvent&lt;EVENT&gt;</a>&amp; it) __VA_ARGS__))</div>
+<div class="ttc" id="anamespacecydui_1_1events_html_a8738c154e14a51805dbcab48b42cf0e6"><div class="ttname"><a href="namespacecydui_1_1events.html#a8738c154e14a51805dbcab48b42cf0e6">cydui::events::Consumer</a></div><div class="ttdeci">std::function&lt; void(const ParsedEvent&lt; T &gt; &amp;)&gt; Consumer</div><div class="ttdef"><b>Definition</b> <a href="include_2events_2events_8hpp_source.html#l00148">events.hpp:148</a></div></div>
 <div class="ttc" id="astructcydui_1_1events_1_1ParsedEvent_html"><div class="ttname"><a href="structcydui_1_1events_1_1ParsedEvent.html">cydui::events::ParsedEvent</a></div><div class="ttdef"><b>Definition</b> <a href="include_2events_2events_8hpp_source.html#l00096">events.hpp:96</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="include_2events_2events_8hpp_source.html#l00225">225</a> of file <a class="el" href="include_2events_2events_8hpp_source.html">events.hpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2events_2events_8hpp_source.html#l00220">220</a> of file <a class="el" href="include_2events_2events_8hpp_source.html">events.hpp</a>.</p>
 
 </div>
 </div>

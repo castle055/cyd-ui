@@ -82,18 +82,21 @@ Definition at line \fB177\fP of file \fBcompositing\&.h\fP\&..PP
 177                          {
 178         running\&.test_and_set();
 179         compositing_thd = std::thread {&compositing_task, this};
-180       }
+180         pthread_t pt = compositing_thd\&.native_handle();
+181         pthread_setname_np(pt, "COMPOSITING_THD");
+182       }
 .fi
 
 .SS "cydui::compositing::LayoutCompositor::~LayoutCompositor ()\fC [inline]\fP"
 
 .PP
-Definition at line \fB182\fP of file \fBcompositing\&.h\fP\&..PP
+Definition at line \fB184\fP of file \fBcompositing\&.h\fP\&..PP
 .nf
-182                           {
-183         running\&.clear();
-184         compositing_thd\&.join();
-185       }
+184                           {
+185         running\&.clear();
+186         cv\&.notify_all();
+187         compositing_thd\&.join();
+188       }
 .fi
 
 .SH "Member Function Documentation"
@@ -101,19 +104,19 @@ Definition at line \fB182\fP of file \fBcompositing\&.h\fP\&..PP
 .SS "void cydui::compositing::LayoutCompositor::compose (\fBcompositing_tree_t\fP * _tree)\fC [inline]\fP"
 
 .PP
-Definition at line \fB193\fP of file \fBcompositing\&.h\fP\&..PP
+Definition at line \fB196\fP of file \fBcompositing\&.h\fP\&..PP
 .nf
-193                                               {
-194         compositing_tree_t* old_tree;
-195         {
-196           std::lock_guard lk(m);
-197           old_tree = tree;
-198           tree = _tree;
-199           tree_dirty = true;
-200         }
-201         cv\&.notify_all();
-202         delete old_tree;
-203       }
+196                                               {
+197         compositing_tree_t* old_tree;
+198         {
+199           std::lock_guard lk(m);
+200           old_tree = tree;
+201           tree = _tree;
+202           tree_dirty = true;
+203         }
+204         cv\&.notify_all();
+205         delete old_tree;
+206       }
 .fi
 
 .SS "static void cydui::compositing::LayoutCompositor::compositing_task (\fBLayoutCompositor\fP * compositor)\fC [inline]\fP, \fC [static]\fP, \fC [private]\fP"
@@ -128,7 +131,7 @@ Definition at line \fB92\fP of file \fBcompositing\&.h\fP\&..PP
 96           std::unique_lock lk(compositor\->m);
 97           if (nullptr != compositor\->render_target) {
 98             compositor\->cv\&.wait(lk, [&] {
-99               return compositor\->tree_dirty;
+99               return compositor\->tree_dirty || !compositor\->running\&.test();
 100             });
 101             auto _pev = compositor\->profiler\->scope_event("COMPOSITING TASK");
 102             compositor\->tree_dirty = false;
@@ -215,13 +218,13 @@ Definition at line \fB116\fP of file \fBcompositing\&.h\fP\&..PP
 .SS "void cydui::compositing::LayoutCompositor::set_render_target (\fBgraphics::window_t\fP * _render_target, \fBprof::context_t\fP * _profiler)\fC [inline]\fP"
 
 .PP
-Definition at line \fB187\fP of file \fBcompositing\&.h\fP\&..PP
+Definition at line \fB190\fP of file \fBcompositing\&.h\fP\&..PP
 .nf
-187                                                                                          {
-188         std::lock_guard lk(m);
-189         render_target = _render_target;
-190         profiler = _profiler;
-191       }
+190                                                                                          {
+191         std::lock_guard lk(m);
+192         render_target = _render_target;
+193         profiler = _profiler;
+194       }
 .fi
 
 .SH "Member Data Documentation"

@@ -126,6 +126,8 @@ Functions</h2></td></tr>
 <tr class="separator:a183658b9bd88610ff0e5767ae04c55d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6234089431f6875fe9514d4d1ed88d0" id="r_ad6234089431f6875fe9514d4d1ed88d0"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1graphics.html#ad6234089431f6875fe9514d4d1ed88d0">get_id</a> (<a class="el" href="structcydui_1_1graphics_1_1window__t.html">window_t</a> *win)</td></tr>
 <tr class="separator:ad6234089431f6875fe9514d4d1ed88d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3ec912c904cf4d43e2615f86602884e" id="r_ac3ec912c904cf4d43e2615f86602884e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1graphics.html#ac3ec912c904cf4d43e2615f86602884e">terminate</a> (<a class="el" href="structcydui_1_1graphics_1_1window__t.html">window_t</a> *win)</td></tr>
+<tr class="separator:ac3ec912c904cf4d43e2615f86602884e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="a7704ec7880a056e09470957824f7d995" name="a7704ec7880a056e09470957824f7d995"></a>
@@ -194,99 +196,102 @@ Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   52</span>  {</div>
 <div class="line"><span class="lineno">   53</span>  <span class="keyword">static</span> <span class="keywordtype">int</span> _ig = XInitThreads();</div>
 <div class="line"><span class="lineno">   54</span>  </div>
-<div class="line"><span class="lineno">   55</span>  XSetWindowAttributes wa = {</div>
-<div class="line"><span class="lineno">   56</span>    .background_pixmap =</div>
-<div class="line"><span class="lineno">   57</span>    BlackPixel(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), <a class="code hl_function" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7">state::get_screen</a>()),<span class="comment">//ParentRelative,</span></div>
-<div class="line"><span class="lineno">   58</span>    .bit_gravity = NorthWestGravity,</div>
-<div class="line"><span class="lineno">   59</span>    .event_mask  = FocusChangeMask | KeyPressMask | KeyReleaseMask</div>
-<div class="line"><span class="lineno">   60</span>      | VisibilityChangeMask | StructureNotifyMask | ButtonMotionMask</div>
-<div class="line"><span class="lineno">   61</span>      | ButtonPressMask | ButtonReleaseMask | ExposureMask | FocusChangeMask</div>
-<div class="line"><span class="lineno">   62</span>      | LeaveWindowMask | EnterWindowMask | PointerMotionMask,</div>
-<div class="line"><span class="lineno">   63</span>    .override_redirect =</div>
-<div class="line"><span class="lineno">   64</span>    override_redirect<span class="comment">// This makes it immutable across workspaces</span></div>
-<div class="line"><span class="lineno">   65</span>  };</div>
-<div class="line"><span class="lineno">   66</span>  <a class="code hl_typedef" href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">str</a> title_str = title;</div>
-<div class="line"><span class="lineno">   67</span>  <a class="code hl_typedef" href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">str</a> wclass_str = wclass;</div>
-<div class="line"><span class="lineno">   68</span>  XClassHint ch = {title_str.data(), wclass_str.data()};</div>
-<div class="line"><span class="lineno">   69</span>  </div>
-<div class="line"><span class="lineno">   70</span>  <span class="keywordtype">int</span> x_o, y_o;</div>
-<div class="line"><span class="lineno">   71</span>  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> w_o, h_o;</div>
-<div class="line"><span class="lineno">   72</span>  <a class="code hl_typedef" href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">str</a> geom;</div>
-<div class="line"><span class="lineno">   73</span>  geom += <span class="stringliteral">&quot;0x0&quot;</span>;</div>
-<div class="line"><span class="lineno">   74</span>  <span class="keywordflow">if</span> (x &gt;= 0)</div>
-<div class="line"><span class="lineno">   75</span>    geom += <span class="stringliteral">&quot;+&quot;</span>;</div>
-<div class="line"><span class="lineno">   76</span>  geom += std::to_string(x);</div>
-<div class="line"><span class="lineno">   77</span>  <span class="keywordflow">if</span> (y &gt;= 0)</div>
+<div class="line"><span class="lineno">   55</span>  XVisualInfo vinfo;</div>
+<div class="line"><span class="lineno">   56</span>  XMatchVisualInfo(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), <a class="code hl_function" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7">state::get_screen</a>(), 32, TrueColor, &amp;vinfo);</div>
+<div class="line"><span class="lineno">   57</span>  XSetWindowAttributes wa = {</div>
+<div class="line"><span class="lineno">   58</span>    .background_pixel = 0,<span class="comment">//ParentRelative,</span></div>
+<div class="line"><span class="lineno">   59</span>    .border_pixel = 0,</div>
+<div class="line"><span class="lineno">   60</span>    .bit_gravity = NorthWestGravity,</div>
+<div class="line"><span class="lineno">   61</span>    .event_mask  = FocusChangeMask | KeyPressMask | KeyReleaseMask</div>
+<div class="line"><span class="lineno">   62</span>      | VisibilityChangeMask | StructureNotifyMask | ButtonMotionMask</div>
+<div class="line"><span class="lineno">   63</span>      | ButtonPressMask | ButtonReleaseMask | ExposureMask | FocusChangeMask</div>
+<div class="line"><span class="lineno">   64</span>      | LeaveWindowMask | EnterWindowMask | PointerMotionMask,</div>
+<div class="line"><span class="lineno">   65</span>    .override_redirect =</div>
+<div class="line"><span class="lineno">   66</span>    override_redirect, <span class="comment">// This makes it immutable across workspaces</span></div>
+<div class="line"><span class="lineno">   67</span>    .colormap = XCreateColormap(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), <a class="code hl_function" href="namespacex11_1_1state.html#aa84ba9257575606e735f96a9e16ac069">state::get_root</a>(), vinfo.visual, AllocNone),</div>
+<div class="line"><span class="lineno">   68</span>  };</div>
+<div class="line"><span class="lineno">   69</span>  <a class="code hl_typedef" href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">str</a> title_str = title;</div>
+<div class="line"><span class="lineno">   70</span>  <a class="code hl_typedef" href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">str</a> wclass_str = wclass;</div>
+<div class="line"><span class="lineno">   71</span>  XClassHint ch = {title_str.data(), wclass_str.data()};</div>
+<div class="line"><span class="lineno">   72</span>  </div>
+<div class="line"><span class="lineno">   73</span>  <span class="keywordtype">int</span> x_o, y_o;</div>
+<div class="line"><span class="lineno">   74</span>  <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> w_o, h_o;</div>
+<div class="line"><span class="lineno">   75</span>  <a class="code hl_typedef" href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">str</a> geom;</div>
+<div class="line"><span class="lineno">   76</span>  geom += <span class="stringliteral">&quot;0x0&quot;</span>;</div>
+<div class="line"><span class="lineno">   77</span>  <span class="keywordflow">if</span> (x &gt;= 0)</div>
 <div class="line"><span class="lineno">   78</span>    geom += <span class="stringliteral">&quot;+&quot;</span>;</div>
-<div class="line"><span class="lineno">   79</span>  geom += std::to_string(y);</div>
-<div class="line"><span class="lineno">   80</span>  </div>
-<div class="line"><span class="lineno">   81</span>  <span class="keywordtype">int</span> gm_mask = XParseGeometry(geom.c_str(), &amp;x_o, &amp;y_o, &amp;w_o, &amp;h_o);</div>
-<div class="line"><span class="lineno">   82</span>  </div>
-<div class="line"><span class="lineno">   83</span>  <span class="keywordflow">if</span> (gm_mask &amp; XNegative)</div>
-<div class="line"><span class="lineno">   84</span>    x_o += DisplayWidth(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), <a class="code hl_function" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7">state::get_screen</a>()) - w;<span class="comment">// - 2;</span></div>
-<div class="line"><span class="lineno">   85</span>  <span class="keywordflow">if</span> (gm_mask &amp; YNegative)</div>
-<div class="line"><span class="lineno">   86</span>    y_o += DisplayHeight(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), <a class="code hl_function" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7">state::get_screen</a>()) - h;<span class="comment">// - 2;</span></div>
-<div class="line"><span class="lineno">   87</span>  </div>
-<div class="line"><span class="lineno">   88</span>  Window xwin = XCreateWindow(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(),</div>
-<div class="line"><span class="lineno">   89</span>    <a class="code hl_function" href="namespacex11_1_1state.html#aa84ba9257575606e735f96a9e16ac069">state::get_root</a>(),</div>
-<div class="line"><span class="lineno">   90</span>    x_o,</div>
-<div class="line"><span class="lineno">   91</span>    y_o,</div>
-<div class="line"><span class="lineno">   92</span>    w,</div>
-<div class="line"><span class="lineno">   93</span>    h,</div>
-<div class="line"><span class="lineno">   94</span>    0,</div>
-<div class="line"><span class="lineno">   95</span>    DefaultDepth(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), <a class="code hl_function" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7">state::get_screen</a>()),</div>
-<div class="line"><span class="lineno">   96</span>    InputOutput,</div>
-<div class="line"><span class="lineno">   97</span>    DefaultVisual(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), <a class="code hl_function" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7">state::get_screen</a>()),</div>
-<div class="line"><span class="lineno">   98</span>    CWBorderPixel | CWBitGravity | CWColormap | CWBackPixmap | CWEventMask</div>
-<div class="line"><span class="lineno">   99</span>      | (override_redirect ? CWOverrideRedirect : 0<a class="code hl_enumvalue" href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73a4c614360da93c0a041b22e537de151eb">U</a>),</div>
-<div class="line"><span class="lineno">  100</span>    &amp;wa);</div>
-<div class="line"><span class="lineno">  101</span>  XSetClassHint(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin, &amp;ch);</div>
-<div class="line"><span class="lineno">  102</span>  XStoreName(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin, title);</div>
-<div class="line"><span class="lineno">  103</span>  XSync(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), False);</div>
-<div class="line"><span class="lineno">  104</span>  </div>
-<div class="line"><span class="lineno">  105</span>  <a class="code hl_variable" href="x11__impl_8cpp.html#a8a6f8eec6371a9ce75e79a3f0c03364a">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b">info</a>(</div>
-<div class="line"><span class="lineno">  106</span>    <span class="stringliteral">&quot;Created window %lX at (%s) x: %d, y: %d&quot;</span>, xwin, geom.c_str(), x, y);</div>
+<div class="line"><span class="lineno">   79</span>  geom += std::to_string(x);</div>
+<div class="line"><span class="lineno">   80</span>  <span class="keywordflow">if</span> (y &gt;= 0)</div>
+<div class="line"><span class="lineno">   81</span>    geom += <span class="stringliteral">&quot;+&quot;</span>;</div>
+<div class="line"><span class="lineno">   82</span>  geom += std::to_string(y);</div>
+<div class="line"><span class="lineno">   83</span>  </div>
+<div class="line"><span class="lineno">   84</span>  <span class="keywordtype">int</span> gm_mask = XParseGeometry(geom.c_str(), &amp;x_o, &amp;y_o, &amp;w_o, &amp;h_o);</div>
+<div class="line"><span class="lineno">   85</span>  </div>
+<div class="line"><span class="lineno">   86</span>  <span class="keywordflow">if</span> (gm_mask &amp; XNegative)</div>
+<div class="line"><span class="lineno">   87</span>    x_o += DisplayWidth(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), <a class="code hl_function" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7">state::get_screen</a>()) - w;<span class="comment">// - 2;</span></div>
+<div class="line"><span class="lineno">   88</span>  <span class="keywordflow">if</span> (gm_mask &amp; YNegative)</div>
+<div class="line"><span class="lineno">   89</span>    y_o += DisplayHeight(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), <a class="code hl_function" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7">state::get_screen</a>()) - h;<span class="comment">// - 2;</span></div>
+<div class="line"><span class="lineno">   90</span>  </div>
+<div class="line"><span class="lineno">   91</span>  Window xwin = XCreateWindow(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(),</div>
+<div class="line"><span class="lineno">   92</span>    <a class="code hl_function" href="namespacex11_1_1state.html#aa84ba9257575606e735f96a9e16ac069">state::get_root</a>(),</div>
+<div class="line"><span class="lineno">   93</span>    x_o,</div>
+<div class="line"><span class="lineno">   94</span>    y_o,</div>
+<div class="line"><span class="lineno">   95</span>    w,</div>
+<div class="line"><span class="lineno">   96</span>    h,</div>
+<div class="line"><span class="lineno">   97</span>    0,</div>
+<div class="line"><span class="lineno">   98</span>    vinfo.depth, <span class="comment">//DefaultDepth(state::get_dpy(), state::get_screen()),</span></div>
+<div class="line"><span class="lineno">   99</span>    InputOutput,</div>
+<div class="line"><span class="lineno">  100</span>    vinfo.visual, <span class="comment">//DefaultVisual(state::get_dpy(), state::get_screen()),</span></div>
+<div class="line"><span class="lineno">  101</span>    CWBorderPixel | CWBitGravity | CWColormap | CWBackPixel | CWEventMask</div>
+<div class="line"><span class="lineno">  102</span>      | (override_redirect ? CWOverrideRedirect : 0<a class="code hl_enumvalue" href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73a4c614360da93c0a041b22e537de151eb">U</a>),</div>
+<div class="line"><span class="lineno">  103</span>    &amp;wa);</div>
+<div class="line"><span class="lineno">  104</span>  XSetClassHint(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin, &amp;ch);</div>
+<div class="line"><span class="lineno">  105</span>  XStoreName(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin, title);</div>
+<div class="line"><span class="lineno">  106</span>  XSync(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), False);</div>
 <div class="line"><span class="lineno">  107</span>  </div>
-<div class="line"><span class="lineno">  108</span>  <span class="keywordflow">if</span> (!override_redirect) {</div>
-<div class="line"><span class="lineno">  109</span>    XWMHints wm = {.flags = InputHint, .input = 1};</div>
-<div class="line"><span class="lineno">  110</span>    XSizeHints* sizeh;</div>
-<div class="line"><span class="lineno">  111</span>    sizeh = XAllocSizeHints();</div>
-<div class="line"><span class="lineno">  112</span>    sizeh-&gt;flags = PSize | PResizeInc | PBaseSize | PMinSize;</div>
-<div class="line"><span class="lineno">  113</span>    sizeh-&gt;height = h;</div>
-<div class="line"><span class="lineno">  114</span>    sizeh-&gt;width = w;</div>
-<div class="line"><span class="lineno">  115</span>    sizeh-&gt;height_inc = 1;</div>
-<div class="line"><span class="lineno">  116</span>    sizeh-&gt;width_inc = 1;</div>
-<div class="line"><span class="lineno">  117</span>    <span class="keywordflow">if</span> (gm_mask &amp; (XValue | YValue)) {</div>
-<div class="line"><span class="lineno">  118</span>      sizeh-&gt;flags |= USPosition | PWinGravity;</div>
-<div class="line"><span class="lineno">  119</span>      sizeh-&gt;x = x_o;</div>
-<div class="line"><span class="lineno">  120</span>      sizeh-&gt;y = y_o;</div>
-<div class="line"><span class="lineno">  121</span>      sizeh-&gt;win_gravity = <a class="code hl_function" href="x11__impl_8cpp.html#a6348dff56bb3214034c8315319c5326e">geom_mask_to_gravity</a>(gm_mask);</div>
-<div class="line"><span class="lineno">  122</span>    }</div>
-<div class="line"><span class="lineno">  123</span>    <span class="comment">//</span></div>
-<div class="line"><span class="lineno">  124</span>    XSetWMProperties(</div>
-<div class="line"><span class="lineno">  125</span>      <a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin, NULL, NULL, NULL, 0, sizeh, &amp;wm, &amp;ch);</div>
-<div class="line"><span class="lineno">  126</span>    XFree(sizeh);</div>
-<div class="line"><span class="lineno">  127</span>  }</div>
-<div class="line"><span class="lineno">  128</span>  XSync(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), False);</div>
-<div class="line"><span class="lineno">  129</span>  </div>
-<div class="line"><span class="lineno">  130</span>  <span class="comment">//  XDefineCursor(state::get_dpy(), xwin, state::cursor[CurNormal]-&gt;cursor);</span></div>
-<div class="line"><span class="lineno">  131</span>  <span class="keywordflow">if</span> (override_redirect) {</div>
-<div class="line"><span class="lineno">  132</span>    XMapRaised(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin);</div>
-<div class="line"><span class="lineno">  133</span>  } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">  134</span>    XMapWindow(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin);</div>
-<div class="line"><span class="lineno">  135</span>  }</div>
-<div class="line"><span class="lineno">  136</span>  <a class="code hl_variable" href="x11__impl_8cpp.html#a8a6f8eec6371a9ce75e79a3f0c03364a">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84">debug</a>(<span class="stringliteral">&quot;Mapping window %lX&quot;</span>, xwin);</div>
-<div class="line"><span class="lineno">  137</span>  </div>
-<div class="line"><span class="lineno">  138</span>  <span class="keyword">auto</span>* win = <span class="keyword">new</span> <a class="code hl_struct" href="structcydui_1_1graphics_1_1window__t.html">window_t</a>(profiler, xwin, w, h);</div>
-<div class="line"><span class="lineno">  139</span>  </div>
-<div class="line"><span class="lineno">  140</span>  win-&gt;gc = XCreateGC(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin, 0, <span class="keyword">nullptr</span>);</div>
-<div class="line"><span class="lineno">  141</span>  </div>
-<div class="line"><span class="lineno">  142</span>  XSync(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), False);</div>
-<div class="line"><span class="lineno">  143</span>  </div>
-<div class="line"><span class="lineno">  144</span>  <a class="code hl_function" href="namespacex11_1_1events.html#a810967d43ea3ace068c1af0b4159a5e6">x11::events::start</a>();</div>
-<div class="line"><span class="lineno">  145</span>  </div>
-<div class="line"><span class="lineno">  146</span>  <span class="keywordflow">return</span> win;</div>
-<div class="line"><span class="lineno">  147</span>}</div>
+<div class="line"><span class="lineno">  108</span>  <a class="code hl_variable" href="x11__impl_8cpp.html#a8a6f8eec6371a9ce75e79a3f0c03364a">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b">info</a>(</div>
+<div class="line"><span class="lineno">  109</span>    <span class="stringliteral">&quot;Created window %lX at (%s) x: %d, y: %d&quot;</span>, xwin, geom.c_str(), x, y);</div>
+<div class="line"><span class="lineno">  110</span>  </div>
+<div class="line"><span class="lineno">  111</span>  <span class="keywordflow">if</span> (!override_redirect) {</div>
+<div class="line"><span class="lineno">  112</span>    XWMHints wm = {.flags = InputHint, .input = 1};</div>
+<div class="line"><span class="lineno">  113</span>    XSizeHints* sizeh;</div>
+<div class="line"><span class="lineno">  114</span>    sizeh = XAllocSizeHints();</div>
+<div class="line"><span class="lineno">  115</span>    sizeh-&gt;flags = PSize | PResizeInc | PBaseSize | PMinSize;</div>
+<div class="line"><span class="lineno">  116</span>    sizeh-&gt;height = h;</div>
+<div class="line"><span class="lineno">  117</span>    sizeh-&gt;width = w;</div>
+<div class="line"><span class="lineno">  118</span>    sizeh-&gt;height_inc = 1;</div>
+<div class="line"><span class="lineno">  119</span>    sizeh-&gt;width_inc = 1;</div>
+<div class="line"><span class="lineno">  120</span>    <span class="keywordflow">if</span> (gm_mask &amp; (XValue | YValue)) {</div>
+<div class="line"><span class="lineno">  121</span>      sizeh-&gt;flags |= USPosition | PWinGravity;</div>
+<div class="line"><span class="lineno">  122</span>      sizeh-&gt;x = x_o;</div>
+<div class="line"><span class="lineno">  123</span>      sizeh-&gt;y = y_o;</div>
+<div class="line"><span class="lineno">  124</span>      sizeh-&gt;win_gravity = <a class="code hl_function" href="x11__impl_8cpp.html#a6348dff56bb3214034c8315319c5326e">geom_mask_to_gravity</a>(gm_mask);</div>
+<div class="line"><span class="lineno">  125</span>    }</div>
+<div class="line"><span class="lineno">  126</span>    <span class="comment">//</span></div>
+<div class="line"><span class="lineno">  127</span>    XSetWMProperties(</div>
+<div class="line"><span class="lineno">  128</span>      <a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin, NULL, NULL, NULL, 0, sizeh, &amp;wm, &amp;ch);</div>
+<div class="line"><span class="lineno">  129</span>    XFree(sizeh);</div>
+<div class="line"><span class="lineno">  130</span>  }</div>
+<div class="line"><span class="lineno">  131</span>  XSync(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), False);</div>
+<div class="line"><span class="lineno">  132</span>  </div>
+<div class="line"><span class="lineno">  133</span>  <span class="comment">//  XDefineCursor(state::get_dpy(), xwin, state::cursor[CurNormal]-&gt;cursor);</span></div>
+<div class="line"><span class="lineno">  134</span>  <span class="keywordflow">if</span> (override_redirect) {</div>
+<div class="line"><span class="lineno">  135</span>    XMapRaised(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin);</div>
+<div class="line"><span class="lineno">  136</span>  } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">  137</span>    XMapWindow(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin);</div>
+<div class="line"><span class="lineno">  138</span>  }</div>
+<div class="line"><span class="lineno">  139</span>  <a class="code hl_variable" href="x11__impl_8cpp.html#a8a6f8eec6371a9ce75e79a3f0c03364a">log_task</a>.<a class="code hl_function" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84">debug</a>(<span class="stringliteral">&quot;Mapping window %lX&quot;</span>, xwin);</div>
+<div class="line"><span class="lineno">  140</span>  </div>
+<div class="line"><span class="lineno">  141</span>  <span class="keyword">auto</span>* win = <span class="keyword">new</span> <a class="code hl_struct" href="structcydui_1_1graphics_1_1window__t.html">window_t</a>(profiler, xwin, w, h);</div>
+<div class="line"><span class="lineno">  142</span>  </div>
+<div class="line"><span class="lineno">  143</span>  win-&gt;gc = XCreateGC(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), xwin, 0, <span class="keyword">nullptr</span>);</div>
+<div class="line"><span class="lineno">  144</span>  </div>
+<div class="line"><span class="lineno">  145</span>  XSync(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), False);</div>
+<div class="line"><span class="lineno">  146</span>  </div>
+<div class="line"><span class="lineno">  147</span>  <a class="code hl_function" href="namespacex11_1_1events.html#a810967d43ea3ace068c1af0b4159a5e6">x11::events::start</a>();</div>
+<div class="line"><span class="lineno">  148</span>  </div>
+<div class="line"><span class="lineno">  149</span>  <span class="keywordflow">return</span> win;</div>
+<div class="line"><span class="lineno">  150</span>}</div>
 <div class="ttc" id="acydui__events_8h_html_ab3c7af4820830f9166ede9e5623c4e73a4c614360da93c0a041b22e537de151eb"><div class="ttname"><a href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73a4c614360da93c0a041b22e537de151eb">Key::U</a></div><div class="ttdeci">@ U</div></div>
 <div class="ttc" id="anamespacecydstd_1_1types_1_1primitives_html_ab38d3341dbe66d065be979f28fe07439"><div class="ttname"><a href="namespacecydstd_1_1types_1_1primitives.html#ab38d3341dbe66d065be979f28fe07439">cydstd::types::primitives::str</a></div><div class="ttdeci">std::string str</div><div class="ttdef"><b>Definition</b> <a href="types_8h_source.html#l00029">types.h:29</a></div></div>
 <div class="ttc" id="anamespacex11_1_1events_html_a810967d43ea3ace068c1af0b4159a5e6"><div class="ttname"><a href="namespacex11_1_1events.html#a810967d43ea3ace068c1af0b4159a5e6">x11::events::start</a></div><div class="ttdeci">void start()</div><div class="ttdef"><b>Definition</b> <a href="graphics_2x11_2events_2events_8cpp_source.html#l00318">events.cpp:318</a></div></div>
@@ -342,6 +347,18 @@ Functions</h2></td></tr>
 <area shape="poly" title=" " alt="" coords="715,158,848,241,845,246,712,162"/>
 </map>
 </div>
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="namespacecydui_1_1graphics_a7704ec7880a056e09470957824f7d995_icgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a7704ec7880a056e09470957824f7d995_icgraph" alt=""/></div>
+<map name="anamespacecydui_1_1graphics_a7704ec7880a056e09470957824f7d995_icgraph" id="anamespacecydui_1_1graphics_a7704ec7880a056e09470957824f7d995_icgraph">
+<area shape="rect" title=" " alt="" coords="202,5,355,48"/>
+<area shape="rect" href="namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="5,13,154,40"/>
+<area shape="poly" title=" " alt="" coords="186,29,154,29,154,24,186,24"/>
+</map>
+</div>
 
 </div>
 </div>
@@ -361,16 +378,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00164">164</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  164</span>                                       {</div>
-<div class="line"><span class="lineno">  165</span>  <a class="code hl_function" href="namespacex11_1_1render.html#a69153a2a848d57aef839a05e0982a76a">render::flush</a>(win);</div>
-<div class="line"><span class="lineno">  166</span>}</div>
+<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00167">167</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  167</span>                                       {</div>
+<div class="line"><span class="lineno">  168</span>  <a class="code hl_function" href="namespacex11_1_1render.html#a69153a2a848d57aef839a05e0982a76a">render::flush</a>(win);</div>
+<div class="line"><span class="lineno">  169</span>}</div>
 <div class="ttc" id="anamespacex11_1_1render_html_a69153a2a848d57aef839a05e0982a76a"><div class="ttname"><a href="namespacex11_1_1render.html#a69153a2a848d57aef839a05e0982a76a">x11::render::flush</a></div><div class="ttdeci">void flush(cydui::graphics::window_t *win)</div><div class="ttdef"><b>Definition</b> <a href="render_8cpp_source.html#l00205">render.cpp:205</a></div></div>
-</div><!-- fragment --><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div><!-- fragment --><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="namespacecydui_1_1graphics_a183658b9bd88610ff0e5767ae04c55d5_cgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a183658b9bd88610ff0e5767ae04c55d5_cgraph" alt=""/></div>
 <map name="anamespacecydui_1_1graphics_a183658b9bd88610ff0e5767ae04c55d5_cgraph" id="anamespacecydui_1_1graphics_a183658b9bd88610ff0e5767ae04c55d5_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,151,40"/>
@@ -382,11 +399,11 @@ Functions</h2></td></tr>
 <area shape="poly" title=" " alt="" coords="517,24,549,24,549,29,517,29"/>
 </map>
 </div>
-<div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="namespacecydui_1_1graphics_a183658b9bd88610ff0e5767ae04c55d5_icgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a183658b9bd88610ff0e5767ae04c55d5_icgraph" alt=""/></div>
 <map name="anamespacecydui_1_1graphics_a183658b9bd88610ff0e5767ae04c55d5_icgraph" id="anamespacecydui_1_1graphics_a183658b9bd88610ff0e5767ae04c55d5_icgraph">
 <area shape="rect" title=" " alt="" coords="388,21,533,48"/>
@@ -415,16 +432,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00286">286</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  286</span>                                                               {</div>
-<div class="line"><span class="lineno">  287</span>  <span class="keywordflow">return</span> win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#ad72eebf095eba2d7a2f42d16e90ed522">staging_target</a>;</div>
-<div class="line"><span class="lineno">  288</span>}</div>
+<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00289">289</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  289</span>                                                               {</div>
+<div class="line"><span class="lineno">  290</span>  <span class="keywordflow">return</span> win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#ad72eebf095eba2d7a2f42d16e90ed522">staging_target</a>;</div>
+<div class="line"><span class="lineno">  291</span>}</div>
 <div class="ttc" id="astructcydui_1_1graphics_1_1window__t_html_ad72eebf095eba2d7a2f42d16e90ed522"><div class="ttname"><a href="structcydui_1_1graphics_1_1window__t.html#ad72eebf095eba2d7a2f42d16e90ed522">cydui::graphics::window_t::staging_target</a></div><div class="ttdeci">pixelmap_t * staging_target</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8hpp_source.html#l00032">x11_impl.hpp:32</a></div></div>
-</div><!-- fragment --><div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div><!-- fragment --><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="namespacecydui_1_1graphics_ac4038832746129448e38dbf83c242d19_icgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_ac4038832746129448e38dbf83c242d19_icgraph" alt=""/></div>
 <map name="anamespacecydui_1_1graphics_ac4038832746129448e38dbf83c242d19_icgraph" id="anamespacecydui_1_1graphics_ac4038832746129448e38dbf83c242d19_icgraph">
 <area shape="rect" title=" " alt="" coords="388,13,523,56"/>
@@ -453,10 +470,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00290">290</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  290</span>                                                              {</div>
-<div class="line"><span class="lineno">  291</span>  <span class="keywordflow">return</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>) win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">xwin</a>;</div>
-<div class="line"><span class="lineno">  292</span>}</div>
+<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00293">293</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  293</span>                                                              {</div>
+<div class="line"><span class="lineno">  294</span>  <span class="keywordflow">return</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>) win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">xwin</a>;</div>
+<div class="line"><span class="lineno">  295</span>}</div>
 <div class="ttc" id="astructcydui_1_1graphics_1_1window__t_html_a1eb9b75f5e17f1d1e8b11138eda9ee66"><div class="ttname"><a href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">cydui::graphics::window_t::xwin</a></div><div class="ttdeci">Window xwin</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8hpp_source.html#l00030">x11_impl.hpp:30</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -493,22 +510,22 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00157">157</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  157</span>                                                      {</div>
-<div class="line"><span class="lineno">  158</span>  <span class="keywordflow">if</span> (w == 0 || h == 0) <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  159</span>  std::lock_guard lk {win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#ada7b7df437402a71353d45d05ef32065">render_mtx</a>};</div>
-<div class="line"><span class="lineno">  160</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#aac71ce31fada0d62b259b3099d06727a">render_target</a>-&gt;<a class="code hl_function" href="structmd__buffer__t.html#a50e27c4acab4822976cf83ff1c79c3bd">resize</a>({(<a class="code hl_typedef" href="multidim__data_8h.html#a801d6a451a01953ef8cbae6feb6a3638">size_t</a>) w, (<span class="keywordtype">size_t</span>) h});</div>
-<div class="line"><span class="lineno">  161</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#ad72eebf095eba2d7a2f42d16e90ed522">staging_target</a>-&gt;<a class="code hl_function" href="structmd__buffer__t.html#a50e27c4acab4822976cf83ff1c79c3bd">resize</a>({(<a class="code hl_typedef" href="multidim__data_8h.html#a801d6a451a01953ef8cbae6feb6a3638">size_t</a>) w, (<span class="keywordtype">size_t</span>) h});</div>
-<div class="line"><span class="lineno">  162</span>}</div>
+<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00160">160</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  160</span>                                                      {</div>
+<div class="line"><span class="lineno">  161</span>  <span class="keywordflow">if</span> (w == 0 || h == 0) <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  162</span>  std::lock_guard lk {win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#ada7b7df437402a71353d45d05ef32065">render_mtx</a>};</div>
+<div class="line"><span class="lineno">  163</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#aac71ce31fada0d62b259b3099d06727a">render_target</a>-&gt;<a class="code hl_function" href="structmd__buffer__t.html#a50e27c4acab4822976cf83ff1c79c3bd">resize</a>({(<a class="code hl_typedef" href="multidim__data_8h.html#a801d6a451a01953ef8cbae6feb6a3638">size_t</a>) w, (<span class="keywordtype">size_t</span>) h});</div>
+<div class="line"><span class="lineno">  164</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#ad72eebf095eba2d7a2f42d16e90ed522">staging_target</a>-&gt;<a class="code hl_function" href="structmd__buffer__t.html#a50e27c4acab4822976cf83ff1c79c3bd">resize</a>({(<a class="code hl_typedef" href="multidim__data_8h.html#a801d6a451a01953ef8cbae6feb6a3638">size_t</a>) w, (<span class="keywordtype">size_t</span>) h});</div>
+<div class="line"><span class="lineno">  165</span>}</div>
 <div class="ttc" id="amultidim__data_8h_html_a801d6a451a01953ef8cbae6feb6a3638"><div class="ttname"><a href="multidim__data_8h.html#a801d6a451a01953ef8cbae6feb6a3638">size_t</a></div><div class="ttdeci">std::size_t size_t</div><div class="ttdef"><b>Definition</b> <a href="multidim__data_8h_source.html#l00014">multidim_data.h:14</a></div></div>
 <div class="ttc" id="astructcydui_1_1graphics_1_1window__t_html_aac71ce31fada0d62b259b3099d06727a"><div class="ttname"><a href="structcydui_1_1graphics_1_1window__t.html#aac71ce31fada0d62b259b3099d06727a">cydui::graphics::window_t::render_target</a></div><div class="ttdeci">pixelmap_t * render_target</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8hpp_source.html#l00033">x11_impl.hpp:33</a></div></div>
 <div class="ttc" id="astructcydui_1_1graphics_1_1window__t_html_ada7b7df437402a71353d45d05ef32065"><div class="ttname"><a href="structcydui_1_1graphics_1_1window__t.html#ada7b7df437402a71353d45d05ef32065">cydui::graphics::window_t::render_mtx</a></div><div class="ttdeci">std::mutex render_mtx</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8hpp_source.html#l00042">x11_impl.hpp:42</a></div></div>
 <div class="ttc" id="astructmd__buffer__t_html_a50e27c4acab4822976cf83ff1c79c3bd"><div class="ttname"><a href="structmd__buffer__t.html#a50e27c4acab4822976cf83ff1c79c3bd">md_buffer_t::resize</a></div><div class="ttdeci">void resize(std::array&lt; size_t, D &gt; new_size)</div><div class="ttdef"><b>Definition</b> <a href="multidim__data_8h_source.html#l00031">multidim_data.h:31</a></div></div>
-</div><!-- fragment --><div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div><!-- fragment --><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="namespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_cgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_cgraph" alt=""/></div>
 <map name="anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_cgraph" id="anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,158,40"/>
@@ -518,11 +535,11 @@ Functions</h2></td></tr>
 <area shape="poly" title=" " alt="" coords="338,24,370,24,370,29,338,29"/>
 </map>
 </div>
-<div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="namespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_icgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_icgraph" alt=""/></div>
 <map name="anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_icgraph" id="anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_icgraph">
 <area shape="rect" title=" " alt="" coords="388,21,540,48"/>
@@ -530,6 +547,67 @@ Functions</h2></td></tr>
 <area shape="poly" title=" " alt="" coords="373,37,341,37,341,32,373,32"/>
 <area shape="rect" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a292f229815bc05bbcf95cf3f2e90877b" title=" " alt="" coords="5,5,149,64"/>
 <area shape="poly" title=" " alt="" coords="181,37,149,37,149,32,181,32"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="ac3ec912c904cf4d43e2615f86602884e" name="ac3ec912c904cf4d43e2615f86602884e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3ec912c904cf4d43e2615f86602884e">&#9670;&#160;</a></span>terminate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void cydui::graphics::terminate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcydui_1_1graphics_1_1window__t.html">window_t</a> *&#160;</td>
+          <td class="paramname"><em>win</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00297">297</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  297</span>                                                        {</div>
+<div class="line"><span class="lineno">  298</span>  XUnmapWindow(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">xwin</a>);</div>
+<div class="line"><span class="lineno">  299</span>  XDestroyWindow(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">xwin</a>);</div>
+<div class="line"><span class="lineno">  300</span>  <span class="keyword">delete</span> win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#ad72eebf095eba2d7a2f42d16e90ed522">staging_target</a>;</div>
+<div class="line"><span class="lineno">  301</span>  <span class="keyword">delete</span> win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#aac71ce31fada0d62b259b3099d06727a">render_target</a>;</div>
+<div class="line"><span class="lineno">  302</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a83be54ffd1345a2a4a4766ea596bffab">render_thd</a>-&gt;<a class="code hl_variable" href="structcydui_1_1threading_1_1thread__t.html#a230c1adb68eeb06a399359ebb1fac07b">running</a> = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  303</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a83be54ffd1345a2a4a4766ea596bffab">render_thd</a>-&gt;<a class="code hl_function" href="structcydui_1_1threading_1_1thread__t.html#a6359aff6f4f5585d8cfee4b01fa995be">join</a>();</div>
+<div class="line"><span class="lineno">  304</span>}</div>
+<div class="ttc" id="astructcydui_1_1graphics_1_1window__t_html_a83be54ffd1345a2a4a4766ea596bffab"><div class="ttname"><a href="structcydui_1_1graphics_1_1window__t.html#a83be54ffd1345a2a4a4766ea596bffab">cydui::graphics::window_t::render_thd</a></div><div class="ttdeci">cydui::threading::thread_t * render_thd</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8hpp_source.html#l00048">x11_impl.hpp:48</a></div></div>
+<div class="ttc" id="astructcydui_1_1threading_1_1thread__t_html_a230c1adb68eeb06a399359ebb1fac07b"><div class="ttname"><a href="structcydui_1_1threading_1_1thread__t.html#a230c1adb68eeb06a399359ebb1fac07b">cydui::threading::thread_t::running</a></div><div class="ttdeci">bool running</div><div class="ttdef"><b>Definition</b> <a href="threading_8hpp_source.html#l00015">threading.hpp:15</a></div></div>
+<div class="ttc" id="astructcydui_1_1threading_1_1thread__t_html_a6359aff6f4f5585d8cfee4b01fa995be"><div class="ttname"><a href="structcydui_1_1threading_1_1thread__t.html#a6359aff6f4f5585d8cfee4b01fa995be">cydui::threading::thread_t::join</a></div><div class="ttdeci">void join() const</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00034">threading.cpp:34</a></div></div>
+</div><!-- fragment --><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="namespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_cgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_cgraph" alt=""/></div>
+<map name="anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_cgraph" id="anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_cgraph">
+<area shape="rect" title=" " alt="" coords="5,60,177,87"/>
+<area shape="rect" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5" title=" " alt="" coords="237,31,370,57"/>
+<area shape="poly" title=" " alt="" coords="177,59,222,53,222,58,177,64"/>
+<area shape="rect" href="structcydui_1_1threading_1_1thread__t.html#a6359aff6f4f5585d8cfee4b01fa995be" title=" " alt="" coords="225,81,382,124"/>
+<area shape="poly" title=" " alt="" coords="177,83,210,87,209,92,177,88"/>
+<area shape="rect" href="structlogging_1_1logger.html#ae412f4d42c6e53803201856b5ceba5aa" title=" " alt="" coords="430,5,569,32"/>
+<area shape="poly" title=" " alt="" coords="369,33,414,27,415,32,370,38"/>
+<area shape="rect" href="structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b" title=" " alt="" coords="433,56,567,83"/>
+<area shape="poly" title=" " alt="" coords="370,50,418,56,417,61,369,55"/>
+</map>
+</div>
+<div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="namespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_icgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_icgraph" alt=""/></div>
+<map name="anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_icgraph" id="anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_icgraph">
+<area shape="rect" title=" " alt="" coords="223,13,394,40"/>
+<area shape="rect" href="classcydui_1_1window_1_1CWindow.html#a44ea0a5067d50ec6af903a7fe62db448" title=" " alt="" coords="5,5,175,48"/>
+<area shape="poly" title=" " alt="" coords="207,29,175,29,175,24,207,24"/>
 </map>
 </div>
 

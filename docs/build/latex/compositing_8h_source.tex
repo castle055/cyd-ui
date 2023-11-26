@@ -100,7 +100,7 @@
 \DoxyCodeLine{\Hypertarget{compositing_8h_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lk(compositor-\/>\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a2a5e313aff23b76564f4ec0213a2c0b3}{m}});}
 \DoxyCodeLine{\Hypertarget{compositing_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ !=\ compositor-\/>\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_aa553689bee43574450265dc739d4fea5}{render\_target}})\ \{}
 \DoxyCodeLine{\Hypertarget{compositing_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ compositor-\/>\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a040d0f1494fd6d02886c1c832546de5d}{cv}}.wait(lk,\ [\&]\ \{}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ compositor-\/>\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a78a66e00d897fb374aed86ae5e8dede0}{tree\_dirty}};}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ compositor-\/>\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a78a66e00d897fb374aed86ae5e8dede0}{tree\_dirty}}\ ||\ !compositor-\/>\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ab2459e00b8b73fa9d9b0fec4b93dad00}{running}}.test();}
 \DoxyCodeLine{\Hypertarget{compositing_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
 \DoxyCodeLine{\Hypertarget{compositing_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ compositor-\/>\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a96d8d306a9d0cf063bf0c095ebbfd3a1}{profiler}}-\/>\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}COMPOSITING\ TASK"{}});}
 \DoxyCodeLine{\Hypertarget{compositing_8h_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ compositor-\/>\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a78a66e00d897fb374aed86ae5e8dede0}{tree\_dirty}}\ =\ \textcolor{keyword}{false};}
@@ -181,33 +181,36 @@
 \DoxyCodeLine{\Hypertarget{compositing_8h_source_l00177}\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a292f229815bc05bbcf95cf3f2e90877b}{00177}}\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a292f229815bc05bbcf95cf3f2e90877b}{LayoutCompositor}}()\ \{}
 \DoxyCodeLine{\Hypertarget{compositing_8h_source_l00178}00178\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ab2459e00b8b73fa9d9b0fec4b93dad00}{running}}.test\_and\_set();}
 \DoxyCodeLine{\Hypertarget{compositing_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ad3e5af5fe0cd6895ef31e2110cbe48ad}{compositing\_thd}}\ =\ std::thread\ \{\&\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a6963756199e05569cf36f7ce8cd896fd}{compositing\_task}},\ \textcolor{keyword}{this}\};}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00180}00180\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00181}00181\ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00182}\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a10e18aac22e1a5baa129a004d2fb2566}{00182}}\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a10e18aac22e1a5baa129a004d2fb2566}{\string~LayoutCompositor}}()\ \{}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00183}00183\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ab2459e00b8b73fa9d9b0fec4b93dad00}{running}}.clear();}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ad3e5af5fe0cd6895ef31e2110cbe48ad}{compositing\_thd}}.join();}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00185}00185\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00186}00186\ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00187}\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a6f945ebee1e201a2d4f606c4eed06bd8}{00187}}\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a6f945ebee1e201a2d4f606c4eed06bd8}{set\_render\_target}}(\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{graphics::window\_t}}*\ \_render\_target,\ \mbox{\hyperlink{structprof_1_1context__t}{prof::context\_t}}*\ \_profiler)\ \{}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a2a5e313aff23b76564f4ec0213a2c0b3}{m}});}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00189}00189\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_aa553689bee43574450265dc739d4fea5}{render\_target}}\ =\ \_render\_target;}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00190}00190\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a96d8d306a9d0cf063bf0c095ebbfd3a1}{profiler}}\ =\ \_profiler;}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00191}00191\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00192}00192\ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00193}\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a857d09d86be1528a255ecdfe3b296c17}{00193}}\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a857d09d86be1528a255ecdfe3b296c17}{compose}}(\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__tree__t}{compositing\_tree\_t}}*\ \_tree)\ \{}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00194}00194\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__tree__t}{compositing\_tree\_t}}*\ old\_tree;}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00195}00195\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a2a5e313aff23b76564f4ec0213a2c0b3}{m}});}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \ \ old\_tree\ =\ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ae5547c3279e71ca5aa9feca804e45452}{tree}};}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ae5547c3279e71ca5aa9feca804e45452}{tree}}\ =\ \_tree;}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a78a66e00d897fb374aed86ae5e8dede0}{tree\_dirty}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a040d0f1494fd6d02886c1c832546de5d}{cv}}.notify\_all();}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ old\_tree;}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00203}00203\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00204}00204\ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00205}00205\ \}}
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00206}00206\ }
-\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00207}00207\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_COMPOSITING\_H}}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00180}00180\ \ \ \ \ \ \ \ \ pthread\_t\ pt\ =\ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ad3e5af5fe0cd6895ef31e2110cbe48ad}{compositing\_thd}}.native\_handle();}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00181}00181\ \ \ \ \ \ \ \ \ pthread\_setname\_np(pt,\ \textcolor{stringliteral}{"{}COMPOSITING\_THD"{}});}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00182}00182\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00183}00183\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00184}\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a10e18aac22e1a5baa129a004d2fb2566}{00184}}\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a10e18aac22e1a5baa129a004d2fb2566}{\string~LayoutCompositor}}()\ \{}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00185}00185\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ab2459e00b8b73fa9d9b0fec4b93dad00}{running}}.clear();}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00186}00186\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a040d0f1494fd6d02886c1c832546de5d}{cv}}.notify\_all();}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00187}00187\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ad3e5af5fe0cd6895ef31e2110cbe48ad}{compositing\_thd}}.join();}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00188}00188\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00189}00189\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00190}\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a6f945ebee1e201a2d4f606c4eed06bd8}{00190}}\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a6f945ebee1e201a2d4f606c4eed06bd8}{set\_render\_target}}(\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{graphics::window\_t}}*\ \_render\_target,\ \mbox{\hyperlink{structprof_1_1context__t}{prof::context\_t}}*\ \_profiler)\ \{}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00191}00191\ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a2a5e313aff23b76564f4ec0213a2c0b3}{m}});}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00192}00192\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_aa553689bee43574450265dc739d4fea5}{render\_target}}\ =\ \_render\_target;}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a96d8d306a9d0cf063bf0c095ebbfd3a1}{profiler}}\ =\ \_profiler;}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00194}00194\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00195}00195\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00196}\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a857d09d86be1528a255ecdfe3b296c17}{00196}}\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a857d09d86be1528a255ecdfe3b296c17}{compose}}(\mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__tree__t}{compositing\_tree\_t}}*\ \_tree)\ \{}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00197}00197\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__tree__t}{compositing\_tree\_t}}*\ old\_tree;}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a2a5e313aff23b76564f4ec0213a2c0b3}{m}});}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ old\_tree\ =\ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ae5547c3279e71ca5aa9feca804e45452}{tree}};}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ae5547c3279e71ca5aa9feca804e45452}{tree}}\ =\ \_tree;}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a78a66e00d897fb374aed86ae5e8dede0}{tree\_dirty}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00203}00203\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a040d0f1494fd6d02886c1c832546de5d}{cv}}.notify\_all();}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ old\_tree;}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00206}00206\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00207}00207\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00208}00208\ \}}
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{compositing_8h_source_l00210}00210\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_COMPOSITING\_H}}
 
 \end{DoxyCode}

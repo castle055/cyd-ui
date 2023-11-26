@@ -21,32 +21,30 @@ class \mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{CWindow}}
 
 
 
-Definition at line \mbox{\hyperlink{window_8cpp_source_l00013}{13}} of file \mbox{\hyperlink{window_8cpp_source}{window.\+cpp}}.
+Definition at line \mbox{\hyperlink{window_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{window_8cpp_source}{window.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00022\ \ \ \{}
-\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{auto}\ win\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{CWindow}}();}
-\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{auto}*\ win\_ref\ =\ graphics::create\_window(\&win-\/>profiling\_ctx,\ title,\ wclass,\ x,\ y,\ w,\ h,\ override\_redirect);}
-\DoxyCodeLine{00025\ \ \ win-\/>layout\ =\ layout;}
-\DoxyCodeLine{00026\ \ \ }
-\DoxyCodeLine{00027\ \ \ win-\/>win\_ref\ =\ win\_ref;}
-\DoxyCodeLine{00028\ \ \ \textcolor{comment}{//graphics::set\_background(win\_ref);}}
-\DoxyCodeLine{00029\ \ \ }
-\DoxyCodeLine{00030\ \ \ layout-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ec466f6250b29670fc625bf251d659b}{bind\_window}}(win);}
-\DoxyCodeLine{00031\ \ \ }
-\DoxyCodeLine{00032\ \ \ \mbox{\hyperlink{window_8cpp_a5161037059401de73c79e880c763948a}{windows}}.push\_back(win);}
-\DoxyCodeLine{00033\ \ \ }
-\DoxyCodeLine{00034\ \ \ events::start();}
-\DoxyCodeLine{00035\ \ \ }
-\DoxyCodeLine{00036\ \ \ \textcolor{comment}{//\ Once\ all\ threads\ have\ started\ and\ everything\ is\ set\ up\ for\ this\ window}}
-\DoxyCodeLine{00037\ \ \ \textcolor{comment}{//\ force\ a\ complete\ redraw}}
-\DoxyCodeLine{00038\ \ \ \textcolor{comment}{//events::emit<RedrawEvent>(\{.win\ =\ (unsigned\ int)\ win\_ref-\/>xwin\});}}
-\DoxyCodeLine{00039\ \ \ \textcolor{comment}{//events::emit<RedrawEvent>(\{\ \});}}
-\DoxyCodeLine{00040\ \ \ \textcolor{comment}{//events::emit<RedrawEvent>(\{.win\ =\ get\_id(win\_ref)\});}}
-\DoxyCodeLine{00041\ \ \ }
-\DoxyCodeLine{00042\ \ \ \textcolor{keywordflow}{return}\ win;}
-\DoxyCodeLine{00043\ \}}
+\DoxyCodeLine{00029\ \ \ \{}
+\DoxyCodeLine{00030\ \ \ \textcolor{keyword}{auto}\ win\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{CWindow}}();}
+\DoxyCodeLine{00031\ \ \ \textcolor{keyword}{auto}*\ win\_ref\ =\ graphics::create\_window(\&win-\/>profiling\_ctx,\ title,\ wclass,\ x,\ y,\ w,\ h,\ override\_redirect);}
+\DoxyCodeLine{00032\ \ \ win-\/>layout\ =\ layout;}
+\DoxyCodeLine{00033\ \ \ win-\/>win\_ref\ =\ win\_ref;}
+\DoxyCodeLine{00034\ \ \ }
+\DoxyCodeLine{00035\ \ \ layout-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ec466f6250b29670fc625bf251d659b}{bind\_window}}(win);}
+\DoxyCodeLine{00036\ \ \ }
+\DoxyCodeLine{00037\ \ \ \textcolor{comment}{//windows.push\_back(win);}}
+\DoxyCodeLine{00038\ \ \ }
+\DoxyCodeLine{00039\ \ \ events::start();}
+\DoxyCodeLine{00040\ \ \ }
+\DoxyCodeLine{00041\ \ \ \textcolor{comment}{//\ Once\ all\ threads\ have\ started\ and\ everything\ is\ set\ up\ for\ this\ window}}
+\DoxyCodeLine{00042\ \ \ \textcolor{comment}{//\ force\ a\ complete\ redraw}}
+\DoxyCodeLine{00043\ \ \ \textcolor{comment}{//events::emit<RedrawEvent>(\{.win\ =\ (unsigned\ int)\ win\_ref-\/>xwin\});}}
+\DoxyCodeLine{00044\ \ \ \textcolor{comment}{//events::emit<RedrawEvent>(\{\ \});}}
+\DoxyCodeLine{00045\ \ \ \textcolor{comment}{//events::emit<RedrawEvent>(\{.win\ =\ get\_id(win\_ref)\});}}
+\DoxyCodeLine{00046\ \ \ }
+\DoxyCodeLine{00047\ \ \ \textcolor{keywordflow}{return}\ win;}
+\DoxyCodeLine{00048\ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak

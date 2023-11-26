@@ -97,7 +97,7 @@ $(document).ready(function(){initNavTree('conceptcydui_1_1events_1_1EventType.ht
 <p><code>#include &lt;<a class="el" href="include_2events_2events_8hpp_source.html">events.hpp</a>&gt;</code></p>
 <h2 class="groupheader">Concept definition</h2>
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptcydui_1_1events_1_1EventType.html">cydui::events::EventType</a> =  <span class="keyword">requires</span> {</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="conceptcydui_1_1events_1_1EventType.html">cydui::events::EventType</a> =  <span class="keyword">requires</span>(T::DataType dt) {</div>
 <div class="line">      {</div>
 <div class="line">      T::type</div>
 <div class="line">      } -&gt; std::convertible_to&lt;str&gt;;</div>
@@ -105,9 +105,9 @@ $(document).ready(function(){initNavTree('conceptcydui_1_1events_1_1EventType.ht
 <div class="line">      {</div>
 <div class="line">      T::data</div>
 <div class="line">      } -&gt; std::convertible_to&lt;typename T::DataType&gt;;</div>
-<div class="line">      {</div>
-<div class="line">      T::DataType::win</div>
-<div class="line">      } -&gt; std::convertible_to&lt;unsigned long&gt;;</div>
+<div class="line">      </div>
+<div class="line">      </div>
+<div class="line">      </div>
 <div class="line">    }</div>
 <div class="ttc" id="aconceptcydui_1_1events_1_1EventType_html"><div class="ttname"><a href="conceptcydui_1_1events_1_1EventType.html">cydui::events::EventType</a></div><div class="ttdef"><b>Definition</b> <a href="include_2events_2events_8hpp_source.html#l00082">events.hpp:82</a></div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>

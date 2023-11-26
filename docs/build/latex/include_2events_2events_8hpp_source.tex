@@ -83,7 +83,7 @@
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00079}00079\ }
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00080}00080\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacecydui_1_1events}{cydui::events}}\ \{}
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00081}00081\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{class}\ T>}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00082}\mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{00082}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{EventType}}\ =\ \textcolor{keyword}{requires}\ \{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00082}\mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{00082}}\ \ \ \ \ \textcolor{keyword}{concept\ }\mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{EventType}}\ =\ \textcolor{keyword}{requires}(T::DataType\ dt)\ \{}
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00083}00083\ \ \ \ \ \ \ \{}
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00084}00084\ \ \ \ \ \ \ T::type}
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00085}00085\ \ \ \ \ \ \ \}\ -\/>\ std::convertible\_to<str>;}
@@ -91,9 +91,9 @@
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00087}00087\ \ \ \ \ \ \ \{}
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00088}00088\ \ \ \ \ \ \ T::data}
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00089}00089\ \ \ \ \ \ \ \}\ -\/>\ std::convertible\_to<typename\ T::DataType>;}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00090}00090\ \ \ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00091}00091\ \ \ \ \ \ \ T::DataType::win}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00092}00092\ \ \ \ \ \ \ \}\ -\/>\ std::convertible\_to<unsigned\ long>;}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00090}00090\ \ \ \ \ \ \ \textcolor{comment}{//\{}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00091}00091\ \ \ \ \ \ \ \textcolor{comment}{//dt.win}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00092}00092\ \ \ \ \ \ \ \textcolor{comment}{//\}\ -\/>\ std::convertible\_to<unsigned\ long>;}}
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00093}00093\ \ \ \ \ \};}
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00094}00094\ \ \ \ \ }
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00095}00095\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{requires}\ \mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{EventType<T>}}}
@@ -147,98 +147,97 @@
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00143}\mbox{\hyperlink{namespacecydui_1_1events_a64db03d0513c4d66801257e90c58b3a6}{00143}}\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecydui_1_1events_a64db03d0513c4d66801257e90c58b3a6}{emit}}(\textcolor{keyword}{typename}\ T::DataType\ data)\ \{}
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00144}00144\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_abfd3c7106abd299bacc674ec3865de6a}{emit\_raw}}(T::type,\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}(\{.data\ =\ data\}));}
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00145}00145\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00146}00146\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00146}00146\ }
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00147}00147\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\ \textcolor{keyword}{requires}\ EventType<T>}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00148}\mbox{\hyperlink{classcydui_1_1events_1_1Consumer}{00148}}\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classcydui_1_1events_1_1Consumer}{Consumer}}:\ \textcolor{keyword}{public}\ std::function<void(const\ ParsedEvent<T>\ \&)>\ \{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00149}00149\ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00150}00150\ \textcolor{preprocessor}{\#pragma\ clang\ diagnostic\ push}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00151}00151\ \textcolor{preprocessor}{\#pragma\ ide\ diagnostic\ ignored\ "{}google-\/explicit-\/constructor"{}}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00152}00152\ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00153}\mbox{\hyperlink{classcydui_1_1events_1_1Consumer_a20be8d6afa2f5cdb9603a897ce7ac596}{00153}}\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1events_1_1Consumer_a20be8d6afa2f5cdb9603a897ce7ac596}{Consumer}}(std::function<\textcolor{keywordtype}{void}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1events_1_1ParsedEvent}{ParsedEvent<T>}}\ \&)>\ c)}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00154}00154\ \ \ \ \ \ \ \ \ :\ std::function<void(const\ \mbox{\hyperlink{structcydui_1_1events_1_1ParsedEvent}{ParsedEvent}}<\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}>\ \&)>(c)\ \{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00155}00155\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00156}00156\ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00157}00157\ \textcolor{preprocessor}{\#pragma\ clang\ diagnostic\ pop}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00158}00158\ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00159}00159\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00160}00160\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00161}\mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{00161}}\ \ \ \ \ \textcolor{keyword}{typedef}\ std::function<void(\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}}*)>\ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00162}00162\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\_t}};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00163}00163\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00164}\mbox{\hyperlink{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc}{00164}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc}{remove\_listener}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \&event\_type,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\_t}}\ \&listener);}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00165}00165\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00166}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{00166}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\_t}}\ \{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00167}00167\ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00168}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{00168}}\ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00169}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{00169}}\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00170}00170\ \ \ \ \ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00171}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa4738ea6d20e54db9da4effa01a1254e}{00171}}\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa4738ea6d20e54db9da4effa01a1254e}{listener\_t}}()\ \{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}}\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00174}00174\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00175}00175\ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00176}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a9abc780b85a06be01a8b66793503f3ae}{00176}}\ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a9abc780b85a06be01a8b66793503f3ae}{listener\_t}}(\mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}}\ c):\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a75f63d36af643792a3d83a78ddff7aa6}{func}}(std::move(c))\ \{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}}\ =\ (long)\ \textcolor{keyword}{new}\ \mbox{\hyperlink{multidim__data_8h_ad24825e11b71d87e40f5c0e88dd980a0}{u8}};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00178}00178\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00179}00179\ \ \ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00180}00180\ \ \ \ \ \ \ \textcolor{comment}{//listener\_t(const\ listener\_t\ \&other)\ \{}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00181}00181\ \ \ \ \ \ \ \textcolor{comment}{//\ \ ID\ =\ other.get\_id();}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00182}00182\ \ \ \ \ \ \ \textcolor{comment}{//\}}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00183}00183\ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00184}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a62126b951712f8710fb9b41037ed1b57}{00184}}\ \ \ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a62126b951712f8710fb9b41037ed1b57}{get\_id}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00186}00186\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00187}00187\ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00188}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a}{00188}}\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a}{event\_type}};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00189}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a75f63d36af643792a3d83a78ddff7aa6}{00189}}\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a75f63d36af643792a3d83a78ddff7aa6}{func}};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00190}00190\ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00191}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a9323c358738542305a449d913e912911}{00191}}\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a9323c358738542305a449d913e912911}{remove}}()\ \{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc}{cydui::events::remove\_listener}}(\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a}{event\_type}},\ *\textcolor{keyword}{this});}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00194}00194\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00195}00195\ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00196}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a13dbb59580167e689ca95ac22581edad}{00196}}\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a13dbb59580167e689ca95ac22581edad}{is\_active}}()\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00198}00198\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00199}00199\ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00200}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a6c2442a05bb1538ae71bb4052fd3e556}{00200}}\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a6c2442a05bb1538ae71bb4052fd3e556}{operator()}}(\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}}*\ ev)\textcolor{keyword}{\ const\ }\{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a75f63d36af643792a3d83a78ddff7aa6}{func}}(ev);}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00202}00202\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00203}00203\ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00204}00204\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00205}\mbox{\hyperlink{namespacecydui_1_1events_af4bd6d1ea80753200425f7457ddf2826}{00205}}\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\_t}}\ \mbox{\hyperlink{namespacecydui_1_1events_af4bd6d1ea80753200425f7457ddf2826}{on\_event\_raw}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \&event\_type,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}}\ \&l);}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00206}00206\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00207}00207\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00208}00208\ \ \ \ \ \textcolor{keyword}{requires}\ \mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{EventType<T>}}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00209}\mbox{\hyperlink{namespacecydui_1_1events_aecd185c59b15b1d0299119e9a6825c26}{00209}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\_t}}\ \mbox{\hyperlink{namespacecydui_1_1events_aecd185c59b15b1d0299119e9a6825c26}{on\_event}}(\mbox{\hyperlink{classcydui_1_1events_1_1Consumer}{Consumer<T>}}\ c)\ \{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00210}00210\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacecydui_1_1events_af4bd6d1ea80753200425f7457ddf2826}{cydui::events::on\_event\_raw}}(T::type,\ [c](\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}}*\ ev)\ \{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ parsed\ =\ ev-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_ad8fbe3ea4366883699af10b5bbb0c312}{parse}}<\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}>();}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parsed.data)\ \{}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ c(parsed);}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00215}00215\ \ \ \ \ \ \ \});}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00216}00216\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00217}00217\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00218}00218\ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00219}00219\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecydui_1_1events_ae57f3d691631bd72884ab4a6021387b9}{start}}();}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00220}00220\ \ \ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00221}00221\ \}\textcolor{comment}{//\ namespace\ cydui::events}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00222}00222\ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00223}00223\ \textcolor{comment}{//\ MACROS}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00224}\mbox{\hyperlink{include_2events_2events_8hpp_aa0a366172261a71aeff0bd609de53d1c}{00224}}\ \textcolor{preprocessor}{\#define\ consumer\ [=](it)}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00225}\mbox{\hyperlink{include_2events_2events_8hpp_ab3850b31e5296658c9d8a88cb17f3688}{00225}}\ \textcolor{preprocessor}{\#define\ listen(EVENT,\ block)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00226}00226\ \textcolor{preprocessor}{\ \ cydui::events::on\_event<EVENT>(cydui::events::Consumer<EVENT>(\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00227}00227\ \textcolor{preprocessor}{\ \ \ \ \ \ [=,\ this](const\ cydui::events::ParsedEvent<EVENT>\&\ it)\ block))}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00228}00228\ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00229}00229\ \textcolor{comment}{//\ TODO\ -\/\ In\ case\ of\ event\ name\ collision\ (it's\ possible),\ maybe\ append\ \_\_FILE\_\_\ or\ \_\_LINE\_\_\ to\ the\ \`{}type`}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00230}00230\ \textcolor{comment}{//\ variable\ to\ make\ the\ event\ type\ unique\ even\ if\ multiple\ translation\ units\ declare\ similarly\ named\ events.}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00231}\mbox{\hyperlink{include_2events_2events_8hpp_a013e5c56ca9a52b77ec5c6fb71014df3}{00231}}\ \textcolor{preprocessor}{\#define\ EVENT(NAME,\ DATA)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00232}00232\ \textcolor{preprocessor}{\ \ struct\ NAME\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00233}00233\ \textcolor{preprocessor}{\ \ \ \ constexpr\ static\ const\ char*\ type\ =\ \#NAME;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00234}00234\ \textcolor{preprocessor}{\ \ \ \ struct\ DataType\ DATA\ data;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00235}00235\ \textcolor{preprocessor}{\ \ \};}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00148}\mbox{\hyperlink{namespacecydui_1_1events_a8738c154e14a51805dbcab48b42cf0e6}{00148}}\ \ \ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespacecydui_1_1events_a8738c154e14a51805dbcab48b42cf0e6}{Consumer}}\ =\ std::function<void(\textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1events_1_1ParsedEvent}{ParsedEvent<T>}}\&)>;}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00149}00149\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00150}\mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{00150}}\ \ \ \ \ \textcolor{keyword}{typedef}\ std::function<void(\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}}*)>\ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00151}00151\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\_t}};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00152}00152\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00153}\mbox{\hyperlink{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc}{00153}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc}{remove\_listener}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \&event\_type,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\_t}}\ \&listener);}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00154}00154\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00155}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{00155}}\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\_t}}\ \{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00156}00156\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00157}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{00157}}\ \ \ \ \ \ \ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00158}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{00158}}\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00159}00159\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00160}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa4738ea6d20e54db9da4effa01a1254e}{00160}}\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa4738ea6d20e54db9da4effa01a1254e}{listener\_t}}()\ \{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00163}00163\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00164}00164\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00165}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aff8404f57e9fec14677a7641249ca4fb}{00165}}\ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aff8404f57e9fec14677a7641249ca4fb}{listener\_t}}(\mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \ type,\ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}}\ c):\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a}{event\_type}}(std::move(type)),\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a0a08f7c6fc877fc7449087263619ea66}{func}}(new\ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}}\ \{std::move(c)\})\ \{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}}\ =\ (long)\ \textcolor{keyword}{new}\ \mbox{\hyperlink{multidim__data_8h_ad24825e11b71d87e40f5c0e88dd980a0}{u8}};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00167}00167\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00168}00168\ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00169}00169\ \ \ \ \ \ \ \textcolor{comment}{//listener\_t(const\ listener\_t\ \&other)\ \{}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00170}00170\ \ \ \ \ \ \ \textcolor{comment}{//\ \ ID\ =\ other.get\_id();}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00171}00171\ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00172}00172\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00173}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a62126b951712f8710fb9b41037ed1b57}{00173}}\ \ \ \ \ \ \ [[nodiscard]]\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a62126b951712f8710fb9b41037ed1b57}{get\_id}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00175}00175\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00176}00176\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00177}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a}{00177}}\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a}{event\_type}};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00178}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a0a08f7c6fc877fc7449087263619ea66}{00178}}\ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}}*\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a0a08f7c6fc877fc7449087263619ea66}{func}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00179}00179\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00180}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a9323c358738542305a449d913e912911}{00180}}\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a9323c358738542305a449d913e912911}{remove}}()\ \{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{namespacecydui_1_1events_a505fb93652ddea4a8e14f58589294fbc}{cydui::events::remove\_listener}}(\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_aa111eec3d20b557da0a898951a1c944a}{event\_type}},\ *\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ (\mbox{\hyperlink{multidim__data_8h_ad24825e11b71d87e40f5c0e88dd980a0}{u8}}*)\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a0a08f7c6fc877fc7449087263619ea66}{func}};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a0a08f7c6fc877fc7449087263619ea66}{func}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a1117ad058312430a34f9d93a4b43e1af}{ID}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00187}00187\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00188}00188\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00189}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a13dbb59580167e689ca95ac22581edad}{00189}}\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a13dbb59580167e689ca95ac22581edad}{is\_active}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a5bc7ada55ff6cfec09fce008d751de27}{active}};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00191}00191\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00192}00192\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00193}\mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a6c2442a05bb1538ae71bb4052fd3e556}{00193}}\ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a6c2442a05bb1538ae71bb4052fd3e556}{operator()}}(\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}}*\ ev)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ !=\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a0a08f7c6fc877fc7449087263619ea66}{func}})\ \{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t_a0a08f7c6fc877fc7449087263619ea66}{func}}-\/>operator()(ev);}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00197}00197\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00198}00198\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00199}00199\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00200}\mbox{\hyperlink{namespacecydui_1_1events_a1fb9ac28468b1aa9a3c860745c0b95cd}{00200}}\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\_t}}*\ \mbox{\hyperlink{namespacecydui_1_1events_a1fb9ac28468b1aa9a3c860745c0b95cd}{on\_event\_raw}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \&event\_type,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{namespacecydui_1_1events_aafe7ad203fd40e022bae6950003804a8}{Listener}}\ \&l);}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00201}00201\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00202}00202\ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00203}00203\ \ \ \ \ \textcolor{keyword}{requires}\ \mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{EventType<T>}}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00204}\mbox{\hyperlink{namespacecydui_1_1events_af912b8c268e59712bb10aa38c681be41}{00204}}\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{structcydui_1_1events_1_1listener__t}{listener\_t}}*\ \mbox{\hyperlink{namespacecydui_1_1events_af912b8c268e59712bb10aa38c681be41}{on\_event}}(\mbox{\hyperlink{namespacecydui_1_1events_a8738c154e14a51805dbcab48b42cf0e6}{Consumer<T>}}\ c)\ \{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00205}00205\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacecydui_1_1events_a1fb9ac28468b1aa9a3c860745c0b95cd}{cydui::events::on\_event\_raw}}(T::type,\ [\&,c](\mbox{\hyperlink{structcydui_1_1events_1_1Event}{Event}}*\ ev)\ \{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00206}00206\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ parsed\ =\ ev-\/>\mbox{\hyperlink{structcydui_1_1events_1_1Event_ad8fbe3ea4366883699af10b5bbb0c312}{parse}}<\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}>();}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00207}00207\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (parsed.data)\ \{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \ \ c(parsed);}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00210}00210\ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00211}00211\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00212}00212\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00213}00213\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00214}00214\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecydui_1_1events_ae57f3d691631bd72884ab4a6021387b9}{start}}();}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00215}00215\ \ \ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00216}00216\ \}\textcolor{comment}{//\ namespace\ cydui::events}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00218}00218\ \textcolor{comment}{//\ MACROS}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00219}\mbox{\hyperlink{include_2events_2events_8hpp_aa0a366172261a71aeff0bd609de53d1c}{00219}}\ \textcolor{preprocessor}{\#define\ consumer\ [=](it)}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00220}\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{00220}}\ \textcolor{preprocessor}{\#define\ listen(EVENT,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00221}00221\ \textcolor{preprocessor}{\ \ cydui::events::on\_event<EVENT>(cydui::events::Consumer<EVENT>(\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00222}00222\ \textcolor{preprocessor}{\ \ \ \ \ \ [\&](const\ cydui::events::ParsedEvent<EVENT>\&\ it)\ \_\_VA\_ARGS\_\_))}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00225}\mbox{\hyperlink{structevent__data__type__base__t}{00225}}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structevent__data__type__base__t}{event\_data\_type\_base\_t}}\ \{}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00226}\mbox{\hyperlink{structevent__data__type__base__t_a613e340111f5f283292ed4fed87d5681}{00226}}\ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{long}\ \mbox{\hyperlink{structevent__data__type__base__t_a613e340111f5f283292ed4fed87d5681}{win}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00227}00227\ \};}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00228}00228\ \textcolor{comment}{//\ TODO\ -\/\ In\ case\ of\ event\ name\ collision\ (it's\ possible),\ maybe\ append\ \_\_FILE\_\_\ or\ \_\_LINE\_\_\ to\ the\ \`{}type`}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00229}00229\ \textcolor{comment}{//\ variable\ to\ make\ the\ event\ type\ unique\ even\ if\ multiple\ translation\ units\ declare\ similarly\ named\ events.}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00230}\mbox{\hyperlink{include_2events_2events_8hpp_a013e5c56ca9a52b77ec5c6fb71014df3}{00230}}\ \textcolor{preprocessor}{\#define\ EVENT(NAME,\ DATA)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00231}00231\ \textcolor{preprocessor}{\ \ struct\ NAME\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00232}00232\ \textcolor{preprocessor}{\ \ \ \ constexpr\ static\ const\ char*\ type\ =\ \#NAME;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00233}00233\ \textcolor{preprocessor}{\ \ \ \ struct\ DataType:\ public\ event\_data\_type\_base\_t\ DATA\ data;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00234}00234\ \textcolor{preprocessor}{\ \ \};}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00235}00235\ }
 \DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00236}00236\ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00237}00237\ }
-\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00238}00238\ \textcolor{preprocessor}{\#endif}\textcolor{comment}{//CYD\_UI\_EVENTS\_HPP}}
+\DoxyCodeLine{\Hypertarget{include_2events_2events_8hpp_source_l00237}00237\ \textcolor{preprocessor}{\#endif}\textcolor{comment}{//CYD\_UI\_EVENTS\_HPP}}
 
 \end{DoxyCode}

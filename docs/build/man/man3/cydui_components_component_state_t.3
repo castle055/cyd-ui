@@ -61,9 +61,10 @@ Definition at line \fB25\fP of file \fBcomponent\&.h\fP\&.
 Definition at line \fB55\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
 55                                        {
-56         ev\&.win = get_id(this\->win\->win_ref);
-57         cydui::events::emit<T>(ev);
-58       }
+56         if (nullptr == this\->win) return;
+57         ev\&.win = get_id(this\->win\->win_ref);
+58         cydui::events::emit<T>(ev);
+59       }
 .fi
 
 .SS "void cydui::components::component_state_t::force_redraw ()\fC [inline]\fP"
@@ -78,11 +79,11 @@ This is only meant to be called from custom event handlers\&. Event handlers for
 .PP
 
 .PP
-Definition at line \fB68\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB69\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-68                           {
-69         emit<RedrawEvent>({\&.component = this});
-70       }
+69                           {
+70         emit<RedrawEvent>({\&.component = this});
+71       }
 .fi
 
 .SS "void cydui::components::component_state_t::mark_dirty ()\fC [inline]\fP"

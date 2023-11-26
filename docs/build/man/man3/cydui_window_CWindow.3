@@ -8,6 +8,13 @@ cydui::window::CWindow
 .PP
 .PP
 \fC#include <window\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBterminate\fP ()"
+.br
+.in -1c
 .SS "Public Attributes"
 
 .in +1c
@@ -24,6 +31,21 @@ cydui::window::CWindow
 .SH "Detailed Description"
 .PP 
 Definition at line \fB15\fP of file \fBwindow\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void cydui::window::CWindow::terminate ()"
+
+.PP
+Definition at line \fB13\fP of file \fBwindow\&.cpp\fP\&..PP
+.nf
+13                                    {
+14   delete layout;
+15   graphics::terminate(win_ref);
+16   delete win_ref;
+17   win_ref = nullptr;
+18 }
+.fi
+
 .SH "Member Data Documentation"
 .PP 
 .SS "\fBlayout::Layout\fP* cydui::window::CWindow::layout"

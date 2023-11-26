@@ -12,6 +12,9 @@ cydui::layout::Layout
 
 .in +1c
 .ti -1c
+.RI "\fB~Layout\fP ()"
+.br
+.ti -1c
 .RI "void \fBbind_window\fP (\fBwindow::CWindow\fP *_win)"
 .br
 .in -1c
@@ -22,10 +25,10 @@ cydui::layout::Layout
 .RI "\fBcomponents::component_base_t\fP * \fBfind_by_coords\fP (int x, int y)"
 .br
 .ti -1c
-.RI "bool \fBrender_if_dirty\fP (\fBcomponents::component_base_t\fP *c)"
+.RI "\fBLayout\fP (\fBcomponents::component_state_t\fP *_root_state, \fBcomponents::component_base_t\fP *_root)"
 .br
 .ti -1c
-.RI "\fBLayout\fP (\fBcomponents::component_state_t\fP *_root_state, \fBcomponents::component_base_t\fP *_root)"
+.RI "bool \fBrender_if_dirty\fP (\fBcomponents::component_base_t\fP *c)"
 .br
 .ti -1c
 .RI "void \fBredraw_component\fP (\fBcomponents::component_base_t\fP *target)"
@@ -58,6 +61,9 @@ cydui::layout::Layout
 .ti -1c
 .RI "\fBcomponents::component_state_t\fP * \fBfocused\fP = nullptr"
 .br
+.ti -1c
+.RI "std::vector< \fBevents::listener_t\fP * > \fBlisteners\fP {}"
+.br
 .in -1c
 .SS "Friends"
 
@@ -74,11 +80,24 @@ Definition at line \fB21\fP of file \fBlayout\&.h\fP\&.
 .SS "cydui::layout::Layout::Layout (\fBcomponents::component_state_t\fP * _root_state, \fBcomponents::component_base_t\fP * _root)\fC [inline]\fP, \fC [private]\fP"
 
 .PP
-Definition at line \fB37\fP of file \fBlayout\&.h\fP\&..PP
+Definition at line \fB36\fP of file \fBlayout\&.h\fP\&..PP
 .nf
-38         : root_state(_root_state), root(_root), focused(_root_state) {
-39         focused\->focused = true;
-40       }
+37         : root_state(_root_state), root(_root), focused(_root_state) {
+38         focused\->focused = true;
+39       }
+.fi
+
+.SS "cydui::layout::Layout::~Layout ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB53\fP of file \fBlayout\&.h\fP\&..PP
+.nf
+53                 {
+54         for (auto &item: listeners) {
+55           item\->remove();
+56           delete item;
+57         }
+58       }
 .fi
 
 .SH "Member Function Documentation"
@@ -86,24 +105,25 @@ Definition at line \fB37\fP of file \fBlayout\&.h\fP\&..PP
 .SS "void cydui::layout::Layout::bind_window (\fBwindow::CWindow\fP * _win)"
 Configure root component
 .PP
-Definition at line \fB167\fP of file \fBlayout\&.cpp\fP\&..PP
+Definition at line \fB166\fP of file \fBlayout\&.cpp\fP\&..PP
 .nf
-167                                                             {
-168   this\->win = _win;
-169   compositor\&.set_render_target(this\->win\->win_ref, &this\->win\->profiling_ctx);
-170   {
-171     root_state\->win = this\->win;
-172     
-173     auto dim = root\->get_dimensional_relations();
-174     dim\&.w = get_frame(win\->win_ref)\->width();
-175     dim\&.h = get_frame(win\->win_ref)\->height();
-176     dim\&.fixed_w = true;
-177     dim\&.fixed_h = true;
+166                                                             {
+167   this\->win = _win;
+168   compositor\&.set_render_target(this\->win\->win_ref, &this\->win\->profiling_ctx);
+169   {
+170     root_state\->win = this\->win;
+171     
+172     auto dim = root\->get_dimensional_relations();
+173     dim\&.w = get_frame(this\->win\->win_ref)\->width();
+174     dim\&.h = get_frame(this\->win\->win_ref)\->height();
+175     dim\&.fixed_w = true;
+176     dim\&.fixed_h = true;
+177     root\->configure_event_handler();
 178     root\->subscribe_events();
 179   }
 180   
-181   listen(RedrawEvent, {
-182     if (it\&.data\->win != 0 && it\&.data\->win != get_id(win\->win_ref))
+181   listeners\&.push_back(listen(RedrawEvent, {
+182     if (it\&.data\->win != get_id(win\->win_ref))
 183       return;
 184     auto _pev = this\->win\->profiling_ctx\&.scope_event("Redraw");
 185     if (it\&.data\->component) {
@@ -115,8 +135,8 @@ Definition at line \fB167\fP of file \fBlayout\&.cpp\fP\&..PP
 191     } else {
 192       redraw_component(root);
 193     }
-194   });
-195   listen(KeyEvent, {
+194   }));
+195   listeners\&.push_back(listen(KeyEvent, {
 196     if (it\&.data\->win != get_id(win\->win_ref))
 197       return;
 198     auto _pev = this\->win\->profiling_ctx\&.scope_event("Key");
@@ -131,8 +151,8 @@ Definition at line \fB167\fP of file \fBlayout\&.cpp\fP\&..PP
 207         focused = nullptr;
 208       }
 209     }
-210   });
-211   listen(ButtonEvent, {
+210   }));
+211   listeners\&.push_back(listen(ButtonEvent, {
 212     if (it\&.data\->win != get_id(win\->win_ref))
 213       return;
 214     auto _pev = this\->win\->profiling_ctx\&.scope_event("Button");
@@ -149,11 +169,11 @@ Definition at line \fB167\fP of file \fBlayout\&.cpp\fP\&..PP
 225     
 226     if (focused != target\->state\&.value()) {
 227       if (focused) {
-228         if (focused\->component_instance\&.has_value()) {
-229           focused\->component_instance\&.value()
-230             \->event_handler()
-231             \->on_button_release((Button) it\&.data\->button, 0, 0);
-232         }
+228         //if (focused\->component_instance\&.has_value()) {
+229         //  focused\->component_instance\&.value()
+230         //    \->event_handler()
+231         //    \->on_button_release((Button) it\&.data\->button, 0, 0);
+232         //}
 233         focused\->focused = false;
 234         focused = nullptr;
 235       }
@@ -167,8 +187,8 @@ Definition at line \fB167\fP of file \fBlayout\&.cpp\fP\&..PP
 243       target\->event_handler()\->on_button_release((Button) it\&.data\->button, rel_x, rel_y);
 244     }
 245     render_if_dirty(root);
-246   });
-247   listen(ScrollEvent, {
+246   }));
+247   listeners\&.push_back(listen(ScrollEvent, {
 248     if (it\&.data\->win != get_id(win\->win_ref))
 249       return;
 250     auto _pev = this\->win\->profiling_ctx\&.scope_event("Scroll");
@@ -181,8 +201,8 @@ Definition at line \fB167\fP of file \fBlayout\&.cpp\fP\&..PP
 257     target\->event_handler()\->on_scroll(it\&.data\->dx, it\&.data\->dy);
 258     
 259     render_if_dirty(root);
-260   });
-261   listen(MotionEvent, {
+260   }));
+261   listeners\&.push_back(listen(MotionEvent, {
 262     if (it\&.data\->win != get_id(win\->win_ref))
 263       return;
 264     auto _pev = this\->win\->profiling_ctx\&.scope_event("Motion");
@@ -263,8 +283,8 @@ Definition at line \fB167\fP of file \fBlayout\&.cpp\fP\&..PP
 339     //}
 340     
 341     render_if_dirty(root);
-342   });
-343   listen(ResizeEvent, {
+342   }));
+343   listeners\&.push_back(listen(ResizeEvent, {
 344     if (it\&.data\->win != get_id(win\->win_ref))
 345       return;
 346     auto _pev = this\->win\->profiling_ctx\&.scope_event("Resize");
@@ -277,18 +297,18 @@ Definition at line \fB167\fP of file \fBlayout\&.cpp\fP\&..PP
 353     dim\&.fixed_h = true;
 354     
 355     redraw_component(root);
-356   });
+356   }));
 357 }
 .fi
 
 .SS "\fBcomponent_base_t\fP * cydui::layout::Layout::find_by_coords (int x, int y)\fC [private]\fP"
 
 .PP
-Definition at line \fB154\fP of file \fBlayout\&.cpp\fP\&..PP
+Definition at line \fB153\fP of file \fBlayout\&.cpp\fP\&..PP
 .nf
-154                                                                 {
-155   return root\->find_by_coords(x, y);
-156 }
+153                                                                 {
+154   return root\->find_by_coords(x, y);
+155 }
 .fi
 
 .SS "void cydui::layout::Layout::recompose_layout ()\fC [private]\fP"
@@ -342,20 +362,20 @@ Definition at line \fB119\fP of file \fBlayout\&.cpp\fP\&..PP
 .SS "bool cydui::layout::Layout::render_if_dirty (\fBcomponents::component_base_t\fP * c)\fC [private]\fP"
 
 .PP
-Definition at line \fB141\fP of file \fBlayout\&.cpp\fP\&..PP
+Definition at line \fB140\fP of file \fBlayout\&.cpp\fP\&..PP
 .nf
-141                                                            {
-142   if (c\->state\&.value()\->_dirty) {
-143     redraw_component(c);
-144     return true;
-145   } else {
-146     bool any = false;
-147     for (auto &item: c\->children)
-148       any = render_if_dirty(item) || any;// ! F**K, order here matters
-149     // ? render_if_dirty() needs to be called before `any` is checked\&.
-150     return any;
-151   }
-152 }
+140                                                            {
+141   if (c\->state\&.value()\->_dirty) {
+142     redraw_component(c);
+143     return true;
+144   } else {
+145     bool any = false;
+146     for (auto &item: c\->children)
+147       any = render_if_dirty(item) || any;// ! F**K, order here matters
+148     // ? render_if_dirty() needs to be called before `any` is checked\&.
+149     return any;
+150   }
+151 }
 .fi
 
 .SH "Friends And Related Symbol Documentation"
@@ -380,6 +400,14 @@ Definition at line \fB30\fP of file \fBlayout\&.h\fP\&.
 
 .PP
 Definition at line \fB29\fP of file \fBlayout\&.h\fP\&.
+.SS "std::vector<\fBevents::listener_t\fP*> cydui::layout::Layout::listeners {}\fC [private]\fP"
+
+.PP
+Definition at line \fB32\fP of file \fBlayout\&.h\fP\&..PP
+.nf
+32 {};
+.fi
+
 .SS "\fBcomponents::component_base_t\fP* cydui::layout::Layout::root\fC [private]\fP"
 
 .PP

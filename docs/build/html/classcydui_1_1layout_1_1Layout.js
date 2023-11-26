@@ -1,6 +1,7 @@
 var classcydui_1_1layout_1_1Layout =
 [
     [ "Layout", "classcydui_1_1layout_1_1Layout.html#a24556ee868914f24b239763c55d94bc8", null ],
+    [ "~Layout", "classcydui_1_1layout_1_1Layout.html#a90299ba7822cccd4a80ea6a3b9a976eb", null ],
     [ "bind_window", "classcydui_1_1layout_1_1Layout.html#a4ec466f6250b29670fc625bf251d659b", null ],
     [ "find_by_coords", "classcydui_1_1layout_1_1Layout.html#a4ee8b05bc42235d0c3cbe8294471533f", null ],
     [ "recompose_layout", "classcydui_1_1layout_1_1Layout.html#af92699c9d633f3c4b6668c268692675c", null ],
@@ -11,6 +12,7 @@ var classcydui_1_1layout_1_1Layout =
     [ "compositor", "classcydui_1_1layout_1_1Layout.html#ae5c92c3240d7e45a4d5e0a7b9e07e026", null ],
     [ "focused", "classcydui_1_1layout_1_1Layout.html#a35906693575543e93cd208e5d3b5cb34", null ],
     [ "hovering", "classcydui_1_1layout_1_1Layout.html#aac8db603ef2f2560addc52f44a59f4da", null ],
+    [ "listeners", "classcydui_1_1layout_1_1Layout.html#a6fef496d1430173121c8ac47637dbddb", null ],
     [ "root", "classcydui_1_1layout_1_1Layout.html#aa20857a68ff314cb3686ecffa231a3a7", null ],
     [ "root_state", "classcydui_1_1layout_1_1Layout.html#ad8fc40ad48c1fd4a5904c97745bb3784", null ],
     [ "win", "classcydui_1_1layout_1_1Layout.html#abd8cc2a7c95c3692d3eff28ddae423c4", null ]

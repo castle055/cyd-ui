@@ -228,27 +228,28 @@ Definition at line \fB100\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 180 std::unordered_map<std::string, listener_data_t> get_event_listeners() override { \\
 181   _Pragma("clang diagnostic push") \\
 182   _Pragma("clang diagnostic ignored \\"\-Wunused\-lambda\-capture\\"") \\
-183   return __VA_ARGS__ ;                                                            \\
+183   return { __VA_ARGS__ };     \\
 184   _Pragma("clang diagnostic pop") \\
 185 }
 186 
 187 #define ON_EVENT(EVENT, \&.\&.\&.) \\
-188 { EVENT ::type, {[this](cydui::events::Event* ev) { \\
-189   auto parsed_event = ev\->parse<EVENT>(); \\
-190   [this](const cydui::events::ParsedEvent<EVENT>::DataType* ev) \\
-191     __VA_ARGS__              \\
-192   (parsed_event\&.data);       \\
-193 }}}
-194 
-195 #define FRAGMENT \\
-196   void           \\
-197   draw_fragment  \\
-198   (vg::vg_fragment_t& fragment) \\
-199   override
-200   
-201 }
-202 
-203 #endif //CYD_UI_COMPONENT_EVENT_HANDLER_H
+188 { EVENT ::type, {[&](cydui::events::Event* ev) { \\
+189   if (nullptr == state) return;                     \\
+190   auto parsed_event = ev\->parse<EVENT>(); \\
+191   [&](const cydui::events::ParsedEvent<EVENT>::DataType* ev) \\
+192     __VA_ARGS__              \\
+193   (parsed_event\&.data);       \\
+194 }}}
+195 
+196 #define FRAGMENT \\
+197   void           \\
+198   draw_fragment  \\
+199   (vg::vg_fragment_t& fragment) \\
+200   override
+201   
+202 }
+203 
+204 #endif //CYD_UI_COMPONENT_EVENT_HANDLER_H
 .fi
 
 .SS "#define CYDUI_INTERNAL_EV_button_release_ARGS   \fBCYDUI_INTERNAL_EV_button_ARGS\fP"
@@ -402,7 +403,7 @@ Definition at line \fB168\fP of file \fBcomponent_event_handler\&.h\fP\&.
 std::unordered_map<std::string, listener_data_t> get_event_listeners() override { \\
   _Pragma("clang diagnostic push") \\
   _Pragma("clang diagnostic ignored \\"\-Wunused\-lambda\-capture\\"") \\
-  return __VA_ARGS__ ;                                                            \\
+  return { __VA_ARGS__ };     \\
   _Pragma("clang diagnostic pop") \\
 }
 .fi
@@ -410,9 +411,10 @@ std::unordered_map<std::string, listener_data_t> get_event_listeners() override 
 .SS "#define ON_EVENT(\fBEVENT\fP,  \&.\&.\&.)"
 \fBValue:\fP.PP
 .nf
-{ EVENT ::type, {[this](cydui::events::Event* ev) { \\
+{ EVENT ::type, {[&](cydui::events::Event* ev) { \\
+  if (nullptr == state) return;                     \\
   auto parsed_event = ev\->parse<EVENT>(); \\
-  [this](const cydui::events::ParsedEvent<EVENT>::DataType* ev) \\
+  [&](const cydui::events::ParsedEvent<EVENT>::DataType* ev) \\
     __VA_ARGS__              \\
   (parsed_event\&.data);       \\
 }}}

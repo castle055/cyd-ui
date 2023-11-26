@@ -80,7 +80,9 @@ Definition at line \mbox{\hyperlink{compositing_8h_source_l00177}{177}} of file 
 \DoxyCodeLine{00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00178\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ab2459e00b8b73fa9d9b0fec4b93dad00}{running}}.test\_and\_set();}
 \DoxyCodeLine{00179\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ad3e5af5fe0cd6895ef31e2110cbe48ad}{compositing\_thd}}\ =\ std::thread\ \{\&\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a6963756199e05569cf36f7ce8cd896fd}{compositing\_task}},\ \textcolor{keyword}{this}\};}
-\DoxyCodeLine{00180\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00180\ \ \ \ \ \ \ \ \ pthread\_t\ pt\ =\ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ad3e5af5fe0cd6895ef31e2110cbe48ad}{compositing\_thd}}.native\_handle();}
+\DoxyCodeLine{00181\ \ \ \ \ \ \ \ \ pthread\_setname\_np(pt,\ \textcolor{stringliteral}{"{}COMPOSITING\_THD"{}});}
+\DoxyCodeLine{00182\ \ \ \ \ \ \ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -98,14 +100,15 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{compositing_8h_source_l00182}{182}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
+Definition at line \mbox{\hyperlink{compositing_8h_source_l00184}{184}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00182\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ab2459e00b8b73fa9d9b0fec4b93dad00}{running}}.clear();}
-\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ad3e5af5fe0cd6895ef31e2110cbe48ad}{compositing\_thd}}.join();}
-\DoxyCodeLine{00185\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00184\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ab2459e00b8b73fa9d9b0fec4b93dad00}{running}}.clear();}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a040d0f1494fd6d02886c1c832546de5d}{cv}}.notify\_all();}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ad3e5af5fe0cd6895ef31e2110cbe48ad}{compositing\_thd}}.join();}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \}}
 
 \end{DoxyCode}
 
@@ -119,21 +122,21 @@ Definition at line \mbox{\hyperlink{compositing_8h_source_l00182}{182}} of file 
 
 
 
-Definition at line \mbox{\hyperlink{compositing_8h_source_l00193}{193}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
+Definition at line \mbox{\hyperlink{compositing_8h_source_l00196}{196}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ compositing\_tree\_t*\ old\_tree;}
-\DoxyCodeLine{00195\ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a2a5e313aff23b76564f4ec0213a2c0b3}{m}});}
-\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ old\_tree\ =\ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ae5547c3279e71ca5aa9feca804e45452}{tree}};}
-\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ae5547c3279e71ca5aa9feca804e45452}{tree}}\ =\ \_tree;}
-\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a78a66e00d897fb374aed86ae5e8dede0}{tree\_dirty}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a040d0f1494fd6d02886c1c832546de5d}{cv}}.notify\_all();}
-\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ old\_tree;}
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ compositing\_tree\_t*\ old\_tree;}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a2a5e313aff23b76564f4ec0213a2c0b3}{m}});}
+\DoxyCodeLine{00200\ \ \ \ \ \ \ \ \ \ \ old\_tree\ =\ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ae5547c3279e71ca5aa9feca804e45452}{tree}};}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_ae5547c3279e71ca5aa9feca804e45452}{tree}}\ =\ \_tree;}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a78a66e00d897fb374aed86ae5e8dede0}{tree\_dirty}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a040d0f1494fd6d02886c1c832546de5d}{cv}}.notify\_all();}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ old\_tree;}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \}}
 
 \end{DoxyCode}
 \Hypertarget{classcydui_1_1compositing_1_1LayoutCompositor_a6963756199e05569cf36f7ce8cd896fd}\label{classcydui_1_1compositing_1_1LayoutCompositor_a6963756199e05569cf36f7ce8cd896fd} 
@@ -155,7 +158,7 @@ Definition at line \mbox{\hyperlink{compositing_8h_source_l00092}{92}} of file \
 \DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ std::unique\_lock\ lk(compositor-\/>m);}
 \DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ !=\ compositor-\/>render\_target)\ \{}
 \DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ compositor-\/>cv.wait(lk,\ [\&]\ \{}
-\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ compositor-\/>tree\_dirty;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ compositor-\/>tree\_dirty\ ||\ !compositor-\/>running.test();}
 \DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \});}
 \DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ compositor-\/>profiler-\/>scope\_event(\textcolor{stringliteral}{"{}COMPOSITING\ TASK"{}});}
 \DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ compositor-\/>tree\_dirty\ =\ \textcolor{keyword}{false};}
@@ -282,15 +285,15 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{compositing_8h_source_l00187}{187}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
+Definition at line \mbox{\hyperlink{compositing_8h_source_l00190}{190}} of file \mbox{\hyperlink{compositing_8h_source}{compositing.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a2a5e313aff23b76564f4ec0213a2c0b3}{m}});}
-\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_aa553689bee43574450265dc739d4fea5}{render\_target}}\ =\ \_render\_target;}
-\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a96d8d306a9d0cf063bf0c095ebbfd3a1}{profiler}}\ =\ \_profiler;}
-\DoxyCodeLine{00191\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ std::lock\_guard\ lk(\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a2a5e313aff23b76564f4ec0213a2c0b3}{m}});}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_aa553689bee43574450265dc739d4fea5}{render\_target}}\ =\ \_render\_target;}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a96d8d306a9d0cf063bf0c095ebbfd3a1}{profiler}}\ =\ \_profiler;}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \}}
 
 \end{DoxyCode}
 

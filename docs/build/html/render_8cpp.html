@@ -461,7 +461,7 @@ Variables</h2></td></tr>
 <div class="line"><span class="lineno">   28</span>  </div>
 <div class="line"><span class="lineno">   29</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#ada7b7df437402a71353d45d05ef32065">render_mtx</a>.lock();</div>
 <div class="line"><span class="lineno">   30</span>  {</div>
-<div class="line"><span class="lineno">   31</span>    image-&gt;depth = DisplayPlanes(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), <a class="code hl_function" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7">state::get_screen</a>());</div>
+<div class="line"><span class="lineno">   31</span>    image-&gt;depth = 32;<span class="comment">//DisplayPlanes(state::get_dpy(), state::get_screen());</span></div>
 <div class="line"><span class="lineno">   32</span>    image-&gt;format = ZPixmap;</div>
 <div class="line"><span class="lineno">   33</span>    image-&gt;xoffset = 0;</div>
 <div class="line"><span class="lineno">   34</span>    image-&gt;data = (<span class="keywordtype">char</span>*) win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#aac71ce31fada0d62b259b3099d06727a">render_target</a>-&gt;<a class="code hl_variable" href="structmd__buffer__t.html#a42db81e853e05dcf04b4f00840bfee30">data</a>;</div>
@@ -510,25 +510,21 @@ Variables</h2></td></tr>
 <div id="dynsection-3-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="render_8cpp_af098c7565dcab42f6f984ca26d81f0ca_cgraph.png" border="0" usemap="#arender_8cpp_af098c7565dcab42f6f984ca26d81f0ca_cgraph" alt=""/></div>
 <map name="arender_8cpp_af098c7565dcab42f6f984ca26d81f0ca_cgraph" id="arender_8cpp_af098c7565dcab42f6f984ca26d81f0ca_cgraph">
-<area shape="rect" title=" " alt="" coords="5,107,88,133"/>
-<area shape="rect" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5" title=" " alt="" coords="348,5,480,32"/>
-<area shape="poly" title=" " alt="" coords="57,105,89,72,111,55,135,42,184,25,235,16,332,11,332,16,236,21,185,31,137,46,113,59,92,76,61,108"/>
-<area shape="rect" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7" title=" " alt="" coords="136,56,286,83"/>
-<area shape="poly" title=" " alt="" coords="87,105,150,85,151,90,89,110"/>
-<area shape="rect" href="structpixelmap__t.html#aa70c0fa0014f555358a2d07198b00f69" title=" " alt="" coords="147,107,275,133"/>
-<area shape="poly" title=" " alt="" coords="88,117,132,117,132,123,88,123"/>
-<area shape="rect" href="structprof_1_1context__t.html#a1be702fd81e660750ae54216bc14ed80" title=" " alt="" coords="137,157,285,200"/>
-<area shape="poly" title=" " alt="" coords="87,131,136,149,134,154,85,136"/>
-<area shape="rect" href="structpixelmap__t.html#afd28dda06874905136d50de6911a0242" title=" " alt="" coords="149,224,273,251"/>
-<area shape="poly" title=" " alt="" coords="60,132,92,171,113,192,137,210,146,215,143,219,134,214,110,196,88,174,56,136"/>
-<area shape="rect" href="structlogging_1_1logger.html#ae412f4d42c6e53803201856b5ceba5aa" title=" " alt="" coords="541,5,681,32"/>
-<area shape="poly" title=" " alt="" coords="480,16,526,16,526,21,480,21"/>
-<area shape="rect" href="structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b" title=" " alt="" coords="544,56,678,83"/>
-<area shape="poly" title=" " alt="" coords="469,30,542,49,541,54,468,35"/>
-<area shape="poly" title=" " alt="" coords="267,53,342,34,343,39,268,58"/>
-<area shape="poly" title=" " alt="" coords="286,67,529,67,529,72,286,72"/>
-<area shape="rect" href="structprof_1_1context__t.html#ac55bb716357698723f15704b418995be" title=" " alt="" coords="334,165,493,192"/>
-<area shape="poly" title=" " alt="" coords="286,176,319,176,319,181,286,181"/>
+<area shape="rect" title=" " alt="" coords="5,111,88,137"/>
+<area shape="rect" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5" title=" " alt="" coords="144,31,276,57"/>
+<area shape="poly" title=" " alt="" coords="66,108,134,67,148,61,150,66,137,72,69,112"/>
+<area shape="rect" href="structpixelmap__t.html#aa70c0fa0014f555358a2d07198b00f69" title=" " alt="" coords="146,81,274,108"/>
+<area shape="poly" title=" " alt="" coords="87,114,131,106,131,111,88,119"/>
+<area shape="rect" href="structprof_1_1context__t.html#a1be702fd81e660750ae54216bc14ed80" title=" " alt="" coords="136,132,284,175"/>
+<area shape="poly" title=" " alt="" coords="88,129,121,135,120,140,87,134"/>
+<area shape="rect" href="structpixelmap__t.html#afd28dda06874905136d50de6911a0242" title=" " alt="" coords="148,199,272,225"/>
+<area shape="poly" title=" " alt="" coords="65,135,97,160,137,184,149,190,147,195,134,189,94,164,62,140"/>
+<area shape="rect" href="structlogging_1_1logger.html#ae412f4d42c6e53803201856b5ceba5aa" title=" " alt="" coords="342,5,481,32"/>
+<area shape="poly" title=" " alt="" coords="276,33,326,27,327,32,277,38"/>
+<area shape="rect" href="structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b" title=" " alt="" coords="345,56,479,83"/>
+<area shape="poly" title=" " alt="" coords="277,50,329,56,329,62,276,55"/>
+<area shape="rect" href="structprof_1_1context__t.html#ac55bb716357698723f15704b418995be" title=" " alt="" coords="332,140,491,167"/>
+<area shape="poly" title=" " alt="" coords="284,151,316,151,316,156,284,156"/>
 </map>
 </div>
 <div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -591,29 +587,25 @@ Variables</h2></td></tr>
 <div id="dynsection-5-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="render_8cpp_a912e5e13a2361939b93713a8862c228f_cgraph.png" border="0" usemap="#arender_8cpp_a912e5e13a2361939b93713a8862c228f_cgraph" alt=""/></div>
 <map name="arender_8cpp_a912e5e13a2361939b93713a8862c228f_cgraph" id="arender_8cpp_a912e5e13a2361939b93713a8862c228f_cgraph">
-<area shape="rect" title=" " alt="" coords="5,81,95,108"/>
-<area shape="rect" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84" title=" " alt="" coords="143,56,291,83"/>
-<area shape="poly" title=" " alt="" coords="95,85,127,80,128,86,96,91"/>
-<area shape="rect" href="render_8cpp.html#af098c7565dcab42f6f984ca26d81f0ca" title=" " alt="" coords="176,107,258,133"/>
-<area shape="poly" title=" " alt="" coords="96,99,161,109,160,114,95,104"/>
-<area shape="rect" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5" title=" " alt="" coords="551,5,683,32"/>
-<area shape="poly" title=" " alt="" coords="257,107,290,92,304,80,312,67,321,53,338,42,387,24,438,13,489,9,535,9,535,14,489,14,439,19,388,29,340,46,325,57,317,70,308,83,292,97,259,112"/>
-<area shape="rect" href="namespacex11_1_1state.html#a5685733b4b3744465723dda6a15ebef7" title=" " alt="" coords="339,56,489,83"/>
-<area shape="poly" title=" " alt="" coords="258,107,344,85,345,90,259,112"/>
-<area shape="rect" href="structpixelmap__t.html#aa70c0fa0014f555358a2d07198b00f69" title=" " alt="" coords="351,107,478,133"/>
-<area shape="poly" title=" " alt="" coords="259,117,335,117,335,123,259,123"/>
-<area shape="rect" href="structprof_1_1context__t.html#a1be702fd81e660750ae54216bc14ed80" title=" " alt="" coords="340,157,488,200"/>
-<area shape="poly" title=" " alt="" coords="259,130,326,150,325,155,258,135"/>
-<area shape="rect" href="structpixelmap__t.html#afd28dda06874905136d50de6911a0242" title=" " alt="" coords="353,224,476,251"/>
-<area shape="poly" title=" " alt="" coords="235,132,280,170,340,210,352,215,350,220,338,214,277,174,231,136"/>
-<area shape="rect" href="structlogging_1_1logger.html#ae412f4d42c6e53803201856b5ceba5aa" title=" " alt="" coords="745,5,884,32"/>
-<area shape="poly" title=" " alt="" coords="684,16,729,16,729,21,684,21"/>
-<area shape="rect" href="structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b" title=" " alt="" coords="747,56,882,83"/>
-<area shape="poly" title=" " alt="" coords="673,30,745,49,744,54,671,35"/>
-<area shape="poly" title=" " alt="" coords="470,53,545,34,547,39,471,58"/>
-<area shape="poly" title=" " alt="" coords="490,67,732,67,732,72,490,72"/>
-<area shape="rect" href="structprof_1_1context__t.html#ac55bb716357698723f15704b418995be" title=" " alt="" coords="537,165,697,192"/>
-<area shape="poly" title=" " alt="" coords="489,176,522,176,522,181,489,181"/>
+<area shape="rect" title=" " alt="" coords="5,85,95,112"/>
+<area shape="rect" href="structlogging_1_1logger.html#ad8cb1a2731cf690ffa77a77644551d84" title=" " alt="" coords="143,60,291,87"/>
+<area shape="poly" title=" " alt="" coords="95,89,127,84,128,90,96,95"/>
+<area shape="rect" href="render_8cpp.html#af098c7565dcab42f6f984ca26d81f0ca" title=" " alt="" coords="176,111,258,137"/>
+<area shape="poly" title=" " alt="" coords="96,103,161,113,160,118,95,108"/>
+<area shape="rect" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5" title=" " alt="" coords="347,31,479,57"/>
+<area shape="poly" title=" " alt="" coords="257,109,290,96,314,82,338,67,352,61,354,66,340,72,316,86,292,101,259,114"/>
+<area shape="rect" href="structpixelmap__t.html#aa70c0fa0014f555358a2d07198b00f69" title=" " alt="" coords="350,81,477,108"/>
+<area shape="poly" title=" " alt="" coords="258,115,333,104,334,109,259,121"/>
+<area shape="rect" href="structprof_1_1context__t.html#a1be702fd81e660750ae54216bc14ed80" title=" " alt="" coords="339,132,487,175"/>
+<area shape="poly" title=" " alt="" coords="259,127,324,137,323,143,258,133"/>
+<area shape="rect" href="structpixelmap__t.html#afd28dda06874905136d50de6911a0242" title=" " alt="" coords="352,199,475,225"/>
+<area shape="poly" title=" " alt="" coords="243,135,340,184,355,190,353,195,338,189,241,140"/>
+<area shape="rect" href="structlogging_1_1logger.html#ae412f4d42c6e53803201856b5ceba5aa" title=" " alt="" coords="545,5,685,32"/>
+<area shape="poly" title=" " alt="" coords="479,33,529,27,530,32,480,38"/>
+<area shape="rect" href="structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b" title=" " alt="" coords="548,56,682,83"/>
+<area shape="poly" title=" " alt="" coords="480,50,533,56,532,62,479,55"/>
+<area shape="rect" href="structprof_1_1context__t.html#ac55bb716357698723f15704b418995be" title=" " alt="" coords="535,140,695,167"/>
+<area shape="poly" title=" " alt="" coords="488,151,520,151,520,156,488,156"/>
 </map>
 </div>
 <div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">

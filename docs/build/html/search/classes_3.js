@@ -13,7 +13,6 @@ var searchData=
   ['compositing_5fobject_5ft_10',['compositing_object_t',['../structcydui_1_1compositing_1_1compositing__object__t.html',1,'cydui::compositing']]],
   ['compositing_5foperation_5ft_11',['compositing_operation_t',['../structcydui_1_1compositing_1_1compositing__operation__t.html',1,'cydui::compositing']]],
   ['compositing_5ftree_5ft_12',['compositing_tree_t',['../structcydui_1_1compositing_1_1compositing__tree__t.html',1,'cydui::compositing']]],
-  ['consumer_13',['Consumer',['../classcydui_1_1events_1_1Consumer.html',1,'cydui::events']]],
-  ['context_5ft_14',['context_t',['../structprof_1_1context__t.html',1,'prof']]],
-  ['cwindow_15',['CWindow',['../classcydui_1_1window_1_1CWindow.html',1,'cydui::window']]]
+  ['context_5ft_13',['context_t',['../structprof_1_1context__t.html',1,'prof']]],
+  ['cwindow_14',['CWindow',['../classcydui_1_1window_1_1CWindow.html',1,'cydui::window']]]
 ];

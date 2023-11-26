@@ -239,7 +239,9 @@ Private Attributes</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">  177</span>                         {</div>
 <div class="line"><span class="lineno">  178</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ab2459e00b8b73fa9d9b0fec4b93dad00">running</a>.test_and_set();</div>
 <div class="line"><span class="lineno">  179</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ad3e5af5fe0cd6895ef31e2110cbe48ad">compositing_thd</a> = std::thread {&amp;<a class="code hl_function" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a6963756199e05569cf36f7ce8cd896fd">compositing_task</a>, <span class="keyword">this</span>};</div>
-<div class="line"><span class="lineno">  180</span>      }</div>
+<div class="line"><span class="lineno">  180</span>        pthread_t pt = <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ad3e5af5fe0cd6895ef31e2110cbe48ad">compositing_thd</a>.native_handle();</div>
+<div class="line"><span class="lineno">  181</span>        pthread_setname_np(pt, <span class="stringliteral">&quot;COMPOSITING_THD&quot;</span>);</div>
+<div class="line"><span class="lineno">  182</span>      }</div>
 <div class="ttc" id="aclasscydui_1_1compositing_1_1LayoutCompositor_html_a6963756199e05569cf36f7ce8cd896fd"><div class="ttname"><a href="classcydui_1_1compositing_1_1LayoutCompositor.html#a6963756199e05569cf36f7ce8cd896fd">cydui::compositing::LayoutCompositor::compositing_task</a></div><div class="ttdeci">static void compositing_task(LayoutCompositor *compositor)</div><div class="ttdef"><b>Definition</b> <a href="compositing_8h_source.html#l00092">compositing.h:92</a></div></div>
 <div class="ttc" id="aclasscydui_1_1compositing_1_1LayoutCompositor_html_ab2459e00b8b73fa9d9b0fec4b93dad00"><div class="ttname"><a href="classcydui_1_1compositing_1_1LayoutCompositor.html#ab2459e00b8b73fa9d9b0fec4b93dad00">cydui::compositing::LayoutCompositor::running</a></div><div class="ttdeci">std::atomic_flag running</div><div class="ttdef"><b>Definition</b> <a href="compositing_8h_source.html#l00081">compositing.h:81</a></div></div>
 <div class="ttc" id="aclasscydui_1_1compositing_1_1LayoutCompositor_html_ad3e5af5fe0cd6895ef31e2110cbe48ad"><div class="ttname"><a href="classcydui_1_1compositing_1_1LayoutCompositor.html#ad3e5af5fe0cd6895ef31e2110cbe48ad">cydui::compositing::LayoutCompositor::compositing_thd</a></div><div class="ttdeci">std::thread compositing_thd</div><div class="ttdef"><b>Definition</b> <a href="compositing_8h_source.html#l00082">compositing.h:82</a></div></div>
@@ -308,11 +310,13 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compositing_8h_source.html#l00182">182</a> of file <a class="el" href="compositing_8h_source.html">compositing.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  182</span>                          {</div>
-<div class="line"><span class="lineno">  183</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ab2459e00b8b73fa9d9b0fec4b93dad00">running</a>.clear();</div>
-<div class="line"><span class="lineno">  184</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ad3e5af5fe0cd6895ef31e2110cbe48ad">compositing_thd</a>.join();</div>
-<div class="line"><span class="lineno">  185</span>      }</div>
+<p class="definition">Definition at line <a class="el" href="compositing_8h_source.html#l00184">184</a> of file <a class="el" href="compositing_8h_source.html">compositing.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  184</span>                          {</div>
+<div class="line"><span class="lineno">  185</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ab2459e00b8b73fa9d9b0fec4b93dad00">running</a>.clear();</div>
+<div class="line"><span class="lineno">  186</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a040d0f1494fd6d02886c1c832546de5d">cv</a>.notify_all();</div>
+<div class="line"><span class="lineno">  187</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ad3e5af5fe0cd6895ef31e2110cbe48ad">compositing_thd</a>.join();</div>
+<div class="line"><span class="lineno">  188</span>      }</div>
+<div class="ttc" id="aclasscydui_1_1compositing_1_1LayoutCompositor_html_a040d0f1494fd6d02886c1c832546de5d"><div class="ttname"><a href="classcydui_1_1compositing_1_1LayoutCompositor.html#a040d0f1494fd6d02886c1c832546de5d">cydui::compositing::LayoutCompositor::cv</a></div><div class="ttdeci">std::condition_variable cv</div><div class="ttdef"><b>Definition</b> <a href="compositing_8h_source.html#l00080">compositing.h:80</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -341,19 +345,18 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compositing_8h_source.html#l00193">193</a> of file <a class="el" href="compositing_8h_source.html">compositing.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  193</span>                                              {</div>
-<div class="line"><span class="lineno">  194</span>        compositing_tree_t* old_tree;</div>
-<div class="line"><span class="lineno">  195</span>        {</div>
-<div class="line"><span class="lineno">  196</span>          std::lock_guard lk(<a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a2a5e313aff23b76564f4ec0213a2c0b3">m</a>);</div>
-<div class="line"><span class="lineno">  197</span>          old_tree = <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ae5547c3279e71ca5aa9feca804e45452">tree</a>;</div>
-<div class="line"><span class="lineno">  198</span>          <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ae5547c3279e71ca5aa9feca804e45452">tree</a> = _tree;</div>
-<div class="line"><span class="lineno">  199</span>          <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a78a66e00d897fb374aed86ae5e8dede0">tree_dirty</a> = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  200</span>        }</div>
-<div class="line"><span class="lineno">  201</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a040d0f1494fd6d02886c1c832546de5d">cv</a>.notify_all();</div>
-<div class="line"><span class="lineno">  202</span>        <span class="keyword">delete</span> old_tree;</div>
-<div class="line"><span class="lineno">  203</span>      }</div>
-<div class="ttc" id="aclasscydui_1_1compositing_1_1LayoutCompositor_html_a040d0f1494fd6d02886c1c832546de5d"><div class="ttname"><a href="classcydui_1_1compositing_1_1LayoutCompositor.html#a040d0f1494fd6d02886c1c832546de5d">cydui::compositing::LayoutCompositor::cv</a></div><div class="ttdeci">std::condition_variable cv</div><div class="ttdef"><b>Definition</b> <a href="compositing_8h_source.html#l00080">compositing.h:80</a></div></div>
+<p class="definition">Definition at line <a class="el" href="compositing_8h_source.html#l00196">196</a> of file <a class="el" href="compositing_8h_source.html">compositing.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  196</span>                                              {</div>
+<div class="line"><span class="lineno">  197</span>        compositing_tree_t* old_tree;</div>
+<div class="line"><span class="lineno">  198</span>        {</div>
+<div class="line"><span class="lineno">  199</span>          std::lock_guard lk(<a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a2a5e313aff23b76564f4ec0213a2c0b3">m</a>);</div>
+<div class="line"><span class="lineno">  200</span>          old_tree = <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ae5547c3279e71ca5aa9feca804e45452">tree</a>;</div>
+<div class="line"><span class="lineno">  201</span>          <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#ae5547c3279e71ca5aa9feca804e45452">tree</a> = _tree;</div>
+<div class="line"><span class="lineno">  202</span>          <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a78a66e00d897fb374aed86ae5e8dede0">tree_dirty</a> = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  203</span>        }</div>
+<div class="line"><span class="lineno">  204</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a040d0f1494fd6d02886c1c832546de5d">cv</a>.notify_all();</div>
+<div class="line"><span class="lineno">  205</span>        <span class="keyword">delete</span> old_tree;</div>
+<div class="line"><span class="lineno">  206</span>      }</div>
 <div class="ttc" id="aclasscydui_1_1compositing_1_1LayoutCompositor_html_a2a5e313aff23b76564f4ec0213a2c0b3"><div class="ttname"><a href="classcydui_1_1compositing_1_1LayoutCompositor.html#a2a5e313aff23b76564f4ec0213a2c0b3">cydui::compositing::LayoutCompositor::m</a></div><div class="ttdeci">std::mutex m</div><div class="ttdef"><b>Definition</b> <a href="compositing_8h_source.html#l00079">compositing.h:79</a></div></div>
 <div class="ttc" id="aclasscydui_1_1compositing_1_1LayoutCompositor_html_a78a66e00d897fb374aed86ae5e8dede0"><div class="ttname"><a href="classcydui_1_1compositing_1_1LayoutCompositor.html#a78a66e00d897fb374aed86ae5e8dede0">cydui::compositing::LayoutCompositor::tree_dirty</a></div><div class="ttdeci">bool tree_dirty</div><div class="ttdef"><b>Definition</b> <a href="compositing_8h_source.html#l00088">compositing.h:88</a></div></div>
 <div class="ttc" id="aclasscydui_1_1compositing_1_1LayoutCompositor_html_ae5547c3279e71ca5aa9feca804e45452"><div class="ttname"><a href="classcydui_1_1compositing_1_1LayoutCompositor.html#ae5547c3279e71ca5aa9feca804e45452">cydui::compositing::LayoutCompositor::tree</a></div><div class="ttdeci">compositing_tree_t * tree</div><div class="ttdef"><b>Definition</b> <a href="compositing_8h_source.html#l00087">compositing.h:87</a></div></div>
@@ -392,7 +395,7 @@ Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   96</span>          std::unique_lock lk(compositor-&gt;m);</div>
 <div class="line"><span class="lineno">   97</span>          <span class="keywordflow">if</span> (<span class="keyword">nullptr</span> != compositor-&gt;render_target) {</div>
 <div class="line"><span class="lineno">   98</span>            compositor-&gt;cv.wait(lk, [&amp;] {</div>
-<div class="line"><span class="lineno">   99</span>              <span class="keywordflow">return</span> compositor-&gt;tree_dirty;</div>
+<div class="line"><span class="lineno">   99</span>              <span class="keywordflow">return</span> compositor-&gt;tree_dirty || !compositor-&gt;running.test();</div>
 <div class="line"><span class="lineno">  100</span>            });</div>
 <div class="line"><span class="lineno">  101</span>            <span class="keyword">auto</span> _pev = compositor-&gt;profiler-&gt;scope_event(<span class="stringliteral">&quot;COMPOSITING TASK&quot;</span>);</div>
 <div class="line"><span class="lineno">  102</span>            compositor-&gt;tree_dirty = <span class="keyword">false</span>;</div>
@@ -408,9 +411,9 @@ Private Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  112</span>          std::this_thread::sleep_until(t0 + 16666us);</div>
 <div class="line"><span class="lineno">  113</span>        }</div>
 <div class="line"><span class="lineno">  114</span>      }</div>
-<div class="ttc" id="anamespacecydui_1_1graphics_html_a183658b9bd88610ff0e5767ae04c55d5"><div class="ttname"><a href="namespacecydui_1_1graphics.html#a183658b9bd88610ff0e5767ae04c55d5">cydui::graphics::flush</a></div><div class="ttdeci">void flush(window_t *win)</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8cpp_source.html#l00164">x11_impl.cpp:164</a></div></div>
-<div class="ttc" id="anamespacecydui_1_1graphics_html_a556fba69a253edbba4d4427ce889d0b7"><div class="ttname"><a href="namespacecydui_1_1graphics.html#a556fba69a253edbba4d4427ce889d0b7">cydui::graphics::resize</a></div><div class="ttdeci">void resize(window_t *win, int w, int h)</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8cpp_source.html#l00157">x11_impl.cpp:157</a></div></div>
-<div class="ttc" id="anamespacecydui_1_1graphics_html_ac4038832746129448e38dbf83c242d19"><div class="ttname"><a href="namespacecydui_1_1graphics.html#ac4038832746129448e38dbf83c242d19">cydui::graphics::get_frame</a></div><div class="ttdeci">pixelmap_t * get_frame(window_t *win)</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8cpp_source.html#l00286">x11_impl.cpp:286</a></div></div>
+<div class="ttc" id="anamespacecydui_1_1graphics_html_a183658b9bd88610ff0e5767ae04c55d5"><div class="ttname"><a href="namespacecydui_1_1graphics.html#a183658b9bd88610ff0e5767ae04c55d5">cydui::graphics::flush</a></div><div class="ttdeci">void flush(window_t *win)</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8cpp_source.html#l00167">x11_impl.cpp:167</a></div></div>
+<div class="ttc" id="anamespacecydui_1_1graphics_html_a556fba69a253edbba4d4427ce889d0b7"><div class="ttname"><a href="namespacecydui_1_1graphics.html#a556fba69a253edbba4d4427ce889d0b7">cydui::graphics::resize</a></div><div class="ttdeci">void resize(window_t *win, int w, int h)</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8cpp_source.html#l00160">x11_impl.cpp:160</a></div></div>
+<div class="ttc" id="anamespacecydui_1_1graphics_html_ac4038832746129448e38dbf83c242d19"><div class="ttname"><a href="namespacecydui_1_1graphics.html#ac4038832746129448e38dbf83c242d19">cydui::graphics::get_frame</a></div><div class="ttdeci">pixelmap_t * get_frame(window_t *win)</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8cpp_source.html#l00289">x11_impl.cpp:289</a></div></div>
 <div class="ttc" id="astructpixelmap__t_html"><div class="ttname"><a href="structpixelmap__t.html">pixelmap_t</a></div><div class="ttdef"><b>Definition</b> <a href="pixelmap_8h_source.html#l00017">pixelmap.h:17</a></div></div>
 </div><!-- fragment --><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
@@ -637,12 +640,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="compositing_8h_source.html#l00187">187</a> of file <a class="el" href="compositing_8h_source.html">compositing.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  187</span>                                                                                         {</div>
-<div class="line"><span class="lineno">  188</span>        std::lock_guard lk(<a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a2a5e313aff23b76564f4ec0213a2c0b3">m</a>);</div>
-<div class="line"><span class="lineno">  189</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#aa553689bee43574450265dc739d4fea5">render_target</a> = _render_target;</div>
-<div class="line"><span class="lineno">  190</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a96d8d306a9d0cf063bf0c095ebbfd3a1">profiler</a> = _profiler;</div>
-<div class="line"><span class="lineno">  191</span>      }</div>
+<p class="definition">Definition at line <a class="el" href="compositing_8h_source.html#l00190">190</a> of file <a class="el" href="compositing_8h_source.html">compositing.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  190</span>                                                                                         {</div>
+<div class="line"><span class="lineno">  191</span>        std::lock_guard lk(<a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a2a5e313aff23b76564f4ec0213a2c0b3">m</a>);</div>
+<div class="line"><span class="lineno">  192</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#aa553689bee43574450265dc739d4fea5">render_target</a> = _render_target;</div>
+<div class="line"><span class="lineno">  193</span>        <a class="code hl_variable" href="classcydui_1_1compositing_1_1LayoutCompositor.html#a96d8d306a9d0cf063bf0c095ebbfd3a1">profiler</a> = _profiler;</div>
+<div class="line"><span class="lineno">  194</span>      }</div>
 <div class="ttc" id="aclasscydui_1_1compositing_1_1LayoutCompositor_html_a96d8d306a9d0cf063bf0c095ebbfd3a1"><div class="ttname"><a href="classcydui_1_1compositing_1_1LayoutCompositor.html#a96d8d306a9d0cf063bf0c095ebbfd3a1">cydui::compositing::LayoutCompositor::profiler</a></div><div class="ttdeci">prof::context_t * profiler</div><div class="ttdef"><b>Definition</b> <a href="compositing_8h_source.html#l00085">compositing.h:85</a></div></div>
 <div class="ttc" id="aclasscydui_1_1compositing_1_1LayoutCompositor_html_aa553689bee43574450265dc739d4fea5"><div class="ttname"><a href="classcydui_1_1compositing_1_1LayoutCompositor.html#aa553689bee43574450265dc739d4fea5">cydui::compositing::LayoutCompositor::render_target</a></div><div class="ttdeci">graphics::window_t * render_target</div><div class="ttdef"><b>Definition</b> <a href="compositing_8h_source.html#l00084">compositing.h:84</a></div></div>
 </div><!-- fragment -->
