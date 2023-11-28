@@ -5,7 +5,7 @@
 #ifndef CYD_UI_PIXELMAP_H
 #define CYD_UI_PIXELMAP_H
 
-#include "cydstd/multidim_data.h"
+#include "../cydstd/multidim_data.h"
 
 struct __attribute__((packed)) pixel_t {
   u8 b;
