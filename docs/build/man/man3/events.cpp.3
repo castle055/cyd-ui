@@ -1,236 +1,186 @@
-.TH "src/events/events.cpp" 3 "CYD-UI" \" -*- nroff -*-
+.TH "src/graphics/x11/events/events.cpp" 3 "CYD-UI" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-src/events/events.cpp
+src/graphics/x11/events/events.cpp
 .SH SYNOPSIS
 .br
 .PP
-\fC#include 'events/events\&.hpp'\fP
+\fC#include 'events\&.hpp'\fP
 .br
 \fC#include 'cydstd/logging\&.hpp'\fP
 .br
-\fC#include <deque>\fP
+\fC#include '\&.\&./state/state\&.hpp'\fP
 .br
-\fC#include <list>\fP
+\fC#include <X11/Xlib\&.h>\fP
 .br
-\fC#include <mutex>\fP
-.br
-\fC#include <unordered_map>\fP
+\fC#include <X11/keysym\&.h>\fP
 .br
 
-.SS "Classes"
-
-.in +1c
-.ti -1c
-.RI "struct \fBthread_data\fP"
-.br
-.in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "static void \fBrun_event\fP (\fBthread_data\fP *data, \fBcydui::events::Event\fP *ev)"
+.RI "Bool \fBevpredicate\fP ()"
 .br
 .ti -1c
-.RI "void \fBpush_event\fP (\fBthread_data\fP *data, \fBcydui::events::Event\fP *ev)"
+.RI "static void \fBrun\fP ()"
 .br
 .ti -1c
-.RI "\fBcydui::events::Event\fP * \fBget_next_event\fP (\fBthread_data\fP *data)"
-.br
-.ti -1c
-.RI "void \fBclean_up_event\fP (\fBthread_data\fP *data, \fBcydui::events::Event\fP *ev)"
-.br
-.ti -1c
-.RI "void \fBprocess_event\fP (\fBthread_data\fP *data)"
-.br
-.ti -1c
-.RI "void \fBevent_task\fP (\fBcydui::threading::thread_t\fP *this_thread)"
+.RI "void \fBx11_event_emitter_task\fP (\fBcydui::threading::thread_t\fP *this_thread)"
 .br
 .in -1c
 .SS "Variables"
 
 .in +1c
 .ti -1c
-.RI "\fBlogging::logger\fP \fBlog_task\fP"
+.RI "\fBcydui::threading::thread_t\fP * \fBx11_thread\fP"
 .br
 .ti -1c
-.RI "\fBlogging::logger\fP \fBlog_ctrl\fP"
+.RI "\fBlogging::logger\fP \fBx11_evlog\fP = {\&.name = 'X11::EV'}"
 .br
 .ti -1c
-.RI "\fBcydui::threading::thread_t\fP * \fBevent_thread\fP"
+.RI "\fBlogging::logger\fP \fBchev_log\fP = {\&.name = 'EV::CHANGE', \&.on = false}"
 .br
 .ti -1c
-.RI "static \fBthread_data\fP * \fBth_data\fP = new \fBthread_data\fP"
+.RI "\fBcydui::events::change_ev::DataMonitor\fP< \fBRedrawEvent\fP > \fBredrawEventDataMonitor\fP ([](\fBRedrawEvent::DataType\fP &o_data, \fBRedrawEvent::DataType\fP &n_data) { return true;})"
 .br
 .ti -1c
-.RI "std::mutex \fBevent_mutex\fP"
+.RI "\fBcydui::events::change_ev::DataMonitor\fP< \fBResizeEvent\fP > \fBresizeEventDataMonitor\fP ([](\fBResizeEvent::DataType\fP &o_data, \fBResizeEvent::DataType\fP &n_data) { return(o_data\&.w !=n_data\&.w||o_data\&.h !=n_data\&.h);})"
 .br
 .ti -1c
-.RI "std::mutex \fBlisteners_mutex\fP"
+.RI "\fBcydui::events::change_ev::DataMonitor\fP< \fBMotionEvent\fP > \fBmotionEventDataMonitor\fP ([](\fBMotionEvent::DataType\fP &o_data, \fBMotionEvent::DataType\fP &n_data) { return true;})"
+.br
+.ti -1c
+.RI "\fBcydui::events::change_ev::DataMonitor\fP< \fBScrollEvent\fP > \fBvScrollEventDataMonitor\fP ([](\fBScrollEvent::DataType\fP &o_data, \fBScrollEvent::DataType\fP &n_data) { n_data\&.dy+=o_data\&.dy;return true;}, [](\fBScrollEvent::DataType\fP &data) { data\&.dy=0;})"
+.br
+.RI "This prevents the event thread from chocking on scroll events\&. "
+.ti -1c
+.RI "\fBcydui::events::change_ev::DataMonitor\fP< \fBScrollEvent\fP > \fBhScrollEventDataMonitor\fP ([](\fBScrollEvent::DataType\fP &o_data, \fBScrollEvent::DataType\fP &n_data) { n_data\&.dx+=o_data\&.dx;return true;}, [](\fBScrollEvent::DataType\fP &data) { data\&.dx=0;})"
+.br
+.RI "This prevents the event thread from chocking on scroll events\&. "
+.ti -1c
+.RI "static std::unordered_map< KeySym, \fBKey\fP > \fBxkey_map\fP"
+.br
+.ti -1c
+.RI "char \fBinput_buffer\fP [10]"
+.br
+.ti -1c
+.RI "static XIM \fBxim\fP"
+.br
+.ti -1c
+.RI "static XIC \fBxic\fP"
+.br
+.ti -1c
+.RI "Status \fBst\fP"
+.br
+.ti -1c
+.RI "KeySym \fBksym\fP"
 .br
 .in -1c
 .SH "Function Documentation"
 .PP 
-.SS "void clean_up_event (\fBthread_data\fP * data, \fBcydui::events::Event\fP * ev)"
+.SS "Bool evpredicate ()"
 
 .PP
-Definition at line \fB86\fP of file \fBevents\&.cpp\fP\&..PP
+Definition at line \fB19\fP of file \fBevents\&.cpp\fP\&..PP
 .nf
-86                                                              {
-87   event_mutex\&.lock();
-88   data\->event_queue\->pop_front();
-89   if (data\->event_queue\->empty())
-90     data\->pending = false;
-91   ev\->ev_mtx\&.lock();
-92   ev\->status = cydui::events::CONSUMED;
-93   ev\->ev_mtx\&.unlock();
-94   log_task\&.debug("DONE WITH EVENT: %s %s", ev\->type\&.c_str(), ev\->managed ? "" : "[deleting]");
-95   if (!ev\->managed) delete ev;
-96   event_mutex\&.unlock();
-97 }
+19                    {
+20   return True;
+21 }
 .fi
 
-.SS "void event_task (\fBcydui::threading::thread_t\fP * this_thread)"
-
+.SS "static void run ()\fC [static]\fP"
+I give no chance for this event not to be emitted
 .PP
-Definition at line \fB113\fP of file \fBevents\&.cpp\fP\&..PP
+Definition at line \fB119\fP of file \fBevents\&.cpp\fP\&..PP
 .nf
-113                                                      {
-114   log_task\&.debug("Started event_task");
-115   auto t0 = std::chrono::system_clock::now();
-116   while (this_thread\->running) {
-117     t0 = std::chrono::system_clock::now();
-118     process_event((thread_data*) (this_thread\->data));
-119     std::this_thread::sleep_until(t0 + 100us);
-120   }
-121 }
-.fi
-
-.SS "\fBcydui::events::Event\fP * get_next_event (\fBthread_data\fP * data)"
-
-.PP
-Definition at line \fB73\fP of file \fBevents\&.cpp\fP\&..PP
-.nf
-73                                                     {
-74   cydui::events::Event* ev = nullptr;
-75   
-76   //event_mutex\&.lock();
-77   if (data\->pending) {
-78     //    log_task\&.info("EV QUEUE: %d", data\->event_queue\->size());
-79     ev = data\->event_queue\->front();
-80   }
-81   //event_mutex\&.unlock();
-82   
-83   return ev;
-84 }
-.fi
-
-.SS "void process_event (\fBthread_data\fP * data)"
-
-.PP
-Definition at line \fB99\fP of file \fBevents\&.cpp\fP\&..PP
-.nf
-99                                       {
-100   //    log_task\&.debug("Processing next event");
-101   
-102   log_task\&.debug("EVENT COUNT: %ld", data\->event_queue\->size());
-103   cydui::events::Event* ev = get_next_event(data);
-104   
-105   if (ev != nullptr) {
-106     run_event(data, ev);
-107     clean_up_event(data, ev);
-108   }
-109 }
-.fi
-
-.SS "void push_event (\fBthread_data\fP * data, \fBcydui::events::Event\fP * ev)"
-
-.PP
-Definition at line \fB65\fP of file \fBevents\&.cpp\fP\&..PP
-.nf
-65                                                          {
-66   event_mutex\&.lock();
-67   data\->event_queue\->push_back(ev);
-68   data\->pending = true;
-69   log_task\&.debug("NEW EVENT: %s", ev\->type\&.c_str());
-70   event_mutex\&.unlock();
-71 }
-.fi
-
-.SS "static void run_event (\fBthread_data\fP * data, \fBcydui::events::Event\fP * ev)\fC [static]\fP"
-Geniusly removing the insane edge case where a listener modifies the list of listeners for the SAME EVENT TYPE as it runs\&. Even more geniusly introduced the case where that problem is solved EXCEPT for when a listener adds AND removes the same amount of listeners\&.
-.PP
-NOTE that the problem is modifying the list of listeners as it's being iterated on! This below is a crude way of checking if the list was changed
-.PP
-Definition at line \fB41\fP of file \fBevents\&.cpp\fP\&..PP
-.nf
-41                                                                {
-42   ev\->ev_mtx\&.lock();
-43   ev\->status = cydui::events::PROCESSING;
-44   ev\->ev_mtx\&.unlock();
-45   listeners_mutex\&.lock();
-46   if (data\->event_listeners\->contains(ev\->type)) {
-47     auto size_before = (*data\->event_listeners)[ev\->type]\&.size();
-48     for (const auto listener: (*data\->event_listeners)[ev\->type]) {
-49       listener\->operator()(ev);
-57       if ((*data\->event_listeners)[ev\->type]\&.size() != size_before) {
-58         break;
-59       }
-60     }
-61   }
-62   listeners_mutex\&.unlock();
-63 }
-.fi
-
-.SH "Variable Documentation"
-.PP 
-.SS "std::mutex event_mutex"
-
-.PP
-Definition at line \fB37\fP of file \fBevents\&.cpp\fP\&.
-.SS "\fBcydui::threading::thread_t\fP* event_thread"
-
-.PP
-Definition at line \fB20\fP of file \fBevents\&.cpp\fP\&.
-.SS "std::mutex listeners_mutex"
-
-.PP
-Definition at line \fB38\fP of file \fBevents\&.cpp\fP\&.
-.SS "\fBlogging::logger\fP log_ctrl"
-\fBInitial value:\fP.PP
-.nf
-=
-  {\&.name = "EV_CTRL", \&.on = true, \&.min_level = logging::ERROR}
-.fi
-
-.PP
-Definition at line \fB17\fP of file \fBevents\&.cpp\fP\&..PP
-.nf
-18   {\&.name = "EV_CTRL", \&.on = true, \&.min_level = logging::ERROR};
-.fi
-
-.SS "\fBlogging::logger\fP log_task"
-\fBInitial value:\fP.PP
-.nf
-=
-  {\&.name = "EV_TASK", \&.on = true, \&.min_level = logging::INFO}
-.fi
-
-.PP
-Definition at line \fB15\fP of file \fBevents\&.cpp\fP\&..PP
-.nf
-16   {\&.name = "EV_TASK", \&.on = true, \&.min_level = logging::INFO};
-.fi
-
-.SS "\fBthread_data\fP* th_data = new \fBthread_data\fP\fC [static]\fP"
-
-.PP
-Definition at line \fB34\fP of file \fBevents\&.cpp\fP\&.
-.SH "Author"
-.PP 
-Generated automatically by Doxygen for CYD-UI from the source code\&.
-ow,
+119                   {
+120   XEvent ev;
+121   
+122   int queued = XEventsQueued(state::get_dpy(), QueuedAlready);
+123   for (int i = 0; i < queued; ++i) {
+124     XNextEvent(
+125       state::get_dpy(),
+126       &ev
+127     );
+128     //if (6 != ev\&.type
+129     //  && 2 != ev\&.type
+130     //  && 3 != ev\&.type
+131     //  )
+132     //x11_evlog\&.debug("event = %d", ev\&.type);
+133     using namespace cydui::events;
+134     switch (ev\&.type) {
+135       case MapNotify:
+136         break;
+137       case VisibilityNotify:
+138       case Expose:
+139         if (ev\&.xvisibility\&.type == VisibilityNotify) {
+140           redrawEventDataMonitor\&.update({
+141             \&.win = (unsigned int) ev\&.xvisibility\&.window,
+142           });
+143         } else if (ev\&.xexpose\&.type == Expose
+144           && ev\&.xexpose\&.count == 0
+145           /*&& ev\&.xexpose\&.width > 0
+146           && ev\&.xexpose\&.height > 0*/) {
+147           redrawEventDataMonitor\&.update({
+148             \&.win = (unsigned int) ev\&.xexpose\&.window,
+149           });
+150         }
+151         break;
+152       case KeyPress://x11_evlog\&.warn("KEY= %X", XLookupKeysym(&ev\&.xkey, 0));
+153         Xutf8LookupString(xic, &ev\&.xkey, input_buffer, 10, &ksym, &st);
+154         //x11_evlog\&.warn("BUF(%d)= %s", st, input_buffer);
+155         if ((st == XLookupKeySym || st == XLookupBoth)) {
+156           //x11_evlog\&.warn("====FOUND");
+157           emit<KeyEvent>({
+158             \&.win = (unsigned int) ev\&.xkey\&.window,
+159             \&.key = xkey_map\&.contains(ksym) ? xkey_map[ksym] : Key::UNKNOWN,
+160             \&.pressed = true,
+161             \&.text = st == XLookupBoth ? str(input_buffer) : "",
+162           });
+163         }
+164         break;
+165       case KeyRelease:
+166         if (xkey_map\&.contains(XLookupKeysym(&ev\&.xkey, 0))) {
+167           emit<KeyEvent>({
+168             \&.win = (unsigned int) ev\&.xkey\&.window,
+169             \&.key = xkey_map[XLookupKeysym(&ev\&.xkey, 0)],
+170             \&.released = true,
+171           });
+172         }
+173         break;
+174       case ButtonPress:
+175         //x11_evlog\&.warn("BUTTON= %d", ev\&.xbutton\&.button);
+176         if (ev\&.xbutton\&.button == 4) {
+177           //emit<ScrollEvent>({
+178           //  \&.win = (unsigned int) ev\&.xbutton\&.window,
+179           //  \&.dy = 64,
+180           //  \&.x = ev\&.xbutton\&.x,
+181           //  \&.y = ev\&.xbutton\&.y,
+182           //});
+183           vScrollEventDataMonitor\&.update({
+184             \&.win = (unsigned int) ev\&.xbutton\&.window,
+185             \&.dy = 64,
+186             \&.x = ev\&.xbutton\&.x,
+187             \&.y = ev\&.xbutton\&.y,
+188           });
+189         } else if (ev\&.xbutton\&.button == 5) {
+190           //emit<ScrollEvent>({
+191           //  \&.win = (unsigned int) ev\&.xbutton\&.window,
+192           //  \&.dy = \-64,
+193           //  \&.x = ev\&.xbutton\&.x,
+194           //  \&.y = ev\&.xbutton\&.y,
+195           //});
+196           vScrollEventDataMonitor\&.update({
+197             \&.win = (unsigned int) ev\&.xbutton\&.window,
+198             \&.dy = \-64,
+199             \&.x = ev\&.xbutton\&.x,
+200             \&.y = ev\&.xbutton\&.y,
+201           });
+202         } else if (ev\&.xbutton\&.button == 6) {
+203           hScrollEventDataMonitor\&.update({
+204             \&.win = (unsigned int) ev\&.xbutton\&.window,
 205             \&.dx = \-64,
 206             \&.x = ev\&.xbutton\&.x,
 207             \&.y = ev\&.xbutton\&.y,
