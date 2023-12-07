@@ -41,6 +41,7 @@ struct NAME:                 \
     explicit NAME(props_t props)    \
       : cydui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\
       , props(std::move(props)) { } \
+    ~NAME() override = default;     \
   };                         \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \
   CYDUI_STATE_NAME(NAME)* state = nullptr;                    \
@@ -84,6 +85,7 @@ struct NAME:                          \
         NAME SET_COMPONENT_TEMPLATE_SHORT                     \
       >()                             \
       , props(std::move(props)) { }   \
+    ~NAME() override = default;       \
 };                                    \
 template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \

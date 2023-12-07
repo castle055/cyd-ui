@@ -18,6 +18,9 @@ Inherited by \fBattrs_component< ThreadTimeline >\fP, and \fBattrs_component< T 
 Public Member Functions inherited from \fBattr_x< T >\fP
 .in +1c
 .ti -1c
+.RI "\fB~attr_x\fP () override=default"
+.br
+.ti -1c
 .RI "\fBT\fP & \fBx\fP (auto &_x_)"
 .br
 .ti -1c
@@ -25,8 +28,18 @@ Public Member Functions inherited from \fBattr_x< T >\fP
 .br
 .in -1c
 
+Public Member Functions inherited from \fBattribute_i\fP
+.in +1c
+.ti -1c
+.RI "virtual \fB~attribute_i\fP ()=default"
+.br
+.in -1c
+
 Public Member Functions inherited from \fBattr_y< T >\fP
 .in +1c
+.ti -1c
+.RI "\fB~attr_y\fP () override=default"
+.br
 .ti -1c
 .RI "\fBT\fP & \fBy\fP (auto &_y_)"
 .br
@@ -38,6 +51,9 @@ Public Member Functions inherited from \fBattr_y< T >\fP
 Public Member Functions inherited from \fBattr_w< T >\fP
 .in +1c
 .ti -1c
+.RI "\fB~attr_w\fP () override=default"
+.br
+.ti -1c
 .RI "\fBT\fP & \fBw\fP (auto &_w_)"
 .br
 .ti -1c
@@ -47,6 +63,9 @@ Public Member Functions inherited from \fBattr_w< T >\fP
 
 Public Member Functions inherited from \fBattr_h< T >\fP
 .in +1c
+.ti -1c
+.RI "\fB~attr_h\fP () override=default"
+.br
 .ti -1c
 .RI "\fBT\fP & \fBh\fP (auto &_h_)"
 .br
@@ -95,7 +114,7 @@ Public Attributes inherited from \fBattr_h< T >\fP
 .br
 struct attrs_dimensions< T >"
 .PP
-Definition at line \fB90\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB94\fP of file \fBcomponent_attributes\&.h\fP\&.
 
 .SH "Author"
 .PP 

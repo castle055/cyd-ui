@@ -89,7 +89,7 @@ include/events/events.hpp
 .RI "void \fBcydui::events::emit_raw\fP (\fBcydui::events::Event\fP *ev)"
 .br
 .ti -1c
-.RI "void \fBcydui::events::emit_raw\fP (const \fBstr\fP &event_type, void *data)"
+.RI "void \fBcydui::events::emit_raw\fP (const \fBstr\fP &event_type, void *data, std::function< void()> data_destructor)"
 .br
 .ti -1c
 .RI "template<typename \fBT\fP > 
@@ -116,7 +116,7 @@ requires EventType<\fBT\fP>\fBlistener_t\fP * \fBcydui::events::on_event\fP (\fB
 .SS "#define consumer   [=](it)"
 
 .PP
-Definition at line \fB219\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB226\fP of file \fBevents\&.hpp\fP\&.
 .SS "#define EVENT(NAME, DATA)"
 \fBValue:\fP.PP
 .nf
@@ -127,12 +127,12 @@ Definition at line \fB219\fP of file \fBevents\&.hpp\fP\&.
 .fi
 
 .PP
-Definition at line \fB230\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB237\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-231               {                                                                \\
-232     constexpr static const char* type = #NAME;                                 \\
-233     struct DataType: public event_data_type_base_t DATA data;                  \\
-234   };
+238               {                                                                \\
+239     constexpr static const char* type = #NAME;                                 \\
+240     struct DataType: public event_data_type_base_t DATA data;                  \\
+241   };
 .fi
 
 .SS "#define listen(\fBEVENT\fP,  \&.\&.\&.)"
@@ -143,7 +143,7 @@ Definition at line \fB230\fP of file \fBevents\&.hpp\fP\&..PP
 .fi
 
 .PP
-Definition at line \fB220\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB227\fP of file \fBevents\&.hpp\fP\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for CYD-UI from the source code\&.

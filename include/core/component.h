@@ -23,7 +23,7 @@ namespace cydui::layout {
 
 namespace cydui::components {
     struct component_state_t {
-      window::CWindow* win;
+      window::CWindow* win = nullptr;
       
       std::optional<component_state_t*> parent = std::nullopt;
       std::unordered_map<std::string, component_state_t*> children_states {};
@@ -34,6 +34,7 @@ namespace cydui::components {
       bool hovering = false;
       
       std::optional<component_base_t*> component_instance = std::nullopt;
+      //std::function<void()> component_instance_destructor = []() { };
       
       /*!
        * @brief Marks this component state as needing to be redrawn.
@@ -78,12 +79,13 @@ namespace cydui::components {
       
       std::vector<cydui::events::listener_t*> subscribed_listeners {};
       
-      virtual ~component_base_t() {
-        clear_subscribed_listeners();
-        if (state.has_value()) {
-          state.value()->component_instance = std::nullopt;
-        }
-      }
+      virtual ~component_base_t() = default; //{
+      //  ! All of this is done in the `component_t` class destructor
+      //  clear_subscribed_listeners();
+      //  if (state.has_value()) {
+      //    state.value()->component_instance = std::nullopt;
+      //  }
+      //}
       virtual void configure_event_handler() = 0;
       virtual void subscribe_events() = 0;
       virtual void clear_children() = 0;
@@ -119,7 +121,7 @@ namespace cydui::components {
     template<ComponentEventHandlerConcept EVH, typename T>
     struct component_t:
       public component_base_t,
-      attrs_component<T> {
+      public attrs_component<T> {
     private: //! Private attributes
       cydui::dimensions::dimension_t cx;
       cydui::dimensions::dimension_t cy;
@@ -130,6 +132,10 @@ namespace cydui::components {
     
     public:
       ~component_t() override {
+        for (auto &child: children) {
+          delete child;
+        }
+        children.clear();
         clear_subscribed_listeners();
         if (state.has_value()) {
           state.value()->component_instance = std::nullopt;
@@ -137,12 +143,12 @@ namespace cydui::components {
       };
       
       void configure_event_handler() override {
+        EVH * evh = event_handler_.operator->();
         if (parent.has_value()) {
-          event_handler_->parent = parent.value()->event_handler();
+          evh->parent = parent.value()->event_handler();
         } else {
-          event_handler_->parent = nullptr;
+          evh->parent = nullptr;
         }
-        EVH* evh = event_handler_.operator->();
         evh->state = (typename T::state_t*) state.value();
         evh->props = &(((T*) this)->props);
         evh->attrs = (attrs_component<T>*) this;
@@ -150,7 +156,7 @@ namespace cydui::components {
       }
       void subscribe_events() override {
         clear_subscribed_listeners();
-        EVH* evh = event_handler_.operator->();
+        EVH * evh = event_handler_.operator->();
         add_event_listeners(evh->get_event_listeners());
       }
       void clear_children() override {
@@ -198,6 +204,7 @@ namespace cydui::components {
             child_state->component_instance = component;
             component->parent = this;
             children.push_back(component);
+            //printf("CHILDREN LEN: %d\n", children.size());
             
             // Configure event handler
             component->configure_event_handler();

@@ -24,6 +24,8 @@ Collaboration diagram for cydui\+::dimensions\+::dimension\+\_\+t\+:\nopagebreak
 \item 
 \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a5acf28bae2f15ab0b42c8e1504926130}{dimension\+\_\+t}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a89a341699e02020d36c1b5a6ef5ec031}{value}})
 \item 
+\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_af8b09cd2251e97a1623e397468d35282}{\texorpdfstring{$\sim$}{\string~}dimension\+\_\+t}} ()
+\item 
 \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \& \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a8e909709aeae61f2993018a6dfb790c6}{operator=}} (\mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}} \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a89a341699e02020d36c1b5a6ef5ec031}{value}})
 \item 
 \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \& \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a03f4f0a6bd40b7ddd1423fb804275761}{operator=}} (\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} const \&dim)
@@ -40,7 +42,7 @@ static bool \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_af59a023fa
 \item 
 bool \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a09d648cb67171a9331413b2ec56ece27}{unknown}} = false
 \item 
-std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a0098b789747b7ad03724b174cef4327d}{deps}} = \{\}
+std\+::unordered\+\_\+set$<$ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a0098b789747b7ad03724b174cef4327d}{deps}}
 \item 
 std\+::function$<$ \mbox{\hyperlink{namespacecydui_1_1dimensions_a30d917fa574bad7f5bc21f64723d7fb1}{dimension\+\_\+value\+\_\+t}}()$>$ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_adaaa3cdf0c66f335be657467d0e55fdc}{binding}}
 \end{DoxyCompactItemize}
@@ -82,6 +84,23 @@ Definition at line \mbox{\hyperlink{dimensions_8cpp_source_l00043}{43}} of file 
 \DoxyCodeLine{00045\ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_adaaa3cdf0c66f335be657467d0e55fdc}{binding}}\ =\ [\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}]()\ \{\ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}};\ \};}
 \DoxyCodeLine{00046\ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a09d648cb67171a9331413b2ec56ece27}{unknown}}\ =\ \textcolor{keyword}{false};}
 \DoxyCodeLine{00047\ \}}
+
+\end{DoxyCode}
+\Hypertarget{classcydui_1_1dimensions_1_1dimension__t_af8b09cd2251e97a1623e397468d35282}\label{classcydui_1_1dimensions_1_1dimension__t_af8b09cd2251e97a1623e397468d35282} 
+\index{cydui::dimensions::dimension\_t@{cydui::dimensions::dimension\_t}!````~dimension\_t@{\texorpdfstring{$\sim$}{\string~}dimension\_t}}
+\index{````~dimension\_t@{\texorpdfstring{$\sim$}{\string~}dimension\_t}!cydui::dimensions::dimension\_t@{cydui::dimensions::dimension\_t}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}dimension\_t()}{\string~dimension\_t()}}
+{\footnotesize\ttfamily cydui\+::dimensions\+::dimension\+\_\+t\+::\texorpdfstring{$\sim$}{\string~}dimension\+\_\+t (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{dimensions_8hpp_source_l00065}{65}} of file \mbox{\hyperlink{dimensions_8hpp_source}{dimensions.\+hpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_a0098b789747b7ad03724b174cef4327d}{deps}}.clear();}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \}}
 
 \end{DoxyCode}
 
@@ -268,17 +287,12 @@ Definition at line \mbox{\hyperlink{dimensions_8hpp_source_l00054}{54}} of file 
 \index{cydui::dimensions::dimension\_t@{cydui::dimensions::dimension\_t}!deps@{deps}}
 \index{deps@{deps}!cydui::dimensions::dimension\_t@{cydui::dimensions::dimension\_t}}
 \doxysubsubsection{\texorpdfstring{deps}{deps}}
-{\footnotesize\ttfamily std\+::unordered\+\_\+set$<$\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}}\texorpdfstring{$\ast$}{*}$>$ cydui\+::dimensions\+::dimension\+\_\+t\+::deps = \{\}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+set$<$\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t}{dimension\+\_\+t}}\texorpdfstring{$\ast$}{*}$>$ cydui\+::dimensions\+::dimension\+\_\+t\+::deps}
 
 
 
 Definition at line \mbox{\hyperlink{dimensions_8hpp_source_l00053}{53}} of file \mbox{\hyperlink{dimensions_8hpp_source}{dimensions.\+hpp}}.
 
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00053\ \{\};}
-
-\end{DoxyCode}
 \Hypertarget{classcydui_1_1dimensions_1_1dimension__t_a09d648cb67171a9331413b2ec56ece27}\label{classcydui_1_1dimensions_1_1dimension__t_a09d648cb67171a9331413b2ec56ece27} 
 \index{cydui::dimensions::dimension\_t@{cydui::dimensions::dimension\_t}!unknown@{unknown}}
 \index{unknown@{unknown}!cydui::dimensions::dimension\_t@{cydui::dimensions::dimension\_t}}

@@ -62,159 +62,162 @@ Definition at line \fB43\fP of file \fBx11_impl\&.cpp\fP\&..PP
 53   static int _ig = XInitThreads();
 54   
 55   XVisualInfo vinfo;
-56   XMatchVisualInfo(state::get_dpy(), state::get_screen(), 32, TrueColor, &vinfo);
-57   XSetWindowAttributes wa = {
-58     \&.background_pixel = 0,//ParentRelative,
-59     \&.border_pixel = 0,
-60     \&.bit_gravity = NorthWestGravity,
-61     \&.event_mask  = FocusChangeMask | KeyPressMask | KeyReleaseMask
-62       | VisibilityChangeMask | StructureNotifyMask | ButtonMotionMask
-63       | ButtonPressMask | ButtonReleaseMask | ExposureMask | FocusChangeMask
-64       | LeaveWindowMask | EnterWindowMask | PointerMotionMask,
-65     \&.override_redirect =
-66     override_redirect, // This makes it immutable across workspaces
-67     \&.colormap = XCreateColormap(state::get_dpy(), state::get_root(), vinfo\&.visual, AllocNone),
-68   };
-69   str title_str = title;
-70   str wclass_str = wclass;
-71   XClassHint ch = {title_str\&.data(), wclass_str\&.data()};
-72   
-73   int x_o, y_o;
-74   unsigned int w_o, h_o;
-75   str geom;
-76   geom += "0x0";
-77   if (x >= 0)
-78     geom += "+";
-79   geom += std::to_string(x);
-80   if (y >= 0)
+56   if (not XMatchVisualInfo(state::get_dpy(), state::get_screen(), 32, TrueColor, &vinfo)) {
+57     log_task\&.error("XMatchVisualInfo failed to find a Visual");
+58   }
+59   Colormap cmap = XCreateColormap(state::get_dpy(), state::get_root(), vinfo\&.visual, AllocNone);
+60   XSetWindowAttributes wa = {
+61     \&.background_pixel = 0,//ParentRelative,
+62     \&.border_pixel = 0,
+63     \&.bit_gravity = NorthWestGravity,
+64     \&.event_mask  = FocusChangeMask | KeyPressMask | KeyReleaseMask
+65       | VisibilityChangeMask | StructureNotifyMask | ButtonMotionMask
+66       | ButtonPressMask | ButtonReleaseMask | ExposureMask | FocusChangeMask
+67       | LeaveWindowMask | EnterWindowMask | PointerMotionMask,
+68     \&.override_redirect =
+69     override_redirect, // This makes it immutable across workspaces
+70     \&.colormap = cmap,
+71   };
+72   str title_str = title;
+73   str wclass_str = wclass;
+74   XClassHint ch = {title_str\&.data(), wclass_str\&.data()};
+75   
+76   int x_o, y_o;
+77   unsigned int w_o, h_o;
+78   str geom;
+79   geom += "0x0";
+80   if (x >= 0)
 81     geom += "+";
-82   geom += std::to_string(y);
-83   
-84   int gm_mask = XParseGeometry(geom\&.c_str(), &x_o, &y_o, &w_o, &h_o);
-85   
-86   if (gm_mask & XNegative)
-87     x_o += DisplayWidth(state::get_dpy(), state::get_screen()) \- w;// \- 2;
-88   if (gm_mask & YNegative)
-89     y_o += DisplayHeight(state::get_dpy(), state::get_screen()) \- h;// \- 2;
-90   
-91   Window xwin = XCreateWindow(state::get_dpy(),
-92     state::get_root(),
-93     x_o,
-94     y_o,
-95     w,
-96     h,
-97     0,
-98     vinfo\&.depth, //DefaultDepth(state::get_dpy(), state::get_screen()),
-99     InputOutput,
-100     vinfo\&.visual, //DefaultVisual(state::get_dpy(), state::get_screen()),
-101     CWBorderPixel | CWBitGravity | CWColormap | CWBackPixel | CWEventMask
-102       | (override_redirect ? CWOverrideRedirect : 0U),
-103     &wa);
-104   XSetClassHint(state::get_dpy(), xwin, &ch);
-105   XStoreName(state::get_dpy(), xwin, title);
-106   XSync(state::get_dpy(), False);
-107   
-108   log_task\&.info(
-109     "Created window %lX at (%s) x: %d, y: %d", xwin, geom\&.c_str(), x, y);
+82   geom += std::to_string(x);
+83   if (y >= 0)
+84     geom += "+";
+85   geom += std::to_string(y);
+86   
+87   int gm_mask = XParseGeometry(geom\&.c_str(), &x_o, &y_o, &w_o, &h_o);
+88   
+89   if (gm_mask & XNegative)
+90     x_o += DisplayWidth(state::get_dpy(), state::get_screen()) \- w;// \- 2;
+91   if (gm_mask & YNegative)
+92     y_o += DisplayHeight(state::get_dpy(), state::get_screen()) \- h;// \- 2;
+93   
+94   Window xwin = XCreateWindow(state::get_dpy(),
+95     state::get_root(),
+96     x_o,
+97     y_o,
+98     w,
+99     h,
+100     0,
+101     vinfo\&.depth, //DefaultDepth(state::get_dpy(), state::get_screen()),
+102     InputOutput,
+103     vinfo\&.visual, //DefaultVisual(state::get_dpy(), state::get_screen()),
+104     CWBorderPixel | CWBitGravity | CWColormap | CWBackPixel | CWEventMask
+105       | (override_redirect ? CWOverrideRedirect : 0U),
+106     &wa);
+107   XSetClassHint(state::get_dpy(), xwin, &ch);
+108   XStoreName(state::get_dpy(), xwin, title);
+109   XSync(state::get_dpy(), False);
 110   
-111   if (!override_redirect) {
-112     XWMHints wm = {\&.flags = InputHint, \&.input = 1};
-113     XSizeHints* sizeh;
-114     sizeh = XAllocSizeHints();
-115     sizeh\->flags = PSize | PResizeInc | PBaseSize | PMinSize;
-116     sizeh\->height = h;
-117     sizeh\->width = w;
-118     sizeh\->height_inc = 1;
-119     sizeh\->width_inc = 1;
-120     if (gm_mask & (XValue | YValue)) {
-121       sizeh\->flags |= USPosition | PWinGravity;
-122       sizeh\->x = x_o;
-123       sizeh\->y = y_o;
-124       sizeh\->win_gravity = geom_mask_to_gravity(gm_mask);
-125     }
-126     //
-127     XSetWMProperties(
-128       state::get_dpy(), xwin, NULL, NULL, NULL, 0, sizeh, &wm, &ch);
-129     XFree(sizeh);
-130   }
-131   XSync(state::get_dpy(), False);
-132   
-133   //  XDefineCursor(state::get_dpy(), xwin, state::cursor[CurNormal]\->cursor);
-134   if (override_redirect) {
-135     XMapRaised(state::get_dpy(), xwin);
-136   } else {
-137     XMapWindow(state::get_dpy(), xwin);
-138   }
-139   log_task\&.debug("Mapping window %lX", xwin);
-140   
-141   auto* win = new window_t(profiler, xwin, w, h);
-142   
-143   win\->gc = XCreateGC(state::get_dpy(), xwin, 0, nullptr);
-144   
-145   XSync(state::get_dpy(), False);
-146   
-147   x11::events::start();
-148   
-149   return win;
-150 }
+111   log_task\&.info(
+112     "Created window %lX at (%s) x: %d, y: %d", xwin, geom\&.c_str(), x, y);
+113   
+114   if (!override_redirect) {
+115     XWMHints wm = {\&.flags = InputHint, \&.input = 1};
+116     XSizeHints* sizeh;
+117     sizeh = XAllocSizeHints();
+118     sizeh\->flags = PSize | PResizeInc | PBaseSize | PMinSize;
+119     sizeh\->height = h;
+120     sizeh\->width = w;
+121     sizeh\->height_inc = 1;
+122     sizeh\->width_inc = 1;
+123     if (gm_mask & (XValue | YValue)) {
+124       sizeh\->flags |= USPosition | PWinGravity;
+125       sizeh\->x = x_o;
+126       sizeh\->y = y_o;
+127       sizeh\->win_gravity = geom_mask_to_gravity(gm_mask);
+128     }
+129     //
+130     XSetWMProperties(
+131       state::get_dpy(), xwin, NULL, NULL, NULL, 0, sizeh, &wm, &ch);
+132     XFree(sizeh);
+133   }
+134   XSync(state::get_dpy(), False);
+135   
+136   //  XDefineCursor(state::get_dpy(), xwin, state::cursor[CurNormal]\->cursor);
+137   if (override_redirect) {
+138     XMapRaised(state::get_dpy(), xwin);
+139   } else {
+140     XMapWindow(state::get_dpy(), xwin);
+141   }
+142   log_task\&.debug("Mapping window %lX", xwin);
+143   
+144   auto* win = new window_t(profiler, xwin, w, h);
+145   
+146   win\->gc = XCreateGC(state::get_dpy(), xwin, 0, nullptr);
+147   
+148   XSync(state::get_dpy(), False);
+149   
+150   x11::events::start();
+151   
+152   return win;
+153 }
 .fi
 
 .SS "void cydui::graphics::flush (\fBwindow_t\fP * win)"
 
 .PP
-Definition at line \fB167\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB170\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-167                                        {
-168   render::flush(win);
-169 }
+170                                        {
+171   render::flush(win);
+172 }
 .fi
 
 .SS "\fBpixelmap_t\fP * cydui::graphics::get_frame (\fBwindow_t\fP * win)"
 
 .PP
-Definition at line \fB289\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB292\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-289                                                                {
-290   return win\->staging_target;
-291 }
+292                                                                {
+293   return win\->staging_target;
+294 }
 .fi
 
 .SS "unsigned long cydui::graphics::get_id (\fBwindow_t\fP * win)"
 
 .PP
-Definition at line \fB293\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB296\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-293                                                               {
-294   return (unsigned int) win\->xwin;
-295 }
+296                                                               {
+297   return (unsigned int) win\->xwin;
+298 }
 .fi
 
 .SS "void cydui::graphics::resize (\fBwindow_t\fP * win, int w, int h)"
 
 .PP
-Definition at line \fB160\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB163\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-160                                                       {
-161   if (w == 0 || h == 0) return;
-162   std::lock_guard lk {win\->render_mtx};
-163   win\->render_target\->resize({(size_t) w, (size_t) h});
-164   win\->staging_target\->resize({(size_t) w, (size_t) h});
-165 }
+163                                                       {
+164   if (w == 0 || h == 0) return;
+165   std::lock_guard lk {win\->render_mtx};
+166   win\->render_target\->resize({(size_t) w, (size_t) h});
+167   win\->staging_target\->resize({(size_t) w, (size_t) h});
+168 }
 .fi
 
 .SS "void cydui::graphics::terminate (\fBwindow_t\fP * win)"
 
 .PP
-Definition at line \fB297\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB300\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-297                                                         {
-298   XUnmapWindow(state::get_dpy(), win\->xwin);
-299   XDestroyWindow(state::get_dpy(), win\->xwin);
-300   delete win\->staging_target;
-301   delete win\->render_target;
-302   win\->render_thd\->running = false;
-303   win\->render_thd\->join();
-304 }
+300                                                         {
+301   XUnmapWindow(state::get_dpy(), win\->xwin);
+302   XDestroyWindow(state::get_dpy(), win\->xwin);
+303   delete win\->staging_target;
+304   delete win\->render_target;
+305   win\->render_thd\->running = false;
+306   win\->render_thd\->join();
+307 }
 .fi
 
 .SH "Author"

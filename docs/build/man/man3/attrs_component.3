@@ -18,6 +18,9 @@ Inherited by \fBcydui::components::component_t< ThreadTimelineEventHandler, Thre
 Public Member Functions inherited from \fBattr_x< T >\fP
 .in +1c
 .ti -1c
+.RI "\fB~attr_x\fP () override=default"
+.br
+.ti -1c
 .RI "\fBT\fP & \fBx\fP (auto &_x_)"
 .br
 .ti -1c
@@ -25,8 +28,18 @@ Public Member Functions inherited from \fBattr_x< T >\fP
 .br
 .in -1c
 
+Public Member Functions inherited from \fBattribute_i\fP
+.in +1c
+.ti -1c
+.RI "virtual \fB~attribute_i\fP ()=default"
+.br
+.in -1c
+
 Public Member Functions inherited from \fBattr_y< T >\fP
 .in +1c
+.ti -1c
+.RI "\fB~attr_y\fP () override=default"
+.br
 .ti -1c
 .RI "\fBT\fP & \fBy\fP (auto &_y_)"
 .br
@@ -38,6 +51,9 @@ Public Member Functions inherited from \fBattr_y< T >\fP
 Public Member Functions inherited from \fBattr_w< T >\fP
 .in +1c
 .ti -1c
+.RI "\fB~attr_w\fP () override=default"
+.br
+.ti -1c
 .RI "\fBT\fP & \fBw\fP (auto &_w_)"
 .br
 .ti -1c
@@ -47,6 +63,9 @@ Public Member Functions inherited from \fBattr_w< T >\fP
 
 Public Member Functions inherited from \fBattr_h< T >\fP
 .in +1c
+.ti -1c
+.RI "\fB~attr_h\fP () override=default"
+.br
 .ti -1c
 .RI "\fBT\fP & \fBh\fP (auto &_h_)"
 .br
@@ -58,6 +77,9 @@ Public Member Functions inherited from \fBattr_h< T >\fP
 Public Member Functions inherited from \fBattr_margin_top< T >\fP
 .in +1c
 .ti -1c
+.RI "\fB~attr_margin_top\fP () override=default"
+.br
+.ti -1c
 .RI "\fBT\fP & \fBmargin_top\fP (auto &_margin_top_)"
 .br
 .ti -1c
@@ -67,6 +89,9 @@ Public Member Functions inherited from \fBattr_margin_top< T >\fP
 
 Public Member Functions inherited from \fBattr_margin_bottom< T >\fP
 .in +1c
+.ti -1c
+.RI "\fB~attr_margin_bottom\fP () override=default"
+.br
 .ti -1c
 .RI "\fBT\fP & \fBmargin_bottom\fP (auto &_margin_bottom_)"
 .br
@@ -78,6 +103,9 @@ Public Member Functions inherited from \fBattr_margin_bottom< T >\fP
 Public Member Functions inherited from \fBattr_margin_left< T >\fP
 .in +1c
 .ti -1c
+.RI "\fB~attr_margin_left\fP () override=default"
+.br
+.ti -1c
 .RI "\fBT\fP & \fBmargin_left\fP (auto &_margin_left_)"
 .br
 .ti -1c
@@ -87,6 +115,9 @@ Public Member Functions inherited from \fBattr_margin_left< T >\fP
 
 Public Member Functions inherited from \fBattr_margin_right< T >\fP
 .in +1c
+.ti -1c
+.RI "\fB~attr_margin_right\fP () override=default"
+.br
 .ti -1c
 .RI "\fBT\fP & \fBmargin_right\fP (auto &_margin_right_)"
 .br
@@ -98,6 +129,9 @@ Public Member Functions inherited from \fBattr_margin_right< T >\fP
 Public Member Functions inherited from \fBattr_padding_top< T >\fP
 .in +1c
 .ti -1c
+.RI "\fB~attr_padding_top\fP () override=default"
+.br
+.ti -1c
 .RI "\fBT\fP & \fBpadding_top\fP (auto &_padding_top_)"
 .br
 .ti -1c
@@ -107,6 +141,9 @@ Public Member Functions inherited from \fBattr_padding_top< T >\fP
 
 Public Member Functions inherited from \fBattr_padding_bottom< T >\fP
 .in +1c
+.ti -1c
+.RI "\fB~attr_padding_bottom\fP () override=default"
+.br
 .ti -1c
 .RI "\fBT\fP & \fBpadding_bottom\fP (auto &_padding_bottom_)"
 .br
@@ -118,6 +155,9 @@ Public Member Functions inherited from \fBattr_padding_bottom< T >\fP
 Public Member Functions inherited from \fBattr_padding_left< T >\fP
 .in +1c
 .ti -1c
+.RI "\fB~attr_padding_left\fP () override=default"
+.br
+.ti -1c
 .RI "\fBT\fP & \fBpadding_left\fP (auto &_padding_left_)"
 .br
 .ti -1c
@@ -127,6 +167,9 @@ Public Member Functions inherited from \fBattr_padding_left< T >\fP
 
 Public Member Functions inherited from \fBattr_padding_right< T >\fP
 .in +1c
+.ti -1c
+.RI "\fB~attr_padding_right\fP () override=default"
+.br
 .ti -1c
 .RI "\fBT\fP & \fBpadding_right\fP (auto &_padding_right_)"
 .br
@@ -248,7 +291,7 @@ Public Attributes inherited from \fBattr_content< T >\fP
 .br
 struct attrs_component< T >"
 .PP
-Definition at line \fB98\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB102\fP of file \fBcomponent_attributes\&.h\fP\&.
 
 .SH "Author"
 .PP 

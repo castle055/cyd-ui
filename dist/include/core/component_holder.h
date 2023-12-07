@@ -6,21 +6,30 @@
 #define CYD_UI_COMPONENT_HOLDER_H
 
 #include "with_template.h"
+#include "memory"
 
 namespace cydui::components {
     struct component_holder_t {
-      template<ComponentConcept C>
-      inline component_holder_t(C &&comp) {
-        components[""] = new C {comp};
-      }
+      //template<ComponentConcept C>
+      //inline component_holder_t(C &&comp) {
+      //  components[""] = new C {comp};
+      //  //components[""] = std::make_unique<C>(comp);
+      //}
+      //
+      //template<ComponentConcept C>
+      //inline component_holder_t(C &comp) {
+      //  components[""] = new C {comp};
+      //  //components[""] = std::make_unique<C>(comp);
+      //}
       
       template<ComponentConcept C>
-      inline component_holder_t(C &comp) {
+      inline component_holder_t(C comp) { // NOLINT(*-explicit-constructor)
         components[""] = new C {comp};
+        //components[""] = std::make_unique<C>(comp);
       }
       
       template<typename T>
-      inline component_holder_t(with::with<T> &_with) {
+      inline component_holder_t(with::with<T> _with) { // NOLINT(*-explicit-constructor)
         for (const auto &item: _with.get_selection()) {
           components[item.first] = item.second;
         }

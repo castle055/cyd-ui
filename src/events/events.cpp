@@ -9,6 +9,7 @@
 #include <list>
 #include <mutex>
 #include <unordered_map>
+#include <utility>
 
 // EVENT THREAD IMPLEMENTATION
 
@@ -135,10 +136,11 @@ void cydui::events::emit_raw(cydui::events::Event* ev) {
   push_event(th_data, ev);
 }
 
-void cydui::events::emit_raw(const str &event_type, void* data) {
-  auto ev = new cydui::events::Event {
+void cydui::events::emit_raw(const str &event_type, void* data, std::function<void()> data_destructor) {
+  auto* ev = new cydui::events::Event {
     .type = event_type,
     .ev = data,
+    .ev_destructor = std::move(data_destructor),
   };
   
   push_event(th_data, ev);

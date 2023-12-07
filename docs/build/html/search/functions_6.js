@@ -1,7 +1,7 @@
 var searchData=
 [
   ['emit_0',['emit',['../structcydui_1_1components_1_1component__state__t.html#a9b47e276ec9c6e55128c90f935609fde',1,'cydui::components::component_state_t::emit()'],['../namespacecydui_1_1events.html#a64db03d0513c4d66801257e90c58b3a6',1,'cydui::events::emit(typename T::DataType data)']]],
-  ['emit_5fraw_1',['emit_raw',['../namespacecydui_1_1events.html#abfd3c7106abd299bacc674ec3865de6a',1,'cydui::events::emit_raw(cydui::events::Event *ev)'],['../namespacecydui_1_1events.html#a0dd46403db28d66d08ff9f0c61610fe7',1,'cydui::events::emit_raw(const str &amp;event_type, void *data)']]],
+  ['emit_5fraw_1',['emit_raw',['../namespacecydui_1_1events.html#abfd3c7106abd299bacc674ec3865de6a',1,'cydui::events::emit_raw(cydui::events::Event *ev)'],['../namespacecydui_1_1events.html#a659942380bb725ffe2b3ce9b159810aa',1,'cydui::events::emit_raw(const str &amp;event_type, void *data, std::function&lt; void()&gt; data_destructor)']]],
   ['empty_2',['empty',['../structcydui_1_1graphics_1_1vg_1_1vg__fragment__t.html#a896a54cec4a2be8a15bf59ba5b484478',1,'cydui::graphics::vg::vg_fragment_t']]],
   ['end_5fevent_3',['end_event',['../structprof_1_1context__t.html#aa3343b868b9771b5b8fe3198a941daa0',1,'prof::context_t']]],
   ['eq_4',['eq',['../structcydui_1_1components_1_1with_1_1with_3_01int_01_4.html#abc768aca17b05f7fbe64f7e00560d206',1,'cydui::components::with::with&lt; int &gt;']]],

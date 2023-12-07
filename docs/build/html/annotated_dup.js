@@ -178,7 +178,7 @@ var annotated_dup =
     [ "attr_w", "structattr__w.html", "structattr__w" ],
     [ "attr_x", "structattr__x.html", "structattr__x" ],
     [ "attr_y", "structattr__y.html", "structattr__y" ],
-    [ "attribute_i", "structattribute__i.html", null ],
+    [ "attribute_i", "structattribute__i.html", "structattribute__i" ],
     [ "attrs_component", "structattrs__component.html", null ],
     [ "attrs_dimensions", "structattrs__dimensions.html", null ],
     [ "attrs_margin", "structattrs__margin.html", null ],

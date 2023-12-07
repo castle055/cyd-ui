@@ -57,7 +57,7 @@ cydui::events
 .RI "void \fBemit_raw\fP (\fBcydui::events::Event\fP *ev)"
 .br
 .ti -1c
-.RI "void \fBemit_raw\fP (const \fBstr\fP &event_type, void *data)"
+.RI "void \fBemit_raw\fP (const \fBstr\fP &event_type, void *data, std::function< void()> data_destructor)"
 .br
 .ti -1c
 .RI "template<typename \fBT\fP > 
@@ -84,11 +84,11 @@ requires EventType<\fBT\fP>\fBlistener_t\fP * \fBon_event\fP (\fBConsumer\fP< \f
 .SS "template<typename \fBT\fP > using \fBcydui::events::Consumer\fP = typedef std::function<void(const \fBParsedEvent\fP<\fBT\fP>&)>"
 
 .PP
-Definition at line \fB148\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB155\fP of file \fBevents\&.hpp\fP\&.
 .SS "typedef std::function<void(\fBEvent\fP*)> \fBcydui::events::Listener\fP"
 
 .PP
-Definition at line \fB150\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB157\fP of file \fBevents\&.hpp\fP\&.
 .SH "Enumeration Type Documentation"
 .PP 
 .SS "enum \fBcydui::events::EventStatus\fP"
@@ -119,23 +119,24 @@ Definition at line \fB103\fP of file \fBevents\&.hpp\fP\&..PP
 requires EventType<\fBT\fP>void cydui::events::emit (typename T::DataType data)\fC [inline]\fP"
 
 .PP
-Definition at line \fB143\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB149\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-143                                               {
-144       emit_raw(T::type, new T({\&.data = data}));
-145     }
+149                                               {
+150       auto* data_ptr = new T({\&.data = data});
+151       emit_raw(T::type, data_ptr, [data_ptr](){ delete data_ptr; });
+152     }
 .fi
 
-.SS "void cydui::events::emit_raw (const \fBstr\fP & event_type, void * data)"
+.SS "void cydui::events::emit_raw (const \fBstr\fP & event_type, void * data, std::function< void()> data_destructor)"
 
 .SS "void cydui::events::emit_raw (\fBcydui::events::Event\fP * ev)"
 
 .PP
-Definition at line \fB134\fP of file \fBevents\&.cpp\fP\&..PP
+Definition at line \fB135\fP of file \fBevents\&.cpp\fP\&..PP
 .nf
-134                                                {
-135   push_event(th_data, ev);
-136 }
+135                                                {
+136   push_event(th_data, ev);
+137 }
 .fi
 
 .SS "template<typename \fBT\fP > 
@@ -143,16 +144,16 @@ Definition at line \fB134\fP of file \fBevents\&.cpp\fP\&..PP
 requires EventType<\fBT\fP>\fBlistener_t\fP * cydui::events::on_event (\fBConsumer\fP< \fBT\fP > c)\fC [inline]\fP"
 
 .PP
-Definition at line \fB204\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB211\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-204                                                {
-205       return cydui::events::on_event_raw(T::type, [&,c](Event* ev) {
-206         auto parsed = ev\->parse<T>();
-207         if (parsed\&.data) {
-208           c(parsed);
-209         }
-210       });
-211     }
+211                                                {
+212       return cydui::events::on_event_raw(T::type, [&,c](Event* ev) {
+213         auto parsed = ev\->parse<T>();
+214         if (parsed\&.data) {
+215           c(parsed);
+216         }
+217       });
+218     }
 .fi
 
 .SS "\fBlistener_t\fP * cydui::events::on_event_raw (const \fBstr\fP & event_type, const \fBListener\fP & l)"
@@ -162,17 +163,17 @@ Definition at line \fB204\fP of file \fBevents\&.hpp\fP\&..PP
 .SS "void cydui::events::start ()"
 
 .PP
-Definition at line \fB124\fP of file \fBevents\&.cpp\fP\&..PP
+Definition at line \fB125\fP of file \fBevents\&.cpp\fP\&..PP
 .nf
-124                         {
-125   if (event_thread && event_thread\->native_thread != nullptr)
-126     return;
-127   log_ctrl\&.debug("Starting event_thread");
-128   
-129   event_thread =
-130     threading::new_thread(&event_task, th_data)
-131       \->set_name("EV_THD");
-132 }
+125                         {
+126   if (event_thread && event_thread\->native_thread != nullptr)
+127     return;
+128   log_ctrl\&.debug("Starting event_thread");
+129   
+130   event_thread =
+131     threading::new_thread(&event_task, th_data)
+132       \->set_name("EV_THD");
+133 }
 .fi
 
 .SH "Author"

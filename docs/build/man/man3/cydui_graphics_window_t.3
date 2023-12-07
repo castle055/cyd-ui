@@ -60,15 +60,15 @@ Definition at line \fB28\fP of file \fBx11_impl\&.hpp\fP\&.
 .SS "window_t::window_t (\fBprof::context_t\fP * profiler, Window xwin, unsigned long w, unsigned long h)"
 
 .PP
-Definition at line \fB152\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB155\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-152                                                                                          {
-153   this\->profiler = profiler;
-154   this\->xwin = xwin;
-155   this\->staging_target = new pixelmap_t {w, h};
-156   this\->render_target = new pixelmap_t {w, h};
-157   render::start(this);
-158 }
+155                                                                                          {
+156   this\->profiler = profiler;
+157   this\->xwin = xwin;
+158   this\->staging_target = new pixelmap_t {w, h};
+159   this\->render_target = new pixelmap_t {w, h};
+160   render::start(this);
+161 }
 .fi
 
 .SH "Member Data Documentation"

@@ -21,28 +21,30 @@
 \DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00017}\mbox{\hyperlink{classpixelmap__editor__t_a46d7c68a611e7a04d85aaa6d3ff8c4f7}{00017}}\ \ \ Cairo::RefPtr<Cairo::Context>\ \mbox{\hyperlink{classpixelmap__editor__t_a46d7c68a611e7a04d85aaa6d3ff8c4f7}{ctx}};}
 \DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00018}00018\ \textcolor{keyword}{public}:}
 \DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00019}\mbox{\hyperlink{classpixelmap__editor__t_ae97a3fce81f1fc9271407839a3585e9b}{00019}}\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classpixelmap__editor__t_ae97a3fce81f1fc9271407839a3585e9b}{pixelmap\_editor\_t}}(\mbox{\hyperlink{structpixelmap__t}{pixelmap\_t}}\ \&\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}):\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}(\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}})\ \{}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{classpixelmap__editor__t_aa692f53390ce573bcc54337361efd5cf}{surface}}\ =\ Cairo::ImageSurface::create(}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00021}00021\ \ \ \ \ \ \ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*)\ this-\/>img.\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}},}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00022}00022\ \ \ \ \ \ \ Cairo::Surface::Format::ARGB32,}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00023}00023\ \ \ \ \ \ \ (\textcolor{keywordtype}{int})\ this-\/>img.width(),\ (\textcolor{keywordtype}{int})\ this-\/>img.height(),}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00024}00024\ \ \ \ \ \ \ cairo\_format\_stride\_for\_width(CAIRO\_FORMAT\_ARGB32,\ (\textcolor{keywordtype}{int})\ this-\/>img.\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}())}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00025}00025\ \ \ \ \ );}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{classpixelmap__editor__t_a46d7c68a611e7a04d85aaa6d3ff8c4f7}{ctx}}\ =\ Cairo::Context::create(\mbox{\hyperlink{classpixelmap__editor__t_aa692f53390ce573bcc54337361efd5cf}{surface}});}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00027}00027\ \ \ \}}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00028}00028\ \ \ }
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00029}\mbox{\hyperlink{classpixelmap__editor__t_ad5e69df15e557a4dfef7323add2144ec}{00029}}\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classpixelmap__editor__t_ad5e69df15e557a4dfef7323add2144ec}{pixelmap\_editor\_t}}(\mbox{\hyperlink{structpixelmap__t}{pixelmap\_t}}*\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}):\ \mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\_editor\_t}}(*\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}})\ \{}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00030}00030\ \ \ \}}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00031}00031\ }
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00032}00032\ \textcolor{keyword}{public}:}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00033}\mbox{\hyperlink{classpixelmap__editor__t_a56ec6050db7a7856609b3f806b2edc6b}{00033}}\ \ \ Cairo::RefPtr<Cairo::Context>\ \mbox{\hyperlink{classpixelmap__editor__t_a56ec6050db7a7856609b3f806b2edc6b}{operator-\/>}}()\ \{}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00034}00034\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classpixelmap__editor__t_a46d7c68a611e7a04d85aaa6d3ff8c4f7}{ctx}};}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00035}00035\ \ \ \}}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00036}00036\ \ \ }
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00037}\mbox{\hyperlink{classpixelmap__editor__t_ac66e48470b32095095595563cc4cfde6}{00037}}\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classpixelmap__editor__t_ac66e48470b32095095595563cc4cfde6}{clear}}()\ \{}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00038}00038\ \ \ \ \ memset(\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}},\ 0,\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}()\ *\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structpixelmap__t_aa70c0fa0014f555358a2d07198b00f69}{height}}()\ *\ \textcolor{keyword}{sizeof}(pixel\_t));}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00039}00039\ \ \ \}}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00040}00040\ \};}
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00041}00041\ }
-\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00042}00042\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_PIXELMAP\_EDITOR\_H}}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00020}00020\ \ \ \ \ \textcolor{comment}{//\ TODO\ -\/\ cairo\_format\_stride\_for\_width()\ should\ be\ called\ before\ allocating\ the\ image\ buffer\ and\ thus\ use\ its}}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00021}00021\ \ \ \ \ \textcolor{comment}{//\ output\ to\ determine\ the\ 'width'\ of\ the\ buffer.}}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00022}00022\ \ \ \ \ \mbox{\hyperlink{classpixelmap__editor__t_aa692f53390ce573bcc54337361efd5cf}{surface}}\ =\ Cairo::ImageSurface::create(}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00023}00023\ \ \ \ \ \ \ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*)\ this-\/>img.\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}},}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00024}00024\ \ \ \ \ \ \ Cairo::Surface::Format::ARGB32,}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00025}00025\ \ \ \ \ \ \ (\textcolor{keywordtype}{int})\ this-\/>img.width(),\ (\textcolor{keywordtype}{int})\ this-\/>img.height(),}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00026}00026\ \ \ \ \ \ \ cairo\_format\_stride\_for\_width(CAIRO\_FORMAT\_ARGB32,\ (\textcolor{keywordtype}{int})\ this-\/>img.\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}())}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00027}00027\ \ \ \ \ );}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{classpixelmap__editor__t_a46d7c68a611e7a04d85aaa6d3ff8c4f7}{ctx}}\ =\ Cairo::Context::create(\mbox{\hyperlink{classpixelmap__editor__t_aa692f53390ce573bcc54337361efd5cf}{surface}});}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00029}00029\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00030}00030\ \ \ }
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00031}\mbox{\hyperlink{classpixelmap__editor__t_ad5e69df15e557a4dfef7323add2144ec}{00031}}\ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classpixelmap__editor__t_ad5e69df15e557a4dfef7323add2144ec}{pixelmap\_editor\_t}}(\mbox{\hyperlink{structpixelmap__t}{pixelmap\_t}}*\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}):\ \mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\_editor\_t}}(*\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}})\ \{}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00032}00032\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00034}00034\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00035}\mbox{\hyperlink{classpixelmap__editor__t_a56ec6050db7a7856609b3f806b2edc6b}{00035}}\ \ \ Cairo::RefPtr<Cairo::Context>\ \mbox{\hyperlink{classpixelmap__editor__t_a56ec6050db7a7856609b3f806b2edc6b}{operator-\/>}}()\ \{}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classpixelmap__editor__t_a46d7c68a611e7a04d85aaa6d3ff8c4f7}{ctx}};}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00037}00037\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00038}00038\ \ \ }
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00039}\mbox{\hyperlink{classpixelmap__editor__t_ac66e48470b32095095595563cc4cfde6}{00039}}\ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classpixelmap__editor__t_ac66e48470b32095095595563cc4cfde6}{clear}}()\ \{}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00040}00040\ \ \ \ \ memset(\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}},\ 0,\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}()\ *\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structpixelmap__t_aa70c0fa0014f555358a2d07198b00f69}{height}}()\ *\ \textcolor{keyword}{sizeof}(pixel\_t));}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00041}00041\ \ \ \}}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00042}00042\ \};}
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{pixelmap__editor_8h_source_l00044}00044\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_PIXELMAP\_EDITOR\_H}}
 
 \end{DoxyCode}

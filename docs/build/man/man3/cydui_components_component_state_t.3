@@ -29,7 +29,7 @@ Inherited by \fBThreadTimelineState\fP\&.
 
 .in +1c
 .ti -1c
-.RI "\fBwindow::CWindow\fP * \fBwin\fP"
+.RI "\fBwindow::CWindow\fP * \fBwin\fP = nullptr"
 .br
 .ti -1c
 .RI "std::optional< \fBcomponent_state_t\fP * > \fBparent\fP = std::nullopt"
@@ -58,13 +58,13 @@ Definition at line \fB25\fP of file \fBcomponent\&.h\fP\&.
 .SS "template<\fBcydui::events::EventType\fP T> void cydui::components::component_state_t::emit (typename T::DataType ev)\fC [inline]\fP"
 
 .PP
-Definition at line \fB55\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB56\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-55                                        {
-56         if (nullptr == this\->win) return;
-57         ev\&.win = get_id(this\->win\->win_ref);
-58         cydui::events::emit<T>(ev);
-59       }
+56                                        {
+57         if (nullptr == this\->win) return;
+58         ev\&.win = get_id(this\->win\->win_ref);
+59         cydui::events::emit<T>(ev);
+60       }
 .fi
 
 .SS "void cydui::components::component_state_t::force_redraw ()\fC [inline]\fP"
@@ -79,11 +79,11 @@ This is only meant to be called from custom event handlers\&. Event handlers for
 .PP
 
 .PP
-Definition at line \fB69\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB70\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-69                           {
-70         emit<RedrawEvent>({\&.component = this});
-71       }
+70                           {
+71         emit<RedrawEvent>({\&.component = this});
+72       }
 .fi
 
 .SS "void cydui::components::component_state_t::mark_dirty ()\fC [inline]\fP"
@@ -93,11 +93,11 @@ Marks this component state as needing to be redrawn\&. Events declared in \fC\fB
 .PP
 It is due diligence of the component developer to appropriately mark the component as dirty when appropriate\&. As a baseline, any mutation to the state of a component should mark it dirty if said mutation affects how the component, or its children, are rendered\&. 
 .PP
-Definition at line \fB50\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB51\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-50                         {
-51         _dirty = true;
-52       }
+51                         {
+52         _dirty = true;
+53       }
 .fi
 
 .SH "Member Data Documentation"
@@ -130,7 +130,7 @@ Definition at line \fB34\fP of file \fBcomponent\&.h\fP\&.
 
 .PP
 Definition at line \fB28\fP of file \fBcomponent\&.h\fP\&.
-.SS "\fBwindow::CWindow\fP* cydui::components::component_state_t::win"
+.SS "\fBwindow::CWindow\fP* cydui::components::component_state_t::win = nullptr"
 
 .PP
 Definition at line \fB26\fP of file \fBcomponent\&.h\fP\&.

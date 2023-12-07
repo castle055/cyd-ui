@@ -50,7 +50,7 @@ namespace cydui::dimensions {
       static bool compute(dimension_t &dimension);
       
       bool unknown = false;
-      std::unordered_set<dimension_t*> deps = {};
+      std::unordered_set<dimension_t*> deps;
       std::function<dimension_value_t()> binding = []() {
         return 0;
       };
@@ -61,6 +61,10 @@ namespace cydui::dimensions {
       dimension_t() = default;
       
       dimension_t(dimension_value_t value);// NOLINT(google-explicit-constructor)
+      
+      ~dimension_t() {
+        deps.clear();
+      }
       
       /* *
        * Copy constructor comes in handy sometimes, so NOT deleting it

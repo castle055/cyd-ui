@@ -218,7 +218,7 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a805629d2279bd32a8423246e3ca72e53" id="r_a805629d2279bd32a8423246e3ca72e53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcydui_1_1window_1_1CWindow.html">window::CWindow</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcydui_1_1components_1_1component__state__t.html#a805629d2279bd32a8423246e3ca72e53">win</a></td></tr>
+<tr class="memitem:a805629d2279bd32a8423246e3ca72e53" id="r_a805629d2279bd32a8423246e3ca72e53"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classcydui_1_1window_1_1CWindow.html">window::CWindow</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcydui_1_1components_1_1component__state__t.html#a805629d2279bd32a8423246e3ca72e53">win</a> = nullptr</td></tr>
 <tr class="separator:a805629d2279bd32a8423246e3ca72e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9b274be1a4e0046f33e6785cd4bb5cc" id="r_ae9b274be1a4e0046f33e6785cd4bb5cc"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="structcydui_1_1components_1_1component__state__t.html">component_state_t</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcydui_1_1components_1_1component__state__t.html#ae9b274be1a4e0046f33e6785cd4bb5cc">parent</a> = std::nullopt</td></tr>
 <tr class="separator:ae9b274be1a4e0046f33e6785cd4bb5cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -263,14 +263,14 @@ template&lt;<a class="el" href="conceptcydui_1_1events_1_1EventType.html">cydui:
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="component_8h_source.html#l00055">55</a> of file <a class="el" href="component_8h_source.html">component.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   55</span>                                       {</div>
-<div class="line"><span class="lineno">   56</span>        <span class="keywordflow">if</span> (<span class="keyword">nullptr</span> == this-&gt;<a class="code hl_variable" href="structcydui_1_1components_1_1component__state__t.html#a805629d2279bd32a8423246e3ca72e53">win</a>) <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">   57</span>        ev.win = <a class="code hl_function" href="namespacecydui_1_1graphics.html#ad6234089431f6875fe9514d4d1ed88d0">get_id</a>(this-&gt;<a class="code hl_variable" href="structcydui_1_1components_1_1component__state__t.html#a805629d2279bd32a8423246e3ca72e53">win</a>-&gt;<a class="code hl_variable" href="classcydui_1_1window_1_1CWindow.html#a1516e993510f48cfd825c024138e42ee">win_ref</a>);</div>
-<div class="line"><span class="lineno">   58</span>        cydui::events::emit&lt;T&gt;(ev);</div>
-<div class="line"><span class="lineno">   59</span>      }</div>
+<p class="definition">Definition at line <a class="el" href="component_8h_source.html#l00056">56</a> of file <a class="el" href="component_8h_source.html">component.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   56</span>                                       {</div>
+<div class="line"><span class="lineno">   57</span>        <span class="keywordflow">if</span> (<span class="keyword">nullptr</span> == this-&gt;<a class="code hl_variable" href="structcydui_1_1components_1_1component__state__t.html#a805629d2279bd32a8423246e3ca72e53">win</a>) <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">   58</span>        ev.win = <a class="code hl_function" href="namespacecydui_1_1graphics.html#ad6234089431f6875fe9514d4d1ed88d0">get_id</a>(this-&gt;<a class="code hl_variable" href="structcydui_1_1components_1_1component__state__t.html#a805629d2279bd32a8423246e3ca72e53">win</a>-&gt;<a class="code hl_variable" href="classcydui_1_1window_1_1CWindow.html#a1516e993510f48cfd825c024138e42ee">win_ref</a>);</div>
+<div class="line"><span class="lineno">   59</span>        cydui::events::emit&lt;T&gt;(ev);</div>
+<div class="line"><span class="lineno">   60</span>      }</div>
 <div class="ttc" id="aclasscydui_1_1window_1_1CWindow_html_a1516e993510f48cfd825c024138e42ee"><div class="ttname"><a href="classcydui_1_1window_1_1CWindow.html#a1516e993510f48cfd825c024138e42ee">cydui::window::CWindow::win_ref</a></div><div class="ttdeci">graphics::window_t * win_ref</div><div class="ttdef"><b>Definition</b> <a href="window_8h_source.html#l00017">window.h:17</a></div></div>
-<div class="ttc" id="anamespacecydui_1_1graphics_html_ad6234089431f6875fe9514d4d1ed88d0"><div class="ttname"><a href="namespacecydui_1_1graphics.html#ad6234089431f6875fe9514d4d1ed88d0">cydui::graphics::get_id</a></div><div class="ttdeci">unsigned long get_id(window_t *win)</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8cpp_source.html#l00293">x11_impl.cpp:293</a></div></div>
+<div class="ttc" id="anamespacecydui_1_1graphics_html_ad6234089431f6875fe9514d4d1ed88d0"><div class="ttname"><a href="namespacecydui_1_1graphics.html#ad6234089431f6875fe9514d4d1ed88d0">cydui::graphics::get_id</a></div><div class="ttdeci">unsigned long get_id(window_t *win)</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8cpp_source.html#l00296">x11_impl.cpp:296</a></div></div>
 <div class="ttc" id="astructcydui_1_1components_1_1component__state__t_html_a805629d2279bd32a8423246e3ca72e53"><div class="ttname"><a href="structcydui_1_1components_1_1component__state__t.html#a805629d2279bd32a8423246e3ca72e53">cydui::components::component_state_t::win</a></div><div class="ttdeci">window::CWindow * win</div><div class="ttdef"><b>Definition</b> <a href="component_8h_source.html#l00026">component.h:26</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -301,10 +301,10 @@ template&lt;<a class="el" href="conceptcydui_1_1events_1_1EventType.html">cydui:
 <p>Emits a <a class="el" href="structRedrawEvent.html">RedrawEvent</a> for this component. </p>
 <dl class="section warning"><dt>Warning</dt><dd>This is only meant to be called from custom event handlers. Event handlers for events declared in <code><a class="el" href="cydui__events_8h.html">cydui_events.h</a></code> automatically trigger a redraw if <code>state-&gt;<a class="el" href="structcydui_1_1components_1_1component__state__t.html#a6e52ed7487c61640ad4a8edd0689906f" title="Marks this component state as needing to be redrawn.">mark_dirty()</a></code> gets called. Use that instead. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="component_8h_source.html#l00069">69</a> of file <a class="el" href="component_8h_source.html">component.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   69</span>                          {</div>
-<div class="line"><span class="lineno">   70</span>        emit&lt;RedrawEvent&gt;({.component = <span class="keyword">this</span>});</div>
-<div class="line"><span class="lineno">   71</span>      }</div>
+<p class="definition">Definition at line <a class="el" href="component_8h_source.html#l00070">70</a> of file <a class="el" href="component_8h_source.html">component.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   70</span>                          {</div>
+<div class="line"><span class="lineno">   71</span>        emit&lt;RedrawEvent&gt;({.component = <span class="keyword">this</span>});</div>
+<div class="line"><span class="lineno">   72</span>      }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -335,10 +335,10 @@ template&lt;<a class="el" href="conceptcydui_1_1events_1_1EventType.html">cydui:
 <p>Events declared in <code><a class="el" href="cydui__events_8h.html">cydui_events.h</a></code> are dispatched automatically by the layout, which then checks for any <code>dirty</code> components that need redrawing.</p>
 <p>It is due diligence of the component developer to appropriately mark the component as dirty when appropriate. As a baseline, any mutation to the state of a component should mark it dirty if said mutation affects how the component, or its children, are rendered. </p>
 
-<p class="definition">Definition at line <a class="el" href="component_8h_source.html#l00050">50</a> of file <a class="el" href="component_8h_source.html">component.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   50</span>                        {</div>
-<div class="line"><span class="lineno">   51</span>        <a class="code hl_variable" href="structcydui_1_1components_1_1component__state__t.html#ad320de01c5767207075d22a2d48be7bf">_dirty</a> = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">   52</span>      }</div>
+<p class="definition">Definition at line <a class="el" href="component_8h_source.html#l00051">51</a> of file <a class="el" href="component_8h_source.html">component.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   51</span>                        {</div>
+<div class="line"><span class="lineno">   52</span>        <a class="code hl_variable" href="structcydui_1_1components_1_1component__state__t.html#ad320de01c5767207075d22a2d48be7bf">_dirty</a> = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   53</span>      }</div>
 <div class="ttc" id="astructcydui_1_1components_1_1component__state__t_html_ad320de01c5767207075d22a2d48be7bf"><div class="ttname"><a href="structcydui_1_1components_1_1component__state__t.html#ad320de01c5767207075d22a2d48be7bf">cydui::components::component_state_t::_dirty</a></div><div class="ttdeci">bool _dirty</div><div class="ttdef"><b>Definition</b> <a href="component_8h_source.html#l00031">component.h:31</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -448,7 +448,7 @@ template&lt;<a class="el" href="conceptcydui_1_1events_1_1EventType.html">cydui:
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classcydui_1_1window_1_1CWindow.html">window::CWindow</a>* cydui::components::component_state_t::win</td>
+          <td class="memname"><a class="el" href="classcydui_1_1window_1_1CWindow.html">window::CWindow</a>* cydui::components::component_state_t::win = nullptr</td>
         </tr>
       </table>
 </div><div class="memdoc">

@@ -12,6 +12,9 @@ cydui::events::Event
 
 .in +1c
 .ti -1c
+.RI "\fB~Event\fP ()"
+.br
+.ti -1c
 .RI "template<typename \fBT\fP > 
 .br
 requires EventType<\fBT\fP>\fBParsedEvent\fP< \fBT\fP > \fBparse\fP ()"
@@ -30,6 +33,9 @@ requires EventType<\fBT\fP>\fBParsedEvent\fP< \fBT\fP > \fBparse\fP ()"
 .RI "void * \fBev\fP"
 .br
 .ti -1c
+.RI "std::function< void()> \fBev_destructor\fP = [](){}"
+.br
+.ti -1c
 .RI "std::mutex \fBev_mtx\fP"
 .br
 .ti -1c
@@ -39,6 +45,18 @@ requires EventType<\fBT\fP>\fBParsedEvent\fP< \fBT\fP > \fBparse\fP ()"
 .SH "Detailed Description"
 .PP 
 Definition at line \fB109\fP of file \fBevents\&.hpp\fP\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "cydui::events::Event::~Event ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB116\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+116                {
+117         ev_destructor();
+118       }
+.fi
+
 .SH "Member Function Documentation"
 .PP 
 .SS "template<typename \fBT\fP > 
@@ -46,22 +64,22 @@ Definition at line \fB109\fP of file \fBevents\&.hpp\fP\&.
 requires EventType<\fBT\fP>\fBParsedEvent\fP< \fBT\fP > cydui::events::Event::parse ()\fC [inline]\fP"
 
 .PP
-Definition at line \fB121\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB127\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-121                              {
-122         str matchName = T::type;
-123         if (matchName == type) {
-124           return ParsedEvent<T> {
-125             \&.type = type,
-126             \&.data = (typename T::DataType*) ev,
-127           };
-128         } else {
-129           return ParsedEvent<T> {
-130             \&.type = type,
-131             \&.data = nullptr,
-132           };
-133         }
-134       }
+127                              {
+128         str matchName = T::type;
+129         if (matchName == type) {
+130           return ParsedEvent<T> {
+131             \&.type = type,
+132             \&.data = (typename T::DataType*) ev,
+133           };
+134         } else {
+135           return ParsedEvent<T> {
+136             \&.type = type,
+137             \&.data = nullptr,
+138           };
+139         }
+140       }
 .fi
 
 .SH "Member Data Documentation"
@@ -70,14 +88,22 @@ Definition at line \fB121\fP of file \fBevents\&.hpp\fP\&..PP
 
 .PP
 Definition at line \fB112\fP of file \fBevents\&.hpp\fP\&.
+.SS "std::function<void()> cydui::events::Event::ev_destructor = [](){}"
+
+.PP
+Definition at line \fB115\fP of file \fBevents\&.hpp\fP\&..PP
+.nf
+115 {};
+.fi
+
 .SS "std::mutex cydui::events::Event::ev_mtx"
 
 .PP
-Definition at line \fB114\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB120\fP of file \fBevents\&.hpp\fP\&.
 .SS "bool cydui::events::Event::managed = false"
 
 .PP
-Definition at line \fB117\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB123\fP of file \fBevents\&.hpp\fP\&.
 .SS "\fBEventStatus\fP cydui::events::Event::status = \fBPENDING\fP"
 
 .PP

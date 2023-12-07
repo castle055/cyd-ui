@@ -10,8 +10,7 @@
 {\ttfamily \#include $<$png.\+h$>$}\newline
 {\ttfamily \#include "{}state/state.\+hpp"{}}\newline
 {\ttfamily \#include "{}render/render.\+hpp"{}}\newline
-Include dependency graph for x11\+\_\+impl.\+cpp\+:
-\nopagebreak
+Include dependency graph for x11\+\_\+impl.\+cpp\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -109,14 +108,14 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00282}{282}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00285}{285}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00284\ \ \ \{}
-\DoxyCodeLine{00285\ \ \ \mbox{\hyperlink{structx11_1_1imgs_1_1img__data}{imgs::img\_data}}\ data\ =\ \mbox{\hyperlink{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094}{imgs::read\_jpg}}(img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}});}
-\DoxyCodeLine{00286\ \ \ \textcolor{keywordflow}{return}\ \{data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ab09e9269e3f6980425ee535e256a4ecb}{width}},\ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ade5590ff5608fc235412ec669f50856a}{height}}\};}
-\DoxyCodeLine{00287\ \}}
+\DoxyCodeLine{00287\ \ \ \{}
+\DoxyCodeLine{00288\ \ \ \mbox{\hyperlink{structx11_1_1imgs_1_1img__data}{imgs::img\_data}}\ data\ =\ \mbox{\hyperlink{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094}{imgs::read\_jpg}}(img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}});}
+\DoxyCodeLine{00289\ \ \ \textcolor{keywordflow}{return}\ \{data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ab09e9269e3f6980425ee535e256a4ecb}{width}},\ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ade5590ff5608fc235412ec669f50856a}{height}}\};}
+\DoxyCodeLine{00290\ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -134,32 +133,32 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00257}{257}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00260}{260}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00259\ \ \ \{}
-\DoxyCodeLine{00260\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ font\_spec\ =\ \mbox{\hyperlink{x11__impl_8cpp_afb322b6dc3ff8a6f9cd2ae63971ad7cf}{to\_pattern}}(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}});}
-\DoxyCodeLine{00261\ \ \ XftFont*\ xfont;}
-\DoxyCodeLine{00262\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}{cached\_fonts}}.contains(font\_spec))\ \{}
-\DoxyCodeLine{00263\ \ \ \ \ xfont\ =\ \mbox{\hyperlink{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}{cached\_fonts}}[font\_spec];}
-\DoxyCodeLine{00264\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00265\ \ \ \ \ \textcolor{keywordflow}{if}\ (!(xfont\ =\ XftFontOpenName(}
-\DoxyCodeLine{00266\ \ \ \ \ \ \ \mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}(),\ font\_spec.c\_str())))\ \{}
-\DoxyCodeLine{00267\ \ \ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}}(\textcolor{stringliteral}{"{}Cannot\ load\ font\ from\ name\ \%s"{}},\ font\_spec.c\_str());}
-\DoxyCodeLine{00268\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
-\DoxyCodeLine{00269\ \ \ \ \ \}}
-\DoxyCodeLine{00270\ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}{cached\_fonts}}[font\_spec]\ =\ xfont;}
-\DoxyCodeLine{00271\ \ \ \}}
-\DoxyCodeLine{00272\ \ \ XGlyphInfo\ x\_glyph\_info;}
-\DoxyCodeLine{00273\ \ \ XftTextExtentsUtf8(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),}
-\DoxyCodeLine{00274\ \ \ \ \ xfont,}
-\DoxyCodeLine{00275\ \ \ \ \ (XftChar8*)\ text.c\_str(),}
-\DoxyCodeLine{00276\ \ \ \ \ (\textcolor{keywordtype}{int})\ text.size(),}
-\DoxyCodeLine{00277\ \ \ \ \ \&x\_glyph\_info);}
-\DoxyCodeLine{00278\ \ \ \textcolor{comment}{//XftFontClose(state::get\_dpy(),\ xfont);}}
-\DoxyCodeLine{00279\ \ \ \textcolor{keywordflow}{return}\ \{x\_glyph\_info.xOff,\ x\_glyph\_info.y\};}
-\DoxyCodeLine{00280\ \}}
+\DoxyCodeLine{00262\ \ \ \{}
+\DoxyCodeLine{00263\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ font\_spec\ =\ \mbox{\hyperlink{x11__impl_8cpp_afb322b6dc3ff8a6f9cd2ae63971ad7cf}{to\_pattern}}(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}});}
+\DoxyCodeLine{00264\ \ \ XftFont*\ xfont;}
+\DoxyCodeLine{00265\ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}{cached\_fonts}}.contains(font\_spec))\ \{}
+\DoxyCodeLine{00266\ \ \ \ \ xfont\ =\ \mbox{\hyperlink{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}{cached\_fonts}}[font\_spec];}
+\DoxyCodeLine{00267\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00268\ \ \ \ \ \textcolor{keywordflow}{if}\ (!(xfont\ =\ XftFontOpenName(}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}(),\ font\_spec.c\_str())))\ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}}(\textcolor{stringliteral}{"{}Cannot\ load\ font\ from\ name\ \%s"{}},\ font\_spec.c\_str());}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00272\ \ \ \ \ \}}
+\DoxyCodeLine{00273\ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8f9ebd200dd4664a56242b8bb0f5b635}{cached\_fonts}}[font\_spec]\ =\ xfont;}
+\DoxyCodeLine{00274\ \ \ \}}
+\DoxyCodeLine{00275\ \ \ XGlyphInfo\ x\_glyph\_info;}
+\DoxyCodeLine{00276\ \ \ XftTextExtentsUtf8(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),}
+\DoxyCodeLine{00277\ \ \ \ \ xfont,}
+\DoxyCodeLine{00278\ \ \ \ \ (XftChar8*)\ text.c\_str(),}
+\DoxyCodeLine{00279\ \ \ \ \ (\textcolor{keywordtype}{int})\ text.size(),}
+\DoxyCodeLine{00280\ \ \ \ \ \&x\_glyph\_info);}
+\DoxyCodeLine{00281\ \ \ \textcolor{comment}{//XftFontClose(state::get\_dpy(),\ xfont);}}
+\DoxyCodeLine{00282\ \ \ \textcolor{keywordflow}{return}\ \{x\_glyph\_info.xOff,\ x\_glyph\_info.y\};}
+\DoxyCodeLine{00283\ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -177,31 +176,31 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00185}{185}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00188}{188}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00187\ \ \ \{}
-\DoxyCodeLine{00188\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ font\_spec\ =\ \mbox{\hyperlink{x11__impl_8cpp_afb322b6dc3ff8a6f9cd2ae63971ad7cf}{to\_pattern}}(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}});}
-\DoxyCodeLine{00189\ \ \ \textcolor{keywordflow}{if}\ (win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ae9a0258e615446aff8ff354cf3415b2a}{loaded\_fonts}}.contains(font\_spec))}
-\DoxyCodeLine{00190\ \ \ \ \ \textcolor{keywordflow}{return}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ae9a0258e615446aff8ff354cf3415b2a}{loaded\_fonts}}[font\_spec];}
-\DoxyCodeLine{00191\ \ \ XftFont*\ xfont;}
-\DoxyCodeLine{00192\ \ \ FcPattern*\ pattern;}
-\DoxyCodeLine{00193\ \ \ }
-\DoxyCodeLine{00194\ \ \ \textcolor{keywordflow}{if}\ (!(xfont\ =\ XftFontOpenName(}
-\DoxyCodeLine{00195\ \ \ \ \ \mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}(),\ font\_spec.c\_str())))\ \{}
-\DoxyCodeLine{00196\ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}}(\textcolor{stringliteral}{"{}Cannot\ load\ font\ from\ name\ \%s"{}},\ font\_spec.c\_str());}
-\DoxyCodeLine{00197\ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
-\DoxyCodeLine{00198\ \ \ \}}
-\DoxyCodeLine{00199\ \ \ \textcolor{keywordflow}{if}\ (!(pattern\ =\ FcNameParse((FcChar8*)\ (font\_spec.c\_str()))))\ \{}
-\DoxyCodeLine{00200\ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}}(\textcolor{stringliteral}{"{}Cannot\ parse\ font\ name\ to\ pattern:\ \%s"{}},\ font\_spec.c\_str());}
-\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
-\DoxyCodeLine{00202\ \ \ \}}
-\DoxyCodeLine{00203\ \ \ }
-\DoxyCodeLine{00204\ \ \ \textcolor{keyword}{auto}\ f\ =\ \mbox{\hyperlink{structwindow__font}{window\_font}}\ \{.\mbox{\hyperlink{structwindow__font_a0d29e0080044034e42c98a7c18c77130}{xfont}}\ =\ xfont,\ .pattern\ =\ pattern\};}
-\DoxyCodeLine{00205\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ae9a0258e615446aff8ff354cf3415b2a}{loaded\_fonts}}[font\_spec]\ =\ f;}
-\DoxyCodeLine{00206\ \ \ \textcolor{keywordflow}{return}\ f;}
-\DoxyCodeLine{00207\ \}}
+\DoxyCodeLine{00190\ \ \ \{}
+\DoxyCodeLine{00191\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ font\_spec\ =\ \mbox{\hyperlink{x11__impl_8cpp_afb322b6dc3ff8a6f9cd2ae63971ad7cf}{to\_pattern}}(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}});}
+\DoxyCodeLine{00192\ \ \ \textcolor{keywordflow}{if}\ (win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ae9a0258e615446aff8ff354cf3415b2a}{loaded\_fonts}}.contains(font\_spec))}
+\DoxyCodeLine{00193\ \ \ \ \ \textcolor{keywordflow}{return}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ae9a0258e615446aff8ff354cf3415b2a}{loaded\_fonts}}[font\_spec];}
+\DoxyCodeLine{00194\ \ \ XftFont*\ xfont;}
+\DoxyCodeLine{00195\ \ \ FcPattern*\ pattern;}
+\DoxyCodeLine{00196\ \ \ }
+\DoxyCodeLine{00197\ \ \ \textcolor{keywordflow}{if}\ (!(xfont\ =\ XftFontOpenName(}
+\DoxyCodeLine{00198\ \ \ \ \ \mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}(),\ font\_spec.c\_str())))\ \{}
+\DoxyCodeLine{00199\ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}}(\textcolor{stringliteral}{"{}Cannot\ load\ font\ from\ name\ \%s"{}},\ font\_spec.c\_str());}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00201\ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \textcolor{keywordflow}{if}\ (!(pattern\ =\ FcNameParse((FcChar8*)\ (font\_spec.c\_str()))))\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \mbox{\hyperlink{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}{log\_task}}.\mbox{\hyperlink{structlogging_1_1logger_ae412f4d42c6e53803201856b5ceba5aa}{error}}(\textcolor{stringliteral}{"{}Cannot\ parse\ font\ name\ to\ pattern:\ \%s"{}},\ font\_spec.c\_str());}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{keywordflow}{return}\ \{\};}
+\DoxyCodeLine{00205\ \ \ \}}
+\DoxyCodeLine{00206\ \ \ }
+\DoxyCodeLine{00207\ \ \ \textcolor{keyword}{auto}\ f\ =\ \mbox{\hyperlink{structwindow__font}{window\_font}}\ \{.\mbox{\hyperlink{structwindow__font_a0d29e0080044034e42c98a7c18c77130}{xfont}}\ =\ xfont,\ .pattern\ =\ pattern\};}
+\DoxyCodeLine{00208\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ae9a0258e615446aff8ff354cf3415b2a}{loaded\_fonts}}[font\_spec]\ =\ f;}
+\DoxyCodeLine{00209\ \ \ \textcolor{keywordflow}{return}\ f;}
+\DoxyCodeLine{00210\ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -219,40 +218,40 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00215}{215}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00218}{218}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00217\ \ \ \{}
-\DoxyCodeLine{00218\ \ \ \textcolor{keywordflow}{if}\ (win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a65583fe018caf1a588cbd0b303fde833}{loaded\_images}}.contains(img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}}))}
-\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordflow}{return}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a65583fe018caf1a588cbd0b303fde833}{loaded\_images}}[img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}}];}
-\DoxyCodeLine{00220\ \ \ }
-\DoxyCodeLine{00221\ \ \ XImage*\ image\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{00222\ \ \ }
-\DoxyCodeLine{00223\ \ \ \textcolor{comment}{//if\ (img-\/>path.ends\_with("{}.jpg"{})}}
-\DoxyCodeLine{00224\ \ \ \textcolor{comment}{//\ \ ||\ img-\/>path.ends\_with("{}jpeg"{}))\ \{}}
-\DoxyCodeLine{00225\ \ \ \mbox{\hyperlink{structx11_1_1imgs_1_1img__data}{imgs::img\_data}}\ data\ =\ \mbox{\hyperlink{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094}{imgs::read\_jpg}}(img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}});}
-\DoxyCodeLine{00226\ \ \ }
-\DoxyCodeLine{00227\ \ \ image\ =\ XCreateImage(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),}
-\DoxyCodeLine{00228\ \ \ \ \ CopyFromParent,}
-\DoxyCodeLine{00229\ \ \ \ \ DisplayPlanes(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}()),}
-\DoxyCodeLine{00230\ \ \ \ \ ZPixmap,}
-\DoxyCodeLine{00231\ \ \ \ \ 0,}
-\DoxyCodeLine{00232\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_a8031e8fe029af09e4042f14330416ce9}{data}},}
-\DoxyCodeLine{00233\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ab09e9269e3f6980425ee535e256a4ecb}{width}},}
-\DoxyCodeLine{00234\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ade5590ff5608fc235412ec669f50856a}{height}},}
-\DoxyCodeLine{00235\ \ \ \ \ 8,}
-\DoxyCodeLine{00236\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ab09e9269e3f6980425ee535e256a4ecb}{width}}\ *\ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_a194d8541177ebcd68cadaf1411986dc5}{components}});}
-\DoxyCodeLine{00237\ \ \ \textcolor{comment}{//log\_task.info("{}STATUS\ =\ \%d"{},\ XInitImage(image));}}
-\DoxyCodeLine{00238\ \ \ \textcolor{comment}{//\}}}
-\DoxyCodeLine{00239\ \ \ }
-\DoxyCodeLine{00240\ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00241\ \ \ \textcolor{comment}{//auto\ f\ =\ window\_font\ \{.xfont\ =\ xfont,\ .pattern\ =\ pattern\};}}
-\DoxyCodeLine{00242\ \ \ \textcolor{comment}{//win-\/>loaded\_fonts[font\_spec]\ =\ f;}}
-\DoxyCodeLine{00243\ \ \ \textcolor{keyword}{auto}\ i\ =\ \mbox{\hyperlink{structwindow__image}{window\_image}}\ \{image\};}
-\DoxyCodeLine{00244\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a65583fe018caf1a588cbd0b303fde833}{loaded\_images}}[img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}}]\ =\ i;}
-\DoxyCodeLine{00245\ \ \ \textcolor{keywordflow}{return}\ i;}
-\DoxyCodeLine{00246\ \}}
+\DoxyCodeLine{00220\ \ \ \{}
+\DoxyCodeLine{00221\ \ \ \textcolor{keywordflow}{if}\ (win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a65583fe018caf1a588cbd0b303fde833}{loaded\_images}}.contains(img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}}))}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordflow}{return}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a65583fe018caf1a588cbd0b303fde833}{loaded\_images}}[img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}}];}
+\DoxyCodeLine{00223\ \ \ }
+\DoxyCodeLine{00224\ \ \ XImage*\ image\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00225\ \ \ }
+\DoxyCodeLine{00226\ \ \ \textcolor{comment}{//if\ (img-\/>path.ends\_with("{}.jpg"{})}}
+\DoxyCodeLine{00227\ \ \ \textcolor{comment}{//\ \ ||\ img-\/>path.ends\_with("{}jpeg"{}))\ \{}}
+\DoxyCodeLine{00228\ \ \ \mbox{\hyperlink{structx11_1_1imgs_1_1img__data}{imgs::img\_data}}\ data\ =\ \mbox{\hyperlink{namespacex11_1_1imgs_ad24a4a5ef07723dc0f934e1d1acd3094}{imgs::read\_jpg}}(img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}});}
+\DoxyCodeLine{00229\ \ \ }
+\DoxyCodeLine{00230\ \ \ image\ =\ XCreateImage(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),}
+\DoxyCodeLine{00231\ \ \ \ \ CopyFromParent,}
+\DoxyCodeLine{00232\ \ \ \ \ DisplayPlanes(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ \mbox{\hyperlink{namespacex11_1_1state_a5685733b4b3744465723dda6a15ebef7}{state::get\_screen}}()),}
+\DoxyCodeLine{00233\ \ \ \ \ ZPixmap,}
+\DoxyCodeLine{00234\ \ \ \ \ 0,}
+\DoxyCodeLine{00235\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_a8031e8fe029af09e4042f14330416ce9}{data}},}
+\DoxyCodeLine{00236\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ab09e9269e3f6980425ee535e256a4ecb}{width}},}
+\DoxyCodeLine{00237\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ade5590ff5608fc235412ec669f50856a}{height}},}
+\DoxyCodeLine{00238\ \ \ \ \ 8,}
+\DoxyCodeLine{00239\ \ \ \ \ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_ab09e9269e3f6980425ee535e256a4ecb}{width}}\ *\ data.\mbox{\hyperlink{structx11_1_1imgs_1_1img__data_a194d8541177ebcd68cadaf1411986dc5}{components}});}
+\DoxyCodeLine{00240\ \ \ \textcolor{comment}{//log\_task.info("{}STATUS\ =\ \%d"{},\ XInitImage(image));}}
+\DoxyCodeLine{00241\ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00242\ \ \ }
+\DoxyCodeLine{00243\ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00244\ \ \ \textcolor{comment}{//auto\ f\ =\ window\_font\ \{.xfont\ =\ xfont,\ .pattern\ =\ pattern\};}}
+\DoxyCodeLine{00245\ \ \ \textcolor{comment}{//win-\/>loaded\_fonts[font\_spec]\ =\ f;}}
+\DoxyCodeLine{00246\ \ \ \textcolor{keyword}{auto}\ i\ =\ \mbox{\hyperlink{structwindow__image}{window\_image}}\ \{image\};}
+\DoxyCodeLine{00247\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a65583fe018caf1a588cbd0b303fde833}{loaded\_images}}[img-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1images_1_1image__t_a1807e75f4fcab10f2ac8cf1a620b2f69}{path}}]\ =\ i;}
+\DoxyCodeLine{00248\ \ \ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{00249\ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -296,23 +295,23 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00171}{171}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00174}{174}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00172\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}};}
-\DoxyCodeLine{00173\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>name\ +\ \textcolor{stringliteral}{"{}:"{}});}
-\DoxyCodeLine{00174\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}size="{}}\ +\ std::to\_string(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>size)\ +\ \textcolor{stringliteral}{"{}:"{}});}
-\DoxyCodeLine{00175\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}antialias="{}});}
-\DoxyCodeLine{00176\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append((\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>antialias\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}}));}
-\DoxyCodeLine{00177\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}:"{}});}
-\DoxyCodeLine{00178\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}autohint="{}});}
-\DoxyCodeLine{00179\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append((\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>autohint\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}}));}
-\DoxyCodeLine{00180\ \ \ \textcolor{comment}{//str.append("{}:"{});}}
-\DoxyCodeLine{00181\ \ \ }
-\DoxyCodeLine{00182\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}};}
-\DoxyCodeLine{00183\ \}}
+\DoxyCodeLine{00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00175\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}};}
+\DoxyCodeLine{00176\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>name\ +\ \textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{00177\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}size="{}}\ +\ std::to\_string(\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>size)\ +\ \textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{00178\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}antialias="{}});}
+\DoxyCodeLine{00179\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append((\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>antialias\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}}));}
+\DoxyCodeLine{00180\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}:"{}});}
+\DoxyCodeLine{00181\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append(\textcolor{stringliteral}{"{}autohint="{}});}
+\DoxyCodeLine{00182\ \ \ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}}.append((\mbox{\hyperlink{namespacecydui_1_1graphics_1_1font}{font}}-\/>autohint\ ?\ \textcolor{stringliteral}{"{}true"{}}\ :\ \textcolor{stringliteral}{"{}false"{}}));}
+\DoxyCodeLine{00183\ \ \ \textcolor{comment}{//str.append("{}:"{});}}
+\DoxyCodeLine{00184\ \ \ }
+\DoxyCodeLine{00185\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{namespacecydstd_1_1types_1_1primitives_ab38d3341dbe66d065be979f28fe07439}{str}};}
+\DoxyCodeLine{00186\ \}}
 
 \end{DoxyCode}
 Here is the caller graph for this function\+:\nopagebreak
@@ -330,13 +329,13 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00209}{209}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00212}{212}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00211\ \ \ \{}
-\DoxyCodeLine{00212\ \ \ \textcolor{comment}{//\ TODO\ -\/\ Implement}}
-\DoxyCodeLine{00213\ \}}
+\DoxyCodeLine{00214\ \ \ \{}
+\DoxyCodeLine{00215\ \ \ \textcolor{comment}{//\ TODO\ -\/\ Implement}}
+\DoxyCodeLine{00216\ \}}
 
 \end{DoxyCode}
 \Hypertarget{x11__impl_8cpp_a6539d8d22582ecd24ab60d602915b880}\label{x11__impl_8cpp_a6539d8d22582ecd24ab60d602915b880} 
@@ -347,13 +346,13 @@ Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00209}{209}} of file 
 
 
 
-Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00248}{248}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00251}{251}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00251\ \ \ \{}
-\DoxyCodeLine{00252\ \ \ \textcolor{comment}{//\ TODO\ -\/\ Implement}}
-\DoxyCodeLine{00253\ \}}
+\DoxyCodeLine{00254\ \ \ \{}
+\DoxyCodeLine{00255\ \ \ \textcolor{comment}{//\ TODO\ -\/\ Implement}}
+\DoxyCodeLine{00256\ \}}
 
 \end{DoxyCode}
 
@@ -367,7 +366,7 @@ Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00248}{248}} of file 
 
 
 
-Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00255}{255}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00258}{258}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
 
 \Hypertarget{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a}\label{x11__impl_8cpp_a8a6f8eec6371a9ce75e79a3f0c03364a} 
 \index{x11\_impl.cpp@{x11\_impl.cpp}!log\_task@{log\_task}}
