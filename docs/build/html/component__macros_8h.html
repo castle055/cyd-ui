@@ -185,6 +185,7 @@ Macros</h2></td></tr>
 <div class="line">    <span class="keyword">explicit</span> NAME(props_t props)    \</div>
 <div class="line">      : <a class="code hl_struct" href="structcydui_1_1components_1_1component__t.html">cydui::components::component_t&lt;CYDUI_EV_HANDLER_NAME(NAME),NAME&gt;</a>()\</div>
 <div class="line">      , props(std::move(props)) { } \</div>
+<div class="line">    ~NAME() <span class="keyword">override</span> = <span class="keywordflow">default</span>;     \</div>
 <div class="line">  };                         \</div>
 <div class="line"><span class="keyword">struct </span>CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \</div>
 <div class="line">  CYDUI_STATE_NAME(NAME)* state = <span class="keyword">nullptr</span>;                    \</div>
@@ -198,8 +199,8 @@ Macros</h2></td></tr>
 <div class="ttc" id="acomponent__macros_8h_html_a1453acef8e4a8b8c3e571a83fa5b8218"><div class="ttname"><a href="component__macros_8h.html#a1453acef8e4a8b8c3e571a83fa5b8218">CYDUI_EV_HANDLER_NAME</a></div><div class="ttdeci">#define CYDUI_EV_HANDLER_NAME(NAME)</div><div class="ttdef"><b>Definition</b> <a href="component__macros_8h_source.html#l00010">component_macros.h:10</a></div></div>
 <div class="ttc" id="acomponent__macros_8h_html_a36c71dcec93ad69b047ef37456dfc6cf"><div class="ttname"><a href="component__macros_8h.html#a36c71dcec93ad69b047ef37456dfc6cf">CYDUI_EV_HANDLER_DATA_NAME</a></div><div class="ttdeci">#define CYDUI_EV_HANDLER_DATA_NAME(NAME)</div><div class="ttdef"><b>Definition</b> <a href="component__macros_8h_source.html#l00011">component_macros.h:11</a></div></div>
 <div class="ttc" id="acomponent__macros_8h_html_a8af56ccc638418125d0b5b16a292920f"><div class="ttname"><a href="component__macros_8h.html#a8af56ccc638418125d0b5b16a292920f">CYDUI_STATE_NAME</a></div><div class="ttdeci">#define CYDUI_STATE_NAME(NAME)</div><div class="ttdef"><b>Definition</b> <a href="component__macros_8h_source.html#l00009">component_macros.h:9</a></div></div>
-<div class="ttc" id="astructattrs__component_html"><div class="ttname"><a href="structattrs__component.html">attrs_component</a></div><div class="ttdef"><b>Definition</b> <a href="component__attributes_8h_source.html#l00098">component_attributes.h:102</a></div></div>
-<div class="ttc" id="astructcydui_1_1components_1_1component__t_html"><div class="ttname"><a href="structcydui_1_1components_1_1component__t.html">cydui::components::component_t</a></div><div class="ttdef"><b>Definition</b> <a href="component_8h_source.html#l00120">component.h:122</a></div></div>
+<div class="ttc" id="astructattrs__component_html"><div class="ttname"><a href="structattrs__component.html">attrs_component</a></div><div class="ttdef"><b>Definition</b> <a href="component__attributes_8h_source.html#l00102">component_attributes.h:106</a></div></div>
+<div class="ttc" id="astructcydui_1_1components_1_1component__t_html"><div class="ttname"><a href="structcydui_1_1components_1_1component__t.html">cydui::components::component_t</a></div><div class="ttdef"><b>Definition</b> <a href="component_8h_source.html#l00122">component.h:124</a></div></div>
 <div class="ttc" id="astructcydui_1_1components_1_1event__handler__t_html"><div class="ttname"><a href="structcydui_1_1components_1_1event__handler__t.html">cydui::components::event_handler_t</a></div><div class="ttdef"><b>Definition</b> <a href="component__event__handler_8h_source.html#l00061">component_event_handler.h:61</a></div></div>
 <div class="ttc" id="astructlogging_1_1logger_html"><div class="ttname"><a href="structlogging_1_1logger.html">logging::logger</a></div><div class="ttdef"><b>Definition</b> <a href="logging_8hpp_source.html#l00017">logging.hpp:17</a></div></div>
 <div class="ttc" id="astructlogging_1_1logger_html_a0b07f4c872683d157a40708b40bfb72d"><div class="ttname"><a href="structlogging_1_1logger.html#a0b07f4c872683d157a40708b40bfb72d">logging::logger::name</a></div><div class="ttdeci">const char * name</div><div class="ttdef"><b>Definition</b> <a href="logging_8hpp_source.html#l00018">logging.hpp:18</a></div></div>
@@ -218,16 +219,17 @@ Macros</h2></td></tr>
 <div class="line"><span class="lineno">   41</span>    <span class="keyword">explicit</span> NAME(props_t props)    \</div>
 <div class="line"><span class="lineno">   42</span>      : <a class="code hl_struct" href="structcydui_1_1components_1_1component__t.html">cydui::components::component_t&lt;CYDUI_EV_HANDLER_NAME(NAME),NAME&gt;</a>()\</div>
 <div class="line"><span class="lineno">   43</span>      , props(std::move(props)) { } \</div>
-<div class="line"><span class="lineno">   44</span>  };                         \</div>
-<div class="line"><span class="lineno">   45</span><span class="keyword">struct </span>CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \</div>
-<div class="line"><span class="lineno">   46</span>  CYDUI_STATE_NAME(NAME)* state = <span class="keyword">nullptr</span>;                    \</div>
-<div class="line"><span class="lineno">   47</span>  NAME::props_t* props = <span class="keyword">nullptr</span>;   \</div>
-<div class="line"><span class="lineno">   48</span>  <a class="code hl_struct" href="structattrs__component.html">attrs_component&lt;NAME&gt;</a>* attrs = <span class="keyword">nullptr</span>;                     \</div>
-<div class="line"><span class="lineno">   49</span>  <a class="code hl_struct" href="structlogging_1_1logger.html">logging::logger</a> log{.<a class="code hl_variable" href="structlogging_1_1logger.html#a0b07f4c872683d157a40708b40bfb72d">name</a> = #NAME};                         \</div>
-<div class="line"><span class="lineno">   50</span>};                           \</div>
-<div class="line"><span class="lineno">   51</span><span class="keyword">struct </span>CYDUI_EV_HANDLER_NAME(NAME)  \</div>
-<div class="line"><span class="lineno">   52</span>  : <span class="keyword">public</span> <a class="code hl_struct" href="structcydui_1_1components_1_1event__handler__t.html">cydui::components::event_handler_t</a>,  \</div>
-<div class="line"><span class="lineno">   53</span>    <span class="keyword">public</span> <a class="code hl_define" href="component__macros_8h.html#a36c71dcec93ad69b047ef37456dfc6cf">CYDUI_EV_HANDLER_DATA_NAME</a>(NAME)</div>
+<div class="line"><span class="lineno">   44</span>    ~NAME() <span class="keyword">override</span> = <span class="keywordflow">default</span>;     \</div>
+<div class="line"><span class="lineno">   45</span>  };                         \</div>
+<div class="line"><span class="lineno">   46</span><span class="keyword">struct </span>CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \</div>
+<div class="line"><span class="lineno">   47</span>  CYDUI_STATE_NAME(NAME)* state = <span class="keyword">nullptr</span>;                    \</div>
+<div class="line"><span class="lineno">   48</span>  NAME::props_t* props = <span class="keyword">nullptr</span>;   \</div>
+<div class="line"><span class="lineno">   49</span>  <a class="code hl_struct" href="structattrs__component.html">attrs_component&lt;NAME&gt;</a>* attrs = <span class="keyword">nullptr</span>;                     \</div>
+<div class="line"><span class="lineno">   50</span>  <a class="code hl_struct" href="structlogging_1_1logger.html">logging::logger</a> log{.<a class="code hl_variable" href="structlogging_1_1logger.html#a0b07f4c872683d157a40708b40bfb72d">name</a> = #NAME};                         \</div>
+<div class="line"><span class="lineno">   51</span>};                           \</div>
+<div class="line"><span class="lineno">   52</span><span class="keyword">struct </span>CYDUI_EV_HANDLER_NAME(NAME)  \</div>
+<div class="line"><span class="lineno">   53</span>  : <span class="keyword">public</span> <a class="code hl_struct" href="structcydui_1_1components_1_1event__handler__t.html">cydui::components::event_handler_t</a>,  \</div>
+<div class="line"><span class="lineno">   54</span>    <span class="keyword">public</span> <a class="code hl_define" href="component__macros_8h.html#a36c71dcec93ad69b047ef37456dfc6cf">CYDUI_EV_HANDLER_DATA_NAME</a>(NAME)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -257,37 +259,38 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="component__macros_8h_source.html#l00065">65</a> of file <a class="el" href="component__macros_8h_source.html">component_macros.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   69</span>           :                          \</div>
-<div class="line"><span class="lineno">   70</span>  <span class="keyword">public</span> <a class="code hl_struct" href="structcydui_1_1components_1_1component__t.html">cydui::components::component_t</a>&lt;          \</div>
-<div class="line"><span class="lineno">   71</span>    CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT, \</div>
-<div class="line"><span class="lineno">   72</span>    NAME SET_COMPONENT_TEMPLATE_SHORT \</div>
-<div class="line"><span class="lineno">   73</span>  &gt; {                                 \</div>
-<div class="line"><span class="lineno">   74</span>    CYDUI_COMPONENT_METADATA(NAME)    \</div>
-<div class="line"><span class="lineno">   75</span>    <span class="keyword">using </span>state_t = <a class="code hl_define" href="component__macros_8h.html#a8af56ccc638418125d0b5b16a292920f">CYDUI_STATE_NAME</a>(NAME) SET_COMPONENT_TEMPLATE_SHORT; \</div>
-<div class="line"><span class="lineno">   76</span>    <span class="keyword">using </span>event_handler_t = <a class="code hl_define" href="component__macros_8h.html#a1453acef8e4a8b8c3e571a83fa5b8218">CYDUI_EV_HANDLER_NAME</a>(NAME) SET_COMPONENT_TEMPLATE_SHORT; \</div>
-<div class="line"><span class="lineno">   77</span>    <span class="keyword">struct </span>props_t                    \</div>
-<div class="line"><span class="lineno">   78</span>      __VA_ARGS__                     \</div>
-<div class="line"><span class="lineno">   79</span>    props;                            \</div>
-<div class="line"><span class="lineno">   80</span>    NAME() = <span class="keywordflow">default</span>;                 \</div>
-<div class="line"><span class="lineno">   81</span>    <span class="keyword">explicit</span> NAME(props_t props)      \</div>
-<div class="line"><span class="lineno">   82</span>      : <a class="code hl_struct" href="structcydui_1_1components_1_1component__t.html">cydui::components::component_t</a>&lt;           \</div>
-<div class="line"><span class="lineno">   83</span>        CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT,        \</div>
-<div class="line"><span class="lineno">   84</span>        NAME SET_COMPONENT_TEMPLATE_SHORT                     \</div>
-<div class="line"><span class="lineno">   85</span>      &gt;()                             \</div>
-<div class="line"><span class="lineno">   86</span>      , props(std::move(props)) { }   \</div>
-<div class="line"><span class="lineno">   87</span>};                                    \</div>
-<div class="line"><span class="lineno">   88</span><span class="keyword">template</span> SET_COMPONENT_TEMPLATE_DEFAULT \</div>
-<div class="line"><span class="lineno">   89</span>struct <a class="code hl_define" href="component__macros_8h.html#a36c71dcec93ad69b047ef37456dfc6cf">CYDUI_EV_HANDLER_DATA_NAME</a>(NAME) {                     \</div>
-<div class="line"><span class="lineno">   90</span>  CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT* state = <span class="keyword">nullptr</span>;  \</div>
-<div class="line"><span class="lineno">   91</span>  NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = <span class="keyword">nullptr</span>;\</div>
-<div class="line"><span class="lineno">   92</span>  <a class="code hl_struct" href="structattrs__component.html">attrs_component&lt;NAME SET_COMPONENT_TEMPLATE_SHORT&gt;</a>* attrs = <span class="keyword">nullptr</span>;   \</div>
-<div class="line"><span class="lineno">   93</span>  <a class="code hl_struct" href="structlogging_1_1logger.html">logging::logger</a> log{.<a class="code hl_variable" href="structlogging_1_1logger.html#a0b07f4c872683d157a40708b40bfb72d">name</a> = #NAME}; \</div>
-<div class="line"><span class="lineno">   94</span>};                                    \</div>
-<div class="line"><span class="lineno">   95</span><span class="keyword">template</span> SET_COMPONENT_TEMPLATE       \</div>
-<div class="line"><span class="lineno">   96</span>struct <a class="code hl_define" href="component__macros_8h.html#a1453acef8e4a8b8c3e571a83fa5b8218">CYDUI_EV_HANDLER_NAME</a>(NAME)    \</div>
-<div class="line"><span class="lineno">   97</span>  : <span class="keyword">public</span> <a class="code hl_struct" href="structcydui_1_1components_1_1event__handler__t.html">cydui::components::event_handler_t</a>,    \</div>
-<div class="line"><span class="lineno">   98</span>    <span class="keyword">public</span> <a class="code hl_define" href="component__macros_8h.html#a36c71dcec93ad69b047ef37456dfc6cf">CYDUI_EV_HANDLER_DATA_NAME</a>(NAME) SET_COMPONENT_TEMPLATE_SHORT</div>
+<p class="definition">Definition at line <a class="el" href="component__macros_8h_source.html#l00066">66</a> of file <a class="el" href="component__macros_8h_source.html">component_macros.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   70</span>           :                          \</div>
+<div class="line"><span class="lineno">   71</span>  <span class="keyword">public</span> <a class="code hl_struct" href="structcydui_1_1components_1_1component__t.html">cydui::components::component_t</a>&lt;          \</div>
+<div class="line"><span class="lineno">   72</span>    CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT, \</div>
+<div class="line"><span class="lineno">   73</span>    NAME SET_COMPONENT_TEMPLATE_SHORT \</div>
+<div class="line"><span class="lineno">   74</span>  &gt; {                                 \</div>
+<div class="line"><span class="lineno">   75</span>    CYDUI_COMPONENT_METADATA(NAME)    \</div>
+<div class="line"><span class="lineno">   76</span>    <span class="keyword">using </span>state_t = <a class="code hl_define" href="component__macros_8h.html#a8af56ccc638418125d0b5b16a292920f">CYDUI_STATE_NAME</a>(NAME) SET_COMPONENT_TEMPLATE_SHORT; \</div>
+<div class="line"><span class="lineno">   77</span>    <span class="keyword">using </span>event_handler_t = <a class="code hl_define" href="component__macros_8h.html#a1453acef8e4a8b8c3e571a83fa5b8218">CYDUI_EV_HANDLER_NAME</a>(NAME) SET_COMPONENT_TEMPLATE_SHORT; \</div>
+<div class="line"><span class="lineno">   78</span>    <span class="keyword">struct </span>props_t                    \</div>
+<div class="line"><span class="lineno">   79</span>      __VA_ARGS__                     \</div>
+<div class="line"><span class="lineno">   80</span>    props;                            \</div>
+<div class="line"><span class="lineno">   81</span>    NAME() = <span class="keywordflow">default</span>;                 \</div>
+<div class="line"><span class="lineno">   82</span>    <span class="keyword">explicit</span> NAME(props_t props)      \</div>
+<div class="line"><span class="lineno">   83</span>      : <a class="code hl_struct" href="structcydui_1_1components_1_1component__t.html">cydui::components::component_t</a>&lt;           \</div>
+<div class="line"><span class="lineno">   84</span>        CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT,        \</div>
+<div class="line"><span class="lineno">   85</span>        NAME SET_COMPONENT_TEMPLATE_SHORT                     \</div>
+<div class="line"><span class="lineno">   86</span>      &gt;()                             \</div>
+<div class="line"><span class="lineno">   87</span>      , props(std::move(props)) { }   \</div>
+<div class="line"><span class="lineno">   88</span>    ~NAME() <span class="keyword">override</span> = <span class="keywordflow">default</span>;       \</div>
+<div class="line"><span class="lineno">   89</span>};                                    \</div>
+<div class="line"><span class="lineno">   90</span><span class="keyword">template</span> SET_COMPONENT_TEMPLATE_DEFAULT \</div>
+<div class="line"><span class="lineno">   91</span>struct <a class="code hl_define" href="component__macros_8h.html#a36c71dcec93ad69b047ef37456dfc6cf">CYDUI_EV_HANDLER_DATA_NAME</a>(NAME) {                     \</div>
+<div class="line"><span class="lineno">   92</span>  CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT* state = <span class="keyword">nullptr</span>;  \</div>
+<div class="line"><span class="lineno">   93</span>  NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = <span class="keyword">nullptr</span>;\</div>
+<div class="line"><span class="lineno">   94</span>  <a class="code hl_struct" href="structattrs__component.html">attrs_component&lt;NAME SET_COMPONENT_TEMPLATE_SHORT&gt;</a>* attrs = <span class="keyword">nullptr</span>;   \</div>
+<div class="line"><span class="lineno">   95</span>  <a class="code hl_struct" href="structlogging_1_1logger.html">logging::logger</a> log{.<a class="code hl_variable" href="structlogging_1_1logger.html#a0b07f4c872683d157a40708b40bfb72d">name</a> = #NAME}; \</div>
+<div class="line"><span class="lineno">   96</span>};                                    \</div>
+<div class="line"><span class="lineno">   97</span><span class="keyword">template</span> SET_COMPONENT_TEMPLATE       \</div>
+<div class="line"><span class="lineno">   98</span>struct <a class="code hl_define" href="component__macros_8h.html#a1453acef8e4a8b8c3e571a83fa5b8218">CYDUI_EV_HANDLER_NAME</a>(NAME)    \</div>
+<div class="line"><span class="lineno">   99</span>  : <span class="keyword">public</span> <a class="code hl_struct" href="structcydui_1_1components_1_1event__handler__t.html">cydui::components::event_handler_t</a>,    \</div>
+<div class="line"><span class="lineno">  100</span>    <span class="keyword">public</span> <a class="code hl_define" href="component__macros_8h.html#a36c71dcec93ad69b047ef37456dfc6cf">CYDUI_EV_HANDLER_DATA_NAME</a>(NAME) SET_COMPONENT_TEMPLATE_SHORT</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -388,7 +391,7 @@ Macros</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="component__macros_8h_source.html#l00063">63</a> of file <a class="el" href="component__macros_8h_source.html">component_macros.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="component__macros_8h_source.html#l00064">64</a> of file <a class="el" href="component__macros_8h_source.html">component_macros.h</a>.</p>
 
 </div>
 </div>
@@ -433,8 +436,8 @@ Macros</h2></td></tr>
 <div class="line">struct <a class="code hl_define" href="component__macros_8h.html#a8af56ccc638418125d0b5b16a292920f">CYDUI_STATE_NAME</a>(NAME): public <a class="code hl_namespace" href="namespacecydui.html">cydui</a>::components::component_state_t</div>
 <div class="ttc" id="anamespacecydui_html"><div class="ttname"><a href="namespacecydui.html">cydui</a></div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8hpp_source.html#l00027">x11_impl.hpp:27</a></div></div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="component__macros_8h_source.html#l00057">57</a> of file <a class="el" href="component__macros_8h_source.html">component_macros.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   59</span>                             : <span class="keyword">public</span> <a class="code hl_struct" href="structcydui_1_1components_1_1component__state__t.html">cydui::components::component_state_t</a></div>
+<p class="definition">Definition at line <a class="el" href="component__macros_8h_source.html#l00058">58</a> of file <a class="el" href="component__macros_8h_source.html">component_macros.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   60</span>                             : <span class="keyword">public</span> <a class="code hl_struct" href="structcydui_1_1components_1_1component__state__t.html">cydui::components::component_state_t</a></div>
 </div><!-- fragment -->
 </div>
 </div>

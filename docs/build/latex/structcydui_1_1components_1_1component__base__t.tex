@@ -25,7 +25,7 @@ Collaboration diagram for cydui\+::components\+::component\+\_\+base\+\_\+t\+:\n
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-virtual \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a2fcd18d417da0bdd4ed6cafc7e9dd50e}{\texorpdfstring{$\sim$}{\string~}component\+\_\+base\+\_\+t}} ()
+virtual \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_ae6fceed3edc906e76f4b28153d5e6e6f}{\texorpdfstring{$\sim$}{\string~}component\+\_\+base\+\_\+t}} ()=default
 \item 
 virtual void \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a2329fd0d1c024dab910437c76ba78a64}{configure\+\_\+event\+\_\+handler}} ()=0
 \item 
@@ -68,38 +68,17 @@ void \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a6e3a63ecb
 \doxysubsection{Detailed Description}
 
 
-Definition at line \mbox{\hyperlink{component_8h_source_l00074}{74}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+Definition at line \mbox{\hyperlink{component_8h_source_l00075}{75}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
 
 
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{structcydui_1_1components_1_1component__base__t_a2fcd18d417da0bdd4ed6cafc7e9dd50e}\label{structcydui_1_1components_1_1component__base__t_a2fcd18d417da0bdd4ed6cafc7e9dd50e} 
+\Hypertarget{structcydui_1_1components_1_1component__base__t_ae6fceed3edc906e76f4b28153d5e6e6f}\label{structcydui_1_1components_1_1component__base__t_ae6fceed3edc906e76f4b28153d5e6e6f} 
 \index{cydui::components::component\_base\_t@{cydui::components::component\_base\_t}!````~component\_base\_t@{\texorpdfstring{$\sim$}{\string~}component\_base\_t}}
 \index{````~component\_base\_t@{\texorpdfstring{$\sim$}{\string~}component\_base\_t}!cydui::components::component\_base\_t@{cydui::components::component\_base\_t}}
 \doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}component\_base\_t()}{\string~component\_base\_t()}}
-{\footnotesize\ttfamily virtual cydui\+::components\+::component\+\_\+base\+\_\+t\+::\texorpdfstring{$\sim$}{\string~}component\+\_\+base\+\_\+t (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+{\footnotesize\ttfamily virtual cydui\+::components\+::component\+\_\+base\+\_\+t\+::\texorpdfstring{$\sim$}{\string~}component\+\_\+base\+\_\+t (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}, {\ttfamily [default]}}
 
-
-
-Definition at line \mbox{\hyperlink{component_8h_source_l00081}{81}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a6e3a63ecb81d9babc620d73d52b94a8c}{clear\_subscribed\_listeners}}();}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.has\_value())\ \{}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value()-\/>component\_instance\ =\ std::nullopt;}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \}}
-
-\end{DoxyCode}
-Here is the call graph for this function\+:\nopagebreak
-\begin{figure}[H]
-\begin{center}
-\leavevmode
-\includegraphics[width=350pt]{structcydui_1_1components_1_1component__base__t_a2fcd18d417da0bdd4ed6cafc7e9dd50e_cgraph}
-\end{center}
-\end{figure}
 
 
 \doxysubsection{Member Function Documentation}
@@ -111,16 +90,16 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{component_8h_source_l00104}{104}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+Definition at line \mbox{\hyperlink{component_8h_source_l00106}{106}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&l:\ listeners)\ \{}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&[ev\_type,\ handler]\ =\ l;}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}}.push\_back(\mbox{\hyperlink{namespacecydui_1_1events_a1fb9ac28468b1aa9a3c860745c0b95cd}{cydui::events::on\_event\_raw}}(ev\_type,\ handler.handler));}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&l:\ listeners)\ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&[ev\_type,\ handler]\ =\ l;}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}}.push\_back(\mbox{\hyperlink{namespacecydui_1_1events_a1fb9ac28468b1aa9a3c860745c0b95cd}{cydui::events::on\_event\_raw}}(ev\_type,\ handler.handler));}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -162,17 +141,17 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{component_8h_source_l00110}{110}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+Definition at line \mbox{\hyperlink{component_8h_source_l00112}{112}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}})\ \{}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ item-\/>remove();}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ item;}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}}.clear();}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}})\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ item-\/>remove();}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ item;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}}.clear();}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \}}
 
 \end{DoxyCode}
 Here is the caller graph for this function\+:\nopagebreak
@@ -301,11 +280,11 @@ Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a0fb18
 
 
 
-Definition at line \mbox{\hyperlink{component_8h_source_l00077}{77}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+Definition at line \mbox{\hyperlink{component_8h_source_l00078}{78}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00077\ \{\};}
+\DoxyCodeLine{00078\ \{\};}
 
 \end{DoxyCode}
 \Hypertarget{structcydui_1_1components_1_1component__base__t_ace69ebb59763f0ac0f41a8ea1143299e}\label{structcydui_1_1components_1_1component__base__t_ace69ebb59763f0ac0f41a8ea1143299e} 
@@ -316,7 +295,7 @@ Definition at line \mbox{\hyperlink{component_8h_source_l00077}{77}} of file \mb
 
 
 
-Definition at line \mbox{\hyperlink{component_8h_source_l00076}{76}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+Definition at line \mbox{\hyperlink{component_8h_source_l00077}{77}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
 
 \Hypertarget{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}\label{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe} 
 \index{cydui::components::component\_base\_t@{cydui::components::component\_base\_t}!state@{state}}
@@ -326,7 +305,7 @@ Definition at line \mbox{\hyperlink{component_8h_source_l00076}{76}} of file \mb
 
 
 
-Definition at line \mbox{\hyperlink{component_8h_source_l00075}{75}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+Definition at line \mbox{\hyperlink{component_8h_source_l00076}{76}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
 
 \Hypertarget{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}\label{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030} 
 \index{cydui::components::component\_base\_t@{cydui::components::component\_base\_t}!subscribed\_listeners@{subscribed\_listeners}}
@@ -336,11 +315,11 @@ Definition at line \mbox{\hyperlink{component_8h_source_l00075}{75}} of file \mb
 
 
 
-Definition at line \mbox{\hyperlink{component_8h_source_l00079}{79}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+Definition at line \mbox{\hyperlink{component_8h_source_l00080}{80}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00079\ \{\};}
+\DoxyCodeLine{00080\ \{\};}
 
 \end{DoxyCode}
 

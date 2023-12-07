@@ -56,14 +56,16 @@ Definition at line \mbox{\hyperlink{pixelmap__editor_8h_source_l00019}{19}} of f
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}(\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}})\ \{}
-\DoxyCodeLine{00020\ \ \ \ \ \mbox{\hyperlink{classpixelmap__editor__t_aa692f53390ce573bcc54337361efd5cf}{surface}}\ =\ Cairo::ImageSurface::create(}
-\DoxyCodeLine{00021\ \ \ \ \ \ \ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*)\ this-\/>img.\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}},}
-\DoxyCodeLine{00022\ \ \ \ \ \ \ Cairo::Surface::Format::ARGB32,}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ (\textcolor{keywordtype}{int})\ this-\/>img.width(),\ (\textcolor{keywordtype}{int})\ this-\/>img.height(),}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ cairo\_format\_stride\_for\_width(CAIRO\_FORMAT\_ARGB32,\ (\textcolor{keywordtype}{int})\ this-\/>img.\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}())}
-\DoxyCodeLine{00025\ \ \ \ \ );}
-\DoxyCodeLine{00026\ \ \ \ \ \mbox{\hyperlink{classpixelmap__editor__t_a46d7c68a611e7a04d85aaa6d3ff8c4f7}{ctx}}\ =\ Cairo::Context::create(\mbox{\hyperlink{classpixelmap__editor__t_aa692f53390ce573bcc54337361efd5cf}{surface}});}
-\DoxyCodeLine{00027\ \ \ \}}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{comment}{//\ TODO\ -\/\ cairo\_format\_stride\_for\_width()\ should\ be\ called\ before\ allocating\ the\ image\ buffer\ and\ thus\ use\ its}}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{comment}{//\ output\ to\ determine\ the\ 'width'\ of\ the\ buffer.}}
+\DoxyCodeLine{00022\ \ \ \ \ \mbox{\hyperlink{classpixelmap__editor__t_aa692f53390ce573bcc54337361efd5cf}{surface}}\ =\ Cairo::ImageSurface::create(}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char}*)\ this-\/>img.\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}},}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ Cairo::Surface::Format::ARGB32,}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ (\textcolor{keywordtype}{int})\ this-\/>img.width(),\ (\textcolor{keywordtype}{int})\ this-\/>img.height(),}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ cairo\_format\_stride\_for\_width(CAIRO\_FORMAT\_ARGB32,\ (\textcolor{keywordtype}{int})\ this-\/>img.\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}())}
+\DoxyCodeLine{00027\ \ \ \ \ );}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{classpixelmap__editor__t_a46d7c68a611e7a04d85aaa6d3ff8c4f7}{ctx}}\ =\ Cairo::Context::create(\mbox{\hyperlink{classpixelmap__editor__t_aa692f53390ce573bcc54337361efd5cf}{surface}});}
+\DoxyCodeLine{00029\ \ \ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -81,12 +83,12 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{pixelmap__editor_8h_source_l00029}{29}} of file \mbox{\hyperlink{pixelmap__editor_8h_source}{pixelmap\+\_\+editor.\+h}}.
+Definition at line \mbox{\hyperlink{pixelmap__editor_8h_source_l00031}{31}} of file \mbox{\hyperlink{pixelmap__editor_8h_source}{pixelmap\+\_\+editor.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\_editor\_t}}(*\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}})\ \{}
-\DoxyCodeLine{00030\ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \mbox{\hyperlink{classpixelmap__editor__t}{pixelmap\_editor\_t}}(*\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}})\ \{}
+\DoxyCodeLine{00032\ \ \ \}}
 
 \end{DoxyCode}
 
@@ -100,13 +102,13 @@ Definition at line \mbox{\hyperlink{pixelmap__editor_8h_source_l00029}{29}} of f
 
 
 
-Definition at line \mbox{\hyperlink{pixelmap__editor_8h_source_l00037}{37}} of file \mbox{\hyperlink{pixelmap__editor_8h_source}{pixelmap\+\_\+editor.\+h}}.
+Definition at line \mbox{\hyperlink{pixelmap__editor_8h_source_l00039}{39}} of file \mbox{\hyperlink{pixelmap__editor_8h_source}{pixelmap\+\_\+editor.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00038\ \ \ \ \ memset(\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}},\ 0,\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}()\ *\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structpixelmap__t_aa70c0fa0014f555358a2d07198b00f69}{height}}()\ *\ \textcolor{keyword}{sizeof}(pixel\_t));}
-\DoxyCodeLine{00039\ \ \ \}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00040\ \ \ \ \ memset(\mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structmd__buffer__t_a42db81e853e05dcf04b4f00840bfee30}{data}},\ 0,\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}()\ *\ \mbox{\hyperlink{classpixelmap__editor__t_a94386623cd6dedd6c82168d754426895}{img}}.\mbox{\hyperlink{structpixelmap__t_aa70c0fa0014f555358a2d07198b00f69}{height}}()\ *\ \textcolor{keyword}{sizeof}(pixel\_t));}
+\DoxyCodeLine{00041\ \ \ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -124,13 +126,13 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{pixelmap__editor_8h_source_l00033}{33}} of file \mbox{\hyperlink{pixelmap__editor_8h_source}{pixelmap\+\_\+editor.\+h}}.
+Definition at line \mbox{\hyperlink{pixelmap__editor_8h_source_l00035}{35}} of file \mbox{\hyperlink{pixelmap__editor_8h_source}{pixelmap\+\_\+editor.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classpixelmap__editor__t_a46d7c68a611e7a04d85aaa6d3ff8c4f7}{ctx}};}
-\DoxyCodeLine{00035\ \ \ \}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classpixelmap__editor__t_a46d7c68a611e7a04d85aaa6d3ff8c4f7}{ctx}};}
+\DoxyCodeLine{00037\ \ \ \}}
 
 \end{DoxyCode}
 

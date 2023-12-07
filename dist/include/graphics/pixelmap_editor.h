@@ -17,6 +17,8 @@ public:
   Cairo::RefPtr<Cairo::Context> ctx;
 public:
   explicit pixelmap_editor_t(pixelmap_t &img): img(img) {
+    // TODO - cairo_format_stride_for_width() should be called before allocating the image buffer and thus use its
+    // output to determine the 'width' of the buffer.
     surface = Cairo::ImageSurface::create(
       (unsigned char*) this->img.data,
       Cairo::Surface::Format::ARGB32,

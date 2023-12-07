@@ -56,6 +56,7 @@ struct NAME:                 \\
     explicit NAME(props_t props)    \\
       : cydui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\\
       , props(std::move(props)) { } \\
+    ~NAME() override = default;     \\
   };                         \\
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \\
   CYDUI_STATE_NAME(NAME)* state = nullptr;                    \\
@@ -84,53 +85,55 @@ Definition at line \fB29\fP of file \fBcomponent_macros\&.h\fP\&..PP
 41     explicit NAME(props_t props)    \\
 42       : cydui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\\
 43       , props(std::move(props)) { } \\
-44   };                         \\
-45 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \\
-46   CYDUI_STATE_NAME(NAME)* state = nullptr;                    \\
-47   NAME::props_t* props = nullptr;   \\
-48   attrs_component<NAME>* attrs = nullptr;                     \\
-49   logging::logger log{\&.name = #NAME};                         \\
-50 };                           \\
-51 struct CYDUI_EV_HANDLER_NAME(NAME)  \\
-52   : public cydui::components::event_handler_t,  \\
-53     public CYDUI_EV_HANDLER_DATA_NAME(NAME)
+44     ~NAME() override = default;     \\
+45   };                         \\
+46 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \\
+47   CYDUI_STATE_NAME(NAME)* state = nullptr;                    \\
+48   NAME::props_t* props = nullptr;   \\
+49   attrs_component<NAME>* attrs = nullptr;                     \\
+50   logging::logger log{\&.name = #NAME};                         \\
+51 };                           \\
+52 struct CYDUI_EV_HANDLER_NAME(NAME)  \\
+53   : public cydui::components::event_handler_t,  \\
+54     public CYDUI_EV_HANDLER_DATA_NAME(NAME)
 .fi
 
 .SS "#define COMPONENT_TEMPLATE(NAME,  \&.\&.\&.)"
 
 .PP
-Definition at line \fB65\fP of file \fBcomponent_macros\&.h\fP\&..PP
+Definition at line \fB66\fP of file \fBcomponent_macros\&.h\fP\&..PP
 .nf
-69            :                          \\
-70   public cydui::components::component_t<          \\
-71     CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT, \\
-72     NAME SET_COMPONENT_TEMPLATE_SHORT \\
-73   > {                                 \\
-74     CYDUI_COMPONENT_METADATA(NAME)    \\
-75     using state_t = CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \\
-76     using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \\
-77     struct props_t                    \\
-78       __VA_ARGS__                     \\
-79     props;                            \\
-80     NAME() = default;                 \\
-81     explicit NAME(props_t props)      \\
-82       : cydui::components::component_t<           \\
-83         CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT,        \\
-84         NAME SET_COMPONENT_TEMPLATE_SHORT                     \\
-85       >()                             \\
-86       , props(std::move(props)) { }   \\
-87 };                                    \\
-88 template SET_COMPONENT_TEMPLATE_DEFAULT \\
-89 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \\
-90   CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT* state = nullptr;  \\
-91   NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = nullptr;\\
-92   attrs_component<NAME SET_COMPONENT_TEMPLATE_SHORT>* attrs = nullptr;   \\
-93   logging::logger log{\&.name = #NAME}; \\
-94 };                                    \\
-95 template SET_COMPONENT_TEMPLATE       \\
-96 struct CYDUI_EV_HANDLER_NAME(NAME)    \\
-97   : public cydui::components::event_handler_t,    \\
-98     public CYDUI_EV_HANDLER_DATA_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT
+70            :                          \\
+71   public cydui::components::component_t<          \\
+72     CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT, \\
+73     NAME SET_COMPONENT_TEMPLATE_SHORT \\
+74   > {                                 \\
+75     CYDUI_COMPONENT_METADATA(NAME)    \\
+76     using state_t = CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \\
+77     using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \\
+78     struct props_t                    \\
+79       __VA_ARGS__                     \\
+80     props;                            \\
+81     NAME() = default;                 \\
+82     explicit NAME(props_t props)      \\
+83       : cydui::components::component_t<           \\
+84         CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT,        \\
+85         NAME SET_COMPONENT_TEMPLATE_SHORT                     \\
+86       >()                             \\
+87       , props(std::move(props)) { }   \\
+88     ~NAME() override = default;       \\
+89 };                                    \\
+90 template SET_COMPONENT_TEMPLATE_DEFAULT \\
+91 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \\
+92   CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT* state = nullptr;  \\
+93   NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = nullptr;\\
+94   attrs_component<NAME SET_COMPONENT_TEMPLATE_SHORT>* attrs = nullptr;   \\
+95   logging::logger log{\&.name = #NAME}; \\
+96 };                                    \\
+97 template SET_COMPONENT_TEMPLATE       \\
+98 struct CYDUI_EV_HANDLER_NAME(NAME)    \\
+99   : public cydui::components::event_handler_t,    \\
+100     public CYDUI_EV_HANDLER_DATA_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT
 .fi
 
 .SS "#define CYDUI_COMPONENT_METADATA(NAME_)"
@@ -163,7 +166,7 @@ Definition at line \fB9\fP of file \fBcomponent_macros\&.h\fP\&.
 .SS "#define SET_COMPONENT_TEMPLATE_DEFAULT   SET_COMPONENT_TEMPLATE"
 
 .PP
-Definition at line \fB63\fP of file \fBcomponent_macros\&.h\fP\&.
+Definition at line \fB64\fP of file \fBcomponent_macros\&.h\fP\&.
 .SS "#define STATE(NAME)   struct \fBCYDUI_STATE_NAME\fP(NAME): public \fBcydui::components::component_state_t\fP"
 
 .PP
@@ -180,9 +183,9 @@ struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
 .fi
 
 .PP
-Definition at line \fB57\fP of file \fBcomponent_macros\&.h\fP\&..PP
+Definition at line \fB58\fP of file \fBcomponent_macros\&.h\fP\&..PP
 .nf
-59                              : public cydui::components::component_state_t
+60                              : public cydui::components::component_state_t
 .fi
 
 .SH "Author"

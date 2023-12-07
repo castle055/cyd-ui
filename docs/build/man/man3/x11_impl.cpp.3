@@ -105,106 +105,106 @@ Definition at line \fB30\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .SS "std::pair< int, int > get_image_size (\fBcydui::graphics::images::image_t\fP * img)"
 
 .PP
-Definition at line \fB282\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB285\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-284   {
-285   imgs::img_data data = imgs::read_jpg(img\->path);
-286   return {data\&.width, data\&.height};
-287 }
+287   {
+288   imgs::img_data data = imgs::read_jpg(img\->path);
+289   return {data\&.width, data\&.height};
+290 }
 .fi
 
 .SS "std::pair< int, int > get_text_size (\fBfont::Font\fP * font, const \fBstr\fP & text)"
 
 .PP
-Definition at line \fB257\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB260\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-259   {
-260   str font_spec = to_pattern(font);
-261   XftFont* xfont;
-262   if (cached_fonts\&.contains(font_spec)) {
-263     xfont = cached_fonts[font_spec];
-264   } else {
-265     if (!(xfont = XftFontOpenName(
-266       state::get_dpy(), state::get_screen(), font_spec\&.c_str()))) {
-267       log_task\&.error("Cannot load font from name %s", font_spec\&.c_str());
-268       return {};
-269     }
-270     cached_fonts[font_spec] = xfont;
-271   }
-272   XGlyphInfo x_glyph_info;
-273   XftTextExtentsUtf8(state::get_dpy(),
-274     xfont,
-275     (XftChar8*) text\&.c_str(),
-276     (int) text\&.size(),
-277     &x_glyph_info);
-278   //XftFontClose(state::get_dpy(), xfont);
-279   return {x_glyph_info\&.xOff, x_glyph_info\&.y};
-280 }
+262   {
+263   str font_spec = to_pattern(font);
+264   XftFont* xfont;
+265   if (cached_fonts\&.contains(font_spec)) {
+266     xfont = cached_fonts[font_spec];
+267   } else {
+268     if (!(xfont = XftFontOpenName(
+269       state::get_dpy(), state::get_screen(), font_spec\&.c_str()))) {
+270       log_task\&.error("Cannot load font from name %s", font_spec\&.c_str());
+271       return {};
+272     }
+273     cached_fonts[font_spec] = xfont;
+274   }
+275   XGlyphInfo x_glyph_info;
+276   XftTextExtentsUtf8(state::get_dpy(),
+277     xfont,
+278     (XftChar8*) text\&.c_str(),
+279     (int) text\&.size(),
+280     &x_glyph_info);
+281   //XftFontClose(state::get_dpy(), xfont);
+282   return {x_glyph_info\&.xOff, x_glyph_info\&.y};
+283 }
 .fi
 
 .SS "static \fBwindow_font\fP load_font (\fBcydui::graphics::window_t\fP * win, \fBfont::Font\fP * font)\fC [static]\fP"
 
 .PP
-Definition at line \fB185\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB188\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-187   {
-188   str font_spec = to_pattern(font);
-189   if (win\->loaded_fonts\&.contains(font_spec))
-190     return win\->loaded_fonts[font_spec];
-191   XftFont* xfont;
-192   FcPattern* pattern;
-193   
-194   if (!(xfont = XftFontOpenName(
-195     state::get_dpy(), state::get_screen(), font_spec\&.c_str()))) {
-196     log_task\&.error("Cannot load font from name %s", font_spec\&.c_str());
-197     return {};
-198   }
-199   if (!(pattern = FcNameParse((FcChar8*) (font_spec\&.c_str())))) {
-200     log_task\&.error("Cannot parse font name to pattern: %s", font_spec\&.c_str());
-201     return {};
-202   }
-203   
-204   auto f = window_font {\&.xfont = xfont, \&.pattern = pattern};
-205   win\->loaded_fonts[font_spec] = f;
-206   return f;
-207 }
+190   {
+191   str font_spec = to_pattern(font);
+192   if (win\->loaded_fonts\&.contains(font_spec))
+193     return win\->loaded_fonts[font_spec];
+194   XftFont* xfont;
+195   FcPattern* pattern;
+196   
+197   if (!(xfont = XftFontOpenName(
+198     state::get_dpy(), state::get_screen(), font_spec\&.c_str()))) {
+199     log_task\&.error("Cannot load font from name %s", font_spec\&.c_str());
+200     return {};
+201   }
+202   if (!(pattern = FcNameParse((FcChar8*) (font_spec\&.c_str())))) {
+203     log_task\&.error("Cannot parse font name to pattern: %s", font_spec\&.c_str());
+204     return {};
+205   }
+206   
+207   auto f = window_font {\&.xfont = xfont, \&.pattern = pattern};
+208   win\->loaded_fonts[font_spec] = f;
+209   return f;
+210 }
 .fi
 
 .SS "static \fBwindow_image\fP load_image (\fBcydui::graphics::window_t\fP * win, \fBcydui::graphics::images::image_t\fP * img)\fC [static]\fP"
 
 .PP
-Definition at line \fB215\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB218\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-217   {
-218   if (win\->loaded_images\&.contains(img\->path))
-219     return win\->loaded_images[img\->path];
-220   
-221   XImage* image = nullptr;
-222   
-223   //if (img\->path\&.ends_with("\&.jpg")
-224   //  || img\->path\&.ends_with("jpeg")) {
-225   imgs::img_data data = imgs::read_jpg(img\->path);
-226   
-227   image = XCreateImage(state::get_dpy(),
-228     CopyFromParent,
-229     DisplayPlanes(state::get_dpy(), state::get_screen()),
-230     ZPixmap,
-231     0,
-232     data\&.data,
-233     data\&.width,
-234     data\&.height,
-235     8,
-236     data\&.width * data\&.components);
-237   //log_task\&.info("STATUS = %d", XInitImage(image));
-238   //}
-239   
-240   //
-241   //auto f = window_font {\&.xfont = xfont, \&.pattern = pattern};
-242   //win\->loaded_fonts[font_spec] = f;
-243   auto i = window_image {image};
-244   win\->loaded_images[img\->path] = i;
-245   return i;
-246 }
+220   {
+221   if (win\->loaded_images\&.contains(img\->path))
+222     return win\->loaded_images[img\->path];
+223   
+224   XImage* image = nullptr;
+225   
+226   //if (img\->path\&.ends_with("\&.jpg")
+227   //  || img\->path\&.ends_with("jpeg")) {
+228   imgs::img_data data = imgs::read_jpg(img\->path);
+229   
+230   image = XCreateImage(state::get_dpy(),
+231     CopyFromParent,
+232     DisplayPlanes(state::get_dpy(), state::get_screen()),
+233     ZPixmap,
+234     0,
+235     data\&.data,
+236     data\&.width,
+237     data\&.height,
+238     8,
+239     data\&.width * data\&.components);
+240   //log_task\&.info("STATUS = %d", XInitImage(image));
+241   //}
+242   
+243   //
+244   //auto f = window_font {\&.xfont = xfont, \&.pattern = pattern};
+245   //win\->loaded_fonts[font_spec] = f;
+246   auto i = window_image {image};
+247   win\->loaded_images[img\->path] = i;
+248   return i;
+249 }
 .fi
 
 .SS "char * log_error_code (int err)"
@@ -222,41 +222,41 @@ Definition at line \fB20\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .SS "static \fBstr\fP to_pattern (\fBfont::Font\fP * font)\fC [static]\fP"
 
 .PP
-Definition at line \fB171\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB174\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-171                                       {
-172   str str;
-173   str\&.append(font\->name + ":");
-174   str\&.append("size=" + std::to_string(font\->size) + ":");
-175   str\&.append("antialias=");
-176   str\&.append((font\->antialias ? "true" : "false"));
-177   str\&.append(":");
-178   str\&.append("autohint=");
-179   str\&.append((font\->autohint ? "true" : "false"));
-180   //str\&.append(":");
-181   
-182   return str;
-183 }
+174                                       {
+175   str str;
+176   str\&.append(font\->name + ":");
+177   str\&.append("size=" + std::to_string(font\->size) + ":");
+178   str\&.append("antialias=");
+179   str\&.append((font\->antialias ? "true" : "false"));
+180   str\&.append(":");
+181   str\&.append("autohint=");
+182   str\&.append((font\->autohint ? "true" : "false"));
+183   //str\&.append(":");
+184   
+185   return str;
+186 }
 .fi
 
 .SS "static void unload_font (\fBcydui::graphics::window_t\fP * win, \fBfont::Font\fP * font)\fC [static]\fP"
 
 .PP
-Definition at line \fB209\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB212\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-211   {
-212   // TODO \- Implement
-213 }
+214   {
+215   // TODO \- Implement
+216 }
 .fi
 
 .SS "static void unload_image (\fBcydui::graphics::window_t\fP * win, \fBcydui::graphics::images::image_t\fP * img)\fC [static]\fP"
 
 .PP
-Definition at line \fB248\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB251\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-251   {
-252   // TODO \- Implement
-253 }
+254   {
+255   // TODO \- Implement
+256 }
 .fi
 
 .SH "Variable Documentation"
@@ -264,7 +264,7 @@ Definition at line \fB248\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .SS "std::unordered_map<\fBstr\fP, XftFont*> cached_fonts\fC [static]\fP"
 
 .PP
-Definition at line \fB255\fP of file \fBx11_impl\&.cpp\fP\&.
+Definition at line \fB258\fP of file \fBx11_impl\&.cpp\fP\&.
 .SS "const \fBlogging::logger\fP log_task = {\&.name = 'X11_IMPL', \&.on = true}"
 
 .PP

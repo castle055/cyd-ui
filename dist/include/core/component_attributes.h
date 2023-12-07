@@ -7,11 +7,14 @@
 
 #include "dimensions.hpp"
 
-struct attribute_i { };
+struct attribute_i {
+  virtual ~attribute_i() = default;
+};
 
 #define COMPONENT_ATTRIBUTE(TYPE, NAME, DEFAULT) \
     template<typename E>                         \
     struct attr_##NAME: public attribute_i {     \
+      ~attr_##NAME() override = default;         \
       inline E &NAME(auto& _##NAME##_) {         \
         this->_##NAME = _##NAME##_;              \
         return *(E*)this;                        \
@@ -26,6 +29,7 @@ struct attribute_i { };
 #define COMPONENT_ATTRIBUTE_W_MONITOR(TYPE, NAME, DEFAULT) \
     template<typename E>                                   \
     struct attr_##NAME: public attribute_i {               \
+      ~attr_##NAME() override = default;                   \
       inline E &NAME(auto& _##NAME##_) {                   \
         this->_##NAME = _##NAME##_;                        \
         this->_##NAME##_has_changed = true;                \

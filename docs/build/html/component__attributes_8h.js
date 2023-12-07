@@ -1,6 +1,6 @@
 var component__attributes_8h =
 [
-    [ "attribute_i", "structattribute__i.html", null ],
+    [ "attribute_i", "structattribute__i.html", "structattribute__i" ],
     [ "attr_x< E >", "structattr__x.html", "structattr__x" ],
     [ "attr_y< E >", "structattr__y.html", "structattr__y" ],
     [ "attr_w< E >", "structattr__w.html", "structattr__w" ],

@@ -7,6 +7,7 @@
 
 #include <unordered_map>
 #include <string>
+#include <memory>
 
 #include "component_types.h"
 

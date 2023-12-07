@@ -344,7 +344,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     if (it.data->win != get_id(win->win_ref))
       return;
     auto _pev = this->win->profiling_ctx.scope_event("Resize");
-    log_lay.debug("RESIZE w=%d, h=%d", it.data->w, it.data->h);
+    log_lay.debug("RESIZE: w=%d, h=%d", it.data->w, it.data->h);
     
     auto dim = root->get_dimensional_relations();
     dim.w = it.data->w;

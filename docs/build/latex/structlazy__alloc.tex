@@ -9,18 +9,18 @@
 \item 
 \mbox{\hyperlink{structlazy__alloc_ad98c836c0c9f2649f4b8cbc4a1d6790a}{lazy\+\_\+alloc}} (Args... args)
 \item 
-\mbox{\hyperlink{structlazy__alloc_a9c1f74b2467ff53bfd607299105265b5}{\texorpdfstring{$\sim$}{\string~}lazy\+\_\+alloc}} ()
+\mbox{\hyperlink{structlazy__alloc_ac0f97d645dea91a0489b3b37b31b6220}{\texorpdfstring{$\sim$}{\string~}lazy\+\_\+alloc}} ()=default
 \item 
 \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structlazy__alloc_a564d9dda62f95e2bd83c775e317a68ae}{operator-\/$>$}} ()
 \item 
 \mbox{\hyperlink{structlazy__alloc_a8e68e31f1296f1276f016b219803bc94}{operator T\texorpdfstring{$\ast$}{*}}} ()
 \end{DoxyCompactItemize}
-\doxysubsubsection*{Private Attributes}
+\doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-std\+::function$<$ void(\mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}} \&)$>$ \mbox{\hyperlink{structlazy__alloc_acad7e139eb64855825e75a16f5d22717}{init}}
+std\+::function$<$ void(\mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \texorpdfstring{$\ast$}{*})$>$ \mbox{\hyperlink{structlazy__alloc_a1b7b433b379cf772d1169850e4bff9be}{init}}
 \item 
-\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}} = nullptr
+std\+::shared\+\_\+ptr$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} $>$ \mbox{\hyperlink{structlazy__alloc_a3afeda77c962bde824acfa07142441ab}{val}} = nullptr
 \end{DoxyCompactItemize}
 
 
@@ -29,7 +29,7 @@ std\+::function$<$ void(\mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}} \&
 struct lazy\+\_\+alloc$<$ T, Args $>$}
 
 
-Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00011}{11}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
+Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00012}{12}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
 
 
 
@@ -43,35 +43,24 @@ Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00011}{11}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00012}{12}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
+Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00013}{13}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00013\ \ \ \ \ \mbox{\hyperlink{structlazy__alloc_acad7e139eb64855825e75a16f5d22717}{init}}\ =\ [args...](\mbox{\hyperlink{structlazy__alloc}{lazy\_alloc}}\ \&self)\ \{}
-\DoxyCodeLine{00014\ \ \ \ \ \ \ self.val\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ \{args...\};}
-\DoxyCodeLine{00015\ \ \ \ \ \};}
-\DoxyCodeLine{00016\ \ \ \}}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \mbox{\hyperlink{structlazy__alloc_a1b7b433b379cf772d1169850e4bff9be}{init}}\ =\ [args...](\mbox{\hyperlink{structlazy__alloc}{lazy\_alloc<T>}}*\ self)\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ self-\/>val\ =\ std::make\_shared<T>(args...);}
+\DoxyCodeLine{00016\ \ \ \ \ \};}
+\DoxyCodeLine{00017\ \ \ \}}
 
 \end{DoxyCode}
-\Hypertarget{structlazy__alloc_a9c1f74b2467ff53bfd607299105265b5}\label{structlazy__alloc_a9c1f74b2467ff53bfd607299105265b5} 
+\Hypertarget{structlazy__alloc_ac0f97d645dea91a0489b3b37b31b6220}\label{structlazy__alloc_ac0f97d645dea91a0489b3b37b31b6220} 
 \index{lazy\_alloc$<$ T, Args $>$@{lazy\_alloc$<$ T, Args $>$}!````~lazy\_alloc@{\texorpdfstring{$\sim$}{\string~}lazy\_alloc}}
 \index{````~lazy\_alloc@{\texorpdfstring{$\sim$}{\string~}lazy\_alloc}!lazy\_alloc$<$ T, Args $>$@{lazy\_alloc$<$ T, Args $>$}}
 \doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}lazy\_alloc()}{\string~lazy\_alloc()}}
 {\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} , typename ... Args$>$ \\
-\mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}, Args $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+\mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}, Args $>$\+::\texorpdfstring{$\sim$}{\string~}\mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
 
-
-
-Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00017}{17}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
-
-
-\begin{DoxyCode}{0}
-\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{delete}\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}};}
-\DoxyCodeLine{00019\ \ \ \}}
-
-\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -84,16 +73,16 @@ Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00017}{17}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00028}{28}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
+Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00027}{27}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ ==\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}})\ \{}
-\DoxyCodeLine{00030\ \ \ \ \ \ \ \mbox{\hyperlink{structlazy__alloc_acad7e139eb64855825e75a16f5d22717}{init}}(*\textcolor{keyword}{this});}
-\DoxyCodeLine{00031\ \ \ \ \ \}}
-\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}};}
-\DoxyCodeLine{00033\ \ \ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ ==\ \mbox{\hyperlink{structlazy__alloc_a3afeda77c962bde824acfa07142441ab}{val}})\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \mbox{\hyperlink{structlazy__alloc_a1b7b433b379cf772d1169850e4bff9be}{init}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structlazy__alloc_a3afeda77c962bde824acfa07142441ab}{val}}.get();}
+\DoxyCodeLine{00032\ \ \ \}}
 
 \end{DoxyCode}
 \Hypertarget{structlazy__alloc_a564d9dda62f95e2bd83c775e317a68ae}\label{structlazy__alloc_a564d9dda62f95e2bd83c775e317a68ae} 
@@ -105,56 +94,56 @@ Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00028}{28}} of file \
 
 
 
-Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00021}{21}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
+Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00020}{20}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ ==\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}})\ \{}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \mbox{\hyperlink{structlazy__alloc_acad7e139eb64855825e75a16f5d22717}{init}}(*\textcolor{keyword}{this});}
-\DoxyCodeLine{00024\ \ \ \ \ \}}
-\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}{val}};}
-\DoxyCodeLine{00026\ \ \ \}}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{nullptr}\ ==\ \mbox{\hyperlink{structlazy__alloc_a3afeda77c962bde824acfa07142441ab}{val}})\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \mbox{\hyperlink{structlazy__alloc_a1b7b433b379cf772d1169850e4bff9be}{init}}(\textcolor{keyword}{this});}
+\DoxyCodeLine{00023\ \ \ \ \ \}}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structlazy__alloc_a3afeda77c962bde824acfa07142441ab}{val}}.get();}
+\DoxyCodeLine{00025\ \ \ \}}
 
 \end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
-\Hypertarget{structlazy__alloc_acad7e139eb64855825e75a16f5d22717}\label{structlazy__alloc_acad7e139eb64855825e75a16f5d22717} 
+\Hypertarget{structlazy__alloc_a1b7b433b379cf772d1169850e4bff9be}\label{structlazy__alloc_a1b7b433b379cf772d1169850e4bff9be} 
 \index{lazy\_alloc$<$ T, Args $>$@{lazy\_alloc$<$ T, Args $>$}!init@{init}}
 \index{init@{init}!lazy\_alloc$<$ T, Args $>$@{lazy\_alloc$<$ T, Args $>$}}
 \doxysubsubsection{\texorpdfstring{init}{init}}
 {\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} , typename ... Args$>$ \\
-std\+::function$<$void(\mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}} \&)$>$ \mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}, Args $>$\+::init\hspace{0.3cm}{\ttfamily [private]}}
+std\+::function$<$void(\mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}}$<$\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}$>$\texorpdfstring{$\ast$}{*})$>$ \mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}, Args $>$\+::init}
 
 {\bfseries Initial value\+:}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{=\ [](\mbox{\hyperlink{structlazy__alloc}{lazy\_alloc}}\ \&self)\ \{}
-\DoxyCodeLine{\ \ \ \ self.val\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ \{\};}
+\DoxyCodeLine{=\ [](\mbox{\hyperlink{structlazy__alloc}{lazy\_alloc<T>}}*\ self)\ \{}
+\DoxyCodeLine{\ \ \ \ self-\/>val\ =\ std::make\_shared<T>();}
 \DoxyCodeLine{\ \ \}}
 
 \end{DoxyCode}
 
 
-Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00035}{35}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
+Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00034}{34}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00036\ \ \ \ \ self.val\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\ \{\};}
-\DoxyCodeLine{00037\ \ \ \};}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00035\ \ \ \ \ self-\/>val\ =\ std::make\_shared<T>();}
+\DoxyCodeLine{00036\ \ \ \};}
 
 \end{DoxyCode}
-\Hypertarget{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651}\label{structlazy__alloc_a9d25ebb80590d2b64fd9b6edf7728651} 
+\Hypertarget{structlazy__alloc_a3afeda77c962bde824acfa07142441ab}\label{structlazy__alloc_a3afeda77c962bde824acfa07142441ab} 
 \index{lazy\_alloc$<$ T, Args $>$@{lazy\_alloc$<$ T, Args $>$}!val@{val}}
 \index{val@{val}!lazy\_alloc$<$ T, Args $>$@{lazy\_alloc$<$ T, Args $>$}}
 \doxysubsubsection{\texorpdfstring{val}{val}}
 {\footnotesize\ttfamily template$<$typename \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}} , typename ... Args$>$ \\
-\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}, Args $>$\+::val = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+std\+::shared\+\_\+ptr$<$\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}$>$ \mbox{\hyperlink{structlazy__alloc}{lazy\+\_\+alloc}}$<$ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3}{T}}, Args $>$\+::val = nullptr}
 
 
 
-Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00038}{38}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
+Definition at line \mbox{\hyperlink{lazy__alloc_8h_source_l00037}{37}} of file \mbox{\hyperlink{lazy__alloc_8h_source}{lazy\+\_\+alloc.\+h}}.
 
 
 

@@ -16,7 +16,7 @@ var include_2events_2events_8hpp =
       [ "CONSUMED", "include_2events_2events_8hpp.html#a835f7ecff6753ba3e359dc9958ef7944af98104656717ce9bad1e4058b1a20520", null ]
     ] ],
     [ "emit", "include_2events_2events_8hpp.html#a64db03d0513c4d66801257e90c58b3a6", null ],
-    [ "emit_raw", "include_2events_2events_8hpp.html#a0dd46403db28d66d08ff9f0c61610fe7", null ],
+    [ "emit_raw", "include_2events_2events_8hpp.html#a659942380bb725ffe2b3ce9b159810aa", null ],
     [ "emit_raw", "include_2events_2events_8hpp.html#abfd3c7106abd299bacc674ec3865de6a", null ],
     [ "on_event", "include_2events_2events_8hpp.html#af912b8c268e59712bb10aa38c681be41", null ],
     [ "on_event_raw", "include_2events_2events_8hpp.html#a1fb9ac28468b1aa9a3c860745c0b95cd", null ],

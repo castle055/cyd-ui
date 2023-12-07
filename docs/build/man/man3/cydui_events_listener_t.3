@@ -52,28 +52,28 @@ cydui::events::listener_t
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line \fB155\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB162\fP of file \fBevents\&.hpp\fP\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "cydui::events::listener_t::listener_t ()\fC [inline]\fP"
 
 .PP
-Definition at line \fB160\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB167\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-160                    {
-161         ID = 0;
-162         active = false;
-163       }
+167                    {
+168         ID = 0;
+169         active = false;
+170       }
 .fi
 
 .SS "cydui::events::listener_t::listener_t (\fBstr\fP type, \fBListener\fP c)\fC [inline]\fP, \fC [explicit]\fP"
 
 .PP
-Definition at line \fB165\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB172\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-165                                                 : event_type(std::move(type)), func(new Listener {std::move(c)}) {
-166         ID = (long) new u8;
-167       }
+172                                                 : event_type(std::move(type)), func(new Listener {std::move(c)}) {
+173         ID = (long) new u8;
+174       }
 .fi
 
 .SH "Member Function Documentation"
@@ -81,48 +81,48 @@ Definition at line \fB165\fP of file \fBevents\&.hpp\fP\&..PP
 .SS "long cydui::events::listener_t::get_id () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB173\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB180\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-173                                         {
-174         return ID;
-175       }
+180                                         {
+181         return ID;
+182       }
 .fi
 
 .SS "bool cydui::events::listener_t::is_active () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB189\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB196\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-189                              {
-190         return active;
-191       }
+196                              {
+197         return active;
+198       }
 .fi
 
 .SS "void cydui::events::listener_t::operator() (\fBEvent\fP * ev) const\fC [inline]\fP"
 
 .PP
-Definition at line \fB193\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB200\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-193                                        {
-194         if (nullptr != func) {
-195           func\->operator()(ev);
-196         }
-197       }
+200                                        {
+201         if (nullptr != func) {
+202           func\->operator()(ev);
+203         }
+204       }
 .fi
 
 .SS "void cydui::events::listener_t::remove ()\fC [inline]\fP"
 
 .PP
-Definition at line \fB180\fP of file \fBevents\&.hpp\fP\&..PP
+Definition at line \fB187\fP of file \fBevents\&.hpp\fP\&..PP
 .nf
-180                     {
-181         cydui::events::remove_listener(event_type, *this);
-182         delete (u8*) ID;
-183         delete func;
-184         func = nullptr;
-185         ID = 0;
-186         active = false;
-187       }
+187                     {
+188         cydui::events::remove_listener(event_type, *this);
+189         delete (u8*) ID;
+190         delete func;
+191         func = nullptr;
+192         ID = 0;
+193         active = false;
+194       }
 .fi
 
 .SH "Member Data Documentation"
@@ -130,19 +130,19 @@ Definition at line \fB180\fP of file \fBevents\&.hpp\fP\&..PP
 .SS "bool cydui::events::listener_t::active = true\fC [private]\fP"
 
 .PP
-Definition at line \fB158\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB165\fP of file \fBevents\&.hpp\fP\&.
 .SS "\fBstr\fP cydui::events::listener_t::event_type"
 
 .PP
-Definition at line \fB177\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB184\fP of file \fBevents\&.hpp\fP\&.
 .SS "\fBListener\fP* cydui::events::listener_t::func = nullptr"
 
 .PP
-Definition at line \fB178\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB185\fP of file \fBevents\&.hpp\fP\&.
 .SS "long cydui::events::listener_t::ID\fC [private]\fP"
 
 .PP
-Definition at line \fB157\fP of file \fBevents\&.hpp\fP\&.
+Definition at line \fB164\fP of file \fBevents\&.hpp\fP\&.
 
 .SH "Author"
 .PP 

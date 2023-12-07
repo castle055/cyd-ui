@@ -6,36 +6,35 @@
 #define CYD_UI_LAZY_ALLOC_H
 
 #include <functional>
+#include <memory>
 
 template<typename T, typename ...Args>
 struct lazy_alloc {
   explicit lazy_alloc(Args... args) {
-    init = [args...](lazy_alloc &self) {
-      self.val = new T {args...};
+    init = [args...](lazy_alloc<T>* self) {
+      self->val = std::make_shared<T>(args...);
     };
   }
-  ~lazy_alloc() {
-    delete val;
-  }
+  ~lazy_alloc() = default;
   
   T* operator->() {
     if (nullptr == val) {
-      init(*this);
+      init(this);
     }
-    return val;
+    return val.get();
   }
   
   operator T*() {
     if (nullptr == val) {
-      init(*this);
+      init(this);
     }
-    return val;
+    return val.get();
   }
-private:
-  std::function<void(lazy_alloc &)> init = [](lazy_alloc &self) {
-    self.val = new T {};
+  
+  std::function<void(lazy_alloc<T>*)> init = [](lazy_alloc<T>* self) {
+    self->val = std::make_shared<T>();
   };
-  T* val = nullptr;
+  std::shared_ptr<T> val = nullptr;
 };
 
 #endif //CYD_UI_LAZY_ALLOC_H

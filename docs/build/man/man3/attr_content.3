@@ -22,6 +22,13 @@ Inherited by \fBattrs_component< ThreadTimeline >\fP\&.
 .RI "\fBE\fP & \fBoperator()\fP (auto &_content_)"
 .br
 .in -1c
+
+Public Member Functions inherited from \fBattribute_i\fP
+.in +1c
+.ti -1c
+.RI "virtual \fB~attribute_i\fP ()=default"
+.br
+.in -1c
 .SS "Public Attributes"
 
 .in +1c
@@ -36,29 +43,29 @@ Inherited by \fBattrs_component< ThreadTimeline >\fP\&.
 .br
 struct attr_content< E >"
 .PP
-Definition at line \fB61\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB65\fP of file \fBcomponent_attributes\&.h\fP\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "template<typename \fBE\fP > \fBE\fP & \fBattr_content\fP< \fBE\fP >::operator() (auto && _content_)\fC [inline]\fP"
 
 .PP
-Definition at line \fB62\fP of file \fBcomponent_attributes\&.h\fP\&..PP
+Definition at line \fB66\fP of file \fBcomponent_attributes\&.h\fP\&..PP
 .nf
-62                                          {
-63     this\->_content = _content_;
-64     return *(E*) this;
-65   }
+66                                          {
+67     this\->_content = _content_;
+68     return *(E*) this;
+69   }
 .fi
 
 .SS "template<typename \fBE\fP > \fBE\fP & \fBattr_content\fP< \fBE\fP >::operator() (auto & _content_)\fC [inline]\fP"
 
 .PP
-Definition at line \fB66\fP of file \fBcomponent_attributes\&.h\fP\&..PP
+Definition at line \fB70\fP of file \fBcomponent_attributes\&.h\fP\&..PP
 .nf
-66                                         {
-67     this\->_content = _content_;
-68     return *(E*) this;
-69   }
+70                                         {
+71     this\->_content = _content_;
+72     return *(E*) this;
+73   }
 .fi
 
 .SH "Member Data Documentation"
@@ -66,9 +73,9 @@ Definition at line \fB66\fP of file \fBcomponent_attributes\&.h\fP\&..PP
 .SS "template<typename \fBE\fP > std::function<\fBcontent\fP()> \fBattr_content\fP< \fBE\fP >::_content = [] \-> \fBcontent\fP {return {};}"
 
 .PP
-Definition at line \fB70\fP of file \fBcomponent_attributes\&.h\fP\&..PP
+Definition at line \fB74\fP of file \fBcomponent_attributes\&.h\fP\&..PP
 .nf
-70 {return {};};
+74 {return {};};
 .fi
 
 

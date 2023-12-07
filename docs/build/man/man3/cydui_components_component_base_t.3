@@ -14,7 +14,7 @@ Inherited by \fBcydui::components::component_t< ThreadTimelineEventHandler, Thre
 
 .in +1c
 .ti -1c
-.RI "virtual \fB~component_base_t\fP ()"
+.RI "virtual \fB~component_base_t\fP ()=default"
 .br
 .ti -1c
 .RI "virtual void \fBconfigure_event_handler\fP ()=0"
@@ -72,35 +72,24 @@ Inherited by \fBcydui::components::component_t< ThreadTimelineEventHandler, Thre
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line \fB74\fP of file \fBcomponent\&.h\fP\&.
+Definition at line \fB75\fP of file \fBcomponent\&.h\fP\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
-.SS "virtual cydui::components::component_base_t::~component_base_t ()\fC [inline]\fP, \fC [virtual]\fP"
-
-.PP
-Definition at line \fB81\fP of file \fBcomponent\&.h\fP\&..PP
-.nf
-81                                   {
-82         clear_subscribed_listeners();
-83         if (state\&.has_value()) {
-84           state\&.value()\->component_instance = std::nullopt;
-85         }
-86       }
-.fi
+.SS "virtual cydui::components::component_base_t::~component_base_t ()\fC [virtual]\fP, \fC [default]\fP"
 
 .SH "Member Function Documentation"
 .PP 
 .SS "void cydui::components::component_base_t::add_event_listeners (const std::unordered_map< std::string, event_handler_t::listener_data_t > & listeners)\fC [inline]\fP, \fC [protected]\fP"
 
 .PP
-Definition at line \fB104\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB106\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-104                                                                                                              {
-105         for (auto &l: listeners) {
-106           auto &[ev_type, handler] = l;
-107           subscribed_listeners\&.push_back(cydui::events::on_event_raw(ev_type, handler\&.handler));
-108         }
-109       }
+106                                                                                                              {
+107         for (auto &l: listeners) {
+108           auto &[ev_type, handler] = l;
+109           subscribed_listeners\&.push_back(cydui::events::on_event_raw(ev_type, handler\&.handler));
+110         }
+111       }
 .fi
 
 .SS "virtual void cydui::components::component_base_t::clear_children ()\fC [pure virtual]\fP"
@@ -110,15 +99,15 @@ Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::com
 .SS "void cydui::components::component_base_t::clear_subscribed_listeners ()\fC [inline]\fP, \fC [protected]\fP"
 
 .PP
-Definition at line \fB110\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB112\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-110                                         {
-111         for (auto &item: subscribed_listeners) {
-112           item\->remove();
-113           delete item;
-114         }
-115         subscribed_listeners\&.clear();
-116       }
+112                                         {
+113         for (auto &item: subscribed_listeners) {
+114           item\->remove();
+115           delete item;
+116         }
+117         subscribed_listeners\&.clear();
+118       }
 .fi
 
 .SS "virtual void cydui::components::component_base_t::configure_event_handler ()\fC [pure virtual]\fP"
@@ -158,25 +147,25 @@ Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::com
 .SS "std::vector<\fBcomponent_base_t\fP*> cydui::components::component_base_t::children {}"
 
 .PP
-Definition at line \fB77\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB78\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-77 {};
+78 {};
 .fi
 
 .SS "std::optional<\fBcomponent_base_t\fP*> cydui::components::component_base_t::parent = std::nullopt"
 
 .PP
-Definition at line \fB76\fP of file \fBcomponent\&.h\fP\&.
+Definition at line \fB77\fP of file \fBcomponent\&.h\fP\&.
 .SS "std::optional<\fBcomponent_state_t\fP*> cydui::components::component_base_t::state = std::nullopt"
 
 .PP
-Definition at line \fB75\fP of file \fBcomponent\&.h\fP\&.
+Definition at line \fB76\fP of file \fBcomponent\&.h\fP\&.
 .SS "std::vector<\fBcydui::events::listener_t\fP*> cydui::components::component_base_t::subscribed_listeners {}"
 
 .PP
-Definition at line \fB79\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB80\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-79 {};
+80 {};
 .fi
 
 

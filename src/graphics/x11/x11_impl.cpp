@@ -53,7 +53,10 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   static int _ig = XInitThreads();
   
   XVisualInfo vinfo;
-  XMatchVisualInfo(state::get_dpy(), state::get_screen(), 32, TrueColor, &vinfo);
+  if (not XMatchVisualInfo(state::get_dpy(), state::get_screen(), 32, TrueColor, &vinfo)) {
+    log_task.error("XMatchVisualInfo failed to find a Visual");
+  }
+  Colormap cmap = XCreateColormap(state::get_dpy(), state::get_root(), vinfo.visual, AllocNone);
   XSetWindowAttributes wa = {
     .background_pixel = 0,//ParentRelative,
     .border_pixel = 0,
@@ -64,7 +67,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
       | LeaveWindowMask | EnterWindowMask | PointerMotionMask,
     .override_redirect =
     override_redirect, // This makes it immutable across workspaces
-    .colormap = XCreateColormap(state::get_dpy(), state::get_root(), vinfo.visual, AllocNone),
+    .colormap = cmap,
   };
   str title_str = title;
   str wclass_str = wclass;

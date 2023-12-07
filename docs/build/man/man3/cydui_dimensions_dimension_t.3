@@ -24,6 +24,9 @@ cydui::dimensions::dimension_t
 .RI "\fBdimension_t\fP (\fBdimension_value_t\fP \fBvalue\fP)"
 .br
 .ti -1c
+.RI "\fB~dimension_t\fP ()"
+.br
+.ti -1c
 .RI "\fBdimension_t\fP & \fBoperator=\fP (\fBdimension_value_t\fP \fBvalue\fP)"
 .br
 .ti -1c
@@ -47,7 +50,7 @@ cydui::dimensions::dimension_t
 .RI "bool \fBunknown\fP = false"
 .br
 .ti -1c
-.RI "std::unordered_set< \fBdimension_t\fP * > \fBdeps\fP = {}"
+.RI "std::unordered_set< \fBdimension_t\fP * > \fBdeps\fP"
 .br
 .ti -1c
 .RI "std::function< \fBdimension_value_t\fP()> \fBbinding\fP"
@@ -77,6 +80,16 @@ Definition at line \fB43\fP of file \fBdimensions\&.cpp\fP\&..PP
 45   this\->binding = [val]() { return val; };
 46   this\->unknown = false;
 47 }
+.fi
+
+.SS "cydui::dimensions::dimension_t::~dimension_t ()\fC [inline]\fP"
+
+.PP
+Definition at line \fB65\fP of file \fBdimensions\&.hpp\fP\&..PP
+.nf
+65                      {
+66         deps\&.clear();
+67       }
 .fi
 
 .SH "Member Function Documentation"
@@ -186,14 +199,10 @@ Definition at line \fB54\fP of file \fBdimensions\&.hpp\fP\&..PP
 56       };
 .fi
 
-.SS "std::unordered_set<\fBdimension_t\fP*> cydui::dimensions::dimension_t::deps = {}"
+.SS "std::unordered_set<\fBdimension_t\fP*> cydui::dimensions::dimension_t::deps"
 
 .PP
-Definition at line \fB53\fP of file \fBdimensions\&.hpp\fP\&..PP
-.nf
-53 {};
-.fi
-
+Definition at line \fB53\fP of file \fBdimensions\&.hpp\fP\&.
 .SS "bool cydui::dimensions::dimension_t::unknown = false"
 
 .PP

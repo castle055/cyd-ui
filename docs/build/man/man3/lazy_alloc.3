@@ -15,7 +15,7 @@ lazy_alloc< T, Args >
 .RI "\fBlazy_alloc\fP (Args\&.\&.\&. args)"
 .br
 .ti -1c
-.RI "\fB~lazy_alloc\fP ()"
+.RI "\fB~lazy_alloc\fP ()=default"
 .br
 .ti -1c
 .RI "\fBT\fP * \fBoperator\->\fP ()"
@@ -24,14 +24,14 @@ lazy_alloc< T, Args >
 .RI "\fBoperator T*\fP ()"
 .br
 .in -1c
-.SS "Private Attributes"
+.SS "Public Attributes"
 
 .in +1c
 .ti -1c
-.RI "std::function< void(\fBlazy_alloc\fP &)> \fBinit\fP"
+.RI "std::function< void(\fBlazy_alloc\fP< \fBT\fP > *)> \fBinit\fP"
 .br
 .ti -1c
-.RI "\fBT\fP * \fBval\fP = nullptr"
+.RI "std::shared_ptr< \fBT\fP > \fBval\fP = nullptr"
 .br
 .in -1c
 .SH "Detailed Description"
@@ -41,81 +41,73 @@ lazy_alloc< T, Args >
 .br
 struct lazy_alloc< T, Args >"
 .PP
-Definition at line \fB11\fP of file \fBlazy_alloc\&.h\fP\&.
+Definition at line \fB12\fP of file \fBlazy_alloc\&.h\fP\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBlazy_alloc\fP< \fBT\fP, Args >\fB::lazy_alloc\fP (Args\&.\&.\&. args)\fC [inline]\fP, \fC [explicit]\fP"
 
 .PP
-Definition at line \fB12\fP of file \fBlazy_alloc\&.h\fP\&..PP
+Definition at line \fB13\fP of file \fBlazy_alloc\&.h\fP\&..PP
 .nf
-12                                     {
-13     init = [args\&.\&.\&.](lazy_alloc &self) {
-14       self\&.val = new T {args\&.\&.\&.};
-15     };
-16   }
+13                                     {
+14     init = [args\&.\&.\&.](lazy_alloc<T>* self) {
+15       self\->val = std::make_shared<T>(args\&.\&.\&.);
+16     };
+17   }
 .fi
 
-.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBlazy_alloc\fP< \fBT\fP, Args >::~\fBlazy_alloc\fP ()\fC [inline]\fP"
-
-.PP
-Definition at line \fB17\fP of file \fBlazy_alloc\&.h\fP\&..PP
-.nf
-17                 {
-18     delete val;
-19   }
-.fi
+.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBlazy_alloc\fP< \fBT\fP, Args >::~\fBlazy_alloc\fP ()\fC [default]\fP"
 
 .SH "Member Function Documentation"
 .PP 
 .SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBlazy_alloc\fP< \fBT\fP, Args >::operator \fBT\fP* ()\fC [inline]\fP"
 
 .PP
-Definition at line \fB28\fP of file \fBlazy_alloc\&.h\fP\&..PP
+Definition at line \fB27\fP of file \fBlazy_alloc\&.h\fP\&..PP
 .nf
-28                 {
-29     if (nullptr == val) {
-30       init(*this);
-31     }
-32     return val;
-33   }
+27                 {
+28     if (nullptr == val) {
+29       init(this);
+30     }
+31     return val\&.get();
+32   }
 .fi
 
 .SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBT\fP * \fBlazy_alloc\fP< \fBT\fP, Args >::operator\-> ()\fC [inline]\fP"
 
 .PP
-Definition at line \fB21\fP of file \fBlazy_alloc\&.h\fP\&..PP
+Definition at line \fB20\fP of file \fBlazy_alloc\&.h\fP\&..PP
 .nf
-21                   {
-22     if (nullptr == val) {
-23       init(*this);
-24     }
-25     return val;
-26   }
+20                   {
+21     if (nullptr == val) {
+22       init(this);
+23     }
+24     return val\&.get();
+25   }
 .fi
 
 .SH "Member Data Documentation"
 .PP 
-.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> std::function<void(\fBlazy_alloc\fP &)> \fBlazy_alloc\fP< \fBT\fP, Args >::init\fC [private]\fP"
+.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> std::function<void(\fBlazy_alloc\fP<\fBT\fP>*)> \fBlazy_alloc\fP< \fBT\fP, Args >::init"
 \fBInitial value:\fP.PP
 .nf
-= [](lazy_alloc &self) {
-    self\&.val = new T {};
+= [](lazy_alloc<T>* self) {
+    self\->val = std::make_shared<T>();
   }
 .fi
 
 .PP
-Definition at line \fB35\fP of file \fBlazy_alloc\&.h\fP\&..PP
+Definition at line \fB34\fP of file \fBlazy_alloc\&.h\fP\&..PP
 .nf
-35                                                               {
-36     self\&.val = new T {};
-37   };
+34                                                                    {
+35     self\->val = std::make_shared<T>();
+36   };
 .fi
 
-.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> \fBT\fP* \fBlazy_alloc\fP< \fBT\fP, Args >::val = nullptr\fC [private]\fP"
+.SS "template<typename \fBT\fP , typename \&.\&.\&. Args> std::shared_ptr<\fBT\fP> \fBlazy_alloc\fP< \fBT\fP, Args >::val = nullptr"
 
 .PP
-Definition at line \fB38\fP of file \fBlazy_alloc\&.h\fP\&.
+Definition at line \fB37\fP of file \fBlazy_alloc\&.h\fP\&.
 
 .SH "Author"
 .PP 

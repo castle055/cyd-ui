@@ -48,23 +48,25 @@ Definition at line \fB12\fP of file \fBpixelmap_editor\&.h\fP\&.
 Definition at line \fB19\fP of file \fBpixelmap_editor\&.h\fP\&..PP
 .nf
 19                                              : img(img) {
-20     surface = Cairo::ImageSurface::create(
-21       (unsigned char*) this\->img\&.data,
-22       Cairo::Surface::Format::ARGB32,
-23       (int) this\->img\&.width(), (int) this\->img\&.height(),
-24       cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, (int) this\->img\&.width())
-25     );
-26     ctx = Cairo::Context::create(surface);
-27   }
+20     // TODO \- cairo_format_stride_for_width() should be called before allocating the image buffer and thus use its
+21     // output to determine the 'width' of the buffer\&.
+22     surface = Cairo::ImageSurface::create(
+23       (unsigned char*) this\->img\&.data,
+24       Cairo::Surface::Format::ARGB32,
+25       (int) this\->img\&.width(), (int) this\->img\&.height(),
+26       cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, (int) this\->img\&.width())
+27     );
+28     ctx = Cairo::Context::create(surface);
+29   }
 .fi
 
 .SS "pixelmap_editor_t::pixelmap_editor_t (\fBpixelmap_t\fP * img)\fC [inline]\fP, \fC [explicit]\fP"
 
 .PP
-Definition at line \fB29\fP of file \fBpixelmap_editor\&.h\fP\&..PP
+Definition at line \fB31\fP of file \fBpixelmap_editor\&.h\fP\&..PP
 .nf
-29                                              : pixelmap_editor_t(*img) {
-30   }
+31                                              : pixelmap_editor_t(*img) {
+32   }
 .fi
 
 .SH "Member Function Documentation"
@@ -72,21 +74,21 @@ Definition at line \fB29\fP of file \fBpixelmap_editor\&.h\fP\&..PP
 .SS "void pixelmap_editor_t::clear ()\fC [inline]\fP"
 
 .PP
-Definition at line \fB37\fP of file \fBpixelmap_editor\&.h\fP\&..PP
+Definition at line \fB39\fP of file \fBpixelmap_editor\&.h\fP\&..PP
 .nf
-37                {
-38     memset(img\&.data, 0, img\&.width() * img\&.height() * sizeof(pixel_t));
-39   }
+39                {
+40     memset(img\&.data, 0, img\&.width() * img\&.height() * sizeof(pixel_t));
+41   }
 .fi
 
 .SS "Cairo::RefPtr< Cairo::Context > pixelmap_editor_t::operator\-> ()\fC [inline]\fP"
 
 .PP
-Definition at line \fB33\fP of file \fBpixelmap_editor\&.h\fP\&..PP
+Definition at line \fB35\fP of file \fBpixelmap_editor\&.h\fP\&..PP
 .nf
-33                                          {
-34     return ctx;
-35   }
+35                                          {
+36     return ctx;
+37   }
 .fi
 
 .SH "Member Data Documentation"

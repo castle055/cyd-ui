@@ -2,6 +2,7 @@ var classcydui_1_1dimensions_1_1dimension__t =
 [
     [ "dimension_t", "classcydui_1_1dimensions_1_1dimension__t.html#ab26ae70cc24dd30a207343a530a5c88c", null ],
     [ "dimension_t", "classcydui_1_1dimensions_1_1dimension__t.html#a5acf28bae2f15ab0b42c8e1504926130", null ],
+    [ "~dimension_t", "classcydui_1_1dimensions_1_1dimension__t.html#af8b09cd2251e97a1623e397468d35282", null ],
     [ "compute", "classcydui_1_1dimensions_1_1dimension__t.html#af59a023fa693496e4a7188ff3125de44", null ],
     [ "operator dimension_value_t", "classcydui_1_1dimensions_1_1dimension__t.html#af1750c93076d23f030934ed38f0b5aa0", null ],
     [ "operator=", "classcydui_1_1dimensions_1_1dimension__t.html#a03f4f0a6bd40b7ddd1423fb804275761", null ],

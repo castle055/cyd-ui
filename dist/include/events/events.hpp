@@ -111,6 +111,12 @@ namespace cydui::events {
       EventStatus status = PENDING;
       void* ev;
       
+      // Unfortunately needed since `ev` can be of any type
+      std::function<void()> ev_destructor = [](){};
+      ~Event() {
+        ev_destructor();
+      }
+      
       std::mutex ev_mtx;
       
       // If it is someone else's job to delete this object
@@ -136,12 +142,13 @@ namespace cydui::events {
     
     void emit_raw(cydui::events::Event* ev);
     
-    void emit_raw(const str &event_type, void* data);
+    void emit_raw(const str &event_type, void* data, std::function<void()> data_destructor);
     
     template<typename T>
     requires EventType<T>
     inline void emit(typename T::DataType data) {
-      emit_raw(T::type, new T({.data = data}));
+      auto* data_ptr = new T({.data = data});
+      emit_raw(T::type, data_ptr, [data_ptr](){ delete data_ptr; });
     }
 
     template<typename T> requires EventType<T>
