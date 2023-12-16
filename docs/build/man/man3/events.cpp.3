@@ -46,7 +46,7 @@ src/graphics/x11/events/events.cpp
 .RI "\fBcydui::events::change_ev::DataMonitor\fP< \fBRedrawEvent\fP > \fBredrawEventDataMonitor\fP ([](\fBRedrawEvent::DataType\fP &o_data, \fBRedrawEvent::DataType\fP &n_data) { return true;})"
 .br
 .ti -1c
-.RI "\fBcydui::events::change_ev::DataMonitor\fP< \fBResizeEvent\fP > \fBresizeEventDataMonitor\fP ([](\fBResizeEvent::DataType\fP &o_data, \fBResizeEvent::DataType\fP &n_data) { return(o_data\&.w !=n_data\&.w||o_data\&.h !=n_data\&.h);})"
+.RI "\fBcydui::events::change_ev::DataMonitor\fP< \fBResizeEvent\fP > \fBresizeEventDataMonitor\fP ([](\fBResizeEvent::DataType\fP &o_data, \fBResizeEvent::DataType\fP &n_data) { return(o_data\&.w !=n_data\&.w||o_data\&.h !=n_data\&.h||o_data\&.win !=n_data\&.win);})"
 .br
 .ti -1c
 .RI "\fBcydui::events::change_ev::DataMonitor\fP< \fBMotionEvent\fP > \fBmotionEventDataMonitor\fP ([](\fBMotionEvent::DataType\fP &o_data, \fBMotionEvent::DataType\fP &n_data) { return true;})"
@@ -331,7 +331,7 @@ Definition at line \fB117\fP of file \fBevents\&.cpp\fP\&.
 
 .SS "\fBcydui::events::change_ev::DataMonitor\fP< \fBRedrawEvent\fP > redrawEventDataMonitor([](\fBRedrawEvent::DataType\fP &o_data, \fBRedrawEvent::DataType\fP &n_data) { return true;}) ([] (\fBRedrawEvent::DataType\fP &o_data, \fBRedrawEvent::DataType\fP &n_data) { return true;})"
 
-.SS "\fBcydui::events::change_ev::DataMonitor\fP< \fBResizeEvent\fP > resizeEventDataMonitor([](\fBResizeEvent::DataType\fP &o_data, \fBResizeEvent::DataType\fP &n_data) { return(o_data\&.w !=n_data\&.w||o_data\&.h !=n_data\&.h); }) ([] (\fBResizeEvent::DataType\fP &o_data, \fBResizeEvent::DataType\fP &n_data) { return(o_data\&.w !=n_data\&.w||o_data\&.h !=n_data\&.h);})"
+.SS "\fBcydui::events::change_ev::DataMonitor\fP< \fBResizeEvent\fP > resizeEventDataMonitor([](\fBResizeEvent::DataType\fP &o_data, \fBResizeEvent::DataType\fP &n_data) { return(o_data\&.w !=n_data\&.w||o_data\&.h !=n_data\&.h||o_data\&.win !=n_data\&.win); }) ([] (\fBResizeEvent::DataType\fP &o_data, \fBResizeEvent::DataType\fP &n_data) { return(o_data\&.w !=n_data\&.w||o_data\&.h !=n_data\&.h||o_data\&.win !=n_data\&.win);})"
 
 .SS "Status st"
 
@@ -373,7 +373,7 @@ Definition at line \fB114\fP of file \fBevents\&.cpp\fP\&.
 .PP
 Definition at line \fB67\fP of file \fBevents\&.cpp\fP\&..PP
 .nf
-67                                                  {
+67                                                 {
 68   {XK_a, Key::A},
 69   {XK_b, Key::B},
 70   {XK_c, Key::C},

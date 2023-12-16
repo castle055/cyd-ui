@@ -115,202 +115,202 @@ Definition at line \mbox{\hyperlink{layout_8h_source_l00053}{53}} of file \mbox{
 
 Configure root component
 
-Definition at line \mbox{\hyperlink{layout_8cpp_source_l00166}{166}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
+Definition at line \mbox{\hyperlink{layout_8cpp_source_l00168}{168}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00167\ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}\ =\ \_win;}
-\DoxyCodeLine{00168\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_ae5c92c3240d7e45a4d5e0a7b9e07e026}{compositor}}.\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a6f945ebee1e201a2d4f606c4eed06bd8}{set\_render\_target}}(this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}},\ \&this-\/>win-\/>profiling\_ctx);}
-\DoxyCodeLine{00169\ \ \ \{}
-\DoxyCodeLine{00170\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_ad8fc40ad48c1fd4a5904c97745bb3784}{root\_state}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a805629d2279bd32a8423246e3ca72e53}{win}}\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}};}
-\DoxyCodeLine{00171\ \ \ \ \ }
-\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keyword}{auto}\ dim\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a635bfee6c00b80d785b3b8490158e3ed}{get\_dimensional\_relations}}();}
-\DoxyCodeLine{00173\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a34f13357a75e88dd763dfc6cfaa49d2e}{w}}\ =\ \mbox{\hyperlink{namespacecydui_1_1graphics_ac4038832746129448e38dbf83c242d19}{get\_frame}}(this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}})-\/>\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}();}
-\DoxyCodeLine{00174\ \ \ \ \ dim.h\ =\ \mbox{\hyperlink{namespacecydui_1_1graphics_ac4038832746129448e38dbf83c242d19}{get\_frame}}(this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}})-\/>\mbox{\hyperlink{structpixelmap__t_aa70c0fa0014f555358a2d07198b00f69}{height}}();}
-\DoxyCodeLine{00175\ \ \ \ \ dim.fixed\_w\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00176\ \ \ \ \ dim.fixed\_h\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00177\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a2329fd0d1c024dab910437c76ba78a64}{configure\_event\_handler}}();}
-\DoxyCodeLine{00178\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a7b19add46e616a023ea11a020b2aaf27}{subscribe\_events}}();}
-\DoxyCodeLine{00179\ \ \ \}}
-\DoxyCodeLine{00180\ \ \ }
-\DoxyCodeLine{00181\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structRedrawEvent}{RedrawEvent}},\ \{}
-\DoxyCodeLine{00182\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
-\DoxyCodeLine{00183\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Redraw"{}});}
-\DoxyCodeLine{00185\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>component)\ \{}
-\DoxyCodeLine{00186\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\_state\_t}}*\ target\_state\ =}
-\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\_state\_t}}*)\ it.data-\/>component);}
-\DoxyCodeLine{00188\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (target\_state-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.has\_value())\ \{}
-\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a716228d6aacb611d239c364065bf207d}{redraw\_component}}(target\_state-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.value());}
-\DoxyCodeLine{00190\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00191\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00192\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a716228d6aacb611d239c364065bf207d}{redraw\_component}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}});}
-\DoxyCodeLine{00193\ \ \ \ \ \}}
-\DoxyCodeLine{00194\ \ \ \}));}
-\DoxyCodeLine{00195\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structKeyEvent}{KeyEvent}},\ \{}
-\DoxyCodeLine{00196\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
-\DoxyCodeLine{00197\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Key"{}});}
-\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}\ \&\&\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}})\ \{}
-\DoxyCodeLine{00200\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c}{focused}})\ \{}
-\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>pressed)\ \{}
-\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{layout_8cpp_a4d37894e2a9a85ddba1ddf20272f251d}{INSTANCE\_EV\_HANDLER}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}})-\/>on\_key\_press(*it.data);}
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (it.data-\/>released)\ \{}
-\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{layout_8cpp_a4d37894e2a9a85ddba1ddf20272f251d}{INSTANCE\_EV\_HANDLER}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}})-\/>on\_key\_release(*it.data);}
-\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00206\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{00208\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00209\ \ \ \ \ \}}
-\DoxyCodeLine{00210\ \ \ \}));}
-\DoxyCodeLine{00211\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structButtonEvent}{ButtonEvent}},\ \{}
-\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
-\DoxyCodeLine{00213\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Button"{}});}
-\DoxyCodeLine{00215\ \ \ \ \ }
-\DoxyCodeLine{00216\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}};}
-\DoxyCodeLine{00217\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ specified\_target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ee8b05bc42235d0c3cbe8294471533f}{find\_by\_coords}}(it.data-\/>x,\ it.data-\/>y);}
-\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordflow}{if}\ (specified\_target)\ \{}
-\DoxyCodeLine{00219\ \ \ \ \ \ \ target\ =\ specified\_target;}
-\DoxyCodeLine{00220\ \ \ \ \ \}}
-\DoxyCodeLine{00221\ \ \ \ \ }
-\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keyword}{auto}\ dim\ =\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a635bfee6c00b80d785b3b8490158e3ed}{get\_dimensional\_relations}}();}
-\DoxyCodeLine{00223\ \ \ \ \ \textcolor{keywordtype}{int}\ rel\_x\ =\ it.data-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a5a1367b149c7cc4d3b58f103c97bda80}{x}}\ -\/\ dim.cx.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
-\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keywordtype}{int}\ rel\_y\ =\ it.data-\/>y\ -\/\ dim.cy.val();}
-\DoxyCodeLine{00225\ \ \ \ \ }
-\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}\ !=\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value())\ \{}
-\DoxyCodeLine{00227\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}})\ \{}
-\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (focused-\/>component\_instance.has\_value())\ \{}}
-\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ focused-\/>component\_instance.value()}}
-\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ -\/>event\_handler()}}
-\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ -\/>on\_button\_release((Button)\ it.data-\/>button,\ 0,\ 0);}}
-\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
-\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c}{focused}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{00235\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00236\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}\ =\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value();}
-\DoxyCodeLine{00237\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c}{focused}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00238\ \ \ \ \ \}}
-\DoxyCodeLine{00239\ \ \ \ \ }
-\DoxyCodeLine{00240\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>pressed)\ \{}
-\DoxyCodeLine{00241\ \ \ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_a5eab21f749c18af42527226e734667ad}{on\_button\_press}}((\mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0}{Button}})\ it.data-\/>button,\ rel\_x,\ rel\_y);}
-\DoxyCodeLine{00242\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00243\ \ \ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_ac9f8c3e486db07e784c33c1646f1f2f8}{on\_button\_release}}((\mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0}{Button}})\ it.data-\/>button,\ rel\_x,\ rel\_y);}
-\DoxyCodeLine{00244\ \ \ \ \ \}}
-\DoxyCodeLine{00245\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{render\_if\_dirty}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}});}
-\DoxyCodeLine{00246\ \ \ \}));}
-\DoxyCodeLine{00247\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structScrollEvent}{ScrollEvent}},\ \{}
-\DoxyCodeLine{00248\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
-\DoxyCodeLine{00249\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Scroll"{}});}
-\DoxyCodeLine{00251\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}};}
-\DoxyCodeLine{00252\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ specified\_target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ee8b05bc42235d0c3cbe8294471533f}{find\_by\_coords}}(it.data-\/>x,\ it.data-\/>y);}
-\DoxyCodeLine{00253\ \ \ \ \ \textcolor{keywordflow}{if}\ (specified\_target)\ \{}
-\DoxyCodeLine{00254\ \ \ \ \ \ \ target\ =\ specified\_target;}
-\DoxyCodeLine{00255\ \ \ \ \ \}}
-\DoxyCodeLine{00256\ \ \ \ \ }
-\DoxyCodeLine{00257\ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_a738e7b4883ab753c8f0f4d90d1d49a07}{on\_scroll}}(it.data-\/>dx,\ it.data-\/>dy);}
+\DoxyCodeLine{00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00169\ \ \ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}\ =\ \_win;}
+\DoxyCodeLine{00170\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_ae5c92c3240d7e45a4d5e0a7b9e07e026}{compositor}}.\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a6f945ebee1e201a2d4f606c4eed06bd8}{set\_render\_target}}(this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}},\ \&this-\/>win-\/>profiling\_ctx);}
+\DoxyCodeLine{00171\ \ \ \{}
+\DoxyCodeLine{00172\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_ad8fc40ad48c1fd4a5904c97745bb3784}{root\_state}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a805629d2279bd32a8423246e3ca72e53}{win}}\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}};}
+\DoxyCodeLine{00173\ \ \ \ \ }
+\DoxyCodeLine{00174\ \ \ \ \ \textcolor{keyword}{auto}\ dim\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a635bfee6c00b80d785b3b8490158e3ed}{get\_dimensional\_relations}}();}
+\DoxyCodeLine{00175\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a34f13357a75e88dd763dfc6cfaa49d2e}{w}}\ =\ \mbox{\hyperlink{namespacecydui_1_1graphics_ac4038832746129448e38dbf83c242d19}{get\_frame}}(this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}})-\/>\mbox{\hyperlink{structpixelmap__t_afd28dda06874905136d50de6911a0242}{width}}();}
+\DoxyCodeLine{00176\ \ \ \ \ dim.h\ =\ \mbox{\hyperlink{namespacecydui_1_1graphics_ac4038832746129448e38dbf83c242d19}{get\_frame}}(this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}})-\/>\mbox{\hyperlink{structpixelmap__t_aa70c0fa0014f555358a2d07198b00f69}{height}}();}
+\DoxyCodeLine{00177\ \ \ \ \ dim.fixed\_w\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00178\ \ \ \ \ dim.fixed\_h\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00179\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a2329fd0d1c024dab910437c76ba78a64}{configure\_event\_handler}}();}
+\DoxyCodeLine{00180\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a7b19add46e616a023ea11a020b2aaf27}{subscribe\_events}}();}
+\DoxyCodeLine{00181\ \ \ \}}
+\DoxyCodeLine{00182\ \ \ }
+\DoxyCodeLine{00183\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structRedrawEvent}{RedrawEvent}},\ \{}
+\DoxyCodeLine{00184\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00186\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Redraw"{}});}
+\DoxyCodeLine{00187\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>component)\ \{}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\_state\_t}}*\ target\_state\ =}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ ((\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\_state\_t}}*)\ it.data-\/>component);}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (target\_state-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.has\_value())\ \{}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a716228d6aacb611d239c364065bf207d}{redraw\_component}}(target\_state-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.value());}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00193\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a716228d6aacb611d239c364065bf207d}{redraw\_component}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}});}
+\DoxyCodeLine{00195\ \ \ \ \ \}}
+\DoxyCodeLine{00196\ \ \ \}));}
+\DoxyCodeLine{00197\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structKeyEvent}{KeyEvent}},\ \{}
+\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00200\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Key"{}});}
+\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}\ \&\&\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}})\ \{}
+\DoxyCodeLine{00202\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c}{focused}})\ \{}
+\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>pressed)\ \{}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{layout_8cpp_a4d37894e2a9a85ddba1ddf20272f251d}{INSTANCE\_EV\_HANDLER}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}})-\/>on\_key\_press(*it.data);}
+\DoxyCodeLine{00205\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (it.data-\/>released)\ \{}
+\DoxyCodeLine{00206\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{layout_8cpp_a4d37894e2a9a85ddba1ddf20272f251d}{INSTANCE\_EV\_HANDLER}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}})-\/>on\_key\_release(*it.data);}
+\DoxyCodeLine{00207\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00208\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00211\ \ \ \ \ \}}
+\DoxyCodeLine{00212\ \ \ \}));}
+\DoxyCodeLine{00213\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structButtonEvent}{ButtonEvent}},\ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Button"{}});}
+\DoxyCodeLine{00217\ \ \ \ \ }
+\DoxyCodeLine{00218\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}};}
+\DoxyCodeLine{00219\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ specified\_target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ee8b05bc42235d0c3cbe8294471533f}{find\_by\_coords}}(it.data-\/>x,\ it.data-\/>y);}
+\DoxyCodeLine{00220\ \ \ \ \ \textcolor{keywordflow}{if}\ (specified\_target)\ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ target\ =\ specified\_target;}
+\DoxyCodeLine{00222\ \ \ \ \ \}}
+\DoxyCodeLine{00223\ \ \ \ \ }
+\DoxyCodeLine{00224\ \ \ \ \ \textcolor{keyword}{auto}\ dim\ =\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a635bfee6c00b80d785b3b8490158e3ed}{get\_dimensional\_relations}}();}
+\DoxyCodeLine{00225\ \ \ \ \ \textcolor{keywordtype}{int}\ rel\_x\ =\ it.data-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a5a1367b149c7cc4d3b58f103c97bda80}{x}}\ -\/\ dim.cx.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordtype}{int}\ rel\_y\ =\ it.data-\/>y\ -\/\ dim.cy.val();}
+\DoxyCodeLine{00227\ \ \ \ \ }
+\DoxyCodeLine{00228\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}\ !=\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value())\ \{}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}})\ \{}
+\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ \textcolor{comment}{//if\ (focused-\/>component\_instance.has\_value())\ \{}}
+\DoxyCodeLine{00231\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ focused-\/>component\_instance.value()}}
+\DoxyCodeLine{00232\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ -\/>event\_handler()}}
+\DoxyCodeLine{00233\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ \ \ \ -\/>on\_button\_release((Button)\ it.data-\/>button,\ 0,\ 0);}}
+\DoxyCodeLine{00234\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c}{focused}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00238\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}\ =\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value();}
+\DoxyCodeLine{00239\ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a35906693575543e93cd208e5d3b5cb34}{focused}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c}{focused}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00240\ \ \ \ \ \}}
+\DoxyCodeLine{00241\ \ \ \ \ }
+\DoxyCodeLine{00242\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>pressed)\ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_a5eab21f749c18af42527226e734667ad}{on\_button\_press}}((\mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0}{Button}})\ it.data-\/>button,\ rel\_x,\ rel\_y);}
+\DoxyCodeLine{00244\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_ac9f8c3e486db07e784c33c1646f1f2f8}{on\_button\_release}}((\mbox{\hyperlink{cydui__events_8h_a03bfec859eac87be20f8952c1eb89de0}{Button}})\ it.data-\/>button,\ rel\_x,\ rel\_y);}
+\DoxyCodeLine{00246\ \ \ \ \ \}}
+\DoxyCodeLine{00247\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{render\_if\_dirty}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}});}
+\DoxyCodeLine{00248\ \ \ \}));}
+\DoxyCodeLine{00249\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structScrollEvent}{ScrollEvent}},\ \{}
+\DoxyCodeLine{00250\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00252\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Scroll"{}});}
+\DoxyCodeLine{00253\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}};}
+\DoxyCodeLine{00254\ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ specified\_target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ee8b05bc42235d0c3cbe8294471533f}{find\_by\_coords}}(it.data-\/>x,\ it.data-\/>y);}
+\DoxyCodeLine{00255\ \ \ \ \ \textcolor{keywordflow}{if}\ (specified\_target)\ \{}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ target\ =\ specified\_target;}
+\DoxyCodeLine{00257\ \ \ \ \ \}}
 \DoxyCodeLine{00258\ \ \ \ \ }
-\DoxyCodeLine{00259\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{render\_if\_dirty}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}});}
-\DoxyCodeLine{00260\ \ \ \}));}
-\DoxyCodeLine{00261\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structMotionEvent}{MotionEvent}},\ \{}
-\DoxyCodeLine{00262\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
-\DoxyCodeLine{00263\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Motion"{}});}
-\DoxyCodeLine{00265\ \ \ \ \ }
-\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>x\ ==\ -\/1\ \&\&\ it.data-\/>y\ ==\ -\/1)\ \{}
-\DoxyCodeLine{00267\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ \&\&\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.has\_value())\ \{}
-\DoxyCodeLine{00268\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exit\_rel\_x\ =\ 0;}
-\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exit\_rel\_y\ =\ 0;}
-\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82}{hovering}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.value()}
-\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ -\/>event\_handler()-\/>on\_mouse\_exit(0,\ 0);}
-\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{00274\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00275\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00276\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}};}
-\DoxyCodeLine{00277\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ specified\_target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ee8b05bc42235d0c3cbe8294471533f}{find\_by\_coords}}(it.data-\/>x,\ it.data-\/>y);}
-\DoxyCodeLine{00278\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (specified\_target)}
-\DoxyCodeLine{00279\ \ \ \ \ \ \ \ \ target\ =\ specified\_target;}
-\DoxyCodeLine{00280\ \ \ \ \ \ \ }
-\DoxyCodeLine{00281\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ dim\ =\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a635bfee6c00b80d785b3b8490158e3ed}{get\_dimensional\_relations}}();}
-\DoxyCodeLine{00282\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rel\_x\ =\ it.data-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a5a1367b149c7cc4d3b58f103c97bda80}{x}}\ -\/\ dim.cx.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
-\DoxyCodeLine{00283\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rel\_y\ =\ it.data-\/>y\ -\/\ dim.cy.val();}
-\DoxyCodeLine{00284\ \ \ \ \ \ \ }
-\DoxyCodeLine{00285\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ !=\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value())\ \{}
-\DoxyCodeLine{00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ \&\&\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.has\_value())\ \{}
-\DoxyCodeLine{00287\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ h\_dim\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.value()-\/>get\_dimensional\_relations();}
-\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exit\_rel\_x\ =\ it.data-\/>x\ -\/\ h\_dim.cx.val();}
-\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exit\_rel\_y\ =\ it.data-\/>y\ -\/\ h\_dim.cy.val();}
-\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82}{hovering}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.value()}
-\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \ \ -\/>event\_handler()-\/>on\_mouse\_exit(exit\_rel\_x,\ exit\_rel\_y);}
-\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ =\ \textcolor{keyword}{nullptr};}
-\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ =\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value();}
-\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82}{hovering}}\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ }
-\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_af27f89eb2fca3e6de4ba643281f16337}{on\_mouse\_enter}}(rel\_x,\ rel\_y);}
-\DoxyCodeLine{00299\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_a6a9b64922dc2477b587f9a9a047b3242}{on\_mouse\_motion}}(rel\_x,\ rel\_y);}
-\DoxyCodeLine{00301\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00302\ \ \ \ \ \}}
-\DoxyCodeLine{00303\ \ \ \ \ }
-\DoxyCodeLine{00304\ \ \ \ \ \textcolor{comment}{//\ Calling\ 'Drag'\ related\ event\ handlers}}
-\DoxyCodeLine{00305\ \ \ \ \ \textcolor{comment}{//cydui::components::Component*\ target\ =\ root;}}
-\DoxyCodeLine{00306\ \ \ \ \ \textcolor{comment}{//cydui::components::Component*\ specified\_target\ =}}
-\DoxyCodeLine{00307\ \ \ \ \ \textcolor{comment}{//\ \ find\_by\_coords(root,\ it.data-\/>x,\ it.data-\/>y);}}
-\DoxyCodeLine{00308\ \ \ \ \ \textcolor{comment}{//if\ (specified\_target)}}
-\DoxyCodeLine{00309\ \ \ \ \ \textcolor{comment}{//\ \ target\ =\ specified\_target;}}
-\DoxyCodeLine{00310\ \ \ \ \ \textcolor{comment}{//}}
-\DoxyCodeLine{00311\ \ \ \ \ \textcolor{comment}{//if\ (it.data-\/>dragging)\ \{}}
-\DoxyCodeLine{00312\ \ \ \ \ \textcolor{comment}{//\ \ if\ (dragging\_context.dragging)\ \{}}
-\DoxyCodeLine{00313\ \ \ \ \ \textcolor{comment}{//\ \ \ \ int\ rel\_x\ =\ it.data-\/>x\ -\/\ (*target-\/>state.unwrap())-\/>dim.cx.val();}}
-\DoxyCodeLine{00314\ \ \ \ \ \textcolor{comment}{//\ \ \ \ int\ rel\_y\ =\ it.data-\/>y\ -\/\ (*target-\/>state.unwrap())-\/>dim.cy.val();}}
-\DoxyCodeLine{00315\ \ \ \ \ \textcolor{comment}{//\ \ \ \ dragging\_context.dragging\_item.drag\_move(dragging\_context.dragging\_item,\ rel\_x,\ rel\_y);}}
-\DoxyCodeLine{00316\ \ \ \ \ \textcolor{comment}{//\ \ \ \ target-\/>on\_drag\_motion(rel\_x,\ rel\_y);}}
-\DoxyCodeLine{00317\ \ \ \ \ \textcolor{comment}{//\ \ \}\ else\ \{}}
-\DoxyCodeLine{00318\ \ \ \ \ \textcolor{comment}{//\ \ \ \ int\ rel\_x\ =\ it.data-\/>x\ -\/\ (*target-\/>state.unwrap())-\/>dim.cx.val();}}
-\DoxyCodeLine{00319\ \ \ \ \ \textcolor{comment}{//\ \ \ \ int\ rel\_y\ =\ it.data-\/>y\ -\/\ (*target-\/>state.unwrap())-\/>dim.cy.val();}}
-\DoxyCodeLine{00320\ \ \ \ \ \textcolor{comment}{//\ \ \ \ target-\/>state.let(\_(components::ComponentState\ *\ ,\ \{}}
-\DoxyCodeLine{00321\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ for\ (auto\ \&item\ :\ it-\/>draggable\_sources)\ \{}}
-\DoxyCodeLine{00322\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ if\ (item.x\ -\/\ 10\ <=\ rel\_x\ \&\&\ rel\_x\ <=\ item.x\ +\ 10}}
-\DoxyCodeLine{00323\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \&\&\ item.y\ -\/\ 10\ <=\ rel\_y\ \&\&\ rel\_y\ <=\ item.y\ +\ 10)\ \{}}
-\DoxyCodeLine{00324\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ dragging\_context.dragging\_item\ =\ item.start\_drag(rel\_x,\ rel\_y);}}
-\DoxyCodeLine{00325\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ break;}}
-\DoxyCodeLine{00326\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \}}}
-\DoxyCodeLine{00327\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \}}}
-\DoxyCodeLine{00328\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \}));}}
-\DoxyCodeLine{00329\ \ \ \ \ \textcolor{comment}{//\ \ \ \ target-\/>on\_drag\_start(rel\_x,\ rel\_y);}}
-\DoxyCodeLine{00330\ \ \ \ \ \textcolor{comment}{//\ \ \ \ dragging\_context.dragging\ =\ true;}}
-\DoxyCodeLine{00331\ \ \ \ \ \textcolor{comment}{//\ \ \}}}
-\DoxyCodeLine{00332\ \ \ \ \ \textcolor{comment}{//\}\ else\ if\ (dragging\_context.dragging)\ \{}}
-\DoxyCodeLine{00333\ \ \ \ \ \textcolor{comment}{//\ \ int\ rel\_x\ =\ it.data-\/>x\ -\/\ (*target-\/>state.unwrap())-\/>dim.cx.val();}}
-\DoxyCodeLine{00334\ \ \ \ \ \textcolor{comment}{//\ \ int\ rel\_y\ =\ it.data-\/>y\ -\/\ (*target-\/>state.unwrap())-\/>dim.cy.val();}}
-\DoxyCodeLine{00335\ \ \ \ \ \textcolor{comment}{//\ \ dragging\_context.dragging\_item.drag\_end(dragging\_context.dragging\_item,\ rel\_x,\ rel\_y);}}
-\DoxyCodeLine{00336\ \ \ \ \ \textcolor{comment}{//\ \ target-\/>on\_drag\_finish(rel\_x,\ rel\_y);}}
-\DoxyCodeLine{00337\ \ \ \ \ \textcolor{comment}{//\ \ dragging\_context.dragging\ =\ false;}}
-\DoxyCodeLine{00338\ \ \ \ \ \textcolor{comment}{//\ \ dragging\_context.dragging\_item\ =\ drag\_n\_drop::draggable\_t\ \{\};}}
-\DoxyCodeLine{00339\ \ \ \ \ \textcolor{comment}{//\}}}
-\DoxyCodeLine{00340\ \ \ \ \ }
-\DoxyCodeLine{00341\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{render\_if\_dirty}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}});}
-\DoxyCodeLine{00342\ \ \ \}));}
-\DoxyCodeLine{00343\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structResizeEvent}{ResizeEvent}},\ \{}
-\DoxyCodeLine{00344\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
-\DoxyCodeLine{00345\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
-\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Resize"{}});}
-\DoxyCodeLine{00347\ \ \ \ \ \mbox{\hyperlink{layout_8cpp_aa1d4ffb373d38428543746c1396630b2}{log\_lay}}.\mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{debug}}(\textcolor{stringliteral}{"{}RESIZE:\ w=\%d,\ h=\%d"{}},\ it.data-\/>w,\ it.data-\/>h);}
-\DoxyCodeLine{00348\ \ \ \ \ }
-\DoxyCodeLine{00349\ \ \ \ \ \textcolor{keyword}{auto}\ dim\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a635bfee6c00b80d785b3b8490158e3ed}{get\_dimensional\_relations}}();}
-\DoxyCodeLine{00350\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a34f13357a75e88dd763dfc6cfaa49d2e}{w}}\ =\ it.data-\/>w;}
-\DoxyCodeLine{00351\ \ \ \ \ dim.h\ =\ it.data-\/>h;}
-\DoxyCodeLine{00352\ \ \ \ \ dim.fixed\_w\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00353\ \ \ \ \ dim.fixed\_h\ =\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00354\ \ \ \ \ }
-\DoxyCodeLine{00355\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a716228d6aacb611d239c364065bf207d}{redraw\_component}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}});}
-\DoxyCodeLine{00356\ \ \ \}));}
-\DoxyCodeLine{00357\ \}}
+\DoxyCodeLine{00259\ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_a738e7b4883ab753c8f0f4d90d1d49a07}{on\_scroll}}(it.data-\/>dx,\ it.data-\/>dy);}
+\DoxyCodeLine{00260\ \ \ \ \ }
+\DoxyCodeLine{00261\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{render\_if\_dirty}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}});}
+\DoxyCodeLine{00262\ \ \ \}));}
+\DoxyCodeLine{00263\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structMotionEvent}{MotionEvent}},\ \{}
+\DoxyCodeLine{00264\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
+\DoxyCodeLine{00265\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00266\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Motion"{}});}
+\DoxyCodeLine{00267\ \ \ \ \ }
+\DoxyCodeLine{00268\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>x\ ==\ -\/1\ \&\&\ it.data-\/>y\ ==\ -\/1)\ \{}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ \&\&\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.has\_value())\ \{}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exit\_rel\_x\ =\ 0;}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exit\_rel\_y\ =\ 0;}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82}{hovering}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.value()}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ \ \ -\/>event\_handler()-\/>on\_mouse\_exit(0,\ 0);}
+\DoxyCodeLine{00275\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00276\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00277\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00278\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}};}
+\DoxyCodeLine{00279\ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\_base\_t}}*\ specified\_target\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a4ee8b05bc42235d0c3cbe8294471533f}{find\_by\_coords}}(it.data-\/>x,\ it.data-\/>y);}
+\DoxyCodeLine{00280\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (specified\_target)}
+\DoxyCodeLine{00281\ \ \ \ \ \ \ \ \ target\ =\ specified\_target;}
+\DoxyCodeLine{00282\ \ \ \ \ \ \ }
+\DoxyCodeLine{00283\ \ \ \ \ \ \ \textcolor{keyword}{auto}\ dim\ =\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a635bfee6c00b80d785b3b8490158e3ed}{get\_dimensional\_relations}}();}
+\DoxyCodeLine{00284\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rel\_x\ =\ it.data-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a5a1367b149c7cc4d3b58f103c97bda80}{x}}\ -\/\ dim.cx.\mbox{\hyperlink{classcydui_1_1dimensions_1_1dimension__t_ac9ec14f26302ee07e8211a78a635d6fc}{val}}();}
+\DoxyCodeLine{00285\ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rel\_y\ =\ it.data-\/>y\ -\/\ dim.cy.val();}
+\DoxyCodeLine{00286\ \ \ \ \ \ \ }
+\DoxyCodeLine{00287\ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ !=\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value())\ \{}
+\DoxyCodeLine{00288\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ \&\&\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.has\_value())\ \{}
+\DoxyCodeLine{00289\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ h\_dim\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.value()-\/>get\_dimensional\_relations();}
+\DoxyCodeLine{00290\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exit\_rel\_x\ =\ it.data-\/>x\ -\/\ h\_dim.cx.val();}
+\DoxyCodeLine{00291\ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ exit\_rel\_y\ =\ it.data-\/>y\ -\/\ h\_dim.cy.val();}
+\DoxyCodeLine{00292\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82}{hovering}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00293\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\_instance}}.value()}
+\DoxyCodeLine{00294\ \ \ \ \ \ \ \ \ \ \ \ \ -\/>event\_handler()-\/>on\_mouse\_exit(exit\_rel\_x,\ exit\_rel\_y);}
+\DoxyCodeLine{00295\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00296\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00297\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}\ =\ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value();}
+\DoxyCodeLine{00298\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aac8db603ef2f2560addc52f44a59f4da}{hovering}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82}{hovering}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00299\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_af27f89eb2fca3e6de4ba643281f16337}{on\_mouse\_enter}}(rel\_x,\ rel\_y);}
+\DoxyCodeLine{00301\ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00302\ \ \ \ \ \ \ \ \ target-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\_handler}}()-\/>\mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t_a6a9b64922dc2477b587f9a9a047b3242}{on\_mouse\_motion}}(rel\_x,\ rel\_y);}
+\DoxyCodeLine{00303\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00304\ \ \ \ \ \}}
+\DoxyCodeLine{00305\ \ \ \ \ }
+\DoxyCodeLine{00306\ \ \ \ \ \textcolor{comment}{//\ Calling\ 'Drag'\ related\ event\ handlers}}
+\DoxyCodeLine{00307\ \ \ \ \ \textcolor{comment}{//cydui::components::Component*\ target\ =\ root;}}
+\DoxyCodeLine{00308\ \ \ \ \ \textcolor{comment}{//cydui::components::Component*\ specified\_target\ =}}
+\DoxyCodeLine{00309\ \ \ \ \ \textcolor{comment}{//\ \ find\_by\_coords(root,\ it.data-\/>x,\ it.data-\/>y);}}
+\DoxyCodeLine{00310\ \ \ \ \ \textcolor{comment}{//if\ (specified\_target)}}
+\DoxyCodeLine{00311\ \ \ \ \ \textcolor{comment}{//\ \ target\ =\ specified\_target;}}
+\DoxyCodeLine{00312\ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{00313\ \ \ \ \ \textcolor{comment}{//if\ (it.data-\/>dragging)\ \{}}
+\DoxyCodeLine{00314\ \ \ \ \ \textcolor{comment}{//\ \ if\ (dragging\_context.dragging)\ \{}}
+\DoxyCodeLine{00315\ \ \ \ \ \textcolor{comment}{//\ \ \ \ int\ rel\_x\ =\ it.data-\/>x\ -\/\ (*target-\/>state.unwrap())-\/>dim.cx.val();}}
+\DoxyCodeLine{00316\ \ \ \ \ \textcolor{comment}{//\ \ \ \ int\ rel\_y\ =\ it.data-\/>y\ -\/\ (*target-\/>state.unwrap())-\/>dim.cy.val();}}
+\DoxyCodeLine{00317\ \ \ \ \ \textcolor{comment}{//\ \ \ \ dragging\_context.dragging\_item.drag\_move(dragging\_context.dragging\_item,\ rel\_x,\ rel\_y);}}
+\DoxyCodeLine{00318\ \ \ \ \ \textcolor{comment}{//\ \ \ \ target-\/>on\_drag\_motion(rel\_x,\ rel\_y);}}
+\DoxyCodeLine{00319\ \ \ \ \ \textcolor{comment}{//\ \ \}\ else\ \{}}
+\DoxyCodeLine{00320\ \ \ \ \ \textcolor{comment}{//\ \ \ \ int\ rel\_x\ =\ it.data-\/>x\ -\/\ (*target-\/>state.unwrap())-\/>dim.cx.val();}}
+\DoxyCodeLine{00321\ \ \ \ \ \textcolor{comment}{//\ \ \ \ int\ rel\_y\ =\ it.data-\/>y\ -\/\ (*target-\/>state.unwrap())-\/>dim.cy.val();}}
+\DoxyCodeLine{00322\ \ \ \ \ \textcolor{comment}{//\ \ \ \ target-\/>state.let(\_(components::ComponentState\ *\ ,\ \{}}
+\DoxyCodeLine{00323\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ for\ (auto\ \&item\ :\ it-\/>draggable\_sources)\ \{}}
+\DoxyCodeLine{00324\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ if\ (item.x\ -\/\ 10\ <=\ rel\_x\ \&\&\ rel\_x\ <=\ item.x\ +\ 10}}
+\DoxyCodeLine{00325\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \&\&\ item.y\ -\/\ 10\ <=\ rel\_y\ \&\&\ rel\_y\ <=\ item.y\ +\ 10)\ \{}}
+\DoxyCodeLine{00326\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ dragging\_context.dragging\_item\ =\ item.start\_drag(rel\_x,\ rel\_y);}}
+\DoxyCodeLine{00327\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ break;}}
+\DoxyCodeLine{00328\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{00329\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \ \ \}}}
+\DoxyCodeLine{00330\ \ \ \ \ \textcolor{comment}{//\ \ \ \ \}));}}
+\DoxyCodeLine{00331\ \ \ \ \ \textcolor{comment}{//\ \ \ \ target-\/>on\_drag\_start(rel\_x,\ rel\_y);}}
+\DoxyCodeLine{00332\ \ \ \ \ \textcolor{comment}{//\ \ \ \ dragging\_context.dragging\ =\ true;}}
+\DoxyCodeLine{00333\ \ \ \ \ \textcolor{comment}{//\ \ \}}}
+\DoxyCodeLine{00334\ \ \ \ \ \textcolor{comment}{//\}\ else\ if\ (dragging\_context.dragging)\ \{}}
+\DoxyCodeLine{00335\ \ \ \ \ \textcolor{comment}{//\ \ int\ rel\_x\ =\ it.data-\/>x\ -\/\ (*target-\/>state.unwrap())-\/>dim.cx.val();}}
+\DoxyCodeLine{00336\ \ \ \ \ \textcolor{comment}{//\ \ int\ rel\_y\ =\ it.data-\/>y\ -\/\ (*target-\/>state.unwrap())-\/>dim.cy.val();}}
+\DoxyCodeLine{00337\ \ \ \ \ \textcolor{comment}{//\ \ dragging\_context.dragging\_item.drag\_end(dragging\_context.dragging\_item,\ rel\_x,\ rel\_y);}}
+\DoxyCodeLine{00338\ \ \ \ \ \textcolor{comment}{//\ \ target-\/>on\_drag\_finish(rel\_x,\ rel\_y);}}
+\DoxyCodeLine{00339\ \ \ \ \ \textcolor{comment}{//\ \ dragging\_context.dragging\ =\ false;}}
+\DoxyCodeLine{00340\ \ \ \ \ \textcolor{comment}{//\ \ dragging\_context.dragging\_item\ =\ drag\_n\_drop::draggable\_t\ \{\};}}
+\DoxyCodeLine{00341\ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{00342\ \ \ \ \ }
+\DoxyCodeLine{00343\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{render\_if\_dirty}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}});}
+\DoxyCodeLine{00344\ \ \ \}));}
+\DoxyCodeLine{00345\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a6fef496d1430173121c8ac47637dbddb}{listeners}}.push\_back(\mbox{\hyperlink{include_2events_2events_8hpp_a3c9044321679cfc4fa596f42b0f2d270}{listen}}(\mbox{\hyperlink{structResizeEvent}{ResizeEvent}},\ \{}
+\DoxyCodeLine{00346\ \ \ \ \ \textcolor{keywordflow}{if}\ (it.data-\/>win\ !=\ \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\_id}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a1516e993510f48cfd825c024138e42ee}{win\_ref}}))}
+\DoxyCodeLine{00347\ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00348\ \ \ \ \ \textcolor{keyword}{auto}\ \_pev\ =\ this-\/>\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_abd8cc2a7c95c3692d3eff28ddae423c4}{win}}-\/>\mbox{\hyperlink{classcydui_1_1window_1_1CWindow_a46c5f9b2ed590124cc2189fe2006a142}{profiling\_ctx}}.\mbox{\hyperlink{structprof_1_1context__t_a1be702fd81e660750ae54216bc14ed80}{scope\_event}}(\textcolor{stringliteral}{"{}Resize"{}});}
+\DoxyCodeLine{00349\ \ \ \ \ \mbox{\hyperlink{layout_8cpp_aa1d4ffb373d38428543746c1396630b2}{log\_lay}}.\mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{debug}}(\textcolor{stringliteral}{"{}RESIZE:\ w=\%d,\ h=\%d"{}},\ it.data-\/>w,\ it.data-\/>h);}
+\DoxyCodeLine{00350\ \ \ \ \ }
+\DoxyCodeLine{00351\ \ \ \ \ \textcolor{keyword}{auto}\ dim\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a635bfee6c00b80d785b3b8490158e3ed}{get\_dimensional\_relations}}();}
+\DoxyCodeLine{00352\ \ \ \ \ dim.\mbox{\hyperlink{structcydui_1_1components_1_1component__dimensional__relations__t_a34f13357a75e88dd763dfc6cfaa49d2e}{w}}\ =\ it.data-\/>w;}
+\DoxyCodeLine{00353\ \ \ \ \ dim.h\ =\ it.data-\/>h;}
+\DoxyCodeLine{00354\ \ \ \ \ dim.fixed\_w\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00355\ \ \ \ \ dim.fixed\_h\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00356\ \ \ \ \ }
+\DoxyCodeLine{00357\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a716228d6aacb611d239c364065bf207d}{redraw\_component}}(\mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}});}
+\DoxyCodeLine{00358\ \ \ \}));}
+\DoxyCodeLine{00359\ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -335,13 +335,13 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{layout_8cpp_source_l00153}{153}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
+Definition at line \mbox{\hyperlink{layout_8cpp_source_l00155}{155}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00154\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a4ca05092e1c0fa714df5a1ff9e7256b2}{find\_by\_coords}}(x,\ y);}
-\DoxyCodeLine{00155\ \}}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00156\ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_aa20857a68ff314cb3686ecffa231a3a7}{root}}-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a4ca05092e1c0fa714df5a1ff9e7256b2}{find\_by\_coords}}(x,\ y);}
+\DoxyCodeLine{00157\ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -404,7 +404,7 @@ Definition at line \mbox{\hyperlink{layout_8cpp_source_l00119}{119}} of file \mb
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
 \DoxyCodeLine{00120\ \ \ \mbox{\hyperlink{layout_8cpp_aa1d4ffb373d38428543746c1396630b2}{log\_lay}}.\mbox{\hyperlink{structlogging_1_1logger_ad8cb1a2731cf690ffa77a77644551d84}{debug}}(\textcolor{stringliteral}{"{}REDRAW"{}});}
-\DoxyCodeLine{00121\ \ \ \textcolor{comment}{//auto\ t0\ =\ std::chrono::system\_clock::now().time\_since\_epoch();}}
+\DoxyCodeLine{00121\ \ \ \textcolor{comment}{//auto\ t0\ =\ std::chrono::system\_clock::now();}}
 \DoxyCodeLine{00122\ \ \ \textcolor{comment}{//\ Clear\ render\ area\ of\ component\ instances}}
 \DoxyCodeLine{00123\ \ \ \textcolor{keyword}{auto}*\ compositing\_tree\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{structcydui_1_1compositing_1_1compositing__tree__t}{compositing::compositing\_tree\_t}};}
 \DoxyCodeLine{00124\ \ \ }
@@ -421,7 +421,9 @@ Definition at line \mbox{\hyperlink{layout_8cpp_source_l00119}{119}} of file \mb
 \DoxyCodeLine{00135\ \ \ \textcolor{comment}{//compositing\_tree-\/>fix\_dimensions();}}
 \DoxyCodeLine{00136\ \ \ }
 \DoxyCodeLine{00137\ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_ae5c92c3240d7e45a4d5e0a7b9e07e026}{compositor}}.\mbox{\hyperlink{classcydui_1_1compositing_1_1LayoutCompositor_a857d09d86be1528a255ecdfe3b296c17}{compose}}(compositing\_tree);}
-\DoxyCodeLine{00138\ \}}
+\DoxyCodeLine{00138\ \ \ \textcolor{comment}{//auto\ t1\ =\ std::chrono::system\_clock::now();}}
+\DoxyCodeLine{00139\ \ \ \textcolor{comment}{//printf("{}redraw\ time:\ \%ld\ us\(\backslash\)n"{},\ std::chrono::duration\_cast<std::chrono::microseconds>(t1\ -\/\ t0).count());}}
+\DoxyCodeLine{00140\ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -439,22 +441,22 @@ Here is the call graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{layout_8cpp_source_l00140}{140}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
+Definition at line \mbox{\hyperlink{layout_8cpp_source_l00142}{142}} of file \mbox{\hyperlink{layout_8cpp_source}{layout.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00141\ \ \ \textcolor{keywordflow}{if}\ (c-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value()-\/>\_dirty)\ \{}
-\DoxyCodeLine{00142\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a716228d6aacb611d239c364065bf207d}{redraw\_component}}(c);}
-\DoxyCodeLine{00143\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
-\DoxyCodeLine{00144\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{bool}\ any\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00146\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ c-\/>children)}
-\DoxyCodeLine{00147\ \ \ \ \ \ \ any\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{render\_if\_dirty}}(item)\ ||\ any;\textcolor{comment}{//\ !\ F**K,\ order\ here\ matters}}
-\DoxyCodeLine{00148\ \ \ \ \ \textcolor{comment}{//\ ?\ render\_if\_dirty()\ needs\ to\ be\ called\ before\ \`{}any`\ is\ checked.}}
-\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordflow}{return}\ any;}
-\DoxyCodeLine{00150\ \ \ \}}
-\DoxyCodeLine{00151\ \}}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00143\ \ \ \textcolor{keywordflow}{if}\ (c-\/>\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a3663c6759fb101e8cd13b246dfcf04fe}{state}}.value()-\/>\_dirty)\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a716228d6aacb611d239c364065bf207d}{redraw\_component}}(c);}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{00146\ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{bool}\ any\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ c-\/>children)}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ any\ =\ \mbox{\hyperlink{classcydui_1_1layout_1_1Layout_a2b4b0268403b901e948239bb0e54c95d}{render\_if\_dirty}}(item)\ ||\ any;\textcolor{comment}{//\ !\ F**K,\ order\ here\ matters}}
+\DoxyCodeLine{00150\ \ \ \ \ \textcolor{comment}{//\ ?\ render\_if\_dirty()\ needs\ to\ be\ called\ before\ \`{}any`\ is\ checked.}}
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordflow}{return}\ any;}
+\DoxyCodeLine{00152\ \ \ \}}
+\DoxyCodeLine{00153\ \}}
 
 \end{DoxyCode}
 

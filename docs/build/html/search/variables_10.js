@@ -11,7 +11,7 @@ var searchData=
   ['render_5fmtx_8',['render_mtx',['../structcydui_1_1graphics_1_1window__t.html#ada7b7df437402a71353d45d05ef32065',1,'cydui::graphics::window_t']]],
   ['render_5ftarget_9',['render_target',['../structcydui_1_1graphics_1_1window__t.html#aac71ce31fada0d62b259b3099d06727a',1,'cydui::graphics::window_t::render_target'],['../classcydui_1_1compositing_1_1LayoutCompositor.html#aa553689bee43574450265dc739d4fea5',1,'cydui::compositing::LayoutCompositor::render_target']]],
   ['render_5fthd_10',['render_thd',['../structcydui_1_1graphics_1_1window__t.html#a83be54ffd1345a2a4a4766ea596bffab',1,'cydui::graphics::window_t']]],
-  ['resizeeventdatamonitor_11',['resizeEventDataMonitor',['../graphics_2x11_2events_2events_8cpp.html#a25e8c99a102945f3abea22cf16e82111',1,'events.cpp']]],
+  ['resizeeventdatamonitor_11',['resizeEventDataMonitor',['../graphics_2x11_2events_2events_8cpp.html#aa73ccf52b59650f0917dd9d85bc01800',1,'events.cpp']]],
   ['result_12',['result',['../classcydui_1_1tasks_1_1simple__task__w__result__t.html#a4f5d36b8e20e28d37847113b54d5d71a',1,'cydui::tasks::simple_task_w_result_t::result'],['../structcydui_1_1components_1_1with_1_1map__to__result__t.html#a745e3b072cd4c9e0e5e908babc221da3',1,'cydui::components::with::map_to_result_t::result']]],
   ['right_13',['right',['../structcydui_1_1dimensions_1_1four__sided__dimension__t.html#a4ff3acd7f952b093a4ebbc2236e99b84',1,'cydui::dimensions::four_sided_dimension_t']]],
   ['root_14',['root',['../classcydui_1_1layout_1_1Layout.html#aa20857a68ff314cb3686ecffa231a3a7',1,'cydui::layout::Layout::root'],['../structcydui_1_1compositing_1_1compositing__tree__t.html#a278b85ded193538feb5103bb9060a1d9',1,'cydui::compositing::compositing_tree_t::root']]],

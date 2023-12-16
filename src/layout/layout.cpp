@@ -118,7 +118,7 @@ void cydui::layout::Layout::recompute_dimensions(
 
 void cydui::layout::Layout::redraw_component(component_base_t* target) {
   log_lay.debug("REDRAW");
-  //auto t0 = std::chrono::system_clock::now().time_since_epoch();
+  //auto t0 = std::chrono::system_clock::now();
   // Clear render area of component instances
   auto* compositing_tree = new compositing::compositing_tree_t;
   
@@ -135,6 +135,8 @@ void cydui::layout::Layout::redraw_component(component_base_t* target) {
   //compositing_tree->fix_dimensions();
   
   compositor.compose(compositing_tree);
+  //auto t1 = std::chrono::system_clock::now();
+  //printf("redraw time: %ld us\n", std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count());
 }
 
 bool cydui::layout::Layout::render_if_dirty(component_base_t* c) {
