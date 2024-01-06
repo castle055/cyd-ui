@@ -89,6 +89,7 @@ namespace cydui::components {
       virtual void configure_event_handler() = 0;
       virtual void subscribe_events() = 0;
       virtual void clear_children() = 0;
+      virtual attrs_component<>* attrs() = 0;
       
       virtual event_handler_t* event_handler() = 0;
       
@@ -143,7 +144,7 @@ namespace cydui::components {
       };
       
       void configure_event_handler() override {
-        EVH * evh = event_handler_.operator->();
+        EVH* evh = event_handler_.operator->();
         if (parent.has_value()) {
           evh->parent = parent.value()->event_handler();
         } else {
@@ -153,10 +154,11 @@ namespace cydui::components {
         evh->props = &(((T*) this)->props);
         evh->attrs = (attrs_component<T>*) this;
         evh->get_dim = [this] {return get_dimensional_relations();};
+        evh->$children = [this] {return children;};
       }
       void subscribe_events() override {
         clear_subscribed_listeners();
-        EVH * evh = event_handler_.operator->();
+        EVH* evh = event_handler_.operator->();
         add_event_listeners(evh->get_event_listeners());
       }
       void clear_children() override {
@@ -165,6 +167,14 @@ namespace cydui::components {
         }
         children.clear();
       }
+      attrs_component<>* attrs() override {
+        // Yes, the order of casting matters here because a conversion from `this` to
+        // `(attrs_component<>*)` does not work since that type is not a base of this
+        // class. So we need to cast to the base class first and then to its `void`
+        // specialization.
+        return (attrs_component<>*) (attrs_component<T>*) this;
+      }
+      
       
       component_state_t* create_state_instance() override {
         return new typename T::state_t;
@@ -174,13 +184,54 @@ namespace cydui::components {
       }
       
       void redraw(cydui::layout::Layout* layout) override {
-        std::vector<component_holder_t> new_children = this->_content();
-        std::vector<component_holder_t> redraw_children = event_handler_->on_redraw();
-        for (auto &item: redraw_children) {
-          new_children.push_back(item);
+        std::vector<component_holder_t> content_children = this->_content();
+        std::string content_id_prefix = "content:";
+        std::size_t id_i = 0;
+        for (auto &item: content_children) {
+          for (auto &component_pair: item.get_components()) {
+            auto [id_, component] = component_pair;
+            std::string id = content_id_prefix;
+            id.append(id_);
+            id.append(":");
+            id.append(std::to_string(id_i));
+            
+            // Get or Create state for component
+            component_state_t* child_state;
+            if (state.value()->children_states.contains(id)) {
+              child_state = state.value()->children_states[id];
+            } else {
+              child_state = component->create_state_instance();
+              state.value()->children_states[id] = child_state;
+            }
+            
+            // Set child's variables
+            component->state = child_state;
+            child_state->win = state.value()->win;
+            child_state->parent = state.value();
+            child_state->component_instance = component;
+            component->parent = this;
+            children.push_back(component);
+            //printf("CHILDREN LEN: %d\n", children.size());
+            
+            // Configure event handler
+            component->configure_event_handler();
+            
+            // Subscribe child events
+            component->subscribe_events();
+            // Redraw child
+            //component->redraw(layout);
+            
+          }
+          ++id_i;
         }
         
-        std::size_t id_i = 0;
+        std::vector<component_holder_t> new_children = event_handler_->on_redraw();
+        for (auto &item: children) {
+          // Redraw content child
+          item->redraw(layout);
+        }
+        
+        id_i = 0;
         for (auto &item: new_children) {
           for (auto &component_pair: item.get_components()) {
             auto [id_, component] = component_pair;
