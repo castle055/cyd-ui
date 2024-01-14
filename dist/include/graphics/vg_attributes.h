@@ -238,6 +238,10 @@ namespace cydui::graphics::vg {
     VG_ATTRIBUTE_DIMENSION(cx, 0);
     //! @brief cy - center y-axis coordinate
     VG_ATTRIBUTE_DIMENSION(cy, 0);
+    //! @brief a1 - 1st angle in arcs in degrees
+    VG_ATTRIBUTE(double, a1, 0);
+    //! @brief a1 - 2st angle in arcs in degrees
+    VG_ATTRIBUTE(double, a2, 0);
     
     using point_list_t = std::vector<std::array<int, 2>>;
     //! @brief points

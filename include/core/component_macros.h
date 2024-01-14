@@ -16,17 +16,21 @@
 #define CYDUI_COMPONENT_METADATA(NAME_) \
     logging::logger log{.name = #NAME_};\
     static constexpr const char* NAME = #NAME_ ; \
-
-
+    std::string name() override { return std::string {NAME}; }
 
 // ? Macros for declaring component classes
 // ?>
 #define STATE(NAME) \
-struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
-
+struct NAME;        \
+template<typename T>\
+struct component_state_template; \
+template<>          \
+struct component_state_template<NAME>: public cydui::components::component_state_t
 
 // ?>
 #define COMPONENT(NAME, ...) \
+struct NAME;                 \
+using CYDUI_STATE_NAME(NAME) = component_state_template<NAME>; \
 struct CYDUI_EV_HANDLER_NAME(NAME); \
 struct NAME:                 \
   public cydui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME> \
@@ -35,8 +39,8 @@ struct NAME:                 \
     using state_t = CYDUI_STATE_NAME(NAME);                   \
     using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME);      \
     struct props_t           \
-      __VA_ARGS__            \
-    props;                   \
+      __VA_ARGS__;           \
+    props_t props;           \
     NAME() = default;        \
     explicit NAME(props_t props)    \
       : cydui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\
@@ -76,8 +80,8 @@ struct NAME:                          \
     using state_t = CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \
     using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \
     struct props_t                    \
-      __VA_ARGS__                     \
-    props;                            \
+      __VA_ARGS__;                    \
+    props_t props;                    \
     NAME() = default;                 \
     explicit NAME(props_t props)      \
       : cydui::components::component_t<           \

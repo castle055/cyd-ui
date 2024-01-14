@@ -72,6 +72,9 @@ var annotated_dup =
             [ "solid", "structcydui_1_1graphics_1_1vg_1_1paint_1_1solid.html", "structcydui_1_1graphics_1_1vg_1_1paint_1_1solid" ]
           ] ],
           [ "accepts_content", "structcydui_1_1graphics_1_1vg_1_1accepts__content.html", "structcydui_1_1graphics_1_1vg_1_1accepts__content" ],
+          [ "arc", "structcydui_1_1graphics_1_1vg_1_1arc.html", "structcydui_1_1graphics_1_1vg_1_1arc" ],
+          [ "attr_a1", "structcydui_1_1graphics_1_1vg_1_1attr__a1.html", "structcydui_1_1graphics_1_1vg_1_1attr__a1" ],
+          [ "attr_a2", "structcydui_1_1graphics_1_1vg_1_1attr__a2.html", "structcydui_1_1graphics_1_1vg_1_1attr__a2" ],
           [ "attr_cx", "structcydui_1_1graphics_1_1vg_1_1attr__cx.html", "structcydui_1_1graphics_1_1vg_1_1attr__cx" ],
           [ "attr_cy", "structcydui_1_1graphics_1_1vg_1_1attr__cy.html", "structcydui_1_1graphics_1_1vg_1_1attr__cy" ],
           [ "attr_fill", "structcydui_1_1graphics_1_1vg_1_1attr__fill.html", "structcydui_1_1graphics_1_1vg_1_1attr__fill" ],
@@ -156,6 +159,23 @@ var annotated_dup =
       [ "event_t", "structprof_1_1event__t.html", "structprof_1_1event__t" ],
       [ "thread_context_t", "structprof_1_1thread__context__t.html", "structprof_1_1thread__context__t" ]
     ] ],
+    [ "stdui", "namespacestdui.html", [
+      [ "control", "namespacestdui_1_1control.html", [
+        [ "Button", "structstdui_1_1control_1_1Button.html", "structstdui_1_1control_1_1Button" ],
+        [ "ButtonEventHandler", "structstdui_1_1control_1_1ButtonEventHandler.html", null ],
+        [ "ButtonEventHandlerData", "structstdui_1_1control_1_1ButtonEventHandlerData.html", "structstdui_1_1control_1_1ButtonEventHandlerData" ]
+      ] ],
+      [ "layout", "namespacestdui_1_1layout.html", [
+        [ "component_state_template", "structstdui_1_1layout_1_1component__state__template.html", null ],
+        [ "component_state_template< Grid >", "structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4.html", "structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4" ],
+        [ "Flow", "structstdui_1_1layout_1_1Flow.html", "structstdui_1_1layout_1_1Flow" ],
+        [ "FlowEventHandler", "structstdui_1_1layout_1_1FlowEventHandler.html", "structstdui_1_1layout_1_1FlowEventHandler" ],
+        [ "FlowEventHandlerData", "structstdui_1_1layout_1_1FlowEventHandlerData.html", "structstdui_1_1layout_1_1FlowEventHandlerData" ],
+        [ "Grid", "structstdui_1_1layout_1_1Grid.html", "structstdui_1_1layout_1_1Grid" ],
+        [ "GridEventHandler", "structstdui_1_1layout_1_1GridEventHandler.html", "structstdui_1_1layout_1_1GridEventHandler" ],
+        [ "GridEventHandlerData", "structstdui_1_1layout_1_1GridEventHandlerData.html", "structstdui_1_1layout_1_1GridEventHandlerData" ]
+      ] ]
+    ] ],
     [ "x11", "namespacex11.html", [
       [ "imgs", "namespacex11_1_1imgs.html", [
         [ "img_data", "structx11_1_1imgs_1_1img__data.html", "structx11_1_1imgs_1_1img__data" ],
@@ -184,6 +204,8 @@ var annotated_dup =
     [ "attrs_margin", "structattrs__margin.html", null ],
     [ "attrs_padding", "structattrs__padding.html", null ],
     [ "ButtonEvent", "structButtonEvent.html", "structButtonEvent" ],
+    [ "component_state_template", "structcomponent__state__template.html", null ],
+    [ "component_state_template< ThreadTimeline >", "structcomponent__state__template_3_01ThreadTimeline_01_4.html", "structcomponent__state__template_3_01ThreadTimeline_01_4" ],
     [ "event_data_type_base_t", "structevent__data__type__base__t.html", "structevent__data__type__base__t" ],
     [ "KeyEvent", "structKeyEvent.html", "structKeyEvent" ],
     [ "lazy_alloc", "structlazy__alloc.html", "structlazy__alloc" ],
@@ -199,7 +221,6 @@ var annotated_dup =
     [ "ThreadTimeline", "structThreadTimeline.html", "structThreadTimeline" ],
     [ "ThreadTimelineEventHandler", "structThreadTimelineEventHandler.html", "structThreadTimelineEventHandler" ],
     [ "ThreadTimelineEventHandlerData", "structThreadTimelineEventHandlerData.html", "structThreadTimelineEventHandlerData" ],
-    [ "ThreadTimelineState", "structThreadTimelineState.html", "structThreadTimelineState" ],
     [ "window_font", "structwindow__font.html", "structwindow__font" ],
     [ "window_image", "structwindow__image.html", "structwindow__image" ],
     [ "xcolor_hot_cache_entry_t", "structxcolor__hot__cache__entry__t.html", "structxcolor__hot__cache__entry__t" ]

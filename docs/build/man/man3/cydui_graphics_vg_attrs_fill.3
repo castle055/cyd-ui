@@ -95,41 +95,41 @@ Public Attributes inherited from \fBcydui::graphics::vg::attr_fill_rule< T >\fP
 .br
 struct cydui::graphics::vg::attrs_fill< T >"
 .PP
-Definition at line \fB384\fP of file \fBvg_attributes\&.h\fP\&.
+Definition at line \fB388\fP of file \fBvg_attributes\&.h\fP\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "template<typename \fBT\fP > void \fBcydui::graphics::vg::attrs_fill\fP< \fBT\fP >::apply_fill (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [protected]\fP"
 
 .PP
-Definition at line \fB389\fP of file \fBvg_attributes\&.h\fP\&..PP
+Definition at line \fB393\fP of file \fBvg_attributes\&.h\fP\&..PP
 .nf
-389                                                        {
-390         editor\->set_fill_rule(this\->_fill_rule);
-391       }
+393                                                        {
+394         editor\->set_fill_rule(this\->_fill_rule);
+395       }
 .fi
 
 .SS "template<typename \fBT\fP > \fBcolor::Color\fP \fBcydui::graphics::vg::attrs_fill\fP< \fBT\fP >::sample_fill (int x, int y) const\fC [inline]\fP, \fC [protected]\fP"
 
 .PP
-Definition at line \fB400\fP of file \fBvg_attributes\&.h\fP\&..PP
+Definition at line \fB404\fP of file \fBvg_attributes\&.h\fP\&..PP
 .nf
-400                                                  {
-401         return std::visit([&](auto &&f) \-> color::Color {
-402           return f\&.sample(x, y);
-403         }, this\->_fill);
-404       }
+404                                                  {
+405         return std::visit([&](auto &&f) \-> color::Color {
+406           return f\&.sample(x, y);
+407         }, this\->_fill);
+408       }
 .fi
 
 .SS "template<typename \fBT\fP > void \fBcydui::graphics::vg::attrs_fill\fP< \fBT\fP >::set_source_to_fill (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [protected]\fP"
 
 .PP
-Definition at line \fB393\fP of file \fBvg_attributes\&.h\fP\&..PP
+Definition at line \fB397\fP of file \fBvg_attributes\&.h\fP\&..PP
 .nf
-393                                                                {
-394         std::visit([&](auto &&f) {
-395           f\&.apply_to_source(editor, this\->_fill_opacity);
-396         }, this\->_fill);
-397       }
+397                                                                {
+398         std::visit([&](auto &&f) {
+399           f\&.apply_to_source(editor, this\->_fill_opacity);
+400         }, this\->_fill);
+401       }
 .fi
 
 

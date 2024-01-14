@@ -1,6 +1,7 @@
 var structcydui_1_1components_1_1component__t =
 [
     [ "~component_t", "structcydui_1_1components_1_1component__t.html#a3fb08b92b19ea518f74e0b45b1283304", null ],
+    [ "attrs", "structcydui_1_1components_1_1component__t.html#a9c63db3706476fc81b24e8277f16837b", null ],
     [ "clear_children", "structcydui_1_1components_1_1component__t.html#af3950e3addefc4661bb97e584ce55bb9", null ],
     [ "configure_event_handler", "structcydui_1_1components_1_1component__t.html#aecf031904194d001776f56ae8042c9bc", null ],
     [ "create_state_instance", "structcydui_1_1components_1_1component__t.html#a4f7dfbf6f5dd02faf737f3654c492773", null ],

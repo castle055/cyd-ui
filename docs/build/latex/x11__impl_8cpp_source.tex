@@ -301,13 +301,24 @@
 \DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00297}00297\ \ \ \textcolor{keywordflow}{return}\ (\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int})\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}};}
 \DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00298}00298\ \}}
 \DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00299}00299\ }
-\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00300}\mbox{\hyperlink{namespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e}{00300}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e}{cydui::graphics::terminate}}(\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui::graphics::window\_t}}*\ win)\ \{}
-\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00301}00301\ \ \ XUnmapWindow(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}});}
-\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00302}00302\ \ \ XDestroyWindow(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}});}
-\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00303}00303\ \ \ \textcolor{keyword}{delete}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ad72eebf095eba2d7a2f42d16e90ed522}{staging\_target}};}
-\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00304}00304\ \ \ \textcolor{keyword}{delete}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_aac71ce31fada0d62b259b3099d06727a}{render\_target}};}
-\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00305}00305\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}-\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a230c1adb68eeb06a399359ebb1fac07b}{running}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00306}00306\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}-\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a6359aff6f4f5585d8cfee4b01fa995be}{join}}();}
-\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00307}00307\ \}}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00300}\mbox{\hyperlink{namespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab}{00300}}\ std::pair<int,\ int>\ \mbox{\hyperlink{namespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab}{cydui::graphics::get\_position}}(\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui::graphics::window\_t}}*\ win)\ \{}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00301}00301\ \ \ XWindowAttributes\ attrs;}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00302}00302\ \ \ XGetWindowAttributes(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}},\ \&attrs);}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00303}00303\ \ \ \textcolor{keywordflow}{return}\ \{attrs.x,\ attrs.y\};}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00304}00304\ \}}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00305}\mbox{\hyperlink{namespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56}{00305}}\ std::pair<int,\ int>\ \mbox{\hyperlink{namespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56}{cydui::graphics::get\_size}}(\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui::graphics::window\_t}}*\ win)\ \{}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00306}00306\ \ \ XWindowAttributes\ attrs;}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00307}00307\ \ \ XGetWindowAttributes(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}},\ \&attrs);}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00308}00308\ \ \ \textcolor{keywordflow}{return}\ \{attrs.width,\ attrs.height\};}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00309}00309\ \}}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00310}00310\ }
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00311}\mbox{\hyperlink{namespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e}{00311}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{namespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e}{cydui::graphics::terminate}}(\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{cydui::graphics::window\_t}}*\ win)\ \{}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00312}00312\ \ \ XUnmapWindow(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}});}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00313}00313\ \ \ XDestroyWindow(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}});}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00314}00314\ \ \ \textcolor{keyword}{delete}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ad72eebf095eba2d7a2f42d16e90ed522}{staging\_target}};}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00315}00315\ \ \ \textcolor{keyword}{delete}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_aac71ce31fada0d62b259b3099d06727a}{render\_target}};}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00316}00316\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}-\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a230c1adb68eeb06a399359ebb1fac07b}{running}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00317}00317\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}-\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a6359aff6f4f5585d8cfee4b01fa995be}{join}}();}
+\DoxyCodeLine{\Hypertarget{x11__impl_8cpp_source_l00318}00318\ \}}
 
 \end{DoxyCode}

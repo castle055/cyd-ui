@@ -186,7 +186,7 @@ Additional Inherited Members</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename <a class="el" href="cydui__events_8h.html#ab3c7af4820830f9166ede9e5623c4e73ab9ece18c950afbfa6b0fdbfa4ff731d3">T</a>&gt;<br />
 struct cydui::graphics::vg::attrs_fill&lt; T &gt;</div>
-<p class="definition">Definition at line <a class="el" href="vg__attributes_8h_source.html#l00384">384</a> of file <a class="el" href="vg__attributes_8h_source.html">vg_attributes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="vg__attributes_8h_source.html#l00388">388</a> of file <a class="el" href="vg__attributes_8h_source.html">vg_attributes.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af1feaf9cc6caaa3e84c04be049830a73" name="af1feaf9cc6caaa3e84c04be049830a73"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af1feaf9cc6caaa3e84c04be049830a73">&#9670;&#160;</a></span>apply_fill()</h2>
@@ -214,11 +214,11 @@ template&lt;typename <a class="el" href="cydui__events_8h.html#ab3c7af4820830f91
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="vg__attributes_8h_source.html#l00389">389</a> of file <a class="el" href="vg__attributes_8h_source.html">vg_attributes.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  389</span>                                                       {</div>
-<div class="line"><span class="lineno">  390</span>        editor-&gt;set_fill_rule(this-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1vg_1_1attr__fill__rule.html#ac3daee4e92eadd2c59a62db84205e5ad">_fill_rule</a>);</div>
-<div class="line"><span class="lineno">  391</span>      }</div>
-<div class="ttc" id="astructcydui_1_1graphics_1_1vg_1_1attr__fill__rule_html_ac3daee4e92eadd2c59a62db84205e5ad"><div class="ttname"><a href="structcydui_1_1graphics_1_1vg_1_1attr__fill__rule.html#ac3daee4e92eadd2c59a62db84205e5ad">cydui::graphics::vg::attr_fill_rule&lt; T &gt;::_fill_rule</a></div><div class="ttdeci">fill_rule_e _fill_rule</div><div class="ttdef"><b>Definition</b> <a href="vg__attributes_8h_source.html#l00342">vg_attributes.h:342</a></div></div>
+<p class="definition">Definition at line <a class="el" href="vg__attributes_8h_source.html#l00393">393</a> of file <a class="el" href="vg__attributes_8h_source.html">vg_attributes.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  393</span>                                                       {</div>
+<div class="line"><span class="lineno">  394</span>        editor-&gt;set_fill_rule(this-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1vg_1_1attr__fill__rule.html#ac3daee4e92eadd2c59a62db84205e5ad">_fill_rule</a>);</div>
+<div class="line"><span class="lineno">  395</span>      }</div>
+<div class="ttc" id="astructcydui_1_1graphics_1_1vg_1_1attr__fill__rule_html_ac3daee4e92eadd2c59a62db84205e5ad"><div class="ttname"><a href="structcydui_1_1graphics_1_1vg_1_1attr__fill__rule.html#ac3daee4e92eadd2c59a62db84205e5ad">cydui::graphics::vg::attr_fill_rule&lt; T &gt;::_fill_rule</a></div><div class="ttdeci">fill_rule_e _fill_rule</div><div class="ttdef"><b>Definition</b> <a href="vg__attributes_8h_source.html#l00346">vg_attributes.h:346</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -258,14 +258,14 @@ template&lt;typename <a class="el" href="cydui__events_8h.html#ab3c7af4820830f91
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="vg__attributes_8h_source.html#l00400">400</a> of file <a class="el" href="vg__attributes_8h_source.html">vg_attributes.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  400</span>                                                 {</div>
-<div class="line"><span class="lineno">  401</span>        <span class="keywordflow">return</span> std::visit([&amp;](<span class="keyword">auto</span> &amp;&amp;f) -&gt; <a class="code hl_struct" href="structcydui_1_1graphics_1_1color_1_1Color.html">color::Color</a> {</div>
-<div class="line"><span class="lineno">  402</span>          <span class="keywordflow">return</span> f.sample(x, y);</div>
-<div class="line"><span class="lineno">  403</span>        }, this-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1vg_1_1attr__fill.html#a80b6823a7bfa1fbecfde96bf465dc513">_fill</a>);</div>
-<div class="line"><span class="lineno">  404</span>      }</div>
+<p class="definition">Definition at line <a class="el" href="vg__attributes_8h_source.html#l00404">404</a> of file <a class="el" href="vg__attributes_8h_source.html">vg_attributes.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  404</span>                                                 {</div>
+<div class="line"><span class="lineno">  405</span>        <span class="keywordflow">return</span> std::visit([&amp;](<span class="keyword">auto</span> &amp;&amp;f) -&gt; <a class="code hl_struct" href="structcydui_1_1graphics_1_1color_1_1Color.html">color::Color</a> {</div>
+<div class="line"><span class="lineno">  406</span>          <span class="keywordflow">return</span> f.sample(x, y);</div>
+<div class="line"><span class="lineno">  407</span>        }, this-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1vg_1_1attr__fill.html#a80b6823a7bfa1fbecfde96bf465dc513">_fill</a>);</div>
+<div class="line"><span class="lineno">  408</span>      }</div>
 <div class="ttc" id="astructcydui_1_1graphics_1_1color_1_1Color_html"><div class="ttname"><a href="structcydui_1_1graphics_1_1color_1_1Color.html">cydui::graphics::color::Color</a></div><div class="ttdef"><b>Definition</b> <a href="color_8h_source.html#l00014">color.h:14</a></div></div>
-<div class="ttc" id="astructcydui_1_1graphics_1_1vg_1_1attr__fill_html_a80b6823a7bfa1fbecfde96bf465dc513"><div class="ttname"><a href="structcydui_1_1graphics_1_1vg_1_1attr__fill.html#a80b6823a7bfa1fbecfde96bf465dc513">cydui::graphics::vg::attr_fill&lt; T &gt;::_fill</a></div><div class="ttdeci">vg::paint::type _fill</div><div class="ttdef"><b>Definition</b> <a href="vg__attributes_8h_source.html#l00335">vg_attributes.h:335</a></div></div>
+<div class="ttc" id="astructcydui_1_1graphics_1_1vg_1_1attr__fill_html_a80b6823a7bfa1fbecfde96bf465dc513"><div class="ttname"><a href="structcydui_1_1graphics_1_1vg_1_1attr__fill.html#a80b6823a7bfa1fbecfde96bf465dc513">cydui::graphics::vg::attr_fill&lt; T &gt;::_fill</a></div><div class="ttdeci">vg::paint::type _fill</div><div class="ttdef"><b>Definition</b> <a href="vg__attributes_8h_source.html#l00339">vg_attributes.h:339</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -295,13 +295,13 @@ template&lt;typename <a class="el" href="cydui__events_8h.html#ab3c7af4820830f91
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="vg__attributes_8h_source.html#l00393">393</a> of file <a class="el" href="vg__attributes_8h_source.html">vg_attributes.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  393</span>                                                               {</div>
-<div class="line"><span class="lineno">  394</span>        std::visit([&amp;](<span class="keyword">auto</span> &amp;&amp;f) {</div>
-<div class="line"><span class="lineno">  395</span>          f.apply_to_source(editor, this-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1vg_1_1attr__fill__opacity.html#acd288eecd085e2002f6121b4b2d6497e">_fill_opacity</a>);</div>
-<div class="line"><span class="lineno">  396</span>        }, this-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1vg_1_1attr__fill.html#a80b6823a7bfa1fbecfde96bf465dc513">_fill</a>);</div>
-<div class="line"><span class="lineno">  397</span>      }</div>
-<div class="ttc" id="astructcydui_1_1graphics_1_1vg_1_1attr__fill__opacity_html_acd288eecd085e2002f6121b4b2d6497e"><div class="ttname"><a href="structcydui_1_1graphics_1_1vg_1_1attr__fill__opacity.html#acd288eecd085e2002f6121b4b2d6497e">cydui::graphics::vg::attr_fill_opacity&lt; T &gt;::_fill_opacity</a></div><div class="ttdeci">double _fill_opacity</div><div class="ttdef"><b>Definition</b> <a href="vg__attributes_8h_source.html#l00337">vg_attributes.h:337</a></div></div>
+<p class="definition">Definition at line <a class="el" href="vg__attributes_8h_source.html#l00397">397</a> of file <a class="el" href="vg__attributes_8h_source.html">vg_attributes.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  397</span>                                                               {</div>
+<div class="line"><span class="lineno">  398</span>        std::visit([&amp;](<span class="keyword">auto</span> &amp;&amp;f) {</div>
+<div class="line"><span class="lineno">  399</span>          f.apply_to_source(editor, this-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1vg_1_1attr__fill__opacity.html#acd288eecd085e2002f6121b4b2d6497e">_fill_opacity</a>);</div>
+<div class="line"><span class="lineno">  400</span>        }, this-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1vg_1_1attr__fill.html#a80b6823a7bfa1fbecfde96bf465dc513">_fill</a>);</div>
+<div class="line"><span class="lineno">  401</span>      }</div>
+<div class="ttc" id="astructcydui_1_1graphics_1_1vg_1_1attr__fill__opacity_html_acd288eecd085e2002f6121b4b2d6497e"><div class="ttname"><a href="structcydui_1_1graphics_1_1vg_1_1attr__fill__opacity.html#acd288eecd085e2002f6121b4b2d6497e">cydui::graphics::vg::attr_fill_opacity&lt; T &gt;::_fill_opacity</a></div><div class="ttdeci">double _fill_opacity</div><div class="ttdef"><b>Definition</b> <a href="vg__attributes_8h_source.html#l00341">vg_attributes.h:341</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -180,45 +180,45 @@ Public Attributes inherited from \fBcydui::graphics::vg::attr_stroke_linecap< T 
 .br
 struct cydui::graphics::vg::attrs_stroke< T >"
 .PP
-Definition at line \fB351\fP of file \fBvg_attributes\&.h\fP\&.
+Definition at line \fB355\fP of file \fBvg_attributes\&.h\fP\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "template<typename \fBT\fP > void \fBcydui::graphics::vg::attrs_stroke\fP< \fBT\fP >::apply_stroke (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [protected]\fP"
 
 .PP
-Definition at line \fB361\fP of file \fBvg_attributes\&.h\fP\&..PP
+Definition at line \fB365\fP of file \fBvg_attributes\&.h\fP\&..PP
 .nf
-361                                                          {
-362         editor\->set_line_width(this\->_stroke_width);
-363         editor\->set_line_cap(this\->_stroke_linecap);
-364         editor\->set_line_join(this\->_stroke_linejoin);
-365         editor\->set_dash(this\->_stroke_dasharray, this\->_stroke_dashoffset);
-366         editor\->set_miter_limit(this\->_stroke_miterlimit);
-367       }
+365                                                          {
+366         editor\->set_line_width(this\->_stroke_width);
+367         editor\->set_line_cap(this\->_stroke_linecap);
+368         editor\->set_line_join(this\->_stroke_linejoin);
+369         editor\->set_dash(this\->_stroke_dasharray, this\->_stroke_dashoffset);
+370         editor\->set_miter_limit(this\->_stroke_miterlimit);
+371       }
 .fi
 
 .SS "template<typename \fBT\fP > \fBcolor::Color\fP \fBcydui::graphics::vg::attrs_stroke\fP< \fBT\fP >::sample_stroke (int x, int y) const\fC [inline]\fP, \fC [protected]\fP"
 
 .PP
-Definition at line \fB376\fP of file \fBvg_attributes\&.h\fP\&..PP
+Definition at line \fB380\fP of file \fBvg_attributes\&.h\fP\&..PP
 .nf
-376                                                    {
-377         return std::visit([&](auto &&f) \-> color::Color {
-378           return f\&.sample(x, y);
-379         }, this\->_stroke);
-380       }
+380                                                    {
+381         return std::visit([&](auto &&f) \-> color::Color {
+382           return f\&.sample(x, y);
+383         }, this\->_stroke);
+384       }
 .fi
 
 .SS "template<typename \fBT\fP > void \fBcydui::graphics::vg::attrs_stroke\fP< \fBT\fP >::set_source_to_stroke (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [protected]\fP"
 
 .PP
-Definition at line \fB369\fP of file \fBvg_attributes\&.h\fP\&..PP
+Definition at line \fB373\fP of file \fBvg_attributes\&.h\fP\&..PP
 .nf
-369                                                                  {
-370         std::visit([&](auto &&s) {
-371           s\&.apply_to_source(editor, this\->_stroke_opacity);
-372         }, this\->_stroke);
-373       }
+373                                                                  {
+374         std::visit([&](auto &&s) {
+375           s\&.apply_to_source(editor, this\->_stroke_opacity);
+376         }, this\->_stroke);
+377       }
 .fi
 
 

@@ -125,6 +125,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acd103546110900b4a82eaadcdbf46fa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad9a7a270f58bbb6ac361e0310433a248" id="r_ad9a7a270f58bbb6ac361e0310433a248"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcydui_1_1dimensions_1_1dimensional__relation__t.html#ad9a7a270f58bbb6ac361e0310433a248">operator dimension_value_t</a> () const</td></tr>
 <tr class="separator:ad9a7a270f58bbb6ac361e0310433a248"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a49291eb1943779ca7173c74248cf9ea5" id="r_a49291eb1943779ca7173c74248cf9ea5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacecydui_1_1dimensions.html#a30d917fa574bad7f5bc21f64723d7fb1">dimension_value_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcydui_1_1dimensions_1_1dimensional__relation__t.html#a49291eb1943779ca7173c74248cf9ea5">val</a> () const</td></tr>
+<tr class="separator:a49291eb1943779ca7173c74248cf9ea5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -188,8 +190,9 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="dimensions_8cpp_source.html#l00032">32</a> of file <a class="el" href="dimensions_8cpp_source.html">dimensions.cpp</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   33</span>                                     {</div>
-<div class="line"><span class="lineno">   34</span>  this-&gt;<a class="code hl_variable" href="structcydui_1_1dimensions_1_1dimensional__relation__t.html#a554c606d5c0414b64fcdf5c012f92768">binding</a> = [val]() { <span class="keywordflow">return</span> val; };</div>
+<div class="line"><span class="lineno">   34</span>  this-&gt;<a class="code hl_variable" href="structcydui_1_1dimensions_1_1dimensional__relation__t.html#a554c606d5c0414b64fcdf5c012f92768">binding</a> = [<a class="code hl_function" href="structcydui_1_1dimensions_1_1dimensional__relation__t.html#a49291eb1943779ca7173c74248cf9ea5">val</a>]() { <span class="keywordflow">return</span> <a class="code hl_function" href="structcydui_1_1dimensions_1_1dimensional__relation__t.html#a49291eb1943779ca7173c74248cf9ea5">val</a>; };</div>
 <div class="line"><span class="lineno">   35</span>}</div>
+<div class="ttc" id="astructcydui_1_1dimensions_1_1dimensional__relation__t_html_a49291eb1943779ca7173c74248cf9ea5"><div class="ttname"><a href="structcydui_1_1dimensions_1_1dimensional__relation__t.html#a49291eb1943779ca7173c74248cf9ea5">cydui::dimensions::dimensional_relation_t::val</a></div><div class="ttdeci">dimension_value_t val() const</div><div class="ttdef"><b>Definition</b> <a href="dimensions_8hpp_source.html#l00041">dimensions.hpp:41</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -259,6 +262,54 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   38</span>        <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="structcydui_1_1dimensions_1_1dimensional__relation__t.html#a554c606d5c0414b64fcdf5c012f92768">binding</a>();</div>
 <div class="line"><span class="lineno">   39</span>      }</div>
 </div><!-- fragment -->
+</div>
+</div>
+<a id="a49291eb1943779ca7173c74248cf9ea5" name="a49291eb1943779ca7173c74248cf9ea5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a49291eb1943779ca7173c74248cf9ea5">&#9670;&#160;</a></span>val()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacecydui_1_1dimensions.html#a30d917fa574bad7f5bc21f64723d7fb1">dimension_value_t</a> cydui::dimensions::dimensional_relation_t::val </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="dimensions_8hpp_source.html#l00041">41</a> of file <a class="el" href="dimensions_8hpp_source.html">dimensions.hpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>                                    {</div>
+<div class="line"><span class="lineno">   42</span>        <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="structcydui_1_1dimensions_1_1dimensional__relation__t.html#a554c606d5c0414b64fcdf5c012f92768">binding</a>();</div>
+<div class="line"><span class="lineno">   43</span>      }</div>
+</div><!-- fragment --><div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="structcydui_1_1dimensions_1_1dimensional__relation__t_a49291eb1943779ca7173c74248cf9ea5_icgraph.png" border="0" usemap="#astructcydui_1_1dimensions_1_1dimensional__relation__t_a49291eb1943779ca7173c74248cf9ea5_icgraph" alt=""/></div>
+<map name="astructcydui_1_1dimensions_1_1dimensional__relation__t_a49291eb1943779ca7173c74248cf9ea5_icgraph" id="astructcydui_1_1dimensions_1_1dimensional__relation__t_a49291eb1943779ca7173c74248cf9ea5_icgraph">
+<area shape="rect" title=" " alt="" coords="257,101,396,160"/>
+<area shape="rect" href="structstdui_1_1layout_1_1FlowEventHandler.html#aaf6cc14e095e38e273ecfdf38e48c96a" title=" " alt="" coords="5,5,209,48"/>
+<area shape="poly" title=" " alt="" coords="267,95,208,62,180,51,182,46,210,58,269,90"/>
+<area shape="rect" href="structstdui_1_1layout_1_1FlowEventHandler.html#a5f05ea6fb7223510b42c8dd585022d3b" title=" " alt="" coords="8,72,206,115"/>
+<area shape="poly" title=" " alt="" coords="241,119,206,113,207,108,242,114"/>
+<area shape="rect" href="structstdui_1_1layout_1_1FlowEventHandler.html#ae80f631df4f74add044fdb100f63889f" title=" " alt="" coords="26,139,188,197"/>
+<area shape="poly" title=" " alt="" coords="242,148,189,157,188,152,241,142"/>
+<area shape="rect" href="structstdui_1_1layout_1_1FlowEventHandler.html#a5b307fb261b560906e9cc5e56eaa7769" title=" " alt="" coords="26,221,188,280"/>
+<area shape="poly" title=" " alt="" coords="274,171,210,212,186,223,184,218,207,207,272,167"/>
+</map>
+</div>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

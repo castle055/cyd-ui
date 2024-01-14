@@ -1,0 +1,105 @@
+\doxysection{stdui\+::layout\+::component\+\_\+state\+\_\+template\texorpdfstring{$<$}{<} Grid \texorpdfstring{$>$}{>} Struct Reference}
+\hypertarget{structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4}{}\label{structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4}\index{stdui::layout::component\_state\_template$<$ Grid $>$@{stdui::layout::component\_state\_template$<$ Grid $>$}}
+
+
+{\ttfamily \#include $<$stdui.\+h$>$}
+
+
+
+Inheritance diagram for stdui\+::layout\+::component\+\_\+state\+\_\+template\texorpdfstring{$<$}{<} Grid \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=203pt]{structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for stdui\+::layout\+::component\+\_\+state\+\_\+template\texorpdfstring{$<$}{<} Grid \texorpdfstring{$>$}{>}\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{cydui\+::components\+::component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*}, std\+::pair$<$ int, int $>$ $>$ \mbox{\hyperlink{structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4_abc03abb9b60864ceea0161bccf84eb57}{positions}} \{\}
+\item 
+std\+::unordered\+\_\+map$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{cydui\+::components\+::component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*}, std\+::pair$<$ int, int $>$ $>$ \mbox{\hyperlink{structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4_a126dc7be9decd8057e1d005609aa5bd2}{sizes}} \{\}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes inherited from \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui\+::components\+::component\+\_\+state\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classcydui_1_1window_1_1CWindow}{window\+::\+CWindow}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a805629d2279bd32a8423246e3ca72e53}{win}} = nullptr
+\item 
+std\+::optional$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_ae9b274be1a4e0046f33e6785cd4bb5cc}{parent}} = std\+::nullopt
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{component\+\_\+state\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa091bf4653b4921f45bdebb2ce782582}{children\+\_\+states}} \{\}
+\item 
+bool \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_ad320de01c5767207075d22a2d48be7bf}{\+\_\+dirty}} = false
+\item 
+bool \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aec797d7805092d55cd80061fa8ca547c}{focused}} = false
+\item 
+bool \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a633e8d805bb6a8380106f8f9fca4be82}{hovering}} = false
+\item 
+std\+::optional$<$ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{component\+\_\+base\+\_\+t}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_aa41c5fd864bdf71656a292fa86b9e0d3}{component\+\_\+instance}} = std\+::nullopt
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui\+::components\+::component\+\_\+state\+\_\+t}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a6e52ed7487c61640ad4a8edd0689906f}{mark\+\_\+dirty}} ()
+\begin{DoxyCompactList}\small\item\em Marks this component state as needing to be redrawn. \end{DoxyCompactList}\item 
+{\footnotesize template$<$\mbox{\hyperlink{conceptcydui_1_1events_1_1EventType}{cydui\+::events\+::\+Event\+Type}} T$>$ }\\void \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a9b47e276ec9c6e55128c90f935609fde}{emit}} (typename T\+::\+Data\+Type ev)
+\item 
+void \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t_a11cac671896d7f3399bfe676c5669c41}{force\+\_\+redraw}} ()
+\begin{DoxyCompactList}\small\item\em Emits a \doxylink{structRedrawEvent}{Redraw\+Event} for this component. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{stdui_8h_source_l00154}{154}} of file \mbox{\hyperlink{stdui_8h_source}{stdui.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4_abc03abb9b60864ceea0161bccf84eb57}\label{structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4_abc03abb9b60864ceea0161bccf84eb57} 
+\index{stdui::layout::component\_state\_template$<$ Grid $>$@{stdui::layout::component\_state\_template$<$ Grid $>$}!positions@{positions}}
+\index{positions@{positions}!stdui::layout::component\_state\_template$<$ Grid $>$@{stdui::layout::component\_state\_template$<$ Grid $>$}}
+\doxysubsubsection{\texorpdfstring{positions}{positions}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{cydui\+::components\+::component\+\_\+base\+\_\+t}}\texorpdfstring{$\ast$}{*}, std\+::pair$<$int, int$>$ $>$ \mbox{\hyperlink{structstdui_1_1layout_1_1component__state__template}{stdui\+::layout\+::component\+\_\+state\+\_\+template}}$<$ \mbox{\hyperlink{structstdui_1_1layout_1_1Grid}{Grid}} $>$\+::positions \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{stdui_8h_source_l00155}{155}} of file \mbox{\hyperlink{stdui_8h_source}{stdui.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00155\ \{\};}
+
+\end{DoxyCode}
+\Hypertarget{structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4_a126dc7be9decd8057e1d005609aa5bd2}\label{structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4_a126dc7be9decd8057e1d005609aa5bd2} 
+\index{stdui::layout::component\_state\_template$<$ Grid $>$@{stdui::layout::component\_state\_template$<$ Grid $>$}!sizes@{sizes}}
+\index{sizes@{sizes}!stdui::layout::component\_state\_template$<$ Grid $>$@{stdui::layout::component\_state\_template$<$ Grid $>$}}
+\doxysubsubsection{\texorpdfstring{sizes}{sizes}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$\mbox{\hyperlink{structcydui_1_1components_1_1component__base__t}{cydui\+::components\+::component\+\_\+base\+\_\+t}}\texorpdfstring{$\ast$}{*}, std\+::pair$<$int, int$>$ $>$ \mbox{\hyperlink{structstdui_1_1layout_1_1component__state__template}{stdui\+::layout\+::component\+\_\+state\+\_\+template}}$<$ \mbox{\hyperlink{structstdui_1_1layout_1_1Grid}{Grid}} $>$\+::sizes \{\}}
+
+
+
+Definition at line \mbox{\hyperlink{stdui_8h_source_l00156}{156}} of file \mbox{\hyperlink{stdui_8h_source}{stdui.\+h}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00156\ \{\};}
+
+\end{DoxyCode}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+include/\mbox{\hyperlink{stdui_8h}{stdui.\+h}}\end{DoxyCompactItemize}

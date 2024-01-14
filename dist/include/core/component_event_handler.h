@@ -62,6 +62,7 @@ namespace cydui::components {
       event_handler_t* parent;
       
       std::function<component_dimensional_relations_t()> get_dim;
+      std::function<std::vector<component_base_t*>()> $children;
       CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(x)
       CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(y)
       CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(w)

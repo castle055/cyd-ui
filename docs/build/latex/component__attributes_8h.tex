@@ -8,7 +8,8 @@ Include dependency graph for component\+\_\+attributes.\+h\+:\nopagebreak
 \includegraphics[width=295pt]{component__attributes_8h__incl}
 \end{center}
 \end{figure}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -79,16 +80,26 @@ using \mbox{\hyperlink{component__attributes_8h_a433f1845478577b631417df1354fac6
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ E>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }attr\_\#\#NAME:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structattribute__i}{attribute\_i}}\ \{\ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \string~attr\_\#\#NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \ \ TYPE\ \_\#\#NAME\ =\ DEFAULT;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \string~attr\_\#\#NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<!std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}{S}}\&\ NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<!std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}{S}}\&\ NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \}}
 
 \end{DoxyCode}
@@ -99,17 +110,27 @@ Definition at line \mbox{\hyperlink{component__attributes_8h_source_l00014}{14}}
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structattribute__i}{attribute\_i}}\ \{\ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00017\ \ \ \ \ \ \ \string~attr\_\#\#NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00018\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00021\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00022\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \(\backslash\)}
-\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00026\ \ \ \ \ \ \ TYPE\ \_\#\#NAME\ =\ DEFAULT;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00027\ \ \ \ \ \}}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ TYPE\ \_\#\#NAME\ =\ DEFAULT;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \string~attr\_\#\#NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<!std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}{S}}\&\ NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \(\backslash\)}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<!std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}{S}}\&\ NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \(\backslash\)}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \(\backslash\)}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \(\backslash\)}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00037\ \ \ \ \ \}}
 
 \end{DoxyCode}
 \Hypertarget{component__attributes_8h_a3416f2a52a4de9af8b6e0af0e56389de}\label{component__attributes_8h_a3416f2a52a4de9af8b6e0af0e56389de} 
@@ -122,43 +143,67 @@ Definition at line \mbox{\hyperlink{component__attributes_8h_source_l00014}{14}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ E>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }attr\_\#\#NAME:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structattribute__i}{attribute\_i}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \string~attr\_\#\#NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \ \ TYPE\ \_\#\#NAME\ =\ DEFAULT;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \string~attr\_\#\#NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<!std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}{S}}\&\ NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<!std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}{S}}\&\ NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \}}
 
 \end{DoxyCode}
 
 
-Definition at line \mbox{\hyperlink{component__attributes_8h_source_l00029}{29}} of file \mbox{\hyperlink{component__attributes_8h_source}{component\+\_\+attributes.\+h}}.
+Definition at line \mbox{\hyperlink{component__attributes_8h_source_l00039}{39}} of file \mbox{\hyperlink{component__attributes_8h_source}{component\+\_\+attributes.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structattribute__i}{attribute\_i}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00032\ \ \ \ \ \ \ \string~attr\_\#\#NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00033\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00037\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}\ \&NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ TYPE\ \_\#\#NAME\ =\ DEFAULT;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00044\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00045\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structattribute__i}{attribute\_i}}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ TYPE\ \_\#\#NAME\ =\ DEFAULT;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ \_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{false};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \string~attr\_\#\#NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<!std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}{S}}\&\ NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<!std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a5dbc98dcc983a70728bd082d1a47546e}{S}}\&\ NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *(\mbox{\hyperlink{cydui__events_8h_ab3c7af4820830f9166ede9e5623c4e73a3a3ea00cfc35332cedf6e5e9a32e94da}{E}}*)\textcolor{keyword}{this};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ NAME(\textcolor{keyword}{auto}\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \textcolor{keyword}{template}<\textcolor{keyword}{typename}\ S\ =\ E,\ \textcolor{keyword}{typename}\ =\ std::enable\_if\_t<std::is\_\textcolor{keywordtype}{void}\_v<S>>>\ \(\backslash\)}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ NAME(\textcolor{keyword}{auto}\&\&\ \_\#\#NAME\#\#\_)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\ =\ \_\#\#NAME\#\#\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ this-\/>\_\#\#NAME\#\#\_has\_changed\ =\ \textcolor{keyword}{true};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00067\ \ \ \ \ \}}
 
 \end{DoxyCode}
 
@@ -172,5 +217,5 @@ Definition at line \mbox{\hyperlink{component__attributes_8h_source_l00029}{29}}
 
 
 
-Definition at line \mbox{\hyperlink{component__attributes_8h_source_l00062}{62}} of file \mbox{\hyperlink{component__attributes_8h_source}{component\+\_\+attributes.\+h}}.
+Definition at line \mbox{\hyperlink{component__attributes_8h_source_l00084}{84}} of file \mbox{\hyperlink{component__attributes_8h_source}{component\+\_\+attributes.\+h}}.
 

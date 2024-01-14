@@ -90,6 +90,7 @@ namespace cydui::components {
       virtual void subscribe_events() = 0;
       virtual void clear_children() = 0;
       virtual attrs_component<>* attrs() = 0;
+      virtual std::string name() = 0;
       
       virtual event_handler_t* event_handler() = 0;
       
@@ -346,7 +347,11 @@ namespace cydui::components {
         };
       }
     };
+  
 }
+
+template<typename C>
+struct component_state_template: public cydui::components::component_state_t { };
 
 //#include "../graphics/vg.h"
 //

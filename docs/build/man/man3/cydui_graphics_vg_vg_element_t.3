@@ -9,7 +9,7 @@ cydui::graphics::vg::vg_element_t
 .PP
 \fC#include <vg\&.h>\fP
 .PP
-Inherited by \fBcydui::graphics::vg::circle\fP, \fBcydui::graphics::vg::ellipse\fP, \fBcydui::graphics::vg::group\fP, \fBcydui::graphics::vg::line\fP, \fBcydui::graphics::vg::path\fP, \fBcydui::graphics::vg::pixel\fP, \fBcydui::graphics::vg::polygon\fP, \fBcydui::graphics::vg::polyline\fP, \fBcydui::graphics::vg::rect\fP, and \fBcydui::graphics::vg::text\fP\&.
+Inherited by \fBcydui::graphics::vg::arc\fP, \fBcydui::graphics::vg::circle\fP, \fBcydui::graphics::vg::ellipse\fP, \fBcydui::graphics::vg::group\fP, \fBcydui::graphics::vg::line\fP, \fBcydui::graphics::vg::path\fP, \fBcydui::graphics::vg::pixel\fP, \fBcydui::graphics::vg::polygon\fP, \fBcydui::graphics::vg::polyline\fP, \fBcydui::graphics::vg::rect\fP, and \fBcydui::graphics::vg::text\fP\&.
 .SS "Classes"
 
 .in +1c
@@ -66,11 +66,11 @@ Definition at line \fB17\fP of file \fBvg\&.h\fP\&..PP
 .SS "virtual void cydui::graphics::vg::vg_element_t::apply_to (\fBpixelmap_editor_t\fP & editor) const\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::graphics::vg::pixel\fP, \fBcydui::graphics::vg::line\fP, \fBcydui::graphics::vg::polygon\fP, \fBcydui::graphics::vg::polyline\fP, \fBcydui::graphics::vg::path\fP, \fBcydui::graphics::vg::rect\fP, \fBcydui::graphics::vg::circle\fP, \fBcydui::graphics::vg::ellipse\fP, \fBcydui::graphics::vg::group\fP, and \fBcydui::graphics::vg::text\fP\&.
+Implemented in \fBcydui::graphics::vg::pixel\fP, \fBcydui::graphics::vg::line\fP, \fBcydui::graphics::vg::polygon\fP, \fBcydui::graphics::vg::polyline\fP, \fBcydui::graphics::vg::path\fP, \fBcydui::graphics::vg::rect\fP, \fBcydui::graphics::vg::circle\fP, \fBcydui::graphics::vg::arc\fP, \fBcydui::graphics::vg::ellipse\fP, \fBcydui::graphics::vg::group\fP, and \fBcydui::graphics::vg::text\fP\&.
 .SS "virtual \fBfootprint\fP cydui::graphics::vg::vg_element_t::get_footprint () const\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::graphics::vg::pixel\fP, \fBcydui::graphics::vg::line\fP, \fBcydui::graphics::vg::polygon\fP, \fBcydui::graphics::vg::polyline\fP, \fBcydui::graphics::vg::path\fP, \fBcydui::graphics::vg::rect\fP, \fBcydui::graphics::vg::circle\fP, \fBcydui::graphics::vg::ellipse\fP, \fBcydui::graphics::vg::group\fP, and \fBcydui::graphics::vg::text\fP\&.
+Implemented in \fBcydui::graphics::vg::pixel\fP, \fBcydui::graphics::vg::line\fP, \fBcydui::graphics::vg::polygon\fP, \fBcydui::graphics::vg::polyline\fP, \fBcydui::graphics::vg::path\fP, \fBcydui::graphics::vg::rect\fP, \fBcydui::graphics::vg::circle\fP, \fBcydui::graphics::vg::arc\fP, \fBcydui::graphics::vg::ellipse\fP, \fBcydui::graphics::vg::group\fP, and \fBcydui::graphics::vg::text\fP\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "int cydui::graphics::vg::vg_element_t::origin_x = 0"

@@ -358,15 +358,15 @@ Protected Member Functions inherited from \fBcydui::graphics::vg::attrs_font< te
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line \fB400\fP of file \fBvg\&.h\fP\&.
+Definition at line \fB433\fP of file \fBvg\&.h\fP\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "cydui::graphics::vg::text::text (std::string _text)\fC [inline]\fP"
 
 .PP
-Definition at line \fB411\fP of file \fBvg\&.h\fP\&..PP
+Definition at line \fB444\fP of file \fBvg\&.h\fP\&..PP
 .nf
-411 : _text(std::move(_text)) { }
+444 : _text(std::move(_text)) { }
 .fi
 
 .SH "Member Function Documentation"
@@ -376,30 +376,30 @@ Definition at line \fB411\fP of file \fBvg\&.h\fP\&..PP
 .PP
 Implements \fBcydui::graphics::vg::vg_element_t\fP\&.
 .PP
-Definition at line \fB412\fP of file \fBvg\&.h\fP\&..PP
+Definition at line \fB445\fP of file \fBvg\&.h\fP\&..PP
 .nf
-412                                                               {
-413         apply_font(editor);
-414         //apply_stroke(editor);
-415         apply_fill(editor);
-416         
-417         Cairo::FontExtents fextents;
-418         editor\->get_font_extents(fextents);
-419         
-420         Cairo::TextExtents extents;
-421         editor\->get_text_extents(_text, extents);
-422         
-423         
-424         set_source_to_fill(editor);
-425         editor\->move_to(origin_x + _x, origin_y + _y);
-426         editor\->show_text(_text);
-427         //editor\->move_to(origin_x + _x, origin_y + _y + fextents\&.ascent);
-428         //editor\->show_text(_text);
-429         //editor\->move_to(origin_x + _x + 5, origin_y + _y + fextents\&.height);
-430         //editor\->show_text(_text);
-431         //editor\->move_to(origin_x + _x + 10, origin_y + _y + extents\&.height);
-432         //editor\->show_text(_text);
-433       }
+445                                                               {
+446         apply_font(editor);
+447         //apply_stroke(editor);
+448         apply_fill(editor);
+449         
+450         Cairo::FontExtents fextents;
+451         editor\->get_font_extents(fextents);
+452         
+453         Cairo::TextExtents extents;
+454         editor\->get_text_extents(_text, extents);
+455         
+456         
+457         set_source_to_fill(editor);
+458         editor\->move_to(origin_x + _x, origin_y + _y);
+459         editor\->show_text(_text);
+460         //editor\->move_to(origin_x + _x, origin_y + _y + fextents\&.ascent);
+461         //editor\->show_text(_text);
+462         //editor\->move_to(origin_x + _x + 5, origin_y + _y + fextents\&.height);
+463         //editor\->show_text(_text);
+464         //editor\->move_to(origin_x + _x + 10, origin_y + _y + extents\&.height);
+465         //editor\->show_text(_text);
+466       }
 .fi
 
 .SS "\fBfootprint\fP cydui::graphics::vg::text::get_footprint () const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -407,11 +407,28 @@ Definition at line \fB412\fP of file \fBvg\&.h\fP\&..PP
 .PP
 Implements \fBcydui::graphics::vg::vg_element_t\fP\&.
 .PP
-Definition at line \fB435\fP of file \fBvg\&.h\fP\&..PP
+Definition at line \fB468\fP of file \fBvg\&.h\fP\&..PP
 .nf
-435                                                {
-436         return {};
-437       }
+468                                                {
+469         pixelmap_t pm {0, 0};
+470         pixelmap_editor_t pe {pm};
+471         
+472         apply_font(pe);
+473         apply_fill(pe);
+474         
+475         Cairo::FontExtents fextents;
+476         pe\->get_font_extents(fextents);
+477         
+478         Cairo::TextExtents extents;
+479         pe\->get_text_extents(_text, extents);
+480         
+481         return {
+482           \&.x = _x,
+483           \&.y = _y,
+484           \&.w = (int) extents\&.width,
+485           \&.h = (int) extents\&.height,
+486         };
+487       }
 .fi
 
 .SH "Member Data Documentation"
@@ -419,7 +436,7 @@ Definition at line \fB435\fP of file \fBvg\&.h\fP\&..PP
 .SS "std::string cydui::graphics::vg::text::_text"
 
 .PP
-Definition at line \fB410\fP of file \fBvg\&.h\fP\&.
+Definition at line \fB443\fP of file \fBvg\&.h\fP\&.
 
 .SH "Author"
 .PP 

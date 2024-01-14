@@ -126,6 +126,10 @@ Functions</h2></td></tr>
 <tr class="separator:a183658b9bd88610ff0e5767ae04c55d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6234089431f6875fe9514d4d1ed88d0" id="r_ad6234089431f6875fe9514d4d1ed88d0"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1graphics.html#ad6234089431f6875fe9514d4d1ed88d0">get_id</a> (<a class="el" href="structcydui_1_1graphics_1_1window__t.html">window_t</a> *win)</td></tr>
 <tr class="separator:ad6234089431f6875fe9514d4d1ed88d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44527d8f527f90eaf30edaabf48f1eab" id="r_a44527d8f527f90eaf30edaabf48f1eab"><td class="memItemLeft" align="right" valign="top">std::pair&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1graphics.html#a44527d8f527f90eaf30edaabf48f1eab">get_position</a> (<a class="el" href="structcydui_1_1graphics_1_1window__t.html">window_t</a> *win)</td></tr>
+<tr class="separator:a44527d8f527f90eaf30edaabf48f1eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72aab0f1e4039451adef6cbb8207ed56" id="r_a72aab0f1e4039451adef6cbb8207ed56"><td class="memItemLeft" align="right" valign="top">std::pair&lt; int, int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1graphics.html#a72aab0f1e4039451adef6cbb8207ed56">get_size</a> (<a class="el" href="structcydui_1_1graphics_1_1window__t.html">window_t</a> *win)</td></tr>
+<tr class="separator:a72aab0f1e4039451adef6cbb8207ed56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3ec912c904cf4d43e2615f86602884e" id="r_ac3ec912c904cf4d43e2615f86602884e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacecydui_1_1graphics.html#ac3ec912c904cf4d43e2615f86602884e">terminate</a> (<a class="el" href="structcydui_1_1graphics_1_1window__t.html">window_t</a> *win)</td></tr>
 <tr class="separator:ac3ec912c904cf4d43e2615f86602884e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -483,6 +487,112 @@ Functions</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="a44527d8f527f90eaf30edaabf48f1eab" name="a44527d8f527f90eaf30edaabf48f1eab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44527d8f527f90eaf30edaabf48f1eab">&#9670;&#160;</a></span>get_position()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; int, int &gt; cydui::graphics::get_position </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcydui_1_1graphics_1_1window__t.html">window_t</a> *&#160;</td>
+          <td class="paramname"><em>win</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00300">300</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  300</span>                                                                        {</div>
+<div class="line"><span class="lineno">  301</span>  XWindowAttributes attrs;</div>
+<div class="line"><span class="lineno">  302</span>  XGetWindowAttributes(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">xwin</a>, &amp;attrs);</div>
+<div class="line"><span class="lineno">  303</span>  <span class="keywordflow">return</span> {attrs.x, attrs.y};</div>
+<div class="line"><span class="lineno">  304</span>}</div>
+</div><!-- fragment --><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="namespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab_cgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab_cgraph" alt=""/></div>
+<map name="anamespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab_cgraph" id="anamespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab_cgraph">
+<area shape="rect" title=" " alt="" coords="5,23,141,65"/>
+<area shape="rect" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5" title=" " alt="" coords="189,31,321,57"/>
+<area shape="poly" title=" " alt="" coords="141,41,173,41,173,47,141,47"/>
+<area shape="rect" href="structlogging_1_1logger.html#ae412f4d42c6e53803201856b5ceba5aa" title=" " alt="" coords="369,5,508,32"/>
+<area shape="poly" title=" " alt="" coords="321,32,353,28,354,33,322,37"/>
+<area shape="rect" href="structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b" title=" " alt="" coords="372,56,506,83"/>
+<area shape="poly" title=" " alt="" coords="322,51,357,55,356,61,321,56"/>
+</map>
+</div>
+<div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="namespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab_icgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab_icgraph" alt=""/></div>
+<map name="anamespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab_icgraph" id="anamespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab_icgraph">
+<area shape="rect" title=" " alt="" coords="223,5,358,48"/>
+<area shape="rect" href="classcydui_1_1window_1_1CWindow.html#a8d0b3cdc91af68faf48ffaf3fbbe1e02" title=" " alt="" coords="5,5,175,48"/>
+<area shape="poly" title=" " alt="" coords="207,29,175,29,175,24,207,24"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a72aab0f1e4039451adef6cbb8207ed56" name="a72aab0f1e4039451adef6cbb8207ed56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72aab0f1e4039451adef6cbb8207ed56">&#9670;&#160;</a></span>get_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt; int, int &gt; cydui::graphics::get_size </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structcydui_1_1graphics_1_1window__t.html">window_t</a> *&#160;</td>
+          <td class="paramname"><em>win</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00305">305</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  305</span>                                                                    {</div>
+<div class="line"><span class="lineno">  306</span>  XWindowAttributes attrs;</div>
+<div class="line"><span class="lineno">  307</span>  XGetWindowAttributes(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">xwin</a>, &amp;attrs);</div>
+<div class="line"><span class="lineno">  308</span>  <span class="keywordflow">return</span> {attrs.width, attrs.height};</div>
+<div class="line"><span class="lineno">  309</span>}</div>
+</div><!-- fragment --><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="namespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56_cgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56_cgraph" alt=""/></div>
+<map name="anamespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56_cgraph" id="anamespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56_cgraph">
+<area shape="rect" title=" " alt="" coords="5,31,172,57"/>
+<area shape="rect" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5" title=" " alt="" coords="220,31,352,57"/>
+<area shape="poly" title=" " alt="" coords="172,41,204,41,204,47,172,47"/>
+<area shape="rect" href="structlogging_1_1logger.html#ae412f4d42c6e53803201856b5ceba5aa" title=" " alt="" coords="400,5,539,32"/>
+<area shape="poly" title=" " alt="" coords="352,32,384,28,385,33,353,37"/>
+<area shape="rect" href="structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b" title=" " alt="" coords="403,56,537,83"/>
+<area shape="poly" title=" " alt="" coords="353,51,388,55,387,61,352,56"/>
+</map>
+</div>
+<div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><img src="namespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56_icgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56_icgraph" alt=""/></div>
+<map name="anamespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56_icgraph" id="anamespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56_icgraph">
+<area shape="rect" title=" " alt="" coords="223,13,389,40"/>
+<area shape="rect" href="classcydui_1_1window_1_1CWindow.html#a0b4da8ca9fc5e94121b6a0231ca332cb" title=" " alt="" coords="5,5,175,48"/>
+<area shape="poly" title=" " alt="" coords="207,29,175,29,175,24,207,24"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a556fba69a253edbba4d4427ce889d0b7" name="a556fba69a253edbba4d4427ce889d0b7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a556fba69a253edbba4d4427ce889d0b7">&#9670;&#160;</a></span>resize()</h2>
 
@@ -526,11 +636,11 @@ Functions</h2></td></tr>
 <div class="ttc" id="astructcydui_1_1graphics_1_1window__t_html_aac71ce31fada0d62b259b3099d06727a"><div class="ttname"><a href="structcydui_1_1graphics_1_1window__t.html#aac71ce31fada0d62b259b3099d06727a">cydui::graphics::window_t::render_target</a></div><div class="ttdeci">pixelmap_t * render_target</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8hpp_source.html#l00033">x11_impl.hpp:33</a></div></div>
 <div class="ttc" id="astructcydui_1_1graphics_1_1window__t_html_ada7b7df437402a71353d45d05ef32065"><div class="ttname"><a href="structcydui_1_1graphics_1_1window__t.html#ada7b7df437402a71353d45d05ef32065">cydui::graphics::window_t::render_mtx</a></div><div class="ttdeci">std::mutex render_mtx</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8hpp_source.html#l00042">x11_impl.hpp:42</a></div></div>
 <div class="ttc" id="astructmd__buffer__t_html_a50e27c4acab4822976cf83ff1c79c3bd"><div class="ttname"><a href="structmd__buffer__t.html#a50e27c4acab4822976cf83ff1c79c3bd">md_buffer_t::resize</a></div><div class="ttdeci">void resize(std::array&lt; size_t, D &gt; new_size)</div><div class="ttdef"><b>Definition</b> <a href="multidim__data_8h_source.html#l00031">multidim_data.h:31</a></div></div>
-</div><!-- fragment --><div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div><!-- fragment --><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="namespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_cgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_cgraph" alt=""/></div>
 <map name="anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_cgraph" id="anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_cgraph">
 <area shape="rect" title=" " alt="" coords="5,13,158,40"/>
@@ -540,11 +650,11 @@ Functions</h2></td></tr>
 <area shape="poly" title=" " alt="" coords="338,24,370,24,370,29,338,29"/>
 </map>
 </div>
-<div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="namespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_icgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_icgraph" alt=""/></div>
 <map name="anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_icgraph" id="anamespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7_icgraph">
 <area shape="rect" title=" " alt="" coords="388,21,540,48"/>
@@ -573,23 +683,23 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00300">300</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  300</span>                                                        {</div>
-<div class="line"><span class="lineno">  301</span>  XUnmapWindow(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">xwin</a>);</div>
-<div class="line"><span class="lineno">  302</span>  XDestroyWindow(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">xwin</a>);</div>
-<div class="line"><span class="lineno">  303</span>  <span class="keyword">delete</span> win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#ad72eebf095eba2d7a2f42d16e90ed522">staging_target</a>;</div>
-<div class="line"><span class="lineno">  304</span>  <span class="keyword">delete</span> win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#aac71ce31fada0d62b259b3099d06727a">render_target</a>;</div>
-<div class="line"><span class="lineno">  305</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a83be54ffd1345a2a4a4766ea596bffab">render_thd</a>-&gt;<a class="code hl_variable" href="structcydui_1_1threading_1_1thread__t.html#a230c1adb68eeb06a399359ebb1fac07b">running</a> = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  306</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a83be54ffd1345a2a4a4766ea596bffab">render_thd</a>-&gt;<a class="code hl_function" href="structcydui_1_1threading_1_1thread__t.html#a6359aff6f4f5585d8cfee4b01fa995be">join</a>();</div>
-<div class="line"><span class="lineno">  307</span>}</div>
+<p class="definition">Definition at line <a class="el" href="x11__impl_8cpp_source.html#l00311">311</a> of file <a class="el" href="x11__impl_8cpp_source.html">x11_impl.cpp</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  311</span>                                                        {</div>
+<div class="line"><span class="lineno">  312</span>  XUnmapWindow(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">xwin</a>);</div>
+<div class="line"><span class="lineno">  313</span>  XDestroyWindow(<a class="code hl_function" href="namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5">state::get_dpy</a>(), win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a1eb9b75f5e17f1d1e8b11138eda9ee66">xwin</a>);</div>
+<div class="line"><span class="lineno">  314</span>  <span class="keyword">delete</span> win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#ad72eebf095eba2d7a2f42d16e90ed522">staging_target</a>;</div>
+<div class="line"><span class="lineno">  315</span>  <span class="keyword">delete</span> win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#aac71ce31fada0d62b259b3099d06727a">render_target</a>;</div>
+<div class="line"><span class="lineno">  316</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a83be54ffd1345a2a4a4766ea596bffab">render_thd</a>-&gt;<a class="code hl_variable" href="structcydui_1_1threading_1_1thread__t.html#a230c1adb68eeb06a399359ebb1fac07b">running</a> = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  317</span>  win-&gt;<a class="code hl_variable" href="structcydui_1_1graphics_1_1window__t.html#a83be54ffd1345a2a4a4766ea596bffab">render_thd</a>-&gt;<a class="code hl_function" href="structcydui_1_1threading_1_1thread__t.html#a6359aff6f4f5585d8cfee4b01fa995be">join</a>();</div>
+<div class="line"><span class="lineno">  318</span>}</div>
 <div class="ttc" id="astructcydui_1_1graphics_1_1window__t_html_a83be54ffd1345a2a4a4766ea596bffab"><div class="ttname"><a href="structcydui_1_1graphics_1_1window__t.html#a83be54ffd1345a2a4a4766ea596bffab">cydui::graphics::window_t::render_thd</a></div><div class="ttdeci">cydui::threading::thread_t * render_thd</div><div class="ttdef"><b>Definition</b> <a href="x11__impl_8hpp_source.html#l00048">x11_impl.hpp:48</a></div></div>
 <div class="ttc" id="astructcydui_1_1threading_1_1thread__t_html_a230c1adb68eeb06a399359ebb1fac07b"><div class="ttname"><a href="structcydui_1_1threading_1_1thread__t.html#a230c1adb68eeb06a399359ebb1fac07b">cydui::threading::thread_t::running</a></div><div class="ttdeci">bool running</div><div class="ttdef"><b>Definition</b> <a href="threading_8hpp_source.html#l00015">threading.hpp:15</a></div></div>
 <div class="ttc" id="astructcydui_1_1threading_1_1thread__t_html_a6359aff6f4f5585d8cfee4b01fa995be"><div class="ttname"><a href="structcydui_1_1threading_1_1thread__t.html#a6359aff6f4f5585d8cfee4b01fa995be">cydui::threading::thread_t::join</a></div><div class="ttdeci">void join() const</div><div class="ttdef"><b>Definition</b> <a href="threading_8cpp_source.html#l00034">threading.cpp:34</a></div></div>
-</div><!-- fragment --><div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div><!-- fragment --><div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="namespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_cgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_cgraph" alt=""/></div>
 <map name="anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_cgraph" id="anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_cgraph">
 <area shape="rect" title=" " alt="" coords="5,60,177,87"/>
@@ -603,11 +713,11 @@ Functions</h2></td></tr>
 <area shape="poly" title=" " alt="" coords="370,50,418,56,417,61,369,55"/>
 </map>
 </div>
-<div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><img src="namespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_icgraph.png" border="0" usemap="#anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_icgraph" alt=""/></div>
 <map name="anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_icgraph" id="anamespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e_icgraph">
 <area shape="rect" title=" " alt="" coords="223,13,394,40"/>

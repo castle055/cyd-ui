@@ -11,7 +11,7 @@ attr_padding_top< E >
 .PP
 Inherits \fBattribute_i\fP\&.
 .PP
-Inherited by \fBattrs_padding< ThreadTimeline >\fP\&.
+Inherited by \fBattrs_padding< ThreadTimeline >\fP, \fBattrs_padding< void >\fP, \fBattrs_padding< Button >\fP, \fBattrs_padding< Flow >\fP, \fBattrs_padding< Grid >\fP, \fBattrs_padding< stdui::control::Button >\fP, \fBattrs_padding< stdui::layout::Flow >\fP, and \fBattrs_padding< stdui::layout::Grid >\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
@@ -19,10 +19,16 @@ Inherited by \fBattrs_padding< ThreadTimeline >\fP\&.
 .RI "\fB~attr_padding_top\fP () override=default"
 .br
 .ti -1c
-.RI "\fBE\fP & \fBpadding_top\fP (auto &_padding_top_)"
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBpadding_top\fP (auto &_padding_top_)"
 .br
 .ti -1c
-.RI "\fBE\fP & \fBpadding_top\fP (auto &&_padding_top_)"
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBpadding_top\fP (auto &&_padding_top_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBpadding_top\fP (auto &_padding_top_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBpadding_top\fP (auto &&_padding_top_)"
 .br
 .in -1c
 
@@ -46,27 +52,35 @@ Public Member Functions inherited from \fBattribute_i\fP
 .br
 struct attr_padding_top< E >"
 .PP
-Definition at line \fB57\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB79\fP of file \fBcomponent_attributes\&.h\fP\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "template<typename \fBE\fP > \fBattr_padding_top\fP< \fBE\fP >::~\fBattr_padding_top\fP ()\fC [override]\fP, \fC [default]\fP"
 
 .SH "Member Function Documentation"
 .PP 
-.SS "template<typename \fBE\fP > \fBE\fP & \fBattr_padding_top\fP< \fBE\fP >::padding_top (auto && _padding_top_)\fC [inline]\fP"
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBattr_padding_top\fP< \fBE\fP >::padding_top (auto && _padding_top_)\fC [inline]\fP"
 
 .PP
-Definition at line \fB57\fP of file \fBcomponent_attributes\&.h\fP\&.
-.SS "template<typename \fBE\fP > \fBE\fP & \fBattr_padding_top\fP< \fBE\fP >::padding_top (auto & _padding_top_)\fC [inline]\fP"
+Definition at line \fB79\fP of file \fBcomponent_attributes\&.h\fP\&.
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBattr_padding_top\fP< \fBE\fP >::padding_top (auto && _padding_top_)\fC [inline]\fP"
 
 .PP
-Definition at line \fB57\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB79\fP of file \fBcomponent_attributes\&.h\fP\&.
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBattr_padding_top\fP< \fBE\fP >::padding_top (auto & _padding_top_)\fC [inline]\fP"
+
+.PP
+Definition at line \fB79\fP of file \fBcomponent_attributes\&.h\fP\&.
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBattr_padding_top\fP< \fBE\fP >::padding_top (auto & _padding_top_)\fC [inline]\fP"
+
+.PP
+Definition at line \fB79\fP of file \fBcomponent_attributes\&.h\fP\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "template<typename \fBE\fP > \fBcydui::dimensions::dimension_t\fP \fBattr_padding_top\fP< \fBE\fP >::_padding_top = 0"
 
 .PP
-Definition at line \fB57\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB79\fP of file \fBcomponent_attributes\&.h\fP\&.
 
 .SH "Author"
 .PP 

@@ -1,23 +1,25 @@
 <map id="cydui::graphics::vg::vg_element_t" name="cydui::graphics::vg::vg_element_t">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,305,137,348"/>
-<area shape="rect" id="Node000002" href="$structcydui_1_1graphics_1_1vg_1_1circle.html" title=" " alt="" coords="185,5,316,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,289,90,239,111,178,141,115,161,85,183,58,196,47,200,51,187,62,165,88,146,118,116,180,95,241,82,291"/>
-<area shape="rect" id="Node000003" href="$structcydui_1_1graphics_1_1vg_1_1ellipse.html" title=" " alt="" coords="185,72,316,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="83,290,121,209,149,165,183,125,198,113,201,117,187,129,153,168,125,211,88,292"/>
-<area shape="rect" id="Node000004" href="$structcydui_1_1graphics_1_1vg_1_1group.html" title=" " alt="" coords="185,139,316,181"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="93,291,132,241,183,191,200,180,203,184,186,195,136,245,97,294"/>
-<area shape="rect" id="Node000005" href="$structcydui_1_1graphics_1_1vg_1_1line.html" title=" " alt="" coords="185,205,316,248"/>
-<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="120,295,183,258,205,246,207,251,186,262,122,299"/>
-<area shape="rect" id="Node000006" href="$structcydui_1_1graphics_1_1vg_1_1path.html" title=" " alt="" coords="185,272,316,315"/>
-<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="152,309,184,303,185,308,153,314"/>
-<area shape="rect" id="Node000007" href="$structcydui_1_1graphics_1_1vg_1_1pixel.html" title=" " alt="" coords="185,339,316,381"/>
-<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="153,339,185,345,184,350,152,344"/>
-<area shape="rect" id="Node000008" href="$structcydui_1_1graphics_1_1vg_1_1polygon.html" title=" " alt="" coords="185,405,316,448"/>
-<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="122,354,186,391,207,402,205,407,183,396,120,359"/>
-<area shape="rect" id="Node000009" href="$structcydui_1_1graphics_1_1vg_1_1polyline.html" title=" " alt="" coords="185,472,316,515"/>
-<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="97,359,136,409,186,458,203,469,200,474,183,462,132,412,93,362"/>
-<area shape="rect" id="Node000010" href="$structcydui_1_1graphics_1_1vg_1_1rect.html" title=" " alt="" coords="185,539,316,581"/>
-<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="88,361,125,442,153,486,187,525,201,536,198,540,183,529,149,489,121,445,83,364"/>
-<area shape="rect" id="Node000011" href="$structcydui_1_1graphics_1_1vg_1_1text.html" title=" " alt="" coords="185,605,316,648"/>
-<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="82,363,95,413,116,473,146,536,165,565,187,591,200,603,196,607,183,595,161,568,141,538,111,475,90,414,77,364"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,323,137,365"/>
+<area shape="rect" id="Node000002" href="$structcydui_1_1graphics_1_1vg_1_1arc.html" title=" " alt="" coords="185,5,342,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,306,83,249,103,178,135,105,157,72,183,42,200,30,203,35,186,46,161,75,139,108,108,180,88,250,79,307"/>
+<area shape="rect" id="Node000003" href="$structcydui_1_1graphics_1_1vg_1_1circle.html" title=" " alt="" coords="198,56,329,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="79,307,92,263,114,210,144,156,183,109,198,97,202,101,187,113,148,159,119,212,97,265,84,309"/>
+<area shape="rect" id="Node000004" href="$structcydui_1_1graphics_1_1vg_1_1ellipse.html" title=" " alt="" coords="198,123,329,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="86,307,125,241,152,206,183,175,200,164,203,168,186,179,156,210,129,244,91,310"/>
+<area shape="rect" id="Node000005" href="$structcydui_1_1graphics_1_1vg_1_1group.html" title=" " alt="" coords="198,189,329,232"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="101,310,139,275,183,242,204,230,206,235,186,246,142,279,105,314"/>
+<area shape="rect" id="Node000006" href="$structcydui_1_1graphics_1_1vg_1_1line.html" title=" " alt="" coords="198,256,329,299"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="148,315,199,297,201,302,149,320"/>
+<area shape="rect" id="Node000007" href="$structcydui_1_1graphics_1_1vg_1_1path.html" title=" " alt="" coords="198,323,329,365"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="152,341,198,341,198,347,152,347"/>
+<area shape="rect" id="Node000008" href="$structcydui_1_1graphics_1_1vg_1_1pixel.html" title=" " alt="" coords="198,389,329,432"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="149,368,201,386,199,391,148,373"/>
+<area shape="rect" id="Node000009" href="$structcydui_1_1graphics_1_1vg_1_1polygon.html" title=" " alt="" coords="198,456,329,499"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="105,374,142,409,186,442,206,453,204,458,183,446,139,413,101,378"/>
+<area shape="rect" id="Node000010" href="$structcydui_1_1graphics_1_1vg_1_1polyline.html" title=" " alt="" coords="198,523,329,565"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="91,378,129,444,156,478,186,509,203,520,200,524,183,513,152,482,125,447,86,381"/>
+<area shape="rect" id="Node000011" href="$structcydui_1_1graphics_1_1vg_1_1rect.html" title=" " alt="" coords="198,589,329,632"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="84,379,97,423,119,476,148,529,187,575,202,587,198,591,183,579,144,532,114,478,92,425,79,381"/>
+<area shape="rect" id="Node000012" href="$structcydui_1_1graphics_1_1vg_1_1text.html" title=" " alt="" coords="198,656,329,699"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="79,380,90,437,110,507,141,579,162,612,187,642,200,653,197,658,183,646,158,615,136,581,105,508,85,438,74,381"/>
 </map>

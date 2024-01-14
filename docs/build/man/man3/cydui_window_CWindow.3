@@ -14,6 +14,12 @@ cydui::window::CWindow
 .ti -1c
 .RI "void \fBterminate\fP ()"
 .br
+.ti -1c
+.RI "std::pair< int, int > \fBget_position\fP () const"
+.br
+.ti -1c
+.RI "std::pair< int, int > \fBget_size\fP () const"
+.br
 .in -1c
 .SS "Public Attributes"
 
@@ -33,6 +39,26 @@ cydui::window::CWindow
 Definition at line \fB15\fP of file \fBwindow\&.h\fP\&.
 .SH "Member Function Documentation"
 .PP 
+.SS "std::pair< int, int > cydui::window::CWindow::get_position () const"
+
+.PP
+Definition at line \fB20\fP of file \fBwindow\&.cpp\fP\&..PP
+.nf
+20                                                          {
+21   return graphics::get_position(win_ref);
+22 }
+.fi
+
+.SS "std::pair< int, int > cydui::window::CWindow::get_size () const"
+
+.PP
+Definition at line \fB23\fP of file \fBwindow\&.cpp\fP\&..PP
+.nf
+23                                                      {
+24   return graphics::get_size(win_ref);
+25 }
+.fi
+
 .SS "void cydui::window::CWindow::terminate ()"
 
 .PP

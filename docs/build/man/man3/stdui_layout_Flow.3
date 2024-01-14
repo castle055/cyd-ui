@@ -1,0 +1,607 @@
+.TH "stdui::layout::Flow" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+stdui::layout::Flow
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <stdui\&.h>\fP
+.PP
+Inherits \fBcydui::components::component_t< FlowEventHandler, Flow >\fP\&.
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBprops_t\fP"
+.br
+.in -1c
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum class \fBDirection\fP { \fBHORIZONTAL\fP, \fBVERTICAL\fP }"
+.br
+.ti -1c
+.RI "using \fBstate_t\fP = \fBFlowState\fP"
+.br
+.ti -1c
+.RI "using \fBevent_handler_t\fP = \fBFlowEventHandler\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "std::string \fBname\fP () override"
+.br
+.ti -1c
+.RI "auto & \fBdir\fP (typeof(props_t::dir)&_dir)"
+.br
+.ti -1c
+.RI "auto & \fBdir\fP (typeof(props_t::dir)&&_dir)"
+.br
+.ti -1c
+.RI "auto & \fBspacing\fP (typeof(props_t::spacing)&_spacing)"
+.br
+.ti -1c
+.RI "auto & \fBspacing\fP (typeof(props_t::spacing)&&_spacing)"
+.br
+.ti -1c
+.RI "\fBFlow\fP ()=default"
+.br
+.ti -1c
+.RI "\fBFlow\fP (\fBprops_t\fP \fBprops\fP)"
+.br
+.ti -1c
+.RI "\fB~Flow\fP () override=default"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::components::component_t< FlowEventHandler, Flow >\fP
+.in +1c
+.ti -1c
+.RI "\fB~component_t\fP () override"
+.br
+.ti -1c
+.RI "void \fBconfigure_event_handler\fP () override"
+.br
+.ti -1c
+.RI "void \fBsubscribe_events\fP () override"
+.br
+.ti -1c
+.RI "void \fBclear_children\fP () override"
+.br
+.ti -1c
+.RI "\fBattrs_component\fP * \fBattrs\fP () override"
+.br
+.ti -1c
+.RI "\fBcomponent_state_t\fP * \fBcreate_state_instance\fP () override"
+.br
+.ti -1c
+.RI "\fBevent_handler_t\fP * \fBevent_handler\fP () override"
+.br
+.ti -1c
+.RI "void \fBredraw\fP (\fBcydui::layout::Layout\fP *layout) override"
+.br
+.ti -1c
+.RI "void \fBget_fragment\fP (\fBcydui::layout::Layout\fP *layout, \fBcydui::compositing::compositing_node_t\fP *compositing_node) override"
+.br
+.ti -1c
+.RI "\fBcomponent_base_t\fP * \fBfind_by_coords\fP (int x, int y) override"
+.br
+.ti -1c
+.RI "\fBcomponent_dimensional_relations_t\fP \fBget_dimensional_relations\fP () override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::components::component_base_t\fP
+.in +1c
+.ti -1c
+.RI "virtual \fB~component_base_t\fP ()=default"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_x< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_x\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBx\fP (auto &_x_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBx\fP (auto &&_x_)"
+.br
+.ti -1c
+.RI "void \fBx\fP (auto &_x_)"
+.br
+.ti -1c
+.RI "void \fBx\fP (auto &&_x_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattribute_i\fP
+.in +1c
+.ti -1c
+.RI "virtual \fB~attribute_i\fP ()=default"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_y< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_y\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBy\fP (auto &_y_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBy\fP (auto &&_y_)"
+.br
+.ti -1c
+.RI "void \fBy\fP (auto &_y_)"
+.br
+.ti -1c
+.RI "void \fBy\fP (auto &&_y_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_w< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_w\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBw\fP (auto &_w_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBw\fP (auto &&_w_)"
+.br
+.ti -1c
+.RI "void \fBw\fP (auto &_w_)"
+.br
+.ti -1c
+.RI "void \fBw\fP (auto &&_w_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_h< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_h\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBh\fP (auto &_h_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBh\fP (auto &&_h_)"
+.br
+.ti -1c
+.RI "void \fBh\fP (auto &_h_)"
+.br
+.ti -1c
+.RI "void \fBh\fP (auto &&_h_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_margin_top< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_margin_top\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBmargin_top\fP (auto &_margin_top_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBmargin_top\fP (auto &&_margin_top_)"
+.br
+.ti -1c
+.RI "void \fBmargin_top\fP (auto &_margin_top_)"
+.br
+.ti -1c
+.RI "void \fBmargin_top\fP (auto &&_margin_top_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_margin_bottom< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_margin_bottom\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBmargin_bottom\fP (auto &_margin_bottom_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBmargin_bottom\fP (auto &&_margin_bottom_)"
+.br
+.ti -1c
+.RI "void \fBmargin_bottom\fP (auto &_margin_bottom_)"
+.br
+.ti -1c
+.RI "void \fBmargin_bottom\fP (auto &&_margin_bottom_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_margin_left< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_margin_left\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBmargin_left\fP (auto &_margin_left_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBmargin_left\fP (auto &&_margin_left_)"
+.br
+.ti -1c
+.RI "void \fBmargin_left\fP (auto &_margin_left_)"
+.br
+.ti -1c
+.RI "void \fBmargin_left\fP (auto &&_margin_left_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_margin_right< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_margin_right\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBmargin_right\fP (auto &_margin_right_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBmargin_right\fP (auto &&_margin_right_)"
+.br
+.ti -1c
+.RI "void \fBmargin_right\fP (auto &_margin_right_)"
+.br
+.ti -1c
+.RI "void \fBmargin_right\fP (auto &&_margin_right_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_padding_top< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_padding_top\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBpadding_top\fP (auto &_padding_top_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBpadding_top\fP (auto &&_padding_top_)"
+.br
+.ti -1c
+.RI "void \fBpadding_top\fP (auto &_padding_top_)"
+.br
+.ti -1c
+.RI "void \fBpadding_top\fP (auto &&_padding_top_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_padding_bottom< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_padding_bottom\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBpadding_bottom\fP (auto &_padding_bottom_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBpadding_bottom\fP (auto &&_padding_bottom_)"
+.br
+.ti -1c
+.RI "void \fBpadding_bottom\fP (auto &_padding_bottom_)"
+.br
+.ti -1c
+.RI "void \fBpadding_bottom\fP (auto &&_padding_bottom_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_padding_left< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_padding_left\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBpadding_left\fP (auto &_padding_left_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBpadding_left\fP (auto &&_padding_left_)"
+.br
+.ti -1c
+.RI "void \fBpadding_left\fP (auto &_padding_left_)"
+.br
+.ti -1c
+.RI "void \fBpadding_left\fP (auto &&_padding_left_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_padding_right< T >\fP
+.in +1c
+.ti -1c
+.RI "\fB~attr_padding_right\fP () override=default"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBpadding_right\fP (auto &_padding_right_)"
+.br
+.ti -1c
+.RI "\fBS\fP & \fBpadding_right\fP (auto &&_padding_right_)"
+.br
+.ti -1c
+.RI "void \fBpadding_right\fP (auto &_padding_right_)"
+.br
+.ti -1c
+.RI "void \fBpadding_right\fP (auto &&_padding_right_)"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBattr_content< E >\fP
+.in +1c
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBoperator()\fP (auto &&_content_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBoperator()\fP (auto &_content_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBoperator()\fP (auto &&_content_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBoperator()\fP (auto &_content_)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBlogging::logger\fP \fBlog\fP {\&.\fBname\fP = 'Flow'}"
+.br
+.ti -1c
+.RI "\fBprops_t\fP \fBprops\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBcydui::components::component_base_t\fP
+.in +1c
+.ti -1c
+.RI "std::optional< \fBcomponent_state_t\fP * > \fBstate\fP = std::nullopt"
+.br
+.ti -1c
+.RI "std::optional< \fBcomponent_base_t\fP * > \fBparent\fP = std::nullopt"
+.br
+.ti -1c
+.RI "std::vector< \fBcomponent_base_t\fP * > \fBchildren\fP {}"
+.br
+.ti -1c
+.RI "std::vector< \fBcydui::events::listener_t\fP * > \fBsubscribed_listeners\fP {}"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_x< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_x\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_y< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_y\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_w< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_w\fP"
+.br
+.ti -1c
+.RI "bool \fB_w_has_changed\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_h< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_h\fP"
+.br
+.ti -1c
+.RI "bool \fB_h_has_changed\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_margin_top< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_margin_top\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_margin_bottom< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_margin_bottom\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_margin_left< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_margin_left\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_margin_right< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_margin_right\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_padding_top< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_padding_top\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_padding_bottom< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_padding_bottom\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_padding_left< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_padding_left\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_padding_right< T >\fP
+.in +1c
+.ti -1c
+.RI "\fBcydui::dimensions::dimension_t\fP \fB_padding_right\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBattr_content< E >\fP
+.in +1c
+.ti -1c
+.RI "std::function< \fBcontent\fP()> \fB_content\fP = [] \-> \fBcontent\fP {return {};}"
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static constexpr const char * \fBNAME\fP = 'Flow'"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Protected Member Functions inherited from \fBcydui::components::component_base_t\fP
+.in +1c
+.ti -1c
+.RI "void \fBadd_event_listeners\fP (const std::unordered_map< std::string, event_handler_t::listener_data_t > &listeners)"
+.br
+.ti -1c
+.RI "void \fBclear_subscribed_listeners\fP ()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&.
+.SH "Member Typedef Documentation"
+.PP 
+.SS "using \fBstdui::layout::Flow::event_handler_t\fP =  \fBFlowEventHandler\fP"
+
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&.
+.SS "using \fBstdui::layout::Flow::state_t\fP =  \fBFlowState\fP"
+
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&.
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "enum class \fBstdui::layout::Flow::Direction\fP\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIHORIZONTAL \fP\fP
+.TP
+\fB\fIVERTICAL \fP\fP
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&..PP
+.nf
+35 {
+.fi
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "stdui::layout::Flow::Flow ()\fC [default]\fP"
+
+.SS "stdui::layout::Flow::Flow (\fBprops_t\fP props)\fC [inline]\fP, \fC [explicit]\fP"
+
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&..PP
+.nf
+35 {
+.fi
+
+.SS "stdui::layout::Flow::~Flow ()\fC [override]\fP, \fC [default]\fP"
+
+.SH "Member Function Documentation"
+.PP 
+.SS "auto & stdui::layout::Flow::dir (typeof(props_t::dir)&& _dir)\fC [inline]\fP"
+
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&..PP
+.nf
+35 {
+.fi
+
+.SS "auto & stdui::layout::Flow::dir (typeof(props_t::dir)& _dir)\fC [inline]\fP"
+
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&..PP
+.nf
+35 {
+.fi
+
+.SS "std::string stdui::layout::Flow::name ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBcydui::components::component_base_t\fP\&.
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&..PP
+.nf
+35 {
+.fi
+
+.SS "auto & stdui::layout::Flow::spacing (typeof(props_t::spacing)&& _spacing)\fC [inline]\fP"
+
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&..PP
+.nf
+35 {
+.fi
+
+.SS "auto & stdui::layout::Flow::spacing (typeof(props_t::spacing)& _spacing)\fC [inline]\fP"
+
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&..PP
+.nf
+35 {
+.fi
+
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBlogging::logger\fP stdui::layout::Flow::log {\&.\fBname\fP = 'Flow'}"
+
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&..PP
+.nf
+35 {
+.fi
+
+.SS "constexpr const char* stdui::layout::Flow::NAME = 'Flow'\fC [static]\fP, \fC [constexpr]\fP"
+
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&.
+.SS "\fBprops_t\fP stdui::layout::Flow::props"
+
+.PP
+Definition at line \fB35\fP of file \fBstdui\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

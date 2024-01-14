@@ -1,16 +1,17 @@
 var searchData=
 [
-  ['elements_0',['elements',['../structcydui_1_1graphics_1_1vg_1_1vg__fragment__t.html#ae89ae6eb6c015630fe08813372c48178',1,'cydui::graphics::vg::vg_fragment_t']]],
-  ['enter_1',['enter',['../structMotionEvent_1_1DataType.html#ad1822f233d60d8f75f58e1bd57c008f8',1,'MotionEvent::DataType']]],
-  ['envvar_2',['ENVVAR',['../structcydstd_1_1env_1_1var.html#ae7e5f4aad8e481716502f66012c85619',1,'cydstd::env::var']]],
-  ['ev_3',['ev',['../structprof_1_1context__t_1_1scope__event__t.html#a9b27caf620da04a609b9c83de0e285d6',1,'prof::context_t::scope_event_t::ev'],['../classcydui_1_1events_1_1change__ev_1_1DataMonitor.html#a38ec98a63f6be0743bf8bf460a592f63',1,'cydui::events::change_ev::DataMonitor::ev'],['../structcydui_1_1events_1_1Event.html#ae6951f5e592e714433aa2deae8f387c7',1,'cydui::events::Event::ev']]],
-  ['ev_5fdestructor_4',['ev_destructor',['../structcydui_1_1events_1_1Event.html#ad4ffe646cb2645926bb76e6bb2321b49',1,'cydui::events::Event']]],
-  ['ev_5fmtx_5',['ev_mtx',['../structcydui_1_1events_1_1Event.html#acb7a776f885a47232c7e96889eb11186',1,'cydui::events::Event']]],
-  ['event_5fhandler_5f_6',['event_handler_',['../structcydui_1_1components_1_1component__t.html#a921b15e8c2f7a240158047eb5241ebfa',1,'cydui::components::component_t']]],
-  ['event_5flisteners_7',['event_listeners',['../structthread__data.html#a0d90f618865c1246b6329b60b54ddd8a',1,'thread_data']]],
-  ['event_5fmutex_8',['event_mutex',['../events_2events_8cpp.html#a3c0bff5d6e182f32fae3dc23a4661804',1,'events.cpp']]],
-  ['event_5fqueue_9',['event_queue',['../structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814',1,'thread_data']]],
-  ['event_5fthread_10',['event_thread',['../events_2events_8cpp.html#a5e3e24444280ea9e10126547b60a2701',1,'events.cpp']]],
-  ['event_5ftype_11',['event_type',['../structcydui_1_1events_1_1listener__t.html#aa111eec3d20b557da0a898951a1c944a',1,'cydui::events::listener_t']]],
-  ['exit_12',['exit',['../structMotionEvent_1_1DataType.html#aef72b9f2e0fe81c540d994f18bbdfca3',1,'MotionEvent::DataType']]]
+  ['data_0',['data',['../structcydui_1_1drag__n__drop_1_1draggable__t.html#a5f53bece1ff5a532d49fefd70eeb723f',1,'cydui::drag_n_drop::draggable_t::data'],['../structmd__buffer__t.html#a42db81e853e05dcf04b4f00840bfee30',1,'md_buffer_t::data'],['../structtemplate__str__buffer.html#abb56fbf2da63c33fc3897cff0ad6e9bd',1,'template_str_buffer::data'],['../structRedrawEvent.html#a991b587bd986d77e0aa93d03de1e8695',1,'RedrawEvent::data'],['../structButtonEvent.html#a326fd973e7ff4e3779b6be5a5533e237',1,'ButtonEvent::data'],['../structScrollEvent.html#a419949337045d7728a0b51207328a488',1,'ScrollEvent::data'],['../structMotionEvent.html#a606161517c79d766433850614974b66b',1,'MotionEvent::data'],['../structResizeEvent.html#a7c9e5d33028d4f2f0d5c842b9d205fb3',1,'ResizeEvent::data'],['../structKeyEvent.html#a5e668cb5e606c3ff960951c117f20118',1,'KeyEvent::data'],['../structcydui_1_1events_1_1ParsedEvent.html#a5cc4884cba2c02072549929b978a7b6f',1,'cydui::events::ParsedEvent::data'],['../structcydui_1_1threading_1_1thread__t.html#a4ffcba2ceb7e17d4a78e07ce5a280433',1,'cydui::threading::thread_t::data'],['../structx11_1_1imgs_1_1img__data.html#a8031e8fe029af09e4042f14330416ce9',1,'x11::imgs::img_data::data']]],
+  ['default_5fresult_1',['default_result',['../classcydui_1_1tasks_1_1simple__task__w__result__t.html#a519da44bbd371d4c141cb15e82dccbb8',1,'cydui::tasks::simple_task_w_result_t']]],
+  ['deps_2',['deps',['../classcydui_1_1dimensions_1_1dimension__t.html#a0098b789747b7ad03724b174cef4327d',1,'cydui::dimensions::dimension_t::deps'],['../structcydui_1_1dimensions_1_1dimensional__relation__t.html#a5413c183b4248763faf56d092a20046b',1,'cydui::dimensions::dimensional_relation_t::deps']]],
+  ['description_3',['description',['../structprof_1_1event__t.html#a734730018f06880228364bd5fb19a81d',1,'prof::event_t']]],
+  ['dir_4',['dir',['../structstdui_1_1layout_1_1Flow_1_1props__t.html#afbb101ec23877e05cc2a04aa5a041932',1,'stdui::layout::Flow::props_t']]],
+  ['dirty_5',['dirty',['../structcydui_1_1graphics_1_1window__t.html#acb63b36da8b18c305f4df398e2b0cb98',1,'cydui::graphics::window_t']]],
+  ['dpy_6',['dpy',['../state_8cpp.html#a7d43b3edf58f8d85a89852ab95b740f6',1,'state.cpp']]],
+  ['drag_5fend_7',['drag_end',['../structcydui_1_1drag__n__drop_1_1draggable__t.html#a8cee68ba072def4d27c9c41abcc2f866',1,'cydui::drag_n_drop::draggable_t::drag_end'],['../structcydui_1_1drag__n__drop_1_1draggable__source__t.html#a469a4d90c573496d777f55cc546ca9ef',1,'cydui::drag_n_drop::draggable_source_t::drag_end']]],
+  ['drag_5fmove_8',['drag_move',['../structcydui_1_1drag__n__drop_1_1draggable__t.html#aac8281c81aebe4a73bfc84e2c7ea3d20',1,'cydui::drag_n_drop::draggable_t::drag_move'],['../structcydui_1_1drag__n__drop_1_1draggable__source__t.html#ae126f2b76e624908536d402db23d11e0',1,'cydui::drag_n_drop::draggable_source_t::drag_move']]],
+  ['drag_5fstart_9',['drag_start',['../structcydui_1_1drag__n__drop_1_1draggable__source__t.html#a478131de80e610c69b252e6f410ae4bb',1,'cydui::drag_n_drop::draggable_source_t']]],
+  ['dragging_10',['dragging',['../structcydui_1_1drag__n__drop_1_1dragging__context__t.html#a8ec3b840aa4d8317ca411c06decfcf62',1,'cydui::drag_n_drop::dragging_context_t::dragging'],['../structMotionEvent_1_1DataType.html#a138dca293200f4448eb17cfab1aada9c',1,'MotionEvent::DataType::dragging']]],
+  ['dragging_5fitem_11',['dragging_item',['../structcydui_1_1drag__n__drop_1_1dragging__context__t.html#a174bb53115ebac298c4204bfdf13af50',1,'cydui::drag_n_drop::dragging_context_t']]],
+  ['dx_12',['dx',['../structScrollEvent_1_1DataType.html#a9d9d99894f5f31295fb65bd72aed12ba',1,'ScrollEvent::DataType']]],
+  ['dy_13',['dy',['../structScrollEvent_1_1DataType.html#a5455ace3222a68a549a6003b8720806d',1,'ScrollEvent::DataType']]]
 ];

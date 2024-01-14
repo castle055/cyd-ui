@@ -6,7 +6,8 @@
 
 
 
-Inheritance diagram for cydui\+::components\+::component\+\_\+base\+\_\+t\+:\nopagebreak
+Inheritance diagram for cydui\+::components\+::component\+\_\+base\+\_\+t\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -32,6 +33,10 @@ virtual void \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a2
 virtual void \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a7b19add46e616a023ea11a020b2aaf27}{subscribe\+\_\+events}} ()=0
 \item 
 virtual void \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a9fa6b50d5f0a8f08dfeb1393c9214cb3}{clear\+\_\+children}} ()=0
+\item 
+virtual \mbox{\hyperlink{structattrs__component}{attrs\+\_\+component}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a9e9032b46f5bcc526fb9eaba07d8815e}{attrs}} ()=0
+\item 
+virtual std\+::string \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a4c9192c2b510da4df8163269df93329c}{name}} ()=0
 \item 
 virtual \mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t}{event\+\_\+handler\+\_\+t}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}{event\+\_\+handler}} ()=0
 \item 
@@ -90,16 +95,16 @@ Definition at line \mbox{\hyperlink{component_8h_source_l00075}{75}} of file \mb
 
 
 
-Definition at line \mbox{\hyperlink{component_8h_source_l00106}{106}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+Definition at line \mbox{\hyperlink{component_8h_source_l00108}{108}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&l:\ listeners)\ \{}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&[ev\_type,\ handler]\ =\ l;}
-\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}}.push\_back(\mbox{\hyperlink{namespacecydui_1_1events_a1fb9ac28468b1aa9a3c860745c0b95cd}{cydui::events::on\_event\_raw}}(ev\_type,\ handler.handler));}
-\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00111\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&l:\ listeners)\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ \&[ev\_type,\ handler]\ =\ l;}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}}.push\_back(\mbox{\hyperlink{namespacecydui_1_1events_a1fb9ac28468b1aa9a3c860745c0b95cd}{cydui::events::on\_event\_raw}}(ev\_type,\ handler.handler));}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak
@@ -116,6 +121,16 @@ Here is the caller graph for this function\+:\nopagebreak
 \includegraphics[width=350pt]{structcydui_1_1components_1_1component__base__t_a07f6120d73007c4b804e67c39f38061d_icgraph}
 \end{center}
 \end{figure}
+\Hypertarget{structcydui_1_1components_1_1component__base__t_a9e9032b46f5bcc526fb9eaba07d8815e}\label{structcydui_1_1components_1_1component__base__t_a9e9032b46f5bcc526fb9eaba07d8815e} 
+\index{cydui::components::component\_base\_t@{cydui::components::component\_base\_t}!attrs@{attrs}}
+\index{attrs@{attrs}!cydui::components::component\_base\_t@{cydui::components::component\_base\_t}}
+\doxysubsubsection{\texorpdfstring{attrs()}{attrs()}}
+{\footnotesize\ttfamily virtual \mbox{\hyperlink{structattrs__component}{attrs\+\_\+component}} \texorpdfstring{$\ast$}{*} cydui\+::components\+::component\+\_\+base\+\_\+t\+::attrs (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a9c63db3706476fc81b24e8277f16837b}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a9c63db3706476fc81b24e8277f16837b}{cydui\+::components\+::component\+\_\+t$<$ Button\+Event\+Handler, Button $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a9c63db3706476fc81b24e8277f16837b}{cydui\+::components\+::component\+\_\+t$<$ Flow\+Event\+Handler, Flow $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a9c63db3706476fc81b24e8277f16837b}{cydui\+::components\+::component\+\_\+t$<$ Grid\+Event\+Handler, Grid $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a9c63db3706476fc81b24e8277f16837b}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+
 \Hypertarget{structcydui_1_1components_1_1component__base__t_a9fa6b50d5f0a8f08dfeb1393c9214cb3}\label{structcydui_1_1components_1_1component__base__t_a9fa6b50d5f0a8f08dfeb1393c9214cb3} 
 \index{cydui::components::component\_base\_t@{cydui::components::component\_base\_t}!clear\_children@{clear\_children}}
 \index{clear\_children@{clear\_children}!cydui::components::component\_base\_t@{cydui::components::component\_base\_t}}
@@ -124,7 +139,7 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af3950e3addefc4661bb97e584ce55bb9}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af3950e3addefc4661bb97e584ce55bb9}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af3950e3addefc4661bb97e584ce55bb9}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af3950e3addefc4661bb97e584ce55bb9}{cydui\+::components\+::component\+\_\+t$<$ Button\+Event\+Handler, Button $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af3950e3addefc4661bb97e584ce55bb9}{cydui\+::components\+::component\+\_\+t$<$ Flow\+Event\+Handler, Flow $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af3950e3addefc4661bb97e584ce55bb9}{cydui\+::components\+::component\+\_\+t$<$ Grid\+Event\+Handler, Grid $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af3950e3addefc4661bb97e584ce55bb9}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
 
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
@@ -141,17 +156,17 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{component_8h_source_l00112}{112}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
+Definition at line \mbox{\hyperlink{component_8h_source_l00114}{114}} of file \mbox{\hyperlink{component_8h_source}{component.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}})\ \{}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ item-\/>remove();}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ item;}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}}.clear();}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&item:\ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}})\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ item-\/>remove();}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ item;}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structcydui_1_1components_1_1component__base__t_aadd46c330956f1c7919bf3608214b030}{subscribed\_listeners}}.clear();}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \}}
 
 \end{DoxyCode}
 Here is the caller graph for this function\+:\nopagebreak
@@ -169,7 +184,7 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_aecf031904194d001776f56ae8042c9bc}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_aecf031904194d001776f56ae8042c9bc}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_aecf031904194d001776f56ae8042c9bc}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_aecf031904194d001776f56ae8042c9bc}{cydui\+::components\+::component\+\_\+t$<$ Button\+Event\+Handler, Button $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_aecf031904194d001776f56ae8042c9bc}{cydui\+::components\+::component\+\_\+t$<$ Flow\+Event\+Handler, Flow $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_aecf031904194d001776f56ae8042c9bc}{cydui\+::components\+::component\+\_\+t$<$ Grid\+Event\+Handler, Grid $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_aecf031904194d001776f56ae8042c9bc}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
 
 \Hypertarget{structcydui_1_1components_1_1component__base__t_aa242d6bff8bd221144c1a5644262757f}\label{structcydui_1_1components_1_1component__base__t_aa242d6bff8bd221144c1a5644262757f} 
 \index{cydui::components::component\_base\_t@{cydui::components::component\_base\_t}!create\_state\_instance@{create\_state\_instance}}
@@ -179,7 +194,7 @@ Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_aecf03
 
 
 
-Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a4f7dfbf6f5dd02faf737f3654c492773}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a4f7dfbf6f5dd02faf737f3654c492773}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a4f7dfbf6f5dd02faf737f3654c492773}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a4f7dfbf6f5dd02faf737f3654c492773}{cydui\+::components\+::component\+\_\+t$<$ Button\+Event\+Handler, Button $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a4f7dfbf6f5dd02faf737f3654c492773}{cydui\+::components\+::component\+\_\+t$<$ Flow\+Event\+Handler, Flow $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a4f7dfbf6f5dd02faf737f3654c492773}{cydui\+::components\+::component\+\_\+t$<$ Grid\+Event\+Handler, Grid $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a4f7dfbf6f5dd02faf737f3654c492773}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
 
 \Hypertarget{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71}\label{structcydui_1_1components_1_1component__base__t_a14f7aa03b77da88cc4ae6cf5f2f4ae71} 
 \index{cydui::components::component\_base\_t@{cydui::components::component\_base\_t}!event\_handler@{event\_handler}}
@@ -189,7 +204,7 @@ Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a4f7df
 
 
 
-Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a55b9a13989b26837a5a858a3410ff02f}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a55b9a13989b26837a5a858a3410ff02f}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a55b9a13989b26837a5a858a3410ff02f}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a55b9a13989b26837a5a858a3410ff02f}{cydui\+::components\+::component\+\_\+t$<$ Button\+Event\+Handler, Button $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a55b9a13989b26837a5a858a3410ff02f}{cydui\+::components\+::component\+\_\+t$<$ Flow\+Event\+Handler, Flow $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a55b9a13989b26837a5a858a3410ff02f}{cydui\+::components\+::component\+\_\+t$<$ Grid\+Event\+Handler, Grid $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a55b9a13989b26837a5a858a3410ff02f}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
 
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
@@ -206,7 +221,7 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af60e04880b486c0007d587f2492a20da}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af60e04880b486c0007d587f2492a20da}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af60e04880b486c0007d587f2492a20da}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af60e04880b486c0007d587f2492a20da}{cydui\+::components\+::component\+\_\+t$<$ Button\+Event\+Handler, Button $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af60e04880b486c0007d587f2492a20da}{cydui\+::components\+::component\+\_\+t$<$ Flow\+Event\+Handler, Flow $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af60e04880b486c0007d587f2492a20da}{cydui\+::components\+::component\+\_\+t$<$ Grid\+Event\+Handler, Grid $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_af60e04880b486c0007d587f2492a20da}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
 
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
@@ -223,7 +238,7 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a1e07ccc5118d126161c14815f1dab4e5}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a1e07ccc5118d126161c14815f1dab4e5}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a1e07ccc5118d126161c14815f1dab4e5}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a1e07ccc5118d126161c14815f1dab4e5}{cydui\+::components\+::component\+\_\+t$<$ Button\+Event\+Handler, Button $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a1e07ccc5118d126161c14815f1dab4e5}{cydui\+::components\+::component\+\_\+t$<$ Flow\+Event\+Handler, Flow $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a1e07ccc5118d126161c14815f1dab4e5}{cydui\+::components\+::component\+\_\+t$<$ Grid\+Event\+Handler, Grid $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a1e07ccc5118d126161c14815f1dab4e5}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
 
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
@@ -240,7 +255,17 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a66895726989b817053f31d78eb5f7074}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a66895726989b817053f31d78eb5f7074}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a66895726989b817053f31d78eb5f7074}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a66895726989b817053f31d78eb5f7074}{cydui\+::components\+::component\+\_\+t$<$ Button\+Event\+Handler, Button $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a66895726989b817053f31d78eb5f7074}{cydui\+::components\+::component\+\_\+t$<$ Flow\+Event\+Handler, Flow $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a66895726989b817053f31d78eb5f7074}{cydui\+::components\+::component\+\_\+t$<$ Grid\+Event\+Handler, Grid $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a66895726989b817053f31d78eb5f7074}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+
+\Hypertarget{structcydui_1_1components_1_1component__base__t_a4c9192c2b510da4df8163269df93329c}\label{structcydui_1_1components_1_1component__base__t_a4c9192c2b510da4df8163269df93329c} 
+\index{cydui::components::component\_base\_t@{cydui::components::component\_base\_t}!name@{name}}
+\index{name@{name}!cydui::components::component\_base\_t@{cydui::components::component\_base\_t}}
+\doxysubsubsection{\texorpdfstring{name()}{name()}}
+{\footnotesize\ttfamily virtual std\+::string cydui\+::components\+::component\+\_\+base\+\_\+t\+::name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Implemented in \mbox{\hyperlink{structstdui_1_1layout_1_1Flow_a690d9865a25f39240b038465650878c3}{stdui\+::layout\+::\+Flow}}, \mbox{\hyperlink{structstdui_1_1layout_1_1Grid_a114e8a2f8c446d024afe855bcd3d0e4c}{stdui\+::layout\+::\+Grid}}, \mbox{\hyperlink{structstdui_1_1control_1_1Button_a15c772a78fa4d7165ac74c62145d1528}{stdui\+::control\+::\+Button}}, and \mbox{\hyperlink{structThreadTimeline_ab6d21ac313ca29d017f02e700e2ee510}{Thread\+Timeline}}.
 
 \Hypertarget{structcydui_1_1components_1_1component__base__t_afbf4618a37061a24b981a3425178d1be}\label{structcydui_1_1components_1_1component__base__t_afbf4618a37061a24b981a3425178d1be} 
 \index{cydui::components::component\_base\_t@{cydui::components::component\_base\_t}!redraw@{redraw}}
@@ -250,7 +275,7 @@ Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a66895
 
 
 
-Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a68a33d980fca3160d421e4483f7558b6}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a68a33d980fca3160d421e4483f7558b6}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a68a33d980fca3160d421e4483f7558b6}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a68a33d980fca3160d421e4483f7558b6}{cydui\+::components\+::component\+\_\+t$<$ Button\+Event\+Handler, Button $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a68a33d980fca3160d421e4483f7558b6}{cydui\+::components\+::component\+\_\+t$<$ Flow\+Event\+Handler, Flow $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a68a33d980fca3160d421e4483f7558b6}{cydui\+::components\+::component\+\_\+t$<$ Grid\+Event\+Handler, Grid $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a68a33d980fca3160d421e4483f7558b6}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
 
 Here is the caller graph for this function\+:\nopagebreak
 \begin{figure}[H]
@@ -267,7 +292,7 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a0fb18436618eba390371dd49b0e22052}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a0fb18436618eba390371dd49b0e22052}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
+Implemented in \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a0fb18436618eba390371dd49b0e22052}{cydui\+::components\+::component\+\_\+t$<$ EVH, T $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a0fb18436618eba390371dd49b0e22052}{cydui\+::components\+::component\+\_\+t$<$ Button\+Event\+Handler, Button $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a0fb18436618eba390371dd49b0e22052}{cydui\+::components\+::component\+\_\+t$<$ Flow\+Event\+Handler, Flow $>$}}, \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a0fb18436618eba390371dd49b0e22052}{cydui\+::components\+::component\+\_\+t$<$ Grid\+Event\+Handler, Grid $>$}}, and \mbox{\hyperlink{structcydui_1_1components_1_1component__t_a0fb18436618eba390371dd49b0e22052}{cydui\+::components\+::component\+\_\+t$<$ Thread\+Timeline\+Event\+Handler, Thread\+Timeline $>$}}.
 
 
 

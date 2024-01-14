@@ -8,5 +8,6 @@ var dir_d44c64559bbebec7f509842c48db8b23 =
     [ "containers.hpp", "containers_8hpp.html", null ],
     [ "cydui.hpp", "cydui_8hpp.html", null ],
     [ "splines.h", "splines_8h.html", "splines_8h" ],
+    [ "stdui.h", "stdui_8h.html", "stdui_8h" ],
     [ "threading.hpp", "threading_8hpp.html", "threading_8hpp" ]
 ];

@@ -196,38 +196,38 @@ include/core/dimensions.hpp
 .fi
 
 .PP
-Definition at line \fB84\fP of file \fBdimensions\&.hpp\fP\&..PP
+Definition at line \fB88\fP of file \fBdimensions\&.hpp\fP\&..PP
 .nf
-130                                   {
-131       dimension_t top = 0;
-132       dimension_t right = 0;
-133       dimension_t bottom = 0;
-134       dimension_t left = 0;
-135       
-136       four_sided_dimension_t &operator=(dimension_value_t val);
-137     };
-138     
-139     struct component_dimensions_t {
-140       dimension_t x = 0;
-141       dimension_t y = 0;
-142       dimension_t w = 0;
-143       dimension_t h = 0;
-144       
-145       bool given_w = false;
-146       bool given_h = false;
-147       
-148       dimension_t cx = 0;
-149       dimension_t cy = 0;
-150       dimension_t cw = 0;
-151       dimension_t ch = 0;
-152       
-153       four_sided_dimension_t margin;
-154       four_sided_dimension_t padding;
-155     };
-156 }// namespace cydui::dimensions
-157 
-158 
-159 #endif//CYD_UI_DIMENSIONS_HPP
+134                                   {
+135       dimension_t top = 0;
+136       dimension_t right = 0;
+137       dimension_t bottom = 0;
+138       dimension_t left = 0;
+139       
+140       four_sided_dimension_t &operator=(dimension_value_t val);
+141     };
+142     
+143     struct component_dimensions_t {
+144       dimension_t x = 0;
+145       dimension_t y = 0;
+146       dimension_t w = 0;
+147       dimension_t h = 0;
+148       
+149       bool given_w = false;
+150       bool given_h = false;
+151       
+152       dimension_t cx = 0;
+153       dimension_t cy = 0;
+154       dimension_t cw = 0;
+155       dimension_t ch = 0;
+156       
+157       four_sided_dimension_t margin;
+158       four_sided_dimension_t padding;
+159     };
+160 }// namespace cydui::dimensions
+161 
+162 
+163 #endif//CYD_UI_DIMENSIONS_HPP
 .fi
 
 .SS "#define DIMENSION_REL_OPERATOR_H(OP)"
@@ -244,7 +244,7 @@ Definition at line \fB84\fP of file \fBdimensions\&.hpp\fP\&..PP
 .fi
 
 .PP
-Definition at line \fB107\fP of file \fBdimensions\&.hpp\fP\&.
+Definition at line \fB111\fP of file \fBdimensions\&.hpp\fP\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -24,6 +24,9 @@ Inherits \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTi
 
 .in +1c
 .ti -1c
+.RI "std::string \fBname\fP () override"
+.br
+.ti -1c
 .RI "\fBThreadTimeline\fP ()=default"
 .br
 .ti -1c
@@ -47,6 +50,9 @@ Public Member Functions inherited from \fBcydui::components::component_t< Thread
 .br
 .ti -1c
 .RI "void \fBclear_children\fP () override"
+.br
+.ti -1c
+.RI "\fBattrs_component\fP * \fBattrs\fP () override"
 .br
 .ti -1c
 .RI "\fBcomponent_state_t\fP * \fBcreate_state_instance\fP () override"
@@ -81,10 +87,16 @@ Public Member Functions inherited from \fBattr_x< T >\fP
 .RI "\fB~attr_x\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBx\fP (auto &_x_)"
+.RI "\fBS\fP & \fBx\fP (auto &_x_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBx\fP (auto &&_x_)"
+.RI "\fBS\fP & \fBx\fP (auto &&_x_)"
+.br
+.ti -1c
+.RI "void \fBx\fP (auto &_x_)"
+.br
+.ti -1c
+.RI "void \fBx\fP (auto &&_x_)"
 .br
 .in -1c
 
@@ -101,10 +113,16 @@ Public Member Functions inherited from \fBattr_y< T >\fP
 .RI "\fB~attr_y\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBy\fP (auto &_y_)"
+.RI "\fBS\fP & \fBy\fP (auto &_y_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBy\fP (auto &&_y_)"
+.RI "\fBS\fP & \fBy\fP (auto &&_y_)"
+.br
+.ti -1c
+.RI "void \fBy\fP (auto &_y_)"
+.br
+.ti -1c
+.RI "void \fBy\fP (auto &&_y_)"
 .br
 .in -1c
 
@@ -114,10 +132,16 @@ Public Member Functions inherited from \fBattr_w< T >\fP
 .RI "\fB~attr_w\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBw\fP (auto &_w_)"
+.RI "\fBS\fP & \fBw\fP (auto &_w_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBw\fP (auto &&_w_)"
+.RI "\fBS\fP & \fBw\fP (auto &&_w_)"
+.br
+.ti -1c
+.RI "void \fBw\fP (auto &_w_)"
+.br
+.ti -1c
+.RI "void \fBw\fP (auto &&_w_)"
 .br
 .in -1c
 
@@ -127,10 +151,16 @@ Public Member Functions inherited from \fBattr_h< T >\fP
 .RI "\fB~attr_h\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBh\fP (auto &_h_)"
+.RI "\fBS\fP & \fBh\fP (auto &_h_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBh\fP (auto &&_h_)"
+.RI "\fBS\fP & \fBh\fP (auto &&_h_)"
+.br
+.ti -1c
+.RI "void \fBh\fP (auto &_h_)"
+.br
+.ti -1c
+.RI "void \fBh\fP (auto &&_h_)"
 .br
 .in -1c
 
@@ -140,10 +170,16 @@ Public Member Functions inherited from \fBattr_margin_top< T >\fP
 .RI "\fB~attr_margin_top\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_top\fP (auto &_margin_top_)"
+.RI "\fBS\fP & \fBmargin_top\fP (auto &_margin_top_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_top\fP (auto &&_margin_top_)"
+.RI "\fBS\fP & \fBmargin_top\fP (auto &&_margin_top_)"
+.br
+.ti -1c
+.RI "void \fBmargin_top\fP (auto &_margin_top_)"
+.br
+.ti -1c
+.RI "void \fBmargin_top\fP (auto &&_margin_top_)"
 .br
 .in -1c
 
@@ -153,10 +189,16 @@ Public Member Functions inherited from \fBattr_margin_bottom< T >\fP
 .RI "\fB~attr_margin_bottom\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_bottom\fP (auto &_margin_bottom_)"
+.RI "\fBS\fP & \fBmargin_bottom\fP (auto &_margin_bottom_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_bottom\fP (auto &&_margin_bottom_)"
+.RI "\fBS\fP & \fBmargin_bottom\fP (auto &&_margin_bottom_)"
+.br
+.ti -1c
+.RI "void \fBmargin_bottom\fP (auto &_margin_bottom_)"
+.br
+.ti -1c
+.RI "void \fBmargin_bottom\fP (auto &&_margin_bottom_)"
 .br
 .in -1c
 
@@ -166,10 +208,16 @@ Public Member Functions inherited from \fBattr_margin_left< T >\fP
 .RI "\fB~attr_margin_left\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_left\fP (auto &_margin_left_)"
+.RI "\fBS\fP & \fBmargin_left\fP (auto &_margin_left_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_left\fP (auto &&_margin_left_)"
+.RI "\fBS\fP & \fBmargin_left\fP (auto &&_margin_left_)"
+.br
+.ti -1c
+.RI "void \fBmargin_left\fP (auto &_margin_left_)"
+.br
+.ti -1c
+.RI "void \fBmargin_left\fP (auto &&_margin_left_)"
 .br
 .in -1c
 
@@ -179,10 +227,16 @@ Public Member Functions inherited from \fBattr_margin_right< T >\fP
 .RI "\fB~attr_margin_right\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_right\fP (auto &_margin_right_)"
+.RI "\fBS\fP & \fBmargin_right\fP (auto &_margin_right_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_right\fP (auto &&_margin_right_)"
+.RI "\fBS\fP & \fBmargin_right\fP (auto &&_margin_right_)"
+.br
+.ti -1c
+.RI "void \fBmargin_right\fP (auto &_margin_right_)"
+.br
+.ti -1c
+.RI "void \fBmargin_right\fP (auto &&_margin_right_)"
 .br
 .in -1c
 
@@ -192,10 +246,16 @@ Public Member Functions inherited from \fBattr_padding_top< T >\fP
 .RI "\fB~attr_padding_top\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_top\fP (auto &_padding_top_)"
+.RI "\fBS\fP & \fBpadding_top\fP (auto &_padding_top_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_top\fP (auto &&_padding_top_)"
+.RI "\fBS\fP & \fBpadding_top\fP (auto &&_padding_top_)"
+.br
+.ti -1c
+.RI "void \fBpadding_top\fP (auto &_padding_top_)"
+.br
+.ti -1c
+.RI "void \fBpadding_top\fP (auto &&_padding_top_)"
 .br
 .in -1c
 
@@ -205,10 +265,16 @@ Public Member Functions inherited from \fBattr_padding_bottom< T >\fP
 .RI "\fB~attr_padding_bottom\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_bottom\fP (auto &_padding_bottom_)"
+.RI "\fBS\fP & \fBpadding_bottom\fP (auto &_padding_bottom_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_bottom\fP (auto &&_padding_bottom_)"
+.RI "\fBS\fP & \fBpadding_bottom\fP (auto &&_padding_bottom_)"
+.br
+.ti -1c
+.RI "void \fBpadding_bottom\fP (auto &_padding_bottom_)"
+.br
+.ti -1c
+.RI "void \fBpadding_bottom\fP (auto &&_padding_bottom_)"
 .br
 .in -1c
 
@@ -218,10 +284,16 @@ Public Member Functions inherited from \fBattr_padding_left< T >\fP
 .RI "\fB~attr_padding_left\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_left\fP (auto &_padding_left_)"
+.RI "\fBS\fP & \fBpadding_left\fP (auto &_padding_left_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_left\fP (auto &&_padding_left_)"
+.RI "\fBS\fP & \fBpadding_left\fP (auto &&_padding_left_)"
+.br
+.ti -1c
+.RI "void \fBpadding_left\fP (auto &_padding_left_)"
+.br
+.ti -1c
+.RI "void \fBpadding_left\fP (auto &&_padding_left_)"
 .br
 .in -1c
 
@@ -231,30 +303,42 @@ Public Member Functions inherited from \fBattr_padding_right< T >\fP
 .RI "\fB~attr_padding_right\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_right\fP (auto &_padding_right_)"
+.RI "\fBS\fP & \fBpadding_right\fP (auto &_padding_right_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_right\fP (auto &&_padding_right_)"
+.RI "\fBS\fP & \fBpadding_right\fP (auto &&_padding_right_)"
+.br
+.ti -1c
+.RI "void \fBpadding_right\fP (auto &_padding_right_)"
+.br
+.ti -1c
+.RI "void \fBpadding_right\fP (auto &&_padding_right_)"
 .br
 .in -1c
 
-Public Member Functions inherited from \fBattr_content< T >\fP
+Public Member Functions inherited from \fBattr_content< E >\fP
 .in +1c
 .ti -1c
-.RI "\fBT\fP & \fBoperator()\fP (auto &&_content_)"
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBoperator()\fP (auto &&_content_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBoperator()\fP (auto &_content_)"
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBoperator()\fP (auto &_content_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBoperator()\fP (auto &&_content_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBoperator()\fP (auto &_content_)"
 .br
 .in -1c
 .SS "Public Attributes"
 
 .in +1c
 .ti -1c
-.RI "\fBlogging::logger\fP \fBlog\fP {\&.name = 'ThreadTimeline'}"
+.RI "\fBlogging::logger\fP \fBlog\fP {\&.\fBname\fP = 'ThreadTimeline'}"
 .br
 .ti -1c
-.RI "struct props_t \fBprops\fP"
+.RI "props_t \fBprops\fP"
 .br
 .in -1c
 
@@ -364,10 +448,10 @@ Public Attributes inherited from \fBattr_padding_right< T >\fP
 .br
 .in -1c
 
-Public Attributes inherited from \fBattr_content< T >\fP
+Public Attributes inherited from \fBattr_content< E >\fP
 .in +1c
 .ti -1c
-.RI "std::function< \fBcontent\fP()> \fB_content\fP"
+.RI "std::function< \fBcontent\fP()> \fB_content\fP = [] \-> \fBcontent\fP {return {};}"
 .br
 .in -1c
 .SS "Static Public Attributes"
@@ -416,9 +500,21 @@ Definition at line \fB18\fP of file \fBThreadTimeline\&.h\fP\&..PP
 
 .SS "ThreadTimeline::~ThreadTimeline ()\fC [override]\fP, \fC [default]\fP"
 
+.SH "Member Function Documentation"
+.PP 
+.SS "std::string ThreadTimeline::name ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBcydui::components::component_base_t\fP\&.
+.PP
+Definition at line \fB18\fP of file \fBThreadTimeline\&.h\fP\&..PP
+.nf
+18 {
+.fi
+
 .SH "Member Data Documentation"
 .PP 
-.SS "\fBlogging::logger\fP ThreadTimeline::log {\&.name = 'ThreadTimeline'}"
+.SS "\fBlogging::logger\fP ThreadTimeline::log {\&.\fBname\fP = 'ThreadTimeline'}"
 
 .PP
 Definition at line \fB18\fP of file \fBThreadTimeline\&.h\fP\&..PP
@@ -430,7 +526,7 @@ Definition at line \fB18\fP of file \fBThreadTimeline\&.h\fP\&..PP
 
 .PP
 Definition at line \fB18\fP of file \fBThreadTimeline\&.h\fP\&.
-.SS "struct props_t ThreadTimeline::props"
+.SS "props_t ThreadTimeline::props"
 
 .PP
 Definition at line \fB18\fP of file \fBThreadTimeline\&.h\fP\&.

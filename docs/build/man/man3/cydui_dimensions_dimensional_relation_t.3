@@ -23,6 +23,9 @@ cydui::dimensions::dimensional_relation_t
 .ti -1c
 .RI "\fBoperator dimension_value_t\fP () const"
 .br
+.ti -1c
+.RI "\fBdimension_value_t\fP \fBval\fP () const"
+.br
 .in -1c
 .SS "Public Attributes"
 
@@ -78,6 +81,16 @@ Definition at line \fB37\fP of file \fBdimensions\&.hpp\fP\&..PP
 37                                          {
 38         return this\->binding();
 39       }
+.fi
+
+.SS "\fBdimension_value_t\fP cydui::dimensions::dimensional_relation_t::val () const\fC [inline]\fP"
+
+.PP
+Definition at line \fB41\fP of file \fBdimensions\&.hpp\fP\&..PP
+.nf
+41                                     {
+42         return this\->binding();
+43       }
 .fi
 
 .SH "Member Data Documentation"

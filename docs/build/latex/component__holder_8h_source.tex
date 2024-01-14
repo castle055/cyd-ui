@@ -42,11 +42,17 @@
 \DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00038}\mbox{\hyperlink{structcydui_1_1components_1_1component__holder__t_aa4a582fd274704415658767cea266196}{00038}}\ \ \ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&\mbox{\hyperlink{structcydui_1_1components_1_1component__holder__t_aa4a582fd274704415658767cea266196}{get\_components}}()\textcolor{keyword}{\ const\ }\{}
 \DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__holder__t_a822c45421b0f38586c693129da60f480}{components}};}
 \DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00040}00040\ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00041}00041\ \ \ \ \ \textcolor{keyword}{private}:}
-\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00042}\mbox{\hyperlink{structcydui_1_1components_1_1component__holder__t_a822c45421b0f38586c693129da60f480}{00042}}\ \ \ \ \ \ \ std::unordered\_map<std::string,\ component\_base\_t*>\ \mbox{\hyperlink{structcydui_1_1components_1_1component__holder__t_a822c45421b0f38586c693129da60f480}{components}}\ \{\};}
-\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00043}00043\ \ \ \ \ \};}
-\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00044}00044\ \}}
-\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00045}00045\ }
-\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00046}00046\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_COMPONENT\_HOLDER\_H}}
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00041}00041\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00042}00042\ \ \ \ \ \ \ \textcolor{comment}{//\ Cannot\ work,\ since\ we\ would\ need\ to\ recursively\ copy\ any\ \`{}component\_holder\_t`\ in\ the\ props}}
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00043}00043\ \ \ \ \ \ \ \textcolor{comment}{//\ of\ each\ component.}}
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00044}00044\ \ \ \ \ \ \ \textcolor{comment}{//component\_holder\_t\ clone()\ const\ \{}}
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00045}00045\ \ \ \ \ \ \ \textcolor{comment}{//}}
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00046}00046\ \ \ \ \ \ \ \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00047}00047\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00048}\mbox{\hyperlink{structcydui_1_1components_1_1component__holder__t_a822c45421b0f38586c693129da60f480}{00048}}\ \ \ \ \ \ \ std::unordered\_map<std::string,\ component\_base\_t*>\ \mbox{\hyperlink{structcydui_1_1components_1_1component__holder__t_a822c45421b0f38586c693129da60f480}{components}}\ \{\};}
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00049}00049\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00050}00050\ \}}
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{component__holder_8h_source_l00052}00052\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_COMPONENT\_HOLDER\_H}}
 
 \end{DoxyCode}

@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['on_0',['on',['../structlogging_1_1logger.html#a47c405c3a35bfe8ee6b66f3948e7e643',1,'logging::logger']]],
-  ['op_1',['op',['../structcydui_1_1compositing_1_1compositing__object__t.html#a686001814043a44319cdb74e4327f6d1',1,'cydui::compositing::compositing_object_t::op'],['../structcydui_1_1compositing_1_1compositing__node__t.html#adb3336329c15c1967f82a6c9b52cfe80',1,'cydui::compositing::compositing_node_t::op']]],
-  ['orig_5fx_2',['orig_x',['../structcydui_1_1compositing_1_1compositing__operation__t.html#ad83723266108d81c7d7a3280f3f34c4e',1,'cydui::compositing::compositing_operation_t']]],
-  ['orig_5fy_3',['orig_y',['../structcydui_1_1compositing_1_1compositing__operation__t.html#a74bfb26ff3dd3b81c64226a395a3304b',1,'cydui::compositing::compositing_operation_t']]],
-  ['origin_5fx_4',['origin_x',['../structcydui_1_1graphics_1_1vg_1_1vg__element__t.html#ab7691b4e18ba2ab4b10e5b963a77245e',1,'cydui::graphics::vg::vg_element_t']]],
-  ['origin_5fy_5',['origin_y',['../structcydui_1_1graphics_1_1vg_1_1vg__element__t.html#af43a409454bbb40787ca6467d8bf965a',1,'cydui::graphics::vg::vg_element_t']]],
-  ['overline_6',['overline',['../structcydui_1_1graphics_1_1vg_1_1text__decoration__t.html#aad5f9af5d262d829dfae4a8984de0029',1,'cydui::graphics::vg::text_decoration_t']]]
+  ['name_0',['name',['../structstdui_1_1layout_1_1Flow.html#a9e000579e897b03144962124c686b5e5',1,'stdui::layout::Flow::NAME'],['../structstdui_1_1layout_1_1Grid.html#a2e7b09c108e8f5dbd300712037642a58',1,'stdui::layout::Grid::NAME'],['../structstdui_1_1control_1_1Button.html#a0c02c4df160b9aac76c50831c4107337',1,'stdui::control::Button::NAME'],['../structThreadTimeline.html#ae6f9b987deb07017c639bf427c5902b7',1,'ThreadTimeline::NAME'],['../structlogging_1_1logger.html#a0b07f4c872683d157a40708b40bfb72d',1,'logging::logger::name'],['../structprof_1_1thread__context__t.html#a880fba1c27cfa01b65bca4689c5eab93',1,'prof::thread_context_t::name'],['../structcydui_1_1graphics_1_1font_1_1Font.html#acf849c4d29d274c3851ba1cec3844269',1,'cydui::graphics::font::Font::name']]],
+  ['native_5fthread_1',['native_thread',['../structcydui_1_1threading_1_1thread__t.html#a0133f1df15c19c50cdbb85b45bedf24b',1,'cydui::threading::thread_t']]]
 ];

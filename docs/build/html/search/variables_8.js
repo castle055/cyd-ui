@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['h_0',['h',['../structcydui_1_1components_1_1component__dimensional__relations__t.html#a7bd14ea576daf6a453189fd5f73085a2',1,'cydui::components::component_dimensional_relations_t::h'],['../structcydui_1_1dimensions_1_1component__dimensions__t.html#a37e67243ca8d760d3edcef88ef8eab8c',1,'cydui::dimensions::component_dimensions_t::h'],['../structResizeEvent_1_1DataType.html#abb4753387288e6130ea5344fc82bcd73',1,'ResizeEvent::DataType::h'],['../structcydui_1_1compositing_1_1compositing__operation__t.html#a3a676c7ab0dd657ed7669a68da24d0f0',1,'cydui::compositing::compositing_operation_t::h'],['../structcydui_1_1graphics_1_1vg_1_1vg__element__t_1_1footprint.html#a8a22b6904d555b41b56d4d0b739e0646',1,'cydui::graphics::vg::vg_element_t::footprint::h']]],
-  ['height_1',['height',['../structx11_1_1imgs_1_1img__data.html#ade5590ff5608fc235412ec669f50856a',1,'x11::imgs::img_data']]],
-  ['holding_2',['holding',['../structButtonEvent_1_1DataType.html#a07015b52e15599a681728dab15d0b4f5',1,'ButtonEvent::DataType::holding'],['../structKeyEvent_1_1DataType.html#a3c5f5970e1b9c631fcccf0416fdb0871',1,'KeyEvent::DataType::holding']]],
-  ['hovering_3',['hovering',['../structcydui_1_1components_1_1component__state__t.html#a633e8d805bb6a8380106f8f9fca4be82',1,'cydui::components::component_state_t::hovering'],['../classcydui_1_1layout_1_1Layout.html#aac8db603ef2f2560addc52f44a59f4da',1,'cydui::layout::Layout::hovering']]],
-  ['hscrolleventdatamonitor_4',['hScrollEventDataMonitor',['../graphics_2x11_2events_2events_8cpp.html#a11e763f8025ff7e6101cfc49ed90cff8',1,'events.cpp']]]
+  ['g_0',['g',['../structcydui_1_1graphics_1_1color_1_1Color.html#a226f1ebb36ab3bbe829801bdfeeca27f',1,'cydui::graphics::color::Color']]],
+  ['gc_1',['gc',['../structcydui_1_1graphics_1_1window__t.html#a9bd4f23ce9e98928a9efd918cd22d3d1',1,'cydui::graphics::window_t']]],
+  ['get_5fdim_2',['get_dim',['../structcydui_1_1components_1_1event__handler__t.html#a710eca04807d924f6b97587c6db608f8',1,'cydui::components::event_handler_t']]],
+  ['given_5fh_3',['given_h',['../structcydui_1_1dimensions_1_1component__dimensions__t.html#a4257b15506f4fd83093b1a1c40f6e2a9',1,'cydui::dimensions::component_dimensions_t']]],
+  ['given_5fw_4',['given_w',['../structcydui_1_1dimensions_1_1component__dimensions__t.html#ad0d6af6c99c45c4b961d260600829891',1,'cydui::dimensions::component_dimensions_t']]],
+  ['graphics_5',['graphics',['../structcydui_1_1compositing_1_1compositing__object__t.html#ac17c8ab6036be832962eeb6cc5aa27c3',1,'cydui::compositing::compositing_object_t::graphics'],['../structcydui_1_1compositing_1_1compositing__node__t.html#ab225f17632dfd1bad8743451d9fdacf7',1,'cydui::compositing::compositing_node_t::graphics']]],
+  ['green_6',['Green',['../namespacecydui_1_1graphics_1_1color.html#af897d44d7de147ba98d762fb19325814',1,'cydui::graphics::color']]]
 ];

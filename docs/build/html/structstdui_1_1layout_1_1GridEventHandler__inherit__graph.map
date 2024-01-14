@@ -1,0 +1,7 @@
+<map id="stdui::layout::GridEventHandler" name="stdui::layout::GridEventHandler">
+<area shape="rect" id="Node000001" title=" " alt="" coords="83,96,241,139"/>
+<area shape="rect" id="Node000002" href="$structcydui_1_1components_1_1event__handler__t.html" title=" " alt="" coords="5,5,145,48"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,57,144,94,140,98,104,61"/>
+<area shape="rect" id="Node000003" href="$structstdui_1_1layout_1_1GridEventHandlerData.html" title=" " alt="" coords="169,5,328,48"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="220,61,184,98,180,94,216,57"/>
+</map>

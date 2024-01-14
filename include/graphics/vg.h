@@ -343,6 +343,39 @@ namespace cydui::graphics::vg {
         return {_cx - _r, _cy - _r, 2 * _r, 2 * _r};
       }
     };
+    // * <arc>
+    struct arc:
+      vg_element_t,
+      attrs_core<arc>,
+      attrs_fill<arc>,
+      attrs_stroke<arc>,
+      attr_cx<arc>,
+      attr_cy<arc>,
+      attr_r<arc>,
+      attr_a1<arc>,
+      attr_a2<arc> {
+      void apply_to(pixelmap_editor_t &editor) const override {
+        apply_stroke(editor);
+        apply_fill(editor);
+        
+        editor->save();
+        editor->translate(origin_x + _cx, origin_y + _cy);
+        //editor->scale(_rx, _ry);
+        editor->arc(0.0, 0.0, _r, _a1 * 2 * M_PI / 360.0, _a2 * 2 * M_PI / 360.0);
+        
+        set_source_to_stroke(editor);
+        editor->stroke_preserve();
+        
+        set_source_to_fill(editor);
+        editor->fill();
+        
+        editor->restore();
+      }
+      
+      footprint get_footprint() const override {
+        return {_cx - _r, _cy - _r, 2 * _r, 2 * _r};
+      }
+    };
     
     // * <ellipse>
     struct ellipse:
@@ -373,7 +406,7 @@ namespace cydui::graphics::vg {
       }
       
       footprint get_footprint() const override {
-        return {};
+        return {_cx - _rx, _cy - _ry, 2 * _rx, 2 * _ry};
       }
     };
     
@@ -433,7 +466,24 @@ namespace cydui::graphics::vg {
       }
       
       footprint get_footprint() const override {
-        return {};
+        pixelmap_t pm {0, 0};
+        pixelmap_editor_t pe {pm};
+        
+        apply_font(pe);
+        apply_fill(pe);
+        
+        Cairo::FontExtents fextents;
+        pe->get_font_extents(fextents);
+        
+        Cairo::TextExtents extents;
+        pe->get_text_extents(_text, extents);
+        
+        return {
+          .x = _x,
+          .y = _y,
+          .w = (int) extents.width,
+          .h = (int) extents.height,
+        };
       }
     };
     

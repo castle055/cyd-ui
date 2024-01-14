@@ -17,6 +17,13 @@ void cydui::window::CWindow::terminate() {
   win_ref = nullptr;
 }
 
+std::pair<int, int> cydui::window::CWindow::get_position() const {
+  return graphics::get_position(win_ref);
+}
+std::pair<int, int> cydui::window::CWindow::get_size() const {
+  return graphics::get_size(win_ref);
+}
+
 CWindow* cydui::window::create(
   layout::Layout* layout,
   const char* title,
