@@ -2,6 +2,9 @@ var namespacecydui_1_1graphics_1_1vg =
 [
     [ "paint", "namespacecydui_1_1graphics_1_1vg_1_1paint.html", "namespacecydui_1_1graphics_1_1vg_1_1paint" ],
     [ "accepts_content", "structcydui_1_1graphics_1_1vg_1_1accepts__content.html", "structcydui_1_1graphics_1_1vg_1_1accepts__content" ],
+    [ "arc", "structcydui_1_1graphics_1_1vg_1_1arc.html", "structcydui_1_1graphics_1_1vg_1_1arc" ],
+    [ "attr_a1", "structcydui_1_1graphics_1_1vg_1_1attr__a1.html", "structcydui_1_1graphics_1_1vg_1_1attr__a1" ],
+    [ "attr_a2", "structcydui_1_1graphics_1_1vg_1_1attr__a2.html", "structcydui_1_1graphics_1_1vg_1_1attr__a2" ],
     [ "attr_cx", "structcydui_1_1graphics_1_1vg_1_1attr__cx.html", "structcydui_1_1graphics_1_1vg_1_1attr__cx" ],
     [ "attr_cy", "structcydui_1_1graphics_1_1vg_1_1attr__cy.html", "structcydui_1_1graphics_1_1vg_1_1attr__cy" ],
     [ "attr_fill", "structcydui_1_1graphics_1_1vg_1_1attr__fill.html", "structcydui_1_1graphics_1_1vg_1_1attr__fill" ],

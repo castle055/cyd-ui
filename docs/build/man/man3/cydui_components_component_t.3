@@ -26,6 +26,9 @@ Inherits \fBcydui::components::component_base_t\fP, and \fBattrs_component< T >\
 .RI "void \fBclear_children\fP () override"
 .br
 .ti -1c
+.RI "\fBattrs_component\fP * \fBattrs\fP () override"
+.br
+.ti -1c
 .RI "\fBcomponent_state_t\fP * \fBcreate_state_instance\fP () override"
 .br
 .ti -1c
@@ -50,6 +53,9 @@ Public Member Functions inherited from \fBcydui::components::component_base_t\fP
 .ti -1c
 .RI "virtual \fB~component_base_t\fP ()=default"
 .br
+.ti -1c
+.RI "virtual std::string \fBname\fP ()=0"
+.br
 .in -1c
 
 Public Member Functions inherited from \fBattr_x< T >\fP
@@ -58,10 +64,16 @@ Public Member Functions inherited from \fBattr_x< T >\fP
 .RI "\fB~attr_x\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBx\fP (auto &_x_)"
+.RI "\fBS\fP & \fBx\fP (auto &_x_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBx\fP (auto &&_x_)"
+.RI "\fBS\fP & \fBx\fP (auto &&_x_)"
+.br
+.ti -1c
+.RI "void \fBx\fP (auto &_x_)"
+.br
+.ti -1c
+.RI "void \fBx\fP (auto &&_x_)"
 .br
 .in -1c
 
@@ -78,10 +90,16 @@ Public Member Functions inherited from \fBattr_y< T >\fP
 .RI "\fB~attr_y\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBy\fP (auto &_y_)"
+.RI "\fBS\fP & \fBy\fP (auto &_y_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBy\fP (auto &&_y_)"
+.RI "\fBS\fP & \fBy\fP (auto &&_y_)"
+.br
+.ti -1c
+.RI "void \fBy\fP (auto &_y_)"
+.br
+.ti -1c
+.RI "void \fBy\fP (auto &&_y_)"
 .br
 .in -1c
 
@@ -91,10 +109,16 @@ Public Member Functions inherited from \fBattr_w< T >\fP
 .RI "\fB~attr_w\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBw\fP (auto &_w_)"
+.RI "\fBS\fP & \fBw\fP (auto &_w_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBw\fP (auto &&_w_)"
+.RI "\fBS\fP & \fBw\fP (auto &&_w_)"
+.br
+.ti -1c
+.RI "void \fBw\fP (auto &_w_)"
+.br
+.ti -1c
+.RI "void \fBw\fP (auto &&_w_)"
 .br
 .in -1c
 
@@ -104,10 +128,16 @@ Public Member Functions inherited from \fBattr_h< T >\fP
 .RI "\fB~attr_h\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBh\fP (auto &_h_)"
+.RI "\fBS\fP & \fBh\fP (auto &_h_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBh\fP (auto &&_h_)"
+.RI "\fBS\fP & \fBh\fP (auto &&_h_)"
+.br
+.ti -1c
+.RI "void \fBh\fP (auto &_h_)"
+.br
+.ti -1c
+.RI "void \fBh\fP (auto &&_h_)"
 .br
 .in -1c
 
@@ -117,10 +147,16 @@ Public Member Functions inherited from \fBattr_margin_top< T >\fP
 .RI "\fB~attr_margin_top\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_top\fP (auto &_margin_top_)"
+.RI "\fBS\fP & \fBmargin_top\fP (auto &_margin_top_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_top\fP (auto &&_margin_top_)"
+.RI "\fBS\fP & \fBmargin_top\fP (auto &&_margin_top_)"
+.br
+.ti -1c
+.RI "void \fBmargin_top\fP (auto &_margin_top_)"
+.br
+.ti -1c
+.RI "void \fBmargin_top\fP (auto &&_margin_top_)"
 .br
 .in -1c
 
@@ -130,10 +166,16 @@ Public Member Functions inherited from \fBattr_margin_bottom< T >\fP
 .RI "\fB~attr_margin_bottom\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_bottom\fP (auto &_margin_bottom_)"
+.RI "\fBS\fP & \fBmargin_bottom\fP (auto &_margin_bottom_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_bottom\fP (auto &&_margin_bottom_)"
+.RI "\fBS\fP & \fBmargin_bottom\fP (auto &&_margin_bottom_)"
+.br
+.ti -1c
+.RI "void \fBmargin_bottom\fP (auto &_margin_bottom_)"
+.br
+.ti -1c
+.RI "void \fBmargin_bottom\fP (auto &&_margin_bottom_)"
 .br
 .in -1c
 
@@ -143,10 +185,16 @@ Public Member Functions inherited from \fBattr_margin_left< T >\fP
 .RI "\fB~attr_margin_left\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_left\fP (auto &_margin_left_)"
+.RI "\fBS\fP & \fBmargin_left\fP (auto &_margin_left_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_left\fP (auto &&_margin_left_)"
+.RI "\fBS\fP & \fBmargin_left\fP (auto &&_margin_left_)"
+.br
+.ti -1c
+.RI "void \fBmargin_left\fP (auto &_margin_left_)"
+.br
+.ti -1c
+.RI "void \fBmargin_left\fP (auto &&_margin_left_)"
 .br
 .in -1c
 
@@ -156,10 +204,16 @@ Public Member Functions inherited from \fBattr_margin_right< T >\fP
 .RI "\fB~attr_margin_right\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_right\fP (auto &_margin_right_)"
+.RI "\fBS\fP & \fBmargin_right\fP (auto &_margin_right_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_right\fP (auto &&_margin_right_)"
+.RI "\fBS\fP & \fBmargin_right\fP (auto &&_margin_right_)"
+.br
+.ti -1c
+.RI "void \fBmargin_right\fP (auto &_margin_right_)"
+.br
+.ti -1c
+.RI "void \fBmargin_right\fP (auto &&_margin_right_)"
 .br
 .in -1c
 
@@ -169,10 +223,16 @@ Public Member Functions inherited from \fBattr_padding_top< T >\fP
 .RI "\fB~attr_padding_top\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_top\fP (auto &_padding_top_)"
+.RI "\fBS\fP & \fBpadding_top\fP (auto &_padding_top_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_top\fP (auto &&_padding_top_)"
+.RI "\fBS\fP & \fBpadding_top\fP (auto &&_padding_top_)"
+.br
+.ti -1c
+.RI "void \fBpadding_top\fP (auto &_padding_top_)"
+.br
+.ti -1c
+.RI "void \fBpadding_top\fP (auto &&_padding_top_)"
 .br
 .in -1c
 
@@ -182,10 +242,16 @@ Public Member Functions inherited from \fBattr_padding_bottom< T >\fP
 .RI "\fB~attr_padding_bottom\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_bottom\fP (auto &_padding_bottom_)"
+.RI "\fBS\fP & \fBpadding_bottom\fP (auto &_padding_bottom_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_bottom\fP (auto &&_padding_bottom_)"
+.RI "\fBS\fP & \fBpadding_bottom\fP (auto &&_padding_bottom_)"
+.br
+.ti -1c
+.RI "void \fBpadding_bottom\fP (auto &_padding_bottom_)"
+.br
+.ti -1c
+.RI "void \fBpadding_bottom\fP (auto &&_padding_bottom_)"
 .br
 .in -1c
 
@@ -195,10 +261,16 @@ Public Member Functions inherited from \fBattr_padding_left< T >\fP
 .RI "\fB~attr_padding_left\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_left\fP (auto &_padding_left_)"
+.RI "\fBS\fP & \fBpadding_left\fP (auto &_padding_left_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_left\fP (auto &&_padding_left_)"
+.RI "\fBS\fP & \fBpadding_left\fP (auto &&_padding_left_)"
+.br
+.ti -1c
+.RI "void \fBpadding_left\fP (auto &_padding_left_)"
+.br
+.ti -1c
+.RI "void \fBpadding_left\fP (auto &&_padding_left_)"
 .br
 .in -1c
 
@@ -208,20 +280,32 @@ Public Member Functions inherited from \fBattr_padding_right< T >\fP
 .RI "\fB~attr_padding_right\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_right\fP (auto &_padding_right_)"
+.RI "\fBS\fP & \fBpadding_right\fP (auto &_padding_right_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBpadding_right\fP (auto &&_padding_right_)"
+.RI "\fBS\fP & \fBpadding_right\fP (auto &&_padding_right_)"
+.br
+.ti -1c
+.RI "void \fBpadding_right\fP (auto &_padding_right_)"
+.br
+.ti -1c
+.RI "void \fBpadding_right\fP (auto &&_padding_right_)"
 .br
 .in -1c
 
 Public Member Functions inherited from \fBattr_content< T >\fP
 .in +1c
 .ti -1c
-.RI "\fBT\fP & \fBoperator()\fP (auto &&_content_)"
+.RI "\fBS\fP & \fBoperator()\fP (auto &&_content_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBoperator()\fP (auto &_content_)"
+.RI "\fBS\fP & \fBoperator()\fP (auto &_content_)"
+.br
+.ti -1c
+.RI "void \fBoperator()\fP (auto &&_content_)"
+.br
+.ti -1c
+.RI "void \fBoperator()\fP (auto &_content_)"
 .br
 .in -1c
 .SS "Private Attributes"
@@ -376,41 +460,57 @@ Protected Member Functions inherited from \fBcydui::components::component_base_t
 .br
 struct cydui::components::component_t< EVH, T >"
 .PP
-Definition at line \fB122\fP of file \fBcomponent\&.h\fP\&.
+Definition at line \fB124\fP of file \fBcomponent\&.h\fP\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBcydui::components::component_t\fP< EVH, \fBT\fP >::~\fBcomponent_t\fP ()\fC [inline]\fP, \fC [override]\fP"
 
 .PP
-Definition at line \fB134\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB136\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-134                               {
-135         for (auto &child: children) {
-136           delete child;
-137         }
-138         children\&.clear();
-139         clear_subscribed_listeners();
-140         if (state\&.has_value()) {
-141           state\&.value()\->component_instance = std::nullopt;
-142         }
-143       };
+136                               {
+137         for (auto &child: children) {
+138           delete child;
+139         }
+140         children\&.clear();
+141         clear_subscribed_listeners();
+142         if (state\&.has_value()) {
+143           state\&.value()\->component_instance = std::nullopt;
+144         }
+145       };
 .fi
 
 .SH "Member Function Documentation"
 .PP 
+.SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBattrs_component\fP * \fBcydui::components::component_t\fP< EVH, \fBT\fP >::attrs ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Implements \fBcydui::components::component_base_t\fP\&.
+.PP
+Definition at line \fB171\fP of file \fBcomponent\&.h\fP\&..PP
+.nf
+171                                           {
+172         // Yes, the order of casting matters here because a conversion from `this` to
+173         // `(attrs_component<>*)` does not work since that type is not a base of this
+174         // class\&. So we need to cast to the base class first and then to its `void`
+175         // specialization\&.
+176         return (attrs_component<>*) (attrs_component<T>*) this;
+177       }
+.fi
+
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > void \fBcydui::components::component_t\fP< EVH, \fBT\fP >::clear_children ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
 
 .PP
 Implements \fBcydui::components::component_base_t\fP\&.
 .PP
-Definition at line \fB162\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB165\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-162                                      {
-163         for (auto &child: children) {
-164           delete child;
-165         }
-166         children\&.clear();
-167       }
+165                                      {
+166         for (auto &child: children) {
+167           delete child;
+168         }
+169         children\&.clear();
+170       }
 .fi
 
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > void \fBcydui::components::component_t\fP< EVH, \fBT\fP >::configure_event_handler ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -418,20 +518,21 @@ Definition at line \fB162\fP of file \fBcomponent\&.h\fP\&..PP
 .PP
 Implements \fBcydui::components::component_base_t\fP\&.
 .PP
-Definition at line \fB145\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB147\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-145                                               {
-146         EVH * evh = event_handler_\&.operator\->();
-147         if (parent\&.has_value()) {
-148           evh\->parent = parent\&.value()\->event_handler();
-149         } else {
-150           evh\->parent = nullptr;
-151         }
-152         evh\->state = (typename T::state_t*) state\&.value();
-153         evh\->props = &(((T*) this)\->props);
-154         evh\->attrs = (attrs_component<T>*) this;
-155         evh\->get_dim = [this] {return get_dimensional_relations();};
-156       }
+147                                               {
+148         EVH* evh = event_handler_\&.operator\->();
+149         if (parent\&.has_value()) {
+150           evh\->parent = parent\&.value()\->event_handler();
+151         } else {
+152           evh\->parent = nullptr;
+153         }
+154         evh\->state = (typename T::state_t*) state\&.value();
+155         evh\->props = &(((T*) this)\->props);
+156         evh\->attrs = (attrs_component<T>*) this;
+157         evh\->get_dim = [this] {return get_dimensional_relations();};
+158         evh\->$children = [this] {return children;};
+159       }
 .fi
 
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBcomponent_state_t\fP * \fBcydui::components::component_t\fP< EVH, \fBT\fP >::create_state_instance ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -439,11 +540,11 @@ Definition at line \fB145\fP of file \fBcomponent\&.h\fP\&..PP
 .PP
 Implements \fBcydui::components::component_base_t\fP\&.
 .PP
-Definition at line \fB169\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB180\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-169                                                           {
-170         return new typename T::state_t;
-171       }
+180                                                           {
+181         return new typename T::state_t;
+182       }
 .fi
 
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBevent_handler_t\fP * \fBcydui::components::component_t\fP< EVH, \fBT\fP >::event_handler ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -451,11 +552,11 @@ Definition at line \fB169\fP of file \fBcomponent\&.h\fP\&..PP
 .PP
 Implements \fBcydui::components::component_base_t\fP\&.
 .PP
-Definition at line \fB172\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB183\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-172                                                 {
-173         return event_handler_;
-174       }
+183                                                 {
+184         return event_handler_;
+185       }
 .fi
 
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBcomponent_base_t\fP * \fBcydui::components::component_t\fP< EVH, \fBT\fP >::find_by_coords (int x, int y)\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -463,23 +564,23 @@ Definition at line \fB172\fP of file \fBcomponent\&.h\fP\&..PP
 .PP
 Implements \fBcydui::components::component_base_t\fP\&.
 .PP
-Definition at line \fB259\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB311\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-259                                                               {
-260         component_base_t* found = nullptr;
-261         for (auto c = children\&.rbegin(); c != children\&.rend(); ++c) {
-262           found = (*c)\->find_by_coords(x, y);
-263           if (nullptr != found) {
-264             return found;
-265           }
-266         }
-267         if (cx\&.val() <= x && x < cx\&.val() + cw\&.val()) {
-268           if (cy\&.val() <= y && y < cy\&.val() + ch\&.val()) {
-269             return this;
-270           }
-271         }
-272         return nullptr;
-273       }
+311                                                               {
+312         component_base_t* found = nullptr;
+313         for (auto c = children\&.rbegin(); c != children\&.rend(); ++c) {
+314           found = (*c)\->find_by_coords(x, y);
+315           if (nullptr != found) {
+316             return found;
+317           }
+318         }
+319         if (cx\&.val() <= x && x < cx\&.val() + cw\&.val()) {
+320           if (cy\&.val() <= y && y < cy\&.val() + ch\&.val()) {
+321             return this;
+322           }
+323         }
+324         return nullptr;
+325       }
 .fi
 
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBcomponent_dimensional_relations_t\fP \fBcydui::components::component_t\fP< EVH, \fBT\fP >::get_dimensional_relations ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -487,30 +588,30 @@ Definition at line \fB259\fP of file \fBcomponent\&.h\fP\&..PP
 .PP
 Implements \fBcydui::components::component_base_t\fP\&.
 .PP
-Definition at line \fB275\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB327\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-275                                                                              {
-276         return {
-277           this\->_x,
-278           this\->_y,
-279           this\->_w,
-280           this\->_h,
-281           this\->_w_has_changed,
-282           this\->_h_has_changed,
-283           this\->cx,
-284           this\->cy,
-285           this\->cw,
-286           this\->ch,
-287           this\->_margin_top,
-288           this\->_margin_bottom,
-289           this\->_margin_left,
-290           this\->_margin_right,
-291           this\->_padding_top,
-292           this\->_padding_bottom,
-293           this\->_padding_left,
-294           this\->_padding_right,
-295         };
-296       }
+327                                                                              {
+328         return {
+329           this\->_x,
+330           this\->_y,
+331           this\->_w,
+332           this\->_h,
+333           this\->_w_has_changed,
+334           this\->_h_has_changed,
+335           this\->cx,
+336           this\->cy,
+337           this\->cw,
+338           this\->ch,
+339           this\->_margin_top,
+340           this\->_margin_bottom,
+341           this\->_margin_left,
+342           this\->_margin_right,
+343           this\->_padding_top,
+344           this\->_padding_bottom,
+345           this\->_padding_left,
+346           this\->_padding_right,
+347         };
+348       }
 .fi
 
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > void \fBcydui::components::component_t\fP< EVH, \fBT\fP >::get_fragment (\fBcydui::layout::Layout\fP * layout, \fBcydui::compositing::compositing_node_t\fP * compositing_node)\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -518,43 +619,43 @@ Definition at line \fB275\fP of file \fBcomponent\&.h\fP\&..PP
 .PP
 Implements \fBcydui::components::component_base_t\fP\&.
 .PP
-Definition at line \fB223\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB275\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-223                                                                                                              {
-224         for (auto &child: children) {
-225           auto* child_node = new cydui::compositing::compositing_node_t;
-226           compositing_node\->children\&.push_back(child_node);
-227           child\->get_fragment(layout, child_node);
-228         }
-229         
-230         compositing_node\->id = (unsigned long) (this\->state\&.value());
-231         compositing_node\->op = {
-232           \&.x = this\->_x\&.val(),
-233           \&.y = this\->_y\&.val(),
-234           \&.orig_x = this\->_margin_left\&.val() + this\->_padding_left\&.val(),
-235           \&.orig_y = this\->_margin_top\&.val() + this\->_padding_top\&.val(),
-236           \&.w = this\->_w\&.val(),
-237           \&.h = this\->_h\&.val(),
-238           \&.rot = 0\&.0, // dim\->rot\&.val(),
-239           \&.scale_x = 1\&.0, // dim\->scale_x\&.val(),
-240           \&.scale_y = 1\&.0, // dim\->scale_y\&.val(),
-241         };
-242         
-243         auto &fragment = compositing_node\->graphics;
-244         fragment\&.clear();
-245         event_handler_\->draw_fragment(fragment);
-246         if (!fragment\&.empty()) {
-247           for (const auto &elem: fragment\&.elements) {
-248             auto fp = elem\->get_footprint();
-249             if (fp\&.x + fp\&.w > compositing_node\->op\&.w) {
-250               compositing_node\->op\&.w = fp\&.x + fp\&.w;
-251             }
-252             if (fp\&.y + fp\&.h > compositing_node\->op\&.h) {
-253               compositing_node\->op\&.h = fp\&.y + fp\&.h;
-254             }
-255           }
-256         }
-257       }
+275                                                                                                              {
+276         for (auto &child: children) {
+277           auto* child_node = new cydui::compositing::compositing_node_t;
+278           compositing_node\->children\&.push_back(child_node);
+279           child\->get_fragment(layout, child_node);
+280         }
+281         
+282         compositing_node\->id = (unsigned long) (this\->state\&.value());
+283         compositing_node\->op = {
+284           \&.x = this\->_x\&.val(),
+285           \&.y = this\->_y\&.val(),
+286           \&.orig_x = this\->_margin_left\&.val() + this\->_padding_left\&.val(),
+287           \&.orig_y = this\->_margin_top\&.val() + this\->_padding_top\&.val(),
+288           \&.w = this\->_w\&.val(),
+289           \&.h = this\->_h\&.val(),
+290           \&.rot = 0\&.0, // dim\->rot\&.val(),
+291           \&.scale_x = 1\&.0, // dim\->scale_x\&.val(),
+292           \&.scale_y = 1\&.0, // dim\->scale_y\&.val(),
+293         };
+294         
+295         auto &fragment = compositing_node\->graphics;
+296         fragment\&.clear();
+297         event_handler_\->draw_fragment(fragment);
+298         if (!fragment\&.empty()) {
+299           for (const auto &elem: fragment\&.elements) {
+300             auto fp = elem\->get_footprint();
+301             if (fp\&.x + fp\&.w > compositing_node\->op\&.w) {
+302               compositing_node\->op\&.w = fp\&.x + fp\&.w;
+303             }
+304             if (fp\&.y + fp\&.h > compositing_node\->op\&.h) {
+305               compositing_node\->op\&.h = fp\&.y + fp\&.h;
+306             }
+307           }
+308         }
+309       }
 .fi
 
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > void \fBcydui::components::component_t\fP< EVH, \fBT\fP >::redraw (\fBcydui::layout::Layout\fP * layout)\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -562,53 +663,94 @@ Definition at line \fB223\fP of file \fBcomponent\&.h\fP\&..PP
 .PP
 Implements \fBcydui::components::component_base_t\fP\&.
 .PP
-Definition at line \fB176\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB187\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-176                                                       {
-177         std::vector<component_holder_t> new_children = this\->_content();
-178         std::vector<component_holder_t> redraw_children = event_handler_\->on_redraw();
-179         for (auto &item: redraw_children) {
-180           new_children\&.push_back(item);
-181         }
-182         
-183         std::size_t id_i = 0;
-184         for (auto &item: new_children) {
-185           for (auto &component_pair: item\&.get_components()) {
-186             auto [id_, component] = component_pair;
-187             std::string id = id_;
-188             id\&.append(":");
-189             id\&.append(std::to_string(id_i));
-190             
-191             // Get or Create state for component
-192             component_state_t* child_state;
-193             if (state\&.value()\->children_states\&.contains(id)) {
-194               child_state = state\&.value()\->children_states[id];
-195             } else {
-196               child_state = component\->create_state_instance();
-197               state\&.value()\->children_states[id] = child_state;
-198             }
-199             
-200             // Set child's variables
-201             component\->state = child_state;
-202             child_state\->win = state\&.value()\->win;
-203             child_state\->parent = state\&.value();
-204             child_state\->component_instance = component;
-205             component\->parent = this;
-206             children\&.push_back(component);
-207             //printf("CHILDREN LEN: %d\\n", children\&.size());
-208             
-209             // Configure event handler
-210             component\->configure_event_handler();
-211             
-212             // Subscribe child events
-213             component\->subscribe_events();
-214             // Redraw child
-215             component\->redraw(layout);
+187                                                       {
+188         std::vector<component_holder_t> content_children = this\->_content();
+189         std::string content_id_prefix = "content:";
+190         std::size_t id_i = 0;
+191         for (auto &item: content_children) {
+192           for (auto &component_pair: item\&.get_components()) {
+193             auto [id_, component] = component_pair;
+194             std::string id = content_id_prefix;
+195             id\&.append(id_);
+196             id\&.append(":");
+197             id\&.append(std::to_string(id_i));
+198             
+199             // Get or Create state for component
+200             component_state_t* child_state;
+201             if (state\&.value()\->children_states\&.contains(id)) {
+202               child_state = state\&.value()\->children_states[id];
+203             } else {
+204               child_state = component\->create_state_instance();
+205               state\&.value()\->children_states[id] = child_state;
+206             }
+207             
+208             // Set child's variables
+209             component\->state = child_state;
+210             child_state\->win = state\&.value()\->win;
+211             child_state\->parent = state\&.value();
+212             child_state\->component_instance = component;
+213             component\->parent = this;
+214             children\&.push_back(component);
+215             //printf("CHILDREN LEN: %d\\n", children\&.size());
 216             
-217           }
-218           ++id_i;
-219         }
-220       }
+217             // Configure event handler
+218             component\->configure_event_handler();
+219             
+220             // Subscribe child events
+221             component\->subscribe_events();
+222             // Redraw child
+223             //component\->redraw(layout);
+224             
+225           }
+226           ++id_i;
+227         }
+228         
+229         std::vector<component_holder_t> new_children = event_handler_\->on_redraw();
+230         for (auto &item: children) {
+231           // Redraw content child
+232           item\->redraw(layout);
+233         }
+234         
+235         id_i = 0;
+236         for (auto &item: new_children) {
+237           for (auto &component_pair: item\&.get_components()) {
+238             auto [id_, component] = component_pair;
+239             std::string id = id_;
+240             id\&.append(":");
+241             id\&.append(std::to_string(id_i));
+242             
+243             // Get or Create state for component
+244             component_state_t* child_state;
+245             if (state\&.value()\->children_states\&.contains(id)) {
+246               child_state = state\&.value()\->children_states[id];
+247             } else {
+248               child_state = component\->create_state_instance();
+249               state\&.value()\->children_states[id] = child_state;
+250             }
+251             
+252             // Set child's variables
+253             component\->state = child_state;
+254             child_state\->win = state\&.value()\->win;
+255             child_state\->parent = state\&.value();
+256             child_state\->component_instance = component;
+257             component\->parent = this;
+258             children\&.push_back(component);
+259             //printf("CHILDREN LEN: %d\\n", children\&.size());
+260             
+261             // Configure event handler
+262             component\->configure_event_handler();
+263             
+264             // Subscribe child events
+265             component\->subscribe_events();
+266             // Redraw child
+267             component\->redraw(layout);
+268             
+269           }
+270           ++id_i;
+271         }
+272       }
 .fi
 
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > void \fBcydui::components::component_t\fP< EVH, \fBT\fP >::subscribe_events ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -616,13 +758,13 @@ Definition at line \fB176\fP of file \fBcomponent\&.h\fP\&..PP
 .PP
 Implements \fBcydui::components::component_base_t\fP\&.
 .PP
-Definition at line \fB157\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB160\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-157                                        {
-158         clear_subscribed_listeners();
-159         EVH * evh = event_handler_\&.operator\->();
-160         add_event_listeners(evh\->get_event_listeners());
-161       }
+160                                        {
+161         clear_subscribed_listeners();
+162         EVH* evh = event_handler_\&.operator\->();
+163         add_event_listeners(evh\->get_event_listeners());
+164       }
 .fi
 
 .SH "Member Data Documentation"
@@ -630,27 +772,27 @@ Definition at line \fB157\fP of file \fBcomponent\&.h\fP\&..PP
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBcydui::dimensions::dimension_t\fP \fBcydui::components::component_t\fP< EVH, \fBT\fP >::ch\fC [private]\fP"
 
 .PP
-Definition at line \fB129\fP of file \fBcomponent\&.h\fP\&.
+Definition at line \fB131\fP of file \fBcomponent\&.h\fP\&.
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBcydui::dimensions::dimension_t\fP \fBcydui::components::component_t\fP< EVH, \fBT\fP >::cw\fC [private]\fP"
 
 .PP
-Definition at line \fB128\fP of file \fBcomponent\&.h\fP\&.
+Definition at line \fB130\fP of file \fBcomponent\&.h\fP\&.
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBcydui::dimensions::dimension_t\fP \fBcydui::components::component_t\fP< EVH, \fBT\fP >::cx\fC [private]\fP"
 
 .PP
 Private attributes\&. 
 .PP
-Definition at line \fB126\fP of file \fBcomponent\&.h\fP\&.
+Definition at line \fB128\fP of file \fBcomponent\&.h\fP\&.
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBcydui::dimensions::dimension_t\fP \fBcydui::components::component_t\fP< EVH, \fBT\fP >::cy\fC [private]\fP"
 
 .PP
-Definition at line \fB127\fP of file \fBcomponent\&.h\fP\&.
+Definition at line \fB129\fP of file \fBcomponent\&.h\fP\&.
 .SS "template<ComponentEventHandlerConcept EVH, typename \fBT\fP > \fBlazy_alloc\fP<EVH> \fBcydui::components::component_t\fP< EVH, \fBT\fP >::event_handler_ {}\fC [private]\fP"
 
 .PP
-Definition at line \fB131\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB133\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-131 {};
+133 {};
 .fi
 
 

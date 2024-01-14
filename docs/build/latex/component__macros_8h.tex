@@ -1,6 +1,7 @@
 \doxysection{include/core/component\+\_\+macros.h File Reference}
 \hypertarget{component__macros_8h}{}\label{component__macros_8h}\index{include/core/component\_macros.h@{include/core/component\_macros.h}}
-This graph shows which files directly or indirectly include this file\+:\nopagebreak
+This graph shows which files directly or indirectly include this file\+:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -18,7 +19,7 @@ This graph shows which files directly or indirectly include this file\+:\nopageb
 \item 
 \#define \mbox{\hyperlink{component__macros_8h_a74336a37d7bf60ff01643e73dd9942f8}{CYDUI\+\_\+\+COMPONENT\+\_\+\+METADATA}}(NAME\+\_\+)
 \item 
-\#define \mbox{\hyperlink{component__macros_8h_adf82c38b14cc6c67209d8252e8a9199e}{STATE}}(NAME)~struct \mbox{\hyperlink{component__macros_8h_a8af56ccc638418125d0b5b16a292920f}{CYDUI\+\_\+\+STATE\+\_\+\+NAME}}(NAME)\+: public \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui\+::components\+::component\+\_\+state\+\_\+t}}
+\#define \mbox{\hyperlink{component__macros_8h_adf82c38b14cc6c67209d8252e8a9199e}{STATE}}(NAME)
 \item 
 \#define \mbox{\hyperlink{component__macros_8h_a815d8178754c2fcbbb661c6ac8f9fb1f}{COMPONENT}}(NAME, ...)
 \item 
@@ -39,6 +40,8 @@ This graph shows which files directly or indirectly include this file\+:\nopageb
 
 {\bfseries Value\+:}
 \begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }NAME;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{using\ }\mbox{\hyperlink{component__macros_8h_a8af56ccc638418125d0b5b16a292920f}{CYDUI\_STATE\_NAME}}(NAME)\ =\ \mbox{\hyperlink{structcomponent__state__template}{component\_state\_template<NAME>}};\ \(\backslash\)}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }CYDUI\_EV\_HANDLER\_NAME(NAME);\ \(\backslash\)}
 \DoxyCodeLine{\textcolor{keyword}{struct\ }NAME:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui::components::component\_t}}<CYDUI\_EV\_HANDLER\_NAME(NAME),NAME>\ \(\backslash\)}
@@ -47,8 +50,8 @@ This graph shows which files directly or indirectly include this file\+:\nopageb
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }state\_t\ =\ \mbox{\hyperlink{component__macros_8h_a8af56ccc638418125d0b5b16a292920f}{CYDUI\_STATE\_NAME}}(NAME);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{using\ }event\_handler\_t\ =\ \mbox{\hyperlink{component__macros_8h_a1453acef8e4a8b8c3e571a83fa5b8218}{CYDUI\_EV\_HANDLER\_NAME}}(NAME);\ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{struct\ }props\_t\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{\ \ \ \ props;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \_\_VA\_ARGS\_\_;\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ props\_t\ props;\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ NAME()\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{explicit}\ NAME(props\_t\ props)\ \ \ \ \(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \ \ :\ \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui::components::component\_t<CYDUI\_EV\_HANDLER\_NAME(NAME),NAME>}}()\(\backslash\)}
@@ -68,34 +71,34 @@ This graph shows which files directly or indirectly include this file\+:\nopageb
 \end{DoxyCode}
 
 
-Definition at line \mbox{\hyperlink{component__macros_8h_source_l00029}{29}} of file \mbox{\hyperlink{component__macros_8h_source}{component\+\_\+macros.\+h}}.
+Definition at line \mbox{\hyperlink{component__macros_8h_source_l00031}{31}} of file \mbox{\hyperlink{component__macros_8h_source}{component\+\_\+macros.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ :\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00032\ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui::components::component\_t}}<\mbox{\hyperlink{component__macros_8h_a1453acef8e4a8b8c3e571a83fa5b8218}{CYDUI\_EV\_HANDLER\_NAME}}(NAME),NAME>\ \(\backslash\)}
-\DoxyCodeLine{00033\ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00034\ \ \ \ \ CYDUI\_COMPONENT\_METADATA(NAME)\ \ \(\backslash\)}
-\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{using\ }state\_t\ =\ \mbox{\hyperlink{component__macros_8h_a8af56ccc638418125d0b5b16a292920f}{CYDUI\_STATE\_NAME}}(NAME);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{using\ }event\_handler\_t\ =\ \mbox{\hyperlink{component__macros_8h_a1453acef8e4a8b8c3e571a83fa5b8218}{CYDUI\_EV\_HANDLER\_NAME}}(NAME);\ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{struct\ }props\_t\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00038\ \ \ \ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00039\ \ \ \ \ props;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00040\ \ \ \ \ NAME()\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{explicit}\ NAME(props\_t\ props)\ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00042\ \ \ \ \ \ \ :\ \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui::components::component\_t<CYDUI\_EV\_HANDLER\_NAME(NAME),NAME>}}()\(\backslash\)}
-\DoxyCodeLine{00043\ \ \ \ \ \ \ ,\ props(std::move(props))\ \{\ \}\ \(\backslash\)}
-\DoxyCodeLine{00044\ \ \ \ \ \string~NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00045\ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00046\ \textcolor{keyword}{struct\ }CYDUI\_EV\_HANDLER\_DATA\_NAME(NAME)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00047\ \ \ CYDUI\_STATE\_NAME(NAME)*\ state\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00048\ \ \ NAME::props\_t*\ props\ =\ \textcolor{keyword}{nullptr};\ \ \ \(\backslash\)}
-\DoxyCodeLine{00049\ \ \ \mbox{\hyperlink{structattrs__component}{attrs\_component<NAME>}}*\ attrs\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00050\ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00051\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00052\ \textcolor{keyword}{struct\ }CYDUI\_EV\_HANDLER\_NAME(NAME)\ \ \(\backslash\)}
-\DoxyCodeLine{00053\ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t}{cydui::components::event\_handler\_t}},\ \ \(\backslash\)}
-\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{component__macros_8h_a36c71dcec93ad69b047ef37456dfc6cf}{CYDUI\_EV\_HANDLER\_DATA\_NAME}}(NAME)}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ :\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00036\ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui::components::component\_t}}<\mbox{\hyperlink{component__macros_8h_a1453acef8e4a8b8c3e571a83fa5b8218}{CYDUI\_EV\_HANDLER\_NAME}}(NAME),NAME>\ \(\backslash\)}
+\DoxyCodeLine{00037\ \ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00038\ \ \ \ \ CYDUI\_COMPONENT\_METADATA(NAME)\ \ \(\backslash\)}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{using\ }state\_t\ =\ \mbox{\hyperlink{component__macros_8h_a8af56ccc638418125d0b5b16a292920f}{CYDUI\_STATE\_NAME}}(NAME);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{using\ }event\_handler\_t\ =\ \mbox{\hyperlink{component__macros_8h_a1453acef8e4a8b8c3e571a83fa5b8218}{CYDUI\_EV\_HANDLER\_NAME}}(NAME);\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{struct\ }props\_t\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \_\_VA\_ARGS\_\_;\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00043\ \ \ \ \ props\_t\ props;\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00044\ \ \ \ \ NAME()\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{explicit}\ NAME(props\_t\ props)\ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ :\ \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui::components::component\_t<CYDUI\_EV\_HANDLER\_NAME(NAME),NAME>}}()\(\backslash\)}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ ,\ props(std::move(props))\ \{\ \}\ \(\backslash\)}
+\DoxyCodeLine{00048\ \ \ \ \ \string~NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00049\ \ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00050\ \textcolor{keyword}{struct\ }CYDUI\_EV\_HANDLER\_DATA\_NAME(NAME)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00051\ \ \ CYDUI\_STATE\_NAME(NAME)*\ state\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00052\ \ \ NAME::props\_t*\ props\ =\ \textcolor{keyword}{nullptr};\ \ \ \(\backslash\)}
+\DoxyCodeLine{00053\ \ \ \mbox{\hyperlink{structattrs__component}{attrs\_component<NAME>}}*\ attrs\ =\ \textcolor{keyword}{nullptr};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00054\ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00055\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00056\ \textcolor{keyword}{struct\ }CYDUI\_EV\_HANDLER\_NAME(NAME)\ \ \(\backslash\)}
+\DoxyCodeLine{00057\ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t}{cydui::components::event\_handler\_t}},\ \ \(\backslash\)}
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{component__macros_8h_a36c71dcec93ad69b047ef37456dfc6cf}{CYDUI\_EV\_HANDLER\_DATA\_NAME}}(NAME)}
 
 \end{DoxyCode}
 \Hypertarget{component__macros_8h_a442d28e270626e664e5ce5ee3de2fbcd}\label{component__macros_8h_a442d28e270626e664e5ce5ee3de2fbcd} 
@@ -106,41 +109,41 @@ Definition at line \mbox{\hyperlink{component__macros_8h_source_l00029}{29}} of 
 
 
 
-Definition at line \mbox{\hyperlink{component__macros_8h_source_l00066}{66}} of file \mbox{\hyperlink{component__macros_8h_source}{component\+\_\+macros.\+h}}.
+Definition at line \mbox{\hyperlink{component__macros_8h_source_l00070}{70}} of file \mbox{\hyperlink{component__macros_8h_source}{component\+\_\+macros.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ :\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00071\ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui::components::component\_t}}<\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00072\ \ \ \ \ CYDUI\_EV\_HANDLER\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT,\ \(\backslash\)}
-\DoxyCodeLine{00073\ \ \ \ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT\ \(\backslash\)}
-\DoxyCodeLine{00074\ \ \ >\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00075\ \ \ \ \ CYDUI\_COMPONENT\_METADATA(NAME)\ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{using\ }state\_t\ =\ \mbox{\hyperlink{component__macros_8h_a8af56ccc638418125d0b5b16a292920f}{CYDUI\_STATE\_NAME}}(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT;\ \(\backslash\)}
-\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{using\ }event\_handler\_t\ =\ \mbox{\hyperlink{component__macros_8h_a1453acef8e4a8b8c3e571a83fa5b8218}{CYDUI\_EV\_HANDLER\_NAME}}(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT;\ \(\backslash\)}
-\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keyword}{struct\ }props\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00080\ \ \ \ \ props;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00081\ \ \ \ \ NAME()\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{explicit}\ NAME(props\_t\ props)\ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ :\ \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui::components::component\_t}}<\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ CYDUI\_EV\_HANDLER\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT,\ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ >()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00087\ \ \ \ \ \ \ ,\ props(std::move(props))\ \{\ \}\ \ \ \(\backslash\)}
-\DoxyCodeLine{00088\ \ \ \ \ \string~NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00089\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00090\ \textcolor{keyword}{template}\ SET\_COMPONENT\_TEMPLATE\_DEFAULT\ \(\backslash\)}
-\DoxyCodeLine{00091\ struct\ \mbox{\hyperlink{component__macros_8h_a36c71dcec93ad69b047ef37456dfc6cf}{CYDUI\_EV\_HANDLER\_DATA\_NAME}}(NAME)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00092\ \ \ CYDUI\_STATE\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT*\ state\ =\ \textcolor{keyword}{nullptr};\ \ \(\backslash\)}
-\DoxyCodeLine{00093\ \ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT::props\_t*\ props\ =\ \textcolor{keyword}{nullptr};\(\backslash\)}
-\DoxyCodeLine{00094\ \ \ \mbox{\hyperlink{structattrs__component}{attrs\_component<NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT>}}*\ attrs\ =\ \textcolor{keyword}{nullptr};\ \ \ \(\backslash\)}
-\DoxyCodeLine{00095\ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\};\ \(\backslash\)}
-\DoxyCodeLine{00096\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00097\ \textcolor{keyword}{template}\ SET\_COMPONENT\_TEMPLATE\ \ \ \ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00098\ struct\ \mbox{\hyperlink{component__macros_8h_a1453acef8e4a8b8c3e571a83fa5b8218}{CYDUI\_EV\_HANDLER\_NAME}}(NAME)\ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00099\ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t}{cydui::components::event\_handler\_t}},\ \ \ \ \(\backslash\)}
-\DoxyCodeLine{00100\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{component__macros_8h_a36c71dcec93ad69b047ef37456dfc6cf}{CYDUI\_EV\_HANDLER\_DATA\_NAME}}(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ :\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00075\ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui::components::component\_t}}<\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00076\ \ \ \ \ CYDUI\_EV\_HANDLER\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT,\ \(\backslash\)}
+\DoxyCodeLine{00077\ \ \ \ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT\ \(\backslash\)}
+\DoxyCodeLine{00078\ \ \ >\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00079\ \ \ \ \ CYDUI\_COMPONENT\_METADATA(NAME)\ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{using\ }state\_t\ =\ \mbox{\hyperlink{component__macros_8h_a8af56ccc638418125d0b5b16a292920f}{CYDUI\_STATE\_NAME}}(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT;\ \(\backslash\)}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keyword}{using\ }event\_handler\_t\ =\ \mbox{\hyperlink{component__macros_8h_a1453acef8e4a8b8c3e571a83fa5b8218}{CYDUI\_EV\_HANDLER\_NAME}}(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT;\ \(\backslash\)}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keyword}{struct\ }props\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \_\_VA\_ARGS\_\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00084\ \ \ \ \ props\_t\ props;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00085\ \ \ \ \ NAME()\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00086\ \ \ \ \ \textcolor{keyword}{explicit}\ NAME(props\_t\ props)\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ :\ \mbox{\hyperlink{structcydui_1_1components_1_1component__t}{cydui::components::component\_t}}<\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ CYDUI\_EV\_HANDLER\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT,\ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ >()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ ,\ props(std::move(props))\ \{\ \}\ \ \ \(\backslash\)}
+\DoxyCodeLine{00092\ \ \ \ \ \string~NAME()\ \textcolor{keyword}{override}\ =\ \textcolor{keywordflow}{default};\ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00093\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00094\ \textcolor{keyword}{template}\ SET\_COMPONENT\_TEMPLATE\_DEFAULT\ \(\backslash\)}
+\DoxyCodeLine{00095\ struct\ \mbox{\hyperlink{component__macros_8h_a36c71dcec93ad69b047ef37456dfc6cf}{CYDUI\_EV\_HANDLER\_DATA\_NAME}}(NAME)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00096\ \ \ CYDUI\_STATE\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT*\ state\ =\ \textcolor{keyword}{nullptr};\ \ \(\backslash\)}
+\DoxyCodeLine{00097\ \ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT::props\_t*\ props\ =\ \textcolor{keyword}{nullptr};\(\backslash\)}
+\DoxyCodeLine{00098\ \ \ \mbox{\hyperlink{structattrs__component}{attrs\_component<NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT>}}*\ attrs\ =\ \textcolor{keyword}{nullptr};\ \ \ \(\backslash\)}
+\DoxyCodeLine{00099\ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\};\ \(\backslash\)}
+\DoxyCodeLine{00100\ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00101\ \textcolor{keyword}{template}\ SET\_COMPONENT\_TEMPLATE\ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00102\ struct\ \mbox{\hyperlink{component__macros_8h_a1453acef8e4a8b8c3e571a83fa5b8218}{CYDUI\_EV\_HANDLER\_NAME}}(NAME)\ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00103\ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1event__handler__t}{cydui::components::event\_handler\_t}},\ \ \ \ \(\backslash\)}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{component__macros_8h_a36c71dcec93ad69b047ef37456dfc6cf}{CYDUI\_EV\_HANDLER\_DATA\_NAME}}(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT}
 
 \end{DoxyCode}
 \Hypertarget{component__macros_8h_a74336a37d7bf60ff01643e73dd9942f8}\label{component__macros_8h_a74336a37d7bf60ff01643e73dd9942f8} 
@@ -153,6 +156,7 @@ Definition at line \mbox{\hyperlink{component__macros_8h_source_l00066}{66}} of 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{structlogging_1_1logger}{logging::logger}}\ log\{.\mbox{\hyperlink{structlogging_1_1logger_a0b07f4c872683d157a40708b40bfb72d}{name}}\ =\ \#NAME\_\};\(\backslash\)}
 \DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ NAME\ =\ \#NAME\_\ ;\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ std::string\ name()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ std::string\ \{NAME\};\ \}}
 
 \end{DoxyCode}
 
@@ -163,7 +167,7 @@ Definition at line \mbox{\hyperlink{component__macros_8h_source_l00016}{16}} of 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{.name\ =\ \#NAME\_\};\(\backslash\)}
 \DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{constexpr}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ NAME\ =\ \#NAME\_\ ;\ \(\backslash\)}
-\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00019\ \ \ \ \ std::string\ name()\textcolor{keyword}{\ override\ }\{\ \textcolor{keywordflow}{return}\ std::string\ \{NAME\};\ \}}
 
 \end{DoxyCode}
 \Hypertarget{component__macros_8h_a36c71dcec93ad69b047ef37456dfc6cf}\label{component__macros_8h_a36c71dcec93ad69b047ef37456dfc6cf} 
@@ -204,21 +208,30 @@ Definition at line \mbox{\hyperlink{component__macros_8h_source_l00009}{9}} of f
 
 
 
-Definition at line \mbox{\hyperlink{component__macros_8h_source_l00064}{64}} of file \mbox{\hyperlink{component__macros_8h_source}{component\+\_\+macros.\+h}}.
+Definition at line \mbox{\hyperlink{component__macros_8h_source_l00068}{68}} of file \mbox{\hyperlink{component__macros_8h_source}{component\+\_\+macros.\+h}}.
 
 \Hypertarget{component__macros_8h_adf82c38b14cc6c67209d8252e8a9199e}\label{component__macros_8h_adf82c38b14cc6c67209d8252e8a9199e} 
 \index{component\_macros.h@{component\_macros.h}!STATE@{STATE}}
 \index{STATE@{STATE}!component\_macros.h@{component\_macros.h}}
 \doxysubsubsection{\texorpdfstring{STATE}{STATE}}
-{\footnotesize\ttfamily \#define STATE(\begin{DoxyParamCaption}\item[{}]{NAME }\end{DoxyParamCaption})~struct \mbox{\hyperlink{component__macros_8h_a8af56ccc638418125d0b5b16a292920f}{CYDUI\+\_\+\+STATE\+\_\+\+NAME}}(NAME)\+: public \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui\+::components\+::component\+\_\+state\+\_\+t}}}
+{\footnotesize\ttfamily \#define STATE(\begin{DoxyParamCaption}\item[{}]{NAME }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }NAME;\ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{template}<\textcolor{keyword}{typename}\ T>\(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }\mbox{\hyperlink{structcomponent__state__template}{component\_state\_template}};\ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{template}<>\ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keyword}{struct\ }\mbox{\hyperlink{structcomponent__state__template}{component\_state\_template}}<NAME>:\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui::components::component\_state\_t}}}
+
+\end{DoxyCode}
 
 
-
-Definition at line \mbox{\hyperlink{component__macros_8h_source_l00024}{24}} of file \mbox{\hyperlink{component__macros_8h_source}{component\+\_\+macros.\+h}}.
+Definition at line \mbox{\hyperlink{component__macros_8h_source_l00023}{23}} of file \mbox{\hyperlink{component__macros_8h_source}{component\+\_\+macros.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui::components::component\_state\_t}}}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui::components::component\_state\_t}}}
 
 \end{DoxyCode}
 \Hypertarget{component__macros_8h_af4be5abe4cab4c12417ddecff17c1ee8}\label{component__macros_8h_af4be5abe4cab4c12417ddecff17c1ee8} 
@@ -235,10 +248,10 @@ Definition at line \mbox{\hyperlink{component__macros_8h_source_l00024}{24}} of 
 \end{DoxyCode}
 
 
-Definition at line \mbox{\hyperlink{component__macros_8h_source_l00058}{58}} of file \mbox{\hyperlink{component__macros_8h_source}{component\+\_\+macros.\+h}}.
+Definition at line \mbox{\hyperlink{component__macros_8h_source_l00062}{62}} of file \mbox{\hyperlink{component__macros_8h_source}{component\+\_\+macros.\+h}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui::components::component\_state\_t}}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structcydui_1_1components_1_1component__state__t}{cydui::components::component\_state\_t}}}
 
 \end{DoxyCode}

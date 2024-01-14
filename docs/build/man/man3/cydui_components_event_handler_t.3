@@ -9,7 +9,7 @@ cydui::components::event_handler_t
 .PP
 \fC#include <component_event_handler\&.h>\fP
 .PP
-Inherited by \fBThreadTimelineEventHandler\fP\&.
+Inherited by \fBThreadTimelineEventHandler\fP, \fBstdui::control::ButtonEventHandler\fP, \fBstdui::layout::FlowEventHandler\fP, and \fBstdui::layout::GridEventHandler\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
@@ -119,6 +119,9 @@ Inherited by \fBThreadTimelineEventHandler\fP\&.
 .ti -1c
 .RI "std::function< \fBcomponent_dimensional_relations_t\fP()> \fBget_dim\fP"
 .br
+.ti -1c
+.RI "std::function< std::vector< \fBcomponent_base_t\fP * >()> \fB$children\fP"
+.br
 .in -1c
 .SH "Detailed Description"
 .PP 
@@ -134,198 +137,204 @@ Definition at line \fB61\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$ch () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB74\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB75\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$cw () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB73\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB74\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$cx () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB71\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB72\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$cy () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB72\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB73\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$h () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB68\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB69\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$h (auto value) const\fC [inline]\fP"
 
 .PP
-Definition at line \fB70\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB71\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$margin_bottom () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB76\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB77\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$margin_left () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB77\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB78\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$margin_right () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB78\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB79\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$margin_top () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB75\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB76\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$padding_bottom () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB80\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB81\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$padding_left () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB81\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB82\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$padding_right () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB82\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB83\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$padding_top () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB79\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB80\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$w () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB67\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB68\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$w (auto value) const\fC [inline]\fP"
 
 .PP
-Definition at line \fB69\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB70\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$x () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB65\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB66\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "auto & cydui::components::event_handler_t::$y () const\fC [inline]\fP"
 
 .PP
-Definition at line \fB66\fP of file \fBcomponent_event_handler\&.h\fP\&.
+Definition at line \fB67\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "cydui::components::event_handler_t::_Pragma ('message (\\'\fBTODO\fP \- \\' \\'\\\\\\'Implement a method to set an input context for text input\\\\\\'\\')')\fC [inline]\fP"
 
 .PP
-Definition at line \fB152\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB153\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-154                              {
-155         std::function<void(cydui::events::Event*)> handler {};
-156       };
+155                              {
+156         std::function<void(cydui::events::Event*)> handler {};
+157       };
 .fi
 
 .SS "virtual void cydui::components::event_handler_t::draw_fragment (\fBgraphics::vg::vg_fragment_t\fP & fragment)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB161\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB162\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-161                                                                     {
-162       
-163       }
+162                                                                     {
+163       
+164       }
 .fi
 
 .SS "virtual std::unordered_map< std::string, listener_data_t > cydui::components::event_handler_t::get_event_listeners ()\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB157\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB158\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-157                                                                                  {
-158         return {};
-159       }
+158                                                                                  {
+159         return {};
+160       }
 .fi
 
 .SS "virtual void cydui::components::event_handler_t::on_button_press (\fBButton\fP button, int x, int y)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB109\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB110\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-109                                                    {
-110         CYDUI_INTERNAL_EV_button_PROPAGATE(press);
-111       }
+110                                                    {
+111         CYDUI_INTERNAL_EV_button_PROPAGATE(press);
+112       }
 .fi
 
 .SS "virtual void cydui::components::event_handler_t::on_button_release (\fBButton\fP button, int x, int y)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB114\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB115\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-114                                                      {
-115         CYDUI_INTERNAL_EV_button_PROPAGATE(release);
-116       }
+115                                                      {
+116         CYDUI_INTERNAL_EV_button_PROPAGATE(release);
+117       }
 .fi
 
 .SS "virtual void cydui::components::event_handler_t::on_key_press (const \fBKeyEvent::DataType\fP & ev)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB141\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB142\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-141                                                 {
-142         if (parent)
-143           parent\->on_key_press(ev);
-144       }
+142                                                 {
+143         if (parent)
+144           parent\->on_key_press(ev);
+145       }
 .fi
 
 .SS "virtual void cydui::components::event_handler_t::on_key_release (const \fBKeyEvent::DataType\fP & ev)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB147\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB148\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-147                                                   {
-148         if (parent)
-149           parent\->on_key_release(ev);
-150       }
+148                                                   {
+149         if (parent)
+150           parent\->on_key_release(ev);
+151       }
 .fi
 
 .SS "virtual void cydui::components::event_handler_t::on_mouse_enter (int x, int y)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB119\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB120\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-119                                                   {
-120         CYDUI_INTERNAL_EV_mouse_PROPAGATE(enter);
-121       }
+120                                                   {
+121         CYDUI_INTERNAL_EV_mouse_PROPAGATE(enter);
+122       }
 .fi
 
 .SS "virtual void cydui::components::event_handler_t::on_mouse_exit (int x, int y)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB124\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB125\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-124                                                  {
-125         CYDUI_INTERNAL_EV_mouse_PROPAGATE(exit);
-126       }
+125                                                  {
+126         CYDUI_INTERNAL_EV_mouse_PROPAGATE(exit);
+127       }
 .fi
 
 .SS "virtual void cydui::components::event_handler_t::on_mouse_motion (int x, int y)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB129\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB130\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-129                                                    {
-130         CYDUI_INTERNAL_EV_mouse_PROPAGATE(motion);
-131       }
+130                                                    {
+131         CYDUI_INTERNAL_EV_mouse_PROPAGATE(motion);
+132       }
 .fi
 
 .SS "virtual std::vector< \fBcydui::components::component_holder_t\fP > cydui::components::event_handler_t::on_redraw ()\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB93\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Reimplemented in \fBstdui::layout::FlowEventHandler\fP, and \fBstdui::layout::GridEventHandler\fP\&.
+.PP
+Definition at line \fB94\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-93 {return {};}
+94 {return {};}
 .fi
 
 .SS "virtual void cydui::components::event_handler_t::on_scroll (int dx, int dy)\fC [inline]\fP, \fC [virtual]\fP"
 
 .PP
-Definition at line \fB133\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
+Definition at line \fB134\fP of file \fBcomponent_event_handler\&.h\fP\&..PP
 .nf
-133                                              {
-134         if (parent)
-135           parent\->on_scroll(dx, dy);
-136       }
+134                                              {
+135         if (parent)
+136           parent\->on_scroll(dx, dy);
+137       }
 .fi
 
 .SH "Member Data Documentation"
 .PP 
+.SS "std::function<std::vector<\fBcomponent_base_t\fP*>()> cydui::components::event_handler_t::$children"
+
+.PP
+Definition at line \fB65\fP of file \fBcomponent_event_handler\&.h\fP\&.
 .SS "std::function<\fBcomponent_dimensional_relations_t\fP()> cydui::components::event_handler_t::get_dim"
 
 .PP

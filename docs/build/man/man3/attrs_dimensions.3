@@ -11,7 +11,7 @@ attrs_dimensions< T >
 .PP
 Inherits \fBattr_x< T >\fP, \fBattr_y< T >\fP, \fBattr_w< T >\fP, and \fBattr_h< T >\fP\&.
 .PP
-Inherited by \fBattrs_component< ThreadTimeline >\fP, and \fBattrs_component< T >\fP\&.
+Inherited by \fBattrs_component< ThreadTimeline >\fP, \fBattrs_component< T >\fP, \fBattrs_component< Button >\fP, \fBattrs_component< Flow >\fP, \fBattrs_component< Grid >\fP, \fBattrs_component< stdui::control::Button >\fP, \fBattrs_component< stdui::layout::Flow >\fP, \fBattrs_component< stdui::layout::Grid >\fP, and \fBattrs_component< T >\fP\&.
 .SS "Additional Inherited Members"
 
 
@@ -21,10 +21,16 @@ Public Member Functions inherited from \fBattr_x< T >\fP
 .RI "\fB~attr_x\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBx\fP (auto &_x_)"
+.RI "\fBS\fP & \fBx\fP (auto &_x_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBx\fP (auto &&_x_)"
+.RI "\fBS\fP & \fBx\fP (auto &&_x_)"
+.br
+.ti -1c
+.RI "void \fBx\fP (auto &_x_)"
+.br
+.ti -1c
+.RI "void \fBx\fP (auto &&_x_)"
 .br
 .in -1c
 
@@ -41,10 +47,16 @@ Public Member Functions inherited from \fBattr_y< T >\fP
 .RI "\fB~attr_y\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBy\fP (auto &_y_)"
+.RI "\fBS\fP & \fBy\fP (auto &_y_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBy\fP (auto &&_y_)"
+.RI "\fBS\fP & \fBy\fP (auto &&_y_)"
+.br
+.ti -1c
+.RI "void \fBy\fP (auto &_y_)"
+.br
+.ti -1c
+.RI "void \fBy\fP (auto &&_y_)"
 .br
 .in -1c
 
@@ -54,10 +66,16 @@ Public Member Functions inherited from \fBattr_w< T >\fP
 .RI "\fB~attr_w\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBw\fP (auto &_w_)"
+.RI "\fBS\fP & \fBw\fP (auto &_w_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBw\fP (auto &&_w_)"
+.RI "\fBS\fP & \fBw\fP (auto &&_w_)"
+.br
+.ti -1c
+.RI "void \fBw\fP (auto &_w_)"
+.br
+.ti -1c
+.RI "void \fBw\fP (auto &&_w_)"
 .br
 .in -1c
 
@@ -67,10 +85,16 @@ Public Member Functions inherited from \fBattr_h< T >\fP
 .RI "\fB~attr_h\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBh\fP (auto &_h_)"
+.RI "\fBS\fP & \fBh\fP (auto &_h_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBh\fP (auto &&_h_)"
+.RI "\fBS\fP & \fBh\fP (auto &&_h_)"
+.br
+.ti -1c
+.RI "void \fBh\fP (auto &_h_)"
+.br
+.ti -1c
+.RI "void \fBh\fP (auto &&_h_)"
 .br
 .in -1c
 
@@ -114,7 +138,7 @@ Public Attributes inherited from \fBattr_h< T >\fP
 .br
 struct attrs_dimensions< T >"
 .PP
-Definition at line \fB94\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB126\fP of file \fBcomponent_attributes\&.h\fP\&.
 
 .SH "Author"
 .PP 

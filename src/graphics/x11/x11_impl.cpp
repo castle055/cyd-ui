@@ -297,6 +297,17 @@ unsigned long cydui::graphics::get_id(cydui::graphics::window_t* win) {
   return (unsigned int) win->xwin;
 }
 
+std::pair<int, int> cydui::graphics::get_position(cydui::graphics::window_t* win) {
+  XWindowAttributes attrs;
+  XGetWindowAttributes(state::get_dpy(), win->xwin, &attrs);
+  return {attrs.x, attrs.y};
+}
+std::pair<int, int> cydui::graphics::get_size(cydui::graphics::window_t* win) {
+  XWindowAttributes attrs;
+  XGetWindowAttributes(state::get_dpy(), win->xwin, &attrs);
+  return {attrs.width, attrs.height};
+}
+
 void cydui::graphics::terminate(cydui::graphics::window_t* win) {
   XUnmapWindow(state::get_dpy(), win->xwin);
   XDestroyWindow(state::get_dpy(), win->xwin);

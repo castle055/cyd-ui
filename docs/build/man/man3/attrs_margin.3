@@ -11,7 +11,7 @@ attrs_margin< T >
 .PP
 Inherits \fBattr_margin_top< T >\fP, \fBattr_margin_bottom< T >\fP, \fBattr_margin_left< T >\fP, and \fBattr_margin_right< T >\fP\&.
 .PP
-Inherited by \fBattrs_component< ThreadTimeline >\fP, and \fBattrs_component< T >\fP\&.
+Inherited by \fBattrs_component< ThreadTimeline >\fP, \fBattrs_component< T >\fP, \fBattrs_component< Button >\fP, \fBattrs_component< Flow >\fP, \fBattrs_component< Grid >\fP, \fBattrs_component< stdui::control::Button >\fP, \fBattrs_component< stdui::layout::Flow >\fP, \fBattrs_component< stdui::layout::Grid >\fP, and \fBattrs_component< T >\fP\&.
 .SS "Additional Inherited Members"
 
 
@@ -21,10 +21,16 @@ Public Member Functions inherited from \fBattr_margin_top< T >\fP
 .RI "\fB~attr_margin_top\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_top\fP (auto &_margin_top_)"
+.RI "\fBS\fP & \fBmargin_top\fP (auto &_margin_top_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_top\fP (auto &&_margin_top_)"
+.RI "\fBS\fP & \fBmargin_top\fP (auto &&_margin_top_)"
+.br
+.ti -1c
+.RI "void \fBmargin_top\fP (auto &_margin_top_)"
+.br
+.ti -1c
+.RI "void \fBmargin_top\fP (auto &&_margin_top_)"
 .br
 .in -1c
 
@@ -41,10 +47,16 @@ Public Member Functions inherited from \fBattr_margin_bottom< T >\fP
 .RI "\fB~attr_margin_bottom\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_bottom\fP (auto &_margin_bottom_)"
+.RI "\fBS\fP & \fBmargin_bottom\fP (auto &_margin_bottom_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_bottom\fP (auto &&_margin_bottom_)"
+.RI "\fBS\fP & \fBmargin_bottom\fP (auto &&_margin_bottom_)"
+.br
+.ti -1c
+.RI "void \fBmargin_bottom\fP (auto &_margin_bottom_)"
+.br
+.ti -1c
+.RI "void \fBmargin_bottom\fP (auto &&_margin_bottom_)"
 .br
 .in -1c
 
@@ -54,10 +66,16 @@ Public Member Functions inherited from \fBattr_margin_left< T >\fP
 .RI "\fB~attr_margin_left\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_left\fP (auto &_margin_left_)"
+.RI "\fBS\fP & \fBmargin_left\fP (auto &_margin_left_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_left\fP (auto &&_margin_left_)"
+.RI "\fBS\fP & \fBmargin_left\fP (auto &&_margin_left_)"
+.br
+.ti -1c
+.RI "void \fBmargin_left\fP (auto &_margin_left_)"
+.br
+.ti -1c
+.RI "void \fBmargin_left\fP (auto &&_margin_left_)"
 .br
 .in -1c
 
@@ -67,10 +85,16 @@ Public Member Functions inherited from \fBattr_margin_right< T >\fP
 .RI "\fB~attr_margin_right\fP () override=default"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_right\fP (auto &_margin_right_)"
+.RI "\fBS\fP & \fBmargin_right\fP (auto &_margin_right_)"
 .br
 .ti -1c
-.RI "\fBT\fP & \fBmargin_right\fP (auto &&_margin_right_)"
+.RI "\fBS\fP & \fBmargin_right\fP (auto &&_margin_right_)"
+.br
+.ti -1c
+.RI "void \fBmargin_right\fP (auto &_margin_right_)"
+.br
+.ti -1c
+.RI "void \fBmargin_right\fP (auto &&_margin_right_)"
 .br
 .in -1c
 
@@ -108,7 +132,7 @@ Public Attributes inherited from \fBattr_margin_right< T >\fP
 .br
 struct attrs_margin< T >"
 .PP
-Definition at line \fB78\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB110\fP of file \fBcomponent_attributes\&.h\fP\&.
 
 .SH "Author"
 .PP 

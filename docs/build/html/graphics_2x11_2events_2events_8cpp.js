@@ -9,7 +9,7 @@ var graphics_2x11_2events_2events_8cpp =
     [ "ksym", "graphics_2x11_2events_2events_8cpp.html#a3bb2006c9282090b5313e138d67ba5c0", null ],
     [ "motionEventDataMonitor", "graphics_2x11_2events_2events_8cpp.html#a855a89e149e6d6e3921518a5813357cc", null ],
     [ "redrawEventDataMonitor", "graphics_2x11_2events_2events_8cpp.html#ae59d61129294ea57eecdcc9788fe8538", null ],
-    [ "resizeEventDataMonitor", "graphics_2x11_2events_2events_8cpp.html#a25e8c99a102945f3abea22cf16e82111", null ],
+    [ "resizeEventDataMonitor", "graphics_2x11_2events_2events_8cpp.html#aa73ccf52b59650f0917dd9d85bc01800", null ],
     [ "st", "graphics_2x11_2events_2events_8cpp.html#a40ec3d037ad718b949c55cc17a98d840", null ],
     [ "vScrollEventDataMonitor", "graphics_2x11_2events_2events_8cpp.html#a590ea5d569c4f3650a56d018ed3e3511", null ],
     [ "x11_evlog", "graphics_2x11_2events_2events_8cpp.html#af85124327280add1dacf5a89378f6fe2", null ],

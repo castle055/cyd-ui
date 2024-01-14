@@ -48,6 +48,12 @@ cydui::graphics
 .RI "unsigned long \fBget_id\fP (\fBwindow_t\fP *win)"
 .br
 .ti -1c
+.RI "std::pair< int, int > \fBget_position\fP (\fBwindow_t\fP *win)"
+.br
+.ti -1c
+.RI "std::pair< int, int > \fBget_size\fP (\fBwindow_t\fP *win)"
+.br
+.ti -1c
 .RI "void \fBterminate\fP (\fBwindow_t\fP *win)"
 .br
 .in -1c
@@ -192,6 +198,30 @@ Definition at line \fB296\fP of file \fBx11_impl\&.cpp\fP\&..PP
 298 }
 .fi
 
+.SS "std::pair< int, int > cydui::graphics::get_position (\fBwindow_t\fP * win)"
+
+.PP
+Definition at line \fB300\fP of file \fBx11_impl\&.cpp\fP\&..PP
+.nf
+300                                                                         {
+301   XWindowAttributes attrs;
+302   XGetWindowAttributes(state::get_dpy(), win\->xwin, &attrs);
+303   return {attrs\&.x, attrs\&.y};
+304 }
+.fi
+
+.SS "std::pair< int, int > cydui::graphics::get_size (\fBwindow_t\fP * win)"
+
+.PP
+Definition at line \fB305\fP of file \fBx11_impl\&.cpp\fP\&..PP
+.nf
+305                                                                     {
+306   XWindowAttributes attrs;
+307   XGetWindowAttributes(state::get_dpy(), win\->xwin, &attrs);
+308   return {attrs\&.width, attrs\&.height};
+309 }
+.fi
+
 .SS "void cydui::graphics::resize (\fBwindow_t\fP * win, int w, int h)"
 
 .PP
@@ -208,16 +238,16 @@ Definition at line \fB163\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .SS "void cydui::graphics::terminate (\fBwindow_t\fP * win)"
 
 .PP
-Definition at line \fB300\fP of file \fBx11_impl\&.cpp\fP\&..PP
+Definition at line \fB311\fP of file \fBx11_impl\&.cpp\fP\&..PP
 .nf
-300                                                         {
-301   XUnmapWindow(state::get_dpy(), win\->xwin);
-302   XDestroyWindow(state::get_dpy(), win\->xwin);
-303   delete win\->staging_target;
-304   delete win\->render_target;
-305   win\->render_thd\->running = false;
-306   win\->render_thd\->join();
-307 }
+311                                                         {
+312   XUnmapWindow(state::get_dpy(), win\->xwin);
+313   XDestroyWindow(state::get_dpy(), win\->xwin);
+314   delete win\->staging_target;
+315   delete win\->render_target;
+316   win\->render_thd\->running = false;
+317   win\->render_thd\->join();
+318 }
 .fi
 
 .SH "Author"

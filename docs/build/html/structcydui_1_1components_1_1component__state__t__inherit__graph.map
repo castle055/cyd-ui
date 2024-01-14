@@ -1,5 +1,9 @@
 <map id="cydui::components::component_state_t" name="cydui::components::component_state_t">
-<area shape="rect" id="Node000001" title=" " alt="" coords="6,5,146,48"/>
-<area shape="rect" id="Node000002" href="$structThreadTimelineState.html" title=" " alt="" coords="5,96,147,123"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,64,79,95,73,95,73,64"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,56,145,99"/>
+<area shape="rect" id="Node000002" href="$structcomponent__state__template.html" title=" " alt="" coords="193,5,405,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,50,192,41,237,30,239,35,193,47,160,56"/>
+<area shape="rect" id="Node000003" href="$structcomponent__state__template_3_01ThreadTimeline_01_4.html" title=" " alt="" coords="210,56,388,99"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="160,75,209,75,209,80,160,80"/>
+<area shape="rect" id="Node000004" href="$structstdui_1_1layout_1_1component__state__template_3_01Grid_01_4.html" title=" " alt="" coords="217,123,381,165"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="160,100,225,119,224,125,159,105"/>
 </map>

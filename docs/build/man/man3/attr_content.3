@@ -11,15 +11,21 @@ attr_content< E >
 .PP
 Inherits \fBattribute_i\fP\&.
 .PP
-Inherited by \fBattrs_component< ThreadTimeline >\fP\&.
+Inherited by \fBattrs_component< ThreadTimeline >\fP, \fBattrs_component< Button >\fP, \fBattrs_component< Flow >\fP, \fBattrs_component< Grid >\fP, \fBattrs_component< stdui::control::Button >\fP, \fBattrs_component< stdui::layout::Flow >\fP, \fBattrs_component< stdui::layout::Grid >\fP, and \fBattrs_component< T >\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
 .ti -1c
-.RI "\fBE\fP & \fBoperator()\fP (auto &&_content_)"
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBoperator()\fP (auto &&_content_)"
 .br
 .ti -1c
-.RI "\fBE\fP & \fBoperator()\fP (auto &_content_)"
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBoperator()\fP (auto &_content_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBoperator()\fP (auto &&_content_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBoperator()\fP (auto &_content_)"
 .br
 .in -1c
 
@@ -43,29 +49,49 @@ Public Member Functions inherited from \fBattribute_i\fP
 .br
 struct attr_content< E >"
 .PP
-Definition at line \fB65\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB87\fP of file \fBcomponent_attributes\&.h\fP\&.
 .SH "Member Function Documentation"
 .PP 
-.SS "template<typename \fBE\fP > \fBE\fP & \fBattr_content\fP< \fBE\fP >::operator() (auto && _content_)\fC [inline]\fP"
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBattr_content\fP< \fBE\fP >::operator() (auto && _content_)\fC [inline]\fP"
 
 .PP
-Definition at line \fB66\fP of file \fBcomponent_attributes\&.h\fP\&..PP
+Definition at line \fB89\fP of file \fBcomponent_attributes\&.h\fP\&..PP
 .nf
-66                                          {
-67     this\->_content = _content_;
-68     return *(E*) this;
-69   }
+89                                          {
+90     this\->_content = _content_;
+91     return *(E*) this;
+92   }
 .fi
 
-.SS "template<typename \fBE\fP > \fBE\fP & \fBattr_content\fP< \fBE\fP >::operator() (auto & _content_)\fC [inline]\fP"
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBattr_content\fP< \fBE\fP >::operator() (auto && _content_)\fC [inline]\fP"
 
 .PP
-Definition at line \fB70\fP of file \fBcomponent_attributes\&.h\fP\&..PP
+Definition at line \fB99\fP of file \fBcomponent_attributes\&.h\fP\&..PP
 .nf
-70                                         {
-71     this\->_content = _content_;
-72     return *(E*) this;
-73   }
+99                                            {
+100     this\->_content = _content_;
+101   }
+.fi
+
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBattr_content\fP< \fBE\fP >::operator() (auto & _content_)\fC [inline]\fP"
+
+.PP
+Definition at line \fB94\fP of file \fBcomponent_attributes\&.h\fP\&..PP
+.nf
+94                                         {
+95     this\->_content = _content_;
+96     return *(E*) this;
+97   }
+.fi
+
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBattr_content\fP< \fBE\fP >::operator() (auto & _content_)\fC [inline]\fP"
+
+.PP
+Definition at line \fB103\fP of file \fBcomponent_attributes\&.h\fP\&..PP
+.nf
+103                                           {
+104     this\->_content = _content_;
+105   }
 .fi
 
 .SH "Member Data Documentation"
@@ -73,9 +99,9 @@ Definition at line \fB70\fP of file \fBcomponent_attributes\&.h\fP\&..PP
 .SS "template<typename \fBE\fP > std::function<\fBcontent\fP()> \fBattr_content\fP< \fBE\fP >::_content = [] \-> \fBcontent\fP {return {};}"
 
 .PP
-Definition at line \fB74\fP of file \fBcomponent_attributes\&.h\fP\&..PP
+Definition at line \fB106\fP of file \fBcomponent_attributes\&.h\fP\&..PP
 .nf
-74 {return {};};
+106 {return {};};
 .fi
 
 

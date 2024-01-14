@@ -1,0 +1,11 @@
+<map id="cydui::window::CWindow::get_size" name="cydui::window::CWindow::get_size">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,23,175,65"/>
+<area shape="rect" id="Node000002" href="$namespacecydui_1_1graphics.html#a72aab0f1e4039451adef6cbb8207ed56" title=" " alt="" coords="223,31,389,57"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="175,41,207,41,207,47,175,47"/>
+<area shape="rect" id="Node000003" href="$namespacex11_1_1state.html#a53916a7a1ae17627e69ad45f66378fe5" title=" " alt="" coords="437,31,569,57"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="389,41,421,41,421,47,389,47"/>
+<area shape="rect" id="Node000004" href="$structlogging_1_1logger.html#ae412f4d42c6e53803201856b5ceba5aa" title=" " alt="" coords="617,5,757,32"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="570,32,601,28,602,33,570,37"/>
+<area shape="rect" id="Node000005" href="$structlogging_1_1logger.html#a546a4589ce11ce9882e22594a517fc0b" title=" " alt="" coords="620,56,754,83"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="570,51,605,55,604,61,570,56"/>
+</map>

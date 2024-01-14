@@ -1,3 +1,19 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structtemplate__str__buffer.html" title=" " alt="" coords="5,5,138,48"/>
+<area shape="rect" id="Node000000" href="$structstdui_1_1control_1_1ButtonEventHandlerData.html" title=" " alt="" coords="26,5,202,48"/>
+<area shape="rect" id="Node000001" href="$structstdui_1_1control_1_1ButtonEventHandler.html" title=" " alt="" coords="277,20,454,63"/>
+<area shape="poly" id="edge778_Node000000_Node000001" title=" " alt="" coords="218,30,277,34,277,39,217,35"/>
+<area shape="rect" id="Node000002" href="$structcydui_1_1components_1_1event__handler__t.html" title=" " alt="" coords="44,123,184,165"/>
+<area shape="poly" id="edge780_Node000002_Node000001" title=" " alt="" coords="197,117,222,108,320,61,322,66,224,113,199,122"/>
+<area shape="rect" id="Node000003" href="$structThreadTimelineEventHandler.html" title=" " alt="" coords="271,101,460,128"/>
+<area shape="poly" id="edge779_Node000002_Node000003" title=" " alt="" coords="198,132,270,123,270,128,199,137"/>
+<area shape="rect" id="Node000005" href="$structstdui_1_1layout_1_1FlowEventHandler.html" title=" " alt="" coords="284,153,447,196"/>
+<area shape="poly" id="edge781_Node000002_Node000005" title=" " alt="" coords="199,152,284,162,283,167,198,157"/>
+<area shape="rect" id="Node000007" href="$structstdui_1_1layout_1_1GridEventHandler.html" title=" " alt="" coords="286,224,445,267"/>
+<area shape="poly" id="edge782_Node000002_Node000007" title=" " alt="" coords="199,165,224,175,248,190,272,206,306,221,303,226,269,210,245,195,221,180,197,170"/>
+<area shape="rect" id="Node000006" href="$structstdui_1_1layout_1_1FlowEventHandlerData.html" title=" " alt="" coords="33,189,195,232"/>
+<area shape="poly" id="edge783_Node000006_Node000005" title=" " alt="" coords="211,194,284,184,284,189,211,199"/>
+<area shape="rect" id="Node000008" href="$structstdui_1_1layout_1_1GridEventHandlerData.html" title=" " alt="" coords="35,256,193,299"/>
+<area shape="poly" id="edge784_Node000008_Node000007" title=" " alt="" coords="208,263,285,253,286,258,209,268"/>
+<area shape="rect" id="Node000004" href="$structThreadTimelineEventHandlerData.html" title=" " alt="" coords="5,72,223,99"/>
+<area shape="poly" id="edge785_Node000004_Node000003" title=" " alt="" coords="239,97,270,101,270,106,238,102"/>
 </map>

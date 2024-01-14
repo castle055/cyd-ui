@@ -20,6 +20,8 @@ var vg__attributes_8h =
     [ "cydui::graphics::vg::attr_y2< E >", "structcydui_1_1graphics_1_1vg_1_1attr__y2.html", "structcydui_1_1graphics_1_1vg_1_1attr__y2" ],
     [ "cydui::graphics::vg::attr_cx< E >", "structcydui_1_1graphics_1_1vg_1_1attr__cx.html", "structcydui_1_1graphics_1_1vg_1_1attr__cx" ],
     [ "cydui::graphics::vg::attr_cy< E >", "structcydui_1_1graphics_1_1vg_1_1attr__cy.html", "structcydui_1_1graphics_1_1vg_1_1attr__cy" ],
+    [ "cydui::graphics::vg::attr_a1< E >", "structcydui_1_1graphics_1_1vg_1_1attr__a1.html", "structcydui_1_1graphics_1_1vg_1_1attr__a1" ],
+    [ "cydui::graphics::vg::attr_a2< E >", "structcydui_1_1graphics_1_1vg_1_1attr__a2.html", "structcydui_1_1graphics_1_1vg_1_1attr__a2" ],
     [ "cydui::graphics::vg::attr_points< E >", "structcydui_1_1graphics_1_1vg_1_1attr__points.html", "structcydui_1_1graphics_1_1vg_1_1attr__points" ],
     [ "cydui::graphics::vg::attr_path_str< E >", "structcydui_1_1graphics_1_1vg_1_1attr__path__str.html", "structcydui_1_1graphics_1_1vg_1_1attr__path__str" ],
     [ "cydui::graphics::vg::attr_w< E >", "structcydui_1_1graphics_1_1vg_1_1attr__w.html", "structcydui_1_1graphics_1_1vg_1_1attr__w" ],

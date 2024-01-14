@@ -38,6 +38,12 @@ namespace cydui::components {
       const auto &get_components() const {
         return components;
       }
+      
+      // Cannot work, since we would need to recursively copy any `component_holder_t` in the props
+      // of each component.
+      //component_holder_t clone() const {
+      //
+      //}
     private:
       std::unordered_map<std::string, component_base_t*> components {};
     };

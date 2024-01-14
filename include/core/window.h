@@ -20,6 +20,9 @@ namespace cydui::window {
       prof::context_t profiling_ctx {};
       
       void terminate();
+      
+      std::pair<int, int> get_position() const;
+      std::pair<int, int> get_size() const;
     };
     
     CWindow* create(

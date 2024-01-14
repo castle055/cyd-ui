@@ -10,6 +10,5 @@ var searchData=
   ['threadtimeline_7',['ThreadTimeline',['../structThreadTimeline.html',1,'']]],
   ['threadtimelineeventhandler_8',['ThreadTimelineEventHandler',['../structThreadTimelineEventHandler.html',1,'']]],
   ['threadtimelineeventhandlerdata_9',['ThreadTimelineEventHandlerData',['../structThreadTimelineEventHandlerData.html',1,'']]],
-  ['threadtimelinestate_10',['ThreadTimelineState',['../structThreadTimelineState.html',1,'']]],
-  ['timer_5ft_11',['timer_t',['../classcydui_1_1tasks_1_1timer__t.html',1,'cydui::tasks']]]
+  ['timer_5ft_10',['timer_t',['../classcydui_1_1tasks_1_1timer__t.html',1,'cydui::tasks']]]
 ];

@@ -38,6 +38,10 @@ namespace cydui::dimensions {
         return this->binding();
       }
       
+      dimension_value_t val() const {
+        return this->binding();
+      }
+      
       //dimensional_relation_t(// NOLINT(google-explicit-constructor)
       //  dimensional_relation_t const &rel
       //) = default;

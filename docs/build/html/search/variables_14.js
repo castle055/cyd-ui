@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['val_0',['val',['../structcydui_1_1components_1_1with_1_1with__data__t.html#a6c7d346a47e7075785bd773453e95a08',1,'cydui::components::with::with_data_t::val'],['../structlazy__alloc.html#a3afeda77c962bde824acfa07142441ab',1,'lazy_alloc::val']]],
-  ['value_1',['value',['../classcydui_1_1dimensions_1_1dimension__t.html#a89a341699e02020d36c1b5a6ef5ec031',1,'cydui::dimensions::dimension_t']]],
-  ['vscrolleventdatamonitor_2',['vScrollEventDataMonitor',['../graphics_2x11_2events_2events_8cpp.html#a590ea5d569c4f3650a56d018ed3e3511',1,'events.cpp']]]
+  ['underline_0',['underline',['../structcydui_1_1graphics_1_1vg_1_1text__decoration__t.html#a7a84258ce6027e496a01c15cdff3b5d0',1,'cydui::graphics::vg::text_decoration_t']]],
+  ['unknown_1',['unknown',['../classcydui_1_1dimensions_1_1dimension__t.html#a09d648cb67171a9331413b2ec56ece27',1,'cydui::dimensions::dimension_t']]]
 ];

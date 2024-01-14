@@ -1,0 +1,205 @@
+.TH "stdui::layout::GridEventHandler" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+stdui::layout::GridEventHandler
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <stdui\&.h>\fP
+.PP
+Inherits \fBcydui::components::event_handler_t\fP, and \fBstdui::layout::GridEventHandlerData\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "std::vector< \fBcydui::components::component_holder_t\fP > \fBon_redraw\fP () override"
+.br
+.in -1c
+
+Public Member Functions inherited from \fBcydui::components::event_handler_t\fP
+.in +1c
+.ti -1c
+.RI "auto & \fB$x\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$y\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$w\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$h\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$w\fP (auto value) const"
+.br
+.ti -1c
+.RI "auto & \fB$h\fP (auto value) const"
+.br
+.ti -1c
+.RI "auto & \fB$cx\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$cy\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$cw\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$ch\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$margin_top\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$margin_bottom\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$margin_left\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$margin_right\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$padding_top\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$padding_bottom\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$padding_left\fP () const"
+.br
+.ti -1c
+.RI "auto & \fB$padding_right\fP () const"
+.br
+.ti -1c
+.RI "\fBevent_handler_t\fP ()=default"
+.br
+.ti -1c
+.RI "virtual \fB~event_handler_t\fP ()=default"
+.br
+.ti -1c
+.RI "virtual void \fBon_button_press\fP (\fBButton\fP button, int x, int y)"
+.br
+.ti -1c
+.RI "virtual void \fBon_button_release\fP (\fBButton\fP button, int x, int y)"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_enter\fP (int x, int y)"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_exit\fP (int x, int y)"
+.br
+.ti -1c
+.RI "virtual void \fBon_mouse_motion\fP (int x, int y)"
+.br
+.ti -1c
+.RI "virtual void \fBon_scroll\fP (int dx, int dy)"
+.br
+.ti -1c
+.RI "virtual void \fBon_key_press\fP (const \fBKeyEvent::DataType\fP &ev)"
+.br
+.ti -1c
+.RI "virtual void \fBon_key_release\fP (const \fBKeyEvent::DataType\fP &ev)"
+.br
+.ti -1c
+.RI "\fB_Pragma\fP ('message (\\'\fBTODO\fP \- \\' \\'\\\\\\'Implement a method to set an input context for text input\\\\\\'\\')') struct listener_data_t"
+.br
+.ti -1c
+.RI "virtual std::unordered_map< std::string, listener_data_t > \fBget_event_listeners\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBdraw_fragment\fP (\fBgraphics::vg::vg_fragment_t\fP &fragment)"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+
+
+Public Attributes inherited from \fBcydui::components::event_handler_t\fP
+.in +1c
+.ti -1c
+.RI "\fBevent_handler_t\fP * \fBparent\fP"
+.br
+.ti -1c
+.RI "std::function< \fBcomponent_dimensional_relations_t\fP()> \fBget_dim\fP"
+.br
+.ti -1c
+.RI "std::function< std::vector< \fBcomponent_base_t\fP * >()> \fB$children\fP"
+.br
+.in -1c
+
+Public Attributes inherited from \fBstdui::layout::GridEventHandlerData\fP
+.in +1c
+.ti -1c
+.RI "\fBGridState\fP * \fBstate\fP = nullptr"
+.br
+.ti -1c
+.RI "\fBGrid::props_t\fP * \fBprops\fP = nullptr"
+.br
+.ti -1c
+.RI "\fBattrs_component\fP< \fBGrid\fP > * \fBattrs\fP = nullptr"
+.br
+.ti -1c
+.RI "\fBlogging::logger\fP \fBlog\fP {\&.name = 'Grid'}"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line \fB163\fP of file \fBstdui\&.h\fP\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "std::vector< \fBcydui::components::component_holder_t\fP > stdui::layout::GridEventHandler::on_redraw ()\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
+
+.PP
+Reimplemented from \fBcydui::components::event_handler_t\fP\&.
+.PP
+Definition at line \fB164\fP of file \fBstdui\&.h\fP\&..PP
+.nf
+164                     {
+165             state\->positions\&.clear();
+166             state\->sizes\&.clear();
+167             auto chi = $children();
+168             std::unordered_set<cydui::dimensions::dimension_t*> deps {};
+169             deps\&.insert(&attrs\->_w);
+170             deps\&.insert(&attrs\->_h);
+171             
+172             for (auto &child: chi) {
+173               auto ats = child\->attrs();
+174               state\->positions[child] = {ats\->_x, ats\->_y};
+175               state\->sizes[child] = {ats\->_w, ats\->_h};
+176               
+177               ats\->x(cydui::dimensions::dimensional_relation_t {[=, this]() {
+178                 auto [grid_x, _] = state\->positions[child];
+179                 int total_w = attrs\->_w;
+180                 int step = total_w / (int) props\->cols;
+181                 return grid_x * step + (props\->x_gap / 2);
+182               }, deps});
+183               ats\->y(cydui::dimensions::dimensional_relation_t {[=, this]() {
+184                 auto [_, grid_y] = state\->positions[child];
+185                 int total_h = attrs\->_h;
+186                 int step = total_h / (int) props\->rows;
+187                 return grid_y * step + (props\->y_gap / 2);
+188               }, deps});
+189               ats\->w(cydui::dimensions::dimensional_relation_t {[=, this]() {
+190                 auto [grid_w, _] = state\->sizes[child];
+191                 int total_w = attrs\->_w;
+192                 int step = total_w / (int) props\->cols;
+193                 return grid_w * step \- props\->x_gap;
+194               }, deps});
+195               ats\->h(cydui::dimensions::dimensional_relation_t {[=, this]() {
+196                 auto [_, grid_h] = state\->sizes[child];
+197                 int total_h = attrs\->_h;
+198                 int step = total_h / (int) props\->rows;
+199                 return grid_h * step \- props\->y_gap;
+200               }, deps});
+201             }
+202             return {};
+203           }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

@@ -15,7 +15,7 @@ include/tools/profiler/ThreadTimeline.h
 
 .in +1c
 .ti -1c
-.RI "struct \fBThreadTimelineState\fP"
+.RI "struct \fBcomponent_state_template< ThreadTimeline >\fP"
 .br
 .ti -1c
 .RI "struct \fBThreadTimeline\fP"
@@ -27,6 +27,19 @@ include/tools/profiler/ThreadTimeline.h
 .RI "struct \fBThreadTimelineEventHandler\fP"
 .br
 .in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "using \fBThreadTimelineState\fP = \fBcomponent_state_template\fP< \fBThreadTimeline\fP >"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "using \fBThreadTimelineState\fP =  \fBcomponent_state_template\fP< \fBThreadTimeline\fP >"
+
+.PP
+Definition at line \fB18\fP of file \fBThreadTimeline\&.h\fP\&.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for CYD-UI from the source code\&.

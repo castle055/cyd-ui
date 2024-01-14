@@ -29,7 +29,7 @@ cydui::events::change_ev::DataMonitor<RedrawEvent>
 
 cydui::events::change_ev::DataMonitor<ResizeEvent>
   resizeEventDataMonitor([](ResizeEvent::DataType &o_data, ResizeEvent::DataType &n_data) {
-  return (o_data.w != n_data.w || o_data.h != n_data.h);
+  return (o_data.w != n_data.w || o_data.h != n_data.h || o_data.win != n_data.win);
   //return true;
 });
 
@@ -64,7 +64,7 @@ cydui::events::change_ev::DataMonitor<ScrollEvent>
   data.dx = 0;
 });
 
-static std::unordered_map <KeySym, Key> xkey_map = {
+static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_a, Key::A},
   {XK_b, Key::B},
   {XK_c, Key::C},

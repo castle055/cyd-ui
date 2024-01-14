@@ -1,0 +1,124 @@
+.TH "include/stdui.h" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+include/stdui.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include '\&./cydui\&.hpp'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBstdui::layout::Flow\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::layout::Flow::props_t\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::layout::FlowEventHandlerData\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::layout::FlowEventHandler\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::layout::component_state_template< Grid >\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::layout::Grid\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::layout::Grid::props_t\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::layout::GridEventHandlerData\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::layout::GridEventHandler\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::control::Button\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::control::Button::props_t\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::control::ButtonEventHandlerData\fP"
+.br
+.ti -1c
+.RI "struct \fBstdui::control::ButtonEventHandler\fP"
+.br
+.in -1c
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBstdui\fP"
+.br
+.ti -1c
+.RI "namespace \fBstdui::layout\fP"
+.br
+.ti -1c
+.RI "namespace \fBstdui::control\fP"
+.br
+.ti -1c
+.RI "namespace \fBstdui::media\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBATTR\fP(PROP)"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "using \fBstdui::layout::FlowState\fP = \fBcomponent_state_template\fP< \fBFlow\fP >"
+.br
+.ti -1c
+.RI "using \fBstdui::layout::GridState\fP = \fBcomponent_state_template\fP< \fBGrid\fP >"
+.br
+.ti -1c
+.RI "template<typename \fBF\fP > using \fBstdui::fun\fP = std::function< \fBF\fP >"
+.br
+.ti -1c
+.RI "using \fBstdui::control::ButtonState\fP = \fBcomponent_state_template\fP< \fBButton\fP >"
+.br
+.in -1c
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ATTR(PROP)"
+\fBValue:\fP.PP
+.nf
+auto &PROP(typeof(props_t::PROP)& _##PROP) { \\
+    props\&.PROP = _##PROP;                    \\
+    return *this;  \\
+}                  \\
+auto &PROP(typeof(props_t::PROP)&& _##PROP) {\\
+    props\&.PROP = _##PROP;                    \\
+    return *this;  \\
+}
+.fi
+
+.PP
+Definition at line \fB12\fP of file \fBstdui\&.h\fP\&..PP
+.nf
+13                                          { \\
+14     props\&.PROP = _##PROP;                    \\
+15     return *this;  \\
+16 }                  \\
+17 auto &PROP(typeof(props_t::PROP)&& _##PROP) {\\
+18     props\&.PROP = _##PROP;                    \\
+19     return *this;  \\
+20 }
+.fi
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.
