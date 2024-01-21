@@ -152,7 +152,7 @@ namespace cydui::components {
           evh->parent = nullptr;
         }
         evh->state = (typename T::state_t*) state.value();
-        evh->props = &(((T*) this)->props);
+        evh->props = &(static_cast<T*>(this)->props);
         evh->attrs = (attrs_component<T>*) this;
         evh->get_dim = [this] {return get_dimensional_relations();};
         evh->$children = [this] {return children;};
@@ -173,7 +173,7 @@ namespace cydui::components {
         // `(attrs_component<>*)` does not work since that type is not a base of this
         // class. So we need to cast to the base class first and then to its `void`
         // specialization.
-        return (attrs_component<>*) (attrs_component<T>*) this;
+        return (attrs_component<>*) static_cast<attrs_component<T>*>(this);
       }
       
       
@@ -350,8 +350,13 @@ namespace cydui::components {
   
 }
 
-template<typename C>
-struct component_state_template: public cydui::components::component_state_t { };
+template<typename, typename = void>
+constexpr bool is_type_complete_v = false;
+
+template<typename T>
+constexpr bool is_type_complete_v
+  <T, std::void_t<decltype(sizeof(T))>> = true;
+
 
 //#include "../graphics/vg.h"
 //
