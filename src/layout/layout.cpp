@@ -156,9 +156,9 @@ component_base_t* cydui::layout::Layout::find_by_coords(int x, int y) {
   return root->find_by_coords(x, y);
 }
 
-static event_handler_t* get_instance_ev_handler(component_state_t* component_state) {
-
-}
+//static event_handler_t* get_instance_ev_handler(component_state_t* component_state) {
+//
+//}
 
 #define INSTANCE_EV_HANDLER(STATE_PTR) \
   if (STATE_PTR->component_instance.has_value()) \
@@ -271,7 +271,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
         int exit_rel_y = 0;
         hovering->hovering = false;
         hovering->component_instance.value()
-          ->event_handler()->on_mouse_exit(0, 0);
+                ->event_handler()->on_mouse_exit(0, 0);
         hovering = nullptr;
       }
     } else {
@@ -291,7 +291,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
           int exit_rel_y = it.data->y - h_dim.cy.val();
           hovering->hovering = false;
           hovering->component_instance.value()
-            ->event_handler()->on_mouse_exit(exit_rel_x, exit_rel_y);
+                  ->event_handler()->on_mouse_exit(exit_rel_x, exit_rel_y);
           hovering = nullptr;
         }
         hovering = target->state.value();

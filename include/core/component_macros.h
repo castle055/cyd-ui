@@ -20,24 +20,24 @@
 
 // ? Macros for declaring component classes
 // ?>
+
 #define STATE(NAME) \
-struct NAME;        \
-template<typename T>\
-struct component_state_template; \
-template<>          \
-struct component_state_template<NAME>: public cydui::components::component_state_t
+struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
 
 // ?>
 #define COMPONENT(NAME, ...) \
 struct NAME;                 \
-using CYDUI_STATE_NAME(NAME) = component_state_template<NAME>; \
+struct CYDUI_STATE_NAME(NAME); \
 struct CYDUI_EV_HANDLER_NAME(NAME); \
 struct NAME:                 \
   public cydui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME> \
   {                          \
     CYDUI_COMPONENT_METADATA(NAME)  \
-    using state_t = CYDUI_STATE_NAME(NAME);                   \
-    using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME);      \
+    using state_t =          \
+      std::conditional<is_type_complete_v<CYDUI_STATE_NAME(NAME)>         \
+        , CYDUI_STATE_NAME(NAME)    \
+        , cydui::components::component_state_t>::type;                    \
+    using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME);                  \
     struct props_t           \
       __VA_ARGS__;           \
     props_t props;           \
@@ -48,7 +48,7 @@ struct NAME:                 \
     ~NAME() override = default;     \
   };                         \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \
-  CYDUI_STATE_NAME(NAME)* state = nullptr;                    \
+  NAME::state_t* state = nullptr;                    \
   NAME::props_t* props = nullptr;   \
   attrs_component<NAME>* attrs = nullptr;                     \
   logging::logger log{.name = #NAME};                         \
