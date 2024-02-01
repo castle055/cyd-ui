@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['vg_5fattribute_0',['VG_ATTRIBUTE',['../vg__attributes_8h.html#af04d424130cd011de43e3b5336a954d8',1,'vg_attributes.h']]],
-  ['vg_5fattribute_5fauto_1',['VG_ATTRIBUTE_AUTO',['../vg__attributes_8h.html#abe6cbe50087c08988d648fd6ddd9d540',1,'vg_attributes.h']]],
-  ['vg_5fattribute_5fdimension_2',['VG_ATTRIBUTE_DIMENSION',['../vg__attributes_8h.html#ab23597d8be47c1ec894085d0a1650974',1,'vg_attributes.h']]],
-  ['vg_5fattribute_5fpaint_3',['VG_ATTRIBUTE_PAINT',['../vg__attributes_8h.html#ab50cc72fa6ee6c1c5d82b9a748f00f97',1,'vg_attributes.h']]]
+  ['task_5fw_5fresult_0',['TASK_W_RESULT',['../tasks_8h.html#a05a59cb9a17308fe5b616810169a7779',1,'tasks.h']]],
+  ['then_1',['then',['../with__specialization_8h.html#a2844a2c793572e3373fc912c8e85c6f7',1,'with_specialization.h']]],
+  ['todo_2',['TODO',['../pragma_8h.html#a5f81be6623a184957217db66bae02bce',1,'pragma.h']]]
 ];

@@ -62,6 +62,7 @@ namespace cydui::components {
       event_handler_t* parent;
       
       std::function<component_dimensional_relations_t()> get_dim;
+      std::function<std::vector<component_base_t*>()> $children;
       CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(x)
       CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(y)
       CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(w)
@@ -149,7 +150,7 @@ namespace cydui::components {
           parent->on_key_release(ev);
       }
       // * set text input context (a type that accepts text events like insert, backspace and such)
-      TODO("Implement a method to set an input context for text input")
+      //TODO - Implement a method to set an input context for text input
       
       struct listener_data_t {
         std::function<void(cydui::events::Event*)> handler {};
@@ -172,7 +173,7 @@ namespace cydui::components {
 #define ON_SCROLL           CYDUI_INTERNAL_EV_HANDLER_IMPL(scroll)
 #define ON_KEY_PRESS        CYDUI_INTERNAL_EV_HANDLER_IMPL(key_press)
 #define ON_KEY_RELEASE      CYDUI_INTERNAL_EV_HANDLER_IMPL(key_release)
-    TODO("Implement a method to set an input context for text input")
+    // TODO - Implement a method to set an input context for text input
 
 #pragma clang diagnostic pop
 

@@ -417,7 +417,7 @@ Protected Member Functions inherited from \fBcydui::graphics::vg::attrs_stroke< 
 .in -1c
 .SH "Detailed Description"
 .PP 
-Definition at line \fB348\fP of file \fBvg\&.h\fP\&.
+Definition at line \fB381\fP of file \fBvg\&.h\fP\&.
 .SH "Member Function Documentation"
 .PP 
 .SS "void cydui::graphics::vg::ellipse::apply_to (\fBpixelmap_editor_t\fP & editor) const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -425,25 +425,25 @@ Definition at line \fB348\fP of file \fBvg\&.h\fP\&.
 .PP
 Implements \fBcydui::graphics::vg::vg_element_t\fP\&.
 .PP
-Definition at line \fB357\fP of file \fBvg\&.h\fP\&..PP
+Definition at line \fB390\fP of file \fBvg\&.h\fP\&..PP
 .nf
-357                                                               {
-358         apply_stroke(editor);
-359         apply_fill(editor);
-360         
-361         editor\->save();
-362         editor\->translate(origin_x + _cx, origin_y + _cy);
-363         editor\->scale(_rx, _ry);
-364         editor\->arc(0\&.0, 0\&.0, 1\&.0, 0\&.0, 2 * M_PI);
-365         
-366         set_source_to_stroke(editor);
-367         editor\->stroke_preserve();
-368         
-369         set_source_to_fill(editor);
-370         editor\->fill();
-371         
-372         editor\->restore();
-373       }
+390                                                               {
+391         apply_stroke(editor);
+392         apply_fill(editor);
+393         
+394         editor\->save();
+395         editor\->translate(origin_x + _cx, origin_y + _cy);
+396         editor\->scale(_rx, _ry);
+397         editor\->arc(0\&.0, 0\&.0, 1\&.0, 0\&.0, 2 * M_PI);
+398         
+399         set_source_to_stroke(editor);
+400         editor\->stroke_preserve();
+401         
+402         set_source_to_fill(editor);
+403         editor\->fill();
+404         
+405         editor\->restore();
+406       }
 .fi
 
 .SS "\fBfootprint\fP cydui::graphics::vg::ellipse::get_footprint () const\fC [inline]\fP, \fC [override]\fP, \fC [virtual]\fP"
@@ -451,11 +451,11 @@ Definition at line \fB357\fP of file \fBvg\&.h\fP\&..PP
 .PP
 Implements \fBcydui::graphics::vg::vg_element_t\fP\&.
 .PP
-Definition at line \fB375\fP of file \fBvg\&.h\fP\&..PP
+Definition at line \fB408\fP of file \fBvg\&.h\fP\&..PP
 .nf
-375                                                {
-376         return {};
-377       }
+408                                                {
+409         return {_cx \- _rx, _cy \- _ry, 2 * _rx, 2 * _ry};
+410       }
 .fi
 
 

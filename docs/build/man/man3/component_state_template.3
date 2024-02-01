@@ -1,0 +1,66 @@
+.TH "component_state_template< C >" 3 "CYD-UI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+component_state_template< C >
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <component\&.h>\fP
+.PP
+Inherits \fBcydui::components::component_state_t\fP\&.
+.SS "Additional Inherited Members"
+
+
+Public Member Functions inherited from \fBcydui::components::component_state_t\fP
+.in +1c
+.ti -1c
+.RI "void \fBmark_dirty\fP ()"
+.br
+.RI "Marks this component state as needing to be redrawn\&. "
+.ti -1c
+.RI "template<\fBcydui::events::EventType\fP T> void \fBemit\fP (typename T::DataType ev)"
+.br
+.ti -1c
+.RI "void \fBforce_redraw\fP ()"
+.br
+.RI "Emits a \fBRedrawEvent\fP for this component\&. "
+.in -1c
+
+Public Attributes inherited from \fBcydui::components::component_state_t\fP
+.in +1c
+.ti -1c
+.RI "\fBwindow::CWindow\fP * \fBwin\fP = nullptr"
+.br
+.ti -1c
+.RI "std::optional< \fBcomponent_state_t\fP * > \fBparent\fP = std::nullopt"
+.br
+.ti -1c
+.RI "std::unordered_map< std::string, \fBcomponent_state_t\fP * > \fBchildren_states\fP {}"
+.br
+.ti -1c
+.RI "bool \fB_dirty\fP = false"
+.br
+.ti -1c
+.RI "bool \fBfocused\fP = false"
+.br
+.ti -1c
+.RI "bool \fBhovering\fP = false"
+.br
+.ti -1c
+.RI "std::optional< \fBcomponent_base_t\fP * > \fBcomponent_instance\fP = std::nullopt"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename \fBC\fP>
+.br
+struct component_state_template< C >"
+.PP
+Definition at line \fB354\fP of file \fBcomponent\&.h\fP\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for CYD-UI from the source code\&.

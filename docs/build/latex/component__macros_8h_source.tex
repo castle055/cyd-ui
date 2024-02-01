@@ -20,89 +20,93 @@
 \DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00016}\mbox{\hyperlink{component__macros_8h_a74336a37d7bf60ff01643e73dd9942f8}{00016}}\ \textcolor{preprocessor}{\#define\ CYDUI\_COMPONENT\_METADATA(NAME\_)\ \(\backslash\)}}
 \DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00017}00017\ \textcolor{preprocessor}{\ \ \ \ logging::logger\ log\{.name\ =\ \#NAME\_\};\(\backslash\)}}
 \DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00018}00018\ \textcolor{preprocessor}{\ \ \ \ static\ constexpr\ const\ char*\ NAME\ =\ \#NAME\_\ ;\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00019}00019\ \textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00019}00019\ \textcolor{preprocessor}{\ \ \ \ std::string\ name()\ override\ \{\ return\ std::string\ \{NAME\};\ \}}}
 \DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00020}00020\ }
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00021}00021\ }
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00022}00022\ \textcolor{comment}{//\ ?\ Macros\ for\ declaring\ component\ classes}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00023}00023\ \textcolor{comment}{//\ ?>}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00024}\mbox{\hyperlink{component__macros_8h_adf82c38b14cc6c67209d8252e8a9199e}{00024}}\ \textcolor{preprocessor}{\#define\ STATE(NAME)\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00025}00025\ \textcolor{preprocessor}{struct\ CYDUI\_STATE\_NAME(NAME):\ public\ cydui::components::component\_state\_t}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00026}00026\ }
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00027}00027\ }
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00028}00028\ \textcolor{comment}{//\ ?>}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00029}\mbox{\hyperlink{component__macros_8h_a815d8178754c2fcbbb661c6ac8f9fb1f}{00029}}\ \textcolor{preprocessor}{\#define\ COMPONENT(NAME,\ ...)\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00030}00030\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_NAME(NAME);\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00031}00031\ \textcolor{preprocessor}{struct\ NAME:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00032}00032\ \textcolor{preprocessor}{\ \ public\ cydui::components::component\_t<CYDUI\_EV\_HANDLER\_NAME(NAME),NAME>\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00033}00033\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00034}00034\ \textcolor{preprocessor}{\ \ \ \ CYDUI\_COMPONENT\_METADATA(NAME)\ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00035}00035\ \textcolor{preprocessor}{\ \ \ \ using\ state\_t\ =\ CYDUI\_STATE\_NAME(NAME);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00036}00036\ \textcolor{preprocessor}{\ \ \ \ using\ event\_handler\_t\ =\ CYDUI\_EV\_HANDLER\_NAME(NAME);\ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00037}00037\ \textcolor{preprocessor}{\ \ \ \ struct\ props\_t\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00038}00038\ \textcolor{preprocessor}{\ \ \ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00039}00039\ \textcolor{preprocessor}{\ \ \ \ props;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00040}00040\ \textcolor{preprocessor}{\ \ \ \ NAME()\ =\ default;\ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00041}00041\ \textcolor{preprocessor}{\ \ \ \ explicit\ NAME(props\_t\ props)\ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00042}00042\ \textcolor{preprocessor}{\ \ \ \ \ \ :\ cydui::components::component\_t<CYDUI\_EV\_HANDLER\_NAME(NAME),NAME>()\(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00043}00043\ \textcolor{preprocessor}{\ \ \ \ \ \ ,\ props(std::move(props))\ \{\ \}\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00044}00044\ \textcolor{preprocessor}{\ \ \ \ \string~NAME()\ override\ =\ default;\ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00045}00045\ \textcolor{preprocessor}{\ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00046}00046\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_DATA\_NAME(NAME)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00047}00047\ \textcolor{preprocessor}{\ \ CYDUI\_STATE\_NAME(NAME)*\ state\ =\ nullptr;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00048}00048\ \textcolor{preprocessor}{\ \ NAME::props\_t*\ props\ =\ nullptr;\ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00049}00049\ \textcolor{preprocessor}{\ \ attrs\_component<NAME>*\ attrs\ =\ nullptr;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00050}00050\ \textcolor{preprocessor}{\ \ logging::logger\ log\{.name\ =\ \#NAME\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00051}00051\ \textcolor{preprocessor}{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00052}00052\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_NAME(NAME)\ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00053}00053\ \textcolor{preprocessor}{\ \ :\ public\ cydui::components::event\_handler\_t,\ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00054}00054\ \textcolor{preprocessor}{\ \ \ \ public\ CYDUI\_EV\_HANDLER\_DATA\_NAME(NAME)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00055}00055\ }
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00056}00056\ }
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00057}00057\ \textcolor{comment}{//\ ?>}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00058}\mbox{\hyperlink{component__macros_8h_af4be5abe4cab4c12417ddecff17c1ee8}{00058}}\ \textcolor{preprocessor}{\#define\ STATE\_TEMPLATE(NAME)\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00059}00059\ \textcolor{preprocessor}{template\ SET\_COMPONENT\_TEMPLATE\ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00060}00060\ \textcolor{preprocessor}{struct\ CYDUI\_STATE\_NAME(NAME):\ public\ cydui::components::component\_state\_t}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00061}00061\ }
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00062}00062\ }
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00063}00063\ \textcolor{comment}{//\ ?>}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00064}\mbox{\hyperlink{component__macros_8h_a46e36e84eb8985d2871adc7754004f73}{00064}}\ \textcolor{preprocessor}{\#define\ SET\_COMPONENT\_TEMPLATE\_DEFAULT\ SET\_COMPONENT\_TEMPLATE}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00021}00021\ \textcolor{comment}{//\ ?\ Macros\ for\ declaring\ component\ classes}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00022}00022\ \textcolor{comment}{//\ ?>}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00023}\mbox{\hyperlink{component__macros_8h_adf82c38b14cc6c67209d8252e8a9199e}{00023}}\ \textcolor{preprocessor}{\#define\ STATE(NAME)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00024}00024\ \textcolor{preprocessor}{struct\ NAME;\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00025}00025\ \textcolor{preprocessor}{template<typename\ T>\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00026}00026\ \textcolor{preprocessor}{struct\ component\_state\_template;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00027}00027\ \textcolor{preprocessor}{template<>\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00028}00028\ \textcolor{preprocessor}{struct\ component\_state\_template<NAME>:\ public\ cydui::components::component\_state\_t}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00030}00030\ \textcolor{comment}{//\ ?>}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00031}\mbox{\hyperlink{component__macros_8h_a815d8178754c2fcbbb661c6ac8f9fb1f}{00031}}\ \textcolor{preprocessor}{\#define\ COMPONENT(NAME,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00032}00032\ \textcolor{preprocessor}{struct\ NAME;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00033}00033\ \textcolor{preprocessor}{using\ CYDUI\_STATE\_NAME(NAME)\ =\ component\_state\_template<NAME>;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00034}00034\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_NAME(NAME);\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00035}00035\ \textcolor{preprocessor}{struct\ NAME:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00036}00036\ \textcolor{preprocessor}{\ \ public\ cydui::components::component\_t<CYDUI\_EV\_HANDLER\_NAME(NAME),NAME>\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00037}00037\ \textcolor{preprocessor}{\ \ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00038}00038\ \textcolor{preprocessor}{\ \ \ \ CYDUI\_COMPONENT\_METADATA(NAME)\ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00039}00039\ \textcolor{preprocessor}{\ \ \ \ using\ state\_t\ =\ CYDUI\_STATE\_NAME(NAME);\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00040}00040\ \textcolor{preprocessor}{\ \ \ \ using\ event\_handler\_t\ =\ CYDUI\_EV\_HANDLER\_NAME(NAME);\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00041}00041\ \textcolor{preprocessor}{\ \ \ \ struct\ props\_t\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00042}00042\ \textcolor{preprocessor}{\ \ \ \ \ \ \_\_VA\_ARGS\_\_;\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00043}00043\ \textcolor{preprocessor}{\ \ \ \ props\_t\ props;\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00044}00044\ \textcolor{preprocessor}{\ \ \ \ NAME()\ =\ default;\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00045}00045\ \textcolor{preprocessor}{\ \ \ \ explicit\ NAME(props\_t\ props)\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00046}00046\ \textcolor{preprocessor}{\ \ \ \ \ \ :\ cydui::components::component\_t<CYDUI\_EV\_HANDLER\_NAME(NAME),NAME>()\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00047}00047\ \textcolor{preprocessor}{\ \ \ \ \ \ ,\ props(std::move(props))\ \{\ \}\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00048}00048\ \textcolor{preprocessor}{\ \ \ \ \string~NAME()\ override\ =\ default;\ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00049}00049\ \textcolor{preprocessor}{\ \ \};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00050}00050\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_DATA\_NAME(NAME)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00051}00051\ \textcolor{preprocessor}{\ \ CYDUI\_STATE\_NAME(NAME)*\ state\ =\ nullptr;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00052}00052\ \textcolor{preprocessor}{\ \ NAME::props\_t*\ props\ =\ nullptr;\ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00053}00053\ \textcolor{preprocessor}{\ \ attrs\_component<NAME>*\ attrs\ =\ nullptr;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00054}00054\ \textcolor{preprocessor}{\ \ logging::logger\ log\{.name\ =\ \#NAME\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00055}00055\ \textcolor{preprocessor}{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00056}00056\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_NAME(NAME)\ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00057}00057\ \textcolor{preprocessor}{\ \ :\ public\ cydui::components::event\_handler\_t,\ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00058}00058\ \textcolor{preprocessor}{\ \ \ \ public\ CYDUI\_EV\_HANDLER\_DATA\_NAME(NAME)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00061}00061\ \textcolor{comment}{//\ ?>}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00062}\mbox{\hyperlink{component__macros_8h_af4be5abe4cab4c12417ddecff17c1ee8}{00062}}\ \textcolor{preprocessor}{\#define\ STATE\_TEMPLATE(NAME)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00063}00063\ \textcolor{preprocessor}{template\ SET\_COMPONENT\_TEMPLATE\ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00064}00064\ \textcolor{preprocessor}{struct\ CYDUI\_STATE\_NAME(NAME):\ public\ cydui::components::component\_state\_t}}
 \DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00065}00065\ }
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00066}\mbox{\hyperlink{component__macros_8h_a442d28e270626e664e5ce5ee3de2fbcd}{00066}}\ \textcolor{preprocessor}{\#define\ COMPONENT\_TEMPLATE(NAME,\ ...)\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00067}00067\ \textcolor{preprocessor}{template\ SET\_COMPONENT\_TEMPLATE\_DEFAULT\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00068}00068\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_NAME(NAME);\ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00069}00069\ \textcolor{preprocessor}{template\ SET\_COMPONENT\_TEMPLATE\_DEFAULT\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00070}00070\ \textcolor{preprocessor}{struct\ NAME:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00071}00071\ \textcolor{preprocessor}{\ \ public\ cydui::components::component\_t<\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00072}00072\ \textcolor{preprocessor}{\ \ \ \ CYDUI\_EV\_HANDLER\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT,\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00073}00073\ \textcolor{preprocessor}{\ \ \ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00074}00074\ \textcolor{preprocessor}{\ \ >\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00075}00075\ \textcolor{preprocessor}{\ \ \ \ CYDUI\_COMPONENT\_METADATA(NAME)\ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00076}00076\ \textcolor{preprocessor}{\ \ \ \ using\ state\_t\ =\ CYDUI\_STATE\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT;\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00077}00077\ \textcolor{preprocessor}{\ \ \ \ using\ event\_handler\_t\ =\ CYDUI\_EV\_HANDLER\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT;\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00078}00078\ \textcolor{preprocessor}{\ \ \ \ struct\ props\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00079}00079\ \textcolor{preprocessor}{\ \ \ \ \ \ \_\_VA\_ARGS\_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00080}00080\ \textcolor{preprocessor}{\ \ \ \ props;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00081}00081\ \textcolor{preprocessor}{\ \ \ \ NAME()\ =\ default;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00082}00082\ \textcolor{preprocessor}{\ \ \ \ explicit\ NAME(props\_t\ props)\ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00083}00083\ \textcolor{preprocessor}{\ \ \ \ \ \ :\ cydui::components::component\_t<\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00084}00084\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ CYDUI\_EV\_HANDLER\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT,\ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00085}00085\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00086}00086\ \textcolor{preprocessor}{\ \ \ \ \ \ >()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00087}00087\ \textcolor{preprocessor}{\ \ \ \ \ \ ,\ props(std::move(props))\ \{\ \}\ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00088}00088\ \textcolor{preprocessor}{\ \ \ \ \string~NAME()\ override\ =\ default;\ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00089}00089\ \textcolor{preprocessor}{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00090}00090\ \textcolor{preprocessor}{template\ SET\_COMPONENT\_TEMPLATE\_DEFAULT\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00091}00091\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_DATA\_NAME(NAME)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00092}00092\ \textcolor{preprocessor}{\ \ CYDUI\_STATE\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT*\ state\ =\ nullptr;\ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00093}00093\ \textcolor{preprocessor}{\ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT::props\_t*\ props\ =\ nullptr;\(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00094}00094\ \textcolor{preprocessor}{\ \ attrs\_component<NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT>*\ attrs\ =\ nullptr;\ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00095}00095\ \textcolor{preprocessor}{\ \ logging::logger\ log\{.name\ =\ \#NAME\};\ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00096}00096\ \textcolor{preprocessor}{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00097}00097\ \textcolor{preprocessor}{template\ SET\_COMPONENT\_TEMPLATE\ \ \ \ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00098}00098\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_NAME(NAME)\ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00099}00099\ \textcolor{preprocessor}{\ \ :\ public\ cydui::components::event\_handler\_t,\ \ \ \ \(\backslash\)}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00100}00100\ \textcolor{preprocessor}{\ \ \ \ public\ CYDUI\_EV\_HANDLER\_DATA\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT}}
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00101}00101\ }
-\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00102}00102\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_COMPONENT\_MACROS\_H}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00067}00067\ \textcolor{comment}{//\ ?>}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00068}\mbox{\hyperlink{component__macros_8h_a46e36e84eb8985d2871adc7754004f73}{00068}}\ \textcolor{preprocessor}{\#define\ SET\_COMPONENT\_TEMPLATE\_DEFAULT\ SET\_COMPONENT\_TEMPLATE}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00070}\mbox{\hyperlink{component__macros_8h_a442d28e270626e664e5ce5ee3de2fbcd}{00070}}\ \textcolor{preprocessor}{\#define\ COMPONENT\_TEMPLATE(NAME,\ ...)\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00071}00071\ \textcolor{preprocessor}{template\ SET\_COMPONENT\_TEMPLATE\_DEFAULT\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00072}00072\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_NAME(NAME);\ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00073}00073\ \textcolor{preprocessor}{template\ SET\_COMPONENT\_TEMPLATE\_DEFAULT\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00074}00074\ \textcolor{preprocessor}{struct\ NAME:\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00075}00075\ \textcolor{preprocessor}{\ \ public\ cydui::components::component\_t<\ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00076}00076\ \textcolor{preprocessor}{\ \ \ \ CYDUI\_EV\_HANDLER\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT,\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00077}00077\ \textcolor{preprocessor}{\ \ \ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00078}00078\ \textcolor{preprocessor}{\ \ >\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00079}00079\ \textcolor{preprocessor}{\ \ \ \ CYDUI\_COMPONENT\_METADATA(NAME)\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00080}00080\ \textcolor{preprocessor}{\ \ \ \ using\ state\_t\ =\ CYDUI\_STATE\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00081}00081\ \textcolor{preprocessor}{\ \ \ \ using\ event\_handler\_t\ =\ CYDUI\_EV\_HANDLER\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT;\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00082}00082\ \textcolor{preprocessor}{\ \ \ \ struct\ props\_t\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00083}00083\ \textcolor{preprocessor}{\ \ \ \ \ \ \_\_VA\_ARGS\_\_;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00084}00084\ \textcolor{preprocessor}{\ \ \ \ props\_t\ props;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00085}00085\ \textcolor{preprocessor}{\ \ \ \ NAME()\ =\ default;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00086}00086\ \textcolor{preprocessor}{\ \ \ \ explicit\ NAME(props\_t\ props)\ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00087}00087\ \textcolor{preprocessor}{\ \ \ \ \ \ :\ cydui::components::component\_t<\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00088}00088\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ CYDUI\_EV\_HANDLER\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT,\ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00089}00089\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00090}00090\ \textcolor{preprocessor}{\ \ \ \ \ \ >()\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00091}00091\ \textcolor{preprocessor}{\ \ \ \ \ \ ,\ props(std::move(props))\ \{\ \}\ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00092}00092\ \textcolor{preprocessor}{\ \ \ \ \string~NAME()\ override\ =\ default;\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00093}00093\ \textcolor{preprocessor}{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00094}00094\ \textcolor{preprocessor}{template\ SET\_COMPONENT\_TEMPLATE\_DEFAULT\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00095}00095\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_DATA\_NAME(NAME)\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00096}00096\ \textcolor{preprocessor}{\ \ CYDUI\_STATE\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT*\ state\ =\ nullptr;\ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00097}00097\ \textcolor{preprocessor}{\ \ NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT::props\_t*\ props\ =\ nullptr;\(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00098}00098\ \textcolor{preprocessor}{\ \ attrs\_component<NAME\ SET\_COMPONENT\_TEMPLATE\_SHORT>*\ attrs\ =\ nullptr;\ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00099}00099\ \textcolor{preprocessor}{\ \ logging::logger\ log\{.name\ =\ \#NAME\};\ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00100}00100\ \textcolor{preprocessor}{\};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00101}00101\ \textcolor{preprocessor}{template\ SET\_COMPONENT\_TEMPLATE\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00102}00102\ \textcolor{preprocessor}{struct\ CYDUI\_EV\_HANDLER\_NAME(NAME)\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00103}00103\ \textcolor{preprocessor}{\ \ :\ public\ cydui::components::event\_handler\_t,\ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00104}00104\ \textcolor{preprocessor}{\ \ \ \ public\ CYDUI\_EV\_HANDLER\_DATA\_NAME(NAME)\ SET\_COMPONENT\_TEMPLATE\_SHORT}}
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{component__macros_8h_source_l00106}00106\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//CYD\_UI\_COMPONENT\_MACROS\_H}}
 
 \end{DoxyCode}

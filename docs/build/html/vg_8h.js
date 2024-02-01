@@ -11,6 +11,7 @@ var vg_8h =
     [ "cydui::graphics::vg::path", "structcydui_1_1graphics_1_1vg_1_1path.html", "structcydui_1_1graphics_1_1vg_1_1path" ],
     [ "cydui::graphics::vg::rect", "structcydui_1_1graphics_1_1vg_1_1rect.html", "structcydui_1_1graphics_1_1vg_1_1rect" ],
     [ "cydui::graphics::vg::circle", "structcydui_1_1graphics_1_1vg_1_1circle.html", "structcydui_1_1graphics_1_1vg_1_1circle" ],
+    [ "cydui::graphics::vg::arc", "structcydui_1_1graphics_1_1vg_1_1arc.html", "structcydui_1_1graphics_1_1vg_1_1arc" ],
     [ "cydui::graphics::vg::ellipse", "structcydui_1_1graphics_1_1vg_1_1ellipse.html", "structcydui_1_1graphics_1_1vg_1_1ellipse" ],
     [ "cydui::graphics::vg::group", "structcydui_1_1graphics_1_1vg_1_1group.html", "structcydui_1_1graphics_1_1vg_1_1group" ],
     [ "cydui::graphics::vg::text", "structcydui_1_1graphics_1_1vg_1_1text.html", "structcydui_1_1graphics_1_1vg_1_1text" ]

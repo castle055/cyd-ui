@@ -11,7 +11,7 @@ attr_margin_left< E >
 .PP
 Inherits \fBattribute_i\fP\&.
 .PP
-Inherited by \fBattrs_margin< ThreadTimeline >\fP\&.
+Inherited by \fBattrs_margin< ThreadTimeline >\fP, \fBattrs_margin< void >\fP, \fBattrs_margin< Button >\fP, \fBattrs_margin< Flow >\fP, \fBattrs_margin< Grid >\fP, \fBattrs_margin< stdui::control::Button >\fP, \fBattrs_margin< stdui::layout::Flow >\fP, and \fBattrs_margin< stdui::layout::Grid >\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
@@ -19,10 +19,16 @@ Inherited by \fBattrs_margin< ThreadTimeline >\fP\&.
 .RI "\fB~attr_margin_left\fP () override=default"
 .br
 .ti -1c
-.RI "\fBE\fP & \fBmargin_left\fP (auto &_margin_left_)"
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBmargin_left\fP (auto &_margin_left_)"
 .br
 .ti -1c
-.RI "\fBE\fP & \fBmargin_left\fP (auto &&_margin_left_)"
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBmargin_left\fP (auto &&_margin_left_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBmargin_left\fP (auto &_margin_left_)"
+.br
+.ti -1c
+.RI "template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBmargin_left\fP (auto &&_margin_left_)"
 .br
 .in -1c
 
@@ -46,27 +52,35 @@ Public Member Functions inherited from \fBattribute_i\fP
 .br
 struct attr_margin_left< E >"
 .PP
-Definition at line \fB54\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB76\fP of file \fBcomponent_attributes\&.h\fP\&.
 .SH "Constructor & Destructor Documentation"
 .PP 
 .SS "template<typename \fBE\fP > \fBattr_margin_left\fP< \fBE\fP >::~\fBattr_margin_left\fP ()\fC [override]\fP, \fC [default]\fP"
 
 .SH "Member Function Documentation"
 .PP 
-.SS "template<typename \fBE\fP > \fBE\fP & \fBattr_margin_left\fP< \fBE\fP >::margin_left (auto && _margin_left_)\fC [inline]\fP"
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBattr_margin_left\fP< \fBE\fP >::margin_left (auto && _margin_left_)\fC [inline]\fP"
 
 .PP
-Definition at line \fB54\fP of file \fBcomponent_attributes\&.h\fP\&.
-.SS "template<typename \fBE\fP > \fBE\fP & \fBattr_margin_left\fP< \fBE\fP >::margin_left (auto & _margin_left_)\fC [inline]\fP"
+Definition at line \fB76\fP of file \fBcomponent_attributes\&.h\fP\&.
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBattr_margin_left\fP< \fBE\fP >::margin_left (auto && _margin_left_)\fC [inline]\fP"
 
 .PP
-Definition at line \fB54\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB76\fP of file \fBcomponent_attributes\&.h\fP\&.
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<!std::is_void_v<S>>> \fBS\fP & \fBattr_margin_left\fP< \fBE\fP >::margin_left (auto & _margin_left_)\fC [inline]\fP"
+
+.PP
+Definition at line \fB76\fP of file \fBcomponent_attributes\&.h\fP\&.
+.SS "template<typename \fBE\fP > template<typename \fBS\fP  = E, typename  = std::enable_if_t<std::is_void_v<S>>> void \fBattr_margin_left\fP< \fBE\fP >::margin_left (auto & _margin_left_)\fC [inline]\fP"
+
+.PP
+Definition at line \fB76\fP of file \fBcomponent_attributes\&.h\fP\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "template<typename \fBE\fP > \fBcydui::dimensions::dimension_t\fP \fBattr_margin_left\fP< \fBE\fP >::_margin_left = 0"
 
 .PP
-Definition at line \fB54\fP of file \fBcomponent_attributes\&.h\fP\&.
+Definition at line \fB76\fP of file \fBcomponent_attributes\&.h\fP\&.
 
 .SH "Author"
 .PP 

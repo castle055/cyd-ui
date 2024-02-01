@@ -34,6 +34,10 @@ namespace cydui::graphics {
     
     unsigned long get_id(window_t* win);
     
+    std::pair<int, int> get_position(window_t* win);
+    
+    std::pair<int, int> get_size(window_t* win);
+    
     void terminate(window_t* win);
 }// namespace cydui::graphics
 

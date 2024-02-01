@@ -62,6 +62,7 @@ var NAVTREE =
         [ "Functions", "functions_func.html", "functions_func" ],
         [ "Variables", "functions_vars.html", "functions_vars" ],
         [ "Typedefs", "functions_type.html", null ],
+        [ "Enumerations", "functions_enum.html", null ],
         [ "Related Symbols", "functions_rela.html", null ]
       ] ]
     ] ],
@@ -82,14 +83,15 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "Profiler_8h.html",
-"component__event__handler_8h_source.html",
-"functions_vars_d.html",
-"namespacemembers_type.html",
-"structcydui_1_1components_1_1component__base__t.html#a3663c6759fb101e8cd13b246dfcf04fe",
-"structcydui_1_1compositing_1_1compositing__node__t.html#af49c1ce325e0aa49870741404f4f3547",
-"structcydui_1_1graphics_1_1vg_1_1attr__font__family.html",
-"structcydui_1_1graphics_1_1vg_1_1attr__y1.html#a32dbd0f1ca8de7981ac590b0fa6e987e",
-"structcydui_1_1threading_1_1thread__t.html#a4ffcba2ceb7e17d4a78e07ce5a280433"
+"component__event__handler_8h.html#adb26bab37d63a8209463567e0941fdbe",
+"functions_u.html",
+"namespacecydui_1_1window.html",
+"structattr__padding__top.html#a17c9624860b59de41f207f3ead52454d",
+"structcydui_1_1components_1_1event__handler__t.html#af46d10b87eaa2380b81853e06d2c1629",
+"structcydui_1_1graphics_1_1font_1_1Font.html#a6169c7a59572405261a29619896fb89f",
+"structcydui_1_1graphics_1_1vg_1_1attr__stroke__miterlimit.html#a65befd67132bc7c3b863adda05b82257",
+"structcydui_1_1graphics_1_1vg_1_1text__decoration__t.html#abd9cb0ef586a22a010fc48f4162bdf07",
+"structstdui_1_1layout_1_1Flow.html#ad774628303332abecf3830999ee6c055"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

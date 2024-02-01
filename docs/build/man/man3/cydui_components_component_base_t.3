@@ -9,7 +9,7 @@ cydui::components::component_base_t
 .PP
 \fC#include <component\&.h>\fP
 .PP
-Inherited by \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP, and \fBcydui::components::component_t< EVH, T >\fP\&.
+Inherited by \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< EVH, T >\fP\&.
 .SS "Public Member Functions"
 
 .in +1c
@@ -24,6 +24,12 @@ Inherited by \fBcydui::components::component_t< ThreadTimelineEventHandler, Thre
 .br
 .ti -1c
 .RI "virtual void \fBclear_children\fP ()=0"
+.br
+.ti -1c
+.RI "virtual \fBattrs_component\fP * \fBattrs\fP ()=0"
+.br
+.ti -1c
+.RI "virtual std::string \fBname\fP ()=0"
 .br
 .ti -1c
 .RI "virtual \fBevent_handler_t\fP * \fBevent_handler\fP ()=0"
@@ -82,66 +88,74 @@ Definition at line \fB75\fP of file \fBcomponent\&.h\fP\&.
 .SS "void cydui::components::component_base_t::add_event_listeners (const std::unordered_map< std::string, event_handler_t::listener_data_t > & listeners)\fC [inline]\fP, \fC [protected]\fP"
 
 .PP
-Definition at line \fB106\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB108\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-106                                                                                                              {
-107         for (auto &l: listeners) {
-108           auto &[ev_type, handler] = l;
-109           subscribed_listeners\&.push_back(cydui::events::on_event_raw(ev_type, handler\&.handler));
-110         }
-111       }
+108                                                                                                              {
+109         for (auto &l: listeners) {
+110           auto &[ev_type, handler] = l;
+111           subscribed_listeners\&.push_back(cydui::events::on_event_raw(ev_type, handler\&.handler));
+112         }
+113       }
 .fi
 
+.SS "virtual \fBattrs_component\fP * cydui::components::component_base_t::attrs ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBcydui::components::component_t< EVH, T >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
 .SS "virtual void cydui::components::component_base_t::clear_children ()\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+Implemented in \fBcydui::components::component_t< EVH, T >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
 .SS "void cydui::components::component_base_t::clear_subscribed_listeners ()\fC [inline]\fP, \fC [protected]\fP"
 
 .PP
-Definition at line \fB112\fP of file \fBcomponent\&.h\fP\&..PP
+Definition at line \fB114\fP of file \fBcomponent\&.h\fP\&..PP
 .nf
-112                                         {
-113         for (auto &item: subscribed_listeners) {
-114           item\->remove();
-115           delete item;
-116         }
-117         subscribed_listeners\&.clear();
-118       }
+114                                         {
+115         for (auto &item: subscribed_listeners) {
+116           item\->remove();
+117           delete item;
+118         }
+119         subscribed_listeners\&.clear();
+120       }
 .fi
 
 .SS "virtual void cydui::components::component_base_t::configure_event_handler ()\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+Implemented in \fBcydui::components::component_t< EVH, T >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
 .SS "virtual \fBcomponent_state_t\fP * cydui::components::component_base_t::create_state_instance ()\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+Implemented in \fBcydui::components::component_t< EVH, T >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
 .SS "virtual \fBevent_handler_t\fP * cydui::components::component_base_t::event_handler ()\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+Implemented in \fBcydui::components::component_t< EVH, T >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
 .SS "virtual \fBcomponent_base_t\fP * cydui::components::component_base_t::find_by_coords (int x, int y)\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+Implemented in \fBcydui::components::component_t< EVH, T >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
 .SS "virtual \fBcomponent_dimensional_relations_t\fP cydui::components::component_base_t::get_dimensional_relations ()\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+Implemented in \fBcydui::components::component_t< EVH, T >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
 .SS "virtual void cydui::components::component_base_t::get_fragment (\fBcydui::layout::Layout\fP * layout, \fBcydui::compositing::compositing_node_t\fP * compositing_node)\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+Implemented in \fBcydui::components::component_t< EVH, T >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+.SS "virtual std::string cydui::components::component_base_t::name ()\fC [pure virtual]\fP"
+
+.PP
+Implemented in \fBstdui::layout::Flow\fP, \fBstdui::layout::Grid\fP, \fBstdui::control::Button\fP, and \fBThreadTimeline\fP\&.
 .SS "virtual void cydui::components::component_base_t::redraw (\fBcydui::layout::Layout\fP * layout)\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+Implemented in \fBcydui::components::component_t< EVH, T >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
 .SS "virtual void cydui::components::component_base_t::subscribe_events ()\fC [pure virtual]\fP"
 
 .PP
-Implemented in \fBcydui::components::component_t< EVH, T >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
+Implemented in \fBcydui::components::component_t< EVH, T >\fP, \fBcydui::components::component_t< ButtonEventHandler, Button >\fP, \fBcydui::components::component_t< FlowEventHandler, Flow >\fP, \fBcydui::components::component_t< GridEventHandler, Grid >\fP, and \fBcydui::components::component_t< ThreadTimelineEventHandler, ThreadTimeline >\fP\&.
 .SH "Member Data Documentation"
 .PP 
 .SS "std::vector<\fBcomponent_base_t\fP*> cydui::components::component_base_t::children {}"

@@ -1,3 +1,15 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classcydui_1_1window_1_1CWindow.html" title=" " alt="" coords="5,5,175,32"/>
+<area shape="rect" id="Node000000" href="$structevent__data__type__base__t.html" title=" " alt="" coords="5,132,169,159"/>
+<area shape="rect" id="Node000001" href="$structButtonEvent_1_1DataType.html" title=" " alt="" coords="220,5,378,32"/>
+<area shape="poly" id="edge771_Node000000_Node000001" title=" " alt="" coords="111,119,158,80,215,42,242,30,244,35,218,46,161,84,115,123"/>
+<area shape="rect" id="Node000002" href="$structKeyEvent_1_1DataType.html" title=" " alt="" coords="228,56,370,83"/>
+<area shape="poly" id="edge772_Node000000_Node000002" title=" " alt="" coords="135,123,216,92,250,81,252,86,218,97,136,128"/>
+<area shape="rect" id="Node000003" href="$structMotionEvent_1_1DataType.html" title=" " alt="" coords="220,107,378,133"/>
+<area shape="poly" id="edge773_Node000000_Node000003" title=" " alt="" coords="184,131,219,127,220,132,185,136"/>
+<area shape="rect" id="Node000004" href="$structRedrawEvent_1_1DataType.html" title=" " alt="" coords="217,157,381,184"/>
+<area shape="poly" id="edge774_Node000000_Node000004" title=" " alt="" coords="185,154,216,158,216,163,184,160"/>
+<area shape="rect" id="Node000005" href="$structResizeEvent_1_1DataType.html" title=" " alt="" coords="219,208,379,235"/>
+<area shape="poly" id="edge775_Node000000_Node000005" title=" " alt="" coords="136,162,218,193,252,205,250,210,216,199,135,167"/>
+<area shape="rect" id="Node000006" href="$structScrollEvent_1_1DataType.html" title=" " alt="" coords="223,259,375,285"/>
+<area shape="poly" id="edge776_Node000000_Node000006" title=" " alt="" coords="115,168,161,207,218,244,244,256,242,260,215,249,158,211,111,172"/>
 </map>

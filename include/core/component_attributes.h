@@ -14,34 +14,56 @@ struct attribute_i {
 #define COMPONENT_ATTRIBUTE(TYPE, NAME, DEFAULT) \
     template<typename E>                         \
     struct attr_##NAME: public attribute_i {     \
-      ~attr_##NAME() override = default;         \
-      inline E &NAME(auto& _##NAME##_) {         \
-        this->_##NAME = _##NAME##_;              \
-        return *(E*)this;                        \
-      }                                          \
-      inline E &NAME(auto&& _##NAME##_) {   \
-        this->_##NAME = _##NAME##_;              \
-        return *(E*)this;                        \
-      }                                          \
       TYPE _##NAME = DEFAULT;                    \
+      ~attr_##NAME() override = default;         \
+      template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>> \
+      inline S& NAME(auto& _##NAME##_) {   \
+        this->_##NAME = _##NAME##_;              \
+        return *(E*)this;                        \
+      }                                          \
+      template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>> \
+      inline S& NAME(auto&& _##NAME##_) {  \
+        this->_##NAME = _##NAME##_;              \
+        return *(E*)this;                        \
+      }                                          \
+      template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>> \
+      inline void NAME(auto& _##NAME##_) {   \
+        this->_##NAME = _##NAME##_;              \
+      }                                          \
+      template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>> \
+      inline void NAME(auto&& _##NAME##_) {  \
+        this->_##NAME = _##NAME##_;              \
+      }                                          \
     }
 
 #define COMPONENT_ATTRIBUTE_W_MONITOR(TYPE, NAME, DEFAULT) \
     template<typename E>                                   \
     struct attr_##NAME: public attribute_i {               \
-      ~attr_##NAME() override = default;                   \
-      inline E &NAME(auto& _##NAME##_) {                   \
-        this->_##NAME = _##NAME##_;                        \
-        this->_##NAME##_has_changed = true;                \
-        return *(E*)this;                                  \
-      }                                                    \
-      inline E &NAME(auto&& _##NAME##_) {             \
-        this->_##NAME = _##NAME##_;                        \
-        this->_##NAME##_has_changed = true;                \
-        return *(E*)this;                                  \
-      }                                                    \
       TYPE _##NAME = DEFAULT;                              \
       bool _##NAME##_has_changed = false;                  \
+      ~attr_##NAME() override = default;                   \
+      template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>> \
+      inline S& NAME(auto& _##NAME##_) {                   \
+        this->_##NAME = _##NAME##_;                        \
+        this->_##NAME##_has_changed = true;                \
+        return *(E*)this;                                  \
+      }                                                    \
+      template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>> \
+      inline S& NAME(auto&& _##NAME##_) {             \
+        this->_##NAME = _##NAME##_;                        \
+        this->_##NAME##_has_changed = true;                \
+        return *(E*)this;                                  \
+      }                                                    \
+      template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>> \
+      inline void NAME(auto& _##NAME##_) {                   \
+        this->_##NAME = _##NAME##_;                        \
+        this->_##NAME##_has_changed = true;                \
+      }                                                    \
+      template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>> \
+      inline void NAME(auto&& _##NAME##_) {             \
+        this->_##NAME = _##NAME##_;                        \
+        this->_##NAME##_has_changed = true;                \
+      }                                                    \
     }
 
 COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, x, 0);
@@ -63,13 +85,23 @@ using content = std::vector<cydui::components::component_holder_t>;
 
 template<typename E>
 struct attr_content: public attribute_i {
-  inline E &operator()(auto &&_content_) {
+  template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>>
+  inline S &operator()(auto &&_content_) {
     this->_content = _content_;
     return *(E*) this;
   }
-  inline E &operator()(auto &_content_) {
+  template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>>
+  inline S &operator()(auto &_content_) {
     this->_content = _content_;
     return *(E*) this;
+  }
+  template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>>
+  inline void operator()(auto &&_content_) {
+    this->_content = _content_;
+  }
+  template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>>
+  inline void operator()(auto &_content_) {
+    this->_content = _content_;
   }
   std::function<content()> _content = [] -> content {return {};};
 };
@@ -98,13 +130,20 @@ struct attrs_dimensions
     attr_h<T> {
 };
 
-template<typename T>
+template<typename T = void>
 struct attrs_component
   : attrs_dimensions<T>,
     attrs_margin<T>,
     attrs_padding<T>,
     attr_content<T> {
 };
+//template<>
+//struct attrs_component<void>
+//  : attrs_dimensions<void>,
+//    attrs_margin<void>,
+//    attrs_padding<void>,
+//    attr_content<void> {
+//};
 
 #undef COMPONENT_ATTRIBUTE
 #undef COMPONENT_ATTRIBUTE_W_MONITOR

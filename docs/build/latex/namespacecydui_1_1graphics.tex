@@ -29,6 +29,10 @@ void \mbox{\hyperlink{namespacecydui_1_1graphics_a183658b9bd88610ff0e5767ae04c55
 \item 
 unsigned long \mbox{\hyperlink{namespacecydui_1_1graphics_ad6234089431f6875fe9514d4d1ed88d0}{get\+\_\+id}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{window\+\_\+t}} \texorpdfstring{$\ast$}{*}win)
 \item 
+std\+::pair$<$ int, int $>$ \mbox{\hyperlink{namespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab}{get\+\_\+position}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{window\+\_\+t}} \texorpdfstring{$\ast$}{*}win)
+\item 
+std\+::pair$<$ int, int $>$ \mbox{\hyperlink{namespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56}{get\+\_\+size}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{window\+\_\+t}} \texorpdfstring{$\ast$}{*}win)
+\item 
 void \mbox{\hyperlink{namespacecydui_1_1graphics_ac3ec912c904cf4d43e2615f86602884e}{terminate}} (\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{window\+\_\+t}} \texorpdfstring{$\ast$}{*}win)
 \end{DoxyCompactItemize}
 
@@ -236,6 +240,76 @@ Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00296}{296}} of file 
 \DoxyCodeLine{00298\ \}}
 
 \end{DoxyCode}
+\Hypertarget{namespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab}\label{namespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab} 
+\index{cydui::graphics@{cydui::graphics}!get\_position@{get\_position}}
+\index{get\_position@{get\_position}!cydui::graphics@{cydui::graphics}}
+\doxysubsubsection{\texorpdfstring{get\_position()}{get\_position()}}
+{\footnotesize\ttfamily std\+::pair$<$ int, int $>$ cydui\+::graphics\+::get\+\_\+position (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{window\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{win }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00300}{300}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00301\ \ \ XWindowAttributes\ attrs;}
+\DoxyCodeLine{00302\ \ \ XGetWindowAttributes(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}},\ \&attrs);}
+\DoxyCodeLine{00303\ \ \ \textcolor{keywordflow}{return}\ \{attrs.x,\ attrs.y\};}
+\DoxyCodeLine{00304\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=345pt]{namespacecydui_1_1graphics_a44527d8f527f90eaf30edaabf48f1eab_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{namespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56}\label{namespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56} 
+\index{cydui::graphics@{cydui::graphics}!get\_size@{get\_size}}
+\index{get\_size@{get\_size}!cydui::graphics@{cydui::graphics}}
+\doxysubsubsection{\texorpdfstring{get\_size()}{get\_size()}}
+{\footnotesize\ttfamily std\+::pair$<$ int, int $>$ cydui\+::graphics\+::get\+\_\+size (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t}{window\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{win }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00305}{305}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00305\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00306\ \ \ XWindowAttributes\ attrs;}
+\DoxyCodeLine{00307\ \ \ XGetWindowAttributes(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}},\ \&attrs);}
+\DoxyCodeLine{00308\ \ \ \textcolor{keywordflow}{return}\ \{attrs.width,\ attrs.height\};}
+\DoxyCodeLine{00309\ \}}
+
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{namespacecydui_1_1graphics_a72aab0f1e4039451adef6cbb8207ed56_icgraph}
+\end{center}
+\end{figure}
 \Hypertarget{namespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7}\label{namespacecydui_1_1graphics_a556fba69a253edbba4d4427ce889d0b7} 
 \index{cydui::graphics@{cydui::graphics}!resize@{resize}}
 \index{resize@{resize}!cydui::graphics@{cydui::graphics}}
@@ -278,18 +352,18 @@ Here is the caller graph for this function\+:\nopagebreak
 
 
 
-Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00300}{300}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
+Definition at line \mbox{\hyperlink{x11__impl_8cpp_source_l00311}{311}} of file \mbox{\hyperlink{x11__impl_8cpp_source}{x11\+\_\+impl.\+cpp}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00300\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00301\ \ \ XUnmapWindow(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}});}
-\DoxyCodeLine{00302\ \ \ XDestroyWindow(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}});}
-\DoxyCodeLine{00303\ \ \ \textcolor{keyword}{delete}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ad72eebf095eba2d7a2f42d16e90ed522}{staging\_target}};}
-\DoxyCodeLine{00304\ \ \ \textcolor{keyword}{delete}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_aac71ce31fada0d62b259b3099d06727a}{render\_target}};}
-\DoxyCodeLine{00305\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}-\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a230c1adb68eeb06a399359ebb1fac07b}{running}}\ =\ \textcolor{keyword}{false};}
-\DoxyCodeLine{00306\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}-\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a6359aff6f4f5585d8cfee4b01fa995be}{join}}();}
-\DoxyCodeLine{00307\ \}}
+\DoxyCodeLine{00311\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00312\ \ \ XUnmapWindow(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}});}
+\DoxyCodeLine{00313\ \ \ XDestroyWindow(\mbox{\hyperlink{namespacex11_1_1state_a53916a7a1ae17627e69ad45f66378fe5}{state::get\_dpy}}(),\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a1eb9b75f5e17f1d1e8b11138eda9ee66}{xwin}});}
+\DoxyCodeLine{00314\ \ \ \textcolor{keyword}{delete}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_ad72eebf095eba2d7a2f42d16e90ed522}{staging\_target}};}
+\DoxyCodeLine{00315\ \ \ \textcolor{keyword}{delete}\ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_aac71ce31fada0d62b259b3099d06727a}{render\_target}};}
+\DoxyCodeLine{00316\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}-\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a230c1adb68eeb06a399359ebb1fac07b}{running}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00317\ \ \ win-\/>\mbox{\hyperlink{structcydui_1_1graphics_1_1window__t_a83be54ffd1345a2a4a4766ea596bffab}{render\_thd}}-\/>\mbox{\hyperlink{structcydui_1_1threading_1_1thread__t_a6359aff6f4f5585d8cfee4b01fa995be}{join}}();}
+\DoxyCodeLine{00318\ \}}
 
 \end{DoxyCode}
 Here is the call graph for this function\+:\nopagebreak

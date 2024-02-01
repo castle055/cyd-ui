@@ -32,6 +32,7 @@ var structcydui_1_1components_1_1event__handler__t =
     [ "on_mouse_motion", "structcydui_1_1components_1_1event__handler__t.html#a6a9b64922dc2477b587f9a9a047b3242", null ],
     [ "on_redraw", "structcydui_1_1components_1_1event__handler__t.html#af1cdae43f4c80eff85ee33d777599c11", null ],
     [ "on_scroll", "structcydui_1_1components_1_1event__handler__t.html#a738e7b4883ab753c8f0f4d90d1d49a07", null ],
+    [ "$children", "structcydui_1_1components_1_1event__handler__t.html#adbf82dcde8850d275ff0fa1a2fa3c4fb", null ],
     [ "get_dim", "structcydui_1_1components_1_1event__handler__t.html#a710eca04807d924f6b97587c6db608f8", null ],
     [ "parent", "structcydui_1_1components_1_1event__handler__t.html#aa86b7c297ee937971ed3e2976b5d9237", null ]
 ];
