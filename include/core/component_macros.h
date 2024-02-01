@@ -21,31 +21,36 @@
 // ? Macros for declaring component classes
 // ?>
 
-#define STATE(NAME) \
-struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
+//#define STATE(NAME) \
+//struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
+
+#define STATE ; struct init: public cydui::components::component_state_t
 
 // ?>
 #define COMPONENT(NAME, ...) \
 struct NAME;                 \
-struct CYDUI_STATE_NAME(NAME); \
 struct CYDUI_EV_HANDLER_NAME(NAME); \
 struct NAME:                 \
   public cydui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME> \
   {                          \
     CYDUI_COMPONENT_METADATA(NAME)  \
-    using state_t =          \
-      std::conditional<is_type_complete_v<CYDUI_STATE_NAME(NAME)>         \
-        , CYDUI_STATE_NAME(NAME)    \
-        , cydui::components::component_state_t>::type;                    \
     using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME);                  \
+    struct init;             \
     struct props_t           \
       __VA_ARGS__;           \
     props_t props;           \
+    using state_t =          \
+      std::conditional<is_type_complete_v<struct init>  \
+        , init    \
+        , cydui::components::component_state_t>::type;                    \
     NAME() = default;        \
     explicit NAME(props_t props)    \
       : cydui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\
       , props(std::move(props)) { } \
     ~NAME() override = default;     \
+    void* get_props() override {    \
+      return (void*)&(this->props); \
+    }                        \
   };                         \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \
   NAME::state_t* state = nullptr;                    \
@@ -90,6 +95,9 @@ struct NAME:                          \
       >()                             \
       , props(std::move(props)) { }   \
     ~NAME() override = default;       \
+    void* get_props() override {      \
+      return (void*)&(this->props);   \
+    }                                 \
 };                                    \
 template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \

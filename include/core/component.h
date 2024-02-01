@@ -28,6 +28,11 @@ namespace cydui::components {
       std::optional<component_state_t*> parent = std::nullopt;
       std::unordered_map<std::string, component_state_t*> children_states {};
       
+      component_state_t() = default;
+      component_state_t(void* props) {
+      
+      }
+      
       bool _dirty = false;
       
       bool focused = false;
@@ -90,6 +95,7 @@ namespace cydui::components {
       virtual void subscribe_events() = 0;
       virtual void clear_children() = 0;
       virtual attrs_component<>* attrs() = 0;
+      virtual void* get_props() = 0;
       virtual std::string name() = 0;
       
       virtual event_handler_t* event_handler() = 0;
@@ -145,7 +151,7 @@ namespace cydui::components {
       };
       
       void configure_event_handler() override {
-        EVH* evh = event_handler_.operator->();
+        EVH * evh = event_handler_.operator->();
         if (parent.has_value()) {
           evh->parent = parent.value()->event_handler();
         } else {
@@ -159,7 +165,7 @@ namespace cydui::components {
       }
       void subscribe_events() override {
         clear_subscribed_listeners();
-        EVH* evh = event_handler_.operator->();
+        EVH * evh = event_handler_.operator->();
         add_event_listeners(evh->get_event_listeners());
       }
       void clear_children() override {
@@ -176,9 +182,8 @@ namespace cydui::components {
         return (attrs_component<>*) static_cast<attrs_component<T>*>(this);
       }
       
-      
       component_state_t* create_state_instance() override {
-        return new typename T::state_t;
+        return new typename T::state_t((typename T::props_t*) get_props());
       }
       event_handler_t* event_handler() override {
         return event_handler_;
