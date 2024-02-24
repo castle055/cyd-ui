@@ -27,7 +27,7 @@ namespace cydui::components {
     
     template<typename C>
     concept ComponentConcept = requires(C c) {
-      std::derived_from<C, component_t<typename C::event_handler_t, C>>;
+      requires std::derived_from<C, component_t<typename C::event_handler_t, C>>;
       typename C::props_t;
       typename C::state_t;
       typename C::event_handler_t;

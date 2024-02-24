@@ -38,11 +38,11 @@ namespace cydui::components::with {
         }
         return *this;
       }
-#define then(...) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Wunused-lambda-capture\"") \
-  then([this]{ return std::vector<component_holder_t> __VA_ARGS__ ; }) \
-  _Pragma("clang diagnostic pop")
+//#define then(...) \
+//  _Pragma("clang diagnostic push") \
+//  _Pragma("clang diagnostic ignored \"-Wunused-lambda-capture\"") \
+//  then([this]{ return std::vector<cydui::components::component_holder_t> __VA_ARGS__ ; }) \
+//  _Pragma("clang diagnostic pop")
       
       with<bool> &or_else(std::function<std::vector<component_holder_t>()> components) {
         if (!val) {

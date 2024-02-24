@@ -28,6 +28,11 @@ namespace cydui::components {
       std::optional<component_state_t*> parent = std::nullopt;
       std::unordered_map<std::string, component_state_t*> children_states {};
       
+      component_state_t() = default;
+      component_state_t(void* props) {
+      
+      }
+      
       bool _dirty = false;
       
       bool focused = false;
@@ -90,6 +95,7 @@ namespace cydui::components {
       virtual void subscribe_events() = 0;
       virtual void clear_children() = 0;
       virtual attrs_component<>* attrs() = 0;
+      virtual void* get_props() = 0;
       virtual std::string name() = 0;
       
       virtual event_handler_t* event_handler() = 0;
@@ -152,7 +158,7 @@ namespace cydui::components {
           evh->parent = nullptr;
         }
         evh->state = (typename T::state_t*) state.value();
-        evh->props = &(((T*) this)->props);
+        evh->props = &(static_cast<T*>(this)->props);
         evh->attrs = (attrs_component<T>*) this;
         evh->get_dim = [this] {return get_dimensional_relations();};
         evh->$children = [this] {return children;};
@@ -173,18 +179,19 @@ namespace cydui::components {
         // `(attrs_component<>*)` does not work since that type is not a base of this
         // class. So we need to cast to the base class first and then to its `void`
         // specialization.
-        return (attrs_component<>*) (attrs_component<T>*) this;
+        return (attrs_component<>*) static_cast<attrs_component<T>*>(this);
       }
       
-      
       component_state_t* create_state_instance() override {
-        return new typename T::state_t;
+        return new typename T::state_t((typename T::props_t*) get_props());
       }
       event_handler_t* event_handler() override {
         return event_handler_;
       }
       
       void redraw(cydui::layout::Layout* layout) override {
+        state.value()->_dirty = false;
+        
         std::vector<component_holder_t> content_children = this->_content();
         std::string content_id_prefix = "content:";
         std::size_t id_i = 0;
@@ -350,8 +357,13 @@ namespace cydui::components {
   
 }
 
-template<typename C>
-struct component_state_template: public cydui::components::component_state_t { };
+template<typename, typename = void>
+constexpr bool is_type_complete_v = false;
+
+template<typename T>
+constexpr bool is_type_complete_v
+  <T, std::void_t<decltype(sizeof(T))>> = true;
+
 
 //#include "../graphics/vg.h"
 //
