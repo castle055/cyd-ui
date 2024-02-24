@@ -151,7 +151,7 @@ namespace cydui::components {
       };
       
       void configure_event_handler() override {
-        EVH * evh = event_handler_.operator->();
+        EVH* evh = event_handler_.operator->();
         if (parent.has_value()) {
           evh->parent = parent.value()->event_handler();
         } else {
@@ -165,7 +165,7 @@ namespace cydui::components {
       }
       void subscribe_events() override {
         clear_subscribed_listeners();
-        EVH * evh = event_handler_.operator->();
+        EVH* evh = event_handler_.operator->();
         add_event_listeners(evh->get_event_listeners());
       }
       void clear_children() override {
@@ -190,6 +190,8 @@ namespace cydui::components {
       }
       
       void redraw(cydui::layout::Layout* layout) override {
+        state.value()->_dirty = false;
+        
         std::vector<component_holder_t> content_children = this->_content();
         std::string content_id_prefix = "content:";
         std::size_t id_i = 0;
