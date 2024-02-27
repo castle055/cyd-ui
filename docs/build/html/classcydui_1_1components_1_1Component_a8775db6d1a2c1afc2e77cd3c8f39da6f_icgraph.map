@@ -1,9 +1,0 @@
-<map id="cydui::components::Component::Component" name="cydui::components::Component::Component">
-<area shape="rect" id="Node000001" title=" " alt="" coords="432,39,595,81"/>
-<area shape="rect" id="Node000002" href="$classcydui_1_1components_1_1Component.html#a893cd850cda5ddcef688da444584b9d8" title=" " alt="" coords="225,39,384,81"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="417,63,385,63,385,57,417,57"/>
-<area shape="rect" id="Node000003" href="$classcydui_1_1components_1_1Component.html#a7abde771f5ed3d801447304bb4dfdfd3" title=" " alt="" coords="14,5,168,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="209,48,168,41,169,36,210,43"/>
-<area shape="rect" id="Node000004" href="$classcydui_1_1components_1_1Component.html#af794148bbdfbb8f19c3d66e0b07b9499" title=" " alt="" coords="5,72,177,115"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="210,77,178,83,177,77,209,72"/>
-</map>

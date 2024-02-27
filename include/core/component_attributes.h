@@ -81,29 +81,29 @@ COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, padding_bottom, 0);
 COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, padding_left, 0);
 COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, padding_right, 0);
 
-using content = std::vector<cydui::components::component_holder_t>;
+using content = std::vector<cydui::components::component_builder_t>;
 
 template<typename E>
 struct attr_content: public attribute_i {
   template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>>
-  inline S &operator()(auto &&_content_) {
+  inline S &operator()(content &&_content_) {
     this->_content = _content_;
     return *(E*) this;
   }
   template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>>
-  inline S &operator()(auto &_content_) {
+  inline S &operator()(content &_content_) {
     this->_content = _content_;
     return *(E*) this;
   }
   template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>>
-  inline void operator()(auto &&_content_) {
+  inline void operator()(content &&_content_) {
     this->_content = _content_;
   }
   template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>>
-  inline void operator()(auto &_content_) {
+  inline void operator()(content &_content_) {
     this->_content = _content_;
   }
-  std::function<content()> _content = [] -> content {return {};};
+  content _content = {};
 };
 
 template<typename T>

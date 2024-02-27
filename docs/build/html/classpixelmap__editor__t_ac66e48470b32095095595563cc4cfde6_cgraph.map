@@ -1,7 +1,0 @@
-<map id="pixelmap_editor_t::clear" name="pixelmap_editor_t::clear">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,23,137,65"/>
-<area shape="rect" id="Node000002" href="$structpixelmap__t.html#aa70c0fa0014f555358a2d07198b00f69" title=" " alt="" coords="185,5,312,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="136,32,169,27,170,33,137,37"/>
-<area shape="rect" id="Node000003" href="$structpixelmap__t.html#afd28dda06874905136d50de6911a0242" title=" " alt="" coords="187,56,310,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="137,51,172,56,171,61,136,56"/>
-</map>

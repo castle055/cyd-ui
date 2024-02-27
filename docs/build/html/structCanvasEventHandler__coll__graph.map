@@ -1,9 +1,0 @@
-<map id="CanvasEventHandler" name="CanvasEventHandler">
-<area shape="rect" id="Node000001" title=" " alt="" coords="32,172,177,199"/>
-<area shape="rect" id="Node000002" href="$structevent__handler__t.html" title=" " alt="" coords="5,81,119,108"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="77,121,101,170,96,173,72,123"/>
-<area shape="rect" id="Node000003" href="$structCanvasState.html" title=" " alt="" coords="143,81,240,108"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="170,121,119,173,115,170,167,117"/>
-<area shape="rect" id="Node000004" href="$structcomponent__state__t.html" title=" " alt="" coords="125,5,258,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="194,47,194,81,189,81,189,47"/>
-</map>

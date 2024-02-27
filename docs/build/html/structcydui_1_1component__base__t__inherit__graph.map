@@ -1,9 +1,0 @@
-<map id="cydui::component_base_t" name="cydui::component_base_t">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,59,176,85"/>
-<area shape="rect" id="Node000002" href="$structcydui_1_1component__t.html" title=" " alt="" coords="224,5,428,64"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,53,223,48,224,54,191,59"/>
-<area shape="rect" id="Node000004" href="$structcydui_1_1component__t.html" title=" " alt="" coords="258,88,394,131"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="191,85,258,96,257,101,190,90"/>
-<area shape="rect" id="Node000003" href="$structThreadTimeline.html" title=" " alt="" coords="476,21,586,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="444,32,476,32,476,37,444,37"/>
-</map>

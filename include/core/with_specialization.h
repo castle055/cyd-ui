@@ -13,24 +13,24 @@ namespace cydui::components::with {
     
     template<>
     struct with<bool>: public with_data_t<bool> {
-      with<bool> &then(std::function<std::vector<component_holder_t>()> components) {
+      with<bool> &then(const std::vector<component_builder_t> &components) {
         if (val) {
           selection.clear();
-          auto cs = components();
+          
           std::size_t i = 0;
           std::string index_suffix;
           std::string id;
-          for (const auto &item: cs) {
+          for (const auto &item: components) {
             index_suffix = ":";
             index_suffix.append(std::to_string(i));
             
             for (const auto &component_pair: item.get_components()) {
-              auto [_, component] = component_pair;
+              auto [_, builder] = component_pair;
               // make copy of id for modification
               id = component_pair.first;
               id.append(index_suffix);
               id.append(":then");
-              selection[id] = component;
+              selection[id] = builder;
             }
             
             ++i;
@@ -44,24 +44,24 @@ namespace cydui::components::with {
 //  then([this]{ return std::vector<cydui::components::component_holder_t> __VA_ARGS__ ; }) \
 //  _Pragma("clang diagnostic pop")
       
-      with<bool> &or_else(std::function<std::vector<component_holder_t>()> components) {
+      with<bool> &or_else(const std::vector<component_builder_t> &components) {
         if (!val) {
           selection.clear();
-          auto cs = components();
+          
           std::size_t i = 0;
           std::string index_suffix;
           std::string id;
-          for (const auto &item: cs) {
+          for (const auto &item: components) {
             index_suffix = ":";
             index_suffix.append(std::to_string(i));
             
             for (const auto &component_pair: item.get_components()) {
-              auto [_, component] = component_pair;
+              auto [_, builder] = component_pair;
               // make copy of id for modification
               id = component_pair.first;
               id.append(index_suffix);
               id.append(":or_else");
-              selection[id] = component;
+              selection[id] = builder;
             }
             
             ++i;
@@ -69,11 +69,6 @@ namespace cydui::components::with {
         }
         return *this;
       }
-#define or_else(...) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Wunused-lambda-capture\"") \
-  or_else([this]{ return std::vector<component_holder_t> __VA_ARGS__ ; }) \
-  _Pragma("clang diagnostic pop")
     };
     
     template<typename I>
@@ -87,9 +82,9 @@ namespace cydui::components::with {
     
     struct map_to_result_t {
       std::string id;
-      std::vector<component_holder_t> result;
+      std::vector<component_builder_t> result;
       
-      map_to_result_t(std::initializer_list<component_holder_t> result)
+      map_to_result_t(std::initializer_list<component_builder_t> result)
         : result(result) { }
     };
     
@@ -129,12 +124,6 @@ namespace cydui::components::with {
         }
         return *this;
       }
-#define map_to(...) \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Wunused-lambda-capture\"") \
-  map_to( __VA_ARGS__ ) \
-  _Pragma("clang diagnostic pop")
-    
     };
     
     template<>

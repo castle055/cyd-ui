@@ -1,8 +1,0 @@
-<map id="env::get" name="env::get">
-<area shape="rect" id="Node000001" title="env::get" alt="" coords="241,5,309,32"/>
-<area shape="rect" id="Node000002" href="$env_8h.html#a0938f8e571af96f2740945d27aabe28b" title=" " alt="" coords="5,5,77,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="226,21,77,21,77,16,226,16"/>
-<area shape="rect" id="Node000003" href="$namespaceenv.html#a9e8dc70a7c190769d019cc1836c3c719" title="Set the value of the environmental variable with name ENVVAR to VALUE" alt="" coords="125,31,193,57"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="226,32,194,39,193,34,225,27"/>
-<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="109,36,77,29,78,24,110,31"/>
-</map>

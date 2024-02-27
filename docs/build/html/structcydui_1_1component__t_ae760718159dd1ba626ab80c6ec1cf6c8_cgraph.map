@@ -1,7 +1,0 @@
-<map id="cydui::component_t::redraw" name="cydui::component_t::redraw">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,39,141,81"/>
-<area shape="rect" id="Node000002" href="$structvg_1_1vg__fragment__t.html#ad286e0a6ce5e8d826941479a0006f3bb" title=" " alt="" coords="189,5,323,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,45,173,39,174,44,141,50"/>
-<area shape="rect" id="Node000003" href="$classcydui_1_1dimensions_1_1dimension__t.html#ac9ec14f26302ee07e8211a78a635d6fc" title=" " alt="" coords="189,72,323,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="141,70,174,76,173,81,140,75"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="cydui::graphics::vg::attr_font_weight&lt; E &gt;" name="cydui::graphics::vg::attr_font_weight&lt; E &gt;">
-<area shape="rect" id="Node000001" title="font&#45;weight" alt="" coords="5,96,161,139"/>
-<area shape="rect" id="Node000003" href="$structcydui_1_1graphics_1_1vg_1_1attrs__font.html" title=" " alt="" coords="17,187,149,229"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="86,154,86,186,80,186,80,154"/>
-<area shape="rect" id="Node000002" href="$structcydui_1_1graphics_1_1vg_1_1attribute__i.html" title=" " alt="" coords="17,5,149,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="86,64,86,96,80,96,80,64"/>
-<area shape="rect" id="Node000004" href="$structcydui_1_1graphics_1_1vg_1_1text.html" title=" " alt="" coords="17,277,149,320"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="86,245,86,277,80,277,80,245"/>
-</map>

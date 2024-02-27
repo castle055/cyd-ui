@@ -1,9 +1,0 @@
-<map id="ChildrenStateCollection" name="ChildrenStateCollection">
-<area shape="rect" id="Node000001" title=" " alt="" coords="546,51,704,77"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="251,5,417,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="433,37,546,51,545,56,432,42"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="264,72,404,131"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="418,88,545,72,546,77,419,93"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="5,88,146,115"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="161,99,264,99,264,104,161,104"/>
-</map>

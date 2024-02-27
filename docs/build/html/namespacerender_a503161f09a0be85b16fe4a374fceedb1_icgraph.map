@@ -1,9 +1,0 @@
-<map id="render::flush" name="render::flush">
-<area shape="rect" id="Node000001" title=" " alt="" coords="581,21,675,48"/>
-<area shape="rect" id="Node000002" href="$namespacecydui_1_1graphics.html#a183658b9bd88610ff0e5767ae04c55d5" title=" " alt="" coords="388,21,533,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="565,37,534,37,534,32,565,32"/>
-<area shape="rect" id="Node000003" href="$classcydui_1_1compositing_1_1LayoutCompositor.html#a6963756199e05569cf36f7ce8cd896fd" title=" " alt="" coords="197,5,340,64"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="372,37,340,37,340,32,372,32"/>
-<area shape="rect" id="Node000004" href="$classcydui_1_1compositing_1_1LayoutCompositor.html#a292f229815bc05bbcf95cf3f2e90877b" title=" " alt="" coords="5,5,149,64"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="181,37,149,37,149,32,181,32"/>
-</map>

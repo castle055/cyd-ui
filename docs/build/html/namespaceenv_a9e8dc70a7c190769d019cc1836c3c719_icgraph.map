@@ -1,5 +1,0 @@
-<map id="env::set" name="env::set">
-<area shape="rect" id="Node000001" title="Set the value of the environmental variable with name ENVVAR to VALUE" alt="" coords="185,5,253,32"/>
-<area shape="rect" id="Node000002" href="$structenv_1_1var.html#a1d750b55a9a84194af95ab6925f4bdad" title=" " alt="" coords="5,5,137,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,21,137,21,137,16,169,16"/>
-</map>

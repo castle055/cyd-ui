@@ -1,8 +1,0 @@
-<map id="cydui::event_handler_t::on_scroll" name="cydui::event_handler_t::on_scroll">
-<area shape="rect" id="Node000001" title=" " alt="" coords="392,29,533,72"/>
-<area shape="poly" id="edge3_Node000001_Node000001" title=" " alt="" coords="493,16,482,10,463,8,445,10,434,15,430,21,431,28,426,29,425,19,431,10,444,5,463,3,483,5,496,11"/>
-<area shape="rect" id="Node000002" href="$classcydui_1_1layout_1_1Layout.html#a4ec466f6250b29670fc625bf251d659b" title=" " alt="" coords="202,29,344,72"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="377,53,345,53,345,48,377,48"/>
-<area shape="rect" id="Node000003" href="$namespacecydui_1_1window.html#a7a6979b2904a74aa3456f320746e78b6" title=" " alt="" coords="5,37,154,64"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="186,53,154,53,154,48,186,48"/>
-</map>
