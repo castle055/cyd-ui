@@ -13,7 +13,6 @@ static std::vector<CWindow*> windows;
 void cydui::window::CWindow::terminate() {
   delete layout;
   graphics::terminate(win_ref);
-  delete win_ref;
   win_ref = nullptr;
 }
 

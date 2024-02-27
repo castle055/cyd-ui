@@ -315,4 +315,6 @@ void cydui::graphics::terminate(cydui::graphics::window_t* win) {
   delete win->render_target;
   win->render_thd->running = false;
   win->render_thd->join();
+  
+  delete win;
 }
