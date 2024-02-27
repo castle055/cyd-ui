@@ -23,7 +23,7 @@ namespace cydui::components::with {
         return selection;
       }
     protected:
-      std::unordered_map<std::string, std::function<component_base_t*()>> selection {};
+      std::vector<std::pair<std::string, std::function<component_base_t*()>>> selection {};
     };
     
     template<typename T>

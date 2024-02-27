@@ -30,7 +30,7 @@ namespace cydui::components::with {
               id = component_pair.first;
               id.append(index_suffix);
               id.append(":then");
-              selection[id] = builder;
+              selection.emplace_back(id, builder);
             }
             
             ++i;
@@ -56,7 +56,7 @@ namespace cydui::components::with {
               id = component_pair.first;
               id.append(index_suffix);
               id.append(":or_else");
-              selection[id] = builder;
+              selection.emplace_back(id, builder);
             }
             
             ++i;
@@ -111,7 +111,7 @@ namespace cydui::components::with {
                 id.append(cs.id);
               }
               id.append(":map_to");
-              this->selection[id] = component;
+              this->selection.emplace_back(id, component);
             }
             ++j;
           }
@@ -119,7 +119,7 @@ namespace cydui::components::with {
         }
         return *this;
       }
-      with<I> &map_to(std::function<map_to_result_t(typename I::value_type & value)> transform) {
+      with<I> &map_to(std::function<map_to_result_t(typename I::value_type &value)> transform) {
         return map_to([=](auto i, auto v) {
           return transform(v);
         });
@@ -157,7 +157,7 @@ namespace cydui::components::with {
                 id.append(cs.id);
               }
               id.append(":map_to");
-              this->selection[id] = component;
+              this->selection.emplace_back(id, component);
             }
             ++j;
           }
