@@ -1,9 +1,0 @@
-<map id="prof::context_t::mark_event" name="prof::context_t::mark_event">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,23,148,65"/>
-<area shape="rect" id="Node000002" href="$structprof_1_1context__t.html#ac55bb716357698723f15704b418995be" title=" " alt="" coords="196,5,355,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,32,180,28,180,33,148,38"/>
-<area shape="rect" id="Node000003" href="$structprof_1_1event__t.html#a76a61bf15db0a3c18dfc3af319b44dec" title=" " alt="" coords="210,56,341,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="148,50,195,56,194,62,148,56"/>
-<area shape="rect" id="Node000004" href="$structprof_1_1event__t.html#aaffa32beec73940cdfdc4a5a7af7ad62" title=" " alt="" coords="403,48,534,91"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="341,67,388,67,388,72,341,72"/>
-</map>

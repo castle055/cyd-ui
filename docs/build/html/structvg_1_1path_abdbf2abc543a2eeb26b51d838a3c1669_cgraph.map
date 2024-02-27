@@ -1,7 +1,0 @@
-<map id="vg::path::apply_to" name="vg::path::apply_to">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,47,131,73"/>
-<area shape="rect" id="Node000002" href="$structvg_1_1attrs__fill.html#a039c0e64fa7827bd429f90d345005d4a" title=" " alt="" coords="190,5,317,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,46,174,38,175,43,132,51"/>
-<area shape="rect" id="Node000003" href="$structvg_1_1attrs__stroke.html#abf33eeee6c7f262277a3d9ac732b8861" title=" " alt="" coords="179,72,328,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="132,69,164,75,163,80,131,74"/>
-</map>

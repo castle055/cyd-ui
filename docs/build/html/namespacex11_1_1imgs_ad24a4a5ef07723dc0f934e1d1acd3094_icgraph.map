@@ -1,7 +1,0 @@
-<map id="x11::imgs::read_jpg" name="x11::imgs::read_jpg">
-<area shape="rect" id="Node000001" title=" " alt="" coords="166,31,300,57"/>
-<area shape="rect" id="Node000002" href="$x11__impl_8cpp.html#aa68889137437b26b2dd089a4ac826cd3" title=" " alt="" coords="5,5,118,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="150,34,118,30,118,24,151,29"/>
-<area shape="rect" id="Node000003" href="$x11__impl_8cpp.html#a84e86b8e3ab956ee25728f5e242acbef" title=" " alt="" coords="18,56,105,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="151,59,106,66,105,60,150,54"/>
-</map>

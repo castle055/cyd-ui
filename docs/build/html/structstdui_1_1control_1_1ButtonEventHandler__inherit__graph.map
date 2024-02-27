@@ -1,7 +1,0 @@
-<map id="stdui::control::ButtonEventHandler" name="stdui::control::ButtonEventHandler">
-<area shape="rect" id="Node000001" title=" " alt="" coords="78,96,254,139"/>
-<area shape="rect" id="Node000002" href="$structcydui_1_1components_1_1event__handler__t.html" title=" " alt="" coords="5,5,145,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,57,147,94,143,98,105,61"/>
-<area shape="rect" id="Node000003" href="$structstdui_1_1control_1_1ButtonEventHandlerData.html" title=" " alt="" coords="168,5,345,48"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="226,61,188,98,185,94,222,57"/>
-</map>

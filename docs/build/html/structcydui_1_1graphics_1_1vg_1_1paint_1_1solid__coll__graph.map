@@ -1,7 +1,0 @@
-<map id="cydui::graphics::vg::paint::solid" name="cydui::graphics::vg::paint::solid">
-<area shape="rect" id="Node000001" title=" " alt="" coords="87,112,218,155"/>
-<area shape="rect" id="Node000002" href="$structcydui_1_1graphics_1_1vg_1_1paint_1_1base__i.html" title=" " alt="" coords="5,5,137,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="99,59,138,110,134,113,94,62"/>
-<area shape="rect" id="Node000003" href="$structcydui_1_1graphics_1_1color_1_1Color.html" title=" " alt="" coords="161,5,306,48"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="210,62,170,113,166,110,206,59"/>
-</map>

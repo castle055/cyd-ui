@@ -1,6 +1,0 @@
-<map id="compute_dimensions" name="compute_dimensions">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,29,150,56"/>
-<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="45,30,40,21,44,11,57,5,78,3,100,5,112,12,109,16,98,10,77,8,58,10,48,15,45,20,50,27"/>
-<area shape="rect" id="Node000002" href="$classcydui_1_1dimensions_1_1dimension__t.html#ac9ec14f26302ee07e8211a78a635d6fc" title=" " alt="" coords="198,21,332,64"/>
-<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="150,40,182,40,182,45,150,45"/>
-</map>

@@ -1,9 +1,0 @@
-<map id="cydui::components::component_t::subscribe_events" name="cydui::components::component_t::subscribe_events">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,47,166,105"/>
-<area shape="rect" id="Node000002" href="$structcydui_1_1components_1_1component__base__t.html#a07f6120d73007c4b804e67c39f38061d" title=" " alt="" coords="217,5,378,64"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,58,201,51,202,56,166,63"/>
-<area shape="rect" id="Node000004" href="$structcydui_1_1components_1_1component__base__t.html#a6e3a63ecb81d9babc620d73d52b94a8c" title=" " alt="" coords="214,88,381,147"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="166,89,199,95,198,101,165,94"/>
-<area shape="rect" id="Node000003" href="$namespacecydui_1_1events.html#a1fb9ac28468b1aa9a3c860745c0b95cd" title=" " alt="" coords="429,21,617,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="378,32,414,32,414,37,378,37"/>
-</map>

@@ -1,7 +1,0 @@
-<map id="cydui::graphics::vg::vg_fragment_t" name="cydui::graphics::vg::vg_fragment_t">
-<area shape="rect" id="Node000001" title=" " alt="" coords="43,219,175,261"/>
-<area shape="rect" id="Node000002" title=" " alt="" coords="5,112,213,155"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,170,112,218,106,218,106,170"/>
-<area shape="rect" id="Node000003" href="$structcydui_1_1graphics_1_1vg_1_1vg__element__t.html" title=" " alt="" coords="43,5,175,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="112,64,112,111,106,111,106,64"/>
-</map>

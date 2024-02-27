@@ -45,3 +45,7 @@ cmake-build-release/
 cmake-build-debug-clang/
 cmake-build-debug-gcc-experimental/
 cmake-build-release-gcc-experimental/
+
+docs/
+
+dist/
