@@ -27,11 +27,21 @@ auto &PROP(typeof(props_t::PROP)&& _##PROP) {\
           };
           
           struct props_t {
-            Direction dir;
+            Direction dir = Direction::HORIZONTAL;
             cydui::dimensions::dimensional_relation_t spacing = 0;
           };
           ATTR(dir)
           ATTR(spacing)
+          
+          auto &horizontal() {
+            props.dir = Direction::HORIZONTAL;
+            return *this;
+          }
+          auto &vertical() {
+            props.dir = Direction::VERTICAL;
+            return *this;
+          }
+        
         ) {
           
           void horizontal_fixed_width() {
@@ -151,16 +161,15 @@ auto &PROP(typeof(props_t::PROP)&& _##PROP) {\
           }
         };
         
-        STATE(Grid) {
-          std::unordered_map<cydui::components::component_base_t*, std::pair<int, int>> positions {};
-          std::unordered_map<cydui::components::component_base_t*, std::pair<int, int>> sizes {};
-        };
         COMPONENT(Grid, {
           unsigned int rows;
           unsigned int cols;
           int x_gap = 0;
           int y_gap = 0;
-        }; ATTR(rows) ATTR(cols) ATTR(x_gap) ATTR(y_gap)) {
+        }; ATTR(rows) ATTR(cols) ATTR(x_gap) ATTR(y_gap) STATE {
+          std::unordered_map<cydui::components::component_base_t*, std::pair<int, int>> positions { };
+          std::unordered_map<cydui::components::component_base_t*, std::pair<int, int>> sizes { };
+        }) {
           ON_REDRAW {
             state->positions.clear();
             state->sizes.clear();
