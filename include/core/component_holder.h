@@ -9,45 +9,6 @@
 #include "memory"
 
 namespace cydui::components {
-    struct component_holder_t {
-      //template<ComponentConcept C>
-      //inline component_holder_t(C &&comp) {
-      //  components[""] = new C {comp};
-      //  //components[""] = std::make_unique<C>(comp);
-      //}
-      //
-      //template<ComponentConcept C>
-      //inline component_holder_t(C &comp) {
-      //  components[""] = new C {comp};
-      //  //components[""] = std::make_unique<C>(comp);
-      //}
-      
-      template<ComponentConcept C>
-      inline component_holder_t(C comp) { // NOLINT(*-explicit-constructor)
-        components[""] = new C {comp};
-        //components[""] = std::make_unique<C>(comp);
-      }
-      
-      template<typename T>
-      inline component_holder_t(with::with<T> _with) { // NOLINT(*-explicit-constructor)
-        for (const auto &item: _with.get_selection()) {
-          components[item.first] = item.second();
-        }
-      }
-      
-      const auto &get_components() const {
-        return components;
-      }
-      
-      // Cannot work, since we would need to recursively copy any `component_holder_t` in the props
-      // of each component.
-      //component_holder_t clone() const {
-      //
-      //}
-    private:
-      std::unordered_map<std::string, component_base_t*> components {};
-    };
-    
     struct component_builder_t {
       template<ComponentConcept C>
       inline component_builder_t(C comp) { // NOLINT(*-explicit-constructor)
@@ -81,6 +42,52 @@ namespace cydui::components {
     private:
       std::unordered_map<std::string, std::function<component_base_t*()>> components {};
     };
+    
+    struct component_holder_t {
+      //template<ComponentConcept C>
+      //inline component_holder_t(C &&comp) {
+      //  components[""] = new C {comp};
+      //  //components[""] = std::make_unique<C>(comp);
+      //}
+      //
+      //template<ComponentConcept C>
+      //inline component_holder_t(C &comp) {
+      //  components[""] = new C {comp};
+      //  //components[""] = std::make_unique<C>(comp);
+      //}
+      
+      template<ComponentConcept C>
+      inline component_holder_t(C comp) { // NOLINT(*-explicit-constructor)
+        components[""] = new C {comp};
+        //components[""] = std::make_unique<C>(comp);
+      }
+      
+      template<typename T>
+      inline component_holder_t(with::with<T> _with) { // NOLINT(*-explicit-constructor)
+        for (const auto &item: _with.get_selection()) {
+          components[item.first] = item.second();
+        }
+      }
+      
+      inline component_holder_t(const component_builder_t &builder) { // NOLINT(*-explicit-constructor)
+        for (const auto &item: builder.build_components()) {
+          components[item.first] = item.second;
+        }
+      }
+      
+      const auto &get_components() const {
+        return components;
+      }
+      
+      // Cannot work, since we would need to recursively copy any `component_holder_t` in the props
+      // of each component.
+      //component_holder_t clone() const {
+      //
+      //}
+    private:
+      std::unordered_map<std::string, component_base_t*> components {};
+    };
+  
 }
 
 #endif //CYD_UI_COMPONENT_HOLDER_H

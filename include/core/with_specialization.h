@@ -38,11 +38,6 @@ namespace cydui::components::with {
         }
         return *this;
       }
-//#define then(...) \
-//  _Pragma("clang diagnostic push") \
-//  _Pragma("clang diagnostic ignored \"-Wunused-lambda-capture\"") \
-//  then([this]{ return std::vector<cydui::components::component_holder_t> __VA_ARGS__ ; }) \
-//  _Pragma("clang diagnostic pop")
       
       with<bool> &or_else(const std::vector<component_builder_t> &components) {
         if (!val) {
@@ -90,7 +85,7 @@ namespace cydui::components::with {
     
     template<IterableContainer I>
     struct with<I>: public with_data_t<I> {
-      with<I> &map_to(std::function<map_to_result_t(typename I::value_type &value)> transform) {
+      with<I> &map_to(std::function<map_to_result_t(std::size_t index, typename I::value_type &value)> transform) {
         std::string id;
         std::size_t i = 0;
         std::size_t j = 0;
@@ -99,7 +94,7 @@ namespace cydui::components::with {
         for (auto item = std::begin(this->val); item != std::end(this->val); ++item) {
           index_suffix = ":";
           index_suffix.append(std::to_string(i));
-          auto cs = transform(*item);
+          auto cs = transform(i, *item);
           for (const auto &item1: cs.result) {
             jndex_suffix = ":";
             jndex_suffix.append(std::to_string(j));
@@ -123,6 +118,11 @@ namespace cydui::components::with {
           ++i;
         }
         return *this;
+      }
+      with<I> &map_to(std::function<map_to_result_t(typename I::value_type & value)> transform) {
+        return map_to([=](auto i, auto v) {
+          return transform(v);
+        });
       }
     };
     
