@@ -118,8 +118,13 @@ namespace cydui::graphics::vg {
         
         set_source_to_stroke(editor);
         
-        editor->move_to(origin_x + _x1, origin_y + _y1);
-        editor->line_to(origin_x + _x2, origin_y + _y2);
+        if ((_stroke_width % 2) != 0) {
+          editor->move_to(origin_x + _x1 + 0.5, origin_y + _y1 + 0.5);
+          editor->line_to(origin_x + _x2 + 0.5, origin_y + _y2 + 0.5);
+        } else {
+          editor->move_to(origin_x + _x1, origin_y + _y1);
+          editor->line_to(origin_x + _x2, origin_y + _y2);
+        }
         
         editor->stroke();
       }
@@ -146,12 +151,16 @@ namespace cydui::graphics::vg {
         apply_fill(editor);
         
         bool first = true;
+        double odd_offset = 0.0;
+        if ((_stroke_width % 2) != 0) {
+          odd_offset = 0.5;
+        }
         for (const auto &p: _points) {
           if (first) {
-            editor->move_to(origin_x + p[0], origin_y + p[1]);
+            editor->move_to(origin_x + p[0] + odd_offset, origin_y + p[1] + odd_offset);
             first = false;
           } else {
-            editor->line_to(origin_x + p[0], origin_y + p[1]);
+            editor->line_to(origin_x + p[0] + odd_offset, origin_y + p[1] + odd_offset);
           }
         }
         // Close the polygon
@@ -203,12 +212,16 @@ namespace cydui::graphics::vg {
         apply_fill(editor);
         
         bool first = true;
+        double odd_offset = 0.0;
+        if ((_stroke_width % 2) != 0) {
+          odd_offset = 0.5;
+        }
         for (const auto &p: _points) {
           if (first) {
-            editor->move_to(origin_x + p[0], origin_y + p[1]);
+            editor->move_to(origin_x + p[0] + odd_offset, origin_y + p[1] + odd_offset);
             first = false;
           } else {
-            editor->line_to(origin_x + p[0], origin_y + p[1]);
+            editor->line_to(origin_x + p[0] + odd_offset, origin_y + p[1] + odd_offset);
           }
         }
         
@@ -283,7 +296,11 @@ namespace cydui::graphics::vg {
         // Replace with a proper path construction that takes into account
         // _rx and _ry
         if (_rx == 0 && _ry == 0) {
-          editor->rectangle(origin_x + _x, origin_y + _y, _w, _h);
+          double odd_offset = 0.0;
+          if ((_stroke_width % 2) != 0) {
+            odd_offset = 0.5;
+          }
+          editor->rectangle(origin_x + _x + odd_offset, origin_y + _y + odd_offset, _w, _h);
           if (_stroke_width > 0) {
             set_source_to_stroke(editor);
             editor->stroke_preserve();
@@ -331,7 +348,11 @@ namespace cydui::graphics::vg {
         apply_stroke(editor);
         apply_fill(editor);
         
-        editor->arc(origin_x + _cx, origin_y + _cy, _r, 0, 2 * M_PI);
+        double odd_offset = 0.0;
+        if ((_stroke_width % 2) != 0) {
+          odd_offset = 0.5;
+        }
+        editor->arc(origin_x + _cx + odd_offset, origin_y + _cy + odd_offset, _r, 0, 2 * M_PI);
         set_source_to_stroke(editor);
         editor->stroke_preserve();
         
@@ -359,7 +380,11 @@ namespace cydui::graphics::vg {
         apply_fill(editor);
         
         editor->save();
-        editor->translate(origin_x + _cx, origin_y + _cy);
+        double odd_offset = 0.0;
+        if ((_stroke_width % 2) != 0) {
+          odd_offset = 0.5;
+        }
+        editor->translate(origin_x + _cx + odd_offset, origin_y + _cy + odd_offset);
         //editor->scale(_rx, _ry);
         editor->arc(0.0, 0.0, _r, _a1 * 2 * M_PI / 360.0, _a2 * 2 * M_PI / 360.0);
         
@@ -392,7 +417,11 @@ namespace cydui::graphics::vg {
         apply_fill(editor);
         
         editor->save();
-        editor->translate(origin_x + _cx, origin_y + _cy);
+        double odd_offset = 0.0;
+        if ((_stroke_width % 2) != 0) {
+          odd_offset = 0.5;
+        }
+        editor->translate(origin_x + _cx + odd_offset, origin_y + _cy + odd_offset);
         editor->scale(_rx, _ry);
         editor->arc(0.0, 0.0, 1.0, 0.0, 2 * M_PI);
         
