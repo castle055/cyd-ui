@@ -166,11 +166,11 @@ namespace cydui::graphics::vg {
         // Close the polygon
         editor->close_path();
         
-        set_source_to_stroke(editor);
-        editor->stroke_preserve();
-        
         set_source_to_fill(editor);
-        editor->fill();
+        editor->fill_preserve();
+        
+        set_source_to_stroke(editor);
+        editor->stroke();
       }
       
       footprint get_footprint() const override {
@@ -225,11 +225,11 @@ namespace cydui::graphics::vg {
           }
         }
         
-        set_source_to_stroke(editor);
-        editor->stroke_preserve();
-        
         set_source_to_fill(editor);
-        editor->fill();
+        editor->fill_preserve();
+        
+        set_source_to_stroke(editor);
+        editor->stroke();
       }
       
       footprint get_footprint() const override {
@@ -301,13 +301,11 @@ namespace cydui::graphics::vg {
             odd_offset = 0.5;
           }
           editor->rectangle(origin_x + _x + odd_offset, origin_y + _y + odd_offset, _w, _h);
-          if (_stroke_width > 0) {
-            set_source_to_stroke(editor);
-            editor->stroke_preserve();
-          }
-          
           set_source_to_fill(editor);
-          editor->fill();
+          editor->fill_preserve();
+          
+          set_source_to_stroke(editor);
+          editor->stroke();
         } else {
           //editor->rectangle(
           //  _x + _rx,
@@ -353,11 +351,11 @@ namespace cydui::graphics::vg {
           odd_offset = 0.5;
         }
         editor->arc(origin_x + _cx + odd_offset, origin_y + _cy + odd_offset, _r, 0, 2 * M_PI);
-        set_source_to_stroke(editor);
-        editor->stroke_preserve();
-        
         set_source_to_fill(editor);
-        editor->fill();
+        editor->fill_preserve();
+        
+        set_source_to_stroke(editor);
+        editor->stroke();
       }
       
       footprint get_footprint() const override {
@@ -388,11 +386,11 @@ namespace cydui::graphics::vg {
         //editor->scale(_rx, _ry);
         editor->arc(0.0, 0.0, _r, _a1 * 2 * M_PI / 360.0, _a2 * 2 * M_PI / 360.0);
         
-        set_source_to_stroke(editor);
-        editor->stroke_preserve();
-        
         set_source_to_fill(editor);
-        editor->fill();
+        editor->fill_preserve();
+        
+        set_source_to_stroke(editor);
+        editor->stroke();
         
         editor->restore();
       }
@@ -425,11 +423,11 @@ namespace cydui::graphics::vg {
         editor->scale(_rx, _ry);
         editor->arc(0.0, 0.0, 1.0, 0.0, 2 * M_PI);
         
-        set_source_to_stroke(editor);
-        editor->stroke_preserve();
-        
         set_source_to_fill(editor);
-        editor->fill();
+        editor->fill_preserve();
+        
+        set_source_to_stroke(editor);
+        editor->stroke();
         
         editor->restore();
       }
