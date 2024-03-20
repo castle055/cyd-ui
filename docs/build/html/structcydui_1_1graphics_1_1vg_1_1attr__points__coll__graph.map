@@ -1,9 +1,0 @@
-<map id="cydui::graphics::vg::attr_points&lt; E &gt;" name="cydui::graphics::vg::attr_points&lt; E &gt;">
-<area shape="rect" id="Node000001" title="points" alt="" coords="27,203,158,245"/>
-<area shape="rect" id="Node000002" href="$structcydui_1_1graphics_1_1vg_1_1attribute__i.html" title=" " alt="" coords="5,96,137,139"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,154,91,202,86,203,76,155"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="161,96,312,139"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="198,150,122,204,119,200,194,146"/>
-<area shape="rect" id="Node000004" title=" " alt="" coords="172,5,301,32"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="239,48,239,95,234,95,234,48"/>
-</map>

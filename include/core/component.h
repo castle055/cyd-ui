@@ -190,11 +190,13 @@ namespace cydui::components {
       }
       
       void redraw(cydui::layout::Layout* layout) override {
-        std::vector<component_holder_t> content_children = this->_content();
+        state.value()->_dirty = false;
+        
+        std::vector<component_builder_t> content_children = this->_content;
         std::string content_id_prefix = "content:";
         std::size_t id_i = 0;
         for (auto &item: content_children) {
-          for (auto &component_pair: item.get_components()) {
+          for (auto &component_pair: item.build_components()) {
             auto [id_, component] = component_pair;
             std::string id = content_id_prefix;
             id.append(id_);

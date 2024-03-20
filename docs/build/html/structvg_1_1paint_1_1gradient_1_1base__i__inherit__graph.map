@@ -1,9 +1,0 @@
-<map id="vg::paint::gradient::base_i" name="vg::paint::gradient::base_i">
-<area shape="rect" id="Node000001" title=" " alt="" coords="80,80,205,123"/>
-<area shape="rect" id="Node000003" href="$structvg_1_1paint_1_1gradient_1_1linear.html" title=" " alt="" coords="5,171,131,213"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="118,136,87,172,83,169,114,133"/>
-<area shape="rect" id="Node000004" href="$structvg_1_1paint_1_1gradient_1_1radial.html" title=" " alt="" coords="155,171,280,213"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="172,133,202,169,198,172,168,136"/>
-<area shape="rect" id="Node000002" href="$structvg_1_1paint_1_1base__i.html" title=" " alt="" coords="84,5,201,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,48,145,80,140,80,140,48"/>
-</map>

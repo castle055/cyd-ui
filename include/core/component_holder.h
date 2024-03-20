@@ -9,6 +9,40 @@
 #include "memory"
 
 namespace cydui::components {
+    struct component_builder_t {
+      template<ComponentConcept C>
+      inline component_builder_t(C comp) { // NOLINT(*-explicit-constructor)
+        components.emplace_back("", [=] {
+          return new C {comp};
+        });
+        
+        //components[""] = std::make_unique<C>(comp);
+      }
+      
+      template<typename T>
+      inline component_builder_t(with::with<T> _with) { // NOLINT(*-explicit-constructor)
+        for (const auto &item: _with.get_selection()) {
+          components.emplace_back(item);
+        }
+      }
+      
+      std::vector<std::pair<std::string, component_base_t*>> build_components() const {
+        std::vector<std::pair<std::string, component_base_t*>> _components {};
+        for (const auto &item: components) {
+          const auto &[id, builder] = item;
+          _components.emplace_back(id, builder());
+        }
+        return _components;
+      }
+      
+      const auto &get_components() const {
+        return components;
+      }
+    
+    private:
+      std::vector<std::pair<std::string, std::function<component_base_t*()>>> components {};
+    };
+    
     struct component_holder_t {
       //template<ComponentConcept C>
       //inline component_holder_t(C &&comp) {
@@ -24,18 +58,24 @@ namespace cydui::components {
       
       template<ComponentConcept C>
       inline component_holder_t(C comp) { // NOLINT(*-explicit-constructor)
-        components[""] = new C {comp};
+        components.emplace_back("", new C {comp});
         //components[""] = std::make_unique<C>(comp);
       }
       
       template<typename T>
       inline component_holder_t(with::with<T> _with) { // NOLINT(*-explicit-constructor)
         for (const auto &item: _with.get_selection()) {
-          components[item.first] = item.second;
+          components.emplace_back(item.first, item.second());
         }
       }
       
-      const auto &get_components() const {
+      inline component_holder_t(const component_builder_t &builder) { // NOLINT(*-explicit-constructor)
+        for (const auto &item: builder.build_components()) {
+          components.emplace_back(item);
+        }
+      }
+      
+      [[nodiscard]] const auto &get_components() const {
         return components;
       }
       
@@ -45,8 +85,9 @@ namespace cydui::components {
       //
       //}
     private:
-      std::unordered_map<std::string, component_base_t*> components {};
+      std::vector<std::pair<std::string, component_base_t*>> components {};
     };
+  
 }
 
 #endif //CYD_UI_COMPONENT_HOLDER_H

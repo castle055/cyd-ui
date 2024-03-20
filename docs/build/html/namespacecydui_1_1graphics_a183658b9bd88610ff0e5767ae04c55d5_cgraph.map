@@ -1,9 +1,0 @@
-<map id="cydui::graphics::flush" name="cydui::graphics::flush">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,13,151,40"/>
-<area shape="rect" id="Node000002" href="$namespacex11_1_1render.html#a69153a2a848d57aef839a05e0982a76a" title=" " alt="" coords="199,13,320,40"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="151,24,183,24,183,29,151,29"/>
-<area shape="rect" id="Node000003" href="$structprof_1_1context__t.html#a1be702fd81e660750ae54216bc14ed80" title=" " alt="" coords="368,5,516,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="321,24,353,24,353,29,321,29"/>
-<area shape="rect" id="Node000004" href="$structprof_1_1context__t.html#ac55bb716357698723f15704b418995be" title=" " alt="" coords="564,13,724,40"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="517,24,549,24,549,29,517,29"/>
-</map>

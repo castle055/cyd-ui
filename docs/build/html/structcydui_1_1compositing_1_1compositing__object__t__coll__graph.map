@@ -1,9 +1,0 @@
-<map id="cydui::compositing::compositing_object_t" name="cydui::compositing::compositing_object_t">
-<area shape="rect" id="Node000001" title=" " alt="" coords="541,39,693,81"/>
-<area shape="rect" id="Node000002" href="$structcydui_1_1compositing_1_1compositing__operation__t.html" title=" " alt="" coords="256,5,426,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="442,36,541,48,540,53,441,41"/>
-<area shape="rect" id="Node000003" title=" " alt="" coords="242,72,440,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="455,77,540,67,541,72,456,82"/>
-<area shape="rect" id="Node000004" href="$structcydui_1_1graphics_1_1vg_1_1vg__element__t.html" title=" " alt="" coords="5,72,137,115"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="152,91,241,91,241,96,152,96"/>
-</map>

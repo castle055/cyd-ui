@@ -1,9 +1,0 @@
-<map id="vg::text::apply_to" name="vg::text::apply_to">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,80,128,107"/>
-<area shape="rect" id="Node000002" href="$structvg_1_1attrs__fill.html#a039c0e64fa7827bd429f90d345005d4a" title=" " alt="" coords="186,5,309,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="104,77,172,51,174,56,106,82"/>
-<area shape="rect" id="Node000003" href="$structvg_1_1attrs__font.html#a0ff696a8074964c04165ef67239743c2" title=" " alt="" coords="181,72,314,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="128,91,166,91,166,96,128,96"/>
-<area shape="rect" id="Node000004" href="$structvg_1_1attrs__fill.html#a41b4db81e10b970a1d21c328e84d8ad1" title=" " alt="" coords="176,139,319,181"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="106,105,174,130,172,135,104,110"/>
-</map>

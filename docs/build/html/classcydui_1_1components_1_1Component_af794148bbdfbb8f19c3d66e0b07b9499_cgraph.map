@@ -1,7 +1,0 @@
-<map id="cydui::components::Component::create_group" name="cydui::components::Component::create_group">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,5,177,48"/>
-<area shape="rect" id="Node000002" href="$classcydui_1_1components_1_1Component.html#a893cd850cda5ddcef688da444584b9d8" title=" " alt="" coords="225,5,384,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="177,24,209,24,209,29,177,29"/>
-<area shape="rect" id="Node000003" href="$classcydui_1_1components_1_1Component.html#a8775db6d1a2c1afc2e77cd3c8f39da6f" title=" " alt="" coords="432,5,595,48"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="384,24,416,24,416,29,384,29"/>
-</map>

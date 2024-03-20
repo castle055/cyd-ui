@@ -1,7 +1,0 @@
-<map id="cydui::graphics::color::Color::to_string" name="cydui::graphics::color::Color::to_string">
-<area shape="rect" id="Node000001" title=" " alt="" coords="171,23,316,65"/>
-<area shape="rect" id="Node000002" href="$render_8cpp.html#a3241cbbe248b21be72e8ac88018b8bb6" title=" " alt="" coords="9,5,119,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="155,34,119,29,120,24,156,29"/>
-<area shape="rect" id="Node000003" href="$render_8cpp.html#a21a1a805e821f2aed3fda93f912fe297" title=" " alt="" coords="5,56,123,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="156,59,123,64,123,58,155,54"/>
-</map>

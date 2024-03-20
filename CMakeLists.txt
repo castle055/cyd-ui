@@ -1,8 +1,14 @@
-cmake_minimum_required(VERSION 3.26)
+cmake_minimum_required(VERSION 3.27)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 project(cyd_ui)
 
 set(CMAKE_CXX_STANDARD 23)
+#set(CMAKE_CXX_SCAN_FOR_MODULES YES)
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmodules-ts")
+
+SET(TEST_DIR ${CMAKE_CURRENT_LIST_DIR}/test)
+SET(INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/include)
+SET(SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR}/src)
 
 include(CheckCXXCompilerFlag)
 
@@ -52,7 +58,7 @@ compiler_flags(
 )
 
 
-include_directories(${CMAKE_CURRENT_LIST_DIR}/include)
+include_directories(${INCLUDE_DIR})
 include_directories(/usr/include/freetype2)
 
 find_package(PkgConfig REQUIRED)
@@ -61,12 +67,12 @@ include_directories(${CAIROMM-1.16_INCLUDE_DIRS})
 
 
 FILE(GLOB_RECURSE SRC_LIST
-        ${CMAKE_CURRENT_LIST_DIR}/include/*.h
-        ${CMAKE_CURRENT_LIST_DIR}/include/*.hpp
-        ${CMAKE_CURRENT_LIST_DIR}/include/*.cpp
-        ${CMAKE_CURRENT_LIST_DIR}/src/*.h
-        ${CMAKE_CURRENT_LIST_DIR}/src/*.hpp
-        ${CMAKE_CURRENT_LIST_DIR}/src/*.cpp
+        ${INCLUDE_DIR}/*.h
+        ${INCLUDE_DIR}/*.hpp
+        ${INCLUDE_DIR}/*.cpp
+        ${SOURCE_DIR}/*.h
+        ${SOURCE_DIR}/*.hpp
+        ${SOURCE_DIR}/*.cpp
 )
 
 add_library(cyd_ui)
@@ -82,43 +88,57 @@ target_link_libraries(cyd_ui
 
 # Build Tests
 FILE(GLOB_RECURSE TEST_LIST
-        ${CMAKE_CURRENT_LIST_DIR}/test/*.*
+        ${TEST_DIR}/*.h
+        ${TEST_DIR}/*.hpp
+        ${TEST_DIR}/*.cpp
+        #        ${TEST_DIR}/**/*.*
 )
+#FILE(GLOB_RECURSE TEST_MOD_LIST
+#        ${TEST_DIR}/*.cppm
+#        ${TEST_DIR}/**/*.*
+#)
 add_executable(cyd_ui_test ${TEST_LIST})
-target_link_libraries(cyd_ui_test PRIVATE cyd_ui)
+#target_sources(cyd_ui_test
+#        PRIVATE FILE_SET CXX_MODULES FILES ${TEST_MOD_LIST})
+target_include_directories(cyd_ui_test PRIVATE ${TEST_DIR})
+target_link_libraries(cyd_ui_test
+        PRIVATE cyd_ui
+        sensors)
 
 # Build Doxygen Documentation
+add_custom_target(cyd_ui_docs_dir ALL COMMAND ${CMAKE_COMMAND} -E make_directory docs)
 add_custom_target(
         cyd_ui_docs
         COMMAND /usr/bin/doxygen ${CMAKE_CURRENT_LIST_DIR}/Doxyfile
         WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
         COMMENT "Generating DOXYGEN documentation..."
 )
+add_dependencies(cyd_ui_docs cyd_ui_docs_dir)
 
-if (CMAKE_BUILD_TYPE MATCHES "Release")
-    add_custom_command(TARGET cyd_ui POST_BUILD
-            COMMAND /usr/bin/cp
-            -v
-            ${CMAKE_CURRENT_LIST_DIR}/cmake-build-release/libcyd_ui.a
-            ${CMAKE_CURRENT_LIST_DIR}/dist/
-            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-            COMMENT "Generating distribution files..."
-    )
-    add_custom_command(TARGET cyd_ui POST_BUILD
-            COMMAND /usr/bin/cp
-            -rv
-            ${CMAKE_CURRENT_LIST_DIR}/include
-            ${CMAKE_CURRENT_LIST_DIR}/dist/
-            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-            COMMENT "Copying header files..."
-    )
-    add_custom_command(TARGET cyd_ui POST_BUILD
-            COMMAND /usr/bin/cp
-            -v
-            ${CMAKE_CURRENT_LIST_DIR}/cyd.yml
-            ${CMAKE_CURRENT_LIST_DIR}/dist/
-            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-            COMMENT "Copying CYD files..."
-    )
-    add_dependencies(cyd_ui cyd_ui_docs)
-endif ()
+#if (CMAKE_BUILD_TYPE MATCHES "Release")
+#    add_custom_command(TARGET cyd_ui POST_BUILD
+#            COMMAND /usr/bin/cp
+#            -v
+#            ${CMAKE_CURRENT_LIST_DIR}/cmake-build-release/libcyd_ui.a
+#            ${CMAKE_CURRENT_LIST_DIR}/dist/
+#            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+#            COMMENT "Generating distribution files..."
+#    )
+#    add_custom_command(TARGET cyd_ui POST_BUILD
+#            COMMAND /usr/bin/cp
+#            -rv
+#            ${INCLUDE_DIR}
+#            ${CMAKE_CURRENT_LIST_DIR}/dist/
+#            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+#            COMMENT "Copying header files..."
+#    )
+#    add_custom_command(TARGET cyd_ui POST_BUILD
+#            COMMAND /usr/bin/cp
+#            -v
+#            ${CMAKE_CURRENT_LIST_DIR}/cyd.yml
+#            ${CMAKE_CURRENT_LIST_DIR}/dist/
+#            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+#            COMMENT "Copying CYD files..."
+#    )
+#    add_dependencies(cyd_ui cyd_ui_docs)
+#endif ()

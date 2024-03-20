@@ -1,7 +1,0 @@
-var structthread__data =
-[
-    [ "event_listeners", "structthread__data.html#a0d90f618865c1246b6329b60b54ddd8a", null ],
-    [ "event_queue", "structthread__data.html#ab6d3e0bca38681ca4871ca293c71e814", null ],
-    [ "pending", "structthread__data.html#aa8aba6b97a2602a994f4d5a0db913491", null ],
-    [ "state_events", "structthread__data.html#a554fa732be87a8bfebb983e0a0e4a314", null ]
-];
