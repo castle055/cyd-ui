@@ -12,7 +12,7 @@ namespace cydui::layout {
     class Layout;
 }
 namespace cydui::window {
-    class CWindow {
+    class CWindow: public events::async_bus_t {
     public:
       graphics::window_t* win_ref;
       layout::Layout* layout;

@@ -63,14 +63,6 @@ static void run_event(thread_data* data, cydui::events::Event* ev) {
   listeners_mutex.unlock();
 }
 
-void push_event(thread_data* data, cydui::events::Event* ev) {
-  event_mutex.lock();
-  data->event_queue->push_back(ev);
-  data->pending = true;
-  log_task.debug("NEW EVENT: %s", ev->type.c_str());
-  event_mutex.unlock();
-}
-
 cydui::events::Event* get_next_event(thread_data* data) {
   cydui::events::Event* ev = nullptr;
   
@@ -132,37 +124,12 @@ void cydui::events::start() {
       ->set_name("EV_THD");
 }
 
-void cydui::events::emit_raw(cydui::events::Event* ev) {
-  push_event(th_data, ev);
-}
 
-void cydui::events::emit_raw(const str &event_type, void* data, std::function<void()> data_destructor) {
-  auto* ev = new cydui::events::Event {
-    .type = event_type,
-    .ev = data,
-    .ev_destructor = std::move(data_destructor),
-  };
-  
-  push_event(th_data, ev);
+void cydui::events::listener_t::remove() {
+  if (nullptr != event_queue) event_queue->remove_listener(*this);
+  delete (u8*) ID;
+  delete func;
+  func = nullptr;
+  ID = 0;
+  active = false;
 }
-
-cydui::events::listener_t* cydui::events::on_event_raw(const str &event_type, const Listener &c) {
-  if (!th_data->event_listeners->contains(event_type))
-    (*th_data->event_listeners).insert({event_type, {}});
-  auto* l = new listener_t {event_type, c};
-  (*th_data->event_listeners)[event_type].push_back(l);
-  return l;
-}
-
-void cydui::events::remove_listener(const str &event_type, const listener_t &listener) {
-  if (listener.get_id() == 0) return;
-  if (th_data->event_listeners->contains(event_type)) {
-    for (auto l = (*th_data->event_listeners)[event_type].begin(); l != (*th_data->event_listeners)[event_type].end(); l++) {
-      if ((*l)->get_id() == listener.get_id()) {
-        (*th_data->event_listeners)[event_type].erase(l);
-        break;
-      }
-    }
-  }
-}
-

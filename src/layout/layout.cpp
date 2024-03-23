@@ -172,21 +172,19 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     root_state->win = this->win;
     
     auto dim = root->get_dimensional_relations();
-    dim.w = get_frame(this->win->win_ref)->width();
-    dim.h = get_frame(this->win->win_ref)->height();
+    dim.w = (int) get_frame(this->win->win_ref)->width();
+    dim.h = (int) get_frame(this->win->win_ref)->height();
     dim.fixed_w = true;
     dim.fixed_h = true;
     root->configure_event_handler();
     root->subscribe_events();
   }
   
-  listeners.push_back(listen(RedrawEvent, {
-    if (it.data->win != get_id(win->win_ref))
-      return;
+  listeners.push_back(win->listen(RedrawEvent, {
     auto _pev = this->win->profiling_ctx.scope_event("Redraw");
-    if (it.data->component) {
+    if (ev.data->component) {
       component_state_t* target_state =
-        ((component_state_t*) it.data->component);
+        ((component_state_t*) ev.data->component);
       if (target_state->component_instance.has_value()) {
         redraw_component(target_state->component_instance.value());
       }
@@ -194,36 +192,32 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       redraw_component(root);
     }
   }));
-  listeners.push_back(listen(KeyEvent, {
-    if (it.data->win != get_id(win->win_ref))
-      return;
+  listeners.push_back(win->listen(KeyEvent, {
     auto _pev = this->win->profiling_ctx.scope_event("Key");
     if (focused && focused->component_instance) {
       if (focused->focused) {
-        if (it.data->pressed) {
-          INSTANCE_EV_HANDLER(focused)->on_key_press(*it.data);
-        } else if (it.data->released) {
-          INSTANCE_EV_HANDLER(focused)->on_key_release(*it.data);
+        if (ev.data->pressed) {
+          INSTANCE_EV_HANDLER(focused)->on_key_press(*ev.data);
+        } else if (ev.data->released) {
+          INSTANCE_EV_HANDLER(focused)->on_key_release(*ev.data);
         }
       } else {
         focused = nullptr;
       }
     }
   }));
-  listeners.push_back(listen(ButtonEvent, {
-    if (it.data->win != get_id(win->win_ref))
-      return;
+  listeners.push_back(win->listen(ButtonEvent, {
     auto _pev = this->win->profiling_ctx.scope_event("Button");
     
     component_base_t* target = root;
-    component_base_t* specified_target = find_by_coords(it.data->x, it.data->y);
+    component_base_t* specified_target = find_by_coords(ev.data->x, ev.data->y);
     if (specified_target) {
       target = specified_target;
     }
     
     auto dim = target->get_dimensional_relations();
-    int rel_x = it.data->x - dim.cx.val();
-    int rel_y = it.data->y - dim.cy.val();
+    int rel_x = ev.data->x - dim.cx.val();
+    int rel_y = ev.data->y - dim.cy.val();
     
     if (focused != target->state.value()) {
       if (focused) {
@@ -239,33 +233,29 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       focused->focused = true;
     }
     
-    if (it.data->pressed) {
-      target->event_handler()->on_button_press((Button) it.data->button, rel_x, rel_y);
+    if (ev.data->pressed) {
+      target->event_handler()->on_button_press((Button) ev.data->button, rel_x, rel_y);
     } else {
-      target->event_handler()->on_button_release((Button) it.data->button, rel_x, rel_y);
+      target->event_handler()->on_button_release((Button) ev.data->button, rel_x, rel_y);
     }
     render_if_dirty(root);
   }));
-  listeners.push_back(listen(ScrollEvent, {
-    if (it.data->win != get_id(win->win_ref))
-      return;
+  listeners.push_back(win->listen(ScrollEvent, {
     auto _pev = this->win->profiling_ctx.scope_event("Scroll");
     component_base_t* target = root;
-    component_base_t* specified_target = find_by_coords(it.data->x, it.data->y);
+    component_base_t* specified_target = find_by_coords(ev.data->x, ev.data->y);
     if (specified_target) {
       target = specified_target;
     }
     
-    target->event_handler()->on_scroll(it.data->dx, it.data->dy);
+    target->event_handler()->on_scroll(ev.data->dx, ev.data->dy);
     
     render_if_dirty(root);
   }));
-  listeners.push_back(listen(MotionEvent, {
-    if (it.data->win != get_id(win->win_ref))
-      return;
+  listeners.push_back(win->listen(MotionEvent, {
     auto _pev = this->win->profiling_ctx.scope_event("Motion");
     
-    if (it.data->x == -1 && it.data->y == -1) {
+    if (ev.data->x == -1 && ev.data->y == -1) {
       if (hovering && hovering->component_instance.has_value()) {
         int exit_rel_x = 0;
         int exit_rel_y = 0;
@@ -276,19 +266,19 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
       }
     } else {
       component_base_t* target = root;
-      component_base_t* specified_target = find_by_coords(it.data->x, it.data->y);
+      component_base_t* specified_target = find_by_coords(ev.data->x, ev.data->y);
       if (specified_target)
         target = specified_target;
       
       auto dim = target->get_dimensional_relations();
-      int rel_x = it.data->x - dim.cx.val();
-      int rel_y = it.data->y - dim.cy.val();
+      int rel_x = ev.data->x - dim.cx.val();
+      int rel_y = ev.data->y - dim.cy.val();
       
       if (hovering != target->state.value()) {
         if (hovering && hovering->component_instance.has_value()) {
           auto h_dim = hovering->component_instance.value()->get_dimensional_relations();
-          int exit_rel_x = it.data->x - h_dim.cx.val();
-          int exit_rel_y = it.data->y - h_dim.cy.val();
+          int exit_rel_x = ev.data->x - h_dim.cx.val();
+          int exit_rel_y = ev.data->y - h_dim.cy.val();
           hovering->hovering = false;
           hovering->component_instance.value()
                   ->event_handler()->on_mouse_exit(exit_rel_x, exit_rel_y);
@@ -342,15 +332,13 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     
     render_if_dirty(root);
   }));
-  listeners.push_back(listen(ResizeEvent, {
-    if (it.data->win != get_id(win->win_ref))
-      return;
+  listeners.push_back(win->listen(ResizeEvent, {
     auto _pev = this->win->profiling_ctx.scope_event("Resize");
-    log_lay.debug("RESIZE: w=%d, h=%d", it.data->w, it.data->h);
+    log_lay.debug("RESIZE: w=%d, h=%d", ev.data->w, ev.data->h);
     
     auto dim = root->get_dimensional_relations();
-    dim.w = it.data->w;
-    dim.h = it.data->h;
+    dim.w = ev.data->w;
+    dim.h = ev.data->h;
     dim.fixed_w = true;
     dim.fixed_h = true;
     

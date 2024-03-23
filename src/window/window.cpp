@@ -34,7 +34,7 @@ CWindow* cydui::window::create(
   bool override_redirect
 ) {
   auto win = new CWindow();
-  auto* win_ref = graphics::create_window(&win->profiling_ctx, title, wclass, x, y, w, h, override_redirect);
+  auto* win_ref = graphics::create_window(win, &win->profiling_ctx, title, wclass, x, y, w, h, override_redirect);
   win->layout = layout;
   win->win_ref = win_ref;
   
