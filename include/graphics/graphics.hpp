@@ -11,13 +11,13 @@
 #include "images.h"
 #include "pixelmap.h"
 #include "../cydstd/profiling.h"
-#include "../events/events.hpp"
+#include "async/async_bus.h"
 
 namespace cydui::graphics {
     struct window_t;
     
     window_t* create_window(
-      events::async_bus_t* async_bus,
+      async::async_bus_t* async_bus,
       prof::context_t* profiler,
       const char* title,
       const char* wclass,
@@ -35,7 +35,7 @@ namespace cydui::graphics {
     void flush(window_t* win);
     
     unsigned long get_id(window_t* win);
-    window_t* get_from_id(unsigned long id);
+    std::optional<window_t*> get_from_id(unsigned long id);
     
     std::pair<int, int> get_position(window_t* win);
     

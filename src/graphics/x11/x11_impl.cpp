@@ -43,7 +43,7 @@ static int geom_mask_to_gravity(int mask) {
 static std::unordered_map<unsigned long, window_t*> window_map {};
 
 cydui::graphics::window_t* cydui::graphics::create_window(
-  events::async_bus_t* async_bus,
+  async::async_bus_t* async_bus,
   prof::context_t* profiler,
   const char* title,
   const char* wclass,
@@ -157,7 +157,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
 }
 
 window_t::window_t(
-  events::async_bus_t* async_bus,
+  async::async_bus_t* async_bus,
   prof::context_t* profiler,
   Window xwin,
   unsigned long w,
@@ -307,8 +307,8 @@ pixelmap_t* cydui::graphics::get_frame(cydui::graphics::window_t* win) {
 unsigned long cydui::graphics::get_id(cydui::graphics::window_t* win) {
   return (unsigned int) win->xwin;
 }
-window_t* cydui::graphics::get_from_id(unsigned long id) {
-  return window_map.contains(id) ? window_map[id] : nullptr;
+std::optional<window_t*> cydui::graphics::get_from_id(unsigned long id) {
+  return window_map.contains(id) ? std::optional {window_map[id]} : std::nullopt;
 }
 
 std::pair<int, int> cydui::graphics::get_position(cydui::graphics::window_t* win) {

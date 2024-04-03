@@ -40,8 +40,8 @@ struct NAME:                 \
       __VA_ARGS__;           \
     props_t props;           \
     using state_t =          \
-      std::conditional<is_type_complete_v<struct init>  \
-        , init    \
+      std::conditional<is_type_complete_v<struct init>                    \
+        , init               \
         , cydui::components::component_state_t>::type;                    \
     NAME() = default;        \
     explicit NAME(props_t props)    \
@@ -52,15 +52,18 @@ struct NAME:                 \
       return (void*)&(this->props); \
     }                        \
   };                         \
-struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \
-  NAME::state_t* state = nullptr;                    \
+struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                                 \
+  NAME::state_t* state = nullptr;   \
+  cydui::window::CWindow* window = nullptr;                               \
   NAME::props_t* props = nullptr;   \
-  attrs_component<NAME>* attrs = nullptr;                     \
-  logging::logger log{.name = #NAME};                         \
+  attrs_component<NAME>* attrs = nullptr;                                 \
+  logging::logger log{.name = #NAME};                                     \
 };                           \
 struct CYDUI_EV_HANDLER_NAME(NAME)  \
-  : public cydui::components::event_handler_t,  \
+  : public cydui::components::event_handler_t,                            \
     public CYDUI_EV_HANDLER_DATA_NAME(NAME)
+
+
 
 
 // ?>

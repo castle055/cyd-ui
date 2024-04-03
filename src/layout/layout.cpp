@@ -2,7 +2,7 @@
 // Created by castle on 8/21/22.
 //
 
-#include "core/layout.h"
+#include "layout.h"
 
 logging::logger log_lay = {
   .name = "LAYOUT", .on = true, .min_level = logging::INFO};
@@ -127,7 +127,7 @@ void cydui::layout::Layout::redraw_component(component_base_t* target) {
   // subsections of the screen.
   target->clear_children();
   // Recreate those instances with redraw(), this set all size hints relationships
-  target->redraw(this);
+  target->redraw();
   
   recompute_dimensions(root);
   
@@ -169,7 +169,7 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
   this->win = _win;
   compositor.set_render_target(this->win->win_ref, &this->win->profiling_ctx);
   {/// Configure root component
-    root_state->win = this->win;
+    root_state->window = this->win;
     
     auto dim = root->get_dimensional_relations();
     dim.w = (int) get_frame(this->win->win_ref)->width();

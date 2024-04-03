@@ -9,7 +9,7 @@
 #include "component_holder.h"
 
 
-#include "../events/cydui_events.h"
+#include "../cydui_events.h"
 #include "../graphics/graphics.hpp"
 
 #include <vector>
@@ -153,7 +153,7 @@ namespace cydui::components {
       //TODO - Implement a method to set an input context for text input
       
       struct listener_data_t {
-        std::function<void(cydui::events::Event*)> handler {};
+        std::function<void(cydui::async::event_t)> handler {};
       };
       virtual std::unordered_map<std::string, listener_data_t> get_event_listeners() {
         return {};
@@ -186,7 +186,7 @@ std::unordered_map<std::string, listener_data_t> get_event_listeners() override 
 }
 
 #define ON_EVENT(EVENT, ...) \
-{ EVENT ::type, {[&](cydui::events::Event* ev) { \
+{ EVENT ::type, {[&](cydui::events::event_t* ev) { \
   if (nullptr == state) return;                     \
   auto parsed_event = ev->parse<EVENT>(); \
   [&](const cydui::events::ParsedEvent<EVENT>::DataType* ev) \

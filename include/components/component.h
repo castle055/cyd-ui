@@ -23,7 +23,7 @@ namespace cydui::layout {
 
 namespace cydui::components {
     struct component_state_t {
-      window::CWindow* win = nullptr;
+      window::CWindow* window = nullptr;
       
       std::optional<component_state_t*> parent = std::nullopt;
       std::unordered_map<std::string, component_state_t*> children_states {};
@@ -57,11 +57,10 @@ namespace cydui::components {
         _dirty = true;
       }
       
-      template<cydui::events::EventType T>
+      template<cydui::async::EventType T>
       void emit(typename T::DataType ev) {
-        if (nullptr == this->win) return;
-        ev.win = get_id(this->win->win_ref);
-        cydui::events::emit<T>(ev);
+        if (nullptr == this->window) return;
+        this->window->emit<T>(ev);
       }
       
       /*!
@@ -82,7 +81,7 @@ namespace cydui::components {
       std::optional<component_base_t*> parent = std::nullopt;
       std::vector<component_base_t*> children {};
       
-      std::vector<cydui::events::listener_t*> subscribed_listeners {};
+      std::vector<cydui::async::listener_t*> subscribed_listeners {};
       
       virtual ~component_base_t() = default; //{
       //  ! All of this is done in the `component_t` class destructor
@@ -100,7 +99,7 @@ namespace cydui::components {
       
       virtual event_handler_t* event_handler() = 0;
       
-      virtual void redraw(cydui::layout::Layout* layout) = 0;
+      virtual void redraw() = 0;
       virtual void
       get_fragment(cydui::layout::Layout* layout, cydui::compositing::compositing_node_t* compositing_node) = 0;
       
@@ -112,10 +111,14 @@ namespace cydui::components {
     
     protected:
       void add_event_listeners(const std::unordered_map<std::string, event_handler_t::listener_data_t> &listeners) {
-        for (auto &l: listeners) {
-          auto &[ev_type, handler] = l;
-          subscribed_listeners.push_back(cydui::events::on_event_raw(ev_type, handler.handler));
-        }
+        this->state.transform([&](component_state_t* s) {
+          if (s->window == nullptr) return s;
+          for (auto &l: listeners) {
+            auto &[ev_type, handler] = l;
+            s->window->on_event_raw(ev_type, handler.handler);
+          }
+          return s;
+        });
       }
       void clear_subscribed_listeners() {
         for (auto &item: subscribed_listeners) {
@@ -137,7 +140,55 @@ namespace cydui::components {
       cydui::dimensions::dimension_t ch;
     private:
       lazy_alloc<EVH> event_handler_ {};
-    
+      
+      
+      template<typename C>
+      void add_children(
+        str prefix_id,
+        std::vector<C> children_to_add,
+        bool call_redraw_after_adding
+      ) {
+        std::size_t id_i = 0;
+        for (auto &item: children_to_add) {
+          for (auto &component_pair: item.get_components()) {
+            auto [id_, component] = component_pair;
+            std::string id = prefix_id;
+            id.append(id_);
+            id.append(":");
+            id.append(std::to_string(id_i));
+            
+            // Get or Create state for component
+            component_state_t* child_state;
+            if (state.value()->children_states.contains(id)) {
+              child_state = state.value()->children_states[id];
+            } else {
+              child_state = component->create_state_instance();
+              state.value()->children_states[id] = child_state;
+            }
+            
+            // Set child's variables
+            component->state = child_state;
+            child_state->window = state.value()->window;
+            child_state->parent = state.value();
+            child_state->component_instance = component;
+            component->parent = this;
+            children.push_back(component);
+            //printf("CHILDREN LEN: %d\n", children.size());
+            
+            // Configure event handler
+            component->configure_event_handler();
+            
+            // Subscribe child events
+            component->subscribe_events();
+            // Redraw child
+            if (call_redraw_after_adding) {
+              component->redraw();
+            }
+            
+          }
+          ++id_i;
+        }
+      }
     public:
       ~component_t() override {
         for (auto &child: children) {
@@ -151,13 +202,14 @@ namespace cydui::components {
       };
       
       void configure_event_handler() override {
-        EVH * evh = event_handler_.operator->();
+        EVH* evh = event_handler_.operator->();
         if (parent.has_value()) {
           evh->parent = parent.value()->event_handler();
         } else {
           evh->parent = nullptr;
         }
         evh->state = (typename T::state_t*) state.value();
+        evh->window = ((typename T::state_t*) state.value())->window;
         evh->props = &(static_cast<T*>(this)->props);
         evh->attrs = (attrs_component<T>*) this;
         evh->get_dim = [this] {return get_dimensional_relations();};
@@ -165,7 +217,7 @@ namespace cydui::components {
       }
       void subscribe_events() override {
         clear_subscribed_listeners();
-        EVH * evh = event_handler_.operator->();
+        EVH* evh = event_handler_.operator->();
         add_event_listeners(evh->get_event_listeners());
       }
       void clear_children() override {
@@ -189,93 +241,18 @@ namespace cydui::components {
         return event_handler_;
       }
       
-      void redraw(cydui::layout::Layout* layout) override {
+      void redraw() override {
         state.value()->_dirty = false;
         
         std::vector<component_builder_t> content_children = this->_content;
-        std::string content_id_prefix = "content:";
-        std::size_t id_i = 0;
-        for (auto &item: content_children) {
-          for (auto &component_pair: item.build_components()) {
-            auto [id_, component] = component_pair;
-            std::string id = content_id_prefix;
-            id.append(id_);
-            id.append(":");
-            id.append(std::to_string(id_i));
-            
-            // Get or Create state for component
-            component_state_t* child_state;
-            if (state.value()->children_states.contains(id)) {
-              child_state = state.value()->children_states[id];
-            } else {
-              child_state = component->create_state_instance();
-              state.value()->children_states[id] = child_state;
-            }
-            
-            // Set child's variables
-            component->state = child_state;
-            child_state->win = state.value()->win;
-            child_state->parent = state.value();
-            child_state->component_instance = component;
-            component->parent = this;
-            children.push_back(component);
-            //printf("CHILDREN LEN: %d\n", children.size());
-            
-            // Configure event handler
-            component->configure_event_handler();
-            
-            // Subscribe child events
-            component->subscribe_events();
-            // Redraw child
-            //component->redraw(layout);
-            
-          }
-          ++id_i;
-        }
+        add_children("content:", content_children, false);
         
         std::vector<component_holder_t> new_children = event_handler_->on_redraw();
         for (auto &item: children) {
           // Redraw content child
-          item->redraw(layout);
+          item->redraw();
         }
-        
-        id_i = 0;
-        for (auto &item: new_children) {
-          for (auto &component_pair: item.get_components()) {
-            auto [id_, component] = component_pair;
-            std::string id = id_;
-            id.append(":");
-            id.append(std::to_string(id_i));
-            
-            // Get or Create state for component
-            component_state_t* child_state;
-            if (state.value()->children_states.contains(id)) {
-              child_state = state.value()->children_states[id];
-            } else {
-              child_state = component->create_state_instance();
-              state.value()->children_states[id] = child_state;
-            }
-            
-            // Set child's variables
-            component->state = child_state;
-            child_state->win = state.value()->win;
-            child_state->parent = state.value();
-            child_state->component_instance = component;
-            component->parent = this;
-            children.push_back(component);
-            //printf("CHILDREN LEN: %d\n", children.size());
-            
-            // Configure event handler
-            component->configure_event_handler();
-            
-            // Subscribe child events
-            component->subscribe_events();
-            // Redraw child
-            component->redraw(layout);
-            
-          }
-          ++id_i;
-        }
+        add_children("", new_children, true);
       }
       
       void

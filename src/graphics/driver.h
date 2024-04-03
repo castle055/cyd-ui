@@ -6,6 +6,6 @@
 #define CYD_UI_DRIVER_H
 
 #include "graphics/graphics.hpp"
-#include "events/cydui_events.h"
+#include "cydui_events.h"
 
 #endif //CYD_UI_DRIVER_H

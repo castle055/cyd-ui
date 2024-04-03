@@ -26,7 +26,7 @@ namespace cydui::components {
         }
       }
       
-      std::vector<std::pair<std::string, component_base_t*>> build_components() const {
+      std::vector<std::pair<std::string, component_base_t*>> get_components() const {
         std::vector<std::pair<std::string, component_base_t*>> _components {};
         for (const auto &item: components) {
           const auto &[id, builder] = item;
@@ -35,7 +35,7 @@ namespace cydui::components {
         return _components;
       }
       
-      const auto &get_components() const {
+      const auto &get_component_constructors() const {
         return components;
       }
     
@@ -70,7 +70,7 @@ namespace cydui::components {
       }
       
       inline component_holder_t(const component_builder_t &builder) { // NOLINT(*-explicit-constructor)
-        for (const auto &item: builder.build_components()) {
+        for (const auto &item: builder.get_components()) {
           components.emplace_back(item);
         }
       }

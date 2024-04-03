@@ -26,7 +26,7 @@ typedef std::unordered_map<str, window_image> loaded_images_map_t;
 
 namespace cydui::graphics {
     struct window_t {
-      events::async_bus_t* bus;
+      async::async_bus_t* bus;
       prof::context_t* profiler;
       Window xwin;
       GC gc;
@@ -45,7 +45,7 @@ namespace cydui::graphics {
       loaded_images_map_t loaded_images;
       
       window_t(
-        events::async_bus_t* async_bus,
+        async::async_bus_t* async_bus,
         prof::context_t* profiler,
         Window xwin,
         unsigned long w,

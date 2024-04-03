@@ -5,8 +5,8 @@
 #ifndef CYD_UI_LAYOUT_H
 #define CYD_UI_LAYOUT_H
 
-#include "component.h"
-#include "../cydstd/logging.hpp"
+#include "components/component.h"
+#include "cydstd/logging.hpp"
 
 namespace cydui::window {
     class CWindow;
@@ -29,7 +29,7 @@ namespace cydui::layout {
       components::component_state_t* hovering = nullptr;
       components::component_state_t* focused = nullptr;
       
-      std::vector<events::listener_t*> listeners {};
+      std::vector<async::listener_t*> listeners {};
       
       components::component_base_t* find_by_coords(int x, int y);
       

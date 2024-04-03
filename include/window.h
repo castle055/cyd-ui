@@ -5,14 +5,14 @@
 #ifndef CYD_UI_WINDOW_H
 #define CYD_UI_WINDOW_H
 
-#include "../graphics/graphics.hpp"
-#include "../cydstd/profiling.h"
+#include "graphics/graphics.hpp"
+#include "cydstd/profiling.h"
 
 namespace cydui::layout {
     class Layout;
 }
 namespace cydui::window {
-    class CWindow: public events::async_bus_t {
+    class CWindow: public async::async_bus_t {
     public:
       graphics::window_t* win_ref;
       layout::Layout* layout;

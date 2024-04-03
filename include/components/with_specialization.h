@@ -24,7 +24,7 @@ namespace cydui::components::with {
             index_suffix = ":";
             index_suffix.append(std::to_string(i));
             
-            for (const auto &component_pair: item.get_components()) {
+            for (const auto &component_pair: item.get_component_constructors()) {
               auto [_, builder] = component_pair;
               // make copy of id for modification
               id = component_pair.first;
@@ -50,7 +50,7 @@ namespace cydui::components::with {
             index_suffix = ":";
             index_suffix.append(std::to_string(i));
             
-            for (const auto &component_pair: item.get_components()) {
+            for (const auto &component_pair: item.get_component_constructors()) {
               auto [_, builder] = component_pair;
               // make copy of id for modification
               id = component_pair.first;
@@ -99,7 +99,7 @@ namespace cydui::components::with {
             jndex_suffix = ":";
             jndex_suffix.append(std::to_string(j));
             
-            for (const auto &component_pair: item1.get_components()) {
+            for (const auto &component_pair: item1.get_component_constructors()) {
               auto [_, component] = component_pair;
               // make copy of id for modification
               id = component_pair.first;
@@ -145,7 +145,7 @@ namespace cydui::components::with {
             jndex_suffix = ":";
             jndex_suffix.append(std::to_string(j));
             
-            for (const auto &component_pair: item1.get_components()) {
+            for (const auto &component_pair: item1.get_component_constructors()) {
               auto [_, component] = component_pair;
               // make copy of id for modification
               id = component_pair.first;
@@ -186,7 +186,7 @@ namespace cydui::components::with {
             index_suffix = ":";
             index_suffix.append(std::to_string(i));
             
-            for (const auto &component_pair: item1.get_components()) {
+            for (const auto &component_pair: item1.get_component_constructors()) {
               auto [_id, component] = component_pair;
               // make copy of id for modification
               std::string final_id = id;
@@ -216,7 +216,7 @@ namespace cydui::components::with {
             index_suffix = ":";
             index_suffix.append(std::to_string(i));
             
-            for (const auto &component_pair: item1.get_components()) {
+            for (const auto &component_pair: item1.get_component_constructors()) {
               auto [_id, component] = component_pair;
               // make copy of id for modification
               std::string final_id = id;

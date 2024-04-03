@@ -2,13 +2,11 @@
 // Created by castle on 8/21/22.
 //
 
-#include "core/window.h"
-#include "core/layout.h"
+#include "window.h"
+#include "layout.h"
 #include <vector>
 
 using namespace cydui::window;
-
-static std::vector<CWindow*> windows;
 
 void cydui::window::CWindow::terminate() {
   delete layout;
@@ -39,10 +37,6 @@ CWindow* cydui::window::create(
   win->win_ref = win_ref;
   
   layout->bind_window(win);
-  
-  //windows.push_back(win);
-  
-  events::start();
   
   // Once all threads have started and everything is set up for this window
   // force a complete redraw
