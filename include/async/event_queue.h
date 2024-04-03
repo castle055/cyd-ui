@@ -28,7 +28,7 @@ namespace cydui::async {
       std::mutex event_mutex;
       std::mutex listeners_mutex;
     
-    private: // * Private functions
+    private: /// @name Raw Event Handling
       // ? This function creates a copy of the eve, thus increasing its ref count.
       void push_event(const cydui::async::event_t &ev) {
         {
@@ -37,8 +37,7 @@ namespace cydui::async {
         }
         log_task.debug("NEW EVENT: %s", ev->type.c_str());
       }
-    
-    private: // * Raw Event Handling
+      
       event_t &emit_raw(event_t &ev) {
         push_event(ev);
         return ev;
@@ -50,7 +49,7 @@ namespace cydui::async {
         return ev;
       }
     
-    private:
+    private: /// @name Event Processing
       void swap_event_queues() {
         std::scoped_lock lk {event_mutex};
         std::swap(front_event_queue, back_event_queue);
@@ -86,12 +85,12 @@ namespace cydui::async {
           process_event(ev);
         }
       }
-    protected: // * Bus Interface
+    protected: /// @name Bus Interface
       void events_process_batch() {
         swap_event_queues();
         process_all_events(back_event_queue);
       }
-    public: // * Public Interface
+    public: /// @name Public Interface
       template<typename T>
       requires EventType<T>
       inline event_t emit(typename T::DataType data) {
@@ -130,7 +129,7 @@ namespace cydui::async {
         }
       }
     
-    public: // * Getter
+    public: /// @name Getter
       event_queue_t &get_event_queue() {
         return *this;
       }

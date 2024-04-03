@@ -14,7 +14,7 @@ namespace cydui::async {
       std::queue<async_handle<>> coroutine_queue {};
       std::mutex queue_mtx {};
     
-    protected: // * Bus Interface
+    protected: /// @name Bus Interface
       void coroutine_run() {
         std::optional<async_handle<>> current_handle;
         {
@@ -32,7 +32,7 @@ namespace cydui::async {
           return it;
         });
       }
-    public: // * Public Interface
+    public: /// @name Public Interface
       template<typename R>
       // ? Enqueue an already instantiated async handle
       async<R> &coroutine_enqueue(async<R> &handle) {
@@ -61,7 +61,7 @@ namespace cydui::async {
       inline void coroutine_enqueue(C &&coroutine, Args &&... args) {
         static_assert(false, "`coroutine` must return type async<>.");
       }
-    public: // * Getter
+    public: /// @name Getter
       coroutine_runtime_t &get_coroutine_runtime() {
         return *this;
       }

@@ -16,7 +16,7 @@ namespace cydui::async {
     
     class async_bus_t: public event_queue_t,
                        public coroutine_runtime_t {
-    public: // * Construction & RAII
+    public: /// @name Construction & RAII
       // ! Constructor
       async_bus_t() {
         thread_start();
@@ -32,9 +32,9 @@ namespace cydui::async {
       async_bus_t(async_bus_t &&rhs) = delete;
       async_bus_t &operator=(async_bus_t &&rhs) = delete;
     
-    private: // * Status
+    private: /// @name Status
       std::atomic<async_bus_status_e> status = async_bus_status_e::STOPPED;
-    private: // * Thread
+    private: /// @name Thread
       std::unique_ptr<std::thread> thread = nullptr;
       void thread_start() {
         if (!thread) {
