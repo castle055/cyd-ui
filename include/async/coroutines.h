@@ -5,6 +5,8 @@
 #ifndef CYD_UI_COROUTINES_H
 #define CYD_UI_COROUTINES_H
 
+#include "../cydstd/test_enabled.h"
+
 #include <coroutine>
 #include <future>
 
@@ -16,7 +18,7 @@ namespace cydui::async {
     
     struct continuation {
       std::optional<async_handle<>> cont;
-      bool await_ready() const noexcept {return !cont.has_value();}
+      bool await_ready() const noexcept {return false;} /// Always suspend!
       
       async_handle<> await_suspend(async_handle<> h) noexcept {
         if (cont.has_value()) {

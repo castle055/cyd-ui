@@ -13,7 +13,7 @@
 namespace cydui::async {
     class event_queue_t {
       logging::logger log_task = {.name = "EV_Q", .on = true, .min_level = logging::INFO};
-    private:
+    private TEST_PUBLIC:
       std::queue<event_t> front_event_queue {};
       std::queue<event_t> back_event_queue {};
       
@@ -21,14 +21,11 @@ namespace cydui::async {
         str,
         std::deque<cydui::async::listener_t*>
       > event_listeners {};
-      
-      std::unordered_map<str, cydui::async::event_t>* state_events =
-        new std::unordered_map<str, cydui::async::event_t>;
-    private:
+    private TEST_PUBLIC:
       std::mutex event_mutex;
       std::mutex listeners_mutex;
     
-    private: /// @name Raw Event Handling
+    private TEST_PUBLIC: /// @name Raw Event Handling
       // ? This function creates a copy of the eve, thus increasing its ref count.
       void push_event(const cydui::async::event_t &ev) {
         {
@@ -49,25 +46,30 @@ namespace cydui::async {
         return ev;
       }
     
-    private: /// @name Event Processing
+    private TEST_PUBLIC: /// @name Event Processing
       void swap_event_queues() {
         std::scoped_lock lk {event_mutex};
         std::swap(front_event_queue, back_event_queue);
       }
-      void process_event(const event_t &ev) {
-        ev->status = PROCESSING;
+      std::vector<listener_t*> get_listeners_for_event(const std::string &ev_type) {
         std::vector<listener_t*> listeners {};
         
         { // Make copy of listeners with the mutex
           std::scoped_lock lk {listeners_mutex};
-          if (event_listeners.contains(ev->type)) {
-            std::deque<listener_t*> &ev_listeners = event_listeners[ev->type];
+          if (event_listeners.contains(ev_type)) {
+            std::deque<listener_t*> &ev_listeners = event_listeners[ev_type];
             listeners.reserve(ev_listeners.size());
             for (const auto &item: ev_listeners) {
               listeners.push_back(item);
             }
           }
         }
+        
+        return listeners;
+      }
+      void process_event(const event_t &ev) {
+        ev->status = PROCESSING;
+        std::vector<listener_t*> listeners = get_listeners_for_event(ev->type);
         
         // Iterate over copy of listeners list. This should allow any listener to modify the listeners list (ie: removing themselves)
         for (auto &listener: listeners) {
@@ -85,7 +87,7 @@ namespace cydui::async {
           process_event(ev);
         }
       }
-    protected: /// @name Bus Interface
+    protected TEST_PUBLIC: /// @name Bus Interface
       void events_process_batch() {
         swap_event_queues();
         process_all_events(back_event_queue);
@@ -132,6 +134,16 @@ namespace cydui::async {
     public: /// @name Getter
       event_queue_t &get_event_queue() {
         return *this;
+      }
+    public: /// @name Destructor
+      ~event_queue_t() {
+        for (auto &item: event_listeners) {
+          auto listeners = get_listeners_for_event(item.first);
+          for (auto &l: listeners) {
+            l->remove();
+            delete l;
+          }
+        }
       }
     };
 }

@@ -15,6 +15,7 @@
 #include <type_traits>
 
 #include "../cydstd/cydstd.h"
+#include "../cydstd/test_enabled.h"
 #include "../threading.hpp"
 #include "cydstd/logging.hpp"
 
@@ -83,6 +84,7 @@ namespace cydui::async {
     typedef std::function<void(event_t &)> Listener;
     
     class listener_t {
+    private TEST_PUBLIC:
       long ID;
       bool active = true;
     public:

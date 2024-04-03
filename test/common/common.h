@@ -5,6 +5,12 @@
 #ifndef CYD_UI_COMMON_H
 #define CYD_UI_COMMON_H
 
+#define ENABLE_TESTING
+
+#include "cydui.hpp"
+
+#include "tests_structure.h"
+
 namespace test {
 }
 

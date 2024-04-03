@@ -11,10 +11,11 @@
 
 namespace cydui::async {
     class coroutine_runtime_t {
+    private TEST_PUBLIC:
       std::queue<async_handle<>> coroutine_queue {};
       std::mutex queue_mtx {};
     
-    protected: /// @name Bus Interface
+    protected TEST_PUBLIC: /// @name Bus Interface
       void coroutine_run() {
         std::optional<async_handle<>> current_handle;
         {

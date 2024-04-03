@@ -32,9 +32,9 @@ namespace cydui::async {
       async_bus_t(async_bus_t &&rhs) = delete;
       async_bus_t &operator=(async_bus_t &&rhs) = delete;
     
-    private: /// @name Status
+    private TEST_PUBLIC: /// @name Status
       std::atomic<async_bus_status_e> status = async_bus_status_e::STOPPED;
-    private: /// @name Thread
+    private TEST_PUBLIC: /// @name Thread
       std::unique_ptr<std::thread> thread = nullptr;
       void thread_start() {
         if (!thread) {
@@ -46,6 +46,7 @@ namespace cydui::async {
         if (thread) {
           status = async_bus_status_e::STOPPED;
           thread->join();
+          thread.reset(nullptr);
         }
       }
       
