@@ -1,6 +1,4 @@
-//
-// Created by castle on 4/3/24.
-//
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
 
 #include "async.h"
 #include <cassert>
@@ -12,9 +10,9 @@ void setup() {
 
 TEST("Nominal Start-up") (
   assert(bus->status == cydui::async::async_bus_status_e::RUNNING);
-  assert(bus->thread != nullptr);
-  return 0;
+  assert(bus->thread != nullptr); return 0;
 )
+
 TEST("Nominal Termination") (
   auto t0 = std::chrono::system_clock::now();
   bus->thread_stop();
@@ -30,6 +28,7 @@ TEST("Nominal Termination") (
   assert(bus->thread == nullptr);
   return 0;
 )
+
 TEST("Nominal Restart") (
   bus->thread_stop();
   assert(bus->status == cydui::async::async_bus_status_e::STOPPED);

@@ -1,6 +1,4 @@
-//
-// Created by castle on 8/21/22.
-//
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
 
 #ifndef CYD_UI_DIMENSIONS_HPP
 #define CYD_UI_DIMENSIONS_HPP

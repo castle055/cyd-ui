@@ -1,6 +1,4 @@
-//
-// Created by castle on 8/21/22.
-//
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
 
 #ifndef CYD_UI_EVENTS_H
 #define CYD_UI_EVENTS_H
@@ -17,7 +15,7 @@
 #include "../cydstd/cydstd.h"
 #include "../cydstd/test_enabled.h"
 #include "../threading.hpp"
-#include "cydstd/logging.hpp"
+#include "../cydstd/logging.hpp"
 
 namespace cydui::async {
     template<class T>
@@ -52,11 +50,6 @@ namespace cydui::async {
       str type;
       std::atomic<EventStatus> status = PENDING;
       void* ev = nullptr;
-      
-      std::mutex ev_mtx;
-      
-      // If it is someone else's job to delete this object
-      bool managed = false;
       
       template<EventType T>
       ParsedEvent<T> parse() {

@@ -1,6 +1,4 @@
-//
-// Created by castle on 12/11/23.
-//
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
 
 #ifndef CYD_UI_COROUTINES_H
 #define CYD_UI_COROUTINES_H

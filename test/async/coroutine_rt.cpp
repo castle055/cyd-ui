@@ -1,6 +1,4 @@
-//
-// Created by castle on 4/3/24.
-//
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
 
 #include "async.h"
 #include <cassert>
@@ -29,9 +27,11 @@ TEST("Nominal Function Coroutine Queuing") (
   return 0;
 )
 TEST("Nominal Lambda Coroutine Queuing") (
-  coro_rt->coroutine_enqueue([](int n) -> async<int> {
-    co_return n * 2;
-  }, 10);
+  coro_rt->coroutine_enqueue(
+    [](int n) -> async<int> {
+      co_return n * 2;
+    }, 10
+  );
   assert(coro_rt->coroutine_queue.size() == 1);
   
   return 0;
@@ -53,7 +53,6 @@ TEST("Nominal Coroutine Handling") (
   
   assert(a.h_.done());
   assert(a.h_.promise().future_.get() == 20);
-  
   
   return 0;
 )

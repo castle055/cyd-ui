@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 4/3/24.
 //
@@ -33,11 +35,14 @@ public:
 #define CONCAT_IMPL(A, B) A##B
 #define CONCAT(A, B) CONCAT_IMPL(A, B)
 
-#define __TEST_BODY_DECL__(...) []() { __VA_ARGS__ }};
+#define __TEST_BODY_DECL__(...) []() { \
+  __VA_ARGS__                          \
+}};
 
 #define TEST(NAME) \
 test_case_t CONCAT(TEST_ID,TEST_ID_NUM) { \
-  NAME, __TEST_BODY_DECL__
+  NAME,            \
+  __TEST_BODY_DECL__
 
 void setup();
 

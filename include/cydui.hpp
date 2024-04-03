@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 #ifndef CYD_UI_CYDUI_HPP
 #define CYD_UI_CYDUI_HPP
 
