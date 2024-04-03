@@ -33,18 +33,10 @@
 
 .idea/
 
-cmake-build-debug/
-
-cmake-build-release/
-
-.cyd/
-
 .ccls-cache/
 .cache/
 
-cmake-build-debug-clang/
-cmake-build-debug-gcc-experimental/
-cmake-build-release-gcc-experimental/
+build/
 
 docs/
 
