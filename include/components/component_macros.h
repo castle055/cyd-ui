@@ -103,6 +103,7 @@ struct NAME:                          \
 template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \
   CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT* state = nullptr;  \
+  cydui::window::CWindow* window = nullptr;       \
   NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = nullptr;\
   attrs_component<NAME SET_COMPONENT_TEMPLATE_SHORT>* attrs = nullptr;   \
   logging::logger log{.name = #NAME}; \
