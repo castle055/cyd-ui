@@ -184,10 +184,10 @@ std::unordered_map<std::string, listener_data_t> get_event_listeners() override 
 }
 
 #define ON_EVENT(EVENT, ...) \
-{ EVENT ::type, {[&](cydui::events::event_t* ev) { \
+{ EVENT ::type, {[&](cydui::async::event_t* ev) { \
   if (nullptr == state) return;                     \
   auto parsed_event = ev->parse<EVENT>(); \
-  [&](const cydui::events::ParsedEvent<EVENT>::DataType* ev) \
+  [&](const cydui::async::ParsedEvent<EVENT>::DataType* ev) \
     __VA_ARGS__              \
   (parsed_event.data);       \
 }}}

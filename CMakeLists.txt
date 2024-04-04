@@ -51,7 +51,7 @@ FILE(GLOB_RECURSE SRC_LIST
 add_library(cyd_ui)
 target_sources(cyd_ui PUBLIC ${SRC_LIST})
 target_link_libraries(cyd_ui
-        PUBLIC
+        PRIVATE
         X11 Xft Xrender fontconfig
         ${CAIROMM-1.16_LIBRARIES}
         yaml-cpp jpeg
