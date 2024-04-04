@@ -9,7 +9,7 @@
 #include "images.h"
 #include "pixelmap.h"
 #include "../cydstd/profiling.h"
-#include "async/async_bus.h"
+#include "../async/async_bus.h"
 
 namespace cydui::graphics {
     struct window_t;
