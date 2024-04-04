@@ -1,6 +1,4 @@
-//
-// Created by castle on 8/21/22.
-//
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
 
 #include "async/async_bus.h"
 

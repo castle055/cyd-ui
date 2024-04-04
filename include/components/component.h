@@ -113,7 +113,7 @@ namespace cydui::components {
           if (s->window == nullptr) return s;
           for (auto &l: listeners) {
             auto &[ev_type, handler] = l;
-            s->window->on_event_raw(ev_type, handler.handler);
+            subscribed_listeners.push_back(s->window->on_event_raw(ev_type, handler.handler));
           }
           return s;
         });
