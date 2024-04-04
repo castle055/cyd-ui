@@ -1,6 +1,4 @@
-//
-// Created by castle on 10/27/23.
-//
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
 
 #ifndef CYD_UI_ENV_H
 #define CYD_UI_ENV_H

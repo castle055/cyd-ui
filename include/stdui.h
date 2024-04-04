@@ -1,6 +1,4 @@
-//
-// Created by castle on 1/6/24.
-//
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
 
 #ifndef CYD_UI_STDUI_H
 #define CYD_UI_STDUI_H

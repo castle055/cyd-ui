@@ -2,6 +2,8 @@
 // Created by castle on 9/26/23.
 //
 
+#define CYD_UI_TASKS_H
+
 #ifndef CYD_UI_TASKS_H
 #define CYD_UI_TASKS_H
 

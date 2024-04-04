@@ -40,7 +40,10 @@ static int geom_mask_to_gravity(int mask) {
   return SouthEastGravity;
 }
 
+static std::unordered_map<unsigned long, window_t*> window_map {};
+
 cydui::graphics::window_t* cydui::graphics::create_window(
+  async::async_bus_t* async_bus,
   prof::context_t* profiler,
   const char* title,
   const char* wclass,
@@ -141,7 +144,8 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   }
   log_task.debug("Mapping window %lX", xwin);
   
-  auto* win = new window_t(profiler, xwin, w, h);
+  auto* win = new window_t(async_bus, profiler, xwin, w, h);
+  window_map[get_id(win)] = win;
   
   win->gc = XCreateGC(state::get_dpy(), xwin, 0, nullptr);
   
@@ -152,7 +156,14 @@ cydui::graphics::window_t* cydui::graphics::create_window(
   return win;
 }
 
-window_t::window_t(prof::context_t* profiler, Window xwin, unsigned long w, unsigned long h) {
+window_t::window_t(
+  async::async_bus_t* async_bus,
+  prof::context_t* profiler,
+  Window xwin,
+  unsigned long w,
+  unsigned long h
+) {
+  this->bus = async_bus;
   this->profiler = profiler;
   this->xwin = xwin;
   this->staging_target = new pixelmap_t {w, h};
@@ -295,6 +306,9 @@ pixelmap_t* cydui::graphics::get_frame(cydui::graphics::window_t* win) {
 
 unsigned long cydui::graphics::get_id(cydui::graphics::window_t* win) {
   return (unsigned int) win->xwin;
+}
+std::optional<window_t*> cydui::graphics::get_from_id(unsigned long id) {
+  return window_map.contains(id) ? std::optional {window_map[id]} : std::nullopt;
 }
 
 std::pair<int, int> cydui::graphics::get_position(cydui::graphics::window_t* win) {

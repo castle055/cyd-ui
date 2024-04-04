@@ -2,8 +2,10 @@
 // Created by castle on 9/26/23.
 //
 
-#include "cydstd/logging.hpp"
 #include "tools/tasks.h"
+#ifndef CYD_UI_TASKS_H
+
+#include "cydstd/logging.hpp"
 #include <deque>
 #include <vector>
 
@@ -61,7 +63,7 @@ static void task_executor(cydui::tasks::task_t* task) {
   if (task->reset()) {
     task->exec();
     // TODO - There should be a specific event for task completion
-    cydui::events::emit<RedrawEvent>({});
+    cydui::async::emit<RedrawEvent>({});
   }
 }
 
@@ -167,7 +169,7 @@ void cydui::tasks::task_t::set_progress(int p) {
   this->task_mutex.lock();
   this->progress = p;
   this->task_mutex.unlock();
-  cydui::events::emit<RedrawEvent>({});
+  cydui::async::emit<RedrawEvent>({});
 }
 
 int cydui::tasks::task_t::get_progress() {
@@ -191,3 +193,5 @@ bool cydui::tasks::task_t::is_complete() {
   this->task_mutex.unlock();
   return p > 0 && !r;
 }
+
+#endif //CYD_UI_TASKS_H

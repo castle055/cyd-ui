@@ -1,6 +1,4 @@
-//
-// Created by castle on 8/22/22.
-//
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
 
 #ifndef CYD_UI_THREADING_HPP
 #define CYD_UI_THREADING_HPP
