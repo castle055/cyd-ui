@@ -78,11 +78,9 @@ namespace cydui::async {
         ev->status = CONSUMED;
       }
       void process_all_events(std::queue<event_t> &ev_queue) {
-        event_t ev;
         while (!ev_queue.empty()) {
-          ev = ev_queue.front();
+          process_event(ev_queue.front());
           ev_queue.pop();
-          process_event(ev);
         }
       }
     protected TEST_PUBLIC: /// @name Bus Interface
