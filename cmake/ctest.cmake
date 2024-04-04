@@ -10,13 +10,9 @@ foreach (test ${TEST_LIST})
     target_include_directories(${TName} PRIVATE ${TEST_DIR}/common)
 
     file(STRINGS ${test} TLines)
-    message("TEST CASES")
     foreach (line ${TLines})
         if ("${line}" MATCHES "TEST\\(\"(.*)\"\\)")
-            message("${line}")
             set(case ${CMAKE_MATCH_1})
-            message("${case}")
-
             add_test(NAME "${TName} - ${case}" COMMAND $<TARGET_FILE:${TName}> "${case}")
         endif ()
     endforeach ()
