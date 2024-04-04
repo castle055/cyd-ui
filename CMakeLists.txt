@@ -84,3 +84,24 @@ if (EXISTS ${CMAKE_CURRENT_LIST_DIR}/local_test)
     )
 endif ()
 
+if (CMAKE_BUILD_TYPE MATCHES "Release")
+    add_custom_command(TARGET cyd_ui POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory dist
+            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+    )
+    add_custom_command(TARGET cyd_ui POST_BUILD
+            COMMAND cp -v
+            $<TARGET_FILE:cyd_ui>
+            ${CMAKE_CURRENT_LIST_DIR}/dist/
+            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+            COMMENT "Copying binary into distribution directory..."
+    )
+    add_custom_command(TARGET cyd_ui POST_BUILD
+            COMMAND cp -rv
+            ${INCLUDE_DIR}
+            ${CMAKE_CURRENT_LIST_DIR}/dist/
+            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+            COMMENT "Copying header files into distribution directory..."
+    )
+endif ()
+
