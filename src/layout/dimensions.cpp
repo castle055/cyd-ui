@@ -2,7 +2,7 @@
 // Created by castle on 1/23/23.
 //
 
-#include "core/dimensions.hpp"
+#include "components/dimensions.hpp"
 
 #include <utility>
 

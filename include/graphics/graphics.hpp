@@ -1,6 +1,4 @@
-//
-// Created by castle on 8/21/22.
-//
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
 
 #ifndef CYD_UI_GRAPHICS_HPP
 #define CYD_UI_GRAPHICS_HPP
@@ -11,11 +9,13 @@
 #include "images.h"
 #include "pixelmap.h"
 #include "../cydstd/profiling.h"
+#include "async/async_bus.h"
 
 namespace cydui::graphics {
     struct window_t;
     
     window_t* create_window(
+      async::async_bus_t* async_bus,
       prof::context_t* profiler,
       const char* title,
       const char* wclass,
@@ -33,6 +33,7 @@ namespace cydui::graphics {
     void flush(window_t* win);
     
     unsigned long get_id(window_t* win);
+    std::optional<window_t*> get_from_id(unsigned long id);
     
     std::pair<int, int> get_position(window_t* win);
     
