@@ -153,7 +153,8 @@ namespace cydui::compositing {
               (unsigned char*) sfrm->data,
               Cairo::Surface::Format::ARGB32,
               (int) sfrm->width(), (int) sfrm->height(),
-              cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, (int) sfrm->width())
+              (int) sfrm->width() * 4
+              //cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, (int) sfrm->width())
             );
             editor->set_source(surface, node->op.orig_x + snode->op.x, node->op.orig_y + snode->op.y);
             editor->paint();

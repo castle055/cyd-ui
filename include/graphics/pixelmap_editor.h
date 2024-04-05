@@ -21,7 +21,8 @@ public:
       (unsigned char*) this->img.data,
       Cairo::Surface::Format::ARGB32,
       (int) this->img.width(), (int) this->img.height(),
-      cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, (int) this->img.width())
+      (int) this->img.width() * 4
+      //cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, (int) this->img.width())
     );
     ctx = Cairo::Context::create(surface);
   }
