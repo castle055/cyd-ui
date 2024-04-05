@@ -62,7 +62,7 @@ namespace cydui::layout {
 }
 
 template<cydui::components::ComponentConcept C>
-cydui::layout::Layout* cydui::layout::create(C &&root_component) {
+inline cydui::layout::Layout* cydui::layout::create(C &&root_component) {
   auto* root_state = new typename C::state_t();
   auto* root = new C {root_component};
   root->state = root_state;

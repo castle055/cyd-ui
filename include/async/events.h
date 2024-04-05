@@ -78,7 +78,7 @@ namespace cydui::async {
     
     class listener_t {
     private TEST_PUBLIC:
-      long ID;
+      std::unique_ptr<u8> ID;
       bool active = true;
     public:
       listener_t(): event_queue(nullptr) {
@@ -90,7 +90,7 @@ namespace cydui::async {
         : event_queue(event_queue_),
           event_type(std::move(type)),
           func(new Listener {std::move(c)}) {
-        ID = (long) new u8;
+        ID = std::unique_ptr<u8>(new u8);
       }
       //
       //listener_t(const listener_t &other) {
@@ -98,7 +98,7 @@ namespace cydui::async {
       //}
       
       [[nodiscard]] long get_id() const {
-        return ID;
+        return (long)(u8 *)ID.get();
       }
       
       event_queue_t* const event_queue;
@@ -112,7 +112,7 @@ namespace cydui::async {
       }
       
       void operator()(event_t ev) const {
-        if (nullptr != func) {
+        if (nullptr != func && active) {
           func->operator()(ev);
         }
       }
