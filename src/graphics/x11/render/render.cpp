@@ -51,6 +51,7 @@ void render_sbr(cydui::graphics::window_t* win, XImage* image) {
       << std::to_string(p.b) << ", "
       << std::to_string(p.a)
       << ")" << std::endl;
+    XLockDisplay(state::get_dpy());
     XPutImage(
       state::get_dpy(),
       win->xwin,
@@ -63,6 +64,8 @@ void render_sbr(cydui::graphics::window_t* win, XImage* image) {
       win->render_target->width(),
       win->render_target->height()
     );
+    XFlush(state::get_dpy());
+    XUnlockDisplay(state::get_dpy());
     auto t1 = std::chrono::system_clock::now();
     // std::cout << "PUT IMG: " << std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count() << " us" << std::endl;
     //x_mtx.unlock();
