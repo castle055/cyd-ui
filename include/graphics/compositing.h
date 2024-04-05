@@ -103,14 +103,14 @@ namespace cydui::compositing {
           compositor->tree_dirty = false;
 
           // Resize if needed, window size -(EV)-> layout size -> frame size -> screen size
-          auto t0 = std::chrono::system_clock::now();
+          // auto t0 = std::chrono::system_clock::now();
           graphics::resize(compositor->render_target, compositor->tree->root->op.w, compositor->tree->root->op.h);
           pixelmap_t* frame = graphics::get_frame(compositor->render_target);
           compositor->repaint(compositor->tree->root, frame);
           graphics::flush(compositor->render_target);
-          auto t1 = std::chrono::system_clock::now();
-          std::cout << "COMPOS:  " << std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count() << " us" <<
-            std::endl;
+          // auto t1 = std::chrono::system_clock::now();
+          // std::cout << "COMPOS:  " << std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count() << " us" <<
+            // std::endl;
         }
         lk.unlock();
 
