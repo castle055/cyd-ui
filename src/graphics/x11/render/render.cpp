@@ -14,19 +14,7 @@ using namespace x11;
 logging::logger xlog_ctrl = {.name = "X11::RENDER::CTRL", .on = false};
 logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = true};
 
-static std::mutex x_mtx{};
-
 void render_sbr(cydui::graphics::window_t* win, XImage* image) {
-  //window_render_req req;
-
-  //win->render_mtx.lock();
-  //bool dirty = win->dirty;
-  //win->dirty = false;
-  //win->render_mtx.unlock();
-  //
-  //if (!dirty)
-  //  return;
-
   win->render_mtx.lock(); {
     image->width = win->render_target->width();
     image->height = win->render_target->height();
@@ -43,20 +31,8 @@ void render_sbr(cydui::graphics::window_t* win, XImage* image) {
     image->red_mask = (0xff) << 24;
     image->green_mask = (0xff) << 16;
     image->blue_mask = (0xff) << 8;
-    //if (0 != XInitImage(image)
-    //  && win->gc) {
-    //if (x_mtx.try_lock()) {
+
     auto _pev = win->profiler->scope_event("render::render_sbr");
-    //win->x_mtx.lock();
-    // auto t0 = std::chrono::system_clock::now();
-    // auto p = win->render_target->data[2 + image->width];
-    // std::cout << "color("
-    //   << std::to_string(p.r) << ", "
-    //   << std::to_string(p.g) << ", "
-    //   << std::to_string(p.b) << ", "
-    //   << std::to_string(p.a)
-    //   << ")" << std::endl;
-    XLockDisplay(state::get_dpy());
     XPutImage(
       state::get_dpy(),
       win->xwin,
@@ -69,18 +45,8 @@ void render_sbr(cydui::graphics::window_t* win, XImage* image) {
       win->render_target->width(),
       win->render_target->height()
     );
-    XFlush(state::get_dpy());
-    XUnlockDisplay(state::get_dpy());
-    // auto t1 = std::chrono::system_clock::now();
-    // std::cout << "PUT IMG: " << std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count() << " us" << std::endl;
-    //x_mtx.unlock();
-    //}
-    //X Flush(state::get_dpy());
-
-    //}
   }
   win->render_mtx.unlock();
-  //win->x_mtx.unlock();
 }
 
 using namespace std::chrono_literals;
