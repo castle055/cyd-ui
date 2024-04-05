@@ -99,7 +99,7 @@ namespace cydui::components {
       
       virtual void redraw() = 0;
       virtual void
-      get_fragment(cydui::layout::Layout* layout, cydui::compositing::compositing_node_t* compositing_node) = 0;
+      get_fragment(cydui::layout::Layout* layout, std::unique_ptr<cydui::compositing::compositing_node_t>& compositing_node) = 0;
       
       virtual component_state_t* create_state_instance() = 0;
       
@@ -121,7 +121,6 @@ namespace cydui::components {
       void clear_subscribed_listeners() {
         for (auto &item: subscribed_listeners) {
           item->remove();
-          delete item;
         }
         subscribed_listeners.clear();
       }
@@ -254,11 +253,10 @@ namespace cydui::components {
       }
       
       void
-      get_fragment(cydui::layout::Layout* layout, cydui::compositing::compositing_node_t* compositing_node) override {
+      get_fragment(cydui::layout::Layout* layout, std::unique_ptr<cydui::compositing::compositing_node_t>& compositing_node) override {
         for (auto &child: children) {
-          auto* child_node = new cydui::compositing::compositing_node_t;
-          compositing_node->children.push_back(child_node);
-          child->get_fragment(layout, child_node);
+          compositing_node->children.emplace_back(new compositing::compositing_node_t{});
+          child->get_fragment(layout, compositing_node->children.back());
         }
         
         compositing_node->id = (unsigned long) (this->state.value());

@@ -31,14 +31,8 @@ namespace cydui::compositing {
     struct compositing_node_t {
       unsigned long id = 0;
       compositing_operation_t op {};
-      std::deque<compositing_node_t*> children {};
+      std::deque<std::unique_ptr<compositing_node_t>> children {};
       vg_fragment_t graphics {};
-      
-      ~compositing_node_t() {
-        for (auto &item: children) {
-          delete item;
-        }
-      }
       
       //void fix_op_dimensions() {
       //  op._fix_dimensions(op);
@@ -62,14 +56,14 @@ namespace cydui::compositing {
     };
     
     struct compositing_tree_t {
-      compositing_node_t root {};
+      std::unique_ptr<compositing_node_t> root = std::make_unique<compositing_node_t>();
       
       //void fix_dimensions() {
       //  root.fix_op_dimensions();
       //}
       //
       compositing_node_t* find_by_id(unsigned long _id) {
-        return root.find_by_id(_id);
+        return root->find_by_id(_id);
       }
     };
     
@@ -100,9 +94,9 @@ namespace cydui::compositing {
             compositor->tree_dirty = false;
             
             // Resize if needed, window size -(EV)-> layout size -> frame size -> screen size
-            graphics::resize(compositor->render_target, compositor->tree->root.op.w, compositor->tree->root.op.h);
+            graphics::resize(compositor->render_target, compositor->tree->root->op.w, compositor->tree->root->op.h);
             pixelmap_t* frame = graphics::get_frame(compositor->render_target);
-            compositor->repaint(&compositor->tree->root, frame);
+            compositor->repaint(compositor->tree->root, frame);
             graphics::flush(compositor->render_target);
           }
           lk.unlock();
@@ -111,7 +105,7 @@ namespace cydui::compositing {
         }
       }
       
-      pixelmap_t* repaint(compositing_node_t* node, pixelmap_t* frame = nullptr) {
+      pixelmap_t* repaint(std::unique_ptr<compositing_node_t>& node, pixelmap_t* frame = nullptr) {
         pixelmap_t* frm = frame;
         if (nullptr == frm) {
           if (sub_frame_cache.contains(node->id)) {
@@ -143,8 +137,8 @@ namespace cydui::compositing {
         }
         if (!node->children.empty()) {
           empty = false;
-          std::vector<std::pair<compositing_node_t*, pixelmap_t*>> sub_frames {};
-          for (auto* c: node->children) {
+          std::vector<std::pair<std::unique_ptr<compositing_node_t>&, pixelmap_t*>> sub_frames {};
+          for (auto& c: node->children) {
             sub_frames.emplace_back(c, repaint(c));
           }
           

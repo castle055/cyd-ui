@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 8/21/22.
 //
@@ -131,7 +133,7 @@ void cydui::layout::Layout::redraw_component(component_base_t* target) {
   
   recompute_dimensions(root);
   
-  root->get_fragment(this, &compositing_tree->root);
+  root->get_fragment(this, compositing_tree->root);
   //compositing_tree->fix_dimensions();
   
   compositor.compose(compositing_tree);

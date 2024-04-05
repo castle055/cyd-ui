@@ -17,7 +17,7 @@ namespace cydui::async {
       
       std::unordered_map<
         str,
-        std::deque<cydui::async::listener_t*>
+        std::deque<std::shared_ptr<cydui::async::listener_t>>
       > event_listeners {};
     private TEST_PUBLIC:
       std::mutex event_mutex;
@@ -49,17 +49,14 @@ namespace cydui::async {
         std::scoped_lock lk {event_mutex};
         std::swap(front_event_queue, back_event_queue);
       }
-      std::vector<listener_t*> get_listeners_for_event(const std::string &ev_type) {
-        std::vector<listener_t*> listeners {};
+      std::vector<std::shared_ptr<listener_t>> get_listeners_for_event(const std::string &ev_type) {
+        std::vector<std::shared_ptr<listener_t>> listeners {};
         
-        { // Make copy of listeners with the mutex
-          std::scoped_lock lk {listeners_mutex};
-          if (event_listeners.contains(ev_type)) {
-            std::deque<listener_t*> &ev_listeners = event_listeners[ev_type];
-            listeners.reserve(ev_listeners.size());
-            for (const auto &item: ev_listeners) {
-              listeners.push_back(item);
-            }
+        if (event_listeners.contains(ev_type)) {
+          std::deque<std::shared_ptr<listener_t>> &ev_listeners = event_listeners[ev_type];
+          listeners.reserve(ev_listeners.size());
+          for (const auto &item: ev_listeners) {
+            listeners.emplace_back(item);
           }
         }
         
@@ -67,7 +64,12 @@ namespace cydui::async {
       }
       void process_event(const event_t &ev) {
         ev->status = PROCESSING;
-        std::vector<listener_t*> listeners = get_listeners_for_event(ev->type);
+        //{ // Make copy of listeners with the mutex
+        //  std::scoped_lock lk {listeners_mutex};
+        listeners_mutex.lock();
+          std::vector<std::shared_ptr<listener_t>> listeners = get_listeners_for_event(ev->type);
+        listeners_mutex.unlock();
+        //}
         
         // Iterate over copy of listeners list. This should allow any listener to modify the listeners list (ie: removing themselves)
         for (auto &listener: listeners) {
@@ -97,10 +99,11 @@ namespace cydui::async {
       }
       
       listener_t* on_event_raw(const str &event_type, const Listener &l_) {
+        std::scoped_lock lk {listeners_mutex};
         if (!event_listeners.contains(event_type))
           event_listeners.insert({event_type, {}});
         auto* l = new listener_t {this, event_type, l_};
-        event_listeners[event_type].push_back(l);
+        event_listeners[event_type].emplace_back(l);
         return l;
       }
       template<typename T>
@@ -117,6 +120,7 @@ namespace cydui::async {
       void remove_listener(const listener_t &listener) {
         if (listener.get_id() == 0) return;
         const str &event_type = listener.event_type;
+        std::scoped_lock lk {listeners_mutex};
         if (event_listeners.contains(event_type)) {
           for (auto l = event_listeners[event_type].begin(); l != event_listeners[event_type].end(); l++) {
             if ((*l)->get_id() == listener.get_id()) {
@@ -137,7 +141,6 @@ namespace cydui::async {
           auto listeners = get_listeners_for_event(item.first);
           for (auto &l: listeners) {
             l->remove();
-            delete l;
           }
         }
       }
