@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 8/23/22.
 //
@@ -38,8 +40,8 @@ void render_sbr(cydui::graphics::window_t* win, XImage* image) {
     image->bitmap_unit = 32;
     image->bits_per_pixel = 32;
     image->bytes_per_line = (int) win->render_target->width() * 4;
-    if (0 != XInitImage(image)
-      && win->gc) {
+    //if (0 != XInitImage(image)
+    //  && win->gc) {
       //if (x_mtx.try_lock()) {
       auto _pev = win->profiler->scope_event("render::render_sbr");
       //win->x_mtx.lock();
@@ -55,8 +57,7 @@ void render_sbr(cydui::graphics::window_t* win, XImage* image) {
       //}
       //X Flush(state::get_dpy());
       
-      //XDestroyImage(image);
-    }
+    //}
   }
   win->render_mtx.unlock();
   //win->x_mtx.unlock();
@@ -67,6 +68,7 @@ using namespace std::chrono_literals;
 void render_task(cydui::threading::thread_t* this_thread) {
   xlog_task.debug("Started render thread");
   auto* render_data = (render::RenderThreadData*) this_thread->data;
+  XInitImage(render_data->image);
   auto t0 = std::chrono::system_clock::now();
   while (this_thread->running) {
     t0 = std::chrono::system_clock::now();
@@ -203,8 +205,8 @@ void render::resize(pixelmap_t* target, int w, int h) {
 }
 
 void render::flush(cydui::graphics::window_t* win) {
-  std::lock_guard lk {win->render_mtx};
   auto _pev = win->profiler->scope_event("render::flush");
+  std::lock_guard lk {win->render_mtx};
   
   auto* tmp = win->render_target;
   win->render_target = win->staging_target;
