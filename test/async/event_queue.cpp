@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 4/3/24.
 //
@@ -100,8 +102,7 @@ TEST("Nominal Listener Removal") (
   assert(ev_q->event_listeners[TestEvent::type].front()->is_active());
   
   listener->remove();
-  delete listener;
-  
+
   assert(ev_q->event_listeners.size() == 1);
   assert(ev_q->event_listeners.contains(TestEvent::type));
   assert(ev_q->event_listeners[TestEvent::type].empty());
