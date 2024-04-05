@@ -28,16 +28,21 @@ void render_sbr(cydui::graphics::window_t* win, XImage* image) {
   //  return;
 
   win->render_mtx.lock(); {
-    image->depth = 32; //DisplayPlanes(state::get_dpy(), state::get_screen());
-    image->format = ZPixmap;
-    image->xoffset = 0;
-    image->data = (char*) win->render_target->data;
     image->width = win->render_target->width();
     image->height = win->render_target->height();
-    image->bitmap_pad = 32;
+    image->xoffset = 0;
+    image->format = ZPixmap;
+    image->data = (char*) win->render_target->data;
+    image->byte_order = LSBFirst;
     image->bitmap_unit = 32;
+    image->bitmap_bit_order = MSBFirst;
+    image->bitmap_pad = 8;
+    image->depth = 32; //DisplayPlanes(state::get_dpy(), state::get_screen());
     image->bits_per_pixel = 32;
     image->bytes_per_line = (int) win->render_target->width() * 4;
+    image->red_mask = (0xff) << 24;
+    image->green_mask = (0xff) << 16;
+    image->blue_mask = (0xff) << 8;
     //if (0 != XInitImage(image)
     //  && win->gc) {
     //if (x_mtx.try_lock()) {
