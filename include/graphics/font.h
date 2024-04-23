@@ -3,12 +3,11 @@
 #ifndef CYD_UI_FONT_H
 #define CYD_UI_FONT_H
 
-#include "../cydstd/cydstd.h"
-#include "../cydstd/template_str_buffer.h"
+#include <cyd_fabric/templates/template_str_buffer.h>
 
-namespace cydui::graphics::font {
+namespace cyd::ui::graphics::font {
     struct Font {
-      str name;
+      std::string name;
       int size;
       
       bool antialias = true;

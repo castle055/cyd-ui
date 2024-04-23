@@ -38,6 +38,16 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(CAIROMM-1.16 REQUIRED cairomm-1.16)
 include_directories(${CAIROMM-1.16_INCLUDE_DIRS})
 
+include(FetchContent)
+FetchContent_Declare(cyd_fabric
+        GIT_REPOSITORY https://github.com/castle055/cyd-fabric.git
+        GIT_TAG main
+        FIND_PACKAGE_ARGS
+)
+
+FetchContent_MakeAvailable(cyd_fabric)
+include_directories(${cyd_fabric_SOURCE_DIR}/include)
+
 
 FILE(GLOB_RECURSE SRC_LIST
         ${INCLUDE_DIR}/*.h
@@ -52,6 +62,7 @@ add_library(cyd_ui)
 target_sources(cyd_ui PUBLIC ${SRC_LIST})
 target_link_libraries(cyd_ui
         PRIVATE
+        cyd_fabric
         X11 Xft Xrender fontconfig
         ${CAIROMM-1.16_LIBRARIES}
         yaml-cpp jpeg

@@ -3,7 +3,6 @@
 #ifndef CYD_UI_COMPONENT_EVENT_HANDLER_H
 #define CYD_UI_COMPONENT_EVENT_HANDLER_H
 
-#include "../cydstd/pragma.h"
 #include "component_holder.h"
 
 
@@ -12,7 +11,7 @@
 
 #include <vector>
 
-namespace cydui::components {
+namespace cyd::ui::components {
 // ? INTERNAL MACROS
 // ! DO NOT USE {
 #define CYDUI_INTERNAL_EV_HANDLER_DECL(NAME) \
@@ -87,7 +86,7 @@ namespace cydui::components {
       virtual ~event_handler_t() = default;
 
 
-#define CYDUI_INTERNAL_EV_redraw_RETURN std::vector<cydui::components::component_holder_t>
+#define CYDUI_INTERNAL_EV_redraw_RETURN std::vector<cyd::ui::components::component_holder_t>
 #define CYDUI_INTERNAL_EV_redraw_ARGS   ()
       CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(redraw) {return {};}
       
@@ -151,7 +150,7 @@ namespace cydui::components {
       //TODO - Implement a method to set an input context for text input
       
       struct listener_data_t {
-        std::function<void(cydui::async::event_t)> handler {};
+        std::function<void(cyd::fabric::async::event_t)> handler {};
       };
       virtual std::unordered_map<std::string, listener_data_t> get_event_listeners() {
         return {};
@@ -184,10 +183,10 @@ std::unordered_map<std::string, listener_data_t> get_event_listeners() override 
 }
 
 #define ON_EVENT(EVENT, ...) \
-{ EVENT ::type, {[&](cydui::async::event_t ev) { \
+{ EVENT ::type, {[&](cyd::fabric::async::event_t ev) { \
   if (nullptr == state) return;                     \
   auto parsed_event = ev->parse<EVENT>(); \
-  [&](const cydui::async::ParsedEvent<EVENT>::DataType* ev) \
+  [&](const cyd::fabric::async::ParsedEvent<EVENT>::DataType* ev) \
     __VA_ARGS__              \
   (parsed_event.data);       \
 }}}

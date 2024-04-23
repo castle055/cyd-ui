@@ -3,7 +3,7 @@
 #ifndef CYD_UI_CYDUI_EVENTS_H
 #define CYD_UI_CYDUI_EVENTS_H
 
-#include "async/async_bus.h"
+#include <cyd_fabric/async/async_bus.h>
 
 EVENT(RedrawEvent, {
   unsigned long win = 0;

@@ -12,10 +12,11 @@ namespace cydui {
 #include "window.h"
 #include "tools/tools.h"
 
-namespace vg = cydui::graphics::vg;
-namespace color = cydui::graphics::color;
-namespace font = cydui::graphics::font;
-using namespace cydui::components::with;
-using cydui::async::async;
+namespace vg = cyd::ui::graphics::vg;
+namespace color = cyd::ui::graphics::color;
+namespace font = cyd::ui::graphics::font;
+
+using namespace cyd::ui::components::with;
+using cyd::fabric::async::async;
 
 #endif//CYD_UI_CYDUI_HPP

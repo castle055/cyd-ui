@@ -9,7 +9,7 @@
 
 #include "../events/cydui_events.h"
 
-namespace cydui::tasks {
+namespace cyd::ui::tasks {
     typedef unsigned long task_id;
     typedef unsigned long timer_id;
     
@@ -53,7 +53,7 @@ namespace cydui::tasks {
 #define SIMPLE_TASK_W_RESULT(NAME, ARGS, RESULT, BLOCK) \
   struct NAME##Args ARGS; \
   struct NAME##Result RESULT; \
-  class NAME: public cydui::tasks::simple_task_w_result_t<NAME##Args, NAME##Result> { \
+  class NAME: public cyd::ui::tasks::simple_task_w_result_t<NAME##Args, NAME##Result> { \
     logging::logger log {.name = #NAME }; \
   protected: \
     void main() override BLOCK \
@@ -62,7 +62,7 @@ namespace cydui::tasks {
 #define TASK_W_RESULT(NAME, ARGS, RESULT, BLOCK) \
   struct NAME##Args ARGS; \
   struct NAME##Result RESULT; \
-  class NAME: public cydui::tasks::simple_task_w_result_t<NAME##Args, NAME##Result> { \
+  class NAME: public cyd::ui::tasks::simple_task_w_result_t<NAME##Args, NAME##Result> { \
     logging::logger log {.name = #NAME }; \
   protected: \
     void main() override BLOCK                   \
@@ -107,7 +107,7 @@ namespace cydui::tasks {
 
 #define SIMPLE_TASK(NAME, ARGS, BLOCK) \
   struct NAME##Args ARGS; \
-  class NAME: public cydui::tasks::simple_t<NAME##Args> { \
+  class NAME: public cyd::ui::tasks::simple_t<NAME##Args> { \
     logging::logger log {.name = #NAME }; \
   protected: \
     void main() override BLOCK \

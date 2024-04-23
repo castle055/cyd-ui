@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 1/23/23.
 //
@@ -6,7 +8,7 @@
 
 #include <utility>
 
-using namespace cydui;
+using namespace cyd::ui;
 
 bool dimensions::dimension_t::compute(dimensions::dimension_t& dimension) {
   // Compute value for all dependencies recursively, catch circular deps

@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 8/24/22.
 //
@@ -7,8 +9,8 @@
 
 #include "cydstd/logging.hpp"
 
-using namespace cydui::graphics::color;
-namespace color = cydui::graphics::color;
+using namespace cyd::ui::graphics::color;
+namespace color = cyd::ui::graphics::color;
 
 logging::logger logg {.on = false};
 

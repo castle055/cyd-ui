@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 8/21/22.
 //
@@ -6,22 +8,22 @@
 #include "layout.h"
 #include <vector>
 
-using namespace cydui::window;
+using namespace cyd::ui::window;
 
-void cydui::window::CWindow::terminate() {
+void cyd::ui::window::CWindow::terminate() {
   delete layout;
   graphics::terminate(win_ref);
   win_ref = nullptr;
 }
 
-std::pair<int, int> cydui::window::CWindow::get_position() const {
+std::pair<int, int> cyd::ui::window::CWindow::get_position() const {
   return graphics::get_position(win_ref);
 }
-std::pair<int, int> cydui::window::CWindow::get_size() const {
+std::pair<int, int> cyd::ui::window::CWindow::get_size() const {
   return graphics::get_size(win_ref);
 }
 
-CWindow* cydui::window::create(
+CWindow* cyd::ui::window::create(
   layout::Layout* layout,
   const char* title,
   const char* wclass,

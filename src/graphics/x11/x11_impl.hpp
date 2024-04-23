@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 8/23/22.
 //
@@ -11,7 +13,9 @@
 #include <unordered_map>
 #include <vector>
 
-using namespace cydui::graphics;
+#include "threading.hpp"
+
+using namespace cyd::ui::graphics;
 
 struct window_font {
   XftFont* xfont;
@@ -24,9 +28,9 @@ struct window_image {
 };
 typedef std::unordered_map<str, window_image> loaded_images_map_t;
 
-namespace cydui::graphics {
+namespace cyd::ui::graphics {
     struct window_t {
-      async::async_bus_t* bus;
+      cyd::fabric::async::async_bus_t* bus;
       prof::context_t* profiler;
       Window xwin;
       GC gc;
@@ -45,14 +49,14 @@ namespace cydui::graphics {
       loaded_images_map_t loaded_images;
       
       window_t(
-        async::async_bus_t* async_bus,
+        cyd::fabric::async::async_bus_t* async_bus,
         prof::context_t* profiler,
         Window xwin,
         unsigned long w,
         unsigned long h
       );
       
-      cydui::threading::thread_t* render_thd = nullptr;
+      cyd::ui::threading::thread_t* render_thd = nullptr;
       void* render_data = nullptr;
     };
 }

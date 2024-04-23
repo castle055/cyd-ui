@@ -6,11 +6,11 @@
 #include "components/component.h"
 #include "cydstd/logging.hpp"
 
-namespace cydui::window {
+namespace cyd::ui::window {
     class CWindow;
 }
 
-namespace cydui::layout {
+namespace cyd::ui::layout {
     class Layout;
     
     template<components::ComponentConcept C>
@@ -21,17 +21,17 @@ namespace cydui::layout {
       
       compositing::LayoutCompositor compositor {};
       
-      components::component_state_t* root_state;
+      components::component_state_ref root_state;
       components::component_base_t* root;
       
-      components::component_state_t* hovering = nullptr;
-      components::component_state_t* focused = nullptr;
+      components::component_state_ref hovering = nullptr;
+      components::component_state_ref focused = nullptr;
       
-      std::vector<async::listener_t*> listeners {};
+      std::vector<cyd::fabric::async::listener_t*> listeners {};
       
       components::component_base_t* find_by_coords(int x, int y);
       
-      Layout(components::component_state_t* _root_state, components::component_base_t* _root)
+      Layout(const components::component_state_ref& _root_state, components::component_base_t* _root)
         : root_state(_root_state), root(_root), focused(_root_state) {
         focused->focused = true;
       }
@@ -45,7 +45,7 @@ namespace cydui::layout {
       void recompose_layout();
       
       template<components::ComponentConcept C>
-      friend Layout* cydui::layout::create(C &&root_component);
+      friend Layout* cyd::ui::layout::create(C &&root_component);
     
     public:
       ~Layout() {
@@ -61,9 +61,9 @@ namespace cydui::layout {
     };
 }
 
-template<cydui::components::ComponentConcept C>
-inline cydui::layout::Layout* cydui::layout::create(C &&root_component) {
-  auto* root_state = new typename C::state_t();
+template<cyd::ui::components::ComponentConcept C>
+inline cyd::ui::layout::Layout* cyd::ui::layout::create(C &&root_component) {
+  auto root_state = C::make_state_instance();
   auto* root = new C {root_component};
   root->state = root_state;
   auto* lay = new Layout(root_state, root);

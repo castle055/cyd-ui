@@ -9,7 +9,7 @@
 
 #include "dimensions.hpp"
 
-namespace cydui::components {
+namespace cyd::ui::components {
     
     struct component_state_t;
     struct component_base_t;
@@ -33,27 +33,27 @@ namespace cydui::components {
     };
     
     struct component_dimensional_relations_t {
-      cydui::dimensions::dimension_t &x;
-      cydui::dimensions::dimension_t &y;
-      cydui::dimensions::dimension_t &w;
-      cydui::dimensions::dimension_t &h;
+      cyd::ui::dimensions::dimension_t &x;
+      cyd::ui::dimensions::dimension_t &y;
+      cyd::ui::dimensions::dimension_t &w;
+      cyd::ui::dimensions::dimension_t &h;
       bool &fixed_w;
       bool &fixed_h;
       
-      cydui::dimensions::dimension_t &cx;
-      cydui::dimensions::dimension_t &cy;
-      cydui::dimensions::dimension_t &cw;
-      cydui::dimensions::dimension_t &ch;
+      cyd::ui::dimensions::dimension_t &cx;
+      cyd::ui::dimensions::dimension_t &cy;
+      cyd::ui::dimensions::dimension_t &cw;
+      cyd::ui::dimensions::dimension_t &ch;
       
-      cydui::dimensions::dimension_t &margin_top;
-      cydui::dimensions::dimension_t &margin_bottom;
-      cydui::dimensions::dimension_t &margin_left;
-      cydui::dimensions::dimension_t &margin_right;
+      cyd::ui::dimensions::dimension_t &margin_top;
+      cyd::ui::dimensions::dimension_t &margin_bottom;
+      cyd::ui::dimensions::dimension_t &margin_left;
+      cyd::ui::dimensions::dimension_t &margin_right;
       
-      cydui::dimensions::dimension_t &padding_top;
-      cydui::dimensions::dimension_t &padding_bottom;
-      cydui::dimensions::dimension_t &padding_left;
-      cydui::dimensions::dimension_t &padding_right;
+      cyd::ui::dimensions::dimension_t &padding_top;
+      cyd::ui::dimensions::dimension_t &padding_bottom;
+      cyd::ui::dimensions::dimension_t &padding_left;
+      cyd::ui::dimensions::dimension_t &padding_right;
     };
 }
 

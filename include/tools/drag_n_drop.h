@@ -7,7 +7,7 @@
 
 #include <functional>
 
-namespace cydui::drag_n_drop {
+namespace cyd::ui::drag_n_drop {
     struct draggable_t {
       void* data = nullptr;
       

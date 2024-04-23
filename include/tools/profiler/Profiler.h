@@ -45,7 +45,7 @@ COMPONENT(Profiler) {
         .h = dim->h,
         .inner = {
           FOR_EACH(ThreadTimeline)(props.ctx.threads, [this](auto &thd_data) {
-            return cydui::components::c_init_t<ThreadTimeline> {
+            return cyd::ui::components::c_init_t<ThreadTimeline> {
               .props = {
                 .ctx = props.ctx,
                 .thd_id = thd_data.first,

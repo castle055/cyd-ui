@@ -7,7 +7,7 @@
 #include <unordered_set>
 #include <vector>
 
-namespace cydui::dimensions {
+namespace cyd::ui::dimensions {
     
     typedef int dimension_value_t;
     
@@ -155,7 +155,7 @@ namespace cydui::dimensions {
       four_sided_dimension_t margin;
       four_sided_dimension_t padding;
     };
-}// namespace cydui::dimensions
+}// namespace cyd::ui::dimensions
 
 
 #endif//CYD_UI_DIMENSIONS_HPP

@@ -14,7 +14,7 @@ using namespace x11;
 logging::logger xlog_ctrl = {.name = "X11::RENDER::CTRL", .on = false};
 logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = true};
 
-void render_sbr(cydui::graphics::window_t* win, XImage* image) {
+void render_sbr(cyd::ui::graphics::window_t* win, XImage* image) {
   win->render_mtx.lock(); {
     image->width = win->render_target->width();
     image->height = win->render_target->height();
@@ -51,7 +51,7 @@ void render_sbr(cydui::graphics::window_t* win, XImage* image) {
 
 using namespace std::chrono_literals;
 
-void render_task(cydui::threading::thread_t* this_thread) {
+void render_task(cyd::ui::threading::thread_t* this_thread) {
   xlog_task.debug("Started render thread");
   auto* render_data = (render::RenderThreadData*) this_thread->data;
   XInitImage(render_data->image);
@@ -64,7 +64,7 @@ void render_task(cydui::threading::thread_t* this_thread) {
   }
 }
 
-void render::start(cydui::graphics::window_t* win) {
+void render::start(cyd::ui::graphics::window_t* win) {
   if (win->render_thd && win->render_thd->running)
     return;
   xlog_ctrl.debug("Starting render thread");
@@ -73,7 +73,7 @@ void render::start(cydui::graphics::window_t* win) {
   win->render_data = new RenderThreadData{
     .win = win,
   };
-  win->render_thd = cydui::threading::new_thread(render_task, win->render_data)
+  win->render_thd = cyd::ui::threading::new_thread(render_task, win->render_data)
     ->set_name("RENDER_THD");
 }
 
@@ -192,7 +192,7 @@ void render::resize(pixelmap_t* target, int w, int h) {
   //}
 }
 
-void render::flush(cydui::graphics::window_t* win) {
+void render::flush(cyd::ui::graphics::window_t* win) {
   auto _pev = win->profiler->scope_event("render::flush");
   std::lock_guard lk{win->render_mtx};
 
