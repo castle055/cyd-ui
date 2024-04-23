@@ -6,7 +6,7 @@
 namespace cydui {
 }
 
-#include "cydstd/logging.hpp"
+#include <cyd_fabric/logging/logging.hpp>
 
 #include "layout.h"
 #include "window.h"

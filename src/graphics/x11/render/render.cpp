@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-#include "cydstd/logging.hpp"
+#include <cyd_fabric/logging/logging.hpp>
 
 #include <X11/Xlib.h>
 
