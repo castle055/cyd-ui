@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 8/23/22.
 //
@@ -7,15 +9,15 @@
 
 namespace x11::render {
     struct RenderThreadData {
-      cydui::graphics::window_t* win;
+      cyd::ui::graphics::window_t* win;
       XImage* image = (XImage*) malloc(sizeof(XImage));
     };
     
-    void start(cydui::graphics::window_t* win);
+    void start(cyd::ui::graphics::window_t* win);
     
     void resize(pixelmap_t* target, int w, int h);
     
-    void flush(cydui::graphics::window_t* win);
+    void flush(cyd::ui::graphics::window_t* win);
 }// namespace render
 
 

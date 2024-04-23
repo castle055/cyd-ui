@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 1/4/23.
 //
@@ -6,7 +8,7 @@
 
 #ifndef CYD_UI_CONFIG_HPP
 
-using namespace cydui::config;
+using namespace cyd::ui::config;
 
 ConfigManager::ConfigManager(std::string path)
   : path(std::move(path)) {

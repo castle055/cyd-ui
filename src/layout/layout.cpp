@@ -14,11 +14,11 @@ logging::logger log_lay = {
     return false;                                                              \
   }
 
-using namespace cydui;
-using namespace cydui::components;
+using namespace cyd::ui;
+using namespace cyd::ui::components;
 
 static bool compute_dimensions(component_base_t* rt) {
-  using namespace cydui::dimensions;
+  using namespace cyd::ui::dimensions;
   component_dimensional_relations_t dim = rt->get_dimensional_relations();
   
   /// COMPUTE SOME VALUES
@@ -103,7 +103,7 @@ static bool compute_dimensions(component_base_t* rt) {
 
 #undef COMPUTE
 
-void cydui::layout::Layout::recompute_dimensions(
+void cyd::ui::layout::Layout::recompute_dimensions(
   component_base_t* start_from
 ) {
   if (!compute_dimensions(start_from) && start_from->parent.has_value()) {
@@ -118,7 +118,7 @@ void cydui::layout::Layout::recompute_dimensions(
   }
 }
 
-void cydui::layout::Layout::redraw_component(component_base_t* target) {
+void cyd::ui::layout::Layout::redraw_component(component_base_t* target) {
   log_lay.debug("REDRAW");
   //auto t0 = std::chrono::system_clock::now();
   // Clear render area of component instances
@@ -141,7 +141,7 @@ void cydui::layout::Layout::redraw_component(component_base_t* target) {
   //printf("redraw time: %ld us\n", std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count());
 }
 
-bool cydui::layout::Layout::render_if_dirty(component_base_t* c) {
+bool cyd::ui::layout::Layout::render_if_dirty(component_base_t* c) {
   if (c->state.value()->_dirty) {
     redraw_component(c);
     return true;
@@ -154,7 +154,7 @@ bool cydui::layout::Layout::render_if_dirty(component_base_t* c) {
   }
 }
 
-component_base_t* cydui::layout::Layout::find_by_coords(int x, int y) {
+component_base_t* cyd::ui::layout::Layout::find_by_coords(int x, int y) {
   return root->find_by_coords(x, y);
 }
 
@@ -167,7 +167,7 @@ component_base_t* cydui::layout::Layout::find_by_coords(int x, int y) {
     STATE_PTR->component_instance.value()->event_handler()
 
 
-void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
+void cyd::ui::layout::Layout::bind_window(cyd::ui::window::CWindow* _win) {
   this->win = _win;
   compositor.set_render_target(this->win->win_ref, &this->win->profiling_ctx);
   {/// Configure root component
@@ -296,8 +296,8 @@ void cydui::layout::Layout::bind_window(cydui::window::CWindow* _win) {
     }
     
     // Calling 'Drag' related event handlers
-    //cydui::components::Component* target = root;
-    //cydui::components::Component* specified_target =
+    //cyd::ui::components::Component* target = root;
+    //cyd::ui::components::Component* specified_target =
     //  find_by_coords(root, it.data->x, it.data->y);
     //if (specified_target)
     //  target = specified_target;

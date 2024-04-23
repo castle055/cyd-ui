@@ -64,22 +64,22 @@ struct attribute_i {
       }                                                    \
     }
 
-COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, x, 0);
-COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, y, 0);
-COMPONENT_ATTRIBUTE_W_MONITOR(cydui::dimensions::dimension_t, w, 0);
-COMPONENT_ATTRIBUTE_W_MONITOR(cydui::dimensions::dimension_t, h, 0);
+COMPONENT_ATTRIBUTE(cyd::ui::dimensions::dimension_t, x, 0);
+COMPONENT_ATTRIBUTE(cyd::ui::dimensions::dimension_t, y, 0);
+COMPONENT_ATTRIBUTE_W_MONITOR(cyd::ui::dimensions::dimension_t, w, 0);
+COMPONENT_ATTRIBUTE_W_MONITOR(cyd::ui::dimensions::dimension_t, h, 0);
 
-COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, margin_top, 0);
-COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, margin_bottom, 0);
-COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, margin_left, 0);
-COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, margin_right, 0);
+COMPONENT_ATTRIBUTE(cyd::ui::dimensions::dimension_t, margin_top, 0);
+COMPONENT_ATTRIBUTE(cyd::ui::dimensions::dimension_t, margin_bottom, 0);
+COMPONENT_ATTRIBUTE(cyd::ui::dimensions::dimension_t, margin_left, 0);
+COMPONENT_ATTRIBUTE(cyd::ui::dimensions::dimension_t, margin_right, 0);
 
-COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, padding_top, 0);
-COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, padding_bottom, 0);
-COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, padding_left, 0);
-COMPONENT_ATTRIBUTE(cydui::dimensions::dimension_t, padding_right, 0);
+COMPONENT_ATTRIBUTE(cyd::ui::dimensions::dimension_t, padding_top, 0);
+COMPONENT_ATTRIBUTE(cyd::ui::dimensions::dimension_t, padding_bottom, 0);
+COMPONENT_ATTRIBUTE(cyd::ui::dimensions::dimension_t, padding_left, 0);
+COMPONENT_ATTRIBUTE(cyd::ui::dimensions::dimension_t, padding_right, 0);
 
-using content = std::vector<cydui::components::component_builder_t>;
+using content = std::vector<cyd::ui::components::component_builder_t>;
 
 template<typename E>
 struct attr_content: public attribute_i {

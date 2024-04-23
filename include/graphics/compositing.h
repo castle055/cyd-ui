@@ -9,9 +9,9 @@
 #include <vector>
 
 #include "vg.h"
-#include "../cydstd/profiling.h"
+#include <cyd_fabric/profiling/profiling.h>
 
-namespace cydui::compositing {
+namespace cyd::ui::compositing {
   using namespace graphics::vg;
   using namespace std::chrono_literals;
 
@@ -110,7 +110,7 @@ namespace cydui::compositing {
           graphics::flush(compositor->render_target);
           // auto t1 = std::chrono::system_clock::now();
           // std::cout << "COMPOS:  " << std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count() << " us" <<
-            // std::endl;
+          // std::endl;
         }
         lk.unlock();
 

@@ -6,7 +6,7 @@
 #include "color.h"
 #include "pixelmap_editor.h"
 
-namespace cydui::graphics::vg {
+namespace cyd::ui::graphics::vg {
     namespace paint {
         struct base_i {
           virtual void apply_to_source(pixelmap_editor_t &editor, double opacity) const = 0;

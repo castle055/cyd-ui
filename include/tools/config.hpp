@@ -10,11 +10,11 @@
 
 #include <yaml-cpp/yaml.h>
 
-namespace cydui::config {
+namespace cyd::ui::config {
     class ConfigManager;
 }
 
-class cydui::config::ConfigManager {
+class cyd::ui::config::ConfigManager {
   std::string path;
   
   void parse_raw();
@@ -35,8 +35,8 @@ public:
 };
 
 #define CONFIG(NAME) \
-struct NAME: cydui::config::ConfigManager { \
-  explicit NAME(str path): cydui::config::ConfigManager(std::move(path)) { \
+struct NAME: cyd::ui::config::ConfigManager { \
+  explicit NAME(str path): cyd::ui::config::ConfigManager(std::move(path)) { \
   refresh(); \
   }
 

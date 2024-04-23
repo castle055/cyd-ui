@@ -6,7 +6,7 @@
 #include "with_template.h"
 #include "memory"
 
-namespace cydui::components {
+namespace cyd::ui::components {
     struct component_builder_t {
       template<ComponentConcept C>
       inline component_builder_t(C comp) { // NOLINT(*-explicit-constructor)

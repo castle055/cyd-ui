@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 9/26/23.
 //
@@ -9,7 +11,7 @@
 #include <deque>
 #include <vector>
 
-using namespace cydui::threading;
+using namespace cyd::ui::threading;
 using namespace std::chrono_literals;
 
 logging::logger logger =
@@ -17,13 +19,13 @@ logging::logger logger =
 
 std::mutex task_queue_mtx;
 std::mutex timer_list_mtx;
-typedef std::vector<cydui::tasks::_timer_t*> timer_list_t;
-typedef std::deque<cydui::tasks::task_t*> task_queue_t;
+typedef std::vector<cyd::ui::tasks::_timer_t*> timer_list_t;
+typedef std::deque<cyd::ui::tasks::task_t*> task_queue_t;
 
 static timer_list_t timer_list;
 static task_queue_t task_queue;
 
-static void add_timer(cydui::tasks::_timer_t* timer) {
+static void add_timer(cyd::ui::tasks::_timer_t* timer) {
   timer_list_mtx.lock();
   if (std::find(timer_list.begin(), timer_list.end(), timer) == timer_list.end()) {
     timer_list.push_back(timer);
@@ -31,10 +33,10 @@ static void add_timer(cydui::tasks::_timer_t* timer) {
   timer_list_mtx.unlock();
 }
 
-cydui::tasks::_timer_t* remove_timer(cydui::tasks::_timer_t* timer) {
+cyd::ui::tasks::_timer_t* remove_timer(cyd::ui::tasks::_timer_t* timer) {
   timer_list_mtx.lock();
   auto t = std::find(timer_list.begin(), timer_list.end(), timer);
-  cydui::tasks::_timer_t* t_ret = *t;
+  cyd::ui::tasks::_timer_t* t_ret = *t;
   if (t != timer_list.end()) {
     timer_list.erase(t);
   } else t_ret = nullptr;
@@ -42,15 +44,15 @@ cydui::tasks::_timer_t* remove_timer(cydui::tasks::_timer_t* timer) {
   return t_ret;
 }
 
-static void push_task(cydui::tasks::task_t* task) {
+static void push_task(cyd::ui::tasks::task_t* task) {
   task_queue_mtx.lock();
   task_queue.push_back(task);
   task_queue_mtx.unlock();
 }
 
-static cydui::tasks::task_t* pop_task() {
+static cyd::ui::tasks::task_t* pop_task() {
   task_queue_mtx.lock();
-  cydui::tasks::task_t* id = nullptr;
+  cyd::ui::tasks::task_t* id = nullptr;
   if (!task_queue.empty()) {
     id = task_queue.front();
     task_queue.pop_front();
@@ -59,11 +61,11 @@ static cydui::tasks::task_t* pop_task() {
   return id;
 }
 
-static void task_executor(cydui::tasks::task_t* task) {
+static void task_executor(cyd::ui::tasks::task_t* task) {
   if (task->reset()) {
     task->exec();
     // TODO - There should be a specific event for task completion
-    cydui::async::emit<RedrawEvent>({});
+    cyd::ui::async::emit<RedrawEvent>({});
   }
 }
 
@@ -101,13 +103,13 @@ static void taskrunner_task(thread_t* this_thread) {
   }
 }
 
-cydui::threading::thread_t* taskrunner_thread;
+cyd::ui::threading::thread_t* taskrunner_thread;
 struct thread_data {
 
 };
 thread_data* taskrunner_th_data = new thread_data;
 
-void cydui::tasks::start_thd() {
+void cyd::ui::tasks::start_thd() {
   if (taskrunner_thread && taskrunner_thread->native_thread != nullptr)
     return;
   logger.debug("Starting taskrunner");
@@ -117,12 +119,12 @@ void cydui::tasks::start_thd() {
       ->set_name("TASKRUNNER_THD");
 }
 
-void cydui::tasks::start(task_t* task) {
+void cyd::ui::tasks::start(task_t* task) {
   start_thd();
   push_task(task);
 }
 
-void cydui::tasks::start_timer(_timer_t* timer) {
+void cyd::ui::tasks::start_timer(_timer_t* timer) {
   start_thd();
   add_timer(timer);
 }
@@ -130,11 +132,11 @@ void cydui::tasks::start_timer(_timer_t* timer) {
 
 // TYPE IMPLEMENTATION
 
-cydui::tasks::task_id cydui::tasks::task_t::get_id() {
+cyd::ui::tasks::task_id cyd::ui::tasks::task_t::get_id() {
   return this->id;
 }
 
-bool cydui::tasks::task_t::exec() {
+bool cyd::ui::tasks::task_t::exec() {
   this->task_mutex.lock();
   if (!this->running) {
     this->progress = 1;
@@ -152,7 +154,7 @@ bool cydui::tasks::task_t::exec() {
   }
 }
 
-bool cydui::tasks::task_t::reset() {
+bool cyd::ui::tasks::task_t::reset() {
   this->task_mutex.lock();
   if (!this->running) {
     this->progress = 0;
@@ -165,28 +167,28 @@ bool cydui::tasks::task_t::reset() {
   }
 }
 
-void cydui::tasks::task_t::set_progress(int p) {
+void cyd::ui::tasks::task_t::set_progress(int p) {
   this->task_mutex.lock();
   this->progress = p;
   this->task_mutex.unlock();
-  cydui::async::emit<RedrawEvent>({});
+  cyd::ui::async::emit<RedrawEvent>({});
 }
 
-int cydui::tasks::task_t::get_progress() {
+int cyd::ui::tasks::task_t::get_progress() {
   this->task_mutex.lock();
   int p = this->progress;
   this->task_mutex.unlock();
   return p;
 }
 
-bool cydui::tasks::task_t::is_running() {
+bool cyd::ui::tasks::task_t::is_running() {
   this->task_mutex.lock();
   int r = this->running;
   this->task_mutex.unlock();
   return r;
 }
 
-bool cydui::tasks::task_t::is_complete() {
+bool cyd::ui::tasks::task_t::is_complete() {
   this->task_mutex.lock();
   int p = this->progress;
   int r = this->running;

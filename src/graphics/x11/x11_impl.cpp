@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 8/21/22.
 //
@@ -42,8 +44,8 @@ static int geom_mask_to_gravity(int mask) {
 
 static std::unordered_map<unsigned long, window_t*> window_map {};
 
-cydui::graphics::window_t* cydui::graphics::create_window(
-  async::async_bus_t* async_bus,
+cyd::ui::graphics::window_t* cyd::ui::graphics::create_window(
+  cyd::fabric::async::async_bus_t* async_bus,
   prof::context_t* profiler,
   const char* title,
   const char* wclass,
@@ -157,7 +159,7 @@ cydui::graphics::window_t* cydui::graphics::create_window(
 }
 
 window_t::window_t(
-  async::async_bus_t* async_bus,
+  cyd::fabric::async::async_bus_t* async_bus,
   prof::context_t* profiler,
   Window xwin,
   unsigned long w,
@@ -171,14 +173,14 @@ window_t::window_t(
   render::start(this);
 }
 
-void cydui::graphics::resize(window_t* win, int w, int h) {
+void cyd::ui::graphics::resize(window_t* win, int w, int h) {
   if (w == 0 || h == 0) return;
   std::lock_guard lk {win->render_mtx};
   win->render_target->resize({(size_t) w, (size_t) h});
   win->staging_target->resize({(size_t) w, (size_t) h});
 }
 
-void cydui::graphics::flush(window_t* win) {
+void cyd::ui::graphics::flush(window_t* win) {
   render::flush(win);
 }
 
@@ -197,7 +199,7 @@ static str to_pattern(font::Font* font) {
 }
 
 static window_font load_font(
-  cydui::graphics::window_t* win, font::Font* font
+  cyd::ui::graphics::window_t* win, font::Font* font
 ) {
   str font_spec = to_pattern(font);
   if (win->loaded_fonts.contains(font_spec))
@@ -221,13 +223,13 @@ static window_font load_font(
 }
 
 static void unload_font(
-  cydui::graphics::window_t* win, font::Font* font
+  cyd::ui::graphics::window_t* win, font::Font* font
 ) {
   // TODO - Implement
 }
 
 static window_image load_image(
-  cydui::graphics::window_t* win, cydui::graphics::images::image_t* img
+  cyd::ui::graphics::window_t* win, cyd::ui::graphics::images::image_t* img
 ) {
   if (win->loaded_images.contains(img->path))
     return win->loaded_images[img->path];
@@ -260,8 +262,8 @@ static window_image load_image(
 }
 
 static void unload_image(
-  cydui::graphics::window_t* win,
-  cydui::graphics::images::image_t* img
+  cyd::ui::graphics::window_t* win,
+  cyd::ui::graphics::images::image_t* img
 ) {
   // TODO - Implement
 }
@@ -294,35 +296,35 @@ std::pair<int, int> get_text_size(
 }
 
 std::pair<int, int> get_image_size(
-  cydui::graphics::images::image_t* img
+  cyd::ui::graphics::images::image_t* img
 ) {
   imgs::img_data data = imgs::read_jpg(img->path);
   return {data.width, data.height};
 }
 
-pixelmap_t* cydui::graphics::get_frame(cydui::graphics::window_t* win) {
+pixelmap_t* cyd::ui::graphics::get_frame(cyd::ui::graphics::window_t* win) {
   return win->staging_target;
 }
 
-unsigned long cydui::graphics::get_id(cydui::graphics::window_t* win) {
+unsigned long cyd::ui::graphics::get_id(cyd::ui::graphics::window_t* win) {
   return (unsigned int) win->xwin;
 }
-std::optional<window_t*> cydui::graphics::get_from_id(unsigned long id) {
+std::optional<window_t*> cyd::ui::graphics::get_from_id(unsigned long id) {
   return window_map.contains(id) ? std::optional {window_map[id]} : std::nullopt;
 }
 
-std::pair<int, int> cydui::graphics::get_position(cydui::graphics::window_t* win) {
+std::pair<int, int> cyd::ui::graphics::get_position(cyd::ui::graphics::window_t* win) {
   XWindowAttributes attrs;
   XGetWindowAttributes(state::get_dpy(), win->xwin, &attrs);
   return {attrs.x, attrs.y};
 }
-std::pair<int, int> cydui::graphics::get_size(cydui::graphics::window_t* win) {
+std::pair<int, int> cyd::ui::graphics::get_size(cyd::ui::graphics::window_t* win) {
   XWindowAttributes attrs;
   XGetWindowAttributes(state::get_dpy(), win->xwin, &attrs);
   return {attrs.width, attrs.height};
 }
 
-void cydui::graphics::terminate(cydui::graphics::window_t* win) {
+void cyd::ui::graphics::terminate(cyd::ui::graphics::window_t* win) {
   XUnmapWindow(state::get_dpy(), win->xwin);
   XDestroyWindow(state::get_dpy(), win->xwin);
   delete win->staging_target;

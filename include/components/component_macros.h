@@ -20,16 +20,16 @@
 // ?>
 
 //#define STATE(NAME) \
-//struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
+//struct CYDUI_STATE_NAME(NAME): public cyd::ui::components::component_state_t
 
-#define STATE ; struct init: public cydui::components::component_state_t
+#define STATE ; struct init: public cyd::ui::components::component_state_t
 
 // ?>
 #define COMPONENT(NAME, ...) \
 struct NAME;                 \
 struct CYDUI_EV_HANDLER_NAME(NAME); \
 struct NAME:                 \
-  public cydui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME> \
+  public cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME> \
   {                          \
     CYDUI_COMPONENT_METADATA(NAME)  \
     using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME);                  \
@@ -40,10 +40,10 @@ struct NAME:                 \
     using state_t =          \
       std::conditional<is_type_complete_v<struct init>                    \
         , init               \
-        , cydui::components::component_state_t>::type;                    \
+        , cyd::ui::components::component_state_t>::type;                    \
     NAME() = default;        \
     explicit NAME(props_t props)    \
-      : cydui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\
+      : cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\
       , props(std::move(props)) { } \
     ~NAME() override = default;     \
     void* get_props() override {    \
@@ -51,14 +51,14 @@ struct NAME:                 \
     }                        \
   };                         \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                                 \
-  NAME::state_t* state = nullptr;   \
-  cydui::window::CWindow* window = nullptr;                               \
+  std::shared_ptr<NAME::state_t> state = nullptr;   \
+  cyd::ui::window::CWindow* window = nullptr;                               \
   NAME::props_t* props = nullptr;   \
   attrs_component<NAME>* attrs = nullptr;                                 \
   logging::logger log{.name = #NAME};                                     \
 };                           \
 struct CYDUI_EV_HANDLER_NAME(NAME)  \
-  : public cydui::components::event_handler_t,                            \
+  : public cyd::ui::components::event_handler_t,                            \
     public CYDUI_EV_HANDLER_DATA_NAME(NAME)
 
 
@@ -67,7 +67,7 @@ struct CYDUI_EV_HANDLER_NAME(NAME)  \
 // ?>
 #define STATE_TEMPLATE(NAME) \
 template SET_COMPONENT_TEMPLATE   \
-struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
+struct CYDUI_STATE_NAME(NAME): public cyd::ui::components::component_state_t
 
 
 // ?>
@@ -78,7 +78,7 @@ template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct CYDUI_EV_HANDLER_NAME(NAME);   \
 template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct NAME:                          \
-  public cydui::components::component_t<          \
+  public cyd::ui::components::component_t<          \
     CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT, \
     NAME SET_COMPONENT_TEMPLATE_SHORT \
   > {                                 \
@@ -90,7 +90,7 @@ struct NAME:                          \
     props_t props;                    \
     NAME() = default;                 \
     explicit NAME(props_t props)      \
-      : cydui::components::component_t<           \
+      : cyd::ui::components::component_t<           \
         CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT,        \
         NAME SET_COMPONENT_TEMPLATE_SHORT                     \
       >()                             \
@@ -102,15 +102,15 @@ struct NAME:                          \
 };                                    \
 template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \
-  CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT* state = nullptr;  \
-  cydui::window::CWindow* window = nullptr;       \
+  std::shared_ptr<CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT> state = nullptr;  \
+  cyd::ui::window::CWindow* window = nullptr;       \
   NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = nullptr;\
   attrs_component<NAME SET_COMPONENT_TEMPLATE_SHORT>* attrs = nullptr;   \
   logging::logger log{.name = #NAME}; \
 };                                    \
 template SET_COMPONENT_TEMPLATE       \
 struct CYDUI_EV_HANDLER_NAME(NAME)    \
-  : public cydui::components::event_handler_t,    \
+  : public cyd::ui::components::event_handler_t,    \
     public CYDUI_EV_HANDLER_DATA_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT
 
 #endif //CYD_UI_COMPONENT_MACROS_H

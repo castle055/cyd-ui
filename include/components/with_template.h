@@ -9,7 +9,7 @@
 
 #include "component_types.h"
 
-namespace cydui::components::with {
+namespace cyd::ui::components::with {
     template<typename T>
     struct with_data_t {
       T &val;

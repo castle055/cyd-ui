@@ -5,9 +5,11 @@
 
 #include <thread>
 #include <chrono>
-#include "cydstd/cydstd.h"
+#include <cyd_fabric/type_aliases.h>
 
-namespace cydui::threading {
+using namespace cyd::fabric::type_aliases;
+
+namespace cyd::ui::threading {
     struct thread_t {
       void* native_thread = nullptr;
       bool running = false;
@@ -21,6 +23,6 @@ namespace cydui::threading {
     thread_t* new_thread(void(task)(thread_t* this_thread));
     
     thread_t* new_thread(void(task)(thread_t* this_thread), void* data);
-}// namespace cydui::threading
+}// namespace cyd::ui::threading
 
 #endif//CYD_UI_THREADING_HPP

@@ -1,3 +1,5 @@
+// Copyright (c) 2024, Victor Castillo, All rights reserved.
+
 //
 // Created by castle on 8/21/22.
 //
@@ -8,7 +10,7 @@
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 
-cydui::threading::thread_t* x11_thread;
+cyd::ui::threading::thread_t* x11_thread;
 
 logging::logger x11_evlog = {.name = "X11::EV"};
 //logging::logger chev_log = {.name = "EV::CHANGE", .on = false};
@@ -20,20 +22,20 @@ Bool evpredicate() {
   return True;
 }
 
-//cydui::async::change_ev::DataMonitor<RedrawEvent>
+//cyd::ui::async::change_ev::DataMonitor<RedrawEvent>
 //  redrawEventDataMonitor([](RedrawEvent::DataType &o_data, RedrawEvent::DataType &n_data) {
 //  // this event doesn't really hold data when emitted from x11::events so just consider it changed every time
 //  // it still reuses the same event object, so it won't overload the event bus
 //  return true;
 //});
 //
-//cydui::async::change_ev::DataMonitor<ResizeEvent>
+//cyd::ui::async::change_ev::DataMonitor<ResizeEvent>
 //  resizeEventDataMonitor([](ResizeEvent::DataType &o_data, ResizeEvent::DataType &n_data) {
 //  return (o_data.w != n_data.w || o_data.h != n_data.h || o_data.win != n_data.win);
 //  //return true;
 //});
 //
-//cydui::async::change_ev::DataMonitor<MotionEvent>
+//cyd::ui::async::change_ev::DataMonitor<MotionEvent>
 //  motionEventDataMonitor([](MotionEvent::DataType &o_data, MotionEvent::DataType &n_data) {
 //  return true;
 //});
@@ -43,7 +45,7 @@ Bool evpredicate() {
 // * @note It does impose a limit on the scroll speed to 64 units per frame
 // * in either direction
 // */
-//cydui::async::change_ev::DataMonitor<ScrollEvent>
+//cyd::ui::async::change_ev::DataMonitor<ScrollEvent>
 //  vScrollEventDataMonitor([](ScrollEvent::DataType &o_data, ScrollEvent::DataType &n_data) {
 //  n_data.dy += o_data.dy;
 //  return true;
@@ -56,7 +58,7 @@ Bool evpredicate() {
 // * @note It does impose a limit on the scroll speed to 64 units per frame
 // * in either direction
 // */
-//cydui::async::change_ev::DataMonitor<ScrollEvent>
+//cyd::ui::async::change_ev::DataMonitor<ScrollEvent>
 //  hScrollEventDataMonitor([](ScrollEvent::DataType &o_data, ScrollEvent::DataType &n_data) {
 //  n_data.dx += o_data.dx;
 //  return true;
@@ -116,9 +118,9 @@ static XIC xic;
 Status st;
 KeySym ksym;
 
-template<cydui::async::EventType EV>
+template<cyd::fabric::async::EventType EV>
 static inline bool emit_to_window(unsigned long win, typename EV::DataType &&ev) {
-  auto w = cydui::graphics::get_from_id(win).transform([&](window_t* w) {
+  auto w = cyd::ui::graphics::get_from_id(win).transform([&](window_t* w) {
     w->bus->emit<EV>(ev);
     return w;
   });
@@ -292,7 +294,7 @@ static void run() {
 
 using namespace std::chrono_literals;
 
-void x11_event_emitter_task(cydui::threading::thread_t* this_thread) {
+void x11_event_emitter_task(cyd::ui::threading::thread_t* this_thread) {
   xim = XOpenIM(state::get_dpy(), NULL, NULL, NULL);
   xic = XCreateIC(xim,
     XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
@@ -310,6 +312,6 @@ void x11::events::start() {
   if (x11_thread && x11_thread->native_thread != nullptr)
     return;
   x11_evlog.debug("starting x11_thread");
-  x11_thread = cydui::threading::new_thread(x11_event_emitter_task)
+  x11_thread = cyd::ui::threading::new_thread(x11_event_emitter_task)
     ->set_name("X11_EV_THD");
 }
