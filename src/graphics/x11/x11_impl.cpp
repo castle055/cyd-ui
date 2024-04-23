@@ -4,8 +4,7 @@
 // Created by castle on 8/21/22.
 //
 
-#include "cydstd/cydstd.h"
-#include "cydstd/logging.hpp"
+#include <cyd_fabric/logging/logging.hpp>
 #include "images.h"
 #include "events/events.hpp"
 #include <X11/Xft/Xft.h>

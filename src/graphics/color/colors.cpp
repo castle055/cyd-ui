@@ -7,7 +7,7 @@
 #include <iomanip>
 #include "graphics/color.h"
 
-#include "cydstd/logging.hpp"
+#include <cyd_fabric/logging/logging.hpp>
 
 using namespace cyd::ui::graphics::color;
 namespace color = cyd::ui::graphics::color;
