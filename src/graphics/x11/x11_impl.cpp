@@ -169,7 +169,6 @@ window_t::window_t(
   this->xwin = xwin;
   this->staging_target = new pixelmap_t {w, h};
   this->render_target = new pixelmap_t {w, h};
-  render::start(this);
 }
 
 void cyd::ui::graphics::resize(window_t* win, int w, int h) {
