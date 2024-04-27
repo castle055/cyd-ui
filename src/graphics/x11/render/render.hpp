@@ -8,13 +8,6 @@
 #define CYD_UI_RENDER_HPP
 
 namespace x11::render {
-    struct RenderThreadData {
-      cyd::ui::graphics::window_t* win;
-      XImage* image = (XImage*) malloc(sizeof(XImage));
-    };
-    
-    void start(cyd::ui::graphics::window_t* win);
-    
     void resize(pixelmap_t* target, int w, int h);
     
     void flush(cyd::ui::graphics::window_t* win);

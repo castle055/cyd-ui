@@ -15,67 +15,39 @@ logging::logger xlog_ctrl = {.name = "X11::RENDER::CTRL", .on = false};
 logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = true};
 
 void render_sbr(cyd::ui::graphics::window_t* win, XImage* image) {
-  win->render_mtx.lock(); {
-    image->width = win->render_target->width();
-    image->height = win->render_target->height();
-    image->xoffset = 0;
-    image->format = ZPixmap;
-    image->data = (char*) win->render_target->data;
-    image->byte_order = LSBFirst;
-    image->bitmap_unit = 32;
-    image->bitmap_bit_order = MSBFirst;
-    image->bitmap_pad = 8;
-    image->depth = 32; //DisplayPlanes(state::get_dpy(), state::get_screen());
-    image->bits_per_pixel = 32;
-    image->bytes_per_line = (int) win->render_target->width() * 4;
-    image->red_mask = (0xff) << 24;
-    image->green_mask = (0xff) << 16;
-    image->blue_mask = (0xff) << 8;
+  std::lock_guard lk{win->render_mtx};
+  image->width = win->render_target->width();
+  image->height = win->render_target->height();
+  image->xoffset = 0;
+  image->format = ZPixmap;
+  image->data = (char*) win->render_target->data;
+  image->byte_order = LSBFirst;
+  image->bitmap_unit = 32;
+  image->bitmap_bit_order = MSBFirst;
+  image->bitmap_pad = 8;
+  image->depth = 32; //DisplayPlanes(state::get_dpy(), state::get_screen());
+  image->bits_per_pixel = 32;
+  image->bytes_per_line = (int) win->render_target->width() * 4;
+  image->red_mask = (0xff) << 24;
+  image->green_mask = (0xff) << 16;
+  image->blue_mask = (0xff) << 8;
 
-    auto _pev = win->profiler->scope_event("render::render_sbr");
-    XPutImage(
-      state::get_dpy(),
-      win->xwin,
-      win->gc,
-      image,
-      0,
-      0,
-      0,
-      0,
-      win->render_target->width(),
-      win->render_target->height()
-    );
-  }
-  win->render_mtx.unlock();
+  auto _pev = win->profiler->scope_event("render::render_sbr");
+  XPutImage(
+    state::get_dpy(),
+    win->xwin,
+    win->gc,
+    image,
+    0,
+    0,
+    0,
+    0,
+    win->render_target->width(),
+    win->render_target->height()
+  );
 }
 
 using namespace std::chrono_literals;
-
-void render_task(cyd::ui::threading::thread_t* this_thread) {
-  xlog_task.debug("Started render thread");
-  auto* render_data = (render::RenderThreadData*) this_thread->data;
-  XInitImage(render_data->image);
-  auto t0 = std::chrono::system_clock::now();
-  while (this_thread->running) {
-    t0 = std::chrono::system_clock::now();
-    render_sbr(render_data->win, render_data->image);
-    std::this_thread::sleep_until(t0 + 16666us); // 60 FPS
-    // std::this_thread::sleep_until(t0 + 2 * 16666us); // 30 FPS
-  }
-}
-
-void render::start(cyd::ui::graphics::window_t* win) {
-  if (win->render_thd && win->render_thd->running)
-    return;
-  xlog_ctrl.debug("Starting render thread");
-
-  delete (RenderThreadData*) win->render_data;
-  win->render_data = new RenderThreadData{
-    .win = win,
-  };
-  win->render_thd = cyd::ui::threading::new_thread(render_task, win->render_data)
-    ->set_name("RENDER_THD");
-}
 
 static std::unordered_map<u32, XColor> xcolor_cache;
 
@@ -194,11 +166,10 @@ void render::resize(pixelmap_t* target, int w, int h) {
 
 void render::flush(cyd::ui::graphics::window_t* win) {
   auto _pev = win->profiler->scope_event("render::flush");
-  std::lock_guard lk{win->render_mtx};
-
+  XImage ximg;
+  XInitImage(&ximg);
   auto* tmp = win->render_target;
   win->render_target = win->staging_target;
   win->staging_target = tmp;
-
-  win->dirty = true;
+  render_sbr(win, &ximg);
 }
