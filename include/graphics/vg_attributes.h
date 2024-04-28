@@ -9,16 +9,19 @@
 namespace cyd::ui::graphics::vg {
     namespace paint {
         struct base_i {
+          virtual ~base_i() = default;
           virtual void apply_to_source(pixelmap_editor_t &editor, double opacity) const = 0;
           virtual color::Color sample(int x, int y) const = 0;
+
+          virtual base_i* make_copy() const = 0;
         };
-        
+
         struct solid: public base_i {
           color::Color c = "#00000000"_color;
-          
+
           solid() = default;
           solid(color::Color _c): c(_c) { }
-          
+
           void apply_to_source(pixelmap_editor_t &editor, double opacity) const override {
             editor->set_source_rgba(
               c.r,
@@ -27,19 +30,24 @@ namespace cyd::ui::graphics::vg {
               c.a * opacity
             );
           }
-          
+
           color::Color sample(int x, int y) const override {
             return c;
           }
+
+          [[nodiscard]]
+          base_i* make_copy() const override {
+            return new solid{*this};
+          }
         };
-        
+
         namespace gradient {
             struct base_i: public paint::base_i {
               std::vector<Cairo::ColorStop> color_stops {};
               int x0, y0;
               int x1, y1;
             };
-            
+
             struct linear: public gradient::base_i {
               linear(
                 std::pair<int, int> start,
@@ -60,7 +68,7 @@ namespace cyd::ui::graphics::vg {
                   });
                 }
               }
-              
+
               void apply_to_source(pixelmap_editor_t &editor, double opacity) const override {
                 auto lg = Cairo::LinearGradient::create(x0, y0, x1, y1);
                 for (auto &item: color_stops) {
@@ -77,10 +85,15 @@ namespace cyd::ui::graphics::vg {
               color::Color sample(int x, int y) const override {
                 return "#00000000"_color;
               }
+
+              [[nodiscard]]
+              base_i* make_copy() const override {
+                return new linear{*this};
+              }
             };
             struct radial: public gradient::base_i {
               int r0, r1;
-              
+
               radial(
                 std::pair<int, int> start, int r0,
                 std::pair<int, int> end, int r1,
@@ -102,7 +115,7 @@ namespace cyd::ui::graphics::vg {
                   });
                 }
               }
-              
+
               void apply_to_source(pixelmap_editor_t &editor, double opacity) const override {
                 auto lg = Cairo::RadialGradient::create(x0, y0, r0, x1, y1, r1);
                 for (auto &item: color_stops) {
@@ -119,22 +132,50 @@ namespace cyd::ui::graphics::vg {
               color::Color sample(int x, int y) const override {
                 return "#00000000"_color;
               }
+
+              [[nodiscard]]
+              base_i* make_copy() const override {
+                return new radial{*this};
+              }
             };
         }
-        
+
         namespace pixelmap {
             struct base_i: public paint::base_i {
-            
+
             };
         }
-        
-        using type = std::variant<
-          solid,
-          gradient::linear,
-          gradient::radial
-        >;
+
+        // using type = std::variant<
+          // solid,
+          // gradient::linear,
+          // gradient::radial
+        // >;
+
+        struct type {
+          enum {
+            SOLID,
+            GRADIENT_LINEAR,
+            GRADIENT_RADIAL,
+          } paint_type = SOLID;
+          std::unique_ptr<base_i> paint_data = std::make_unique<solid>();
+
+          type(decltype(paint_type) type_, std::unique_ptr<base_i>&& paint_data_)
+          : paint_type(type_), paint_data(std::move(paint_data_)){}
+
+          type(const type& rhl)
+            : paint_type(rhl.paint_type),
+              paint_data(rhl.paint_data->make_copy()) {
+          }
+          type& operator=(const type& rhl) {
+            this->paint_type = rhl.paint_type;
+            auto new_paint_data = std::unique_ptr<base_i>(rhl.paint_data->make_copy());
+            std::swap(this->paint_data, new_paint_data);
+            return *this;
+          };
+        };
     }
-    
+
     struct attribute_i { };
 
 #define VG_ATTRIBUTE(TYPE, NAME, DEFAULT) \
@@ -165,34 +206,40 @@ namespace cyd::ui::graphics::vg {
       TYPE _##NAME = DEFAULT;             \
     }
 
-#define VG_ATTRIBUTE_PAINT(NAME, DEFAULT) \
+#define VG_ATTRIBUTE_PAINT(NAME) \
     template<typename E>                  \
     struct attr_##NAME: public attribute_i { \
       inline E &NAME(vg::paint::solid& _##NAME##_) {  \
-        this->_##NAME = _##NAME##_;       \
+        this->_##NAME.paint_data = std::make_unique<vg::paint::solid>(_##NAME##_);       \
+        this->_##NAME.paint_type = vg::paint::type::SOLID;  \
         return *(E*)this;                 \
       }                                   \
       inline E &NAME(vg::paint::solid&& _##NAME##_) { \
-        this->_##NAME = _##NAME##_;       \
+        this->_##NAME.paint_data = std::make_unique<vg::paint::solid>(_##NAME##_);       \
+        this->_##NAME.paint_type = vg::paint::type::SOLID;  \
         return *(E*)this;                 \
       }                                   \
       inline E &NAME(vg::paint::gradient::linear& _##NAME##_) {  \
-        this->_##NAME = _##NAME##_;       \
+        this->_##NAME.paint_data = std::make_unique<vg::paint::gradient::linear>(_##NAME##_);       \
+        this->_##NAME.paint_type = vg::paint::type::GRADIENT_LINEAR;  \
         return *(E*)this;                 \
       }                                   \
       inline E &NAME(vg::paint::gradient::linear&& _##NAME##_) { \
-        this->_##NAME = _##NAME##_;       \
+        this->_##NAME.paint_data = std::make_unique<vg::paint::gradient::linear>(_##NAME##_);       \
+        this->_##NAME.paint_type = vg::paint::type::GRADIENT_LINEAR;  \
         return *(E*)this;                 \
       }                                   \
       inline E &NAME(vg::paint::gradient::radial& _##NAME##_) {  \
-        this->_##NAME = _##NAME##_;       \
+        this->_##NAME.paint_data = std::make_unique<vg::paint::gradient::radial>(_##NAME##_);       \
+        this->_##NAME.paint_type = vg::paint::type::GRADIENT_RADIAL;  \
         return *(E*)this;                 \
       }                                   \
       inline E &NAME(vg::paint::gradient::radial&& _##NAME##_) { \
-        this->_##NAME = _##NAME##_;       \
+        this->_##NAME.paint_data = std::make_unique<vg::paint::gradient::radial>(_##NAME##_);       \
+        this->_##NAME.paint_type = vg::paint::type::GRADIENT_RADIAL;  \
         return *(E*)this;                 \
       }                                   \
-      vg::paint::type _##NAME = DEFAULT;             \
+      vg::paint::type _##NAME {vg::paint::type::SOLID, std::make_unique<vg::paint::solid>()};             \
     }
 
 #define VG_ATTRIBUTE_DIMENSION(NAME, DEFAULT) \
@@ -208,12 +255,12 @@ namespace cyd::ui::graphics::vg {
       }                                   \
       int _##NAME = DEFAULT;             \
     }
-    
+
     //! @brief id
     VG_ATTRIBUTE(std::string, id, " ");
     //! @brief class
     VG_ATTRIBUTE(std::vector<std::string>, style_class, std::vector<std::string> {});
-    
+
     //! @brief x  - x-axis coordinate
     VG_ATTRIBUTE_DIMENSION(x, 0);
     //! @brief y  - y-axis coordinate
@@ -240,42 +287,42 @@ namespace cyd::ui::graphics::vg {
     VG_ATTRIBUTE(double, a1, 0);
     //! @brief a1 - 2st angle in arcs in degrees
     VG_ATTRIBUTE(double, a2, 0);
-    
+
     using point_list_t = std::vector<std::array<int, 2>>;
     //! @brief points
     VG_ATTRIBUTE(point_list_t, points, point_list_t {});
-    
+
     //! @brief d - path str
     VG_ATTRIBUTE(std::string, path_str, std::string {});
-    
+
     //! @brief width
     VG_ATTRIBUTE_DIMENSION(w, 0);
     //! @brief height
     VG_ATTRIBUTE_DIMENSION(h, 0);
-    
+
     //! @brief hidden - replaces display="none" from SVG
     VG_ATTRIBUTE(bool, hidden, 1.0);
     //! @brief opacity
     VG_ATTRIBUTE(float, opacity, 1.0);
-    
+
     // ?* STROKE ATTRIBUTES
     //! @brief stroke
-    VG_ATTRIBUTE_PAINT(stroke, paint::solid {});
+    VG_ATTRIBUTE_PAINT(stroke);
     //! @brief stroke-dasharray
-    VG_ATTRIBUTE(std::vector<double>, stroke_dasharray, std::vector<double> {});
+    VG_ATTRIBUTE(std::valarray<double>, stroke_dasharray, std::valarray<double> {});
     //! @brief stroke-dashoffset
     VG_ATTRIBUTE(double, stroke_dashoffset, 0.0);
-    
+
     //enum class stroke_linecap_e {
     //  BUTT,
     //  ROUND,
     //  SQUARE,
     //};
     using stroke_linecap_e = Cairo::Context::LineCap;
-    
+
     //! @brief stroke-linecap
     VG_ATTRIBUTE(stroke_linecap_e, stroke_linecap, stroke_linecap_e::BUTT);
-    
+
     //enum class stroke_linejoin_e {
     //  ARCS,
     //  BEVEL,
@@ -284,17 +331,17 @@ namespace cyd::ui::graphics::vg {
     //  ROUND,
     //};
     using stroke_linejoin_e = Cairo::Context::LineJoin;
-    
+
     //! @brief stroke-linejoin
     VG_ATTRIBUTE(stroke_linejoin_e, stroke_linejoin, stroke_linejoin_e::MITER);
-    
+
     //! @brief stroke-miterlimit
     VG_ATTRIBUTE(int, stroke_miterlimit, 4);
     //! @brief stroke-opacity
     VG_ATTRIBUTE(float, stroke_opacity, 1.0);
     //! @brief stroke-width
     VG_ATTRIBUTE_DIMENSION(stroke_width, 0);
-    
+
     // ?* TEXT ATTRIBUTES
     //! @brief font-family
     VG_ATTRIBUTE(std::string, font_family, "default");
@@ -304,50 +351,50 @@ namespace cyd::ui::graphics::vg {
     //VG_ATTRIBUTE(double, font_size_adjust, 0.0); What is this?
     //! @brief font-stretch
     VG_ATTRIBUTE(double, font_stretch, 1.0); //! UNUSED
-    
+
     using font_style_e = Cairo::ToyFontFace::Slant;
     //! @brief font-style
     VG_ATTRIBUTE(font_style_e, font_style, font_style_e::NORMAL);
-    
+
     using font_weight_e = Cairo::ToyFontFace::Weight;
     //! @brief font-weight
     VG_ATTRIBUTE(font_weight_e, font_weight, font_weight_e::NORMAL);
-    
+
     enum class text_anchor_e {
       START,
       MIDDLE,
       END,
     };
-    
+
     //! @brief text-anchor
     VG_ATTRIBUTE(text_anchor_e, text_anchor, text_anchor_e::START);
-    
+
     struct text_decoration_t {
       bool underline = false;
       bool overline = false;
       bool strike_through = false;
     };
-    
+
     //! @brief text-decoration
     VG_ATTRIBUTE(text_decoration_t, text_decoration, text_decoration_t {});
-    
+
     // ?* COLOR ATTRIBUTES
     // brief color
     //! @brief fill
-    VG_ATTRIBUTE_PAINT(fill, paint::solid {});
+    VG_ATTRIBUTE_PAINT(fill);
     //! @brief fill-opacity
     VG_ATTRIBUTE(double, fill_opacity, 1.0);
-    
+
     using fill_rule_e = Cairo::Context::FillRule;
-    
+
     //! @brief fill-rule
     VG_ATTRIBUTE(fill_rule_e, fill_rule, fill_rule_e::WINDING);
-    
+
     // ?* CLIP ATTRIBUTES
     // brief clip-path
     // brief clip-rule
     // brief clipPathUnits
-    
+
     // ? ATTRIBUTE GROUPS
     template<typename T>
     struct attrs_stroke:
@@ -367,21 +414,17 @@ namespace cyd::ui::graphics::vg {
         editor->set_dash(this->_stroke_dasharray, this->_stroke_dashoffset);
         editor->set_miter_limit(this->_stroke_miterlimit);
       }
-      
+
       void set_source_to_stroke(pixelmap_editor_t &editor) const {
-        std::visit([&](auto &&s) {
-          s.apply_to_source(editor, this->_stroke_opacity);
-        }, this->_stroke);
+        this->_stroke.paint_data->apply_to_source(editor, this->_stroke_opacity);
       }
-      
+
       [[nodiscard]]
       color::Color sample_stroke(int x, int y) const {
-        return std::visit([&](auto &&f) -> color::Color {
-          return f.sample(x, y);
-        }, this->_stroke);
+        return this->_stroke.paint_data->sample(x,y);
       }
     };
-    
+
     template<typename T>
     struct attrs_fill:
       attr_fill<T>,
@@ -391,21 +434,17 @@ namespace cyd::ui::graphics::vg {
       void apply_fill(pixelmap_editor_t &editor) const {
         editor->set_fill_rule(this->_fill_rule);
       }
-      
+
       void set_source_to_fill(pixelmap_editor_t &editor) const {
-        std::visit([&](auto &&f) {
-          f.apply_to_source(editor, this->_fill_opacity);
-        }, this->_fill);
+        this->_fill.paint_data->apply_to_source(editor, this->_fill_opacity);
       }
-      
+
       [[nodiscard]]
       color::Color sample_fill(int x, int y) const {
-        return std::visit([&](auto &&f) -> color::Color {
-          return f.sample(x, y);
-        }, this->_fill);
+        return this->_fill.paint_data->sample(x,y);
       }
     };
-    
+
     template<typename T>
     struct attrs_font:
       attr_font_family<T>,
@@ -420,11 +459,11 @@ namespace cyd::ui::graphics::vg {
         editor->set_font_size(this->_font_size);
       }
     };
-    
+
     template<typename T>
     struct attrs_core:
-      attr_id<T>,
-      attr_style_class<T>,
+      // attr_id<T>,
+      // attr_style_class<T>,
       attr_hidden<T>,
       attr_opacity<T> {
     };
