@@ -28,16 +28,9 @@ namespace cyd::ui::graphics::vg {
   };
 
   struct vg_fragment_t {
-    std::vector<vg_element_t*> elements{};
-
-    ~vg_fragment_t() {
-      clear();
-    }
+    std::vector<std::unique_ptr<vg_element_t>> elements{};
 
     void clear() {
-      for (auto &item: elements) {
-        delete item;
-      }
       elements.clear();
     }
 
@@ -45,16 +38,10 @@ namespace cyd::ui::graphics::vg {
       return elements.empty();
     }
 
-    void append(std::initializer_list<vg_element_t*> _elements) {
-      for (const auto &item: _elements) {
-        elements.push_back(item);
-      }
-    }
-
     template<typename... T>
-    void append(T... _elements) {
-      static_assert((std::derived_from<T, vg_element_t> && ...), "Elements must derive from vg_element_t.");
-      (elements.push_back(new T{_elements}), ...);
+    void append(T&&... _elements) {
+      static_assert((std::derived_from<std::remove_reference_t<T>, vg_element_t> && ...), "Elements must derive from vg_element_t.");
+      (elements.emplace_back(new std::remove_reference_t<T>{std::forward<T&&>(_elements)}), ...);
     }
   };
 
