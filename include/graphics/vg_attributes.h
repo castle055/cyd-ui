@@ -283,10 +283,20 @@ namespace cyd::ui::graphics::vg {
     VG_ATTRIBUTE_DIMENSION(cx, 0);
     //! @brief cy - center y-axis coordinate
     VG_ATTRIBUTE_DIMENSION(cy, 0);
+    //! @brief rotate - angle of rotation in degrees
+    VG_ATTRIBUTE(double, rotate, 0);
+    //! @brief pivot_x - rotate pivot x-axis coordinate
+    VG_ATTRIBUTE_DIMENSION(pivot_x, 0);
+    //! @brief pivot_y - rotate pivot y-axis coordinate
+    VG_ATTRIBUTE_DIMENSION(pivot_y, 0);
     //! @brief a1 - 1st angle in arcs in degrees
     VG_ATTRIBUTE(double, a1, 0);
     //! @brief a1 - 2st angle in arcs in degrees
     VG_ATTRIBUTE(double, a2, 0);
+    //! @brief rotate - angle of rotation in degrees
+    VG_ATTRIBUTE(double, scale_x, 1);
+    //! @brief rotate - angle of rotation in degrees
+    VG_ATTRIBUTE(double, scale_y, 1);
 
     using point_list_t = std::vector<std::array<int, 2>>;
     //! @brief points
