@@ -16,11 +16,11 @@ struct pixelmap_t: public md_buffer_t<pixel_t, 2> {
   pixelmap_t(unsigned long w, unsigned long h): md_buffer_t<pixel_t, 2>({w, h}) {
   }
 
-  size_t width() {
+  [[nodiscard]] size_t width() const {
     return size[0];
   }
 
-  size_t height() {
+  [[nodiscard]] size_t height() const {
     return size[1];
   }
 };

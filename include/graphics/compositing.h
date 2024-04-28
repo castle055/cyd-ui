@@ -193,7 +193,7 @@ namespace cyd::ui::compositing {
             //cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, (int) sfrm->width())
           );
           (*editor)->save();
-          (*editor)->set_antialias(Cairo::ANTIALIAS_NONE);
+          // (*editor)->set_antialias(Cairo::ANTIALIAS_NONE);
           (*editor)->set_operator(Cairo::Context::Operator::OVER);
           (*editor)->set_source(surface, node->op.orig_x + snode->op.x, node->op.orig_y + snode->op.y);
           (*editor)->rectangle(node->op.orig_x + snode->op.x, node->op.orig_y + snode->op.y, snode->op.w, snode->op.h);
