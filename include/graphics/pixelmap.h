@@ -15,7 +15,7 @@ struct __attribute__((packed)) pixel_t {
 struct pixelmap_t: public md_buffer_t<pixel_t, 2> {
   pixelmap_t(unsigned long w, unsigned long h): md_buffer_t<pixel_t, 2>({w, h}) {
   }
-  pixelmap_t(unsigned long w, unsigned long h, void* data): md_buffer_t<pixel_t, 2>({w, h}, static_cast<pixel_t*>(data)) {
+  pixelmap_t(unsigned long w, unsigned long h, pixel_t*& data): md_buffer_t<pixel_t, 2>({w, h}, data) {
   }
 
   [[nodiscard]] size_t width() const {
