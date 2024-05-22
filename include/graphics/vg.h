@@ -4,6 +4,7 @@
 #define CYD_UI_VG_H
 
 #include <vector>
+#include <numbers>
 #include <variant>
 
 #include "vg_attributes.h"

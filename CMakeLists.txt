@@ -49,10 +49,9 @@ FetchContent_MakeAvailable(cyd_fabric)
 include_directories(${cyd_fabric_SOURCE_DIR}/include)
 
 
-FILE(GLOB_RECURSE SRC_LIST
+FILE(GLOB_RECURSE SRC_LIST CONFIGURE_DEPENDS
         ${INCLUDE_DIR}/*.h
         ${INCLUDE_DIR}/*.hpp
-        ${INCLUDE_DIR}/*.cpp
         ${SOURCE_DIR}/*.h
         ${SOURCE_DIR}/*.hpp
         ${SOURCE_DIR}/*.cpp
@@ -61,12 +60,14 @@ FILE(GLOB_RECURSE SRC_LIST
 add_library(cyd_ui)
 target_sources(cyd_ui PUBLIC ${SRC_LIST})
 target_link_libraries(cyd_ui
-        PRIVATE
+        PUBLIC
         cyd_fabric
         X11 Xft Xrender fontconfig
         ${CAIROMM-1.16_LIBRARIES}
         yaml-cpp jpeg
 )
+target_include_directories(cyd_ui PUBLIC ${CAIROMM-1.16_INCLUDE_DIRS})
+target_include_directories(cyd_ui PUBLIC ${cyd_fabric_SOURCE_DIR}/include)
 
 # Build Tests
 include(cmake/ctest.cmake)

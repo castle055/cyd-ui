@@ -5,6 +5,8 @@
 //
 
 #include "layout.h"
+#include <ranges>
+#include <algorithm>
 
 logging::logger log_lay = {
   .name = "LAYOUT", .on = true, .min_level = logging::INFO};
