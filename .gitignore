@@ -36,6 +36,7 @@
 .ccls-cache/
 .cache/
 
+.build/
 build/
 
 docs/

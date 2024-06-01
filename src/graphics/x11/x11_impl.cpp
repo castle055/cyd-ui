@@ -1,10 +1,10 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 //
 // Created by castle on 8/21/22.
 //
 
-#include <cyd_fabric/logging/logging.hpp>
 #include "images.h"
 #include "events/events.hpp"
 #include <X11/Xft/Xft.h>
@@ -14,9 +14,10 @@
 #include "state/state.hpp"
 #include "render/render.hpp"
 
+import fabric.logging;
+
 using namespace x11;
 
-const logging::logger log_task = {.name = "X11_IMPL", .on = true};
 
 char* log_error_code(int err) {
   static char buf[128];
@@ -37,7 +38,7 @@ static int geom_mask_to_gravity(int mask) {
     case YNegative:
       return SouthWestGravity;
   }
-  
+
   return SouthEastGravity;
 }
 
@@ -55,10 +56,10 @@ cyd::ui::graphics::window_t* cyd::ui::graphics::create_window(
   bool override_redirect
 ) {
   static int _ig = XInitThreads();
-  
+
   XVisualInfo vinfo;
   if (not XMatchVisualInfo(state::get_dpy(), state::get_screen(), 32, TrueColor, &vinfo)) {
-    log_task.error("XMatchVisualInfo failed to find a Visual");
+    LOG::print{ERROR}("XMatchVisualInfo failed to find a Visual");
   }
   Colormap cmap = XCreateColormap(state::get_dpy(), state::get_root(), vinfo.visual, AllocNone);
   XSetWindowAttributes wa = {
@@ -76,7 +77,7 @@ cyd::ui::graphics::window_t* cyd::ui::graphics::create_window(
   str title_str = title;
   str wclass_str = wclass;
   XClassHint ch = {title_str.data(), wclass_str.data()};
-  
+
   int x_o, y_o;
   unsigned int w_o, h_o;
   str geom;
@@ -87,14 +88,14 @@ cyd::ui::graphics::window_t* cyd::ui::graphics::create_window(
   if (y >= 0)
     geom += "+";
   geom += std::to_string(y);
-  
+
   int gm_mask = XParseGeometry(geom.c_str(), &x_o, &y_o, &w_o, &h_o);
-  
+
   if (gm_mask & XNegative)
     x_o += DisplayWidth(state::get_dpy(), state::get_screen()) - w;// - 2;
   if (gm_mask & YNegative)
     y_o += DisplayHeight(state::get_dpy(), state::get_screen()) - h;// - 2;
-  
+
   Window xwin = XCreateWindow(state::get_dpy(),
     state::get_root(),
     x_o,
@@ -111,10 +112,10 @@ cyd::ui::graphics::window_t* cyd::ui::graphics::create_window(
   XSetClassHint(state::get_dpy(), xwin, &ch);
   XStoreName(state::get_dpy(), xwin, title);
   XSync(state::get_dpy(), False);
-  
-  log_task.info(
-    "Created window %lX at (%s) x: %d, y: %d", xwin, geom.c_str(), x, y);
-  
+
+  LOG::print{INFO}(
+    "Created window {} at ({}) x: {}, y: {}", xwin, geom.c_str(), x, y);
+
   if (!override_redirect) {
     XWMHints wm = {.flags = InputHint, .input = 1};
     XSizeHints* sizeh;
@@ -136,24 +137,24 @@ cyd::ui::graphics::window_t* cyd::ui::graphics::create_window(
     XFree(sizeh);
   }
   XSync(state::get_dpy(), False);
-  
+
   //  XDefineCursor(state::get_dpy(), xwin, state::cursor[CurNormal]->cursor);
   if (override_redirect) {
     XMapRaised(state::get_dpy(), xwin);
   } else {
     XMapWindow(state::get_dpy(), xwin);
   }
-  log_task.debug("Mapping window %lX", xwin);
-  
+  LOG::print{DEBUG}("Mapping window {}", xwin);
+
   auto* win = new window_t(async_bus, profiler, xwin, w, h);
   window_map[get_id(win)] = win;
-  
+
   win->gc = XCreateGC(state::get_dpy(), xwin, 0, nullptr);
-  
+
   XSync(state::get_dpy(), False);
-  
+
   x11::events::start();
-  
+
   return win;
 }
 
@@ -192,7 +193,7 @@ static str to_pattern(font::Font* font) {
   str.append("autohint=");
   str.append((font->autohint ? "true" : "false"));
   //str.append(":");
-  
+
   return str;
 }
 
@@ -204,17 +205,17 @@ static window_font load_font(
     return win->loaded_fonts[font_spec];
   XftFont* xfont;
   FcPattern* pattern;
-  
+
   if (!(xfont = XftFontOpenName(
     state::get_dpy(), state::get_screen(), font_spec.c_str()))) {
-    log_task.error("Cannot load font from name %s", font_spec.c_str());
+    LOG::print{ERROR}("Cannot load font from name {}", font_spec);
     return {};
   }
   if (!(pattern = FcNameParse((FcChar8*) (font_spec.c_str())))) {
-    log_task.error("Cannot parse font name to pattern: %s", font_spec.c_str());
+    LOG::print{ERROR}("Cannot parse font name to pattern: {}", font_spec.c_str());
     return {};
   }
-  
+
   auto f = window_font {.xfont = xfont, .pattern = pattern};
   win->loaded_fonts[font_spec] = f;
   return f;
@@ -231,13 +232,13 @@ static window_image load_image(
 ) {
   if (win->loaded_images.contains(img->path))
     return win->loaded_images[img->path];
-  
+
   XImage* image = nullptr;
-  
+
   //if (img->path.ends_with(".jpg")
   //  || img->path.ends_with("jpeg")) {
   imgs::img_data data = imgs::read_jpg(img->path);
-  
+
   image = XCreateImage(state::get_dpy(),
     CopyFromParent,
     DisplayPlanes(state::get_dpy(), state::get_screen()),
@@ -250,7 +251,7 @@ static window_image load_image(
     data.width * data.components);
   //log_task.info("STATUS = %d", XInitImage(image));
   //}
-  
+
   //
   //auto f = window_font {.xfont = xfont, .pattern = pattern};
   //win->loaded_fonts[font_spec] = f;
@@ -278,7 +279,7 @@ std::pair<int, int> get_text_size(
   } else {
     if (!(xfont = XftFontOpenName(
       state::get_dpy(), state::get_screen(), font_spec.c_str()))) {
-      log_task.error("Cannot load font from name %s", font_spec.c_str());
+      LOG::print{ERROR}("Cannot load font from name {}", font_spec.c_str());
       return {};
     }
     cached_fonts[font_spec] = xfont;
@@ -329,6 +330,6 @@ void cyd::ui::graphics::terminate(cyd::ui::graphics::window_t* win) {
   delete win->render_target;
   win->render_thd->running = false;
   win->render_thd->join();
-  
+
   delete win;
 }

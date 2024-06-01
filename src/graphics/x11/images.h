@@ -1,4 +1,5 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #ifndef CYD_UI_X11_IMAGES_H
 #define CYD_UI_X11_IMAGES_H
@@ -53,7 +54,6 @@ namespace x11::imgs {
       1
     );
 
-    logging::logger logg{};
     auto* data = (unsigned char*) malloc(cinfo.output_height * cinfo.output_width * 4);
 
     while (cinfo.output_scanline < cinfo.output_height) {

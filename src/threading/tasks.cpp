@@ -1,21 +1,14 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
-//
-// Created by castle on 9/26/23.
-//
-
-#include "tools/tasks.h"
+#include "cyd_ui/tools/tasks.h"
 #ifndef CYD_UI_TASKS_H
 
-#include "cydstd/logging.hpp"
 #include <deque>
 #include <vector>
 
 using namespace cyd::ui::threading;
 using namespace std::chrono_literals;
-
-logging::logger logger =
-  {.name = "TASKRUNNER", .on = true};
 
 std::mutex task_queue_mtx;
 std::mutex timer_list_mtx;

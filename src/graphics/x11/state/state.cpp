@@ -1,13 +1,9 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
-
-//
-// Created by castle on 8/21/22.
-//
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "state.hpp"
-#include <cyd_fabric/logging/logging.hpp>
 
-const logging::logger log_task = {.name = "X11_IMPL::state"};
+import fabric.logging;
 
 static Display* dpy = nullptr;
 static int screen = -1;
@@ -18,10 +14,10 @@ Display* state::get_dpy() {
   if (dpy)
     return dpy;
   if ((dpy = XOpenDisplay(nullptr))) {
-    log_task.info("dpy = %lX", (unsigned long) dpy);
+    LOG::print{INFO}("dpy = {}", (unsigned long) dpy);
     return dpy;
   } else {
-    log_task.error("Could not open display");
+    LOG::print{ERROR}("Could not open display");
     return nullptr;
   }
 }
@@ -30,12 +26,12 @@ int state::get_screen() {
   if (screen != -1)
     return screen;
   screen = DefaultScreen(get_dpy());
-  log_task.info("screen = %d", screen);
+  LOG::print{INFO}("screen = {}", screen);
   return screen;
 }
 
 Window state::get_root() {
   Window root = XRootWindow(get_dpy(), get_screen());
-  log_task.info("root = %lu", root);
+  LOG::print{INFO}("root = {}", root);
   return root;
 }

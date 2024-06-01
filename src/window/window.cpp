@@ -1,11 +1,8 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
-//
-// Created by castle on 8/21/22.
-//
-
-#include "window.h"
-#include "layout.h"
+#include "cyd_ui/window.h"
+#include "cyd_ui/layout.h"
 #include <vector>
 
 using namespace cyd::ui::window;

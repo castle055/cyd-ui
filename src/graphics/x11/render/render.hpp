@@ -1,8 +1,5 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
-
-//
-// Created by castle on 8/23/22.
-//
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #ifndef CYD_UI_RENDER_HPP
 #define CYD_UI_RENDER_HPP

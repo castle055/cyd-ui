@@ -1,8 +1,5 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
-
-//
-// Created by castle on 8/21/22.
-//
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #include <cyd_fabric/logging/logging.hpp>
 #include <cstdarg>

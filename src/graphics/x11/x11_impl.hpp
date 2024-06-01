@@ -1,8 +1,5 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
-
-//
-// Created by castle on 8/23/22.
-//
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #ifndef CYD_UI_X11_IMPL_HPP
 #define CYD_UI_X11_IMPL_HPP
@@ -13,7 +10,7 @@
 #include <unordered_map>
 #include <vector>
 
-#include "threading.hpp"
+#include "cyd_ui/threading.hpp"
 
 using namespace cyd::ui::graphics;
 

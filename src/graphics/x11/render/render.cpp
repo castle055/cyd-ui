@@ -1,18 +1,16 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #include "../state/state.hpp"
 #include "render.hpp"
 
 #include <iostream>
 
-#include <cyd_fabric/logging/logging.hpp>
-
 #include <X11/Xlib.h>
 
-using namespace x11;
+import fabric.logging;
 
-logging::logger xlog_ctrl = {.name = "X11::RENDER::CTRL", .on = false};
-logging::logger xlog_task = {.name = "X11::RENDER::TASK", .on = true};
+using namespace x11;
 
 void render_sbr(cyd::ui::graphics::window_t* win, XImage* image) {
   std::lock_guard lk{win->render_mtx};
@@ -117,7 +115,7 @@ XftColor* color_to_xftcolor(color::Color color) {
     color.to_string().c_str(),
     c
   )) {
-    xlog_ctrl.error("Cannot allocate color %s", color.to_string().c_str());
+    LOG::print{ERROR}("Cannot allocate color {}", color.to_string());
   }
 
   xftcolor_cache[color_id] = c;

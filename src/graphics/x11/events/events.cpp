@@ -1,19 +1,15 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
-//
-// Created by castle on 8/21/22.
-//
-
-#include <cyd_fabric/logging/logging.hpp>
 #include "../state/state.hpp"
 #include "events.hpp"
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 
+import fabric.logging;
+
 cyd::ui::threading::thread_t* x11_thread;
 
-logging::logger x11_evlog = {.name = "X11::EV"};
-//logging::logger chev_log = {.name = "EV::CHANGE", .on = false};
 
 using namespace std::chrono_literals;
 using namespace x11;
@@ -311,7 +307,7 @@ void x11_event_emitter_task(cyd::ui::threading::thread_t* this_thread) {
 void x11::events::start() {
   if (x11_thread && x11_thread->native_thread != nullptr)
     return;
-  x11_evlog.debug("starting x11_thread");
+  LOG::print{DEBUG}("starting x11_thread");
   x11_thread = cyd::ui::threading::new_thread(x11_event_emitter_task)
     ->set_name("X11_EV_THD");
 }

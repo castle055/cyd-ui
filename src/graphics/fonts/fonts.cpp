@@ -1,5 +1,4 @@
-//
-// Created by castle on 8/28/22.
-//
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
-#include "graphics/font.h"
+#include "cyd_ui/graphics/font.h"

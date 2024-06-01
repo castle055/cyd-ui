@@ -1,19 +1,13 @@
-// Copyright (c) 2024, Victor Castillo, All rights reserved.
-
-//
-// Created by castle on 8/24/22.
-//
+// Copyright (c) 2024, Víctor Castillo Agüero.
+// SPDX-License-Identifier: GPL-3.0-or-later
 
 #include <iomanip>
-#include "graphics/color.h"
+#include "cyd_ui/graphics/color.h"
 
 #include <sstream>
-#include <cyd_fabric/logging/logging.hpp>
 
 using namespace cyd::ui::graphics::color;
 namespace color = cyd::ui::graphics::color;
-
-logging::logger logg {.on = false};
 
 str Color::to_string() const {
   std::ostringstream oss;
@@ -21,7 +15,6 @@ str Color::to_string() const {
   oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(r * 255.0);
   oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(g * 255.0);
   oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(b * 255.0);
-  logg.info("Color (%f,%f,%f) -> %s", r, g, b, oss.str().c_str());
   return oss.str();
 }
 
