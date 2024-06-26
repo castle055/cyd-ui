@@ -57,6 +57,7 @@ struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                                 \
   NAME::props_t* props = nullptr;   \
   attrs_component<NAME>* attrs = nullptr;                                 \
   logging::logger log{.name = #NAME};                                     \
+  NAME* component_instance() const { return static_cast<NAME*>(this->state->component_instance.value()); } \
 };                           \
 struct CYDUI_EV_HANDLER_NAME(NAME)  \
   : public cyd::ui::components::event_handler_t,                            \
