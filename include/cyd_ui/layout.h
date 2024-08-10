@@ -73,6 +73,7 @@ inline cyd::ui::layout::Layout* cyd::ui::layout::create(C &&root_component) {
   auto root_state = C::make_state_instance();
   auto* root = new C {root_component};
   root->state = root_state;
+  root_state->component_instance = root;
   auto* lay = new Layout(root_state, root);
   return lay;
 }
@@ -82,6 +83,7 @@ inline cyd::ui::layout::Layout* cyd::ui::layout::create(C &root_component) {
   auto root_state = C::make_state_instance();
   auto* root = new C {root_component};
   root->state = root_state;
+  root_state->component_instance = root;
   auto* lay = new Layout(root_state, root);
   return lay;
 }
