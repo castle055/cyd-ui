@@ -100,6 +100,14 @@ dimensions::four_sided_dimension_t &dimensions::four_sided_dimension_t::operator
 
 #define DIMENSION_OPERATOR(OP)                                                 \
   dimensions::dimensional_relation_t dimensions::operator OP(                  \
+      const dimension_t& dim, dimension_value_t val) {                         \
+    return dimensional_relation_t(                                                                   \
+        [&dim, val]() { return dim.val() OP val; },                 \
+        {(dimension_t*)&dim}                                       \
+    );                                                                         \
+  }                                                                            \
+                                                                               \
+  dimensions::dimensional_relation_t dimensions::operator OP(                  \
       const dimension_t& dim, double val) {                         \
     return dimensional_relation_t(                                                                   \
         [&dim, val]() { return dim.val() OP val; },                 \
@@ -148,6 +156,14 @@ DIMENSION_OPERATOR(/)
 #undef DIMENSION_OPERATOR
 
 #define DIMENSION_REL_OPERATOR(OP)                                             \
+  dimensions::dimensional_relation_t dimensions::operator OP(                  \
+      const dimensional_relation_t r, dimension_value_t val) {                \
+    return dimensional_relation_t(                                                                   \
+        [r, val]() { return r.binding() OP val; },                 \
+        r.deps                                                     \
+    );                                                                         \
+  }                                                                            \
+                                                                               \
   dimensions::dimensional_relation_t dimensions::operator OP(                  \
       const dimensional_relation_t r, double val) {                \
     return dimensional_relation_t(                                                                   \

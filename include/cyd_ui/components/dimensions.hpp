@@ -88,6 +88,8 @@ namespace cyd::ui::dimensions {
   dimensional_relation_t operator OP( \
       const dimension_t& dim, dimension_t& value); \
   dimensional_relation_t operator OP( \
+      const dimension_t& dim, dimension_value_t value); \
+  dimensional_relation_t operator OP( \
       const dimension_t& dim, double value); \
   dimensional_relation_t operator OP( \
       dimension_value_t value, dimension_t& dim);  \
@@ -110,6 +112,8 @@ namespace cyd::ui::dimensions {
 #define DIMENSION_REL_OPERATOR_H(OP) \
   dimensional_relation_t operator OP(\
       const dimensional_relation_t r, dimension_t& value); \
+  dimensional_relation_t operator OP(\
+      const dimensional_relation_t r, dimension_value_t value); \
   dimensional_relation_t operator OP(\
       const dimensional_relation_t r, double value); \
   dimensional_relation_t operator OP(\
