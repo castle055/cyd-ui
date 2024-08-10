@@ -71,4 +71,13 @@ inline cyd::ui::layout::Layout* cyd::ui::layout::create(C &&root_component) {
   return lay;
 }
 
+template<cyd::ui::components::ComponentConcept C>
+inline cyd::ui::layout::Layout* cyd::ui::layout::create(C &root_component) {
+  auto root_state = C::make_state_instance();
+  auto* root = new C {root_component};
+  root->state = root_state;
+  auto* lay = new Layout(root_state, root);
+  return lay;
+}
+
 #endif //CYD_UI_LAYOUT_H
