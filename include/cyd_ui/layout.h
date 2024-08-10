@@ -16,6 +16,9 @@ namespace cyd::ui::layout {
     template<components::ComponentConcept C>
     Layout* create(C &&root_component);
 
+    template<components::ComponentConcept C>
+    Layout* create(C &root_component);
+
     class Layout {
       window::CWindow* win = nullptr;
 
@@ -47,6 +50,9 @@ namespace cyd::ui::layout {
 
       template<components::ComponentConcept C>
       friend Layout* layout::create(C &&root_component);
+
+      template<components::ComponentConcept C>
+      friend Layout* layout::create(C &root_component);
 
     public:
       ~Layout() {
