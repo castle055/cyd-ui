@@ -271,7 +271,7 @@ namespace cyd::ui::components {
         // Redraw content child
         item->redraw();
       }
-      add_children("", new_children, true);
+      add_children("", std::move(new_children), true);
     }
 
     void
