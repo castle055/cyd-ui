@@ -45,11 +45,11 @@ EVENT(ResizeEvent, {
 
 enum class Button {
   PRIMARY = 1,
-  SECONDARY = 2,
-  WHEEL = 3,
+  SECONDARY = 3,
+  WHEEL = 2,
   BUTTON1 = PRIMARY,
-  BUTTON2 = SECONDARY,
-  BUTTON3 = WHEEL,
+  BUTTON2 = WHEEL,
+  BUTTON3 = SECONDARY,
 };
 
 enum class Key {
