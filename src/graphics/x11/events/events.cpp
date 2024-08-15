@@ -108,9 +108,6 @@ static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_Super_R,   Key::RIGHT_SUPER},
 };
 
-char input_buffer[10];
-static XIM xim;
-static XIC xic;
 Status st;
 KeySym ksym;
 
@@ -132,6 +129,9 @@ static void run() {
       state::get_dpy(),
       &ev
     );
+    if (XFilterEvent(&ev, None)) {
+      continue;
+    }
     //if (6 != ev.type
     //  && 2 != ev.type
     //  && 3 != ev.type
@@ -152,16 +152,18 @@ static void run() {
         }
         break;
       case KeyPress://x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));
-        Xutf8LookupString(xic, &ev.xkey, input_buffer, 10, &ksym, &st);
+        cyd::ui::graphics::get_from_id(ev.xkey.window).transform([&](window_t* w) {
+          XmbLookupString(w->input_method.xic, &ev.xkey, w->input_method.input_buffer, sizeof w->input_method.input_buffer, &ksym, &st);
+          if ((st == XLookupKeySym || st == XLookupBoth)) {
+            emit_to_window<KeyEvent>(ev.xkey.window, {
+                                       .key = xkey_map.contains(ksym)? xkey_map[ksym] : Key::UNKNOWN,
+                                       .pressed = true,
+                                       .text = st == XLookupBoth? str(w->input_method.input_buffer) : "",
+                                     });
+          }
+          return w;
+        });
         //x11_evlog.warn("BUF(%d)= %s", st, input_buffer);
-        if ((st == XLookupKeySym || st == XLookupBoth)) {
-          //x11_evlog.warn("====FOUND");
-          emit_to_window<KeyEvent>(ev.xkey.window, {
-            .key = xkey_map.contains(ksym) ? xkey_map[ksym] : Key::UNKNOWN,
-            .pressed = true,
-            .text = st == XLookupBoth ? str(input_buffer) : "",
-          });
-        }
         break;
       case KeyRelease:
         if (xkey_map.contains(XLookupKeysym(&ev.xkey, 0))) {
@@ -291,17 +293,10 @@ static void run() {
 using namespace std::chrono_literals;
 
 void x11_event_emitter_task(cyd::ui::threading::thread_t* this_thread) {
-  xim = XOpenIM(state::get_dpy(), NULL, NULL, NULL);
-  xic = XCreateIC(xim,
-    XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
-    NULL
-  );
   while (this_thread->running) {
     run();
     std::this_thread::sleep_for(20ms);
   }
-  XDestroyIC(xic);
-  XCloseIM(xim);
 }
 
 void x11::events::start() {

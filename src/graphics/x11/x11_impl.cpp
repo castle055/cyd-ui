@@ -158,13 +158,28 @@ cyd::ui::graphics::window_t* cyd::ui::graphics::create_window(
   return win;
 }
 
+window_input_method_t::window_input_method_t(Window xwin) {
+  this->xwin = xwin;
+  this->xim = XOpenIM(state::get_dpy(), NULL, NULL, NULL);
+  this->xic = XCreateIC(this->xim,
+    XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
+    XNClientWindow, xwin, NULL
+  );
+}
+
+window_input_method_t::~window_input_method_t() {
+  XDestroyIC(xic);
+  XCloseIM(xim);
+}
+
+
 window_t::window_t(
   cyd::fabric::async::async_bus_t* async_bus,
   prof::context_t* profiler,
   Window xwin,
   unsigned long w,
   unsigned long h
-) {
+): input_method(xwin) {
   this->bus = async_bus;
   this->profiler = profiler;
   this->xwin = xwin;

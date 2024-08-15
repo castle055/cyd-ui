@@ -14,6 +14,7 @@ Display* state::get_dpy() {
   if (dpy)
     return dpy;
   if ((dpy = XOpenDisplay(nullptr))) {
+    setlocale(LC_ALL, "");
     LOG::print{INFO}("dpy = {}", (unsigned long) dpy);
     return dpy;
   } else {

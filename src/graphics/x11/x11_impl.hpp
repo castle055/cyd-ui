@@ -26,13 +26,25 @@ struct window_image {
 typedef std::unordered_map<str, window_image> loaded_images_map_t;
 
 namespace cyd::ui::graphics {
+    struct window_input_method_t {
+      Window xwin;
+      XIM    xim;
+      XIC    xic;
+      // Status st;
+      // KeySym ksym;
+      char   input_buffer[64];
+
+      explicit window_input_method_t(Window xwin);
+      ~window_input_method_t();
+    };
     struct window_t {
       cyd::fabric::async::async_bus_t* bus;
-      prof::context_t* profiler;
-      Window xwin;
-      GC gc;
-      pixelmap_t* staging_target = nullptr;
-      pixelmap_t* render_target = nullptr;
+      prof::context_t*                 profiler;
+      Window                           xwin;
+      GC                               gc;
+      window_input_method_t            input_method;
+      pixelmap_t*                      staging_target = nullptr;
+      pixelmap_t*                      render_target  = nullptr;
       //Drawable drawable;
       //Drawable staging_drawable;
       //int staging_w;
@@ -40,21 +52,21 @@ namespace cyd::ui::graphics {
       //GC gc;
       //int w;
       //int h;
-      bool dirty = true;
-      std::mutex render_mtx;
-      loaded_font_map_t loaded_fonts;
+      bool                dirty = true;
+      std::mutex          render_mtx;
+      loaded_font_map_t   loaded_fonts;
       loaded_images_map_t loaded_images;
-      
+
       window_t(
         cyd::fabric::async::async_bus_t* async_bus,
-        prof::context_t* profiler,
-        Window xwin,
-        unsigned long w,
-        unsigned long h
+        prof::context_t*                 profiler,
+        Window                           xwin,
+        unsigned long                    w,
+        unsigned long                    h
       );
-      
-      cyd::ui::threading::thread_t* render_thd = nullptr;
-      void* render_data = nullptr;
+
+      cyd::ui::threading::thread_t* render_thd  = nullptr;
+      void*                         render_data = nullptr;
     };
 }
 
