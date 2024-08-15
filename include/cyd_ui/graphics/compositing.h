@@ -4,11 +4,6 @@
 #ifndef CYD_UI_COMPOSITING_H
 #define CYD_UI_COMPOSITING_H
 
-#include <condition_variable>
-#include <deque>
-#include <iostream>
-#include <vector>
-
 #include "vg.h"
 #include <cyd_fabric/profiling/profiling.h>
 

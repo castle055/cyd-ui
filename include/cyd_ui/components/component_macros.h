@@ -5,15 +5,14 @@
 #define CYD_UI_COMPONENT_MACROS_H
 
 // ? Overridable macros in case of name collision
-#define CYDUI_STATE_NAME(NAME) NAME##State
-#define CYDUI_EV_HANDLER_NAME(NAME) NAME##EventHandler
-#define CYDUI_EV_HANDLER_DATA_NAME(NAME) NAME##EventHandlerData
+#define CYDUI_STATE_NAME(NAME) State##NAME
+#define CYDUI_EV_HANDLER_NAME(NAME) EventHandler##NAME
+#define CYDUI_EV_HANDLER_DATA_NAME(NAME) EventHandlerData##NAME
 
 
 
 // ? Every component class must have this data
 #define CYDUI_COMPONENT_METADATA(NAME_) \
-    logging::logger log{.name = #NAME_};\
     static constexpr const char* NAME = #NAME_ ; \
     std::string name() override { return std::string {NAME}; }
 
@@ -56,7 +55,6 @@ struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                                 \
   cyd::ui::window::CWindow* window = nullptr;                               \
   NAME::props_t* props = nullptr;   \
   attrs_component<NAME>* attrs = nullptr;                                 \
-  logging::logger log{.name = #NAME};                                     \
   NAME* component_instance() const { return static_cast<NAME*>(this->state->component_instance.value()); } \
 };                           \
 struct CYDUI_EV_HANDLER_NAME(NAME)  \

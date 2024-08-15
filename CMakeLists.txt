@@ -156,6 +156,7 @@ endif ()
 ################################################################################
 #[[                             CONFIGURE TESTS                              ]]#
 ################################################################################
+enable_testing()
 if (CYD_UI_DEV_MODE AND CYD_UI_BUILD_TESTS)
     target_configure_test_directory(cyd_ui ${CYD_UI_TEST_DIR})
 endif ()

@@ -9,7 +9,7 @@
 #include <vector>
 
 namespace cyd::ui::dimensions {
-    
+
     typedef int dimension_value_t;
     
     class dimension_t;

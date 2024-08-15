@@ -3,8 +3,6 @@
 
 #include "cyd_ui/components/dimensions.hpp"
 
-#include <utility>
-
 using namespace cyd::ui;
 
 bool dimensions::dimension_t::compute(dimensions::dimension_t& dimension) {

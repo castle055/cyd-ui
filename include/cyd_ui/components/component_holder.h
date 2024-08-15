@@ -5,8 +5,6 @@
 #define CYD_UI_COMPONENT_HOLDER_H
 
 #include "with_template.h"
-#include "memory"
-#include <format>
 
 namespace cyd::ui::components {
     struct component_builder_t {

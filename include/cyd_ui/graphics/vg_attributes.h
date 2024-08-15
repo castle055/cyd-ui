@@ -4,8 +4,8 @@
 #ifndef CYD_UI_VG_ATTRIBUTES_H
 #define CYD_UI_VG_ATTRIBUTES_H
 
-#include "color.h"
 #include "pixelmap_editor.h"
+#include "color.h"
 
 namespace cyd::ui::graphics::vg {
     namespace paint {

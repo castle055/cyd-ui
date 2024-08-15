@@ -4,9 +4,9 @@
 #ifndef CYD_UI_PIXELMAP_EDITOR_H
 #define CYD_UI_PIXELMAP_EDITOR_H
 
-#include "pixelmap.h"
-
 #include <cairomm-1.16/cairomm/cairomm.h>
+
+#include "pixelmap.h"
 
 // CAIRO_HAS_PDF_SURFACE
 

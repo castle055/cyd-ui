@@ -4,10 +4,6 @@
 #ifndef CYD_UI_WITH_TEMPLATE_H
 #define CYD_UI_WITH_TEMPLATE_H
 
-#include <unordered_map>
-#include <string>
-#include <memory>
-
 #include "component_types.h"
 
 namespace cyd::ui::components::with {

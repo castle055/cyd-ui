@@ -21,6 +21,8 @@ namespace cyd::ui::window {
 
     void terminate();
 
+    bool is_open() const;
+
     std::pair<int, int> get_position() const;
     std::pair<int, int> get_size() const;
   };

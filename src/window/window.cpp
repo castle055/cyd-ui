@@ -13,6 +13,11 @@ void cyd::ui::window::CWindow::terminate() {
   win_ref = nullptr;
 }
 
+bool CWindow::is_open() const {
+  return win_ref != nullptr;
+}
+
+
 std::pair<int, int> cyd::ui::window::CWindow::get_position() const {
   return graphics::get_position(win_ref);
 }
