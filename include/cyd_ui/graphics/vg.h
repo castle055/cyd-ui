@@ -513,10 +513,10 @@ namespace cyd::ui::graphics::vg {
       pe->get_text_extents(_text, extents);
 
       return {
-        .x = _x,
-        .y = _y,
-        .w = (int) extents.width,
-        .h = (int) extents.height,
+        .x = static_cast<int>(_x),
+        .y = static_cast<int>(_y - fextents.ascent),
+        .w = (int) extents.x_advance,
+        .h = (int) fextents.height,
       };
     }
   };
