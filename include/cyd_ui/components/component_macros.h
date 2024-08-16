@@ -45,12 +45,16 @@ struct NAME:                 \
     struct init;             \
     struct props_t           \
       __VA_ARGS__;           \
+  public:                    \
     props_t props;           \
     using state_t =          \
       std::conditional<is_type_complete_v<struct init>                    \
         , init               \
         , cyd::ui::components::component_state_t>::type;                    \
-    NAME() = default;        \
+    template <typename P = props_t> \
+    explicit NAME(typename std::enable_if<std::is_default_constructible_v<P>, props_t>::type props = {})    \
+      : cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\
+      , props(std::move(props)) { } \
     explicit NAME(props_t props)    \
       : cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\
       , props(std::move(props)) { } \
@@ -58,13 +62,15 @@ struct NAME:                 \
     void* get_props() override {    \
       return (void*)&(this->props); \
     }                        \
+    friend struct CYDUI_EV_HANDLER_NAME(NAME); \
+    friend struct CYDUI_EV_HANDLER_DATA_NAME(NAME); \
   };                         \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                                 \
   std::shared_ptr<NAME::state_t> state = nullptr;   \
   cyd::ui::window::CWindow* window = nullptr;                               \
   NAME::props_t* props = nullptr;   \
   attrs_component<NAME>* attrs = nullptr;                                 \
-  NAME* component_instance() const { return static_cast<NAME*>(this->state->component_instance.value()); } \
+  NAME* component_instance() const { return dynamic_cast<NAME*>(this->state->component_instance.value()); } \
 };                           \
 struct CYDUI_EV_HANDLER_NAME(NAME)  \
   : public cyd::ui::components::event_handler_t,                            \
