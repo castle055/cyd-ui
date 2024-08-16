@@ -22,7 +22,16 @@
 //#define STATE(NAME) \
 //struct CYDUI_STATE_NAME(NAME): public cyd::ui::components::component_state_t
 
-#define STATE ; struct init: public cyd::ui::components::component_state_t
+#define STATE ; public: struct init: public cyd::ui::components::component_state_t
+
+#define ATTRIBUTE(NAME, ...) \
+; public: \
+  auto& NAME (const __VA_ARGS__& value) { \
+    NAME##_ = value; \
+    return *this; \
+  } \
+private: \
+  __VA_ARGS__ NAME##_
 
 // ?>
 #define COMPONENT(NAME, ...) \
