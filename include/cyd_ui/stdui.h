@@ -5,9 +5,10 @@
 #define CYD_UI_STDUI_H
 
 #include "./cydui.hpp"
+#include "stdui/input.h"
 
 namespace stdui {
-#define ATTR(PROP) \
+#define ATTR_PROP(PROP) \
 auto &PROP(decltype(props_t::PROP)& _##PROP) { \
     props.PROP = _##PROP;                    \
     return *this;  \
@@ -30,8 +31,8 @@ auto &PROP(decltype(props_t::PROP)&& _##PROP) {\
       Direction dir = Direction::HORIZONTAL;
       cyd::ui::dimensions::dimensional_relation_t spacing = 0;
       };
-      ATTR(dir)
-      ATTR(spacing)
+      ATTR_PROP(dir)
+      ATTR_PROP(spacing)
 
       auto &horizontal() {
       props.dir = Direction::HORIZONTAL;
@@ -199,7 +200,7 @@ auto &PROP(decltype(props_t::PROP)&& _##PROP) {\
       unsigned int cols;
       int x_gap = 0;
       int y_gap = 0;
-      }; ATTR(rows) ATTR(cols) ATTR(x_gap) ATTR(y_gap) STATE {
+      }; ATTR_PROP(rows) ATTR_PROP(cols) ATTR_PROP(x_gap) ATTR_PROP(y_gap) STATE {
       std::unordered_map<cyd::ui::components::component_base_t*,
       std::pair<int,
       int>> positions { };

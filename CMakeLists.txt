@@ -96,6 +96,7 @@ compiler_flags(
         #"-Wno-error=unused"
 
         "-Wno-unknown-pragmas"
+        "-Wno-extra-semi"
 )
 
 
