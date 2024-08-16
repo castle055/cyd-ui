@@ -95,6 +95,10 @@ enum class Key {
   RIGHT_SHIFT,
   LEFT_SUPER,
   RIGHT_SUPER,
+  PAGE_UP,
+  PAGE_DOWN,
+  HOME,
+  END
 };
 
 EVENT(KeyEvent, {

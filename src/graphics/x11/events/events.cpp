@@ -106,6 +106,10 @@ static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_Shift_R,   Key::RIGHT_CTRL},
   {XK_Super_L,   Key::LEFT_SUPER},
   {XK_Super_R,   Key::RIGHT_SUPER},
+  {XK_Page_Up,   Key::PAGE_UP},
+  {XK_Page_Down, Key::PAGE_DOWN},
+  {XK_Home,      Key::HOME},
+  {XK_End,       Key::END},
 };
 
 Status st;
