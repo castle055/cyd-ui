@@ -48,6 +48,16 @@ namespace cyd::ui::graphics::vg {
       );
       (elements.emplace_back(new std::remove_reference_t<T>{std::forward<T &&>(_elements)}), ...);
     }
+
+    template<typename T, typename... Args>
+    T& draw(Args&&... args) {
+      static_assert(
+        std::derived_from<std::remove_reference_t<T>, vg_element_t>,
+        "Elements must derive from vg_element_t."
+      );
+      elements.emplace_back(new std::remove_reference_t<T>{std::forward<Args &&>(args)...});
+      return *static_cast<T*>(elements.back().get());
+    }
   };
 
   template<typename... T>
