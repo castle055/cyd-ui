@@ -5,7 +5,9 @@
 #define CYD_UI_STDUI_H
 
 #include "./cydui.hpp"
+
 #include "stdui/input.h"
+#include "stdui/charts.h"
 
 namespace stdui {
 #define ATTR_PROP(PROP) \
