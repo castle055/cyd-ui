@@ -4,13 +4,7 @@
 #ifndef CYD_UI_TESTS_STRUCTURE_H
 #define CYD_UI_TESTS_STRUCTURE_H
 
-#include <source_location>
-#include <unordered_map>
-#include <string>
-#include <functional>
-#include <utility>
-#include <iostream>
-#include <cassert>
+import std;
 
 class test_case_t;
 

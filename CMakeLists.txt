@@ -126,12 +126,29 @@ FILE(GLOB_RECURSE SRC_LIST CONFIGURE_DEPENDS
         ${CYD_UI_SOURCE_DIR}/*.hpp
         ${CYD_UI_SOURCE_DIR}/*.cpp
 )
+FILE(GLOB_RECURSE SRC_MOD_LIST CONFIGURE_DEPENDS
+        ${CYD_UI_INCLUDE_DIR}/*.cppm
+        ${CYD_UI_SOURCE_DIR}/*.cppm
+)
+FILE(GLOB_RECURSE SRC_MODI_LIST CONFIGURE_DEPENDS
+        ${CYD_UI_INCLUDE_DIR}/*.cppi
+        ${CYD_UI_SOURCE_DIR}/*.cppi
+)
 
 target_include_directories(cyd_ui PUBLIC ${CYD_UI_INCLUDE_DIR})
 target_include_directories(cyd_ui PUBLIC ${cyd_fabric_SOURCE_DIR}/include)
 target_compile_features(cyd_ui PUBLIC cxx_std_23)
 
-target_sources(cyd_ui PUBLIC ${SRC_LIST})
+target_sources(cyd_ui
+        PUBLIC ${SRC_LIST}
+        PUBLIC ${SRC_MODI_LIST}
+        PUBLIC
+        FILE_SET cxx_modules
+        #        FILE_SET "${APP_NAME}_modfiles"
+        TYPE CXX_MODULES
+        BASE_DIRS ${CYD_UI_SOURCE_DIR} ${CYD_UI_INCLUDE_DIR}
+        FILES ${SRC_MOD_LIST}
+)
 
 target_link_libraries(cyd_ui
         PUBLIC cyd_fabric

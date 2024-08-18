@@ -6,7 +6,7 @@
 
 #define ENABLE_TESTING
 
-#include "../../include/cyd_ui/cydui.hpp"
+import cydui;
 
 #include "tests_structure.h"
 

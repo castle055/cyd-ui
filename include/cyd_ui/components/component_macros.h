@@ -4,6 +4,10 @@
 #ifndef CYD_UI_COMPONENT_MACROS_H
 #define CYD_UI_COMPONENT_MACROS_H
 
+#include "./component_event_macros.h"
+#include <cyd_fabric/async/async_bus.h>
+
+
 // ? Overridable macros in case of name collision
 #define CYDUI_STATE_NAME(NAME) State##NAME
 #define CYDUI_EV_HANDLER_NAME(NAME) EventHandler##NAME
@@ -67,7 +71,7 @@ struct NAME:                 \
   };                         \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                                 \
   std::shared_ptr<NAME::state_t> state = nullptr;   \
-  cyd::ui::window::CWindow* window = nullptr;                               \
+  cyd::fabric::async::async_bus_t* window = nullptr;                               \
   NAME::props_t* props = nullptr;   \
   attrs_component<NAME>* attrs = nullptr;                                 \
   NAME* component_instance() const { return dynamic_cast<NAME*>(this->state->component_instance.value()); } \
@@ -118,7 +122,7 @@ struct NAME:                          \
 template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \
   std::shared_ptr<CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT> state = nullptr;  \
-  cyd::ui::window::CWindow* window = nullptr;       \
+  cyd::fabric::async::async_bus_t* window = nullptr;       \
   NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = nullptr;\
   attrs_component<NAME SET_COMPONENT_TEMPLATE_SHORT>* attrs = nullptr;   \
   logging::logger log{.name = #NAME}; \
@@ -127,5 +131,53 @@ template SET_COMPONENT_TEMPLATE       \
 struct CYDUI_EV_HANDLER_NAME(NAME)    \
   : public cyd::ui::components::event_handler_t,    \
     public CYDUI_EV_HANDLER_DATA_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT
+
+
+
+#define CYDUI_INTERNAL_EV_HANDLER_IMPL(NAME) \
+  void                                       \
+  on_##NAME                                  \
+  CYDUI_INTERNAL_EV_##NAME##_ARGS            \
+  override
+
+#define CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(NAME) \
+  CYDUI_INTERNAL_EV_##NAME##_RETURN                \
+  on_##NAME                                        \
+  CYDUI_INTERNAL_EV_##NAME##_ARGS                  \
+  override
+
+#define ON_REDRAW           CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(redraw)
+#define ON_BUTTON_PRESS     CYDUI_INTERNAL_EV_HANDLER_IMPL(button_press)
+#define ON_BUTTON_RELEASE   CYDUI_INTERNAL_EV_HANDLER_IMPL(button_release)
+#define ON_MOUSE_ENTER      CYDUI_INTERNAL_EV_HANDLER_IMPL(mouse_enter)
+#define ON_MOUSE_EXIT       CYDUI_INTERNAL_EV_HANDLER_IMPL(mouse_exit)
+#define ON_MOUSE_MOTION     CYDUI_INTERNAL_EV_HANDLER_IMPL(mouse_motion)
+#define ON_SCROLL           CYDUI_INTERNAL_EV_HANDLER_IMPL(scroll)
+#define ON_KEY_PRESS        CYDUI_INTERNAL_EV_HANDLER_IMPL(key_press)
+#define ON_KEY_RELEASE      CYDUI_INTERNAL_EV_HANDLER_IMPL(key_release)
+
+#define ON_CUSTOM_EVENTS(...) \
+std::unordered_map<std::string, listener_data_t> get_event_listeners() override { \
+  _Pragma("clang diagnostic push") \
+  _Pragma("clang diagnostic ignored \"-Wunused-lambda-capture\"") \
+  return { __VA_ARGS__ };     \
+  _Pragma("clang diagnostic pop") \
+}
+
+#define ON_EVENT(EVENT, ...) \
+{ EVENT ::type, {[&](cyd::fabric::async::event_t ev) { \
+  if (nullptr == state) return;                     \
+  auto parsed_event = ev->parse<EVENT>(); \
+  [&](const cyd::fabric::async::ParsedEvent<EVENT>::DataType* ev) \
+    __VA_ARGS__              \
+  (parsed_event.data);       \
+}}}
+
+#define FRAGMENT \
+  void           \
+  draw_fragment  \
+  (vg::vg_fragment_t& fragment) \
+  override
+
 
 #endif //CYD_UI_COMPONENT_MACROS_H
