@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 module;
-#include <cyd_fabric/profiling/profiling.h>
 #include <cairomm-1.16/cairomm/cairomm.h>
 
 export module cydui.graphics:compositing;
 
 import std;
+
+import fabric.profiling;
 
 import :api;
 import :vg;

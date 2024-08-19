@@ -4,14 +4,14 @@
  */
 
 module;
-#include <cyd_fabric/async/async_bus.h>
-#include <cyd_fabric/profiling/profiling.h>
 #include <X11/Xlib.h>
 #include <clocale>
 
 export module cydui.graphics.native:state;
 
 import fabric.logging;
+export import fabric.async;
+export import fabric.profiling;
 
 export import cydui.graphics.types;
 export import cydui.threading;

@@ -6,7 +6,6 @@
 module;
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
-#include <cyd_fabric/async/async_bus.h>
 
 export module cydui.graphics.native:events;
 
@@ -170,7 +169,7 @@ static void run() {
             emit_to_window<KeyEvent>(ev.xkey.window, {
                                        .key = xkey_map.contains(ksym)? xkey_map[ksym] : Key::UNKNOWN,
                                        .pressed = true,
-                                       .text = st == XLookupBoth? str(w->input_method.input_buffer) : "",
+                                       .text = st == XLookupBoth? std::string(w->input_method.input_buffer) : "",
                                      });
           }
           return w;

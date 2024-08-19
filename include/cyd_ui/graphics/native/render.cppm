@@ -6,16 +6,14 @@
 module;
 #include <X11/Xlib.h>
 #include <X11/Xft/Xft.h>
-#include <cyd_fabric/type_aliases.h>
 
 export module cydui.graphics.native:render;
 
 import std;
 import fabric.logging;
+export import fabric.type_aliases;
 
 import :window;
-
-using namespace cyd::fabric::type_aliases;
 
 void render_sbr(cyd::ui::graphics::window_t* win, XImage* image) {
   std::lock_guard lk{win->render_mtx};

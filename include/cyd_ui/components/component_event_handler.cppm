@@ -3,16 +3,15 @@
 
 module;
 #include "./component_event_macros.h"
-#include <cyd_fabric/async/async_bus.h>
 
 export module cydui.components:event_handler;
+
+export import std;
 
 export import :holder;
 
 export import cydui.events;
 export import cydui.graphics;
-
-#include <vector>
 
 export {
 namespace cyd::ui::components {

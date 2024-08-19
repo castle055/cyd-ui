@@ -3,14 +3,14 @@
  *!
  */
 
-module;
-#include <cyd_fabric/async/async_bus.h>
-#include <cyd_fabric/profiling/profiling.h>
-
 export module cydui.graphics:api;
 
-import cydui.graphics.native;
+import std;
 
+export import fabric.async;
+export import fabric.profiling;
+
+import cydui.graphics.native;
 
 export namespace cyd::ui::graphics {
   using cyd::ui::graphics::window_t;

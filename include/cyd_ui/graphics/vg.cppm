@@ -3,11 +3,13 @@
 
 module;
 #include <cairomm-1.16/cairomm/cairomm.h>
-#include <cyd_fabric/memory/multidim_data.h>
 
 export module cydui.graphics:vg;
 
 import std;
+
+import fabric.memory.multidim_data;
+import fabric.type_aliases;
 
 export import :vg_attributes;
 

@@ -8,12 +8,13 @@ module;
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <png.h>
-#include <cyd_fabric/async/async_bus.h>
-#include <cyd_fabric/profiling/profiling.h>
 
 export module cydui.graphics.native;
 
 import std;
+
+export import fabric.async;
+export import fabric.profiling;
 
 export import :window;
 export import :render;
@@ -42,7 +43,7 @@ static int geom_mask_to_gravity(int mask) {
 
 using namespace cyd::ui::graphics;
 static std::unordered_map<unsigned long, window_t*> window_map { };
-static std::unordered_map<str, XftFont*>            cached_fonts;
+static std::unordered_map<std::string, XftFont*>            cached_fonts;
 
 
 export namespace native {
@@ -75,7 +76,7 @@ export namespace native {
     cyd::ui::graphics::window_t* win,
     font::Font*                  font
   ) {
-    str font_spec = to_pattern(font);
+    std::string font_spec = to_pattern(font);
     if (win->loaded_fonts.contains(font_spec))
       return win->loaded_fonts[font_spec];
     XftFont*   xfont;
@@ -87,7 +88,7 @@ export namespace native {
       return { };
     }
     if (!(pattern = FcNameParse((FcChar8*)(font_spec.c_str())))) {
-      LOG::print {ERROR}("Cannot parse font name to pattern: {}", font_spec.c_str());
+      LOG::print {ERROR}("Cannot parse font name to pattern: {}", font_spec);
       return { };
     }
 
@@ -146,16 +147,16 @@ export namespace native {
 
   std::pair<int, int> get_text_size(
     font::Font* font,
-    const str&  text
+    const std::string&  text
   ) {
-    str      font_spec = to_pattern(font);
+    std::string      font_spec = to_pattern(font);
     XftFont* xfont;
     if (cached_fonts.contains(font_spec)) {
       xfont = cached_fonts[font_spec];
     } else {
       if (!(xfont = XftFontOpenName(
               state::get_dpy(), state::get_screen(), font_spec.c_str()))) {
-        LOG::print {ERROR}("Cannot load font from name {}", font_spec.c_str());
+        LOG::print {ERROR}("Cannot load font from name {}", font_spec);
         return { };
       }
       cached_fonts[font_spec] = xfont;
@@ -242,13 +243,13 @@ export namespace native {
       override_redirect, // This makes it immutable across workspaces
       .colormap = cmap,
     };
-    str        title_str  = title;
-    str        wclass_str = wclass;
+    std::string        title_str  = title;
+    std::string        wclass_str = wclass;
     XClassHint ch         = {title_str.data(), wclass_str.data()};
 
     int          x_o, y_o;
     unsigned int w_o, h_o;
-    str          geom;
+    std::string          geom;
     geom += "0x0";
     if (x >= 0)
       geom += "+";
@@ -282,7 +283,7 @@ export namespace native {
     XSync(state::get_dpy(), False);
 
     LOG::print {INFO}(
-      "Created window {} at ({}) x: {}, y: {}", xwin, geom.c_str(), x, y);
+      "Created window {} at ({}) x: {}, y: {}", xwin, geom, x, y);
 
     if (!override_redirect) {
       XWMHints    wm = {.flags = InputHint, .input = 1};

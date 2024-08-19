@@ -5,7 +5,6 @@
 #define CYD_UI_COMPONENT_MACROS_H
 
 #include "./component_event_macros.h"
-#include <cyd_fabric/async/async_bus.h>
 
 
 // ? Overridable macros in case of name collision

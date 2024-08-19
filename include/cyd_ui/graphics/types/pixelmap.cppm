@@ -1,12 +1,12 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-module;
-#include <cyd_fabric/memory/multidim_data.h>
-
 export module cydui.graphics.types:pixelmap;
 
 import std;
+
+import fabric.memory.multidim_data;
+import fabric.type_aliases;
 
 export {
 struct __attribute__((packed)) pixel_t {

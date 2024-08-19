@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 module;
-#include <cyd_fabric/type_aliases.h>
+#include <pthread.h>
 
 export module cydui.threading;
 
 import std;
 
-using namespace cyd::fabric::type_aliases;
+import fabric.type_aliases;
 
 export
 namespace cyd::ui::threading {
@@ -17,7 +17,7 @@ namespace cyd::ui::threading {
     bool  running       = false;
     void* data          = nullptr;
 
-    thread_t* set_name(const str& name) {
+    thread_t* set_name(const std::string& name) {
       pthread_t pt = ((std::thread*)native_thread)->native_handle();
       pthread_setname_np(pt, name.c_str());
       return this;

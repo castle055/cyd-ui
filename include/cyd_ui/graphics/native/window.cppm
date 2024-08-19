@@ -8,20 +8,18 @@ module;
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <png.h>
-#include <cyd_fabric/async/async_bus.h>
-#include <cyd_fabric/profiling/profiling.h>
 #include <jpeglib.h>
-#include <cyd_fabric/type_aliases.h>
 
 export module cydui.graphics.native:window;
 
 import std;
 
 export import :state;
+export import fabric.profiling;
+export import fabric.type_aliases;
 
 
 using namespace x11;
-using namespace cyd::fabric::type_aliases;
 
 
 export struct window_font {
@@ -129,7 +127,7 @@ namespace x11::imgs {
     char* data = nullptr;
   };
 
-  inline img_data read_jpg(str path) {
+  inline img_data read_jpg(std::string path) {
     FILE* infile;
     JSAMPARRAY buffer;
     jpeg_decompress_struct cinfo{};

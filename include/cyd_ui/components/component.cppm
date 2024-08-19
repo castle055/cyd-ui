@@ -1,13 +1,12 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-module;
-#include <cyd_fabric/memory/lazy_alloc.h>
-#include <cyd_fabric/async/async_bus.h>
-
 export module cydui.components;
 
 import std;
+
+import fabric.memory.lazy_alloc;
+import fabric.async;
 
 export import :attributes;
 export import :event_handler;
@@ -145,7 +144,7 @@ namespace cyd::ui::components {
 
     template<typename C>
     void add_children(
-      str prefix_id,
+      std::string prefix_id,
       std::vector<C> children_to_add,
       bool call_redraw_after_adding
     ) {

@@ -1,15 +1,13 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-module;
-#include <cyd_fabric/templates/template_str_buffer.h>
-#include <cyd_fabric/static_assertions.h>
-
 export module cydui.graphics.types:color;
 
 import std;
 
-using namespace cyd::fabric::type_aliases;
+import fabric.type_aliases;
+import fabric.char_utils;
+import fabric.templates.str_buffer;
 
 export namespace color {
   struct Color {
@@ -19,7 +17,7 @@ export namespace color {
     double a = 1.0;
 
     [[nodiscard("Don't call 'to_string()' if you don't need a string.")]]
-    str to_string() const {
+    std::string to_string() const {
       std::ostringstream oss;
       oss << '#';
       oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(r * 255.0);
@@ -40,15 +38,15 @@ consteval color::Color operator ""_color() {
   static_assert(data.count == 7 || data.count == 9, "Invalid Color, wrong length");
   static_assert(data.data[0] == '#', "Invalid Color, must begin with '#'");
 
-  STATIC_ASSERT_IS_HEX(data.data[1]);
-  STATIC_ASSERT_IS_HEX(data.data[2]);
-  STATIC_ASSERT_IS_HEX(data.data[3]);
-  STATIC_ASSERT_IS_HEX(data.data[4]);
-  STATIC_ASSERT_IS_HEX(data.data[5]);
-  STATIC_ASSERT_IS_HEX(data.data[6]);
+  static_assert(char_is_hex(data.data[1]), "Invalid char (1), must be hexadecimal");
+  static_assert(char_is_hex(data.data[2]), "Invalid char (2), must be hexadecimal");
+  static_assert(char_is_hex(data.data[3]), "Invalid char (3), must be hexadecimal");
+  static_assert(char_is_hex(data.data[4]), "Invalid char (4), must be hexadecimal");
+  static_assert(char_is_hex(data.data[5]), "Invalid char (5), must be hexadecimal");
+  static_assert(char_is_hex(data.data[6]), "Invalid char (6), must be hexadecimal");
   if constexpr (data.count == 9) {
-    STATIC_ASSERT_IS_HEX(data.data[7]);
-    STATIC_ASSERT_IS_HEX(data.data[8]);
+    static_assert(char_is_hex(data.data[7]), "Invalid char (7), must be hexadecimal");
+    static_assert(char_is_hex(data.data[8]), "Invalid char (8), must be hexadecimal");
   }
 
   u8 r = 0U;

@@ -1,9 +1,6 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-// module;
-// #include <cairomm-1.16/cairomm/cairomm.h>
-
 module;
 #include <cairomm-1.16/cairomm/cairomm.h>
 

@@ -4,13 +4,14 @@
  */
 
 module;
-#include <cyd_fabric/async/async_bus.h>
-#include <cyd_fabric/profiling/profiling.h>
+#include <cyd_fabric_modules/headers/macros/async_events.h>
 
 export module cydui.core;
 
 import std;
 import fabric.logging;
+import fabric.async;
+import fabric.profiling;
 
 export import cydui.components;
 

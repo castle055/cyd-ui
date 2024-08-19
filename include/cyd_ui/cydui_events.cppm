@@ -2,9 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 module;
-#include <cyd_fabric/async/async_bus.h>
+#include <cyd_fabric_modules/headers/macros/async_events.h>
 
 export module cydui.events;
+
+export import std;
+export import fabric.async;
 
 export {
 EVENT(RedrawEvent, {
@@ -108,7 +111,7 @@ EVENT(KeyEvent, {
   const bool pressed = false;
   const bool released = false;
   const bool holding = false;
-  const str text = "";
+  const std::string text = "";
 })
 
 }
