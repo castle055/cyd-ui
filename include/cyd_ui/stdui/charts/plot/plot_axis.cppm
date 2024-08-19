@@ -19,7 +19,7 @@ namespace charts {
   constexpr la::scalar DEFAULT_AXIS_MAX_VALUE = +1.0;
   constexpr la::scalar DEFAULT_AXIS_STEP = 0.1;
 
-  COMPONENT(PlotAxis, {
+  export COMPONENT(PlotAxis, {
             la::vec<2> axis_direction{0, 0};
             la::vec<2> label_direction{0, 0};
             la::scalar label_offset{0};
@@ -214,7 +214,7 @@ namespace charts {
     }
   };
 
-  COMPONENT(NumericAxisLabel, {
+  export COMPONENT(NumericAxisLabel, {
             la::scalar value = 0;
             };
             static cyd::ui::components::component_holder_t builder(const la::scalar value) {
@@ -241,7 +241,7 @@ namespace charts {
     }
   };
 
-  COMPONENT(PiRatioAxisLabel, {
+  export COMPONENT(PiRatioAxisLabel, {
             la::scalar value = 0;
             };
             static cyd::ui::components::component_holder_t builder(const la::scalar value) {
