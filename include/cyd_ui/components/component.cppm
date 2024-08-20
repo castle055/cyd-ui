@@ -12,8 +12,14 @@ export import :attributes;
 export import :event_handler;
 export import :with_specialization;
 
+export namespace cyd::ui::components {
+  struct component_base_t;
+  template<ComponentEventHandlerConcept EVH, typename T>
+  struct component_t;
+  struct component_state_t;
+  using component_state_ref = std::shared_ptr<component_state_t>;
+}
 
-export {
 namespace cyd::ui::components {
   struct component_state_t {
     virtual ~component_state_t() = default;
@@ -68,9 +74,21 @@ namespace cyd::ui::components {
     void force_redraw() {
       emit<RedrawEvent>({.component = this});
     }
-  };
 
-  using component_state_ref = std::shared_ptr<component_state_t>;
+    std::string component_name() const {
+      return component_name_;
+    }
+  private:
+    friend struct component_base_t;
+    template<ComponentEventHandlerConcept EVH, typename T>
+    friend struct component_t;
+
+    void set_component_name(const std::string& name) {
+      component_name_ = name;
+    }
+
+    std::string component_name_;
+  };
 
   struct component_base_t {
     std::optional<std::shared_ptr<component_state_t>> state = std::nullopt;
@@ -239,11 +257,14 @@ namespace cyd::ui::components {
     }
 
     std::shared_ptr<component_state_t> create_state_instance() override {
+      std::shared_ptr<component_state_t> state;
       if constexpr (requires { new typename T::state_t{std::declval<typename T::props_t*>()}; }) {
-        return std::shared_ptr<component_state_t>{new typename T::state_t((typename T::props_t*) get_props())};
+        state = std::shared_ptr<component_state_t>{new typename T::state_t(static_cast<typename T::props_t*>(get_props()))};
       } else {
-        return std::shared_ptr<component_state_t>{new typename T::state_t()};
+        state = std::shared_ptr<component_state_t>{new typename T::state_t()};
       }
+      state->set_component_name(this->name());
+      return state;
     }
     static std::shared_ptr<component_state_t> make_state_instance() {
       return std::shared_ptr<component_state_t>{new typename T::state_t()};
@@ -345,10 +366,9 @@ namespace cyd::ui::components {
   };
 }
 
-template<typename, typename = void>
+export template<typename, typename = void>
 constexpr bool is_type_complete_v = false;
 
-template<typename T>
+export template<typename T>
 constexpr bool is_type_complete_v
   <T, std::void_t<decltype(sizeof(T))>> = true;
-}
