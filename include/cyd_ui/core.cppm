@@ -58,19 +58,6 @@ namespace cyd::ui::window {
 
 
 export namespace cyd::ui {
-  namespace window {
-      CWindow* create(
-        layout::Layout* layout,
-        const char*     title,
-        const char*     wclass,
-        int             x,
-        int             y,
-        int             w,
-        int             h,
-        bool            override_redirect
-      );
-  }
-
   namespace layout {
     template<components::ComponentConcept C>
     Layout* create(C &&root_component);
@@ -134,8 +121,8 @@ export namespace cyd::ui
 {
   template <components::ComponentConcept C>
   layout::Layout* layout::create(C&& root_component) {
-    auto  root_state               = C::make_state_instance();
     auto* root                     = new C {root_component};
+    auto  root_state               = root->create_state_instance();
     root->state                    = root_state;
     root_state->component_instance = root;
     auto* lay                      = new Layout(root_state, root);
@@ -144,8 +131,8 @@ export namespace cyd::ui
 
   template <components::ComponentConcept C>
   layout::Layout* layout::create(C& root_component) {
-    auto  root_state               = C::make_state_instance();
     auto* root                     = new C {root_component};
+    auto  root_state               = root->create_state_instance();
     root->state                    = root_state;
     root_state->component_instance = root;
     auto* lay                      = new Layout(root_state, root);

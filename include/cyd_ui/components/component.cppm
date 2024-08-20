@@ -266,9 +266,7 @@ namespace cyd::ui::components {
       state->set_component_name(this->name());
       return state;
     }
-    static std::shared_ptr<component_state_t> make_state_instance() {
-      return std::shared_ptr<component_state_t>{new typename T::state_t()};
-    }
+
     event_handler_t* event_handler() override {
       return event_handler_;
     }
