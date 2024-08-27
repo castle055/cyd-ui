@@ -20,11 +20,9 @@ export import :window;
 export import :render;
 export import :events;
 
-using namespace x11;
-
 char* log_error_code(int err) {
   static char buf[128];
-  XGetErrorText(state::get_dpy(), err, buf, 128);
+  XGetErrorText(x11::state::get_dpy(), err, buf, 128);
   return buf;
 }
 
@@ -55,7 +53,7 @@ export namespace native {
   }
 
   void flush(window_t* win) {
-    render::flush(win);
+    x11::render::flush(win);
   }
 
   std::string to_pattern(font::Font* font) {
@@ -83,7 +81,7 @@ export namespace native {
     FcPattern* pattern;
 
     if (!(xfont = XftFontOpenName(
-            state::get_dpy(), state::get_screen(), font_spec.c_str()))) {
+            x11::state::get_dpy(), x11::state::get_screen(), font_spec.c_str()))) {
       LOG::print {ERROR}("Cannot load font from name {}", font_spec);
       return { };
     }
@@ -115,11 +113,11 @@ export namespace native {
 
     //if (img->path.ends_with(".jpg")
     //  || img->path.ends_with("jpeg")) {
-    imgs::img_data data = imgs::read_jpg(img->path);
+    x11::imgs::img_data data = x11::imgs::read_jpg(img->path);
 
-    image = XCreateImage(state::get_dpy(),
+    image = XCreateImage(x11::state::get_dpy(),
                          CopyFromParent,
-                         DisplayPlanes(state::get_dpy(), state::get_screen()),
+                         DisplayPlanes(x11::state::get_dpy(), x11::state::get_screen()),
                          ZPixmap,
                          0,
                          data.data,
@@ -155,14 +153,14 @@ export namespace native {
       xfont = cached_fonts[font_spec];
     } else {
       if (!(xfont = XftFontOpenName(
-              state::get_dpy(), state::get_screen(), font_spec.c_str()))) {
+              x11::state::get_dpy(), x11::state::get_screen(), font_spec.c_str()))) {
         LOG::print {ERROR}("Cannot load font from name {}", font_spec);
         return { };
       }
       cached_fonts[font_spec] = xfont;
     }
     XGlyphInfo x_glyph_info;
-    XftTextExtentsUtf8(state::get_dpy(),
+    XftTextExtentsUtf8(x11::state::get_dpy(),
                        xfont,
                        (XftChar8*)text.c_str(),
                        (int)text.size(),
@@ -174,7 +172,7 @@ export namespace native {
   std::pair<int, int> get_image_size(
     cyd::ui::graphics::images::image_t* img
   ) {
-    imgs::img_data data = imgs::read_jpg(img->path);
+    x11::imgs::img_data data = x11::imgs::read_jpg(img->path);
     return {data.width, data.height};
   }
 
@@ -192,19 +190,19 @@ export namespace native {
 
   std::pair<int, int> get_position(cyd::ui::graphics::window_t* win) {
     XWindowAttributes attrs;
-    XGetWindowAttributes(state::get_dpy(), win->xwin, &attrs);
+    XGetWindowAttributes(x11::state::get_dpy(), win->xwin, &attrs);
     return {attrs.x, attrs.y};
   }
 
   std::pair<int, int> get_size(cyd::ui::graphics::window_t* win) {
     XWindowAttributes attrs;
-    XGetWindowAttributes(state::get_dpy(), win->xwin, &attrs);
+    XGetWindowAttributes(x11::state::get_dpy(), win->xwin, &attrs);
     return {attrs.width, attrs.height};
   }
 
   void terminate(cyd::ui::graphics::window_t* win) {
-    XUnmapWindow(state::get_dpy(), win->xwin);
-    XDestroyWindow(state::get_dpy(), win->xwin);
+    XUnmapWindow(x11::state::get_dpy(), win->xwin);
+    XDestroyWindow(x11::state::get_dpy(), win->xwin);
     delete win->staging_target;
     delete win->render_target;
     win->render_thd->running = false;
@@ -227,10 +225,10 @@ export namespace native {
     static int _ig = XInitThreads();
 
     XVisualInfo vinfo;
-    if (not XMatchVisualInfo(state::get_dpy(), state::get_screen(), 32, TrueColor, &vinfo)) {
+    if (not XMatchVisualInfo(x11::state::get_dpy(), x11::state::get_screen(), 32, TrueColor, &vinfo)) {
       LOG::print {ERROR}("XMatchVisualInfo failed to find a Visual");
     }
-    Colormap             cmap = XCreateColormap(state::get_dpy(), state::get_root(), vinfo.visual, AllocNone);
+    Colormap             cmap = XCreateColormap(x11::state::get_dpy(), x11::state::get_root(), vinfo.visual, AllocNone);
     XSetWindowAttributes wa   = {
       .background_pixel = 0,//ParentRelative,
       .border_pixel = 0,
@@ -261,12 +259,12 @@ export namespace native {
     int gm_mask = XParseGeometry(geom.c_str(), &x_o, &y_o, &w_o, &h_o);
 
     if (gm_mask & XNegative)
-      x_o += DisplayWidth(state::get_dpy(), state::get_screen()) - w;// - 2;
+      x_o += DisplayWidth(x11::state::get_dpy(), x11::state::get_screen()) - w;// - 2;
     if (gm_mask & YNegative)
-      y_o += DisplayHeight(state::get_dpy(), state::get_screen()) - h;// - 2;
+      y_o += DisplayHeight(x11::state::get_dpy(), x11::state::get_screen()) - h;// - 2;
 
-    Window xwin = XCreateWindow(state::get_dpy(),
-                                state::get_root(),
+    Window xwin = XCreateWindow(x11::state::get_dpy(),
+                                x11::state::get_root(),
                                 x_o,
                                 y_o,
                                 w,
@@ -278,9 +276,9 @@ export namespace native {
                                 CWBorderPixel | CWBitGravity | CWColormap | CWBackPixel | CWEventMask
                                 | (override_redirect? CWOverrideRedirect : 0U),
                                 &wa);
-    XSetClassHint(state::get_dpy(), xwin, &ch);
-    XStoreName(state::get_dpy(), xwin, title);
-    XSync(state::get_dpy(), False);
+    XSetClassHint(x11::state::get_dpy(), xwin, &ch);
+    XStoreName(x11::state::get_dpy(), xwin, title);
+    XSync(x11::state::get_dpy(), False);
 
     LOG::print {INFO}(
       "Created window {} at ({}) x: {}, y: {}", xwin, geom, x, y);
@@ -302,25 +300,25 @@ export namespace native {
       }
       //
       XSetWMProperties(
-        state::get_dpy(), xwin, NULL, NULL, NULL, 0, sizeh, &wm, &ch);
+        x11::state::get_dpy(), xwin, NULL, NULL, NULL, 0, sizeh, &wm, &ch);
       XFree(sizeh);
     }
-    XSync(state::get_dpy(), False);
+    XSync(x11::state::get_dpy(), False);
 
     //  XDefineCursor(state::get_dpy(), xwin, state::cursor[CurNormal]->cursor);
     if (override_redirect) {
-      XMapRaised(state::get_dpy(), xwin);
+      XMapRaised(x11::state::get_dpy(), xwin);
     } else {
-      XMapWindow(state::get_dpy(), xwin);
+      XMapWindow(x11::state::get_dpy(), xwin);
     }
     LOG::print {DEBUG}("Mapping window {}", xwin);
 
     auto* win               = new window_t(async_bus, profiler, xwin, w, h);
     window_map[get_id(win)] = win;
 
-    win->gc = XCreateGC(state::get_dpy(), xwin, 0, nullptr);
+    win->gc = XCreateGC(x11::state::get_dpy(), xwin, 0, nullptr);
 
-    XSync(state::get_dpy(), False);
+    XSync(x11::state::get_dpy(), False);
 
     x11::events::start();
 

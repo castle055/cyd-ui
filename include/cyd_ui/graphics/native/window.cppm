@@ -19,8 +19,6 @@ export import fabric.profiling;
 export import fabric.type_aliases;
 
 
-using namespace x11;
-
 
 export struct window_font {
   XftFont* xfont;
@@ -49,7 +47,7 @@ export namespace cyd::ui::graphics {
 
   window_input_method_t::window_input_method_t(Window xwin) {
     this->xwin = xwin;
-    this->xim  = XOpenIM(state::get_dpy(), NULL, NULL, NULL);
+    this->xim  = XOpenIM(x11::state::get_dpy(), NULL, NULL, NULL);
     this->xic  = XCreateIC(this->xim,
                           XNInputStyle, XIMPreeditNothing | XIMStatusNothing,
                           XNClientWindow, xwin, NULL

@@ -11,7 +11,3 @@ export import cydui.graphics;
 export namespace font = cyd::ui::graphics::font;
 
 // using cyd::fabric::async::async;
-
-void asfasdf() {
-  vg::vg_fragment_t v{};
-}

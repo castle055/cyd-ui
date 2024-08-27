@@ -19,7 +19,6 @@ cyd::ui::threading::thread_t* x11_thread;
 
 
 using namespace std::chrono_literals;
-using namespace x11;
 
 Bool evpredicate() {
   return True;
@@ -134,10 +133,10 @@ static inline bool emit_to_window(unsigned long win, typename EV::DataType &&ev)
 static void run() {
   XEvent ev;
 
-  int queued = XEventsQueued(state::get_dpy(), QueuedAlready);
+  int queued = XEventsQueued(x11::state::get_dpy(), QueuedAlready);
   for (int i = 0; i < queued; ++i) {
     XNextEvent(
-      state::get_dpy(),
+      x11::state::get_dpy(),
       &ev
     );
     if (XFilterEvent(&ev, None)) {
@@ -298,7 +297,7 @@ static void run() {
         break;
     }
   }
-  XFlush(state::get_dpy());
+  XFlush(x11::state::get_dpy());
 }
 
 using namespace std::chrono_literals;
