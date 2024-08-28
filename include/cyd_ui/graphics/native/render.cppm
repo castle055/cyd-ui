@@ -35,7 +35,7 @@ void render_sbr(cyd::ui::graphics::window_t* win, XImage* image) {
 
   auto _pev = win->profiler->scope_event("render::render_sbr");
   XPutImage(
-    state::get_dpy(),
+    x11::state::get_dpy(),
     win->xwin,
     win->gc,
     image,
@@ -81,8 +81,8 @@ XColor color_to_xcolor(color::Color color) {
     return c;
   }
 
-  auto dpy = state::get_dpy();
-  auto screen = state::get_screen();
+  auto dpy = x11::state::get_dpy();
+  auto screen = x11::state::get_screen();
   Colormap map = DefaultColormap(dpy, screen);
   XColor c;
   XParseColor(dpy, map, color.to_string().c_str(), &c);
@@ -109,8 +109,8 @@ XftColor* color_to_xftcolor(color::Color color) {
 
   auto* c = new XftColor;
 
-  auto dpy = state::get_dpy();
-  auto screen = state::get_screen();
+  auto dpy = x11::state::get_dpy();
+  auto screen = x11::state::get_screen();
   if (!XftColorAllocName(
     dpy,
     DefaultVisual(dpy, screen),
