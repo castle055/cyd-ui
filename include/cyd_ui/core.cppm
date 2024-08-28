@@ -111,6 +111,10 @@ export namespace cyd::ui {
       //drag_n_drop::dragging_context_t dragging_context {};
 
       void bind_window(window::CWindow* _win);
+
+      components::component_state_ref get_root_state() const {
+        return root_state;
+      }
     };
   }
 }
