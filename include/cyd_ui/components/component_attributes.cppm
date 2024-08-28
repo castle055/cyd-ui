@@ -3,6 +3,7 @@
 
 export module cydui.components:attributes;
 
+import std;
 export import :holder;
 
 export {

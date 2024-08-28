@@ -14,6 +14,7 @@ export module cydui.graphics.native;
 import std;
 
 export import fabric.async;
+export import fabric.logging;
 export import fabric.profiling;
 
 export import :window;

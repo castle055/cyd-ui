@@ -3,6 +3,7 @@
 
 export module cydui.components:with_template;
 
+import std;
 export import :type;
 
 export namespace cyd::ui::components::with {
