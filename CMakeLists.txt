@@ -118,12 +118,15 @@ FetchContent_MakeAvailable(cyd_fabric)
 #[[                             CONFIGURE CYD UI                             ]]#
 ################################################################################
 add_library(cyd_ui)
+reflect_target(cyd_ui)
 
 FILE(GLOB_RECURSE SRC_LIST CONFIGURE_DEPENDS
         ${CYD_UI_INCLUDE_DIR}/*.h
         ${CYD_UI_INCLUDE_DIR}/*.hpp
+        ${CYD_UI_INCLUDE_DIR}/*.inc
         ${CYD_UI_SOURCE_DIR}/*.h
         ${CYD_UI_SOURCE_DIR}/*.hpp
+        ${CYD_UI_SOURCE_DIR}/*.inc
         ${CYD_UI_SOURCE_DIR}/*.cpp
 )
 FILE(GLOB_RECURSE SRC_MOD_LIST CONFIGURE_DEPENDS
