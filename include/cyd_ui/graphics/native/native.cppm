@@ -213,7 +213,7 @@ export namespace native {
   }
 
   window_t* create_window(
-    cyd::fabric::async::async_bus_t* async_bus,
+    fabric::async::async_bus_t* async_bus,
     prof::context_t*                 profiler,
     const char*                      title,
     const char*                      wclass,

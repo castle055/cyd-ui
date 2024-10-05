@@ -9,26 +9,24 @@ export import :with_template;
 export {
 namespace cyd::ui::components {
     struct component_builder_t {
-
-
       template<ComponentConcept C>
       component_builder_t(C comp) { // NOLINT(*-explicit-constructor)
         components.emplace_back("", [=] {
-          return new C {comp};
+          return std::shared_ptr<component_base_t>{new C {comp}};
         });
         
         //components[""] = std::make_unique<C>(comp);
       }
       
       template<typename T>
-      component_builder_t(with::with<T> _with) { // NOLINT(*-explicit-constructor)
+      component_builder_t(::with<T> _with) { // NOLINT(*-explicit-constructor)
         for (const auto &item: _with.get_selection()) {
           components.emplace_back(item);
         }
       }
       
-      std::vector<std::pair<std::string, component_base_t*>> get_components() const {
-        std::vector<std::pair<std::string, component_base_t*>> _components {};
+      std::vector<std::pair<std::string, std::shared_ptr<component_base_t>>> get_components() const {
+        std::vector<std::pair<std::string, std::shared_ptr<component_base_t>>> _components {};
         for (const auto &item: components) {
           const auto &[id, builder] = item;
           _components.emplace_back(id, builder());
@@ -41,7 +39,7 @@ namespace cyd::ui::components {
       }
     
     private:
-      std::vector<std::pair<std::string, std::function<component_base_t*()>>> components {};
+      std::vector<std::pair<std::string, std::function<std::shared_ptr<component_base_t>()>>> components {};
     };
     
     struct component_holder_t {
@@ -60,19 +58,19 @@ namespace cyd::ui::components {
       component_holder_t(std::vector<C> comps) noexcept {
         std::size_t index = 0;
         for (auto& comp : comps) {
-          components.emplace_back(std::to_string(index), new C {comp});
+          components.emplace_back(std::to_string(index), std::shared_ptr<component_base_t>{new C {comp}});
           ++index;
         }
       }
 
       template<ComponentConcept C>
       component_holder_t(C comp) { // NOLINT(explicit-constructor)
-        components.emplace_back("", new C {comp});
+        components.emplace_back("", std::shared_ptr<component_base_t>{new C {comp}});
         //components[""] = std::make_unique<C>(comp);
       }
       
       template<typename T>
-      component_holder_t(with::with<T> _with) { // NOLINT(*-explicit-constructor)
+      component_holder_t(::with<T> _with) { // NOLINT(*-explicit-constructor)
         for (const auto &item: _with.get_selection()) {
           components.emplace_back(item.first, item.second());
         }
@@ -94,7 +92,7 @@ namespace cyd::ui::components {
       //
       //}
     private:
-      std::vector<std::pair<std::string, component_base_t*>> components {};
+      std::vector<std::pair<std::string, std::shared_ptr<component_base_t>>> components {};
     };
   
 }

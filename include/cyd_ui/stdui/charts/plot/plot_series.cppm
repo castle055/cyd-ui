@@ -6,6 +6,7 @@ export module cydui.std.charts.plot:series;
 
 import std;
 import fabric.linalg;
+import reflect;
 
 using la = with_precision<double>;
 
@@ -37,4 +38,7 @@ export namespace charts {
       return *this;
     }
   };
+  bool operator==(const data_series_t& lhs, const data_series_t& rhs) {
+    return refl::deep_eq(lhs, rhs);
+  }
 }

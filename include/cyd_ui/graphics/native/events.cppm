@@ -116,13 +116,48 @@ static std::unordered_map<KeySym, Key> xkey_map = {
   {XK_Page_Down, Key::PAGE_DOWN},
   {XK_Home,      Key::HOME},
   {XK_End,       Key::END},
+  {XK_F1,        Key::F1},
+  {XK_F2,        Key::F2},
+  {XK_F3,        Key::F3},
+  {XK_F4,        Key::F4},
+  {XK_F5,        Key::F5},
+  {XK_F6,        Key::F6},
+  {XK_F7,        Key::F7},
+  {XK_F8,        Key::F8},
+  {XK_F9,        Key::F9},
+  {XK_F10,       Key::F10},
+  {XK_F11,       Key::F11},
+  {XK_F12,       Key::F12},
+  {XK_F13,       Key::F13},
+  {XK_F14,       Key::F14},
+  {XK_F15,       Key::F15},
+  {XK_F16,       Key::F16},
+  {XK_F17,       Key::F17},
+  {XK_F18,       Key::F18},
+  {XK_F19,       Key::F19},
+  {XK_F20,       Key::F20},
+  {XK_F21,       Key::F21},
+  {XK_F22,       Key::F22},
+  {XK_F23,       Key::F23},
+  {XK_F24,       Key::F24},
+  {XK_F25,       Key::F25},
+  {XK_F26,       Key::F26},
+  {XK_F27,       Key::F27},
+  {XK_F28,       Key::F28},
+  {XK_F29,       Key::F29},
+  {XK_F30,       Key::F30},
+  {XK_F31,       Key::F31},
+  {XK_F32,       Key::F32},
+  {XK_F33,       Key::F33},
+  {XK_F34,       Key::F34},
+  {XK_F35,       Key::F35},
 };
 
 Status st;
 KeySym ksym;
 
-template<cyd::fabric::async::EventType EV>
-static inline bool emit_to_window(unsigned long win, typename EV::DataType &&ev) {
+template<fabric::async::EventType EV>
+static inline bool emit_to_window(unsigned long win, EV &&ev) {
   auto w = native::get_from_id(win).transform([&](cyd::ui::graphics::window_t* w) {
     w->bus->emit<EV>(ev);
     return w;
@@ -158,76 +193,118 @@ static void run() {
           && ev.xexpose.count == 0
           /*&& ev.xexpose.width > 0
           && ev.xexpose.height > 0*/) {
+          native::get_from_id(ev.xexpose.window).transform([&](cyd::ui::graphics::window_t* w) {
+            if (w->old_width != ev.xexpose.width || w->old_height != ev.xexpose.height) {
+              w->old_width  = ev.xexpose.width;
+              w->old_height = ev.xexpose.height;
+              emit_to_window<ResizeEvent>(
+                ev.xconfigure.window,
+                {
+                  .w = ev.xexpose.width,
+                  .h = ev.xexpose.height,
+                }
+              ); // ! Should this be throttled?
+            }
+            return w;
+          });
           emit_to_window<RedrawEvent>(ev.xexpose.window, {}); // ! Should this be throttled?
         }
         break;
       case KeyPress://x11_evlog.warn("KEY= %X", XLookupKeysym(&ev.xkey, 0));
         native::get_from_id(ev.xkey.window).transform([&](cyd::ui::graphics::window_t* w) {
-          XmbLookupString(w->input_method.xic, &ev.xkey, w->input_method.input_buffer, sizeof w->input_method.input_buffer, &ksym, &st);
-          if ((st == XLookupKeySym || st == XLookupBoth)) {
-            emit_to_window<KeyEvent>(ev.xkey.window, {
-                                       .key = xkey_map.contains(ksym)? xkey_map[ksym] : Key::UNKNOWN,
-                                       .pressed = true,
-                                       .text = st == XLookupBoth? std::string(w->input_method.input_buffer) : "",
-                                     });
-          }
-          return w;
+            XmbLookupString(
+              w->input_method.xic,
+              &ev.xkey,
+              w->input_method.input_buffer,
+              sizeof w->input_method.input_buffer,
+              &ksym,
+              &st
+            );
+            if ((st == XLookupKeySym || st == XLookupBoth)) {
+              emit_to_window<KeyEvent>(
+                ev.xkey.window,
+                {
+                  .key     = xkey_map.contains(ksym) ? xkey_map[ksym] : Key::UNKNOWN,
+                  .pressed = true,
+                  .text    = st == XLookupBoth ? std::string(w->input_method.input_buffer) : "",
+                }
+              );
+            }
+            return w;
         });
         //x11_evlog.warn("BUF(%d)= %s", st, input_buffer);
         break;
       case KeyRelease:
         if (xkey_map.contains(XLookupKeysym(&ev.xkey, 0))) {
-          emit_to_window<KeyEvent>(ev.xkey.window, {
-            .key = xkey_map[XLookupKeysym(&ev.xkey, 0)],
-            .released = true,
-          });
+            emit_to_window<KeyEvent>(
+              ev.xkey.window,
+              {
+                .key      = xkey_map[XLookupKeysym(&ev.xkey, 0)],
+                .released = true,
+              }
+            );
         }
         break;
       case ButtonPress:
         //x11_evlog.warn("BUTTON= %d", ev.xbutton.button);
         if (ev.xbutton.button == 4) {
-          //emit<ScrollEvent>({
-          //  .win = (unsigned int) ev.xbutton.window,
-          //  .dy = 64,
-          //  .x = ev.xbutton.x,
-          //  .y = ev.xbutton.y,
-          //});
-          emit_to_window<ScrollEvent>(ev.xbutton.window, {
-            .dy = 64,
-            .x = ev.xbutton.x,
-            .y = ev.xbutton.y,
-          }); // ! Should this be throttled?
+            // emit<ScrollEvent>({
+            //   .win = (unsigned int) ev.xbutton.window,
+            //   .dy = 64,
+            //   .x = ev.xbutton.x,
+            //   .y = ev.xbutton.y,
+            // });
+            emit_to_window<ScrollEvent>(
+              ev.xbutton.window,
+              {
+                .dy = 64,
+                .x  = ev.xbutton.x,
+                .y  = ev.xbutton.y,
+              }
+            ); // ! Should this be throttled?
         } else if (ev.xbutton.button == 5) {
-          //emit<ScrollEvent>({
-          //  .win = (unsigned int) ev.xbutton.window,
-          //  .dy = -64,
-          //  .x = ev.xbutton.x,
-          //  .y = ev.xbutton.y,
-          //});
-          emit_to_window<ScrollEvent>(ev.xbutton.window, {
-            .dy = -64,
-            .x = ev.xbutton.x,
-            .y = ev.xbutton.y,
-          }); // ! Should this be throttled?
+            // emit<ScrollEvent>({
+            //   .win = (unsigned int) ev.xbutton.window,
+            //   .dy = -64,
+            //   .x = ev.xbutton.x,
+            //   .y = ev.xbutton.y,
+            // });
+            emit_to_window<ScrollEvent>(
+              ev.xbutton.window,
+              {
+                .dy = -64,
+                .x  = ev.xbutton.x,
+                .y  = ev.xbutton.y,
+              }
+            ); // ! Should this be throttled?
         } else if (ev.xbutton.button == 6) {
-          emit_to_window<ScrollEvent>(ev.xbutton.window, {
-            .dx = -64,
-            .x = ev.xbutton.x,
-            .y = ev.xbutton.y,
-          }); // ! Should this be throttled?
+            emit_to_window<ScrollEvent>(
+              ev.xbutton.window,
+              {
+                .dx = -64,
+                .x  = ev.xbutton.x,
+                .y  = ev.xbutton.y,
+              }
+            ); // ! Should this be throttled?
         } else if (ev.xbutton.button == 7) {
-          emit_to_window<ScrollEvent>(ev.xbutton.window, {
-            .dx = 64,
-            .x = ev.xbutton.x,
-            .y = ev.xbutton.y,
-          }); // ! Should this be throttled?
+            emit_to_window<ScrollEvent>(
+              ev.xbutton.window,
+              {
+                .dx = 64,
+                .x  = ev.xbutton.x,
+                .y  = ev.xbutton.y,
+              }
+            ); // ! Should this be throttled?
         } else {
-          emit_to_window<ButtonEvent>(ev.xbutton.window, {
-            .button = ev.xbutton.button,
-            .x      = ev.xbutton.x,
-            .y      = ev.xbutton.y,
-            .pressed = true,
-          });
+            emit_to_window<ButtonEvent>(
+              ev.xbutton.window,
+              {
+                .button  = ev.xbutton.button,
+                .x       = ev.xbutton.x,
+                .y       = ev.xbutton.y,
+                .pressed = true,
+              }
+            );
         }
         break;
       case ButtonRelease:
@@ -236,12 +313,15 @@ static void run() {
           && 6 != ev.xbutton.button
           && 7 != ev.xbutton.button
           ) {
-          emit_to_window<ButtonEvent>(ev.xbutton.window, {
-            .button = ev.xbutton.button,
-            .x      = ev.xbutton.x,
-            .y      = ev.xbutton.y,
-            .released = true,
-          });
+            emit_to_window<ButtonEvent>(
+              ev.xbutton.window,
+              {
+                .button   = ev.xbutton.button,
+                .x        = ev.xbutton.x,
+                .y        = ev.xbutton.y,
+                .released = true,
+              }
+            );
         }
         break;
       case MotionNotify://x11_evlog.info("%d-%d", ev.xmotion.x, ev.xmotion.y);
@@ -252,11 +332,22 @@ static void run() {
           .dragging = (ev.xmotion.state & Button1Mask) > 0,
         }); // ! Should this be throttled?
         break;
-      case ConfigureNotify://x11_evlog.info("%d-%d", ev.xconfigure.width, ev.xconfigure.height);
-        emit_to_window<ResizeEvent>(ev.xconfigure.window, {
-          .w = ev.xconfigure.width,
-          .h = ev.xconfigure.height,
-        }); // ! Should this be throttled?
+      case ConfigureNotify: // x11_evlog.info("%d-%d", ev.xconfigure.width, ev.xconfigure.height);
+        native::get_from_id(ev.xconfigure.window).transform([&](cyd::ui::graphics::window_t* w) {
+            if (w->old_width != ev.xconfigure.width || w->old_height != ev.xconfigure.height) {
+              w->old_width  = ev.xconfigure.width;
+              w->old_height = ev.xconfigure.height;
+              emit_to_window<ResizeEvent>(
+                ev.xconfigure.window,
+                {
+                  .w = ev.xconfigure.width,
+                  .h = ev.xconfigure.height,
+                }
+              ); // ! Should this be throttled?
+            }
+            return w;
+        });
+        emit_to_window<RedrawEvent>(ev.xvisibility.window, {}); // ! Should this be throttled?
         break;
       case EnterNotify:
         break;
@@ -295,7 +386,7 @@ static void run() {
       case GenericEvent:
       default:
         break;
-    }
+        }
   }
   XFlush(x11::state::get_dpy());
 }
@@ -305,7 +396,7 @@ using namespace std::chrono_literals;
 void x11_event_emitter_task(cyd::ui::threading::thread_t* this_thread) {
   while (this_thread->running) {
     run();
-    std::this_thread::sleep_for(20ms);
+    std::this_thread::sleep_for(10ms);
   }
 }
 

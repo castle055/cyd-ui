@@ -60,7 +60,7 @@ export namespace cyd::ui::graphics {
   }
 
   struct window_t {
-    cyd::fabric::async::async_bus_t* bus;
+    fabric::async::async_bus_t* bus;
     prof::context_t*                 profiler;
     Window                           xwin;
     GC                               gc;
@@ -79,8 +79,11 @@ export namespace cyd::ui::graphics {
     loaded_font_map_t   loaded_fonts;
     loaded_images_map_t loaded_images;
 
+    int old_width = 0;
+    int old_height = 0;
+
     window_t(
-      cyd::fabric::async::async_bus_t* async_bus,
+      fabric::async::async_bus_t* async_bus,
       prof::context_t*                 profiler,
       Window                           xwin,
       unsigned long                    w,
@@ -92,7 +95,7 @@ export namespace cyd::ui::graphics {
   };
 
   window_t::window_t(
-    cyd::fabric::async::async_bus_t* async_bus,
+    fabric::async::async_bus_t* async_bus,
     prof::context_t*                 profiler,
     Window                           xwin,
     unsigned long                    w,

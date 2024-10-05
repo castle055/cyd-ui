@@ -8,6 +8,8 @@ export import std;
 export import cydui.core;
 export import cydui.graphics;
 
+export import reflect;
+
 export namespace font = cyd::ui::graphics::font;
 
 // using cyd::fabric::async::async;

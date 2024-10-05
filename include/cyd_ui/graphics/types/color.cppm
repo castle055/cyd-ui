@@ -30,6 +30,10 @@ export namespace color {
       u32 id = 0;
       return id | ((u32)r << 16) | ((u32)g << 8) | (u32)b;
     }
+
+    bool operator==(const Color& rhl) const {
+      return r == rhl.r && g == rhl.g && b == rhl.b && a == rhl.a;
+    }
   };
 }
 

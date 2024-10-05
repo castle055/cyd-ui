@@ -9,6 +9,7 @@ export module cydui.std.charts.plot:view;
 
 import cydui;
 
+import reflect;
 import fabric.linalg;
 import fabric.logging;
 
@@ -16,81 +17,73 @@ import :series;
 
 using la = with_precision<double>;
 
+
 namespace charts {
-  COMPONENT(PlotView, {
-    const data_series_t& series;
-    la::scalar min_x = 0, max_x = 1;
-    la::scalar min_y = 0, max_y = 1;
-    bool show_data_points = true;
-    bool show_lines = true;
-    std::function<void(vg::vg_fragment_t&, int x, int y)> data_point_fragment = [](vg::vg_fragment_t&, int, int){};
-    std::function<void(vg::vg_fragment_t&, int x1, int y1, int x2, int y2)> line_fragment = [](vg::vg_fragment_t&, int, int, int, int){};
+  struct COMPONENT(PlotView, {
+    const data_series_t&                                  series;
+    la::scalar                                            min_x = 0, max_x = 1;
+    la::scalar                                            min_y = 0, max_y = 1;
+    bool                                                  show_data_points = true;
+    bool                                                  show_lines       = true;
+    std::function<void(vg::vg_fragment_t&, int x, int y)> data_point_fragment =
+      [](vg::vg_fragment_t&, int, int) {};
+    std::function<void(vg::vg_fragment_t&, int x1, int y1, int x2, int y2)> line_fragment =
+      [](vg::vg_fragment_t&, int, int, int, int) {};
   }) {
     ON_REDRAW {
       return {};
     }
 
     FRAGMENT {
-      const auto size = props->series.size();
+      const auto size         = props.series.size();
 
-      bool out_of_frame = false;
-      auto data_point   = props->series[0];
-      auto prev         = in_screen_space(data_point);
-      if (data_point[0] < props->min_x
-          || data_point[0] > props->max_x
-          || data_point[1] < props->min_y
-          || data_point[1] > props->max_y) {
+      bool       out_of_frame = false;
+      auto       data_point   = props.series[0];
+      auto       prev         = in_screen_space(data_point, $width, $height);
+      if (data_point[0] < props.min_x || data_point[0] > props.max_x ||
+          data_point[1] < props.min_y || data_point[1] > props.max_y) {
         out_of_frame = true;
       }
-      if (props->show_lines) {
+      if (props.show_lines) {
         for (std::size_t i = 1; i < size; ++i) {
-          data_point = props->series[i];
-          const auto current = in_screen_space(data_point);
+          data_point         = props.series[i];
+          const auto current = in_screen_space(data_point, $width, $height);
           if ((current - prev).mag2() > 2) {
-            if (out_of_frame
-                && (data_point[0] >= props->min_x
-                     && data_point[0] <= props->max_x
-                     && data_point[1] >= props->min_y
-                     && data_point[1] <= props->max_y)
-            ) {
+            if (out_of_frame && (data_point[0] >= props.min_x && data_point[0] <= props.max_x &&
+                                 data_point[1] >= props.min_y && data_point[1] <= props.max_y)) {
               out_of_frame = false;
             }
 
             if (!out_of_frame) {
-              props->line_fragment(fragment, prev[0], prev[1], current[0], current[1]);
+              props.line_fragment(fragment, prev[0], prev[1], current[0], current[1]);
             }
             prev = current;
 
-            if (!out_of_frame
-                && (data_point[0] < props->min_x
-                    || data_point[0] > props->max_x
-                    || data_point[1] < props->min_y
-                    || data_point[1] > props->max_y)
-            ) {
+            if (!out_of_frame && (data_point[0] < props.min_x || data_point[0] > props.max_x ||
+                                  data_point[1] < props.min_y || data_point[1] > props.max_y)) {
               out_of_frame = true;
             }
           }
         }
       }
-      if (props->show_data_points) {
+      if (props.show_data_points) {
         for (std::size_t i = 0; i < size; ++i) {
-          data_point = props->series[i];
-          auto current = in_screen_space(data_point);
-          if (data_point[0] >= props->min_x
-              && data_point[0] <= props->max_x
-              && data_point[1] >= props->min_y
-              && data_point[1] <= props->max_y) {
-            props->data_point_fragment(fragment, current[0], current[1]);
+          data_point   = props.series[i];
+          auto current = in_screen_space(data_point, $width, $height);
+          if (data_point[0] >= props.min_x && data_point[0] <= props.max_x &&
+              data_point[1] >= props.min_y && data_point[1] <= props.max_y) {
+            props.data_point_fragment(fragment, current[0], current[1]);
           }
         }
       }
     }
 
   private:
-    la::vec<2> in_screen_space(const la::vec<2>& point) const {
+    la::vec<2> in_screen_space(const la::vec<2>& point, auto $width, auto $height) const {
       return {
-        (la::scalar)$cw().val() * ((point[0] - props->min_x) / (props->max_x - props->min_x)),
-        (la::scalar)$ch().val() - (la::scalar)$ch().val() * ((point[1] - props->min_y) / (props->max_y - props->min_y)),
+        la::scalar{$width.value} * ((point[0] - props.min_x) / (props.max_x - props.min_x)),
+        la::scalar{$height.value} -
+          la::scalar{$height.value} * ((point[1] - props.min_y) / (props.max_y - props.min_y)),
       };
     }
   };
@@ -141,7 +134,7 @@ namespace charts {
       return ref_->props.series.size() > index_;
     }
 
-    PlotView build_component(const auto& x, const auto& y, const auto& w, const auto& h) const {
+    PlotView build_component(auto& x, auto& y, auto& w, auto& h) const {
       PlotView pa {
         {
           .series = ref_->props.series[index_],
@@ -167,7 +160,7 @@ namespace charts {
           },
         }
       };
-      pa.x(x).y(y).w(w).h(h);
+      pa.x(x).y(y).width(w).height(h);
       return pa;
     }
 
@@ -229,7 +222,7 @@ namespace charts {
       return *ref_;
     }
 
-    std::vector<PlotView> build_component(const auto& x, const auto& y, const auto& w, const auto& h) const {
+    std::vector<PlotView> build_component(auto&& x, auto&& y, auto&& w, auto&& h) const {
       std::vector<PlotView> result{};
       for (const auto & [index, view] : views_) {
         if (!view.exists_in_plot()) { continue; }

@@ -6,7 +6,11 @@ export module cydui.components:with_template;
 import std;
 export import :type;
 
-export namespace cyd::ui::components::with {
+
+export template <typename T>
+struct with;
+
+export namespace cyd::ui::components {
     template<typename T>
     struct with_data_t {
       T &val;
@@ -18,12 +22,15 @@ export namespace cyd::ui::components::with {
         return selection;
       }
     protected:
-      std::vector<std::pair<std::string, std::function<component_base_t*()>>> selection {};
+      std::vector<std::pair<std::string, std::function<std::shared_ptr<component_base_t>()>>> selection {};
     };
-    
-    template<typename T>
-    struct with: public with_data_t<T> {
-      explicit with(T &val): with_data_t<T>(val) { }
-      explicit with(T &&val): with_data_t<T>(val) { }
-    };
-}
+
+} // namespace cyd::ui::components::with
+
+template <typename T>
+struct with: public cyd::ui::components::with_data_t<T> {
+  explicit with(T& val)
+      : cyd::ui::components::with_data_t<T>(val) {}
+  explicit with(T&& val)
+      : cyd::ui::components::with_data_t<T>(val) {}
+};

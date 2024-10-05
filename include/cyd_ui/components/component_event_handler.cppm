@@ -9,84 +9,56 @@ export module cydui.components:event_handler;
 export import std;
 
 export import :holder;
+export import :attributes;
 
 export import cydui.events;
 export import cydui.graphics;
 
 export {
-namespace cyd::ui::components {
-// ? INTERNAL MACROS
-// ! DO NOT USE {
-#define CYDUI_INTERNAL_EV_HANDLER_DECL(NAME) \
-  virtual                                    \
-  void                                       \
-  on_##NAME                                  \
-  CYDUI_INTERNAL_EV_##NAME##_ARGS            \
+  namespace cyd::ui::components {
 
-#define CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(NAME) \
-  virtual                                          \
-  CYDUI_INTERNAL_EV_##NAME##_RETURN                \
-  on_##NAME                                        \
-  CYDUI_INTERNAL_EV_##NAME##_ARGS                  \
+#define CYDUI_INTERNAL_EV_HANDLER_DECL(NAME) void on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
 
-#define CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(NAME) \
-  inline auto& $##NAME() const                             \
-    { return get_dim().NAME; }
+#define CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(NAME)                                                 \
+  CYDUI_INTERNAL_EV_##NAME##_RETURN on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
 
-#define CYDUI_INTERNAL_EV_HANDLER_DIMENSION_MUTATOR(NAME) \
-  inline auto& $##NAME(auto value) const {                \
-    auto d = get_dim();                                  \
-    d.NAME = value;                                       \
-    d.fixed_##NAME = true;                                  \
-    return get_dim().NAME;                                \
-  }
-// ! }
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMacroInspection"
 
-// ? EVENT HANDLER STRUCT
+    //! EVENT HANDLER STRUCT
     struct event_handler_t {
-      event_handler_t* parent;
+    public:
+      event_handler_t* parent = nullptr;
 
-      std::function<component_dimensional_relations_t()> get_dim;
-      std::function<std::vector<component_base_t*>()> $children;
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(x)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(y)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(w)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(h)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_MUTATOR(w)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_MUTATOR(h)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(cx)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(cy)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(cw)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(ch)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(margin_top)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(margin_bottom)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(margin_left)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(margin_right)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(padding_top)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(padding_bottom)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(padding_left)
-      CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR(padding_right)
+    public:
+      const std::list<std::shared_ptr<component_base_t>>& $children;
 
-#undef CYDUI_INTERNAL_EV_HANDLER_DIMENSION_ACCESSOR
-#undef CYDUI_INTERNAL_EV_HANDLER_DIMENSION_MUTATOR
-      
-      event_handler_t() = default;
-      virtual ~event_handler_t() = default;
+      explicit event_handler_t(const std::list<std::shared_ptr<component_base_t>>& $children_)
+          : parent(nullptr),
+            $children($children_) {}
 
+      event_handler_t(
+        event_handler_t* parent_, const std::list<std::shared_ptr<component_base_t>>& $children_
+      )
+          : parent(parent_),
+            $children($children_) {}
 
-      CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(redraw) {return {};}
-      
+      CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(redraw) {
+        return {};
+      }
+
+#define DIMENSIONAL_ARGS                                                                           \
+  $x, $y, $width, $height, $padding_top, $padding_bottom, $padding_left, $padding_right
+
       // ? MOUSE EVENTS
-#define CYDUI_INTERNAL_EV_button_PROPAGATE(NAME) \
-  if (parent)                                   \
-    parent->on_button_##NAME(button, x + $x().val(), y + $y().val())
-#define CYDUI_INTERNAL_EV_mouse_PROPAGATE(NAME) \
-  if (parent)                                   \
-    parent->on_mouse_##NAME(x + $x().val(), y + $y().val())
-      
+#define CYDUI_INTERNAL_EV_button_PROPAGATE(NAME)                                                   \
+  if (parent)                                                                                      \
+  parent->on_button_##NAME(button, x + $x, y + $y, DIMENSIONAL_ARGS)
+#define CYDUI_INTERNAL_EV_mouse_PROPAGATE(NAME)                                                    \
+  if (parent)                                                                                      \
+  parent->on_mouse_##NAME(x + $x, y + $y, DIMENSIONAL_ARGS)
+
       // * button press
       CYDUI_INTERNAL_EV_HANDLER_DECL(button_press) {
         CYDUI_INTERNAL_EV_button_PROPAGATE(press);
@@ -110,37 +82,64 @@ namespace cyd::ui::components {
       // * mouse scroll
       CYDUI_INTERNAL_EV_HANDLER_DECL(scroll) {
         if (parent)
-          parent->on_scroll(dx, dy);
+          parent->on_scroll(dx, dy, DIMENSIONAL_ARGS);
       }
-      
+
       // ? KEYBOARD EVENTS
       // * key press
       CYDUI_INTERNAL_EV_HANDLER_DECL(key_press) {
         if (parent)
-          parent->on_key_press(ev);
+          parent->on_key_press(ev, DIMENSIONAL_ARGS);
       }
       // * key release
       CYDUI_INTERNAL_EV_HANDLER_DECL(key_release) {
         if (parent)
-          parent->on_key_release(ev);
+          parent->on_key_release(ev, DIMENSIONAL_ARGS);
       }
-      // * set text input context (a type that accepts text events like insert, backspace and such)
-      //TODO - Implement a method to set an input context for text input
-      
-      struct listener_data_t {
-        std::function<void(cyd::fabric::async::event_t)> handler {};
-      };
-      virtual std::unordered_map<std::string, listener_data_t> get_event_listeners() {
-        return {};
-      }
-      
-      virtual void draw_fragment(vg::vg_fragment_t &fragment) {
-      
-      }
+
+      void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS {}
     };
 
 #pragma clang diagnostic pop
 
-}
 
+    template <typename Component>
+    struct event_handler_data_t: public event_handler_t {
+      event_handler_data_t(
+        Component&                                          $component_,
+        event_handler_t*                                    parent_,
+        const std::list<std::shared_ptr<component_base_t>>& $children_,
+        const std::shared_ptr<typename Component::state_t>& state_,
+        const std::shared_ptr<fabric::async::async_bus_t>&  window_,
+        typename Component::props_t&                        props_,
+        attrs_component<Component>&                         attrs_
+      )
+          : event_handler_t(parent_, $children_),
+            $component($component_),
+            state(*state_),
+            window(*window_),
+            props(props_),
+            attrs(attrs_) {}
+
+      Component&                   $component;
+      typename Component::state_t& state;
+      fabric::async::async_bus_t&  window;
+      typename Component::props_t& props;
+      attrs_component<Component>&  attrs;
+
+      struct $parent {
+        static constexpr dimension_parameter_t x{"parent_x"};
+        static constexpr dimension_parameter_t y{"parent_y"};
+        static constexpr dimension_parameter_t width{"parent_width"};
+        static constexpr dimension_parameter_t height{"parent_height"};
+      };
+
+      struct $previous {
+        static constexpr dimension_parameter_t x{"prev_x"};
+        static constexpr dimension_parameter_t y{"prev_y"};
+        static constexpr dimension_parameter_t width{"prev_width"};
+        static constexpr dimension_parameter_t height{"prev_height"};
+      };
+    };
+  } // namespace cyd::ui::components
 }

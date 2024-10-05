@@ -30,6 +30,7 @@ public:
       //cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, (int) this->img.width())
     );
     ctx = Cairo::Context::create(surface);
+    // ctx->set_antialias(Cairo::Antialias::ANTIALIAS_SUBPIXEL);
   }
   
   explicit pixelmap_editor_t(pixelmap_t* img): pixelmap_editor_t(*img) {

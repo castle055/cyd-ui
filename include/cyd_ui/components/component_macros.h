@@ -28,7 +28,7 @@
 #define STATE ; public: struct init: public cyd::ui::components::component_state_t
 
 #define ATTRIBUTE(NAME, ...) \
-; public: \
+  public: \
   auto& NAME (const __VA_ARGS__& value) { \
     NAME##_ = value; \
     return *this; \
@@ -37,49 +37,44 @@ private: \
   __VA_ARGS__ NAME##_
 
 // ?>
-#define COMPONENT(NAME, ...) \
-struct NAME;                 \
-struct CYDUI_EV_HANDLER_NAME(NAME); \
-struct NAME:                 \
-  public cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME> \
-  {                          \
-    CYDUI_COMPONENT_METADATA(NAME)  \
-    using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME);                  \
-    struct init;             \
-    struct props_t           \
-      __VA_ARGS__;           \
-  public:                    \
-    props_t props;           \
-    using state_t =          \
-      std::conditional<is_type_complete_v<struct init>                    \
-        , init               \
-        , cyd::ui::components::component_state_t>::type;                    \
-    template <typename P = props_t> \
-    explicit NAME(typename std::enable_if<std::is_default_constructible_v<P>, props_t>::type props = {})    \
-      : cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\
-      , props(std::move(props)) { } \
-    explicit NAME(props_t props)    \
-      : cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME),NAME>()\
-      , props(std::move(props)) { } \
-    ~NAME() override = default;     \
-    void* get_props() override {    \
-      return (void*)&(this->props); \
-    }                        \
-    friend struct CYDUI_EV_HANDLER_NAME(NAME); \
-    friend struct CYDUI_EV_HANDLER_DATA_NAME(NAME); \
-  };                         \
-struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                                 \
-  std::shared_ptr<NAME::state_t> state = nullptr;   \
-  cyd::fabric::async::async_bus_t* window = nullptr;                               \
-  NAME::props_t* props = nullptr;   \
-  attrs_component<NAME>* attrs = nullptr;                                 \
-  NAME* component_instance() const { return dynamic_cast<NAME*>(this->state->component_instance.value()); } \
-};                           \
-struct CYDUI_EV_HANDLER_NAME(NAME)  \
-  : public cyd::ui::components::event_handler_t,                            \
-    public CYDUI_EV_HANDLER_DATA_NAME(NAME)
+#define COMPONENT_EXTRAS(...)                                                                      \
+  __VA_ARGS__                                                                                      \
+  }                                                                                                \
+  ;
 
-
+#define COMPONENT(NAME, ...)                                                                       \
+  NAME;                                                                                            \
+  struct CYDUI_EV_HANDLER_NAME(NAME);                                                              \
+  struct NAME: public cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME), NAME> {        \
+    CYDUI_COMPONENT_METADATA(NAME)                                                                 \
+    using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME);                                           \
+    struct init;                                                                                   \
+    struct props_t __VA_ARGS__;                                                                    \
+                                                                                                   \
+  public:                                                                                          \
+    props_t props;                                                                                 \
+    using state_t = typename std::conditional<                                                     \
+      is_type_complete_v<struct init>,                                                             \
+      init,                                                                                        \
+      cyd::ui::components::component_state_t>::type;                                               \
+    template <typename P = props_t>                                                                \
+    explicit NAME(                                                                                 \
+      typename std::enable_if<std::is_default_constructible_v<P>, props_t>::type props = {}        \
+    )                                                                                              \
+        : cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME), NAME>(),                   \
+          props(std::move(props)) {}                                                               \
+    explicit NAME(props_t props)                                                                   \
+        : cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME), NAME>(),                   \
+          props(std::move(props)) {}                                                               \
+    ~NAME() override = default;                                                                    \
+    void* get_props() override {                                                                   \
+      return (void*)&(this->props);                                                                \
+    }                                                                                              \
+    friend struct CYDUI_EV_HANDLER_NAME(NAME);                                                     \
+    friend struct cyd::ui::components::event_handler_data_t<NAME>;                                 \
+  };                                                                                               \
+  struct CYDUI_EV_HANDLER_NAME(NAME)                                                               \
+      : public cyd::ui::components::event_handler_data_t<NAME>
 
 
 // ?>
@@ -136,16 +131,15 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 #define CYDUI_INTERNAL_EV_HANDLER_IMPL(NAME) \
   void                                       \
   on_##NAME                                  \
-  CYDUI_INTERNAL_EV_##NAME##_ARGS            \
-  override
+  CYDUI_INTERNAL_EV_##NAME##_ARGS
 
 #define CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(NAME) \
   CYDUI_INTERNAL_EV_##NAME##_RETURN                \
   on_##NAME                                        \
-  CYDUI_INTERNAL_EV_##NAME##_ARGS                  \
-  override
+  CYDUI_INTERNAL_EV_##NAME##_ARGS
 
 #define ON_REDRAW           CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(redraw)
+#define CHILDREN            CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(redraw)
 #define ON_BUTTON_PRESS     CYDUI_INTERNAL_EV_HANDLER_IMPL(button_press)
 #define ON_BUTTON_RELEASE   CYDUI_INTERNAL_EV_HANDLER_IMPL(button_release)
 #define ON_MOUSE_ENTER      CYDUI_INTERNAL_EV_HANDLER_IMPL(mouse_enter)
@@ -156,7 +150,7 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 #define ON_KEY_RELEASE      CYDUI_INTERNAL_EV_HANDLER_IMPL(key_release)
 
 #define ON_CUSTOM_EVENTS(...) \
-std::unordered_map<std::string, listener_data_t> get_event_listeners() override { \
+std::unordered_map<std::string, listener_data_t> get_event_listeners() { \
   _Pragma("clang diagnostic push") \
   _Pragma("clang diagnostic ignored \"-Wunused-lambda-capture\"") \
   return { __VA_ARGS__ };     \
@@ -172,11 +166,7 @@ std::unordered_map<std::string, listener_data_t> get_event_listeners() override 
   (parsed_event.data);       \
 }}}
 
-#define FRAGMENT \
-  void           \
-  draw_fragment  \
-  (vg::vg_fragment_t& fragment) \
-  override
+#define FRAGMENT void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS
 
 
 #endif //CYD_UI_COMPONENT_MACROS_H

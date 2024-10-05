@@ -22,7 +22,7 @@ export namespace cyd::ui::compositing {
       OVERLAY,
     } op = OVERLAY;
 
-    int x, y, orig_x, orig_y, w, h;
+    double x, y, orig_x, orig_y, w, h;
     double rot = 0.0;
     double scale_x = 1.0;
     double scale_y = 1.0;
@@ -164,7 +164,10 @@ export namespace cyd::ui::compositing {
         empty = false;
         // Rasterize graphics into `frm`
         for (const auto &element: node->graphics.elements) {
-          element->_internal_set_origin(x_off_in_parent + node->op.orig_x, y_off_in_parent + node->op.orig_y);
+          element->_internal_set_origin(
+            x_off_in_parent + node->op.orig_x,
+            y_off_in_parent + node->op.orig_y
+          );
           element->apply_to(*editor);
         }
       }
@@ -173,7 +176,13 @@ export namespace cyd::ui::compositing {
         std::vector<std::pair<std::unique_ptr<compositing_node_t> &, pixelmap_t*>> sub_frames{};
         for (auto &c: node->children) {
           if (c->op.op == compositing_operation_t::OVERLAY) {
-            repaint(c, frm, editor, x_off_in_parent + c->op.x, y_off_in_parent + c->op.y);
+            repaint(
+              c,
+              frm,
+              editor,
+              x_off_in_parent + node->op.orig_x + c->op.x,
+              y_off_in_parent + node->op.orig_y + c->op.y
+            );
           } else {
             sub_frames.emplace_back(c, repaint(c));
           }

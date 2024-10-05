@@ -19,7 +19,7 @@ export import :view;
 export using la = with_precision<double>;
 
 namespace charts {
-  export COMPONENT(plot, {
+  export struct COMPONENT(plot, {
     std::vector<data_series_t> series{};
   };
   axis_t<plot>     top_axis     {*this, {1,0}, {0,-1}, {1,0}, false, 20, 50};
@@ -48,47 +48,76 @@ namespace charts {
   }
   ) {
     ON_REDRAW {
-      auto &instance = *component_instance();
+      using cyd::ui::dimensions::screen_measure;
+      double title_h = 0;
 
-      int title_h = 0;
+      double axis_title_size = 25;
 
-      int axis_title_size = 25;
+      double top_axis_h = $component.top_axis.show_? 40: 0;
+      double bottom_axis_h = $component.bottom_axis.show_? 40: 0;
+      double left_axis_w = $component.left_axis.show_? 50: 0;
+      double right_axis_w = $component.right_axis.show_? 50: 0;
 
-      int top_axis_h = instance.top_axis.show_? 40: 0;
-      int bottom_axis_h = instance.bottom_axis.show_? 40: 0;
-      int left_axis_w = instance.left_axis.show_? 50: 0;
-      int right_axis_w = instance.right_axis.show_? 50: 0;
-
-      if (top_axis_h > 0 && !instance.top_axis.title_.empty()) {
+      if (top_axis_h > 0 && !$component.top_axis.title_.empty()) {
         top_axis_h += axis_title_size;
       }
-      if (bottom_axis_h > 0 && !instance.bottom_axis.title_.empty()) {
+      if (bottom_axis_h > 0 && !$component.bottom_axis.title_.empty()) {
         bottom_axis_h += axis_title_size;
       }
-      if (left_axis_w > 0 && !instance.left_axis.title_.empty()) {
+      if (left_axis_w > 0 && !$component.left_axis.title_.empty()) {
         left_axis_w += axis_title_size;
       }
-      if (right_axis_w > 0 && !instance.right_axis.title_.empty()) {
+      if (right_axis_w > 0 && !$component.right_axis.title_.empty()) {
         right_axis_w += axis_title_size;
       }
 
       std::vector<cyd::ui::components::component_holder_t> result{};
 
-      result.push_back(instance.grid.build_component(left_axis_w, title_h + top_axis_h, $cw() - left_axis_w - right_axis_w, $ch() - title_h - top_axis_h - bottom_axis_h));
-      for (auto& serie : instance.series.build_component(left_axis_w, title_h + top_axis_h, $cw() - left_axis_w - right_axis_w, $ch() - title_h - top_axis_h - bottom_axis_h)) {
-        result.push_back(serie);
+      result.emplace_back($component.grid.build_component(
+        screen_measure{left_axis_w},
+        screen_measure{title_h + top_axis_h},
+        $width - left_axis_w - right_axis_w,
+        $height - title_h - top_axis_h - bottom_axis_h
+      ));
+      for (auto& serie: $component.series.build_component(
+             screen_measure{left_axis_w},
+             screen_measure{title_h + top_axis_h},
+             $width - left_axis_w - right_axis_w,
+             $height - title_h - top_axis_h - bottom_axis_h
+           )) {
+        result.emplace_back(serie);
       }
       if (top_axis_h > 0) {
-        result.push_back(instance.top_axis.build_component(left_axis_w, title_h, $cw() - left_axis_w - right_axis_w, top_axis_h));
+        result.emplace_back($component.top_axis.build_component(
+          screen_measure{left_axis_w},
+          screen_measure{title_h},
+          $width - left_axis_w - right_axis_w,
+          screen_measure{top_axis_h}
+        ));
       }
       if (bottom_axis_h > 0) {
-        result.push_back(instance.bottom_axis.build_component(left_axis_w, $ch() - bottom_axis_h, $cw() - left_axis_w - right_axis_w, bottom_axis_h));
+        result.emplace_back($component.bottom_axis.build_component(
+          screen_measure{left_axis_w},
+          $height - bottom_axis_h,
+          $width - left_axis_w - right_axis_w,
+          screen_measure{bottom_axis_h}
+        ));
       }
       if (left_axis_w > 0) {
-        result.push_back(instance.left_axis.build_component(0, title_h + top_axis_h, left_axis_w, $ch() - title_h - top_axis_h - bottom_axis_h));
+        result.emplace_back($component.left_axis.build_component(
+          0_px,
+          screen_measure{title_h + top_axis_h},
+          screen_measure{left_axis_w},
+          $height - title_h - top_axis_h - bottom_axis_h
+        ));
       }
       if (right_axis_w > 0) {
-        result.push_back(instance.right_axis.build_component($cw() - right_axis_w, title_h + top_axis_h, right_axis_w, $ch() - title_h - top_axis_h - bottom_axis_h));
+        result.emplace_back($component.right_axis.build_component(
+          $width - right_axis_w,
+          screen_measure{title_h + top_axis_h},
+          screen_measure{right_axis_w},
+          $height - title_h - top_axis_h - bottom_axis_h
+        ));
       }
 
       return result;
@@ -96,7 +125,7 @@ namespace charts {
 
     FRAGMENT {
       fragment.append(vg::rect { }
-                      .w($cw()).h($ch())
+                      .w($width).h($height)
                       .fill("#000000"_color)
       );
     }
