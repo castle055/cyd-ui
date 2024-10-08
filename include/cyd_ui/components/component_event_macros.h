@@ -7,14 +7,14 @@
 
 #define CYDUI_INTERNAL_EV_redraw_RETURN std::vector<cyd::ui::components::component_holder_t>
 #define CYDUI_INTERNAL_EV_redraw_ARGS                                                              \
-  (cyd::ui::components::dimension_t $x,                                                            \
-   cyd::ui::components::dimension_t $y,                                                            \
-   cyd::ui::components::dimension_t $width,                                                        \
-   cyd::ui::components::dimension_t $height,                                                       \
-   cyd::ui::components::dimension_t $padding_top,                                                  \
-   cyd::ui::components::dimension_t $padding_bottom,                                               \
-   cyd::ui::components::dimension_t $padding_left,                                                 \
-   cyd::ui::components::dimension_t $padding_right)
+  (cyd::ui::components::dimension_t & $x,                                                          \
+   cyd::ui::components::dimension_t & $y,                                                          \
+   cyd::ui::components::dimension_t & $width,                                                      \
+   cyd::ui::components::dimension_t & $height,                                                     \
+   cyd::ui::components::dimension_t & $padding_top,                                                \
+   cyd::ui::components::dimension_t & $padding_bottom,                                             \
+   cyd::ui::components::dimension_t & $padding_left,                                               \
+   cyd::ui::components::dimension_t & $padding_right)
 
 #define CYDUI_INTERNAL_EV_button_ARGS                                                              \
   (Button                                              button,                                     \
