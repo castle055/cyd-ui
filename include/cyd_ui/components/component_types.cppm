@@ -6,12 +6,12 @@ export module cydui.components:type;
 import std;
 
 export import reflect;
-export import fabric.units;
+export import quantify;
 
 export import cydui.dimensions;
 
 export namespace cyd::ui::components {
-  using namespace fabric::units;
+  using namespace quantify;
   using dimension_t = dimensions::dimension<dimensions::screen_measure>;
   using dimension_parameter_t = dimensions::parameter<dimensions::screen_measure>;
   using dimension_ctx_t = dimensions::context<dimensions::screen_measure>;

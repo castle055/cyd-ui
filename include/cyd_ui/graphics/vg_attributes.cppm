@@ -8,7 +8,7 @@ export module cydui.graphics:vg_attributes;
 
 import std;
 
-export import fabric.units;
+export import quantify;
 
 export import :pixelmap_editor;
 
@@ -289,12 +289,12 @@ namespace vg {
   template <typename E>                                                                            \
   struct attr_##NAME: public attribute_i {                                                         \
     template <typename UNIT, typename T>                                                           \
-    inline E& NAME(const fabric::units::quantity_t<UNIT, T>& _##NAME##_) {                         \
+    inline E& NAME(const quantify::quantity_t<UNIT, T>& _##NAME##_) {                         \
       this->_##NAME = _##NAME##_.value_as_base_unit();                                             \
       return *(E*)this;                                                                            \
     }                                                                                              \
     template <typename UNIT, typename T>                                                           \
-    inline E& NAME(fabric::units::quantity_t<UNIT, T>&& _##NAME##_) {                              \
+    inline E& NAME(quantify::quantity_t<UNIT, T>&& _##NAME##_) {                              \
       this->_##NAME = _##NAME##_.value_as_base_unit();                                             \
       return *(E*)this;                                                                            \
     }                                                                                              \

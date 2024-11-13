@@ -113,6 +113,14 @@ FetchContent_Declare(cyd_fabric
 )
 FetchContent_MakeAvailable(cyd_fabric)
 
+#[[                           CONFIGURE QUANTIFY                             ]]#
+FetchContent_Declare(quantify
+        GIT_REPOSITORY https://github.com/castle055/quantify.git
+        GIT_TAG main
+        FIND_PACKAGE_ARGS
+)
+FetchContent_MakeAvailable(quantify)
+
 
 ################################################################################
 #[[                             CONFIGURE CYD UI                             ]]#
@@ -154,7 +162,7 @@ target_sources(cyd_ui
 )
 
 target_link_libraries(cyd_ui
-        PUBLIC cyd_fabric
+        PUBLIC cyd_fabric quantify
 )
 
 
@@ -180,6 +188,7 @@ endif ()
 enable_testing()
 if (CYD_UI_DEV_MODE AND CYD_UI_BUILD_TESTS)
     target_configure_test_directory(cyd_ui ${CYD_UI_TEST_DIR})
+    reflect_target(TEST_test)
 endif ()
 
 
