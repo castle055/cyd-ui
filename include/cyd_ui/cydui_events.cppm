@@ -13,7 +13,6 @@ export import cydui.dimensions;
 using cyd::ui::dimensions::screen_measure;
 
 export {
-  using namespace quantify;
   EVENT(RedrawEvent) {
     unsigned long win       = 0;
     int           x         = 0;

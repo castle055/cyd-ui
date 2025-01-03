@@ -11,7 +11,6 @@ export import quantify;
 export import cydui.dimensions;
 
 export namespace cyd::ui::components {
-  using namespace quantify;
   using dimension_t = dimensions::dimension<dimensions::screen_measure>;
   using dimension_parameter_t = dimensions::parameter<dimensions::screen_measure>;
   using dimension_ctx_t = dimensions::context<dimensions::screen_measure>;

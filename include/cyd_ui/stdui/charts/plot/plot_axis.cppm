@@ -14,7 +14,7 @@ import fabric.linalg;
 import fabric.logging;
 
 using la = with_precision<double>;
-using as_no_unit = quantity_t<no_unit, double>;
+using as_no_unit = quantify::quantity_t<quantify::no_unit, double>;
 // using la = with_precision<quantity_t<no_unit, double>>;
 // using la = with_precision<cyd::ui::dimensions::screen_measure>;
 
