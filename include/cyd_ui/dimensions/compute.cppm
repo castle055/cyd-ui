@@ -200,9 +200,9 @@ namespace cyd::ui::dimensions {
   return {cycles};
  }
 
- export template <typename T>
- const T& get_value(const dimension<T>& dim) {
-  //  LOG::print{INFO}("Value: {}", dim.value().to_string());
-   return dim.value();
- }
+ // export template <typename T>
+ // const T& get_value(const dimension<T>& dim) {
+ //  //  LOG::print{INFO}("Value: {}", dim.value().to_string());
+ //   return dim.value();
+ // }
 }

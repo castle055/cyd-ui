@@ -272,7 +272,7 @@ void cyd::ui::layout::Layout::recompute_dimensions(
 }
 
 void cyd::ui::layout::Layout::redraw_component(component_base_t* target) {
-  LOG::print{DEBUG}("REDRAW");
+  // LOG::print{DEBUG}("REDRAW");
   //auto t0 = std::chrono::system_clock::now();
   // Clear render area of component instances
   auto* compositing_tree = new compositing::compositing_tree_t;
@@ -426,6 +426,7 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
           int exit_rel_y     = 0;
           hovering->hovering = false;
           hovering->component_instance.value()->dispatch_mouse_exit(0, 0);
+          redraw_component(hovering->component_instance.value().get());
           hovering = nullptr;
         }
       } else {
@@ -447,12 +448,14 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
             auto  exit_rel_y   = ev.y - dimensions::get_value(h_int_rel.cy);
             hovering->hovering = false;
             hovering->component_instance.value()->dispatch_mouse_exit(exit_rel_x, exit_rel_y);
+            redraw_component(hovering->component_instance.value().get());
             hovering = nullptr;
           }
           hovering           = target->state();
           hovering->hovering = true;
 
           target->dispatch_mouse_enter(rel_x, rel_y);
+          redraw_component(target);
         } else {
           target->dispatch_mouse_motion(rel_x, rel_y);
         }

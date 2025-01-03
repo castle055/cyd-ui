@@ -14,6 +14,12 @@ import :expression;
 import :context;
 
 namespace cyd::ui::dimensions {
+  export template<typename S>
+  const S &get_value(dimension<S> &dimension);
+
+  export template<typename S>
+  const S &get_value(const dimension<S> &dimension);
+
   template <typename T>
   class dimension_impl {
   public:
@@ -26,8 +32,13 @@ namespace cyd::ui::dimensions {
     friend dimension<T>;
     friend expression<T>;
     friend expression<T>::node_t;
+
     template <typename S>
     friend const S& get_value(dimension<S>& dim);
+
+    template <typename S>
+    friend const S& get_value(const dimension<S>& dim);
+
     template <typename S>
     friend compute_result_t<S> compute_dimension(dimension<S>& dim_, const std::unordered_map<std::string, dimension<S>>& parameters);
     template <typename S>

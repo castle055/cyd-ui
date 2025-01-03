@@ -20,8 +20,13 @@ export namespace cyd::ui::dimensions {
   return compute_dimension(dimension);
  }
 
- template <typename T>
- const T& get_value(dimension<T>& dimension) {
+ template <typename S>
+ const S& get_value(dimension<S>& dimension) {
+  return dimension.impl()->value_;
+ }
+
+ template <typename S>
+ const S& get_value(const dimension<S>& dimension) {
   return dimension.impl()->value_;
  }
 }

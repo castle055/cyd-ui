@@ -521,16 +521,22 @@ namespace cyd::ui::components {
 
       component_base_t* found = nullptr;
       for (auto c = children.rbegin(); c != children.rend(); ++c) {
-        found = (*c)->find_by_coords(x, y);
+        auto cx = get_value(c->get()->attrs()->_x);
+        auto cy = get_value(c->get()->attrs()->_y);
+        auto mx = get_value(c->get()->attrs()->_margin_left);
+        auto my = get_value(c->get()->attrs()->_margin_top);
+        auto px = get_value(c->get()->attrs()->_padding_left);
+        auto py = get_value(c->get()->attrs()->_padding_top);
+        found = (*c)->find_by_coords(x - cx - mx - px, y - cy - my - py);
         if (nullptr != found) {
           return found;
         }
       }
 
-      if (x < get_value(this->_x) ||
-          x >= (get_value(this->_x) + get_value(internal_relations.cw)) ||
-          y < get_value(this->_y) ||
-          y >= (get_value(this->_y) + get_value(internal_relations.ch))) {
+      if (x < 0 ||
+          x >= get_value(this->_width) ||
+          y < 0 ||
+          y >= get_value(this->_height)) {
         return nullptr;
       }
       return this;
