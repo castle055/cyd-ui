@@ -21,6 +21,7 @@ export namespace cyd::ui::components {
   using component_state_ref = std::shared_ptr<component_state_t>;
 }
 
+export using children_list = std::vector<cyd::ui::components::component_holder_t>;
 
 namespace cyd::ui::components {
   struct component_state_t {
@@ -506,10 +507,10 @@ namespace cyd::ui::components {
         for (const auto& elem: fragment.elements) {
           auto fp = elem->get_footprint();
           if (fp.x + fp.w > compositing_node->op.w) {
-            compositing_node->op.w = fp.x + fp.w;
+            compositing_node->op.w = fp.x.value_as_base_unit() + fp.w.value_as_base_unit();
           }
           if (fp.y + fp.h > compositing_node->op.h) {
-            compositing_node->op.h = fp.y + fp.h;
+            compositing_node->op.h = fp.y.value_as_base_unit() + fp.h.value_as_base_unit();
           }
         }
       }

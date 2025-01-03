@@ -22,7 +22,7 @@ namespace stdui::input {
 
       if (state.focused) {
         const auto [x, y, w, h] = build_text(props.text.substr(0, state.caret_pos)).get_footprint();
-        fragment.draw<vg::rect>().x(x + w - 1).y(y - 3).w(2).h(h + 3).fill("#FFFFFF"_color);
+        fragment.draw<vg::rect>().x(x + w - 1_px).y(y - 3_px).w(2_px).h(h + 3_px).fill("#FFFFFF"_color);
       }
     }
 
@@ -84,8 +84,8 @@ namespace stdui::input {
       int  min_distance = std::numeric_limits<int>::max();
       auto prev         = build_text(props.text.substr(0, advance_from(0))).get_footprint();
       {
-        const auto d1 = std::abs(x.value_as_base_unit() - prev.x);
-        const auto d2 = std::abs(x.value_as_base_unit() - (prev.x + prev.w));
+        const auto d1 = std::abs(x.value_as_base_unit() - prev.x.value_as_base_unit());
+        const auto d2 = std::abs(x.value_as_base_unit() - (prev.x.value_as_base_unit() + prev.w.value_as_base_unit()));
         if (d1 < d2) {
           state.caret_pos = 0;
           min_distance    = d1;
@@ -97,8 +97,8 @@ namespace stdui::input {
       for (int i = 2; i < static_cast<int>(props.text.size()); i = advance_from(i)) {
         const auto curr = build_text(props.text.substr(0, i)).get_footprint();
         {
-          const auto d1 = std::abs(x.value_as_base_unit() - (prev.x + prev.w));
-          const auto d2 = std::abs(x.value_as_base_unit() - (curr.x + curr.w));
+          const auto d1 = std::abs(x.value_as_base_unit() - (prev.x + prev.w).value_as_base_unit());
+          const auto d2 = std::abs(x.value_as_base_unit() - (curr.x + curr.w).value_as_base_unit());
           if (d1 > min_distance && d2 > min_distance) {
             break;
           }

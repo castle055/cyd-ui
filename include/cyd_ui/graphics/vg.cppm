@@ -12,6 +12,7 @@ import fabric.memory.multidim_data;
 import fabric.type_aliases;
 
 export import :vg_attributes;
+export import cydui.dimensions;
 
 export namespace vg {
   struct vg_element_t {
@@ -27,7 +28,11 @@ export namespace vg {
     virtual void apply_to(pixelmap_editor_t &editor) const = 0;
 
     struct footprint {
-      int x, y, w, h;
+      // int x, y, w, h;
+      cyd::ui::dimensions::screen_measure x;
+      cyd::ui::dimensions::screen_measure y;
+      cyd::ui::dimensions::screen_measure w;
+      cyd::ui::dimensions::screen_measure h;
     };
     virtual footprint get_footprint() const = 0;
   };

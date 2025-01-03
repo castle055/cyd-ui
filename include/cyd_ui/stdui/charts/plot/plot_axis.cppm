@@ -212,7 +212,7 @@ namespace charts {
 
         double ratio;
         int    text_offset_x;
-        int    text_offset_y = footprint.h / 2;
+        int    text_offset_y = footprint.h.value_as_base_unit() / 2;
         switch (props.title_align) {
           case vg::text_anchor_e::START:
             ratio         = 0.0;
@@ -220,11 +220,11 @@ namespace charts {
             break;
           case vg::text_anchor_e::MIDDLE:
             ratio         = 0.5;
-            text_offset_x = footprint.w / 2;
+            text_offset_x = footprint.w.value_as_base_unit() / 2;
             break;
           case vg::text_anchor_e::END:
             ratio         = 1.0;
-            text_offset_x = footprint.w;
+            text_offset_x = footprint.w.value_as_base_unit();
             break;
         }
         auto pos = (props.axis_direction * ratio * line_length) +
@@ -273,8 +273,8 @@ namespace charts {
   ) {
     ON_REDRAW {
       const auto label_footprint = label_fragment().get_footprint();
-      $width                     = cyd::ui::dimensions::screen_measure{(double)label_footprint.w};
-      $height                    = cyd::ui::dimensions::screen_measure{(double)label_footprint.h};
+      $width                     = cyd::ui::dimensions::screen_measure{(double)label_footprint.w.value_as_base_unit()};
+      $height                    = cyd::ui::dimensions::screen_measure{(double)label_footprint.h.value_as_base_unit()};
       return {};
     }
 
@@ -299,8 +299,8 @@ namespace charts {
   ) {
     ON_REDRAW {
       const auto label_footprint = label_fragment().get_footprint();
-      $width                     = cyd::ui::dimensions::screen_measure{(double)label_footprint.w};
-      $height                    = cyd::ui::dimensions::screen_measure{(double)label_footprint.h};
+      $width                     = cyd::ui::dimensions::screen_measure{(double)label_footprint.w.value_as_base_unit()};
+      $height                    = cyd::ui::dimensions::screen_measure{(double)label_footprint.h.value_as_base_unit()};
       return {};
     }
 
