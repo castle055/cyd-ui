@@ -149,24 +149,13 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 #define ON_KEY_PRESS        CYDUI_INTERNAL_EV_HANDLER_IMPL(key_press)
 #define ON_KEY_RELEASE      CYDUI_INTERNAL_EV_HANDLER_IMPL(key_release)
 
-#define ON_CUSTOM_EVENTS(...) \
-std::unordered_map<std::string, listener_data_t> get_event_listeners() { \
-  _Pragma("clang diagnostic push") \
-  _Pragma("clang diagnostic ignored \"-Wunused-lambda-capture\"") \
-  return { __VA_ARGS__ };     \
-  _Pragma("clang diagnostic pop") \
-}
-
 #define ON_EVENT(EVENT, ...) \
-{ EVENT ::type, {[&](cyd::fabric::async::event_t ev) { \
-  if (nullptr == state) return;                     \
-  auto parsed_event = ev->parse<EVENT>(); \
-  [&](const cyd::fabric::async::ParsedEvent<EVENT>::DataType* ev) \
-    __VA_ARGS__              \
-  (parsed_event.data);       \
-}}}
+  custom_event_listener< EVENT > on_##EVENT{window, [&](const EVENT& event) { \
+    __VA_ARGS__ ;\
+  }};
 
 #define FRAGMENT void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS
+
 
 
 #endif //CYD_UI_COMPONENT_MACROS_H
