@@ -152,7 +152,7 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 #define ON_EVENT(EVENT, ...) \
   custom_event_listener< EVENT > on_##EVENT{window, [&](const EVENT& event) { \
     __VA_ARGS__ ;\
-  }};
+  }, [&](){state.force_redraw();}};
 
 #define FRAGMENT void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS
 

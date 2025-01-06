@@ -146,7 +146,7 @@ export {
   template <typename Event>
   class custom_event_listener {
   public:
-    custom_event_listener(fabric::async::async_bus_t&  window, std::function<void(const Event&)> callback): window_(window), callback_(callback) {
+    custom_event_listener(fabric::async::async_bus_t&  window, std::function<void(const Event&)> callback, std::function<void()> post): window_(window), callback_(callback), post_(post) {
       start_listening();
     }
 
@@ -154,18 +154,19 @@ export {
       stop_listening();
     }
 
-    custom_event_listener(const custom_event_listener& other): window_(other.window_), callback_(other.callback_) {
+    custom_event_listener(const custom_event_listener& other): window_(other.window_), callback_(other.callback_), post_(other.post_) {
       start_listening();
     }
     custom_event_listener& operator=(const custom_event_listener& other) {
       stop_listening();
       this->window_ = other.window_;
       this->callback_ = other.callback_;
+      this->post_ = other.post_;
       start_listening();
       return *this;
     }
 
-    custom_event_listener(custom_event_listener&& other): window_(other.window_), callback_(other.callback_) {
+    custom_event_listener(custom_event_listener&& other): window_(other.window_), callback_(other.callback_), post_(other.post_) {
       other.stop_listening();
       start_listening();
     }
@@ -173,6 +174,7 @@ export {
       stop_listening();
       this->window_ = other.window_;
       this->callback_ = other.callback_;
+      this->post_ = other.post_;
       other.stop_listening();
       start_listening();
       return *this;
@@ -181,7 +183,10 @@ export {
     void start_listening() {
       stop_listening();
 
-      listener_ = window_.on_event(callback_);
+      listener_ = window_.on_event([&](const Event& ev) {
+        callback_(ev);
+        post_();
+      });
     }
     void stop_listening() {
       if (listener_.has_value()) {
@@ -192,6 +197,7 @@ export {
   private:
     fabric::async::async_bus_t&  window_;
     std::function<void(const Event&)> callback_;
+    std::function<void()> post_;
     std::optional<fabric::async::listener<Event>> listener_ {std::nullopt};
   };
 
