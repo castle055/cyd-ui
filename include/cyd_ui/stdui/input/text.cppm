@@ -12,16 +12,16 @@ import cydui;
 
 namespace stdui::input {
   export struct COMPONENT(
-    text, { std::string& text; } STATE { int caret_pos = 0; };
+    text, { std::string* text; } STATE { int caret_pos = 0; };
     ATTRIBUTE(on_enter, std::function<void()>){[] {}};
     ATTRIBUTE(on_escape, std::function<void()>){[] {}};
   ) {
     FRAGMENT {
       fragment.draw<vg::rect>().w($width).h($height).fill("#222222"_color);
-      fragment.append(build_text(props.text).fill("#FFFFFF"_color));
+      fragment.append(build_text(*props.text).fill("#FFFFFF"_color));
 
       if (state.focused) {
-        const auto [x, y, w, h] = build_text(props.text.substr(0, state.caret_pos)).get_footprint();
+        const auto [x, y, w, h] = build_text(props.text->substr(0, state.caret_pos)).get_footprint();
         fragment.draw<vg::rect>().x(x + w - 1_px).y(y - 3_px).w(2_px).h(h + 3_px).fill("#FFFFFF"_color);
       }
     }
@@ -34,16 +34,16 @@ namespace stdui::input {
       } else if (ev.key == Key::HOME) {
         state.caret_pos = 0;
       } else if (ev.key == Key::END) {
-        state.caret_pos = props.text.size();
+        state.caret_pos = props.text->size();
       } else if (ev.key == Key::ENTER) {
         $component.on_enter_();
       } else if (ev.key == Key::ESC) {
         $component.on_escape_();
       } else if (ev.key == Key::BACKSPACE) {
-        if (state.caret_pos == static_cast<int>(props.text.size())) {
-          while (!props.text.empty()) {
-            const unsigned char c = props.text[props.text.size() - 1];
-            props.text.pop_back();
+        if (state.caret_pos == static_cast<int>(props.text->size())) {
+          while (!props.text->empty()) {
+            const unsigned char c = (*props.text)[props.text->size() - 1];
+            props.text->pop_back();
             --state.caret_pos;
             if ((c & 0x80) == 0) { // ASCII character (1 byte)
               break;
@@ -55,9 +55,9 @@ namespace stdui::input {
             // state.text = state.text.substr(0, state.text.size() - 1);
           }
         } else {
-          while (!props.text.empty() && state.caret_pos > 0) {
-            const unsigned char c = props.text[state.caret_pos - 1];
-            props.text.erase(state.caret_pos - 1, 1);
+          while (!props.text->empty() && state.caret_pos > 0) {
+            const unsigned char c = (*props.text)[state.caret_pos - 1];
+            props.text->erase(state.caret_pos - 1, 1);
             --state.caret_pos;
             if ((c & 0x80) == 0) { // ASCII character (1 byte)
               break;
@@ -70,10 +70,10 @@ namespace stdui::input {
           }
         }
       } else {
-        if (state.caret_pos == static_cast<int>(props.text.size())) {
-          props.text.append(ev.text);
+        if (state.caret_pos == static_cast<int>(props.text->size())) {
+          props.text->append(ev.text);
         } else {
-          props.text.insert(state.caret_pos, ev.text);
+          props.text->insert(state.caret_pos, ev.text);
         }
         state.caret_pos += static_cast<int>(ev.text.size());
       }
@@ -82,7 +82,7 @@ namespace stdui::input {
 
     ON_BUTTON_PRESS {
       int  min_distance = std::numeric_limits<int>::max();
-      auto prev         = build_text(props.text.substr(0, advance_from(0))).get_footprint();
+      auto prev         = build_text(props.text->substr(0, advance_from(0))).get_footprint();
       {
         const auto d1 = std::abs(x.value_as_base_unit() - prev.x.value_as_base_unit());
         const auto d2 = std::abs(x.value_as_base_unit() - (prev.x.value_as_base_unit() + prev.w.value_as_base_unit()));
@@ -94,8 +94,8 @@ namespace stdui::input {
           min_distance    = d2;
         }
       }
-      for (int i = 2; i < static_cast<int>(props.text.size()); i = advance_from(i)) {
-        const auto curr = build_text(props.text.substr(0, i)).get_footprint();
+      for (int i = 2; i < static_cast<int>(props.text->size()); i = advance_from(i)) {
+        const auto curr = build_text(props.text->substr(0, i)).get_footprint();
         {
           const auto d1 = std::abs(x.value_as_base_unit() - (prev.x + prev.w).value_as_base_unit());
           const auto d2 = std::abs(x.value_as_base_unit() - (curr.x + curr.w).value_as_base_unit());
@@ -119,21 +119,21 @@ namespace stdui::input {
     int advance_from(int index, int n = 1) const {
       if (n > 0) {
         while (n-- > 0) {
-          if ((props.text[index] & 0xC0) == 0xC0) {
+          if (((*props.text)[index] & 0xC0) == 0xC0) {
             ++index;
-            while ((props.text[index] & 0xC0) == 0x80 && index < static_cast<int>(props.text.size())
+            while (((*props.text)[index] & 0xC0) == 0x80 && index < static_cast<int>(props.text->size())
             ) {
               ++index;
             }
-            index = std::min(index, static_cast<int>(props.text.size()));
+            index = std::min(index, static_cast<int>(props.text->size()));
           } else {
             ++index;
-            index = std::min(index, static_cast<int>(props.text.size()));
+            index = std::min(index, static_cast<int>(props.text->size()));
           }
         }
       } else if (n < 0) {
         while (n++ < 0) {
-          while ((props.text[index - 1] & 0xC0) == 0x80 && index > 0) {
+          while (((*props.text)[index - 1] & 0xC0) == 0x80 && index > 0) {
             --index;
           }
           --index;

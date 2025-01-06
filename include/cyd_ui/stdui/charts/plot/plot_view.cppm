@@ -20,7 +20,7 @@ using la = with_precision<double>;
 
 namespace charts {
   struct COMPONENT(PlotView, {
-    const data_series_t&                                  series;
+    const data_series_t*                                  series;
     la::scalar                                            min_x = 0, max_x = 1;
     la::scalar                                            min_y = 0, max_y = 1;
     bool                                                  show_data_points = true;
@@ -35,10 +35,10 @@ namespace charts {
     }
 
     FRAGMENT {
-      const auto size         = props.series.size();
+      const auto size         = props.series->size();
 
       bool       out_of_frame = false;
-      auto       data_point   = props.series[0];
+      auto       data_point   = (*props.series)[0];
       auto       prev         = in_screen_space(data_point, $width, $height);
       if (data_point[0] < props.min_x || data_point[0] > props.max_x ||
           data_point[1] < props.min_y || data_point[1] > props.max_y) {
@@ -46,7 +46,7 @@ namespace charts {
       }
       if (props.show_lines) {
         for (std::size_t i = 1; i < size; ++i) {
-          data_point         = props.series[i];
+          data_point         = (*props.series)[i];
           const auto current = in_screen_space(data_point, $width, $height);
           if ((current - prev).mag2() > 2) {
             if (out_of_frame && (data_point[0] >= props.min_x && data_point[0] <= props.max_x &&
@@ -68,7 +68,7 @@ namespace charts {
       }
       if (props.show_data_points) {
         for (std::size_t i = 0; i < size; ++i) {
-          data_point   = props.series[i];
+          data_point   = (*props.series)[i];
           auto current = in_screen_space(data_point, $width, $height);
           if (data_point[0] >= props.min_x && data_point[0] <= props.max_x &&
               data_point[1] >= props.min_y && data_point[1] <= props.max_y) {
@@ -137,7 +137,7 @@ namespace charts {
     PlotView build_component(auto& x, auto& y, auto& w, auto& h) const {
       PlotView pa {
         {
-          .series = ref_->props.series[index_],
+          .series = &ref_->props.series[index_],
           .min_x = ref_->bottom_axis.min_value_,
           .max_x = ref_->bottom_axis.max_value_,
           .min_y = ref_->left_axis.min_value_,

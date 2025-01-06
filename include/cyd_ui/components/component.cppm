@@ -198,7 +198,8 @@ namespace cyd::ui::components {
 
       bool dirty = false;
       if (not refl::deep_eq(props(), other_component->props())) {
-        std::memcpy(&props(), &other_component->props(), sizeof(typename T::props_t));
+        props() = other_component->props();
+        // std::memcpy(&props(), &other_component->props(), sizeof(typename T::props_t));
         dirty   = true;
       }
       if (not (*attrs() == *(other_component->attrs()))) {
