@@ -14,6 +14,8 @@ export import :attributes;
 export import cydui.events;
 export import cydui.graphics;
 
+export import :base;
+
 export {
   namespace cyd::ui::components {
 
@@ -30,19 +32,24 @@ export {
     struct event_handler_t {
     public:
       event_handler_t* parent = nullptr;
+      component_base_t* component = nullptr;
 
     public:
       const std::list<std::shared_ptr<component_base_t>>& $children;
 
-      explicit event_handler_t(const std::list<std::shared_ptr<component_base_t>>& $children_)
+      explicit event_handler_t(component_base_t* comp, const std::list<std::shared_ptr<component_base_t>>& $children_)
           : parent(nullptr),
+            component(comp),
             $children($children_) {}
 
       event_handler_t(
-        event_handler_t* parent_, const std::list<std::shared_ptr<component_base_t>>& $children_
+        event_handler_t* parent_, component_base_t* comp, const std::list<std::shared_ptr<component_base_t>>& $children_
       )
           : parent(parent_),
+            component(comp),
             $children($children_) {}
+
+      // virtual ~event_handler_t() {}
 
       CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(redraw) {
         return {};
@@ -53,11 +60,11 @@ export {
 
       // ? MOUSE EVENTS
 #define CYDUI_INTERNAL_EV_button_PROPAGATE(NAME)                                                   \
-  if (parent)                                                                                      \
-  parent->on_button_##NAME(button, x + $x, y + $y, DIMENSIONAL_ARGS)
+  if (component->parent.has_value()) \
+    component->parent.value()->dispatch_button_##NAME(button, x + $x, y + $y);
 #define CYDUI_INTERNAL_EV_mouse_PROPAGATE(NAME)                                                    \
-  if (parent)                                                                                      \
-  parent->on_mouse_##NAME(x + $x, y + $y, DIMENSIONAL_ARGS)
+  if (component->parent.has_value()) \
+    component->parent.value()->dispatch_mouse_##NAME(x + $x, y + $y);
 
       // * button press
       CYDUI_INTERNAL_EV_HANDLER_DECL(button_press) {
@@ -81,20 +88,20 @@ export {
       }
       // * mouse scroll
       CYDUI_INTERNAL_EV_HANDLER_DECL(scroll) {
-        if (parent)
-          parent->on_scroll(dx, dy, DIMENSIONAL_ARGS);
+        if (component->parent.has_value())
+          component->parent.value()->dispatch_scroll(dx, dy);
       }
 
       // ? KEYBOARD EVENTS
       // * key press
       CYDUI_INTERNAL_EV_HANDLER_DECL(key_press) {
-        if (parent)
-          parent->on_key_press(ev, DIMENSIONAL_ARGS);
+        if (component->parent.has_value())
+          component->parent.value()->dispatch_key_press(ev);
       }
       // * key release
       CYDUI_INTERNAL_EV_HANDLER_DECL(key_release) {
-        if (parent)
-          parent->on_key_release(ev, DIMENSIONAL_ARGS);
+        if (component->parent.has_value())
+          component->parent.value()->dispatch_key_release(ev);
       }
 
       void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS {}
@@ -114,7 +121,7 @@ export {
         typename Component::props_t&                        props_,
         attrs_component<Component>&                         attrs_
       )
-          : event_handler_t(parent_, $children_),
+          : event_handler_t(parent_, &$component_, $children_),
             $component($component_),
             state(*state_),
             window(*window_),
