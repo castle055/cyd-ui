@@ -100,8 +100,8 @@ export namespace cyd::ui {
 
       static void recompute_dimensions(const components::component_base_t::sptr& start_from);
 
-      static void clear_hovering_flag(const components::component_state_ref& state);
-      static void set_hovering_flag(const components::component_state_ref& state);
+      static void clear_hovering_flag(const components::component_state_ref& state, const MotionEvent& ev);
+      static bool set_hovering_flag(components::component_state_t* state, const MotionEvent& ev, bool clear_children = true);
 
       template <components::ComponentConcept C>
       friend Layout* layout::create(C&& root_component);
@@ -421,44 +421,50 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
       auto _pev = this->win->profiling_ctx.scope_event("Motion");
 
       if (ev.x == dimensions::screen_measure {-1} && ev.y == dimensions::screen_measure {-1}) {
-        if (hovering && hovering->component_instance.has_value()) {
-          int exit_rel_x     = 0;
-          int exit_rel_y     = 0;
-          hovering->hovering = false;
-          hovering->component_instance.value()->dispatch_mouse_exit(0, 0);
-          redraw_component(hovering->component_instance.value().get());
-          hovering = nullptr;
-        }
+        clear_hovering_flag(root_state, ev);
+        redraw_component(root.get());
+        // if (hovering && hovering->component_instance.has_value()) {
+        //   int exit_rel_x     = 0;
+        //   int exit_rel_y     = 0;
+        //   hovering->hovering = false;
+        //   hovering->component_instance.value()->dispatch_mouse_exit(0, 0);
+        //   redraw_component(hovering->component_instance.value().get());
+        //   hovering = nullptr;
+        // }
       } else {
         component_base_t* target           = root.get();
         component_base_t* specified_target = find_by_coords(ev.x, ev.y);
         if (specified_target)
           target = specified_target;
+        //
+        // auto& dim     = target->get_dimensional_relations();
+        // auto& int_rel = target->get_internal_relations();
+        // auto  rel_x   = ev.x - dimensions::get_value(int_rel.cx);
+        // auto  rel_y   = ev.y - dimensions::get_value(int_rel.cy);
 
-        auto& dim     = target->get_dimensional_relations();
-        auto& int_rel = target->get_internal_relations();
-        auto  rel_x   = ev.x - dimensions::get_value(int_rel.cx);
-        auto  rel_y   = ev.y - dimensions::get_value(int_rel.cy);
+        if (set_hovering_flag(target->state().get(), ev, true)) {
 
-        if (hovering != target->state()) {
-          if (hovering && hovering->component_instance.has_value()) {
-            auto  h_dim        = hovering->component_instance.value()->get_dimensional_relations();
-            auto& h_int_rel    = hovering->component_instance.value()->get_internal_relations();
-            auto  exit_rel_x   = ev.x - dimensions::get_value(h_int_rel.cx);
-            auto  exit_rel_y   = ev.y - dimensions::get_value(h_int_rel.cy);
-            hovering->hovering = false;
-            hovering->component_instance.value()->dispatch_mouse_exit(exit_rel_x, exit_rel_y);
-            redraw_component(hovering->component_instance.value().get());
-            hovering = nullptr;
-          }
-          hovering           = target->state();
-          hovering->hovering = true;
-
-          target->dispatch_mouse_enter(rel_x, rel_y);
-          redraw_component(target);
-        } else {
-          target->dispatch_mouse_motion(rel_x, rel_y);
         }
+        render_if_dirty(root.get());
+        // if (hovering != target->state()) {
+        //   if (hovering && hovering->component_instance.has_value()) {
+        //     auto  h_dim        = hovering->component_instance.value()->get_dimensional_relations();
+        //     auto& h_int_rel    = hovering->component_instance.value()->get_internal_relations();
+        //     auto  exit_rel_x   = ev.x - dimensions::get_value(h_int_rel.cx);
+        //     auto  exit_rel_y   = ev.y - dimensions::get_value(h_int_rel.cy);
+        //     hovering->hovering = false;
+        //     hovering->component_instance.value()->dispatch_mouse_exit(exit_rel_x, exit_rel_y);
+        //     redraw_component(hovering->component_instance.value().get());
+        //     hovering = nullptr;
+        //   }
+        //   hovering           = target->state();
+        //   hovering->hovering = true;
+        //
+        //   target->dispatch_mouse_enter(rel_x, rel_y);
+        //   redraw_component(target);
+        // } else {
+        //   target->dispatch_mouse_motion(rel_x, rel_y);
+        // }
       }
 
       // Calling 'Drag' related event handlers
@@ -511,30 +517,59 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
       redraw_component(root.get());
     }),
   };
+
+  // win->emit(RedrawEvent {});
+  // redraw_component(root.get());
 }
 
-void layout::Layout::set_hovering_flag(const component_state_ref &state) {
-  if (state->parent() && state->parent()->hovering) {
-    state->hovering = true;
-    state->mark_dirty();
-  }
-  if (!state->hovering) {
-    state->hovering = true;
-    state->mark_dirty();
-
+bool layout::Layout::set_hovering_flag(component_state_t* state, const MotionEvent& ev, bool clear_children) {
+  if (clear_children) {
     for (const auto &c_state: std::ranges::views::values(state->children_states)) {
-      clear_hovering_flag(c_state);
+      clear_hovering_flag(c_state, ev);
     }
   }
+
+  if (not state->hovering) {
+    state->hovering = true;
+
+    auto &int_rel = state->component_instance.value()->get_internal_relations();
+    auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
+    auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
+    state->component_instance.value()->dispatch_mouse_enter(rel_x, rel_y);
+
+    state->mark_dirty();
+
+    if (state->parent()) {
+      if (state->parent()->hovering) {
+        for (auto &[id, c_state]: state->parent()->children_states) {
+          if (c_state.get() != state) {
+            clear_hovering_flag(c_state, ev);
+          }
+        }
+      } else {
+        set_hovering_flag(state->parent(), ev, false);
+      }
+    }
+
+    return true;
+  }
+
+  return false;
 }
 
-void layout::Layout::clear_hovering_flag(const component_state_ref &state) {
+void layout::Layout::clear_hovering_flag(const component_state_ref &state, const MotionEvent& ev) {
   if (state->hovering) {
-    state->hovering = false;
+    state->hovering    = false;
+
+    auto &h_int_rel    = state->component_instance.value()->get_internal_relations();
+    auto exit_rel_x    = ev.x - dimensions::get_value(h_int_rel.cx);
+    auto exit_rel_y    = ev.y - dimensions::get_value(h_int_rel.cy);
+    state->component_instance.value()->dispatch_mouse_exit(exit_rel_x, exit_rel_y);
+
     state->mark_dirty();
 
     for (const auto &c_state: std::ranges::views::values(state->children_states)) {
-      clear_hovering_flag(c_state);
+      clear_hovering_flag(c_state, ev);
     }
   }
 }
