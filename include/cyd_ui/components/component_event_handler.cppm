@@ -134,6 +134,13 @@ export {
       typename Component::props_t& props;
       attrs_component<Component>&  attrs;
 
+      struct $self {
+        static constexpr dimension_parameter_t x{"self_x"};
+        static constexpr dimension_parameter_t y{"self_y"};
+        static constexpr dimension_parameter_t width{"self_width"};
+        static constexpr dimension_parameter_t height{"self_height"};
+      };
+
       struct $parent {
         static constexpr dimension_parameter_t x{"parent_x"};
         static constexpr dimension_parameter_t y{"parent_y"};

@@ -99,6 +99,19 @@ namespace cyd::ui::components {
 
         // Configure dimensional context
         auto& ctx = *child->get_dimensional_context();
+        ctx.set_parameter("self_x", [child] {
+          return child->get_internal_relations().cx;
+        });
+        ctx.set_parameter("self_y", [child] {
+          return child->get_internal_relations().cy;
+        });
+        ctx.set_parameter("self_width", [child] {
+          return child->get_internal_relations().cw;
+        });
+        ctx.set_parameter("self_height", [child] {
+          return child->get_internal_relations().ch;
+        });
+
         ctx.set_parameter("parent_x", [child] {
           return child->parent.value()->get_internal_relations().cx;
         });
