@@ -17,21 +17,27 @@ export {
         selection.clear();
 
         std::size_t i = 0;
+        std::size_t j = 0;
         std::string index_suffix;
+        std::string jndex_suffix;
         std::string id;
         for (const auto& item: components) {
           index_suffix = ":";
           index_suffix.append(std::to_string(i));
 
+          j = 0;
           for (const auto& component_pair: item.get_component_constructors()) {
+            jndex_suffix = ":";
+            jndex_suffix.append(std::to_string(j));
             auto [_, builder] = component_pair;
             // make copy of id for modification
-            id                = component_pair.first;
+            id = ":then";
             id.append(index_suffix);
-            id.append(":then");
+            id.append(jndex_suffix);
+            id.append(component_pair.first);
             selection.emplace_back(id, builder);
+            ++j;
           }
-
           ++i;
         }
       }
@@ -43,21 +49,27 @@ export {
         selection.clear();
 
         std::size_t i = 0;
+        std::size_t j = 0;
         std::string index_suffix;
+        std::string jndex_suffix;
         std::string id;
         for (const auto& item: components) {
           index_suffix = ":";
           index_suffix.append(std::to_string(i));
 
+          j = 0;
           for (const auto& component_pair: item.get_component_constructors()) {
+            jndex_suffix = ":";
+            jndex_suffix.append(std::to_string(j));
             auto [_, builder] = component_pair;
             // make copy of id for modification
-            id                = component_pair.first;
+            id = ":or_else";
             id.append(index_suffix);
-            id.append(":or_else");
+            id.append(jndex_suffix);
+            id.append(component_pair.first);
             selection.emplace_back(id, builder);
+            ++j;
           }
-
           ++i;
         }
       }
@@ -69,9 +81,12 @@ export {
   concept IterableContainer = requires(I i) {
     typename I::iterator;
     typename I::value_type;
-    { std::begin(i) } -> std::same_as<typename I::iterator>;
-    { std::end(i) } -> std::same_as<typename I::iterator>;
-    { std::size(i) } -> std::same_as<std::size_t>;
+    { i.begin() } -> std::same_as<typename I::iterator>;
+    { i.end() } -> std::same_as<typename I::iterator>;
+    { i.size() } -> std::same_as<std::size_t>;
+    // { std::begin(i) } -> std::same_as<typename I::iterator>;
+    // { std::end(i) } -> std::same_as<typename I::iterator>;
+    // { std::size(i) } -> std::same_as<std::size_t>;
   };
 
   struct map_to_result_t {
@@ -90,29 +105,39 @@ export {
       std::string id;
       std::size_t i = 0;
       std::size_t j = 0;
+      std::size_t k = 0;
       std::string index_suffix;
       std::string jndex_suffix;
+      std::string kndex_suffix;
       for (auto item = std::begin(this->val); item != std::end(this->val); ++item) {
         index_suffix = ":";
         index_suffix.append(std::to_string(i));
+        j = 0;
         auto cs = transform(i, *item);
         for (const auto& item1: cs.result) {
           jndex_suffix = ":";
           jndex_suffix.append(std::to_string(j));
+          k = 0;
 
           for (const auto& component_pair: item1.get_component_constructors()) {
+            kndex_suffix = ":";
+            kndex_suffix.append(std::to_string(k));
+
             auto [_, component] = component_pair;
             // make copy of id for modification
-            id                  = component_pair.first;
+            id = ":map_to";
+            id.append(index_suffix);
             id.append(jndex_suffix);
-            if (cs.id.empty()) {
-              id.append(index_suffix);
-            } else {
+            id.append(kndex_suffix);
+            if (not cs.id.empty()) {
               id.append(":");
               id.append(cs.id);
             }
-            id.append(":map_to");
+            id.append(component_pair.first);
+            id                  = component_pair.first;
+
             this->selection.emplace_back(id, component);
+            ++k;
           }
           ++j;
         }
