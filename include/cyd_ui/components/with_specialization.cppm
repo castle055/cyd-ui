@@ -134,7 +134,6 @@ export {
               id.append(cs.id);
             }
             id.append(component_pair.first);
-            id                  = component_pair.first;
 
             this->selection.emplace_back(id, component);
             ++k;
