@@ -396,7 +396,7 @@ using namespace std::chrono_literals;
 void x11_event_emitter_task(cyd::ui::threading::thread_t* this_thread) {
   while (this_thread->running) {
     run();
-    std::this_thread::sleep_for(10ms);
+    // std::this_thread::sleep_for(10ms);
   }
 }
 

@@ -84,7 +84,7 @@ export namespace cyd::ui::compositing {
     graphics::window_t* render_target = nullptr;
     prof::context_t* profiler = nullptr;
 
-    compositing_tree_t* tree = new compositing_tree_t;
+    std::shared_ptr<compositing_tree_t> tree = std::make_shared<compositing_tree_t>();
     bool tree_dirty = true;
 
     std::unordered_map<unsigned long, pixelmap_t*> sub_frame_cache{};
@@ -92,29 +92,34 @@ export namespace cyd::ui::compositing {
     static void compositing_task(LayoutCompositor* compositor) {
       auto t0 = std::chrono::system_clock::now();
       auto t1 = std::chrono::system_clock::now();
+      std::shared_ptr<compositing_tree_t> tree = {nullptr};
+      graphics::window_t* rtarget = nullptr;
       while (compositor->running.test()) {
-        std::unique_lock lk(compositor->m);
-        if (nullptr != compositor->render_target) {
-          compositor->cv.wait(
-            lk,
-            [&] {
-              return compositor->tree_dirty || !compositor->running.test();
-            }
-          );
-          auto _pev = compositor->profiler->scope_event("COMPOSITING TASK");
-          compositor->tree_dirty = false;
+        tree    = nullptr;
+        rtarget = nullptr;
 
-          // Resize if needed, window size -(EV)-> layout size -> frame size -> screen size
-          // auto t0 = std::chrono::system_clock::now();
-          graphics::resize(compositor->render_target, compositor->tree->root->op.w, compositor->tree->root->op.h);
-          pixelmap_t* frame = graphics::get_frame(compositor->render_target);
-          compositor->repaint(compositor->tree->root, frame);
-          graphics::flush(compositor->render_target);
-          // auto t1 = std::chrono::system_clock::now();
-          // std::cout << "COMPOS:  " << std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count() << " us" <<
-          // std::endl;
+        {
+          std::unique_lock lk(compositor->m);
+          if (nullptr != compositor->render_target) {
+            compositor->cv.wait(
+              lk,
+              [&] {
+                return compositor->tree_dirty || !compositor->running.test();
+              }
+            );
+            compositor->tree_dirty = false;
+            tree                   = compositor->tree;
+            rtarget                = compositor->render_target;
+          }
+          lk.unlock();
         }
-        lk.unlock();
+
+        if (tree != nullptr) {
+          graphics::resize(rtarget, tree->root->op.w, tree->root->op.h);
+          pixelmap_t* frame = graphics::get_frame(rtarget);
+          compositor->repaint(tree->root, frame);
+          graphics::flush(rtarget);
+        }
 
         std::this_thread::sleep_until(t0 + 16666us);
       }
@@ -242,15 +247,19 @@ export namespace cyd::ui::compositing {
       profiler = _profiler;
     }
 
-    void compose(compositing_tree_t* _tree) {
-      compositing_tree_t* old_tree; {
+    void compose(std::shared_ptr<compositing_tree_t> _tree) {
+      // compositing_tree_t* old_tree;
+
+
+      {
         std::lock_guard lk(m);
-        old_tree = tree;
-        tree = _tree;
+        // old_tree   = tree;
+        tree       = _tree;
         tree_dirty = true;
       }
+
       cv.notify_all();
-      delete old_tree;
+      // delete old_tree;
     }
   };
 }

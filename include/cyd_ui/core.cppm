@@ -275,7 +275,7 @@ void cyd::ui::layout::Layout::redraw_component(component_base_t* target) {
   // LOG::print{DEBUG}("REDRAW");
   //auto t0 = std::chrono::system_clock::now();
   // Clear render area of component instances
-  auto* compositing_tree = new compositing::compositing_tree_t;
+  auto compositing_tree = std::make_shared<compositing::compositing_tree_t>();
 
   // TODO - For now the entire screen is redraw everytime, in the future it
   // would be interesting to implement a diff algorithm that could redraw
@@ -422,49 +422,18 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
 
       if (ev.x == dimensions::screen_measure {-1} && ev.y == dimensions::screen_measure {-1}) {
         clear_hovering_flag(root_state, ev);
-        redraw_component(root.get());
-        // if (hovering && hovering->component_instance.has_value()) {
-        //   int exit_rel_x     = 0;
-        //   int exit_rel_y     = 0;
-        //   hovering->hovering = false;
-        //   hovering->component_instance.value()->dispatch_mouse_exit(0, 0);
-        //   redraw_component(hovering->component_instance.value().get());
-        //   hovering = nullptr;
-        // }
       } else {
         component_base_t* target           = root.get();
         component_base_t* specified_target = find_by_coords(ev.x, ev.y);
         if (specified_target)
           target = specified_target;
-        //
-        // auto& dim     = target->get_dimensional_relations();
-        // auto& int_rel = target->get_internal_relations();
-        // auto  rel_x   = ev.x - dimensions::get_value(int_rel.cx);
-        // auto  rel_y   = ev.y - dimensions::get_value(int_rel.cy);
 
-        if (set_hovering_flag(target->state().get(), ev, true)) {
-
+        if (not set_hovering_flag(target->state().get(), ev, true)) {
+          auto &int_rel = target->get_internal_relations();
+          auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
+          auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
+          target->dispatch_mouse_motion(rel_x, rel_y);
         }
-        render_if_dirty(root.get());
-        // if (hovering != target->state()) {
-        //   if (hovering && hovering->component_instance.has_value()) {
-        //     auto  h_dim        = hovering->component_instance.value()->get_dimensional_relations();
-        //     auto& h_int_rel    = hovering->component_instance.value()->get_internal_relations();
-        //     auto  exit_rel_x   = ev.x - dimensions::get_value(h_int_rel.cx);
-        //     auto  exit_rel_y   = ev.y - dimensions::get_value(h_int_rel.cy);
-        //     hovering->hovering = false;
-        //     hovering->component_instance.value()->dispatch_mouse_exit(exit_rel_x, exit_rel_y);
-        //     redraw_component(hovering->component_instance.value().get());
-        //     hovering = nullptr;
-        //   }
-        //   hovering           = target->state();
-        //   hovering->hovering = true;
-        //
-        //   target->dispatch_mouse_enter(rel_x, rel_y);
-        //   redraw_component(target);
-        // } else {
-        //   target->dispatch_mouse_motion(rel_x, rel_y);
-        // }
       }
 
       // Calling 'Drag' related event handlers
@@ -508,7 +477,7 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
     }),
     make_listener([&](const ResizeEvent& ev) {
       auto _pev = this->win->profiling_ctx.scope_event("Resize");
-      LOG::print{DEBUG}("RESIZE: w={}, h={}", ev.w.to_string(), ev.h.to_string());
+      // LOG::print{DEBUG}("RESIZE: w={}, h={}", ev.w.to_string(), ev.h.to_string());
 
       auto& dim    = root->get_dimensional_relations();
       dim._width  = ev.w;
