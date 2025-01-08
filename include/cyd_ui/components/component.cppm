@@ -57,7 +57,7 @@ namespace cyd::ui::components {
       return dirty;
     }
 
-    void mount_child(
+    std::shared_ptr<component_base_t> mount_child(
       const std::string&                            id,
       std::shared_ptr<component_base_t>             child,
       std::list<std::shared_ptr<component_base_t>>& pending_redraw,
@@ -66,6 +66,7 @@ namespace cyd::ui::components {
         std::list<std::shared_ptr<component_base_t>>::iterator>& pending_remove,
       std::optional<std::shared_ptr<component_base_t>> prev
     ) {
+      std::shared_ptr<component_base_t> mounted_child {child};
       // Get or Create state for component
       component_state_ref child_state;
       if (state()->children_states.contains(id)) {
@@ -77,6 +78,7 @@ namespace cyd::ui::components {
 
       if (child_state->component_instance.has_value()) {
         pending_remove.erase(child_state->component_instance.value());
+        mounted_child = child_state->component_instance.value();
 
         // Redraw child
         if (child_state->component_instance.value()->update_with(child)) {
@@ -125,38 +127,36 @@ namespace cyd::ui::components {
           return child->parent.value()->get_internal_relations().ch;
         });
 
-        ctx.set_parameter("prev_x", [this, prev] {
-          if (not prev.has_value()) {
-            return dimension_t {0_px};
-          } else {
+        ctx.set_parameter("prev_x", [=] {
+          if (prev.has_value()) {
             return prev.value()->get_dimensional_relations()._x;
           }
+          return dimension_t {0_px};
         });
-        ctx.set_parameter("prev_y", [this, prev] {
-          if (not prev.has_value()) {
-            return dimension_t {0_px};
-          } else {
+        ctx.set_parameter("prev_y", [=] {
+          if (prev.has_value()) {
             return prev.value()->get_dimensional_relations()._y;
           }
+          return dimension_t {0_px};
         });
-        ctx.set_parameter("prev_width", [this, prev] {
-          if (not prev.has_value()) {
-            return dimension_t {0_px};
-          } else {
+        ctx.set_parameter("prev_width", [=] {
+          if (prev.has_value()) {
             return prev.value()->get_dimensional_relations()._width;
           }
+          return dimension_t {0_px};
         });
-        ctx.set_parameter("prev_height", [this, prev] {
-          if (not prev.has_value()) {
-            return dimension_t {0_px};
-          } else {
+        ctx.set_parameter("prev_height", [=] {
+          if (prev.has_value()) {
             return prev.value()->get_dimensional_relations()._height;
           }
+          return dimension_t {0_px};
         });
 
         // Redraw child
         pending_redraw.push_back(child);
       }
+
+      return mounted_child;
     }
 
     template <typename C>
@@ -178,8 +178,9 @@ namespace cyd::ui::components {
           id.append(":");
           id.append(id_);
 
-          mount_child(id, component, pending_redraw, pending_remove, prev);
-          prev = component;
+          auto mounted_child = mount_child(id, component, pending_redraw, pending_remove, prev);
+          prev.reset();
+          prev.emplace(mounted_child);
         }
         ++id_i;
       }
