@@ -64,7 +64,7 @@ namespace cyd::ui::components {
       std::unordered_map<
         std::shared_ptr<component_base_t>,
         std::list<std::shared_ptr<component_base_t>>::iterator>& pending_remove,
-      std::optional<std::shared_ptr<component_base_t>> &prev
+      std::optional<std::shared_ptr<component_base_t>> prev
     ) {
       // Get or Create state for component
       component_state_ref child_state;
