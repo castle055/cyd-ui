@@ -63,7 +63,8 @@ namespace cyd::ui::components {
       std::list<std::shared_ptr<component_base_t>>& pending_redraw,
       std::unordered_map<
         std::shared_ptr<component_base_t>,
-        std::list<std::shared_ptr<component_base_t>>::iterator>& pending_remove
+        std::list<std::shared_ptr<component_base_t>>::iterator>& pending_remove,
+      std::optional<std::shared_ptr<component_base_t>> &prev
     ) {
       // Get or Create state for component
       component_state_ref child_state;
@@ -92,7 +93,6 @@ namespace cyd::ui::components {
         child->set_state(child_state);
         child_state->component_instance = child;
         children.push_back(child);
-        std::list<std::shared_ptr<component_base_t>>::iterator iter = std::prev(children.end());
 
         // Configure event handler
         child->configure_event_handler();
@@ -125,32 +125,32 @@ namespace cyd::ui::components {
           return child->parent.value()->get_internal_relations().ch;
         });
 
-        ctx.set_parameter("prev_x", [this, iter] {
-          if (iter == this->children.begin()) {
+        ctx.set_parameter("prev_x", [this, prev] {
+          if (not prev.has_value()) {
             return dimension_t {0_px};
           } else {
-            return (*std::prev(iter))->get_dimensional_relations()._x;
+            return prev.value()->get_dimensional_relations()._x;
           }
         });
-        ctx.set_parameter("prev_y", [this, iter] {
-          if (iter == this->children.begin()) {
+        ctx.set_parameter("prev_y", [this, prev] {
+          if (not prev.has_value()) {
             return dimension_t {0_px};
           } else {
-            return (*std::prev(iter))->get_dimensional_relations()._y;
+            return prev.value()->get_dimensional_relations()._y;
           }
         });
-        ctx.set_parameter("prev_width", [this, iter] {
-          if (iter == this->children.begin()) {
+        ctx.set_parameter("prev_width", [this, prev] {
+          if (not prev.has_value()) {
             return dimension_t {0_px};
           } else {
-            return (*std::prev(iter))->get_dimensional_relations()._width;
+            return prev.value()->get_dimensional_relations()._width;
           }
         });
-        ctx.set_parameter("prev_height", [this, iter] {
-          if (iter == this->children.begin()) {
+        ctx.set_parameter("prev_height", [this, prev] {
+          if (not prev.has_value()) {
             return dimension_t {0_px};
           } else {
-            return (*std::prev(iter))->get_dimensional_relations()._height;
+            return prev.value()->get_dimensional_relations()._height;
           }
         });
 
@@ -169,6 +169,7 @@ namespace cyd::ui::components {
         std::list<std::shared_ptr<component_base_t>>::iterator>& pending_remove
     ) {
       std::size_t id_i = 0;
+      std::optional<std::shared_ptr<component_base_t>> prev{std::nullopt};
       for (auto& item: children_to_add) {
         for (auto& component_pair: item.get_components()) {
           auto [id_, component] = component_pair;
@@ -177,7 +178,8 @@ namespace cyd::ui::components {
           id.append(":");
           id.append(id_);
 
-          mount_child(id, component, pending_redraw, pending_remove);
+          mount_child(id, component, pending_redraw, pending_remove, prev);
+          prev = component;
         }
         ++id_i;
       }
