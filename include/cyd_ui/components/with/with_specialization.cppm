@@ -7,35 +7,19 @@ import std;
 
 export import :holder;
 
-using namespace cyd::ui::components;
-
 export {
   template <>
-  struct with<bool>: public with_data_t<bool> {
-    with<bool>& then(const std::vector<component_builder_t>& components) {
+  struct with<bool>: public cyd::ui::components::with_data_t<bool> {
+    with<bool>& then(const std::vector<cyd::ui::components::component_builder_t>& components) {
       if (val) {
         selection.clear();
 
-        std::size_t i = 0;
-        std::size_t j = 0;
-        std::string index_suffix;
-        std::string jndex_suffix;
-        std::string id;
-        for (const auto& item: components) {
-          index_suffix = ":";
-          index_suffix.append(std::to_string(i));
-
-          j = 0;
-          for (const auto& component_pair: item.get_component_constructors()) {
-            jndex_suffix = ":";
-            jndex_suffix.append(std::to_string(j));
-            auto [_, builder] = component_pair;
-            // make copy of id for modification
-            id = ":then";
-            id.append(index_suffix);
-            id.append(jndex_suffix);
-            id.append(component_pair.first);
-            selection.emplace_back(id, builder);
+        std::size_t i {0};
+        for (const auto &item: components) {
+          std::size_t j {0};
+          for (const auto &component_pair: item.get_component_constructors()) {
+            auto &[id, builder] = component_pair;
+            selection.emplace_back(std::format(":then:{}:{}{}", i, j, id), builder);
             ++j;
           }
           ++i;
@@ -44,30 +28,16 @@ export {
       return *this;
     }
 
-    with<bool>& or_else(const std::vector<component_builder_t>& components) {
+    with<bool>& or_else(const std::vector<cyd::ui::components::component_builder_t>& components) {
       if (!val) {
         selection.clear();
 
-        std::size_t i = 0;
-        std::size_t j = 0;
-        std::string index_suffix;
-        std::string jndex_suffix;
-        std::string id;
+        std::size_t i {0};
         for (const auto& item: components) {
-          index_suffix = ":";
-          index_suffix.append(std::to_string(i));
-
-          j = 0;
+          std::size_t j {0};
           for (const auto& component_pair: item.get_component_constructors()) {
-            jndex_suffix = ":";
-            jndex_suffix.append(std::to_string(j));
-            auto [_, builder] = component_pair;
-            // make copy of id for modification
-            id = ":or_else";
-            id.append(index_suffix);
-            id.append(jndex_suffix);
-            id.append(component_pair.first);
-            selection.emplace_back(id, builder);
+            auto [id, builder] = component_pair;
+            selection.emplace_back(std::format(":or_else:{}:{}{}", i, j, id), builder);
             ++j;
           }
           ++i;
@@ -91,51 +61,31 @@ export {
 
   struct map_to_result_t {
     std::string                      id;
-    std::vector<component_builder_t> result;
+    std::vector<cyd::ui::components::component_builder_t> result;
 
-    map_to_result_t(std::initializer_list<component_builder_t> result)
+    map_to_result_t(std::initializer_list<cyd::ui::components::component_builder_t> result)
         : result(result) {}
   };
 
   template <IterableContainer I>
-  struct with<I>: public with_data_t<I> {
+  struct with<I>: public cyd::ui::components::with_data_t<I> {
     with<I>& map_to(
       std::function<map_to_result_t(std::size_t index, typename I::value_type& value)> transform
     ) {
-      std::string id;
       std::size_t i = 0;
-      std::size_t j = 0;
-      std::size_t k = 0;
-      std::string index_suffix;
-      std::string jndex_suffix;
-      std::string kndex_suffix;
       for (auto item = std::begin(this->val); item != std::end(this->val); ++item) {
-        index_suffix = ":";
-        index_suffix.append(std::to_string(i));
-        j = 0;
-        auto cs = transform(i, *item);
+        std::size_t j = 0;
+        auto cs       = transform(i, *item);
         for (const auto& item1: cs.result) {
-          jndex_suffix = ":";
-          jndex_suffix.append(std::to_string(j));
-          k = 0;
-
+          std::size_t k = 0;
           for (const auto& component_pair: item1.get_component_constructors()) {
-            kndex_suffix = ":";
-            kndex_suffix.append(std::to_string(k));
-
-            auto [_, component] = component_pair;
-            // make copy of id for modification
-            id = ":map_to";
-            id.append(index_suffix);
-            id.append(jndex_suffix);
-            id.append(kndex_suffix);
+            auto [id, component] = component_pair;
+            std::string full_id = std::format(":map_to:{}:{}:{}", i, j, k);
             if (not cs.id.empty()) {
-              id.append(":");
-              id.append(cs.id);
+              full_id.append(":");
+              full_id.append(cs.id);
             }
-            id.append(component_pair.first);
-
-            this->selection.emplace_back(id, component);
+            this->selection.emplace_back(full_id.append(id), component);
             ++k;
           }
           ++j;
@@ -150,7 +100,7 @@ export {
   };
 
   template <>
-  struct with<int>: public with_data_t<int> {
+  struct with<int>: public cyd::ui::components::with_data_t<int> {
     with<int>& eq() {
       return *this;
     }
@@ -190,9 +140,9 @@ export {
   };
 
   template <typename... Ts>
-  struct with<std::variant<Ts...>>: with_data_t<std::variant<Ts...>> {
+  struct with<std::variant<Ts...>>: cyd::ui::components::with_data_t<std::variant<Ts...>> {
     template <typename T>
-    with& if_type_is(const std::function<std::vector<component_builder_t>(T& value)>& builder) {
+    with& if_type_is(const std::function<std::vector<cyd::ui::components::component_builder_t>(T& value)>& builder) {
       std::variant<Ts...> v = this->val;
       if (std::holds_alternative<T>(this->val)) {
         T&          value = std::get<T>(this->val);
@@ -222,7 +172,7 @@ export {
       return *this;
     }
     template <typename T>
-    with& if_type_is(std::vector<component_builder_t>& cs) {
+    with& if_type_is(std::vector<cyd::ui::components::component_builder_t>& cs) {
       std::variant<Ts...> v = this->val;
       if (std::holds_alternative<T>(this->val)) {
         T&          value = std::get<T>(this->val);
@@ -251,14 +201,14 @@ export {
       return *this;
     }
     template <typename T>
-    with& if_type_is(std::vector<component_builder_t>&& cs) {
+    with& if_type_is(std::vector<cyd::ui::components::component_builder_t>&& cs) {
       return if_type_is<T>(cs);
     }
   };
 
   template <>
-  struct with<std::string>: public with_data_t<std::string> {
-    with& match(const std::unordered_map<std::string, component_builder_t>& map) {
+  struct with<std::string>: public cyd::ui::components::with_data_t<std::string> {
+    with& match(const std::unordered_map<std::string, cyd::ui::components::component_builder_t>& map) {
       if ((not this->val.empty()) && map.contains(this->val)) {
         auto& cs = map.at(this->val);
         std::string id;
@@ -277,7 +227,7 @@ export {
       }
       return *this;
     }
-    with& match(const std::vector<std::pair<std::string, component_builder_t>>& map) {
+    with& match(const std::vector<std::pair<std::string, cyd::ui::components::component_builder_t>>& map) {
       if ((not this->val.empty())) {
         for (const auto& [str, builder]: map) {
           if (str != this->val) {

@@ -7,6 +7,7 @@ export import std;
 
 export import cydui.core;
 export import cydui.graphics;
+export import cydui.events;
 
 export import reflect;
 
