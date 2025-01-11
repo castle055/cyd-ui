@@ -501,10 +501,12 @@ bool layout::Layout::set_hovering_flag(component_state_t* state, const MotionEve
   if (not state->hovering) {
     state->hovering = true;
 
-    auto &int_rel = state->component_instance.value()->get_internal_relations();
-    auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
-    auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
-    state->component_instance.value()->dispatch_mouse_enter(rel_x, rel_y);
+    if (state->component_instance.has_value()) {
+      auto &int_rel = state->component_instance.value()->get_internal_relations();
+      auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
+      auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
+      state->component_instance.value()->dispatch_mouse_enter(rel_x, rel_y);
+    }
 
     state->mark_dirty();
 
@@ -530,10 +532,12 @@ void layout::Layout::clear_hovering_flag(const component_state_ref &state, const
   if (state->hovering) {
     state->hovering    = false;
 
-    auto &h_int_rel    = state->component_instance.value()->get_internal_relations();
-    auto exit_rel_x    = ev.x - dimensions::get_value(h_int_rel.cx);
-    auto exit_rel_y    = ev.y - dimensions::get_value(h_int_rel.cy);
-    state->component_instance.value()->dispatch_mouse_exit(exit_rel_x, exit_rel_y);
+    if (state->component_instance.has_value()) {
+      auto &h_int_rel = state->component_instance.value()->get_internal_relations();
+      auto exit_rel_x = ev.x - dimensions::get_value(h_int_rel.cx);
+      auto exit_rel_y = ev.y - dimensions::get_value(h_int_rel.cy);
+      state->component_instance.value()->dispatch_mouse_exit(exit_rel_x, exit_rel_y);
+    }
 
     state->mark_dirty();
 
