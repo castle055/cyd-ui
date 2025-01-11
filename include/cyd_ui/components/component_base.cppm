@@ -20,6 +20,34 @@ export import :with_specialization;
 
 export import :state;
 
+export template<typename ContextType>
+struct ContextUpdate {
+  constexpr static const char* type = refl::type_name<ContextUpdate<ContextType>>.data();
+  ContextType* ptr = nullptr;
+};
+
+export class with_context {
+public:
+  with_context(std::initializer_list<cyd::ui::components::component_holder_t> &&components) {
+    std::size_t i {0};
+    for (auto &&holder: components) {
+      for (auto &[id, c]: holder.get_components()) {
+        components_.emplace_back(std::format(":{}{}", i, id), c);
+      }
+      ++i;
+    }
+  }
+
+  cyd::ui::components::component_holder_t build() const {
+    return cyd::ui::components::component_holder_t {components_};
+  }
+
+private:
+  // std::vector<cyd::ui::components::component_holder_t> components_;
+  std::vector<std::pair<std::string, std::shared_ptr<cyd::ui::components::component_base_t>>> components_ { };
+};
+
+
 namespace cyd::ui::components {
   struct event_handler_t;
 
@@ -105,13 +133,25 @@ namespace cyd::ui::components {
 
     virtual void configure_event_handler() = 0;
 
-  private:
+  public:
     template<typename ContextType>
+    void add_context(provide_context<ContextType>& ptr) {
+      context_store_.add_context<ContextType>(ptr);
+    }
+
+  private:
     friend class ::with_context;
+
+    template<typename ContextType>
+    friend struct ::provide_context;
 
     template<typename ContextType>
     void add_context(const std::shared_ptr<ContextType> &ptr) {
       context_store_.add_context<ContextType>(ptr);
+    }
+
+    auto& get_context_store() {
+      return context_store_;
     }
 
     template<typename ContextType>
@@ -155,12 +195,6 @@ namespace cyd::ui::components {
     context_store_t context_store_{};
   };
 }
-
-template<typename ContextType>
-struct ContextUpdate {
-  constexpr static const char* type = refl::type_name<ContextUpdate<ContextType>>.data();
-  ContextType* ptr = nullptr;
-};
 
 export template<typename ContextType>
 struct use_context {
@@ -252,3 +286,55 @@ private:
 
   std::optional<fabric::async::listener<ContextUpdate<context_type>>> listener {std::nullopt};
 };
+
+export template<typename ContextType>
+struct provide_context {
+  using context_type = ContextType;
+
+  template<cyd::ui::components::ComponentEventHandlerConcept EVH, typename T>
+  friend struct cyd::ui::components::component_t;
+
+  provide_context() = default;
+
+  provide_context(const provide_context &other) = default;
+
+  provide_context &operator=(const provide_context &other) = default;
+
+  provide_context(provide_context &&other) noexcept = default;
+
+  provide_context &operator=(provide_context &&other) = default;
+
+  context_type* operator->() {
+    return context_.get();
+  }
+
+  context_type &operator*() {
+    return *context_;
+  }
+
+  void notify() {
+    state->emit<ContextUpdate<context_type>>({context_.get()});
+  }
+
+  cyd::ui::components::component_holder_t operator >(with_context &&components) {
+    auto holder = components.build();
+
+    for (auto &[_, c]: holder.get_components()) {
+      if (not c->get_context_store().find_context<ContextType>().has_value()) {
+        c->add_context(context_);
+      }
+    }
+
+    return holder;
+  }
+
+  operator std::shared_ptr<context_type>() {
+    return context_;
+  }
+
+private:
+  // This object will own the context if it couldn't be found and thus a default one was created
+  cyd::ui::components::component_state_ref state = nullptr;
+  std::shared_ptr<context_type> context_         = std::make_shared<context_type>();
+};
+

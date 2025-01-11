@@ -21,10 +21,13 @@ export namespace cyd::ui::components {
   struct component_t;
   struct component_state_t;
   using component_state_ref = std::shared_ptr<component_state_t>;
+
 }
 
+export class with_context;
+
 export template<typename ContextType>
-class with_context;
+struct provide_context;
 
 export using children_list = std::vector<cyd::ui::components::component_holder_t>;
 

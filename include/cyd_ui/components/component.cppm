@@ -247,6 +247,11 @@ namespace cyd::ui::components {
 
         ctx_ref.state = state_.value().lock();
         ctx_ref.start_listening();
+      } else if constexpr (packtl::is_type<provide_context, field_type>::value) {
+        using context_type = typename field_type::context_type;
+
+        provide_context<context_type>& ctx_ref = field::from_instance(*event_handler_);
+        ctx_ref.state = state_.value().lock();
       }
     }
   public:
@@ -571,26 +576,3 @@ constexpr bool is_type_complete_v
   <T, std::void_t<decltype(sizeof(T))>> = true;
 
 
-export template<typename ContextType>
-class with_context {
-public:
-  with_context(std::initializer_list<cyd::ui::components::component_holder_t>&& components) {
-    auto context = std::make_shared<ContextType>();
-
-    std::size_t i {0};
-    for (auto && holder : components) {
-      for (auto& [id, c] : holder.get_components()) {
-        c->context_store_.add_context(context);
-        components_.emplace_back(std::format(":{}{}", i, id), c);
-      }
-      ++i;
-    }
-  }
-
-  operator cyd::ui::components::component_holder_t() const {
-    return cyd::ui::components::component_holder_t{components_};
-  }
-private:
-  // std::vector<cyd::ui::components::component_holder_t> components_;
-  std::vector<std::pair<std::string, std::shared_ptr<cyd::ui::components::component_base_t>>> components_ { };
-};
