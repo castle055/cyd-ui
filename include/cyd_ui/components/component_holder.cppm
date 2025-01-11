@@ -10,6 +10,9 @@ export
 {
   namespace cyd::ui::components {
     struct component_builder_t {
+
+      component_builder_t() = default;
+
       template<ComponentConcept C>
       component_builder_t(C comp) {
         // NOLINT(*-explicit-constructor)
@@ -39,6 +42,20 @@ export
 
       const auto &get_component_constructors() const {
         return components;
+      }
+
+      void append_component(std::string id, const std::function<std::shared_ptr<component_base_t>()>& component) {
+        components.emplace_back(id, component);
+      }
+
+      void transform(auto&& fun) {
+        for (auto &item: components) {
+          auto &[id, builder] = item;
+          auto original_builder = builder;
+          builder = [=]() {
+            return fun(original_builder());
+          };
+        }
       }
 
     private:

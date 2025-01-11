@@ -291,15 +291,15 @@ namespace cyd::ui::components {
         pending_remove.emplace(*it, it);
       }
 
-      component_holder_t content_children_holder{}; {
+      component_builder_t content_children_builder{}; {
         std::vector<component_builder_t> &content_children = this->_content;
         std::size_t id_i                                   = 0;
         for (auto &item: content_children) {
-          for (auto &component_pair: item.get_components()) {
+          for (auto &component_pair: item.get_component_constructors()) {
             auto [id_, component] = component_pair;
             const std::string id  = std::format("content:{}:{}", id_i, id_);
 
-            content_children_holder.append_component(id, component);
+            content_children_builder.append_component(id, component);
           }
           ++id_i;
         }
@@ -314,7 +314,7 @@ namespace cyd::ui::components {
         this->_padding_bottom,
         this->_padding_left,
         this->_padding_right,
-        content_children_holder
+        content_children_builder
       );
 
       add_children(new_children, pending_redraw, pending_remove);
