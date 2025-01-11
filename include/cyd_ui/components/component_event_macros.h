@@ -14,7 +14,8 @@
    cyd::ui::components::dimension_t & $padding_top,                                                \
    cyd::ui::components::dimension_t & $padding_bottom,                                             \
    cyd::ui::components::dimension_t & $padding_left,                                               \
-   cyd::ui::components::dimension_t & $padding_right)
+   cyd::ui::components::dimension_t & $padding_right,                                              \
+   cyd::ui::components::component_holder_t & $content)
 
 #define CYDUI_INTERNAL_EV_button_ARGS                                                              \
   (Button                                              button,                                     \

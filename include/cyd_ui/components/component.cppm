@@ -151,10 +151,8 @@ namespace cyd::ui::components {
       return mounted_child;
     }
 
-    template <typename C>
     void add_children(
-      std::string                                   prefix_id,
-      const std::vector<C>&                         children_to_add,
+      std::vector<component_holder_t> &             children_to_add,
       std::list<std::shared_ptr<component_base_t>>& pending_redraw,
       std::unordered_map<
         std::shared_ptr<component_base_t>,
@@ -165,10 +163,7 @@ namespace cyd::ui::components {
       for (auto& item: children_to_add) {
         for (auto& component_pair: item.get_components()) {
           auto [id_, component] = component_pair;
-          std::string id        = prefix_id;
-          id.append(std::to_string(id_i));
-          id.append(":");
-          id.append(id_);
+          std::string id        = std::format("{}:{}", id_i, id_);
 
           auto mounted_child = mount_child(id, component, pending_redraw, pending_remove, prev);
           prev.reset();
@@ -296,8 +291,19 @@ namespace cyd::ui::components {
         pending_remove.emplace(*it, it);
       }
 
-      std::vector<component_builder_t>& content_children = this->_content;
-      add_children("content:", content_children, pending_redraw, pending_remove);
+      component_holder_t content_children_holder{}; {
+        std::vector<component_builder_t> &content_children = this->_content;
+        std::size_t id_i                                   = 0;
+        for (auto &item: content_children) {
+          for (auto &component_pair: item.get_components()) {
+            auto [id_, component] = component_pair;
+            const std::string id  = std::format("content:{}:{}", id_i, id_);
+
+            content_children_holder.append_component(id, component);
+          }
+          ++id_i;
+        }
+      }
 
       std::vector<component_holder_t> new_children = event_handler_->on_redraw(
         this->_x,
@@ -307,9 +313,11 @@ namespace cyd::ui::components {
         this->_padding_top,
         this->_padding_bottom,
         this->_padding_left,
-        this->_padding_right
+        this->_padding_right,
+        content_children_holder
       );
-      add_children("", std::move(new_children), pending_redraw, pending_remove);
+
+      add_children(new_children, pending_redraw, pending_remove);
 
       for (const auto& remove: pending_remove) {
         unmount_child(remove.second);

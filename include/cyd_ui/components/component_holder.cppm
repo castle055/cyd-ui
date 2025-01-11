@@ -57,6 +57,8 @@ export
       //  components[""] = new C {comp};
       //  //components[""] = std::make_unique<C>(comp);
       //}
+      component_holder_t() = default;
+
       template<ComponentConcept C>
       component_holder_t(std::vector<C> comps) noexcept {
         std::size_t index = 0;
@@ -106,6 +108,26 @@ export
       //component_holder_t clone() const {
       //
       //}
+
+      void append_component(std::string id, std::shared_ptr<component_base_t> component) {
+        components.emplace_back(id, component);
+      }
+
+      auto begin() {
+        return components.begin();
+      }
+
+      auto begin() const {
+        return components.begin();
+      }
+
+      auto end() {
+        return components.end();
+      }
+
+      auto end() const {
+        return components.end();
+      }
 
     private:
       std::vector<std::pair<std::string, std::shared_ptr<component_base_t>>> components { };
