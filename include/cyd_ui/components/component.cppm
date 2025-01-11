@@ -8,6 +8,7 @@ import std;
 import fabric.logging;
 import fabric.memory.lazy_alloc;
 import fabric.async;
+export import fabric.wiring.signals;
 
 export import :attributes;
 export import :event_handler;
@@ -46,7 +47,36 @@ namespace cyd::ui::components {
         dirty = true;
       }
 
+      if (update_fields(other_component)) {
+        dirty = true;
+      }
+
       return dirty;
+    }
+
+    bool update_fields(std::shared_ptr<component_t>& other) {
+      bool dirty = false;
+      [&]<std::size_t ...I>(std::index_sequence<I...>) {
+        (update_field<I>(dirty, other), ...);
+      }(std::make_index_sequence<refl::field_count<T>>());
+      return dirty;
+    }
+
+    template <std::size_t I>
+    void update_field(bool& dirty, std::shared_ptr<component_t>& other_) {
+      auto other = std::dynamic_pointer_cast<T>(other_);
+      using field = refl::field<T, I>;
+      using field_type = typename field::type;
+
+      if constexpr (packtl::is_type<fabric::wiring::signal, field_type>::value) {
+        auto& this_signal = field::from_instance(*dynamic_cast<T*>(this));
+        auto& other_signal = field::from_instance(*other);
+
+        if (this_signal != other_signal) {
+          this_signal = other_signal;
+          dirty = true;
+        }
+      }
     }
 
     std::shared_ptr<component_base_t> mount_child(

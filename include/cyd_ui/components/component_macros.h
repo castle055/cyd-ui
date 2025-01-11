@@ -156,6 +156,15 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 
 #define FRAGMENT void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS
 
+#define SIGNAL(NAME) \
+;private: \
+fabric::wiring::signal<> NAME{}; \
+public: \
+auto& on_##NAME(auto fun) { \
+  NAME.connect(fun); \
+  return *this; \
+}
+
 
 
 #endif //CYD_UI_COMPONENT_MACROS_H
