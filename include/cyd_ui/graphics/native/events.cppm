@@ -11,7 +11,7 @@ export module cydui.graphics.native:events;
 
 import std;
 import fabric.logging;
-import cydui.events;
+export import cydui.events;
 
 import :window;
 

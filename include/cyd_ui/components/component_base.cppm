@@ -159,6 +159,7 @@ namespace cyd::ui::components {
 template<typename ContextType>
 struct ContextUpdate {
   constexpr static const char* type = refl::type_name<ContextUpdate<ContextType>>.data();
+  ContextType* ptr = nullptr;
 };
 
 export template<typename ContextType>
@@ -223,8 +224,8 @@ struct use_context {
     return *ctx;
   }
 
-  void notify() const {
-    state->emit<ContextUpdate<context_type>>({});
+  void notify() {
+    state->emit<ContextUpdate<context_type>>({ctx});
   }
 
   private:
@@ -232,7 +233,9 @@ struct use_context {
       stop_listening();
 
       listener = state->window->on_event([&](ContextUpdate<context_type> ev) {
-        state->force_redraw();
+        if (ev.ptr == ctx) {
+          state->force_redraw();
+        }
       });
     }
     void stop_listening() {
