@@ -23,25 +23,18 @@ export namespace cyd::ui::components {
   using component_state_ref = std::shared_ptr<component_state_t>;
 }
 
+export template<typename ContextType>
+class with_context;
+
 export using children_list = std::vector<cyd::ui::components::component_holder_t>;
 
 namespace cyd::ui::components {
   struct component_state_t {
     virtual ~component_state_t() = default;
 
-    std::shared_ptr<fabric::async::async_bus_t> window = nullptr;
-
-    std::unordered_map<std::string, component_state_ref> children_states { };
-
     component_state_t() = default;
     explicit component_state_t(void* props) { }
 
-    bool _dirty = false;
-
-    bool focused = false;
-    bool hovering = false;
-
-    std::optional<std::shared_ptr<component_base_t>> component_instance = std::nullopt;
 
     /*!
      * @brief Marks this component state as needing to be redrawn.
@@ -99,7 +92,17 @@ namespace cyd::ui::components {
       component_name_ = name;
     }
 
+  public:
     std::string component_name_;
+
     component_state_t* parent_;
+    std::shared_ptr<fabric::async::async_bus_t> window = nullptr;
+
+    std::optional<std::shared_ptr<component_base_t>> component_instance = std::nullopt;
+    std::unordered_map<std::string, component_state_ref> children_states { };
+
+    bool _dirty = false;
+    bool focused = false;
+    bool hovering = false;
   };
 }

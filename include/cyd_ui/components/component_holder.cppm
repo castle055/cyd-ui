@@ -81,7 +81,12 @@ namespace cyd::ui::components {
           components.emplace_back(item);
         }
       }
-      
+
+      component_holder_t(
+        const std::vector<std::pair<std::string, std::shared_ptr<component_base_t>>> &components_
+      ): components(components_) {
+      }
+
       [[nodiscard]] const auto &get_components() const {
         return components;
       }

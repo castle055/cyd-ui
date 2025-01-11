@@ -15,18 +15,10 @@ export import :with_specialization;
 export import :state;
 export import :base;
 
-export namespace cyd::ui::components {
-  struct component_base_t;
-  template<ComponentEventHandlerConcept EVH, typename T>
-  struct component_t;
-  struct component_state_t;
-  using component_state_ref = std::shared_ptr<component_state_t>;
-}
-
 export using children_list = std::vector<cyd::ui::components::component_holder_t>;
 
 namespace cyd::ui::components {
-  template<ComponentEventHandlerConcept EVH, typename T>
+  export template<ComponentEventHandlerConcept EVH, typename T>
   struct component_t:
     public component_base_t,
     public attrs_component<T> {
@@ -47,11 +39,11 @@ namespace cyd::ui::components {
       if (not refl::deep_eq(props(), other_component->props())) {
         props() = other_component->props();
         // std::memcpy(&props(), &other_component->props(), sizeof(typename T::props_t));
-        dirty   = true;
+        dirty = true;
       }
       if (not (*attrs() == *(other_component->attrs()))) {
         attrs()->update_with(*(other_component->attrs()));
-        dirty    = true;
+        dirty = true;
       }
 
       return dirty;
@@ -221,8 +213,42 @@ namespace cyd::ui::components {
         static_cast<T*>(this)->props,
         *static_cast<attrs_component<T>*>(this),
       });
+
+      if constexpr (refl::Reflected<EVH>) {
+        static constexpr std::size_t field_count = refl::field_count<EVH>;
+
+        configure_event_handler_fields(std::make_index_sequence<field_count> { });
+      }
     }
 
+    template <std::size_t... I>
+    void configure_event_handler_fields(std::index_sequence<I...>) {
+        (configure_event_handler_field<I>(), ...);
+    }
+
+    template <std::size_t FieldI>
+    void configure_event_handler_field() {
+      using field = refl::field<EVH, FieldI>;
+      using field_type = typename field::type;
+
+      if constexpr (packtl::is_type<use_context, field_type>::value) {
+        using context_type = typename field_type::context_type;
+
+        use_context<context_type>& ctx_ref = field::from_instance(*event_handler_);
+
+        auto ctx = find_context<context_type>();
+
+        if (ctx.has_value()) {
+          ctx_ref.ctx = ctx.value();
+        } else {
+          ctx_ref.ctx = new context_type{};
+          ctx_ref.owns_context = true;
+        }
+
+        ctx_ref.state = state_.value().lock();
+        ctx_ref.start_listening();
+      }
+    }
   public:
     void clear_children() override {
       children.clear();
@@ -543,3 +569,28 @@ constexpr bool is_type_complete_v = false;
 export template<typename T>
 constexpr bool is_type_complete_v
   <T, std::void_t<decltype(sizeof(T))>> = true;
+
+
+export template<typename ContextType>
+class with_context {
+public:
+  with_context(std::initializer_list<cyd::ui::components::component_holder_t>&& components) {
+    auto context = std::make_shared<ContextType>();
+
+    std::size_t i {0};
+    for (auto && holder : components) {
+      for (auto& [id, c] : holder.get_components()) {
+        c->context_store_.add_context(context);
+        components_.emplace_back(std::format(":{}{}", i, id), c);
+      }
+      ++i;
+    }
+  }
+
+  operator cyd::ui::components::component_holder_t() const {
+    return cyd::ui::components::component_holder_t{components_};
+  }
+private:
+  // std::vector<cyd::ui::components::component_holder_t> components_;
+  std::vector<std::pair<std::string, std::shared_ptr<cyd::ui::components::component_base_t>>> components_ { };
+};

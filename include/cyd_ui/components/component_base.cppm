@@ -1,6 +1,9 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+module;
+#include "cyd_fabric_modules/headers/macros/async_events.h"
+
 export module cydui.components:base;
 
 import std;
@@ -8,6 +11,7 @@ import std;
 import fabric.logging;
 import fabric.memory.lazy_alloc;
 import fabric.async;
+import fabric.templates.functor_arguments;
 
 import cydui.graphics;
 
@@ -18,6 +22,36 @@ export import :state;
 
 namespace cyd::ui::components {
   struct event_handler_t;
+
+  export class context_store_t {
+  public:
+    context_store_t() = default;
+
+    template<typename T>
+    void add_context(const std::shared_ptr<T> &ptr) {
+      static constexpr refl::type_id_t type_id = refl::type_id<T>;
+      std::shared_ptr<void> ptr_               = std::static_pointer_cast<void>(ptr);
+
+      context_map_[type_id] = ptr_;
+    }
+
+    template<typename T>
+    std::optional<T*> find_context() {
+      static constexpr refl::type_id_t type_id = refl::type_id<T>;
+      if (context_map_.contains(type_id)) {
+        return static_cast<T*>(context_map_[type_id].get());
+      }
+      return std::nullopt;
+    }
+
+    bool empty() const {
+      return context_map_.empty();
+    }
+  private:
+    std::unordered_map<refl::type_id_t, std::shared_ptr<void>> context_map_ { };
+  };
+
+
   export struct component_base_t {
     using sptr = std::shared_ptr<component_base_t>;
 
@@ -71,6 +105,30 @@ namespace cyd::ui::components {
 
     virtual void configure_event_handler() = 0;
 
+  private:
+    template<typename ContextType>
+    friend class ::with_context;
+
+    template<typename ContextType>
+    void add_context(const std::shared_ptr<ContextType> &ptr) {
+      context_store_.add_context<ContextType>(ptr);
+    }
+
+    template<typename ContextType>
+    std::optional<ContextType*> find_context() {
+      if (not context_store_.empty()) {
+        auto context = context_store_.find_context<ContextType>();
+        if (context.has_value()) {
+          return context;
+        }
+      }
+
+      if (parent.has_value()) {
+        return parent.value()->find_context<ContextType>();
+      } else {
+        return std::nullopt;
+      }
+    }
   protected:
     void set_state(const component_state_ref& state) {
       state_ = state;
@@ -93,5 +151,101 @@ namespace cyd::ui::components {
     std::list<std::shared_ptr<component_base_t>> children{};
   private:
     std::optional<std::weak_ptr<component_state_t>> state_ = std::nullopt;
+
+    context_store_t context_store_{};
   };
 }
+
+template<typename ContextType>
+struct ContextUpdate {
+  constexpr static const char* type = refl::type_name<ContextUpdate<ContextType>>.data();
+};
+
+export template<typename ContextType>
+struct use_context {
+  using context_type = ContextType;
+
+  template<cyd::ui::components::ComponentEventHandlerConcept EVH, typename T>
+  friend struct cyd::ui::components::component_t;
+
+  use_context() = default;
+
+  use_context(const use_context& other): ctx(other.ctx), state(other.state) {
+    if (other.owns_context) {
+      this->owns_context = true;
+      other.owns_context = false;
+    }
+  }
+
+  use_context& operator=(const use_context& other) {
+    stop_listening();
+    this->ctx = other.ctx;
+    this->state = other.state;
+    if (other.owns_context) {
+      this->owns_context = true;
+      other.owns_context = false;
+    }
+  }
+
+  use_context(use_context&& other) noexcept: ctx(other.ctx), state(other.state) {
+    other.stop_listening();
+    if (other.owns_context) {
+      this->owns_context = true;
+
+      other.owns_context = false;
+      other.ctx          = nullptr;
+    }
+  }
+
+  use_context& operator=(use_context&& other) {
+    other.stop_listening();
+    stop_listening();
+    this->ctx = other.ctx;
+    this->state = other.state;
+    if (other.owns_context) {
+      this->owns_context = true;
+      other.owns_context = false;
+    }
+  }
+
+  ~use_context() {
+    stop_listening();
+    if (owns_context) {
+      delete ctx;
+    }
+  }
+
+  context_type* operator->() {
+    return ctx;
+  }
+
+  context_type &operator*() {
+    return *ctx;
+  }
+
+  void notify() const {
+    state->emit<ContextUpdate<context_type>>({});
+  }
+
+  private:
+    void start_listening() {
+      stop_listening();
+
+      listener = state->window->on_event([&](ContextUpdate<context_type> ev) {
+        state->force_redraw();
+      });
+    }
+    void stop_listening() {
+      if (listener.has_value()) {
+        listener.value().remove();
+        listener = std::nullopt;
+      }
+    }
+private:
+  // This object will own the context if it couldn't be found and thus a default one was created
+  bool owns_context                                  = false;
+  context_type* ctx                                  = nullptr;
+  cyd::ui::components::component_state_ref state     = nullptr;
+
+  std::optional<fabric::async::listener<ContextUpdate<context_type>>> listener {std::nullopt};
+};
