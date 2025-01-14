@@ -336,6 +336,7 @@ void cyd::ui::layout::Layout::redraw_component(component_base_t* target) {
   // target->clear_children();
   // Recreate those instances with redraw(), this set all size hints relationships
   compositing::compositing_node_t* root_node;
+  bool must_recompose = false;
   {
     ZoneScopedN("Update");
     target->redraw();
@@ -348,8 +349,9 @@ void cyd::ui::layout::Layout::redraw_component(component_base_t* target) {
   } {
     ZoneScopedN("Compositing Tree");
     //compositing_tree->fix_dimensions();
-    root_node = root->compose(win->native());
-  } {
+    root_node = root->compose(win->native(), &must_recompose);
+  }
+  if (must_recompose) {
     ZoneScopedN("Compositing Frame");
     win->compositor.compose(root_node);
   }

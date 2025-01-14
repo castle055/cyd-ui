@@ -119,13 +119,23 @@ export namespace cyd::ui::compositing {
       SDL_UpdateTexture(texture, nullptr, pm.data, pm.width() * 4);
     }
 
-    void copy_into(SDL_Renderer* renderer, device_texture_t& other, SDL_Rect* dst) {
+    void copy_into(SDL_Renderer* renderer, device_texture_t& other, SDL_Rect* dst, bool blend = true) {
       renderer_ = renderer;
       if (texture == nullptr) return;
       ZoneScopedN("Copying Texture");
       SDL_SetRenderTarget(renderer, other.texture);
-      SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-      SDL_RenderCopy(renderer, texture, nullptr, dst);
+      if (blend) {
+        SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+      } else {
+        SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_NONE);
+      }
+      SDL_Rect src {
+        .x = 0,
+        .y = 0,
+        .w = this->w,
+        .h = this->h
+      };
+      SDL_RenderCopy(renderer, texture, &src, dst);
       // SDL_RenderFlush(renderer);
       // SDL_SetRenderTarget(renderer, nullptr);
     }
@@ -135,7 +145,13 @@ export namespace cyd::ui::compositing {
       ZoneScopedN("Copying Texture");
       SDL_SetRenderTarget(renderer, other.texture);
       SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-      SDL_RenderCopy(renderer, texture, nullptr, dst);
+      SDL_Rect src {
+        .x = 0,
+        .y = 0,
+        .w = this->w,
+        .h = this->h
+      };
+      SDL_RenderCopy(renderer, texture, &src, dst);
       // SDL_RenderFlush(renderer);
       // SDL_SetRenderTarget(renderer, nullptr);
     }

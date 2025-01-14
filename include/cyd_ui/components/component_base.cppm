@@ -128,16 +128,28 @@ namespace cyd::ui::components {
 
       if (graphics_dirty_) {
         graphics_dirty_ = false;
+        compositing_dirty_ = true;
         this->get_fragment(compositing_node_);
         compositing_node_.render();
       }
     }
 
-    compositing::compositing_node_t* compose(graphics::window_t* render_target) {
-      compositing_node_.clear_composite_texture(render_target);
-      compositing_node_.compose_own(render_target);
+    compositing::compositing_node_t* compose(graphics::window_t* render_target, bool* should_recompose_parent) {
+      // compositing_node_.clear_composite_texture(render_target);
+      std::vector<compositing::compositing_node_t*> nodes{};
+      bool children_changed = false;
       for (auto& child : children) {
-        compositing_node_.compose(render_target, child->compose(render_target));
+        nodes.emplace_back(child->compose(render_target, &children_changed));
+      }
+
+      if (compositing_dirty_ || children_changed) {
+        compositing_dirty_ = false;
+        (*should_recompose_parent) = true;
+
+        compositing_node_.compose_own(render_target);
+        for (auto &node: nodes) {
+          compositing_node_.compose(render_target, node);
+        }
       }
       return &compositing_node_;
     }
@@ -215,6 +227,7 @@ namespace cyd::ui::components {
 
     compositing::compositing_node_t compositing_node_ { };
     bool graphics_dirty_ = true;
+    bool compositing_dirty_ = true;
   };
 }
 
