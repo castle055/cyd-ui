@@ -227,13 +227,13 @@ export namespace cyd::ui::compositing {
     void compose_own(graphics::window_t* render_target) {
       ZoneScopedN("Compose Own");
       flush_rendered_texture(render_target);
-      // SDL_Rect dst {
-      //   .x = 0,
-      //   .y = 0,
-      //   .w = op.w,
-      //   .h = op.h,
-      // };
-      rendered_texture.copy_into(render_target->renderer, composite_texture, nullptr);
+      SDL_Rect dst {
+        .x = 0,
+        .y = 0,
+        .w = rendered_texture.width(),
+        .h = rendered_texture.height(),
+      };
+      rendered_texture.copy_into(render_target->renderer, composite_texture, &dst, false);
     }
 
     void compose(graphics::window_t* render_target, compositing_node_t* other) {
@@ -242,15 +242,15 @@ export namespace cyd::ui::compositing {
 
       composite_texture.resize(
         renderer,
-        std::max(composite_texture.width(), other->op.x + other->op.w),
-        std::max(composite_texture.height(), other->op.y + other->op.h)
+        std::max(composite_texture.width(), other->op.x + other->composite_texture.width()),
+        std::max(composite_texture.height(), other->op.y + other->composite_texture.height())
       );
 
       SDL_Rect dst {
         .x = other->op.x,
         .y = other->op.y,
-        .w = other->op.w,
-        .h = other->op.h,
+        .w = other->composite_texture.width(),
+        .h = other->composite_texture.height(),
       };
       other->composite_texture.copy_into(renderer, this->composite_texture, &dst);
     }
