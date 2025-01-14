@@ -79,7 +79,6 @@ namespace cyd::ui::components {
     std::unordered_map<refl::type_id_t, std::shared_ptr<void>> context_map_ { };
   };
 
-
   export struct component_base_t {
     using sptr = std::shared_ptr<component_base_t>;
 
@@ -106,10 +105,6 @@ namespace cyd::ui::components {
     virtual void dispatch_mouse_motion(dimension_t::value_type x, dimension_t::value_type y) = 0;
 
     virtual void redraw() = 0;
-    virtual void
-    get_fragment(
-      std::unique_ptr<cyd::ui::compositing::compositing_node_t> &compositing_node
-    ) = 0;
 
     virtual std::shared_ptr<component_state_t> create_state_instance() = 0;
 
@@ -122,6 +117,28 @@ namespace cyd::ui::components {
       return internal_relations;
     }
 
+  protected:
+    virtual void get_fragment(cyd::ui::compositing::compositing_node_t &compositing_node) = 0;
+
+  public:
+    void render() {
+      for (auto& child : children) {
+        child->render();
+      }
+
+      this->get_fragment(compositing_node_);
+
+      compositing_node_.render();
+    }
+
+    compositing::compositing_node_t* compose(graphics::window_t* render_target) {
+      compositing_node_.clear_composite_texture(render_target);
+      compositing_node_.compose_own(render_target);
+      for (auto& child : children) {
+        compositing_node_.compose(render_target, child->compose(render_target));
+      }
+      return &compositing_node_;
+    }
   public:
     component_state_ref state() const {
       if (state_.has_value()) {
@@ -193,6 +210,8 @@ namespace cyd::ui::components {
     std::optional<std::weak_ptr<component_state_t>> state_ = std::nullopt;
 
     context_store_t context_store_{};
+
+    compositing::compositing_node_t compositing_node_ { };
   };
 }
 

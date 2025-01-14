@@ -38,7 +38,7 @@ export namespace vg {
   };
 
   struct vg_fragment_t {
-    std::vector<std::unique_ptr<vg_element_t>> elements{};
+    std::vector<std::shared_ptr<vg_element_t>> elements{};
 
     void clear() {
       elements.clear();

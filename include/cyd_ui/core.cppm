@@ -44,6 +44,10 @@ namespace cyd::ui::window {
       win_ref = new graphics::window_t(this, nullptr, 0, width, height);
     }
 
+    ~CWindow() {
+      this->stop();
+    }
+
     static sptr make(int width, int height) {
       auto ptr = std::make_shared<CWindow>(width, height);
       ptr->add_system([ptr] {
@@ -78,8 +82,8 @@ namespace cyd::ui::window {
       return ptr;
     }
 
-    ~CWindow() {
-      this->stop();
+    graphics::window_t* native() {
+      return win_ref;
     }
 
     graphics::window_t* win_ref;
@@ -325,27 +329,29 @@ void cyd::ui::layout::Layout::redraw_component(component_base_t* target) {
   ZoneScopedN("Redraw Component");
   // LOG::print{DEBUG}("REDRAW");
   //auto t0 = std::chrono::system_clock::now();
-  // Clear render area of component instances
-  auto compositing_tree = std::make_shared<compositing::compositing_tree_t>();
 
   // TODO - For now the entire screen is redraw everytime, in the future it
   // would be interesting to implement a diff algorithm that could redraw
   // subsections of the screen.
   // target->clear_children();
   // Recreate those instances with redraw(), this set all size hints relationships
+  compositing::compositing_node_t* root_node;
   {
-    ZoneScopedN("Redraw");
+    ZoneScopedN("Update");
     target->redraw();
   } {
     ZoneScopedN("Dimensions");
     recompute_dimensions(root);
   } {
-    ZoneScopedN("Fragments");
-    root->get_fragment(compositing_tree->root);
+    ZoneScopedN("Render");
+    root->render();
   } {
-    ZoneScopedN("Compositing");
+    ZoneScopedN("Compositing Tree");
     //compositing_tree->fix_dimensions();
-    win->compositor.compose(compositing_tree);
+    root_node = root->compose(win->native());
+  } {
+    ZoneScopedN("Compositing Frame");
+    win->compositor.compose(root_node);
   }
 
   //auto t1 = std::chrono::system_clock::now();
