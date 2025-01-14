@@ -41,17 +41,37 @@ export namespace cyd::ui::compositing {
 
     device_texture_t(): w(0), h(0) {
     }
-    device_texture_t(const device_texture_t &other): w(other.w), h(other.h), renderer_(other.renderer_) {
+    device_texture_t(const device_texture_t &other): renderer_(other.renderer_), w(other.w), h(other.h) {
       if (other.texture != nullptr) {
-        texture = SDL_CreateTexture(renderer_, SDL_PIXELFORMAT_BGRA32, SDL_TEXTUREACCESS_STREAMING, w, h);
+        texture = SDL_CreateTexture(renderer_, SDL_PIXELFORMAT_BGRA32, SDL_TEXTUREACCESS_TARGET, w, h);
         other.copy_into(renderer_, *this, nullptr);
       }
     }
-    device_texture_t(device_texture_t &&other) noexcept: w(other.w), h(other.h), renderer_(other.renderer_) {
+    device_texture_t& operator=(const device_texture_t &other) {
+      this->renderer_ = other.renderer_;
+      this->w = other.w;
+      this->h = other.h;
+      if (other.texture != nullptr) {
+        texture = SDL_CreateTexture(renderer_, SDL_PIXELFORMAT_BGRA32, SDL_TEXTUREACCESS_TARGET, w, h);
+        other.copy_into(renderer_, *this, nullptr);
+      }
+      return *this;
+    }
+    device_texture_t(device_texture_t &&other) noexcept: renderer_(other.renderer_), w(other.w), h(other.h) {
       if (other.texture != nullptr) {
         texture = other.texture;
         other.texture = nullptr;
       }
+    }
+    device_texture_t& operator=(device_texture_t &&other) noexcept {
+      this->renderer_ = other.renderer_;
+      this->w = other.w;
+      this->h = other.h;
+      if (other.texture != nullptr) {
+        texture = other.texture;
+        other.texture = nullptr;
+      }
+      return *this;
     }
     ~device_texture_t() {
       SDL_DestroyTexture(texture);
