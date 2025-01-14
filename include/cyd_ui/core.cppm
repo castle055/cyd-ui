@@ -556,7 +556,7 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
       dim._height = ev.h;
 
       recompute_dimensions(root);
-      redraw_component(root.get());
+      // redraw_component(root.get());
       // win->emit(RedrawEvent { });
     }),
   };
