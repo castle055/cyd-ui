@@ -337,13 +337,13 @@ static void run() {
             if (w->old_width != ev.xconfigure.width || w->old_height != ev.xconfigure.height) {
               w->old_width  = ev.xconfigure.width;
               w->old_height = ev.xconfigure.height;
-              emit_to_window<ResizeEvent>(
-                ev.xconfigure.window,
-                {
-                  .w = ev.xconfigure.width,
-                  .h = ev.xconfigure.height,
-                }
-              ); // ! Should this be throttled?
+              // emit_to_window<ResizeEvent>(
+              //   ev.xconfigure.window,
+              //   {
+              //     .w = ev.xconfigure.width,
+              //     .h = ev.xconfigure.height,
+              //   }
+              // ); // ! Should this be throttled?
             }
             return w;
         });

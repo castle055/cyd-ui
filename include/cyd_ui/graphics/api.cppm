@@ -2,7 +2,6 @@
  *! \brief 
  *!
  */
-
 export module cydui.graphics:api;
 
 import std;
@@ -12,6 +11,8 @@ export import fabric.profiling;
 
 import cydui.graphics.native;
 
+namespace cyd::ui::graphics {
+}
 export namespace cyd::ui::graphics {
   using cyd::ui::graphics::window_t;
 
@@ -26,7 +27,9 @@ export namespace cyd::ui::graphics {
     int h,
     bool override_redirect = false
   ) {
-    return native::create_window(async_bus, profiler, title, wclass, x, y, w, h, override_redirect);
+    auto win = native::create_window(async_bus, profiler, title, wclass, x, y, w, h, override_redirect);
+
+    return win;
   }
 
   void resize(window_t* win, int w, int h) {

@@ -4,6 +4,9 @@
 module;
 #include <cairomm-1.16/cairomm/cairomm.h>
 
+#define SDL_MAIN_HANDLED
+#include <SDL2/SDL.h>
+
 export module cydui.graphics:compositing;
 
 import std;
@@ -29,11 +32,6 @@ export namespace cyd::ui::compositing {
 
     std::function<void(compositing_operation_t &op)> _fix_dimensions = [](compositing_operation_t &op) {
     };
-  };
-
-  struct compositing_object_t {
-    compositing_operation_t op{};
-    std::vector<vg_element_t> graphics{};
   };
 
   struct compositing_node_t {
@@ -90,10 +88,38 @@ export namespace cyd::ui::compositing {
     std::unordered_map<unsigned long, pixelmap_t*> sub_frame_cache{};
 
     static void compositing_task(LayoutCompositor* compositor) {
-      auto t0 = std::chrono::system_clock::now();
-      auto t1 = std::chrono::system_clock::now();
+      auto t0                                  = std::chrono::system_clock::now();
+      auto t1                                  = std::chrono::system_clock::now();
       std::shared_ptr<compositing_tree_t> tree = {nullptr};
-      graphics::window_t* rtarget = nullptr;
+      graphics::window_t* rtarget              = nullptr; //
+
+      {
+        std::unique_lock lk(compositor->m);
+        if (nullptr != compositor->render_target) {
+          rtarget = compositor->render_target;
+        }
+        lk.unlock();
+      }
+
+      SDL_SetMainReady();
+      if (0 != SDL_Init(SDL_INIT_VIDEO)) {
+        SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
+      }
+      rtarget->window = SDL_CreateWindow(
+        "Compositing",
+        SDL_WINDOWPOS_UNDEFINED,
+        SDL_WINDOWPOS_UNDEFINED,
+        rtarget->staging_target->width(),
+        rtarget->staging_target->height(),
+        SDL_WINDOW_RESIZABLE
+      );
+      SDL_GetWindowID(rtarget->window);
+      rtarget->renderer = SDL_CreateRenderer(rtarget->window, -1, SDL_RENDERER_ACCELERATED);
+
+      // SDL_SetWindowTitle(rtarget->window, rtarget->title);
+      // SDL_SetWindowPosition(rtarget->window, x, y);
+
+
       while (compositor->running.test()) {
         tree    = nullptr;
         rtarget = nullptr;
@@ -118,6 +144,33 @@ export namespace cyd::ui::compositing {
           graphics::resize(rtarget, tree->root->op.w, tree->root->op.h);
           pixelmap_t* frame = graphics::get_frame(rtarget);
           compositor->repaint(tree->root, frame);
+
+          SDL_DestroyTexture(rtarget->texture);
+          rtarget->texture = SDL_CreateTexture(rtarget->renderer, SDL_PIXELFORMAT_BGRA32, SDL_TEXTUREACCESS_STREAMING,
+                                               rtarget->staging_target->width(), rtarget->staging_target->height());
+          SDL_UpdateTexture(rtarget->texture, nullptr, rtarget->staging_target->data, rtarget->staging_target->width() * 4);
+          SDL_Rect src {
+          .x = 0,
+          .y = 0,
+          .w = (int)rtarget->staging_target->width(),
+          .h = (int)rtarget->staging_target->height()
+          };
+
+          SDL_Rect dst {
+          .x = 0,
+          .y = 0,
+          };
+          SDL_GetRendererOutputSize(rtarget->renderer, &dst.w, &dst.h);
+          SDL_RenderSetViewport(rtarget->renderer, &src);
+          // SDL_RenderSetClipRect(rtarget->renderer, &dst);
+          SDL_RenderSetLogicalSize(rtarget->renderer, dst.w, dst.h);//rtarget->staging_target->width(), rtarget->staging_target->height());
+          SDL_UpdateWindowSurface(rtarget->window);
+
+          SDL_RenderClear(rtarget->renderer);
+
+          SDL_RenderCopy(rtarget->renderer, rtarget->texture, &src, &dst);
+          SDL_RenderPresent(rtarget->renderer);
+
           graphics::flush(rtarget);
         }
 
@@ -229,10 +282,6 @@ export namespace cyd::ui::compositing {
   public
   :
     LayoutCompositor() {
-      running.test_and_set();
-      compositing_thd = std::thread{&compositing_task, this};
-      pthread_t pt = compositing_thd.native_handle();
-      pthread_setname_np(pt, "COMPOSITING_THD");
     }
 
     ~LayoutCompositor() {
@@ -245,11 +294,15 @@ export namespace cyd::ui::compositing {
       std::lock_guard lk(m);
       render_target = _render_target;
       profiler = _profiler;
+
+      running.test_and_set();
+      compositing_thd = std::thread{&compositing_task, this};
+      pthread_t pt = compositing_thd.native_handle();
+      pthread_setname_np(pt, "COMPOSITING_THD");
     }
 
     void compose(std::shared_ptr<compositing_tree_t> _tree) {
       // compositing_tree_t* old_tree;
-
 
       {
         std::lock_guard lk(m);

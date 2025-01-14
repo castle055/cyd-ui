@@ -10,6 +10,10 @@ module;
 #include <png.h>
 #include <jpeglib.h>
 
+#define SDL_MAIN_HANDLED
+#include <SDL2/SDL.h>
+
+
 export module cydui.graphics.native:window;
 
 import std;
@@ -92,6 +96,16 @@ export namespace cyd::ui::graphics {
 
     cyd::ui::threading::thread_t* render_thd  = nullptr;
     void*                         render_data = nullptr;
+
+
+    // SDL
+    SDL_Window* window     = nullptr;
+    SDL_Renderer* renderer = nullptr;
+    SDL_Texture* texture = nullptr;
+
+    Uint32 window_id() const {
+      return SDL_GetWindowID(window);
+    }
   };
 
   window_t::window_t(
