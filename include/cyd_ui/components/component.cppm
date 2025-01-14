@@ -311,6 +311,7 @@ namespace cyd::ui::components {
 
     void redraw() override {
       state()->_dirty = false;
+      graphics_dirty_ = true;
 
       std::unordered_map<
         std::shared_ptr<component_base_t>,

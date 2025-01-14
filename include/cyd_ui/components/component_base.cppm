@@ -126,9 +126,11 @@ namespace cyd::ui::components {
         child->render();
       }
 
-      this->get_fragment(compositing_node_);
-
-      compositing_node_.render();
+      if (graphics_dirty_) {
+        graphics_dirty_ = false;
+        this->get_fragment(compositing_node_);
+        compositing_node_.render();
+      }
     }
 
     compositing::compositing_node_t* compose(graphics::window_t* render_target) {
@@ -212,6 +214,7 @@ namespace cyd::ui::components {
     context_store_t context_store_{};
 
     compositing::compositing_node_t compositing_node_ { };
+    bool graphics_dirty_ = true;
   };
 }
 

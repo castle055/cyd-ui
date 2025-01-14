@@ -415,8 +415,15 @@ export namespace cyd::ui::compositing {
         SDL_SetRenderDrawColor(rtarget->renderer, 0, 0, 0, 0);
         SDL_RenderClear(rtarget->renderer);
 
-        SDL_SetTextureBlendMode(root->composite_texture.sdl_texture(), SDL_BLENDMODE_BLEND);
-        SDL_RenderCopy(rtarget->renderer, root->composite_texture.sdl_texture(), nullptr, nullptr);//&src, &dst);
+        SDL_Texture* texture = root->composite_texture.sdl_texture();
+        SDL_Rect src {
+          .x = 0,
+          .y = 0,
+          .w = root->composite_texture.width(),
+          .h = root->composite_texture.height()
+        };
+        SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+        SDL_RenderCopy(rtarget->renderer, texture, &src, &src);//&src, &dst);
         SDL_RenderPresent(rtarget->renderer);
 
         // graphics::flush(rtarget);
