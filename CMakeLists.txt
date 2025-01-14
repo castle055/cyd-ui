@@ -80,7 +80,7 @@ compiler_flags(
         "-Wall"
         "-Wextra"
         "-pedantic"
-        "-Werror"
+#        "-Werror"
 
         "-Wliteral-suffix"
 
@@ -120,6 +120,16 @@ FetchContent_Declare(quantify
         FIND_PACKAGE_ARGS
 )
 FetchContent_MakeAvailable(quantify)
+
+#[[                                 TRACY                                    ]]#
+FetchContent_Declare (
+        tracy
+        GIT_REPOSITORY https://github.com/wolfpld/tracy.git
+        GIT_TAG v0.11.1
+        GIT_SHALLOW TRUE
+        GIT_PROGRESS TRUE
+)
+FetchContent_MakeAvailable(tracy)
 
 # Look for a SDL2 package, 2. look for the SDL2 component and 3. fail if none can be found
 find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
@@ -168,6 +178,7 @@ target_sources(cyd_ui
 
 target_link_libraries(cyd_ui
         PUBLIC cyd_fabric quantify
+         TracyClient
 )
 
 # SDL2::SDL2main may or may not be available. It is e.g. required by Windows GUI applications

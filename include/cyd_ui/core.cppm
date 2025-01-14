@@ -5,6 +5,10 @@
 
 module;
 #include <cyd_fabric_modules/headers/macros/async_events.h>
+#include <tracy/Tracy.hpp>
+#define SDL_MAIN_HANDLED
+#include <SDL2/SDL.h>
+
 
 export module cydui.core;
 
@@ -16,6 +20,8 @@ import fabric.profiling;
 export import cydui.components;
 export import cydui.dimensions;
 
+import cydui.window_events;
+
 export namespace cyd::ui {
   namespace window {
       class CWindow;
@@ -26,11 +32,55 @@ export namespace cyd::ui {
   }
 }
 
+void bind_layout(cyd::ui::layout::Layout* layout, const std::shared_ptr<cyd::ui::window::CWindow>& window);
+
 export {
 namespace cyd::ui::window {
   class CWindow: public fabric::async::async_bus_t {
   public:
     using sptr = std::shared_ptr<CWindow>;
+
+    CWindow(int width, int height) {
+      win_ref = new graphics::window_t(this, nullptr, 0, width, height);
+    }
+
+    static sptr make(int width, int height) {
+      auto ptr = std::make_shared<CWindow>(width, height);
+      ptr->add_system([ptr] {
+        window_events::poll_events(*ptr);
+      });
+
+      ptr->add_init([] {
+        SDL_SetMainReady();
+        if (0 != SDL_Init(SDL_INIT_VIDEO)) {
+          SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
+        }
+      });
+
+      ptr->add_init([ptr] {
+        ptr->win_ref->window = SDL_CreateWindow(
+          "Compositing",
+          SDL_WINDOWPOS_UNDEFINED,
+          SDL_WINDOWPOS_UNDEFINED,
+          ptr->win_ref->staging_target->width(),
+          ptr->win_ref->staging_target->height(),
+          SDL_WINDOW_RESIZABLE
+        );
+        SDL_GetWindowID(ptr->win_ref->window);
+        ptr->win_ref->renderer = SDL_CreateRenderer(ptr->win_ref->window, -1, SDL_RENDERER_ACCELERATED);
+
+        // SDL_SetWindowTitle(rtarget->window, rtarget->title);
+        // SDL_SetWindowPosition(rtarget->window, x, y);
+        bind_layout(ptr->layout, ptr);
+      });
+
+      ptr->start();
+      return ptr;
+    }
+
+    ~CWindow() {
+      this->stop();
+    }
 
     graphics::window_t* win_ref;
     layout::Layout* layout;
@@ -43,6 +93,8 @@ namespace cyd::ui::window {
 
     std::pair<int, int> get_position() const;
     std::pair<int, int> get_size() const;
+
+    compositing::LayoutCompositor compositor{};
   };
 
   CWindow::sptr create(
@@ -70,8 +122,6 @@ export namespace cyd::ui {
 
     class Layout {
       std::shared_ptr<window::CWindow> win = nullptr;
-
-      compositing::LayoutCompositor compositor{};
 
       components::component_state_ref    root_state;
       components::component_base_t::sptr root;
@@ -272,6 +322,7 @@ void cyd::ui::layout::Layout::recompute_dimensions(
 }
 
 void cyd::ui::layout::Layout::redraw_component(component_base_t* target) {
+  ZoneScopedN("Redraw Component");
   // LOG::print{DEBUG}("REDRAW");
   //auto t0 = std::chrono::system_clock::now();
   // Clear render area of component instances
@@ -282,14 +333,21 @@ void cyd::ui::layout::Layout::redraw_component(component_base_t* target) {
   // subsections of the screen.
   // target->clear_children();
   // Recreate those instances with redraw(), this set all size hints relationships
-  target->redraw();
+  {
+    ZoneScopedN("Redraw");
+    target->redraw();
+  } {
+    ZoneScopedN("Dimensions");
+    recompute_dimensions(root);
+  } {
+    ZoneScopedN("Fragments");
+    root->get_fragment(compositing_tree->root);
+  } {
+    ZoneScopedN("Compositing");
+    //compositing_tree->fix_dimensions();
+    win->compositor.compose(compositing_tree);
+  }
 
-  recompute_dimensions(root);
-
-  root->get_fragment(compositing_tree->root);
-  //compositing_tree->fix_dimensions();
-
-  compositor.compose(compositing_tree);
   //auto t1 = std::chrono::system_clock::now();
   //printf("redraw time: %ld us\n", std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count());
 }
@@ -322,14 +380,14 @@ component_base_t* cyd::ui::layout::Layout::find_by_coords(dimensions::screen_mea
 
 void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& _win) {
   this->win = _win;
-  compositor.set_render_target(this->win->win_ref, &this->win->profiling_ctx);
+  win->compositor.set_render_target(this->win->win_ref, &this->win->profiling_ctx);
   {
     /// Configure root component
     root_state->window = this->win;
 
     auto& dim           = root->get_dimensional_relations();
-    dim._width         = {(int)get_frame(this->win->win_ref)->width()};
-    dim._height        = {(int)get_frame(this->win->win_ref)->height()};
+    dim._width         = 0_px; //{};
+    dim._height        = 0_px; //{};
     root->configure_event_handler();
   }
 
@@ -342,6 +400,7 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
 
   listeners          = {
     make_listener([&](const RedrawEvent& ev) {
+      ZoneScopedN("Redraw Event");
       auto _pev = this->win->profiling_ctx.scope_event("Redraw");
       if (ev.component) {
         component_state_t* target_state = ((component_state_t*)ev.component);
@@ -353,6 +412,7 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
       }
     }),
     make_listener([&](const KeyEvent& ev) {
+      ZoneScopedN("Key Event");
       auto _pev = this->win->profiling_ctx.scope_event("Key");
       if (ev.key == Key::F12 && ev.pressed && not ev.holding) {
         LOG::print {INFO} ("Pressed Debug Key");
@@ -371,6 +431,7 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
       }
     }),
     make_listener([&](const ButtonEvent& ev) {
+      ZoneScopedN("Button Event");
       auto              _pev             = this->win->profiling_ctx.scope_event("Button");
 
       component_base_t* target           = root.get();
@@ -406,6 +467,7 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
       render_if_dirty(root.get());
     }),
     make_listener([&](const ScrollEvent& ev) {
+      ZoneScopedN("Scroll Event");
       auto              _pev             = this->win->profiling_ctx.scope_event("Scroll");
       component_base_t* target           = root.get();
       component_base_t* specified_target = find_by_coords(ev.x, ev.y);
@@ -419,6 +481,7 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
     }),
     make_listener([&](const MotionEvent& ev) {
       auto _pev = this->win->profiling_ctx.scope_event("Motion");
+      ZoneScopedN("MotionEvent");
 
       if (ev.x == dimensions::screen_measure {-1} && ev.y == dimensions::screen_measure {-1}) {
         clear_hovering_flag(root_state, ev);
@@ -476,6 +539,7 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
       render_if_dirty(root.get());
     }),
     make_listener([&](const ResizeEvent& ev) {
+      ZoneScopedN("Resize Event");
       auto _pev = this->win->profiling_ctx.scope_event("Resize");
       // LOG::print{DEBUG}("RESIZE: w={}, h={}", ev.w.to_string(), ev.h.to_string());
 
@@ -483,12 +547,18 @@ void cyd::ui::layout::Layout::bind_window(const cyd::ui::window::CWindow::sptr& 
       dim._width  = ev.w;
       dim._height = ev.h;
 
+      recompute_dimensions(root);
       redraw_component(root.get());
+      // win->emit(RedrawEvent { });
     }),
   };
 
   // win->emit(RedrawEvent {});
   // redraw_component(root.get());
+  // win->emit(ResizeEvent{
+    // .w = win->get_size().first, //(int)get_frame(this->win->win_ref)->width(),
+    // .h = (int)get_frame(this->win->win_ref)->height()
+  // });
 }
 
 bool layout::Layout::set_hovering_flag(component_state_t* state, const MotionEvent& ev, bool clear_children) {
@@ -565,10 +635,16 @@ bool CWindow::is_open() const {
 
 
 std::pair<int, int> cyd::ui::window::CWindow::get_position() const {
-  return graphics::get_position(win_ref);
+  int x, y;
+  SDL_GetWindowPosition(win_ref->window, &x, &y);
+  return {x, y};
+  // return graphics::get_position(win_ref);
 }
 std::pair<int, int> cyd::ui::window::CWindow::get_size() const {
-  return graphics::get_size(win_ref);
+  int w, h;
+  SDL_GetWindowSize(win_ref->window, &w, &h);
+  return {w, h};
+  // return graphics::get_size(win_ref);
 }
 
 CWindow::sptr cyd::ui::window::create(
@@ -581,19 +657,15 @@ CWindow::sptr cyd::ui::window::create(
   int h,
   bool override_redirect
 ) {
-  auto win = std::shared_ptr<CWindow>{new CWindow()};
-  auto* win_ref = graphics::create_window(win.get(), &win->profiling_ctx, title, wclass, x, y, w, h, override_redirect);
+  // window_events::start_thread_if_needed();
+  auto win = CWindow::make(w, h);
+  // auto* win_ref = graphics::create_window(win.get(), &win->profiling_ctx, title, wclass, x, y, w, h, override_redirect);
   win->layout = layout;
-  win->win_ref = win_ref;
-
-  layout->bind_window(win);
-
-  // Once all threads have started and everything is set up for this window
-  // force a complete redraw
-  //events::emit<RedrawEvent>({.win = (unsigned int) win_ref->xwin});
-  //events::emit<RedrawEvent>({ });
-  //events::emit<RedrawEvent>({.win = get_id(win_ref)});
+  // win->win_ref = {};//win_ref;
 
   return win;
 }
 
+void bind_layout(cyd::ui::layout::Layout* layout, const cyd::ui::window::CWindow::sptr& window) {
+  layout->bind_window(window);
+}

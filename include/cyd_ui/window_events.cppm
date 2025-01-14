@@ -3,6 +3,7 @@
  *!
  */
 module;
+#include <tracy/Tracy.hpp>
 #define SDL_MAIN_HANDLED
 #include <SDL2/SDL.h>
 
@@ -54,13 +55,25 @@ namespace cyd::ui::window_events::thread {
     return false;
   }
 
-  void dispatch_window_event(const SDL_WindowEvent &event) {
+  void dispatch_window_event(fabric::async::async_bus_t &bus, const SDL_WindowEvent &event) {
     switch (event.event) {
       case SDL_WINDOWEVENT_RESIZED:
-        LOG::print {INFO}("Window resized to {}x{}", event.data1, event.data2);
-        emit_to_window(event.windowID, ResizeEvent {
+        bus.emit(ResizeEvent {
           .w = event.data1,
           .h = event.data2,
+        });
+        break;
+      case SDL_WINDOWEVENT_CLOSE:
+        LOG::print {INFO}("Closing...");
+        std::exit(0);
+        break;
+      case SDL_WINDOWEVENT_EXPOSED:
+        bus.emit(RedrawEvent {});
+        break;
+      case SDL_WINDOWEVENT_LEAVE:
+        bus.emit(MotionEvent {
+          .x = -1,
+          .y = -1,
         });
         break;
       default: break;
@@ -69,40 +82,60 @@ namespace cyd::ui::window_events::thread {
     }
   }
 
-  void dispatch_event(const SDL_Event &event) {
+  void dispatch_event(fabric::async::async_bus_t &bus, const SDL_Event &event) {
     switch (event.type) {
       case SDL_QUIT:
         break;
       case SDL_WINDOWEVENT:
-        dispatch_window_event(event.window);
+        dispatch_window_event(bus, event.window);
         break;
       case SDL_KEYDOWN:
-        event.key.windowID;
+      case SDL_KEYUP:
+        bus.emit(KeyEvent {
+          .pressed = event.key.state == SDL_PRESSED,
+          .released = event.key.state == SDL_RELEASED,
+        });
+        break;
+      case SDL_MOUSEBUTTONDOWN:
+      case SDL_MOUSEBUTTONUP:
+        bus.emit(ButtonEvent {
+          .button = event.button.button,
+          .x = event.button.x,
+          .y = event.button.y,
+          .pressed = event.button.state == SDL_PRESSED,
+          .released = event.button.state == SDL_RELEASED,
+        });
+        break;
+      case SDL_MOUSEMOTION:
+        bus.emit(MotionEvent {
+          .x = event.motion.x,
+          .y = event.motion.y,
+        });
         break;
       default: break;
     }
   }
 
-  void task() {
-    SDL_SetMainReady();
-    if (0 != SDL_Init(SDL_INIT_EVENTS)) {
-      SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
-    }
+  void task(fabric::async::async_bus_t &bus) {
+    ZoneScopedN("Polling events");
     SDL_Event event;
-    while (running.test()) {
+    // while (running.test()) {
       while (SDL_PollEvent(&event)) {
-        dispatch_event(event);
+        dispatch_event(bus, event);
       }
-    }
+    // }
   }
 }
 
 export namespace cyd::ui::window_events {
-  void start_thread_if_needed() {
-    thread::running.test_and_set();
-    if (thread::thread_ptr == nullptr) {
-      thread::thread_ptr = std::make_unique<std::thread>(thread::task);
-    }
+  // void start_thread_if_needed() {
+  //   thread::running.test_and_set();
+  //   if (thread::thread_ptr == nullptr) {
+  //     thread::thread_ptr = std::make_unique<std::thread>(thread::task);
+  //   }
+  // }
+  //
+  void poll_events(fabric::async::async_bus_t &bus) {
+    thread::task(bus);
   }
-
 }
