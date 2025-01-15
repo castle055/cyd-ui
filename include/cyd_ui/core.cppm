@@ -148,6 +148,7 @@ export namespace cyd::ui {
         focused->focused = true;
       }
 
+      bool update_if_dirty(components::component_base_t* c);
       bool render_if_dirty(components::component_base_t* c);
 
       void redraw_component(components::component_base_t* target);
@@ -360,17 +361,44 @@ void cyd::ui::layout::Layout::redraw_component(component_base_t* target) {
   //printf("redraw time: %ld us\n", std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count());
 }
 
-bool cyd::ui::layout::Layout::render_if_dirty(component_base_t* c) {
+bool cyd::ui::layout::Layout::update_if_dirty(component_base_t* c) {
   if (c->state()->_dirty) {
-    redraw_component(c);
+    c->redraw();
     return true;
   } else {
     bool any = false;
     for (auto &item: c->children)
-      any = render_if_dirty(item.get()) || any; // ! Order here matters
+      any = update_if_dirty(item.get()) || any; // ! Order here matters
     // ? render_if_dirty() needs to be called before `any` is checked.
     return any;
   }
+}
+
+bool cyd::ui::layout::Layout::render_if_dirty(component_base_t* c) {
+  ZoneScopedN("Render If Dirty");
+  compositing::compositing_node_t* root_node;
+  bool must_recompose = false;
+  {
+    ZoneScopedN("Update");
+    if (not update_if_dirty(c)) {
+      return false;
+    }
+  } {
+    ZoneScopedN("Dimensions");
+    recompute_dimensions(root);
+  } {
+    ZoneScopedN("Render");
+    root->render(win->native());
+  } {
+    ZoneScopedN("Compositing Tree");
+    //compositing_tree->fix_dimensions();
+    root_node = root->compose(win->native(), &must_recompose);
+  }
+  if (must_recompose) {
+    ZoneScopedN("Compositing Frame");
+    win->compositor.compose(root_node);
+  }
+  return true;
 }
 
 component_base_t* cyd::ui::layout::Layout::find_by_coords(dimensions::screen_measure x, dimensions::screen_measure y) {
