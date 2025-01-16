@@ -107,9 +107,9 @@ export namespace cyd::ui {
 
     bool is_open() const;
 
-    std::pair<int, int> get_position() const;
+    std::pair<int, int> get_position();
 
-    std::pair<int, int> get_size() const;
+    std::pair<int, int> get_size();
 
     compositing::LayoutCompositor compositor { };
   };
@@ -168,19 +168,19 @@ export namespace cyd::ui {
     return win_ref != nullptr;
   }
 
-  std::pair<int, int> CWindow::get_position() const {
+  std::pair<int, int> CWindow::get_position() {
     int x, y;
-    Application::run([&] {
-      SDL_GetWindowPosition(win_ref->window, &x, &y);
-    });
+    Application::run([](int* x, int* y, CWindow* self) {
+      SDL_GetWindowPosition(self->win_ref->window, x, y);
+    }, &x, &y, this);
     return {x, y};
   }
 
-  std::pair<int, int> CWindow::get_size() const {
+  std::pair<int, int> CWindow::get_size() {
     int w, h;
-    Application::run([&] {
-      SDL_GetRendererOutputSize(win_ref->renderer, &w, &h);
-    });
+    Application::run([](int* w, int* h, CWindow* self) {
+      SDL_GetRendererOutputSize(self->win_ref->renderer, w, h);
+    }, &w, &h, this);
     return {w, h};
   }
 }
