@@ -96,6 +96,9 @@ export namespace cyd::ui {
     components::component_state_ref focused  = nullptr;
 
     std::vector<fabric::async::raw_listener::sptr> listeners { };
+
+    std::atomic_flag is_compositing {false};
+    std::atomic_flag composite_is_outdated {false};
   };
 }
 
@@ -244,10 +247,16 @@ namespace cyd::ui {
     }
   }
 
-  void Layout::render() { {
+  void Layout::render() {
+    {
       ZoneScopedN("Dimensions");
       recompute_dimensions(root);
-    } {
+    }
+    if (is_compositing.test()) {
+      composite_is_outdated.test_and_set();
+      return;
+    }
+    {
       ZoneScopedN("Render");
 
       Application::run([](CWindow* w, components::component_base_t* root_) {
@@ -259,7 +268,8 @@ namespace cyd::ui {
     } {
       ZoneScopedN("Queuing Composition");
       //compositing_tree->fix_dimensions();
-      Application::run_async([](CWindow* w, components::component_base_t* root_ptr) {
+      is_compositing.test_and_set();
+      Application::run_async([](Layout* self, std::atomic_flag* completion_flag, std::atomic_flag* is_outdated, CWindow* w, components::component_base_t* root_ptr) {
         ZoneScopedN("Compositing Layout");
         bool must_recompose = false;
         auto* root_node     = root_ptr->compose(w->native(), &must_recompose);
@@ -268,7 +278,20 @@ namespace cyd::ui {
           ZoneScopedN("Compositing Frame");
           w->compositor.compose(root_node);
         }
-      }, win.get(), root.get());
+
+        completion_flag->clear();
+        if (is_outdated->test()) {
+          //-IMPORTANT: Need to make copy of pointers so they aren't passed
+          // as references which will not survive
+          Layout& s = *self;
+          std::atomic_flag& flag = *is_outdated;
+          //---------------------------------------------------------------
+          w->run_async([](Layout* selff, std::atomic_flag* is_outdated) {
+            selff->render();
+            is_outdated->clear();
+          }, &s, &flag);
+        }
+      }, this, &is_compositing, &composite_is_outdated, win.get(), root.get());
     }
   }
 

@@ -111,6 +111,26 @@ export namespace cyd::ui {
 
     std::pair<int, int> get_size();
 
+    template <typename... Args>
+    void run(auto&& fun, Args&&... args) {
+      std::latch completion_latch {1};
+      this->coroutine_enqueue([&](Args... argss) -> fabric::async::async<bool> {
+        fun(std::forward<Args>(argss)...);
+        completion_latch.count_down();
+        co_return true;
+      }, std::forward<Args>(args)...);
+      completion_latch.wait();
+    }
+
+    template <typename... Args>
+    void run_async(auto&& fun, Args&&... args) {
+      this->coroutine_enqueue([&](Args... argss) -> fabric::async::async<bool> {
+        fun(std::forward<Args>(argss)...);
+        co_return true;
+      }, std::forward<Args>(args)...);
+    }
+
+
     compositing::LayoutCompositor compositor { };
   };
 
