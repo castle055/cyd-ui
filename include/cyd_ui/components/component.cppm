@@ -511,6 +511,19 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_right)
       );
     }
+    void dispatch_text_input(const TextInputEvent& ev) final {
+      event_handler_->on_text_input(
+        ev,
+        dimensions::get_value(this->_x),
+        dimensions::get_value(this->_y),
+        dimensions::get_value(this->internal_relations.cw),
+        dimensions::get_value(this->internal_relations.ch),
+        dimensions::get_value(this->_padding_top),
+        dimensions::get_value(this->_padding_bottom),
+        dimensions::get_value(this->_padding_left),
+        dimensions::get_value(this->_padding_right)
+      );
+    }
     void dispatch_button_press(
       const Button& button, dimension_t::value_type x, dimension_t::value_type y
     ) final {

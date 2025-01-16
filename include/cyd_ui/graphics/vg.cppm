@@ -91,17 +91,17 @@ export namespace vg {
     void apply_to(pixelmap_editor_t &editor) const override {
       auto lg = Cairo::LinearGradient::create(0, 0, 1, 1);
 
-      if (static_cast<size_t>(origin_x + _x) < editor.img.width() && static_cast<size_t>(origin_y + _y) < editor.img.height()) {
+      if (static_cast<size_t>(origin_x + _x) < editor.width && static_cast<size_t>(origin_y + _y) < editor.height) {
         auto clr = sample_fill(_x, _y);
-        editor.img.set(
-          {(unsigned int) origin_x + _x, (unsigned int) origin_y + _y},
-          {
-            (u8) (clr.b * 255),
-            (u8) (clr.g * 255),
-            (u8) (clr.r * 255),
-            (u8) (clr.a * _fill_opacity * 255)
-          }
-        );
+        // editor.img.set(
+        //   {(unsigned int) origin_x + _x, (unsigned int) origin_y + _y},
+        //   {
+        //     (u8) (clr.b * 255),
+        //     (u8) (clr.g * 255),
+        //     (u8) (clr.r * 255),
+        //     (u8) (clr.a * _fill_opacity * 255)
+        //   }
+        // );
       }
     }
 

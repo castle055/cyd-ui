@@ -17,48 +17,25 @@ import fabric.async;
 
 export import cydui.events;
 
+
 namespace cyd::ui::window_events {
-  std::mutex window_map_mutex{};
-  std::unordered_map<Uint32, fabric::async::async_bus_t::wptr> window_map{};
-
-  export void add_window(Uint32 id, fabric::async::async_bus_t::wptr window) {
-    std::scoped_lock lock{window_map_mutex};
-    if (window_map.contains(id)) {
-      window_map.erase(id);
-    }
-    window_map.emplace(id, std::move(window));
-  }
-  export void remove_window(Uint32 id) {
-    std::scoped_lock lock{window_map_mutex};
-    window_map.erase(id);
-  }
-}
-
-namespace cyd::ui::window_events::thread {
   std::unique_ptr<std::thread> thread_ptr{nullptr};
   std::atomic_flag running{};
 
-  template<fabric::async::EventType EV>
-  bool emit_to_window(Uint32 win_id, EV &&ev) {
-    std::scoped_lock lock {window_map_mutex};
-    if (window_map.contains(win_id)) {
-      auto& win_ref = window_map.at(win_id);
-      if (win_ref.expired()) {
-        remove_window(win_id);
-        return false;
+  using window_map = std::map<std::size_t, fabric::async::async_bus_t*>;
+
+  void dispatch_window_event(window_map *busses, const SDL_WindowEvent &event) {
+    auto bus = [&](std::size_t id, auto&& ev) {
+      if (busses->contains(id)) {
+        busses->at(id)->emit(ev);
+        return;
       }
+      LOG::print {INFO}("Received event for window {}, but it does not exits", id);
+    };
 
-      win_ref.lock()->emit(ev);
-      return true;
-    }
-
-    return false;
-  }
-
-  void dispatch_window_event(fabric::async::async_bus_t &bus, const SDL_WindowEvent &event) {
     switch (event.event) {
       case SDL_WINDOWEVENT_RESIZED:
-        bus.emit(ResizeEvent {
+        bus(event.windowID, ResizeEvent {
           .w = event.data1,
           .h = event.data2,
         });
@@ -68,10 +45,10 @@ namespace cyd::ui::window_events::thread {
         std::exit(0);
         break;
       case SDL_WINDOWEVENT_EXPOSED:
-        bus.emit(RedrawEvent {});
+        bus(event.windowID, RedrawEvent { });
         break;
       case SDL_WINDOWEVENT_LEAVE:
-        bus.emit(MotionEvent {
+        bus(event.windowID, MotionEvent {
           .x = -1,
           .y = -1,
         });
@@ -82,23 +59,56 @@ namespace cyd::ui::window_events::thread {
     }
   }
 
-  void dispatch_event(fabric::async::async_bus_t &bus, const SDL_Event &event) {
+  void dispatch_display_event(window_map *busses, const SDL_DisplayEvent &event) {
+    auto bus = [&](std::size_t id, auto&& ev) {
+      if (busses->contains(id)) {
+        busses->at(id)->emit(ev);
+        return;
+      }
+      LOG::print {INFO}("Received event for window {}, but it does not exits", id);
+    };
+
+    switch (event.event) {
+      case SDL_DISPLAYEVENT_ORIENTATION:
+        break;
+      case SDL_DISPLAYEVENT_CONNECTED:
+        break;
+      case SDL_DISPLAYEVENT_DISCONNECTED:
+        break;
+      case SDL_DISPLAYEVENT_MOVED:
+        break;
+      default: break;
+    }
+    if (event.type == SDL_QUIT) {
+    }
+  }
+
+  void dispatch_event(window_map *busses, const SDL_Event &event) {
+    auto bus = [&](std::size_t id, auto&& ev) {
+      if (busses->contains(id)) {
+        busses->at(id)->emit(ev);
+        return;
+      }
+      LOG::print {INFO}("Received event for window {}, but it does not exits", id);
+    };
+
     switch (event.type) {
       case SDL_QUIT:
         break;
       case SDL_WINDOWEVENT:
-        dispatch_window_event(bus, event.window);
+        dispatch_window_event(busses, event.window);
         break;
-      case SDL_KEYDOWN:
-      case SDL_KEYUP:
-        bus.emit(KeyEvent {
-          .pressed = event.key.state == SDL_PRESSED,
-          .released = event.key.state == SDL_RELEASED,
-        });
+      case SDL_DISPLAYEVENT:
+        dispatch_display_event(busses, event.display);
+        break;
+      case SDL_SYSWMEVENT:
+        break;
+      case SDL_RENDER_TARGETS_RESET:
+      case SDL_RENDER_DEVICE_RESET:
         break;
       case SDL_MOUSEBUTTONDOWN:
       case SDL_MOUSEBUTTONUP:
-        bus.emit(ButtonEvent {
+        bus(event.button.windowID, ButtonEvent {
           .button = event.button.button,
           .x = event.button.x,
           .y = event.button.y,
@@ -106,24 +116,79 @@ namespace cyd::ui::window_events::thread {
           .released = event.button.state == SDL_RELEASED,
         });
         break;
+      case SDL_MOUSEWHEEL:
+        bus(event.wheel.windowID, ScrollEvent {
+          .dy = event.wheel.preciseY * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED? -1: 1),
+          .dx = event.wheel.preciseX * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED? -1: 1),
+          .x = event.wheel.mouseX,
+          .y = event.wheel.mouseY
+        });
+        break;
       case SDL_MOUSEMOTION:
-        bus.emit(MotionEvent {
+        bus(event.motion.windowID, MotionEvent {
           .x = event.motion.x,
           .y = event.motion.y,
         });
+        break;
+      case SDL_FINGERDOWN:
+      case SDL_FINGERUP:
+      case SDL_FINGERMOTION:
+        break;
+      case SDL_KEYDOWN:
+      case SDL_KEYUP:
+        bus(event.key.windowID, KeyEvent {
+          .keysym = {
+            .scancode = event.key.keysym.scancode,
+            .code = event.key.keysym.sym,
+            .mod = event.key.keysym.mod
+          },
+          .pressed = event.key.state == SDL_PRESSED,
+          .released = event.key.state == SDL_RELEASED,
+        });
+        break;
+      case SDL_TEXTINPUT:
+        bus(event.text.windowID, TextInputEvent {
+          .text = event.text.text,
+        });
+        break;
+      case SDL_TEXTEDITING:
+        bus(event.edit.windowID, TextInputEvent {
+          .text = std::string {event.edit.text, static_cast<std::size_t>(event.edit.length)},
+          .compositing_event = true,
+          .compositing_state = {
+            .cursor = event.edit.start,
+            .selection = event.edit.length,
+          }
+        });
+        break;
+      case SDL_TEXTEDITING_EXT:
+        bus(event.editExt.windowID, TextInputEvent {
+          .text = std::string {event.editExt.text, static_cast<std::size_t>(event.edit.length)},
+          .compositing_event = true,
+          .compositing_state = {
+            .cursor = event.editExt.start,
+            .selection = event.editExt.length,
+          }
+        });
+        SDL_free(event.editExt.text);
+        break;
+      case SDL_KEYMAPCHANGED:
+        break;
+      case SDL_DROPFILE:
+      case SDL_DROPTEXT:
+      case SDL_DROPBEGIN:
+      case SDL_DROPCOMPLETE:
         break;
       default: break;
     }
   }
 
-  void task(fabric::async::async_bus_t &bus) {
+  void task(window_map *busses) {
     ZoneScopedN("Polling events");
     SDL_Event event;
-    // while (running.test()) {
-      while (SDL_PollEvent(&event)) {
-        dispatch_event(bus, event);
-      }
-    // }
+    while (SDL_PollEvent(&event)) {
+      dispatch_event(busses, event);
+    }
   }
 }
 
@@ -135,7 +200,7 @@ export namespace cyd::ui::window_events {
   //   }
   // }
   //
-  void poll_events(fabric::async::async_bus_t &bus) {
-    thread::task(bus);
+  void poll_events(window_map *busses) {
+    task(busses);
   }
 }

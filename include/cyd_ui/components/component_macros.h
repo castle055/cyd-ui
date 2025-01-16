@@ -148,6 +148,7 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 #define ON_SCROLL           CYDUI_INTERNAL_EV_HANDLER_IMPL(scroll)
 #define ON_KEY_PRESS        CYDUI_INTERNAL_EV_HANDLER_IMPL(key_press)
 #define ON_KEY_RELEASE      CYDUI_INTERNAL_EV_HANDLER_IMPL(key_release)
+#define ON_TEXT_INPUT       CYDUI_INTERNAL_EV_HANDLER_IMPL(text_input)
 
 #define ON_EVENT(EVENT, ...) \
   custom_event_listener< EVENT > on_##EVENT{window, [&](const EVENT& event) { \

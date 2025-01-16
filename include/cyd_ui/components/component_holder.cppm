@@ -15,7 +15,6 @@ export
 
       template<ComponentConcept C>
       component_builder_t(C comp) {
-        // NOLINT(*-explicit-constructor)
         components.emplace_back("", [=] {
           return std::shared_ptr<component_base_t> {new C {comp}};
         });
@@ -25,7 +24,6 @@ export
 
       template<typename T>
       component_builder_t(::with<T> _with) {
-        // NOLINT(*-explicit-constructor)
         for (const auto &item: _with.get_selection()) {
           components.emplace_back(item);
         }
@@ -87,21 +85,18 @@ export
 
       template<ComponentConcept C>
       component_holder_t(C comp) {
-        // NOLINT(explicit-constructor)
         components.emplace_back("", std::shared_ptr<component_base_t> {new C {comp}});
         //components[""] = std::make_unique<C>(comp);
       }
 
       template<typename T>
       component_holder_t(::with<T> _with) {
-        // NOLINT(*-explicit-constructor)
         for (const auto &item: _with.get_selection()) {
           components.emplace_back(item.first, item.second());
         }
       }
 
       component_holder_t(const component_builder_t &builder) {
-        // NOLINT(*-explicit-constructor)
         for (const auto &item: builder.get_components()) {
           components.emplace_back(item);
         }

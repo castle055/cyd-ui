@@ -11,11 +11,24 @@ import fabric.logging;
 import cydui;
 
 namespace stdui::input {
+  struct TextInputContext {
+
+  };
   export struct COMPONENT(
     text, { std::string* text; } STATE { int caret_pos = 0; };
     ATTRIBUTE(on_enter, std::function<void()>){[] {}};
     ATTRIBUTE(on_escape, std::function<void()>){[] {}};
   ) {
+    provide_context<TextInputContext> text_input_ctx{};
+
+    CHILDREN {
+      return {
+        text_input_ctx > with_context {
+          $content
+        }
+      };
+    }
+
     FRAGMENT {
       fragment.draw<vg::rect>().w($width).h($height).fill("#222222"_color);
       fragment.append(build_text(*props.text).fill("#FFFFFF"_color));
@@ -27,19 +40,19 @@ namespace stdui::input {
     }
 
     ON_KEY_PRESS {
-      if (ev.key == Key::LEFT) {
+      if (ev.keysym.code == Keycode::SDLK_LEFT) {
         state.caret_pos = advance_from(state.caret_pos, -1);
-      } else if (ev.key == Key::RIGHT) {
+      } else if (ev.keysym.code == Keycode::SDLK_RIGHT) {
         state.caret_pos = advance_from(state.caret_pos);
-      } else if (ev.key == Key::HOME) {
+      } else if (ev.keysym.code == Keycode::SDLK_HOME) {
         state.caret_pos = 0;
-      } else if (ev.key == Key::END) {
+      } else if (ev.keysym.code == Keycode::SDLK_END) {
         state.caret_pos = props.text->size();
-      } else if (ev.key == Key::ENTER) {
+      } else if (ev.keysym.code == Keycode::SDLK_RETURN) {
         $component.on_enter_();
-      } else if (ev.key == Key::ESC) {
+      } else if (ev.keysym.code == Keycode::SDLK_ESCAPE) {
         $component.on_escape_();
-      } else if (ev.key == Key::BACKSPACE) {
+      } else if (ev.keysym.code == Keycode::SDLK_BACKSPACE) {
         if (state.caret_pos == static_cast<int>(props.text->size())) {
           while (!props.text->empty()) {
             const unsigned char c = (*props.text)[props.text->size() - 1];
@@ -69,15 +82,20 @@ namespace stdui::input {
             // state.text = state.text.substr(0, state.text.size() - 1);
           }
         }
-      } else {
+      }
+      state.mark_dirty();
+    }
+
+    ON_TEXT_INPUT {
+      if (not ev.compositing_event) {
         if (state.caret_pos == static_cast<int>(props.text->size())) {
           props.text->append(ev.text);
         } else {
           props.text->insert(state.caret_pos, ev.text);
         }
         state.caret_pos += static_cast<int>(ev.text.size());
+        state.mark_dirty();
       }
-      state.force_redraw();
     }
 
     ON_BUTTON_PRESS {

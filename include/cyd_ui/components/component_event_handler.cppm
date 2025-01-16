@@ -104,6 +104,10 @@ export {
           component->parent.value()->dispatch_key_release(ev);
       }
 
+      // * text input
+      CYDUI_INTERNAL_EV_HANDLER_DECL(text_input) {
+      }
+
       void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS {}
     };
 

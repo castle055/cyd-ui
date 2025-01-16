@@ -97,6 +97,7 @@ namespace cyd::ui::components {
     virtual std::shared_ptr<event_handler_t> event_handler() = 0;
     virtual void dispatch_key_press(const KeyEvent& ev) = 0;
     virtual void dispatch_key_release(const KeyEvent& ev) = 0;
+    virtual void dispatch_text_input(const TextInputEvent& ev) = 0;
     virtual void dispatch_button_press(const Button& ev, dimension_t::value_type x, dimension_t::value_type y) = 0;
     virtual void dispatch_button_release(const Button& ev, dimension_t::value_type x, dimension_t::value_type y) = 0;
     virtual void dispatch_scroll(dimension_t::value_type dx, dimension_t::value_type dy) = 0;
@@ -121,16 +122,26 @@ namespace cyd::ui::components {
     virtual void get_fragment(cyd::ui::compositing::compositing_node_t &compositing_node) = 0;
 
   public:
-    void render() {
+    void start_render(graphics::window_t* render_target) {
       for (auto& child : children) {
-        child->render();
+        child->start_render(render_target);
+      }
+
+      if (graphics_dirty_) {
+        this->get_fragment(compositing_node_);
+        compositing_node_.start_render(render_target);
+      }
+    }
+
+    void render(graphics::window_t* render_target) {
+      for (auto& child : children) {
+        child->render(render_target);
       }
 
       if (graphics_dirty_) {
         graphics_dirty_ = false;
         compositing_dirty_ = true;
-        this->get_fragment(compositing_node_);
-        compositing_node_.render();
+        compositing_node_.render(render_target);
       }
     }
 
