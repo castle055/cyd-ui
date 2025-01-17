@@ -386,44 +386,54 @@ namespace cyd::ui::components {
       auto& fragment = compositing_node.graphics;
       fragment.clear();
 
+      int half_top_border    = this->_border_width_top >> 1;
+      int half_bottom_border = (this->_border_width_bottom >> 1) + (this->_border_width_bottom & 1);
+      int half_left_border   = this->_border_width_left >> 1;
+      int half_right_border  = (this->_border_width_right >> 1) + (this->_border_width_right & 1);
+
+      // The four border corners, in reading order (left -> right, top ->bottom)
+      int x1 = (half_left_border) - get_num_value(this->_padding_left);
+      int y1 = (half_top_border) - get_num_value(this->_padding_top);
+
+      int x2 = x1 + get_num_value(this->_width) - (half_left_border) - (half_right_border);
+      int y2 = y1;
+
+      int x3 = x1;
+      int y3 = y1 + get_num_value(this->_height) - (half_top_border) - (half_bottom_border);
+
+      int x4 = x2;
+      int y4 = y3;
+
       fragment.draw<vg::rect>()
-        .x(-dimensions::get_value(this->_padding_left))
-        .y(-dimensions::get_value(this->_padding_top))
-        .w(dimensions::get_value(this->_width))
-        .h(dimensions::get_value(this->_height))
-        .fill(this->_background);
+              .x(-dimensions::get_value(this->_padding_left))
+              .y(-dimensions::get_value(this->_padding_top))
+              .w(dimensions::get_value(this->_width))
+              .h(dimensions::get_value(this->_height))
+              .fill(this->_background);
       fragment.draw<vg::line>()
-        .x1(-dimensions::get_value(this->_padding_left))
-        .y1(-dimensions::get_value(this->_padding_top))
-        .x2(-dimensions::get_value(this->_padding_left) + dimensions::get_value(this->_width))
-        .y2(-dimensions::get_value(this->_padding_top))
-        .stroke(this->_border_top)
-        .stroke_width(this->_border_width_top)
-        .stroke_dasharray(this->_border_dasharray_top);
+              .x1(x1 - half_left_border).y1(y1)
+              .x2(x2 + half_right_border).y2(y2)
+              .stroke(this->_border_top)
+              .stroke_width(this->_border_width_top)
+              .stroke_dasharray(this->_border_dasharray_top);
       fragment.draw<vg::line>()
-        .x1(-dimensions::get_value(this->_padding_left) + dimensions::get_value(this->_width))
-        .y1(-dimensions::get_value(this->_padding_top) + dimensions::get_value(this->_height))
-        .x2(-dimensions::get_value(this->_padding_left))
-        .y2(-dimensions::get_value(this->_padding_top) + dimensions::get_value(this->_height))
-        .stroke(this->_border_bottom)
-        .stroke_width(this->_border_width_bottom)
-        .stroke_dasharray(this->_border_dasharray_bottom);
+              .x1(x4 + half_right_border).y1(y4)
+              .x2(x3 - half_left_border).y2(y3)
+              .stroke(this->_border_bottom)
+              .stroke_width(this->_border_width_bottom)
+              .stroke_dasharray(this->_border_dasharray_bottom);
       fragment.draw<vg::line>()
-        .x1(-dimensions::get_value(this->_padding_left))
-        .y1(-dimensions::get_value(this->_padding_top) + dimensions::get_value(this->_height))
-        .x2(-dimensions::get_value(this->_padding_left))
-        .y2(-dimensions::get_value(this->_padding_top))
-        .stroke(this->_border_left)
-        .stroke_width(this->_border_width_left)
-        .stroke_dasharray(this->_border_dasharray_left);
+              .x1(x3).y1(y3 + half_bottom_border)
+              .x2(x1).y2(y1 - half_top_border)
+              .stroke(this->_border_left)
+              .stroke_width(this->_border_width_left)
+              .stroke_dasharray(this->_border_dasharray_left);
       fragment.draw<vg::line>()
-        .x1(-dimensions::get_value(this->_padding_left) + dimensions::get_value(this->_width))
-        .y1(-dimensions::get_value(this->_padding_top))
-        .x2(-dimensions::get_value(this->_padding_left) + dimensions::get_value(this->_width))
-        .y2(-dimensions::get_value(this->_padding_top) + dimensions::get_value(this->_height))
-        .stroke(this->_border_right)
-        .stroke_width(this->_border_width_right)
-        .stroke_dasharray(this->_border_dasharray_right);
+              .x1(x2).y1(y2 - half_top_border)
+              .x2(x4).y2(y4 + half_bottom_border)
+              .stroke(this->_border_right)
+              .stroke_width(this->_border_width_right)
+              .stroke_dasharray(this->_border_dasharray_right);
 
 
       event_handler_->draw_fragment(
