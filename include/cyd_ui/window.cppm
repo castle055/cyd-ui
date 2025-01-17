@@ -155,12 +155,13 @@ export namespace cyd::ui {
           height,
           SDL_WINDOW_RESIZABLE
         );
-        Application::register_window(self->win_ref->window_id(), self);
-        self->win_ref->renderer = SDL_CreateRenderer(self->win_ref->window, -1, SDL_RENDERER_ACCELERATED);
-
         SDL_SetWindowPosition(self->win_ref->window, x, y);
         SDL_SetWindowSize(self->win_ref->window, width, height);
         // SDL_FlashWindow(win_ref->window, SDL_FLASH_UNTIL_FOCUSED);
+
+        Application::register_window(self->win_ref->window_id(), self);
+
+        self->win_ref->renderer = SDL_CreateRenderer(self->win_ref->window, -1, SDL_RENDERER_ACCELERATED);
 
         self->compositor.set_render_target(self->win_ref.get(), &self->profiling_ctx);
         LOG::print {INFO}("SDL2 Window initialized.");

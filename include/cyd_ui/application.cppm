@@ -63,10 +63,10 @@ export namespace cyd::ui {
 
     template <typename... Args>
     static void run_async(auto&& fun, Args&&... args) {
-      get_instance().coroutine_enqueue([&](Args... argss) -> fabric::async::async<bool> {
-        fun(std::forward<Args>(argss)...);
+      get_instance().coroutine_enqueue([&](auto funn, Args... argss) -> fabric::async::async<bool> {
+        funn(std::forward<Args>(argss)...);
         co_return true;
-      }, std::forward<Args>(args)...);
+      }, fun, std::forward<Args>(args)...);
     }
 
     static void register_window(std::size_t id, fabric::async::async_bus_t* window) {

@@ -99,6 +99,9 @@ export namespace cyd::ui::compositing {
       if (not is_flattened) {
         editor.clear();
       }
+      editor->begin_new_path();
+      editor->rectangle(0, 0, op.w, op.h);
+      editor->clip();
 
       if (not graphics.empty()) {
         for (const auto &element: graphics.elements) {
@@ -201,8 +204,6 @@ export namespace cyd::ui::compositing {
     void compose(compositing_node_t* root) {
       auto* rtarget = render_target;
       if (root != nullptr) {
-        SDL_SetRenderTarget(rtarget->renderer, nullptr);
-
         SDL_SetRenderDrawColor(rtarget->renderer, 0, 0, 0, 0);
         SDL_RenderClear(rtarget->renderer);
 

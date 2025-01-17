@@ -79,6 +79,7 @@ export namespace cyd::ui::compositing {
               .h = std::min(h, this->h)
             };
             SDL_RenderCopy(renderer, old_texture, &dst, &dst);
+            SDL_SetRenderTarget(renderer, nullptr);
           }
         SDL_DestroyTexture(old_texture);
         }
@@ -95,7 +96,7 @@ export namespace cyd::ui::compositing {
       SDL_SetRenderTarget(renderer, texture);
       SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
       SDL_RenderClear(renderer);
-      // SDL_SetRenderTarget(renderer, nullptr);
+      SDL_SetRenderTarget(renderer, nullptr);
     }
 
     void update_with(const pixelmap_t& pm) {
@@ -144,8 +145,7 @@ export namespace cyd::ui::compositing {
         .h = this->h
       };
       SDL_RenderCopy(renderer, texture, &src, dst);
-      // SDL_RenderFlush(renderer);
-      // SDL_SetRenderTarget(renderer, nullptr);
+      SDL_SetRenderTarget(renderer, nullptr);
     }
 
     void copy_into(SDL_Renderer* renderer, device_texture_t& other, SDL_Rect* dst) const {
@@ -160,8 +160,7 @@ export namespace cyd::ui::compositing {
         .h = this->h
       };
       SDL_RenderCopy(renderer, texture, &src, dst);
-      // SDL_RenderFlush(renderer);
-      // SDL_SetRenderTarget(renderer, nullptr);
+      SDL_SetRenderTarget(renderer, nullptr);
     }
 
     int width() const {

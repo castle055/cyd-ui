@@ -98,7 +98,7 @@ namespace cyd::ui::components {
   public:
     std::string component_name_;
 
-    component_state_t* parent_;
+    component_state_t* parent_ = nullptr;
     std::shared_ptr<fabric::async::async_bus_t> window = nullptr;
 
     std::optional<std::shared_ptr<component_base_t>> component_instance = std::nullopt;
