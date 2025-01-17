@@ -122,26 +122,40 @@ namespace cyd::ui::components {
     virtual void get_fragment(cyd::ui::compositing::compositing_node_t &compositing_node) = 0;
 
   public:
-    void start_render(graphics::window_t* render_target) {
-      for (auto& child : children) {
-        child->start_render(render_target);
-      }
-
+    void update_fragment(compositing::compositing_node_t *parent_node) {
       if (graphics_dirty_) {
         this->get_fragment(compositing_node_);
+
+        compositing_node_.set_parent(parent_node);
+        if (compositing_node_.is_flattened_node()) {
+          compositing_node_.mark_flattening_target_dirty();
+        }
+      }
+
+      for (auto& child : children) {
+        child->update_fragment(&compositing_node_);
+      }
+    }
+
+    void start_render(graphics::window_t* render_target) {
+      if (graphics_dirty_ or compositing_node_.is_flattened_node()) {
         compositing_node_.start_render(render_target);
+      }
+
+      for (auto& child : children) {
+        child->start_render(render_target);
       }
     }
 
     void render(graphics::window_t* render_target) {
-      for (auto& child : children) {
-        child->render(render_target);
-      }
-
-      if (graphics_dirty_) {
+      if (graphics_dirty_ or compositing_node_.is_dirty_from_flattening()) {
         graphics_dirty_ = false;
         compositing_dirty_ = true;
         compositing_node_.render(render_target);
+      }
+
+      for (auto& child : children) {
+        child->render(render_target);
       }
     }
 
@@ -150,7 +164,10 @@ namespace cyd::ui::components {
       std::vector<compositing::compositing_node_t*> nodes{};
       bool children_changed = false;
       for (auto& child : children) {
-        nodes.emplace_back(child->compose(render_target, &children_changed));
+        auto* ptr = child->compose(render_target, &children_changed);
+        if (nullptr != ptr) {
+          nodes.emplace_back(ptr);
+        }
       }
 
       if (compositing_dirty_ || children_changed) {
@@ -162,8 +179,14 @@ namespace cyd::ui::components {
           compositing_node_.compose(render_target, node);
         }
       }
-      return &compositing_node_;
+
+      if (compositing_node_.is_flattened_node()) {
+        return nullptr;
+      } else {
+        return &compositing_node_;
+      }
     }
+
   public:
     component_state_ref state() const {
       if (state_.has_value()) {

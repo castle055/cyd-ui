@@ -255,14 +255,19 @@ namespace cyd::ui {
     if (is_compositing.test()) {
       composite_is_outdated.test_and_set();
       return;
-    }
-    {
-      ZoneScopedN("Render");
+    } {
+      ZoneScopedN("Updating Fragments");
+      root->update_fragment(nullptr);
+    } {
+      ZoneScopedN("Start Render");
 
       Application::run([](CWindow* w, components::component_base_t* root_) {
         ZoneScopedN("Start layout render");
         root_->start_render(w->native());
       }, win.get(), root.get());
+
+    } {
+      ZoneScopedN("Render");
 
       root->render(win->native());
     } {

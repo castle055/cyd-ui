@@ -61,7 +61,7 @@ export namespace cyd::ui::compositing {
       SDL_DestroyTexture(texture);
     }
 
-    void resize(SDL_Renderer* renderer, int w, int h) {
+    void resize(SDL_Renderer* renderer, int w, int h, bool copy_old = false) {
       renderer_ = renderer;
       if (w != this->w || h != this->h) {
         ZoneScopedN("Resize Texture");
@@ -69,17 +69,18 @@ export namespace cyd::ui::compositing {
         texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_BGRA32, streaming_? SDL_TEXTUREACCESS_STREAMING: SDL_TEXTUREACCESS_TARGET, w, h);
 
         if (texture != nullptr) {
-          SDL_SetRenderTarget(renderer, texture);
-          SDL_SetTextureBlendMode(old_texture, SDL_BLENDMODE_BLEND);
-          SDL_Rect dst {
-            .x = 0,
-            .y = 0,
-            .w = std::min(w, this->w),
-            .h = std::min(h, this->h)
-          };
-          SDL_RenderCopy(renderer, old_texture, &dst, &dst);
-          // SDL_SetRenderTarget(renderer, nullptr);
-          SDL_DestroyTexture(old_texture);
+          if (copy_old) {
+            SDL_SetRenderTarget(renderer, texture);
+            SDL_SetTextureBlendMode(old_texture, SDL_BLENDMODE_BLEND);
+            SDL_Rect dst {
+              .x = 0,
+              .y = 0,
+              .w = std::min(w, this->w),
+              .h = std::min(h, this->h)
+            };
+            SDL_RenderCopy(renderer, old_texture, &dst, &dst);
+          }
+        SDL_DestroyTexture(old_texture);
         }
 
         this->w = w;

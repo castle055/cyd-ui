@@ -42,18 +42,50 @@ export namespace cyd::ui::compositing {
   };
 
   struct compositing_node_t {
+    void set_parent(compositing_node_t* parent_) {
+      parent = parent_;
+      is_flattened = (op.op == compositing_operation_t::OVERLAY)
+                     && (parent != nullptr)
+                     && ((op.x + op.w) <= parent->op.w)
+                     && ((op.y + op.h) <= parent->op.h);
+
+      if (is_flattened) {
+        flattening_target = parent->flattening_target;
+      } else {
+        flattening_target = this;
+      }
+    }
+
+    bool is_flattened_node() const {
+      return is_flattened;
+    }
+
+    void mark_flattening_target_dirty() {
+      flattening_target->flattening_dirty = true;
+    }
+
+    bool is_dirty_from_flattening() const {
+      return flattening_target->flattening_dirty;
+    }
+
     void start_render(graphics::window_t* render_target) {
-      if (op.w == 0 or op.h == 0) {
-        rendered_texture.resize(render_target->renderer, 0, 0);
-        return;
-      }
-      ZoneScopedN("Start render");
+      if (is_flattened) {
+        pixel_stride = parent->pixel_stride;
+        pixels = &parent->pixels[op.x + (pixel_stride >> 2) * op.y];
+      } else {
+        if (op.w == 0 or op.h == 0) {
+          rendered_texture.resize(render_target->renderer, 1, 1);
+          return;
+        }
+        ZoneScopedN("Start render");
 
-      if (op.w != rendered_texture.width() || op.h != rendered_texture.height()) {
-        rendered_texture.resize(render_target->renderer, op.w, op.h);
-      }
+        if (op.w != rendered_texture.width() || op.h != rendered_texture.height()) {
+          rendered_texture.resize(render_target->renderer, op.w, op.h);
+        }
 
-      pixels = static_cast<pixel_t*>(rendered_texture.lock());
+        pixel_stride = op.w * sizeof(pixel_t);
+        pixels = static_cast<pixel_t*>(rendered_texture.lock());
+      }
     }
 
     void render(graphics::window_t* render_target) {
@@ -62,8 +94,11 @@ export namespace cyd::ui::compositing {
       }
       ZoneScopedN("Render Node");
 
-      pixelmap_editor_t editor {op.w, op.h, pixels};
-      editor.clear();
+      pixelmap_editor_t editor {op.w, op.h, pixels, pixel_stride};
+
+      if (not is_flattened) {
+        editor.clear();
+      }
 
       if (not graphics.empty()) {
         for (const auto &element: graphics.elements) {
@@ -75,7 +110,7 @@ export namespace cyd::ui::compositing {
         }
       }
 
-      dirty_ = true;
+      flattening_target->dirty_ = true;
     }
 
     void flush_rendered_texture(graphics::window_t* render_target) {
@@ -89,10 +124,13 @@ export namespace cyd::ui::compositing {
 
     void clear_composite_texture(graphics::window_t* render_target) {
       ZoneScopedN("Clear Composite Texture");
-      composite_texture.clear(render_target->renderer);
+      if (not is_flattened) {
+        composite_texture.clear(render_target->renderer);
+      }
     }
 
     void compose_own(graphics::window_t* render_target) {
+      if (is_flattened) return;
       ZoneScopedN("Compose Own");
       flush_rendered_texture(render_target);
       SDL_Rect dst {
@@ -108,10 +146,13 @@ export namespace cyd::ui::compositing {
       ZoneScopedN("Compose Child");
       SDL_Renderer* renderer = render_target->renderer;
 
-      composite_texture.resize(
+      auto& target = is_flattened? flattening_target->composite_texture : composite_texture;
+
+      target.resize(
         renderer,
         std::max(composite_texture.width(), other->op.x + other->composite_texture.width()),
-        std::max(composite_texture.height(), other->op.y + other->composite_texture.height())
+        std::max(composite_texture.height(), other->op.y + other->composite_texture.height()),
+        true
       );
 
       SDL_Rect dst {
@@ -120,11 +161,17 @@ export namespace cyd::ui::compositing {
         .w = other->composite_texture.width(),
         .h = other->composite_texture.height(),
       };
-      other->composite_texture.copy_into(renderer, this->composite_texture, &dst);
+      other->composite_texture.copy_into(renderer, target, &dst);
     }
 
   private:
     bool dirty_ = true;
+
+    compositing_node_t* parent = nullptr;
+    compositing_node_t* flattening_target = nullptr;
+    bool flattening_dirty = false;
+    bool is_flattened = false;
+    int pixel_stride = 0;
   public:
     unsigned long id = 0;
     compositing_operation_t op { };
