@@ -370,19 +370,6 @@ namespace cyd::ui::components {
         return dimensions::get_value(it).template as<dimensions::screen::pixel>().value;
       };
 
-      compositing_node.id = (unsigned long)(this->state().get());
-      compositing_node.op = {
-        .x       = static_cast<int>(get_num_value(this->_x) + get_num_value(this->_margin_left)),
-        .y       = static_cast<int>(get_num_value(this->_y) + get_num_value(this->_margin_top)),
-        .orig_x  = static_cast<int>(get_num_value(this->_padding_left)),
-        .orig_y  = static_cast<int>(get_num_value(this->_padding_top)),
-        .w       = static_cast<int>(get_num_value(this->_width)),
-        .h       = static_cast<int>(get_num_value(this->_height)),
-        .rot     = this->_rotation, // dim->rot.val(),
-        .scale_x = 1.0,             // dim->scale_x.val(),
-        .scale_y = 1.0,             // dim->scale_y.val(),
-      };
-
       auto& fragment = compositing_node.graphics;
       fragment.clear();
 
@@ -447,17 +434,19 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_left),
         dimensions::get_value(this->_padding_right)
       );
-      if (!fragment.empty()) {
-        for (const auto& elem: fragment.elements) {
-          auto fp = elem->get_footprint();
-          if (fp.x + fp.w > compositing_node.op.w) {
-            compositing_node.op.w = fp.x.value_as_base_unit() + fp.w.value_as_base_unit();
-          }
-          if (fp.y + fp.h > compositing_node.op.h) {
-            compositing_node.op.h = fp.y.value_as_base_unit() + fp.h.value_as_base_unit();
-          }
-        }
-      }
+
+      //! Grow fragment if needed
+      // if (!fragment.empty()) {
+      //   for (const auto& elem: fragment.elements) {
+      //     auto fp = elem->get_footprint();
+      //     if ((fp.x + fp.w) > compositing_node.op.w) {
+      //       compositing_node.op.w = fp.x.value_as_base_unit() + fp.w.value_as_base_unit();
+      //     }
+      //     if ((fp.y + fp.h) > compositing_node.op.h) {
+      //       compositing_node.op.h = fp.y.value_as_base_unit() + fp.h.value_as_base_unit();
+      //     }
+      //   }
+      // }
     }
 
     component_base_t*

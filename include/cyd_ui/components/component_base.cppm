@@ -123,13 +123,36 @@ namespace cyd::ui::components {
 
   public:
     void update_fragment(compositing::compositing_node_t *parent_node) {
-      if (graphics_dirty_) {
-        this->get_fragment(compositing_node_);
+      auto get_num_value = [](const auto& it) -> auto {
+        return dimensions::get_value(it).template as<dimensions::screen::pixel>().value;
+      };
 
-        compositing_node_.set_parent(parent_node);
-        if (compositing_node_.is_flattened_node()) {
-          compositing_node_.mark_flattening_target_dirty();
-        }
+      int old_w = compositing_node_.op.w;
+      int old_h = compositing_node_.op.h;
+
+      auto* at = attrs();
+      compositing_node_.id = (unsigned long)(this->state().get());
+      compositing_node_.op = {
+        .x       = static_cast<int>(get_num_value(at->_x) + get_num_value(at->_margin_left)),
+        .y       = static_cast<int>(get_num_value(at->_y) + get_num_value(at->_margin_top)),
+        .orig_x  = static_cast<int>(get_num_value(at->_padding_left)),
+        .orig_y  = static_cast<int>(get_num_value(at->_padding_top)),
+        .w       = static_cast<int>(get_num_value(at->_width)),
+        .h       = static_cast<int>(get_num_value(at->_height)),
+        .rot     = at->_rotation,   // dim->rot.val(),
+        .scale_x = 1.0,             // dim->scale_x.val(),
+        .scale_y = 1.0,             // dim->scale_y.val(),
+      };
+
+      compositing_node_.set_parent(parent_node);
+
+      if (old_w != compositing_node_.op.w or old_h != compositing_node_.op.h) {
+        graphics_dirty_ = true;
+      }
+
+      if (graphics_dirty_) {
+        compositing_node_.mark_flattening_target_dirty();
+        this->get_fragment(compositing_node_);
       }
 
       for (auto& child : children) {
@@ -156,34 +179,34 @@ namespace cyd::ui::components {
 
       for (auto& child : children) {
         child->render(render_target);
+        if (child->compositing_dirty_) {
+          this->compositing_dirty_ = true;
+        }
       }
     }
 
-    compositing::compositing_node_t* compose(graphics::window_t* render_target, bool* should_recompose_parent) {
+    std::pair<compositing::compositing_node_t*, bool> compose(graphics::window_t* render_target) {
       // compositing_node_.clear_composite_texture(render_target);
-      std::vector<compositing::compositing_node_t*> nodes{};
-      bool children_changed = false;
-      for (auto& child : children) {
-        auto* ptr = child->compose(render_target, &children_changed);
-        if (nullptr != ptr) {
-          nodes.emplace_back(ptr);
-        }
-      }
-
-      if (compositing_dirty_ || children_changed) {
+      bool did_compositing = false;
+      if (compositing_dirty_) {
         compositing_dirty_ = false;
-        (*should_recompose_parent) = true;
 
         compositing_node_.compose_own(render_target);
-        for (auto &node: nodes) {
-          compositing_node_.compose(render_target, node);
+
+        for (auto &child: children) {
+          auto&& [node, _] = child->compose(render_target);
+          if (nullptr != node) {
+            compositing_node_.compose(render_target, node);
+          }
         }
+
+        did_compositing = true;
       }
 
       if (compositing_node_.is_flattened_node()) {
-        return nullptr;
+        return {nullptr, did_compositing};
       } else {
-        return &compositing_node_;
+        return {&compositing_node_, did_compositing};
       }
     }
 

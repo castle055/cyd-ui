@@ -68,6 +68,9 @@ export namespace cyd::ui {
     );
 
   private:
+    void update_dimensions();
+    void update_fragments();
+
     void render();
 
   public:
@@ -247,18 +250,24 @@ namespace cyd::ui {
     }
   }
 
+  void Layout::update_dimensions() {
+    ZoneScopedN("Dimensions");
+    recompute_dimensions(root);
+  }
+
+  void Layout::update_fragments() {
+    ZoneScopedN("Fragments");
+    root->update_fragment(nullptr);
+  }
   void Layout::render() {
-    {
-      ZoneScopedN("Dimensions");
-      recompute_dimensions(root);
-    }
-    if (is_compositing.test()) {
+    ZoneScopedN("Render Flow");
+    update_dimensions();
+    if (is_compositing.test_and_set()) {
       composite_is_outdated.test_and_set();
       return;
-    } {
-      ZoneScopedN("Updating Fragments");
-      root->update_fragment(nullptr);
-    } {
+    }
+    update_fragments();
+    {
       ZoneScopedN("Start Render");
 
       Application::run([](CWindow* w, components::component_base_t* root_) {
@@ -273,11 +282,9 @@ namespace cyd::ui {
     } {
       ZoneScopedN("Queuing Composition");
       //compositing_tree->fix_dimensions();
-      is_compositing.test_and_set();
       Application::run_async([](Layout* self, std::atomic_flag* completion_flag, std::atomic_flag* is_outdated, CWindow* w, components::component_base_t* root_ptr) {
         ZoneScopedN("Compositing Layout");
-        bool must_recompose = false;
-        auto* root_node     = root_ptr->compose(w->native(), &must_recompose);
+        auto &&[root_node, must_recompose] = root_ptr->compose(w->native());
 
         if (must_recompose) {
           ZoneScopedN("Compositing Frame");
@@ -306,7 +313,6 @@ namespace cyd::ui {
       ZoneScopedN("Update");
       target->redraw();
     }
-    render();
   }
 
   bool cyd::ui::Layout::update_if_dirty(components::component_base_t* c) {
@@ -361,7 +367,7 @@ namespace cyd::ui {
       dim._width  = cyd::ui::dimensions::screen_measure {double(w)}; //{};
       dim._height = cyd::ui::dimensions::screen_measure {double(h)}; //{};
       root->configure_event_handler();
-      recompute_dimensions(root);
+      render();
     }
 
     for (auto &item: listeners) {
@@ -383,6 +389,8 @@ namespace cyd::ui {
         } else {
           redraw_component(root.get());
         }
+
+        render();
       }),
       make_listener([&](const KeyEvent &ev) {
         ZoneScopedN("Key Event");
@@ -534,7 +542,13 @@ namespace cyd::ui {
         dim._width  = ev.w;
         dim._height = ev.h;
 
-        recompute_dimensions(root);
+        update_dimensions();
+        // if (is_compositing.test()) {
+        //   composite_is_outdated.test_and_set();
+        //   return;
+        // }
+        // update_fragments();
+        // render();
       }),
     };
   }
