@@ -297,22 +297,9 @@ struct use_context {
 
   use_context() = default;
 
-  use_context(const use_context& other): ctx(other.ctx), state(other.state) {
-    if (other.owns_context) {
-      this->owns_context = true;
-      other.owns_context = false;
-    }
-  }
+  use_context(const use_context& other) = delete;
 
-  use_context& operator=(const use_context& other) {
-    stop_listening();
-    this->ctx = other.ctx;
-    this->state = other.state;
-    if (other.owns_context) {
-      this->owns_context = true;
-      other.owns_context = false;
-    }
-  }
+  use_context& operator=(const use_context& other) = delete;
 
   use_context(use_context&& other) noexcept: ctx(other.ctx), state(other.state) {
     other.stop_listening();

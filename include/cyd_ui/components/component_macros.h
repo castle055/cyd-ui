@@ -151,7 +151,7 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 #define ON_TEXT_INPUT       CYDUI_INTERNAL_EV_HANDLER_IMPL(text_input)
 
 #define ON_EVENT(EVENT, ...) \
-  custom_event_listener< EVENT > on_##EVENT{window, [&](const EVENT& event) { \
+  custom_event_listener< EVENT > on_##EVENT{&window, [&](const EVENT& event) { \
     __VA_ARGS__ ;\
   }, [&](){state.force_redraw();}};
 
