@@ -17,10 +17,10 @@ function(enable_cxx_compiler_flag_if_supported flag)
     endif ()
 endfunction()
 
-function(compiler_flags)
+macro(compiler_flags)
     message("Setting Compiler Flags:")
     foreach (flag ${ARGN})
         enable_cxx_compiler_flag_if_supported("${flag}")
     endforeach ()
-endfunction()
+endmacro()
 
