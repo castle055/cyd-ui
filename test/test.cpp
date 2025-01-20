@@ -13,9 +13,9 @@ void setup() {
 }
 
 struct COMPONENT(TestComponent, {
-  std::string* text;
-}) {
-  ON_REDRAW {
+          std::string* text;
+          }) {
+  CHILDREN {
     return {
       input::text {{props.text}}.height($height / 2 - 1).width($width).on_enter([&] {
         std::cout << "ENTER!" << std::endl;
@@ -26,8 +26,11 @@ struct COMPONENT(TestComponent, {
 };
 
 TEST("Text Input") {
-  std::string text{"TEXT: "};
-  auto win = cyd::ui::CWindow::make<TestComponent>({&text}).size(640, 100).title("Text Input").show();
+  std::string text {"TEXT: "};
+  auto win = cyd::ui::CWindow::make<TestComponent>({&text})
+             .size(640, 100)
+             .title("Text Input")
+             .show();
   while (win->is_open());
   return 0;
 }

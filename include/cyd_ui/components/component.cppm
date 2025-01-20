@@ -19,7 +19,7 @@ export import :base;
 export using children_list = std::vector<cyd::ui::components::component_holder_t>;
 
 namespace cyd::ui::components {
-  export template<ComponentEventHandlerConcept EVH, typename T>
+  export template<typename T>
   struct component_t:
     public component_base_t,
     public attrs_component<T> {
@@ -229,7 +229,8 @@ namespace cyd::ui::components {
 
   private:
     void configure_event_handler() override {
-      event_handler_ = std::make_shared<EVH>(event_handler_data_t<T>{
+      using EVH      = typename T::event_handler_t;
+      event_handler_ptr = std::make_shared<EVH>(event_handler_data_t<T>{
         *static_cast<T*>(this),
         parent.has_value()? (parent.value()->event_handler().get()): nullptr,
         children,
@@ -238,6 +239,7 @@ namespace cyd::ui::components {
         static_cast<T*>(this)->props,
         *static_cast<attrs_component<T>*>(this),
       });
+      auto event_handler_ = static_cast<EVH*>(event_handler_ptr.get());
 
       if constexpr (refl::Reflected<EVH>) {
         static constexpr std::size_t field_count = refl::field_count<EVH>;
@@ -253,8 +255,10 @@ namespace cyd::ui::components {
 
     template <std::size_t FieldI>
     void configure_event_handler_field() {
+      using EVH      = typename T::event_handler_t;
       using field = refl::field<EVH, FieldI>;
       using field_type = typename field::type;
+      auto event_handler_ = static_cast<EVH*>(event_handler_ptr.get());
 
       if constexpr (packtl::is_type<use_context, field_type>::value) {
         using context_type = typename field_type::context_type;
@@ -306,10 +310,11 @@ namespace cyd::ui::components {
     }
 
     std::shared_ptr<event_handler_t> event_handler() override {
-      return std::dynamic_pointer_cast<event_handler_t>(event_handler_);
+      return event_handler_ptr;
     }
 
     void redraw() override {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       state()->_dirty = false;
       graphics_dirty_ = true;
 
@@ -361,6 +366,7 @@ namespace cyd::ui::components {
 
     void get_fragment(cyd::ui::compositing::compositing_node_t& compositing_node
     ) override {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       // for (auto& child: children) {
       //   compositing_node.children.emplace_back(new compositing::compositing_node_t{});
       //   child->get_fragment(compositing_node.children.back());
@@ -485,6 +491,7 @@ namespace cyd::ui::components {
     }
   public:
     void dispatch_key_press(const KeyEvent& ev) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_key_press(
         ev,
         dimensions::get_value(this->_x),
@@ -498,6 +505,7 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_key_release(const KeyEvent& ev) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_key_release(
         ev,
         dimensions::get_value(this->_x),
@@ -511,6 +519,7 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_text_input(const TextInputEvent& ev) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_text_input(
         ev,
         dimensions::get_value(this->_x),
@@ -526,6 +535,7 @@ namespace cyd::ui::components {
     void dispatch_button_press(
       const Button& button, dimension_t::value_type x, dimension_t::value_type y
     ) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_button_press(
         button,
         x,
@@ -543,6 +553,7 @@ namespace cyd::ui::components {
     void dispatch_button_release(
       const Button& button, dimension_t::value_type x, dimension_t::value_type y
     ) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_button_release(
         button,
         x,
@@ -558,6 +569,7 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_mouse_enter(dimension_t::value_type x, dimension_t::value_type y) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_mouse_enter(
         x,
         y,
@@ -572,6 +584,7 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_mouse_exit(dimension_t::value_type x, dimension_t::value_type y) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_mouse_exit(
         x,
         y,
@@ -586,6 +599,7 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_mouse_motion(dimension_t::value_type x, dimension_t::value_type y) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_mouse_motion(
         x,
         y,
@@ -600,6 +614,7 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_scroll(dimension_t::value_type dx, dimension_t::value_type dy) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_scroll(
         dx,
         dy,
@@ -615,7 +630,7 @@ namespace cyd::ui::components {
     }
 
   private:
-    std::shared_ptr<EVH> event_handler_{};
+    std::shared_ptr<event_handler_t> event_handler_ptr{};
   };
 }
 

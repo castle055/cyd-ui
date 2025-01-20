@@ -29,13 +29,13 @@ namespace charts {
   grid_t<plot>     grid         {*this};
   view_map_t<plot> series       {*this};
 
-  explicit plot(std::initializer_list<data_series_t>&& series_): cyd::ui::components::component_t<EventHandlerplot,plot>(), props(series_) {
+  explicit plot(std::initializer_list<data_series_t>&& series_): cyd::ui::components::component_t<plot>(), props(series_) {
     for (std::size_t i = 0; i < series_.size(); ++i) {
       (void)series[i];
     }
   }
 
-  plot(const plot& rhl): cyd::ui::components::component_t<EventHandlerplot,plot>() {
+  plot(const plot& rhl): cyd::ui::components::component_t<plot>() {
     props = rhl.props;
     top_axis = rhl.top_axis;
     bottom_axis = rhl.bottom_axis;

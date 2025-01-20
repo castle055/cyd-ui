@@ -49,7 +49,7 @@ private:
 
 
 namespace cyd::ui::components {
-  struct event_handler_t;
+  export struct event_handler_t;
 
   export class context_store_t {
   public:
@@ -269,7 +269,7 @@ namespace cyd::ui::components {
      */
     virtual bool update_with(std::shared_ptr<component_base_t> other) = 0;
 
-    template<ComponentEventHandlerConcept EVH, typename T>
+    template<typename T>
     friend struct component_t;
 
     internal_relations_t internal_relations{};
@@ -292,7 +292,7 @@ export template<typename ContextType>
 struct use_context {
   using context_type = ContextType;
 
-  template<cyd::ui::components::ComponentEventHandlerConcept EVH, typename T>
+  template<typename T>
   friend struct cyd::ui::components::component_t;
 
   use_context() = default;
@@ -370,7 +370,7 @@ export template<typename ContextType>
 struct provide_context {
   using context_type = ContextType;
 
-  template<cyd::ui::components::ComponentEventHandlerConcept EVH, typename T>
+  template<typename T>
   friend struct cyd::ui::components::component_t;
 
   provide_context() = default;
