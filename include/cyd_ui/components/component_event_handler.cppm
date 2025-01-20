@@ -104,6 +104,10 @@ export {
           component->parent.value()->dispatch_key_release(ev);
       }
 
+      // * text input
+      CYDUI_INTERNAL_EV_HANDLER_DECL(text_input) {
+      }
+
       void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS {}
     };
 
@@ -160,7 +164,7 @@ export {
   template <typename Event>
   class custom_event_listener {
   public:
-    custom_event_listener(fabric::async::async_bus_t&  window, std::function<void(const Event&)> callback, std::function<void()> post): window_(window), callback_(callback), post_(post) {
+    custom_event_listener(fabric::async::async_bus_t*  window, std::function<void(const Event&)> callback, std::function<void()> post): window_(window), callback_(callback), post_(post) {
       start_listening();
     }
 
@@ -180,7 +184,7 @@ export {
       return *this;
     }
 
-    custom_event_listener(custom_event_listener&& other): window_(other.window_), callback_(other.callback_), post_(other.post_) {
+    custom_event_listener(custom_event_listener&& other) noexcept: window_(other.window_), callback_(other.callback_), post_(other.post_) {
       other.stop_listening();
       start_listening();
     }
@@ -197,7 +201,7 @@ export {
     void start_listening() {
       stop_listening();
 
-      listener_ = window_.on_event([&](const Event& ev) {
+      listener_ = window_->on_event([&](const Event& ev) {
         callback_(ev);
         post_();
       });
@@ -209,7 +213,7 @@ export {
       }
     }
   private:
-    fabric::async::async_bus_t&  window_;
+    fabric::async::async_bus_t*  window_;
     std::function<void(const Event&)> callback_;
     std::function<void()> post_;
     std::optional<fabric::async::listener<Event>> listener_ {std::nullopt};

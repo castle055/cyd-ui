@@ -19,7 +19,7 @@ export import :base;
 export using children_list = std::vector<cyd::ui::components::component_holder_t>;
 
 namespace cyd::ui::components {
-  export template<ComponentEventHandlerConcept EVH, typename T>
+  export template<typename T>
   struct component_t:
     public component_base_t,
     public attrs_component<T> {
@@ -229,7 +229,8 @@ namespace cyd::ui::components {
 
   private:
     void configure_event_handler() override {
-      event_handler_ = std::make_shared<EVH>(event_handler_data_t<T>{
+      using EVH      = typename T::event_handler_t;
+      event_handler_ptr = std::make_shared<EVH>(event_handler_data_t<T>{
         *static_cast<T*>(this),
         parent.has_value()? (parent.value()->event_handler().get()): nullptr,
         children,
@@ -238,6 +239,7 @@ namespace cyd::ui::components {
         static_cast<T*>(this)->props,
         *static_cast<attrs_component<T>*>(this),
       });
+      auto event_handler_ = static_cast<EVH*>(event_handler_ptr.get());
 
       if constexpr (refl::Reflected<EVH>) {
         static constexpr std::size_t field_count = refl::field_count<EVH>;
@@ -253,8 +255,10 @@ namespace cyd::ui::components {
 
     template <std::size_t FieldI>
     void configure_event_handler_field() {
+      using EVH      = typename T::event_handler_t;
       using field = refl::field<EVH, FieldI>;
       using field_type = typename field::type;
+      auto event_handler_ = static_cast<EVH*>(event_handler_ptr.get());
 
       if constexpr (packtl::is_type<use_context, field_type>::value) {
         using context_type = typename field_type::context_type;
@@ -306,11 +310,13 @@ namespace cyd::ui::components {
     }
 
     std::shared_ptr<event_handler_t> event_handler() override {
-      return std::dynamic_pointer_cast<event_handler_t>(event_handler_);
+      return event_handler_ptr;
     }
 
     void redraw() override {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       state()->_dirty = false;
+      graphics_dirty_ = true;
 
       std::unordered_map<
         std::shared_ptr<component_base_t>,
@@ -358,71 +364,69 @@ namespace cyd::ui::components {
       }
     }
 
-    void get_fragment(std::unique_ptr<cyd::ui::compositing::compositing_node_t>& compositing_node
+    void get_fragment(cyd::ui::compositing::compositing_node_t& compositing_node
     ) override {
-      for (auto& child: children) {
-        compositing_node->children.emplace_back(new compositing::compositing_node_t{});
-        child->get_fragment(compositing_node->children.back());
-      }
-
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
+      // for (auto& child: children) {
+      //   compositing_node.children.emplace_back(new compositing::compositing_node_t{});
+      //   child->get_fragment(compositing_node.children.back());
+      // }
+      //
       auto get_num_value = [](const auto& it) -> auto {
         return dimensions::get_value(it).template as<dimensions::screen::pixel>().value;
       };
 
-      compositing_node->id = (unsigned long)(this->state().get());
-      compositing_node->op = {
-        .x       = get_num_value(this->_x) + get_num_value(this->_margin_left),
-        .y       = get_num_value(this->_y) + get_num_value(this->_margin_top),
-        .orig_x  = get_num_value(this->_padding_left),
-        .orig_y  = get_num_value(this->_padding_top),
-        .w       = get_num_value(this->_width),
-        .h       = get_num_value(this->_height),
-        .rot     = this->_rotation, // dim->rot.val(),
-        .scale_x = 1.0,             // dim->scale_x.val(),
-        .scale_y = 1.0,             // dim->scale_y.val(),
-      };
-
-      auto& fragment = compositing_node->graphics;
+      auto& fragment = compositing_node.graphics;
       fragment.clear();
 
+      int half_top_border    = this->_border_width_top >> 1;
+      int half_bottom_border = (this->_border_width_bottom >> 1) + (this->_border_width_bottom & 1);
+      int half_left_border   = this->_border_width_left >> 1;
+      int half_right_border  = (this->_border_width_right >> 1) + (this->_border_width_right & 1);
+
+      // The four border corners, in reading order (left -> right, top ->bottom)
+      int x1 = (half_left_border) - get_num_value(this->_padding_left);
+      int y1 = (half_top_border) - get_num_value(this->_padding_top);
+
+      int x2 = x1 + get_num_value(this->_width) - (half_left_border) - (half_right_border);
+      int y2 = y1;
+
+      int x3 = x1;
+      int y3 = y1 + get_num_value(this->_height) - (half_top_border) - (half_bottom_border);
+
+      int x4 = x2;
+      int y4 = y3;
+
       fragment.draw<vg::rect>()
-        .x(-dimensions::get_value(this->_padding_left))
-        .y(-dimensions::get_value(this->_padding_top))
-        .w(dimensions::get_value(this->_width))
-        .h(dimensions::get_value(this->_height))
-        .fill(this->_background);
+              .x(-dimensions::get_value(this->_padding_left))
+              .y(-dimensions::get_value(this->_padding_top))
+              .w(dimensions::get_value(this->_width))
+              .h(dimensions::get_value(this->_height))
+              .fill(this->_background);
       fragment.draw<vg::line>()
-        .x1(-dimensions::get_value(this->_padding_left))
-        .y1(-dimensions::get_value(this->_padding_top))
-        .x2(-dimensions::get_value(this->_padding_left) + dimensions::get_value(this->_width))
-        .y2(-dimensions::get_value(this->_padding_top))
-        .stroke(this->_border_top)
-        .stroke_width(this->_border_width_top)
-        .stroke_dasharray(this->_border_dasharray_top);
+              .x1(x1 - half_left_border).y1(y1)
+              .x2(x2 + half_right_border).y2(y2)
+              .stroke(this->_border_top)
+              .stroke_width(this->_border_width_top)
+              .stroke_dasharray(this->_border_dasharray_top);
       fragment.draw<vg::line>()
-        .x1(-dimensions::get_value(this->_padding_left) + dimensions::get_value(this->_width))
-        .y1(-dimensions::get_value(this->_padding_top) + dimensions::get_value(this->_height))
-        .x2(-dimensions::get_value(this->_padding_left))
-        .y2(-dimensions::get_value(this->_padding_top) + dimensions::get_value(this->_height))
-        .stroke(this->_border_bottom)
-        .stroke_width(this->_border_width_bottom)
-        .stroke_dasharray(this->_border_dasharray_bottom);
+              .x1(x4 + half_right_border).y1(y4)
+              .x2(x3 - half_left_border).y2(y3)
+              .stroke(this->_border_bottom)
+              .stroke_width(this->_border_width_bottom)
+              .stroke_dasharray(this->_border_dasharray_bottom);
       fragment.draw<vg::line>()
-        .x1(-dimensions::get_value(this->_padding_left))
-        .y1(-dimensions::get_value(this->_padding_top) + dimensions::get_value(this->_height))
-        .x2(-dimensions::get_value(this->_padding_left))
-        .y2(-dimensions::get_value(this->_padding_top))
-        .stroke(this->_border_left)
-        .stroke_width(this->_border_width_left)
-        .stroke_dasharray(this->_border_dasharray_left);
+              .x1(x3).y1(y3 + half_bottom_border)
+              .x2(x1).y2(y1 - half_top_border)
+              .stroke(this->_border_left)
+              .stroke_width(this->_border_width_left)
+              .stroke_dasharray(this->_border_dasharray_left);
       fragment.draw<vg::line>()
-        .x1(-dimensions::get_value(this->_padding_left) + dimensions::get_value(this->_width))
-        .y1(-dimensions::get_value(this->_padding_top))
-        .x2(-dimensions::get_value(this->_padding_left) + dimensions::get_value(this->_width))
-        .y2(-dimensions::get_value(this->_padding_top) + dimensions::get_value(this->_height))
-        .stroke(this->_border_right)
-        .stroke_width(this->_border_width_right)
-        .stroke_dasharray(this->_border_dasharray_right);
+              .x1(x2).y1(y2 - half_top_border)
+              .x2(x4).y2(y4 + half_bottom_border)
+              .stroke(this->_border_right)
+              .stroke_width(this->_border_width_right)
+              .stroke_dasharray(this->_border_dasharray_right);
 
 
       event_handler_->draw_fragment(
@@ -436,17 +440,19 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_left),
         dimensions::get_value(this->_padding_right)
       );
-      if (!fragment.empty()) {
-        for (const auto& elem: fragment.elements) {
-          auto fp = elem->get_footprint();
-          if (fp.x + fp.w > compositing_node->op.w) {
-            compositing_node->op.w = fp.x.value_as_base_unit() + fp.w.value_as_base_unit();
-          }
-          if (fp.y + fp.h > compositing_node->op.h) {
-            compositing_node->op.h = fp.y.value_as_base_unit() + fp.h.value_as_base_unit();
-          }
-        }
-      }
+
+      //! Grow fragment if needed
+      // if (!fragment.empty()) {
+      //   for (const auto& elem: fragment.elements) {
+      //     auto fp = elem->get_footprint();
+      //     if ((fp.x + fp.w) > compositing_node.op.w) {
+      //       compositing_node.op.w = fp.x.value_as_base_unit() + fp.w.value_as_base_unit();
+      //     }
+      //     if ((fp.y + fp.h) > compositing_node.op.h) {
+      //       compositing_node.op.h = fp.y.value_as_base_unit() + fp.h.value_as_base_unit();
+      //     }
+      //   }
+      // }
     }
 
     component_base_t*
@@ -485,6 +491,7 @@ namespace cyd::ui::components {
     }
   public:
     void dispatch_key_press(const KeyEvent& ev) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_key_press(
         ev,
         dimensions::get_value(this->_x),
@@ -498,7 +505,22 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_key_release(const KeyEvent& ev) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_key_release(
+        ev,
+        dimensions::get_value(this->_x),
+        dimensions::get_value(this->_y),
+        dimensions::get_value(this->internal_relations.cw),
+        dimensions::get_value(this->internal_relations.ch),
+        dimensions::get_value(this->_padding_top),
+        dimensions::get_value(this->_padding_bottom),
+        dimensions::get_value(this->_padding_left),
+        dimensions::get_value(this->_padding_right)
+      );
+    }
+    void dispatch_text_input(const TextInputEvent& ev) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
+      event_handler_->on_text_input(
         ev,
         dimensions::get_value(this->_x),
         dimensions::get_value(this->_y),
@@ -513,6 +535,7 @@ namespace cyd::ui::components {
     void dispatch_button_press(
       const Button& button, dimension_t::value_type x, dimension_t::value_type y
     ) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_button_press(
         button,
         x,
@@ -530,6 +553,7 @@ namespace cyd::ui::components {
     void dispatch_button_release(
       const Button& button, dimension_t::value_type x, dimension_t::value_type y
     ) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_button_release(
         button,
         x,
@@ -545,6 +569,7 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_mouse_enter(dimension_t::value_type x, dimension_t::value_type y) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_mouse_enter(
         x,
         y,
@@ -559,6 +584,7 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_mouse_exit(dimension_t::value_type x, dimension_t::value_type y) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_mouse_exit(
         x,
         y,
@@ -573,6 +599,7 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_mouse_motion(dimension_t::value_type x, dimension_t::value_type y) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_mouse_motion(
         x,
         y,
@@ -587,6 +614,7 @@ namespace cyd::ui::components {
       );
     }
     void dispatch_scroll(dimension_t::value_type dx, dimension_t::value_type dy) final {
+      auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_scroll(
         dx,
         dy,
@@ -602,7 +630,7 @@ namespace cyd::ui::components {
     }
 
   private:
-    std::shared_ptr<EVH> event_handler_{};
+    std::shared_ptr<event_handler_t> event_handler_ptr{};
   };
 }
 

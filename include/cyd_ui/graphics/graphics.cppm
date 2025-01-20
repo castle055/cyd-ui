@@ -6,6 +6,7 @@ export module cydui.graphics;
 import std;
 
 export import cydui.graphics.types;
+export import cydui.graphics.window;
 
 export import :vg;
 export import :api;

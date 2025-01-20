@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 module;
-#include "cyd_ui/components/component_macros.h"
+#include "../components/component_macros.h"
 
 export module cydui.std;
 

@@ -693,10 +693,10 @@ export {
     BORDER_DASHARRAY_SIDE(right)
 
     bool operator==(const attr_border_dasharray& rhl) const {
-      return _border_dasharray_top == rhl._border_dasharray_top
-             && _border_dasharray_bottom == rhl._border_dasharray_bottom
-             && _border_dasharray_left == rhl._border_dasharray_left
-             && _border_dasharray_right == rhl._border_dasharray_right;
+      return bool(_border_dasharray_top == rhl._border_dasharray_top)
+             && bool(_border_dasharray_bottom == rhl._border_dasharray_bottom)
+             && bool(_border_dasharray_left == rhl._border_dasharray_left)
+             && bool(_border_dasharray_right == rhl._border_dasharray_right);
     }
 
     std::valarray<double> _border_dasharray_top{};

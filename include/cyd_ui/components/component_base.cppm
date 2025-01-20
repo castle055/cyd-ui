@@ -49,7 +49,7 @@ private:
 
 
 namespace cyd::ui::components {
-  struct event_handler_t;
+  export struct event_handler_t;
 
   export class context_store_t {
   public:
@@ -79,7 +79,6 @@ namespace cyd::ui::components {
     std::unordered_map<refl::type_id_t, std::shared_ptr<void>> context_map_ { };
   };
 
-
   export struct component_base_t {
     using sptr = std::shared_ptr<component_base_t>;
 
@@ -98,6 +97,7 @@ namespace cyd::ui::components {
     virtual std::shared_ptr<event_handler_t> event_handler() = 0;
     virtual void dispatch_key_press(const KeyEvent& ev) = 0;
     virtual void dispatch_key_release(const KeyEvent& ev) = 0;
+    virtual void dispatch_text_input(const TextInputEvent& ev) = 0;
     virtual void dispatch_button_press(const Button& ev, dimension_t::value_type x, dimension_t::value_type y) = 0;
     virtual void dispatch_button_release(const Button& ev, dimension_t::value_type x, dimension_t::value_type y) = 0;
     virtual void dispatch_scroll(dimension_t::value_type dx, dimension_t::value_type dy) = 0;
@@ -106,10 +106,6 @@ namespace cyd::ui::components {
     virtual void dispatch_mouse_motion(dimension_t::value_type x, dimension_t::value_type y) = 0;
 
     virtual void redraw() = 0;
-    virtual void
-    get_fragment(
-      std::unique_ptr<cyd::ui::compositing::compositing_node_t> &compositing_node
-    ) = 0;
 
     virtual std::shared_ptr<component_state_t> create_state_instance() = 0;
 
@@ -120,6 +116,98 @@ namespace cyd::ui::components {
 
     internal_relations_t& get_internal_relations() {
       return internal_relations;
+    }
+
+  protected:
+    virtual void get_fragment(cyd::ui::compositing::compositing_node_t &compositing_node) = 0;
+
+  public:
+    void update_fragment(compositing::compositing_node_t *parent_node) {
+      auto get_num_value = [](const auto& it) -> auto {
+        return dimensions::get_value(it).template as<dimensions::screen::pixel>().value;
+      };
+
+      int old_w = compositing_node_.op.w;
+      int old_h = compositing_node_.op.h;
+
+      auto* at = attrs();
+      compositing_node_.id = (unsigned long)(this->state().get());
+      compositing_node_.op = {
+        .x       = static_cast<int>(get_num_value(at->_x) + get_num_value(at->_margin_left)),
+        .y       = static_cast<int>(get_num_value(at->_y) + get_num_value(at->_margin_top)),
+        .orig_x  = static_cast<int>(get_num_value(at->_padding_left)),
+        .orig_y  = static_cast<int>(get_num_value(at->_padding_top)),
+        .w       = static_cast<int>(get_num_value(at->_width)),
+        .h       = static_cast<int>(get_num_value(at->_height)),
+        .rot     = at->_rotation,   // dim->rot.val(),
+        .scale_x = 1.0,             // dim->scale_x.val(),
+        .scale_y = 1.0,             // dim->scale_y.val(),
+      };
+
+      compositing_node_.set_parent(parent_node);
+
+      if (old_w != compositing_node_.op.w or old_h != compositing_node_.op.h) {
+        graphics_dirty_ = true;
+      }
+
+      if (graphics_dirty_) {
+        compositing_node_.mark_flattening_target_dirty();
+        this->get_fragment(compositing_node_);
+      }
+
+      for (auto& child : children) {
+        child->update_fragment(&compositing_node_);
+      }
+    }
+
+    void start_render(graphics::window_t* render_target) {
+      if (graphics_dirty_ or compositing_node_.is_flattened_node()) {
+        compositing_node_.start_render(render_target);
+      }
+
+      for (auto& child : children) {
+        child->start_render(render_target);
+      }
+    }
+
+    void render(graphics::window_t* render_target) {
+      if (graphics_dirty_ or compositing_node_.is_dirty_from_flattening()) {
+        graphics_dirty_ = false;
+        compositing_dirty_ = true;
+        compositing_node_.render(render_target);
+      }
+
+      for (auto& child : children) {
+        child->render(render_target);
+        if (child->compositing_dirty_) {
+          this->compositing_dirty_ = true;
+        }
+      }
+    }
+
+    std::pair<compositing::compositing_node_t*, bool> compose(graphics::window_t* render_target) {
+      // compositing_node_.clear_composite_texture(render_target);
+      bool did_compositing = false;
+      if (compositing_dirty_) {
+        compositing_dirty_ = false;
+
+        compositing_node_.compose_own(render_target);
+
+        for (auto &child: children) {
+          auto&& [node, _] = child->compose(render_target);
+          if (nullptr != node) {
+            compositing_node_.compose(render_target, node);
+          }
+        }
+
+        did_compositing = true;
+      }
+
+      if (compositing_node_.is_flattened_node()) {
+        return {nullptr, did_compositing};
+      } else {
+        return {&compositing_node_, did_compositing};
+      }
     }
 
   public:
@@ -181,7 +269,7 @@ namespace cyd::ui::components {
      */
     virtual bool update_with(std::shared_ptr<component_base_t> other) = 0;
 
-    template<ComponentEventHandlerConcept EVH, typename T>
+    template<typename T>
     friend struct component_t;
 
     internal_relations_t internal_relations{};
@@ -193,6 +281,10 @@ namespace cyd::ui::components {
     std::optional<std::weak_ptr<component_state_t>> state_ = std::nullopt;
 
     context_store_t context_store_{};
+
+    compositing::compositing_node_t compositing_node_ { };
+    bool graphics_dirty_ = true;
+    bool compositing_dirty_ = true;
   };
 }
 
@@ -200,27 +292,14 @@ export template<typename ContextType>
 struct use_context {
   using context_type = ContextType;
 
-  template<cyd::ui::components::ComponentEventHandlerConcept EVH, typename T>
+  template<typename T>
   friend struct cyd::ui::components::component_t;
 
   use_context() = default;
 
-  use_context(const use_context& other): ctx(other.ctx), state(other.state) {
-    if (other.owns_context) {
-      this->owns_context = true;
-      other.owns_context = false;
-    }
-  }
+  use_context(const use_context& other) = delete;
 
-  use_context& operator=(const use_context& other) {
-    stop_listening();
-    this->ctx = other.ctx;
-    this->state = other.state;
-    if (other.owns_context) {
-      this->owns_context = true;
-      other.owns_context = false;
-    }
-  }
+  use_context& operator=(const use_context& other) = delete;
 
   use_context(use_context&& other) noexcept: ctx(other.ctx), state(other.state) {
     other.stop_listening();
@@ -291,7 +370,7 @@ export template<typename ContextType>
 struct provide_context {
   using context_type = ContextType;
 
-  template<cyd::ui::components::ComponentEventHandlerConcept EVH, typename T>
+  template<typename T>
   friend struct cyd::ui::components::component_t;
 
   provide_context() = default;

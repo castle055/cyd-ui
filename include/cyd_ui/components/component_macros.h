@@ -36,18 +36,11 @@
 private: \
   __VA_ARGS__ NAME##_
 
-// ?>
-#define COMPONENT_EXTRAS(...)                                                                      \
-  __VA_ARGS__                                                                                      \
-  }                                                                                                \
-  ;
 
 #define COMPONENT(NAME, ...)                                                                       \
-  NAME;                                                                                            \
-  struct CYDUI_EV_HANDLER_NAME(NAME);                                                              \
-  struct NAME: public cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME), NAME> {        \
+  NAME: public cyd::ui::components::component_t<NAME> {                                            \
     CYDUI_COMPONENT_METADATA(NAME)                                                                 \
-    using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME);                                           \
+    struct event_handler_t;                                                                        \
     struct init;                                                                                   \
     struct props_t __VA_ARGS__;                                                                    \
                                                                                                    \
@@ -61,19 +54,19 @@ private: \
     explicit NAME(                                                                                 \
       typename std::enable_if<std::is_default_constructible_v<P>, props_t>::type props = {}        \
     )                                                                                              \
-        : cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME), NAME>(),                   \
+        : cyd::ui::components::component_t<NAME>(),                                                \
           props(std::move(props)) {}                                                               \
     explicit NAME(props_t props)                                                                   \
-        : cyd::ui::components::component_t<CYDUI_EV_HANDLER_NAME(NAME), NAME>(),                   \
+        : cyd::ui::components::component_t<NAME>(),                                                \
           props(std::move(props)) {}                                                               \
     ~NAME() override = default;                                                                    \
     void* get_props() override {                                                                   \
       return (void*)&(this->props);                                                                \
     }                                                                                              \
-    friend struct CYDUI_EV_HANDLER_NAME(NAME);                                                     \
+    friend struct event_handler_t;                                                                 \
     friend struct cyd::ui::components::event_handler_data_t<NAME>;                                 \
   };                                                                                               \
-  struct CYDUI_EV_HANDLER_NAME(NAME)                                                               \
+  struct NAME::event_handler_t                                                                     \
       : public cyd::ui::components::event_handler_data_t<NAME>
 
 
@@ -148,9 +141,10 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 #define ON_SCROLL           CYDUI_INTERNAL_EV_HANDLER_IMPL(scroll)
 #define ON_KEY_PRESS        CYDUI_INTERNAL_EV_HANDLER_IMPL(key_press)
 #define ON_KEY_RELEASE      CYDUI_INTERNAL_EV_HANDLER_IMPL(key_release)
+#define ON_TEXT_INPUT       CYDUI_INTERNAL_EV_HANDLER_IMPL(text_input)
 
 #define ON_EVENT(EVENT, ...) \
-  custom_event_listener< EVENT > on_##EVENT{window, [&](const EVENT& event) { \
+  custom_event_listener< EVENT > on_##EVENT{&window, [&](const EVENT& event) { \
     __VA_ARGS__ ;\
   }, [&](){state.force_redraw();}};
 

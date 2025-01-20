@@ -65,6 +65,17 @@
    const cyd::ui::components::dimension_t::value_type& $padding_left,                              \
    const cyd::ui::components::dimension_t::value_type& $padding_right)
 
+#define CYDUI_INTERNAL_EV_text_input_ARGS                                                          \
+  (const TextInputEvent&                               ev,                                         \
+   const cyd::ui::components::dimension_t::value_type& $x,                                         \
+   const cyd::ui::components::dimension_t::value_type& $y,                                         \
+   const cyd::ui::components::dimension_t::value_type& $width,                                     \
+   const cyd::ui::components::dimension_t::value_type& $height,                                    \
+   const cyd::ui::components::dimension_t::value_type& $padding_top,                               \
+   const cyd::ui::components::dimension_t::value_type& $padding_bottom,                            \
+   const cyd::ui::components::dimension_t::value_type& $padding_left,                              \
+   const cyd::ui::components::dimension_t::value_type& $padding_right)
+
 #define CYDUI_INTERNAL_EV_fragment_ARGS                                                            \
   (vg::vg_fragment_t & fragment,                                                                   \
    const cyd::ui::components::dimension_t::value_type& $x,                                         \

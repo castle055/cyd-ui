@@ -3,6 +3,7 @@
 
 module;
 #include <cyd_fabric_modules/headers/macros/async_events.h>
+#include <SDL2/SDL_keyboard.h>
 
 export module cydui.events;
 
@@ -59,96 +60,29 @@ export {
     BUTTON3   = SECONDARY,
   };
 
-  enum class Key {
-    UNKNOWN,
-    A,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H,
-    I,
-    J,
-    K,
-    L,
-    M,
-    N,
-    O,
-    P,
-    Q,
-    R,
-    S,
-    T,
-    U,
-    V,
-    W,
-    X,
-    Y,
-    Z,
-    SPACE,
-    ENTER,
-    BACKSPACE,
-    DELETE,
-    ESC,
-    LEFT,
-    RIGHT,
-    UP,
-    DOWN,
-    LEFT_CTRL,
-    RIGHT_CTRL,
-    LEFT_SHIFT,
-    RIGHT_SHIFT,
-    LEFT_SUPER,
-    RIGHT_SUPER,
-    PAGE_UP,
-    PAGE_DOWN,
-    HOME,
-    END,
-    F1,
-    F2,
-    F3,
-    F4,
-    F5,
-    F6,
-    F7,
-    F8,
-    F9,
-    F10,
-    F11,
-    F12,
-    F13,
-    F14,
-    F15,
-    F16,
-    F17,
-    F18,
-    F19,
-    F20,
-    F21,
-    F22,
-    F23,
-    F24,
-    F25,
-    F26,
-    F27,
-    F28,
-    F29,
-    F30,
-    F31,
-    F32,
-    F33,
-    F34,
-    F35,
+  using Scancode = SDL_Scancode;
+  using Keycode = SDL_KeyCode;
+  using Keymod = Uint16;
+
+  struct Keysym {
+    Scancode scancode;
+    SDL_Keycode code;
+    Keymod mod;
   };
 
   EVENT(KeyEvent) {
-    const unsigned long win = 0;
-    const Key           key;
+    const Keysym        keysym;
     const bool          pressed  = false;
     const bool          released = false;
     const bool          holding  = false;
-    const std::string   text     = "";
+  };
+
+  EVENT(TextInputEvent) {
+    std::string text = "";
+    bool compositing_event = false;
+    struct {
+      int cursor{0};
+      int selection{0};
+    } compositing_state { };
   };
 }

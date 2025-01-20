@@ -17,7 +17,7 @@ export import :with_specialization;
 
 export namespace cyd::ui::components {
   struct component_base_t;
-  template<ComponentEventHandlerConcept EVH, typename T>
+  template<typename T>
   struct component_t;
   struct component_state_t;
   using component_state_ref = std::shared_ptr<component_state_t>;
@@ -82,7 +82,7 @@ namespace cyd::ui::components {
     }
   private:
     friend struct component_base_t;
-    template<ComponentEventHandlerConcept EVH, typename T>
+    template<typename T>
     friend struct component_t;
 
     void add_children_state(const std::string& id, const component_state_ref &child) {
@@ -98,7 +98,7 @@ namespace cyd::ui::components {
   public:
     std::string component_name_;
 
-    component_state_t* parent_;
+    component_state_t* parent_ = nullptr;
     std::shared_ptr<fabric::async::async_bus_t> window = nullptr;
 
     std::optional<std::shared_ptr<component_base_t>> component_instance = std::nullopt;

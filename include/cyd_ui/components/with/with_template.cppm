@@ -10,10 +10,10 @@ export import :type;
 export template <typename T>
 struct with;
 
-export namespace cyd::ui::components {
-    template<typename T>
+namespace cyd::ui::components {
+    export template<typename T>
     struct with_data_t {
-      T &val;
+      T val;
       
       with_data_t(T &val): val(val) { }
       with_data_t(T &&val): val(val) { }
@@ -24,13 +24,18 @@ export namespace cyd::ui::components {
     protected:
       std::vector<std::pair<std::string, std::function<std::shared_ptr<component_base_t>()>>> selection {};
     };
-
 } // namespace cyd::ui::components::with
 
-template <typename T>
+export template <typename T>
 struct with: public cyd::ui::components::with_data_t<T> {
   explicit with(T& val)
       : cyd::ui::components::with_data_t<T>(val) {}
   explicit with(T&& val)
       : cyd::ui::components::with_data_t<T>(val) {}
 };
+
+export template <typename T>
+with(T&) -> with<T>;
+
+export template <typename T>
+with(T&&) -> with<T>;

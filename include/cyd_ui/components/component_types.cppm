@@ -24,13 +24,13 @@ export namespace cyd::ui::components {
   concept ComponentEventHandlerConcept =
     requires(EVH evh) { std::is_base_of_v<event_handler_t, EVH>; };
 
-  template <ComponentEventHandlerConcept EVH, typename T>
+  template <typename T>
   struct component_t;
 
   template <typename C>
   concept ComponentConcept = requires(C c) {
     requires std::
-      derived_from<std::remove_reference_t<C>, component_t<typename C::event_handler_t, C>>;
+      derived_from<std::remove_reference_t<C>, component_t<C>>;
     typename C::props_t;
     typename C::state_t;
     typename C::event_handler_t;
