@@ -79,6 +79,78 @@ As an alternative for projects that do not use CMake as a build system, this rep
 
 # How To Use
 
+## Components 
+Components are declared with the macro `COMPONENT() {}`, which must be included from the file `include/cyd_ui/components/component_macros.h`. The syntax is as follows:
+
+```c++
+#include "cyd_ui/components/component_macros.h"
+
+struct COMPONENT(Name, { /* Props... */ } STATE { /* State Variables... */ }) {
+  // Event Handlers...
+};
+```
+
+The name must be a valid class name. The properties and state declarations are both struct declarations, so fields must be separated by semicolons `;`.
+
+Components may implement as many or as few event handlers as they need. User input events follow the pattern `ON_<EVENT> {}`. For instance, if a component needs to react to a key press, it should implement `ON_KEY_PRESS {}`:
+
+```c++
+struct COMPONENT(Name, { /* Props... */ } STATE { /* State Variables... */ }) {
+  ON_KEY_PRESS {
+    // Do something
+    state.mark_dirty(); // Indicate this component has changed and need to be redrawn.
+  }
+};
+```
+
+If the event handler determines that the component has changed and that it should be updated and redrawn, it must call `state.mark_dirty()`.
+
+There are two special handlers, `CHILDREN {}` and `FRAGMENT {}` which do not handle specific events. These are called when it is determined that a component has changed in any way. The `CHILDREN {}` handler specifies the children components, their attributes/props and their dimensions. The `FRAGMENT {}` handler specifies graphic elements to be drawn inside the component. Fragment elements are inspired by SVG element tags and allow for rendering primitives (line, rectangle, circle, ...) as well as text and more.
+
+In this way, the `CHILDREN {}` handler defines the structure of the UI whereas the `FRAGMENT {}` handler defines the actual visual elements that get drawn. Note that components may implement either or both depending on their role.
+
+## Events and Coroutines
+
+Each Cyd-UI window provides its own thread-safe asynchronous bus which is exposed to components as the `window` variable. This includes an event queue and a coroutine runtime.
+
+Events are identified by their type and can be emitted with the following syntax:
+
+```c++
+window.emit< /* Event Type */ >({ /* Event Data */ });
+```
+
+Where the event type is defined with the `EVENT() {}` macro as follows:
+
+```c++
+EVENT(SomeEvent) {
+  /* Event Data Struct */
+};
+```
+
+Components can then implement handlers for any event. These handlers will only be active for as long as the component is mounted and showing on the UI.
+
+```c++
+struct COMPONENT(Name, { /* Properties... */ } STATE { /* State Variables... */ }) {
+  ON_EVENT( /* Event Type */ , /* Handler Statement */)
+  
+  ON_EVENT( /* Event Type */ , {
+    /* Handler Block */
+  })
+};
+```
+
+The coroutine runtime is still a work in progress and so only implements minimal features. Nonetheless, the syntax for enqueuing an asynchronous operation is as follows:
+
+```c++
+window.coroutine_enqueue([](/* Args... */) -> fabric::async::async</* Return Type */> {
+  co_return /* ... */;
+}, /* args... */);
+```
+
+The return type and the use of `co_return` are needed to tell the compiler that this is a coroutine. This enables the use of async constructs such as `co_await` and `co_yield`. However, the runtime is still in its early stages of development and may not properly handle this yet.
+
+## Contexts
+
 ## Example 
 This example declares two components. The first `SomeComponent` just draws a blue circle. The second component `ExampleComponent` draws an orange rectangle with black text inside as well as including the first component as a child.
 
@@ -180,9 +252,7 @@ This software uses the following open source projects:
 
 # License
 
-GPL 3.0
-
-[LICENSE.md](LICENSE.md)
+GPL 3.0 &nbsp;&middot;&nbsp; [LICENSE.MD](LICENSE.md)
 
 ---
 
