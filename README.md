@@ -10,7 +10,6 @@
 <h4 align="center">A C++ library for building native user interfaces</h4>
 
 <p align="center">
-<img alt="Work In Progress" src="https://img.shields.io/badge/-WIP-red?&style=for-the-badge">
 <img alt="Language" src="https://img.shields.io/static/v1?style=for-the-badge&message=C%2B%2B&color=00599C&logo=C%2B%2B&logoColor=FFFFFF&label=">
 <img alt="Tool" src="https://img.shields.io/static/v1?style=for-the-badge&message=CMake&color=064F8C&logo=CMake&logoColor=FFFFFF&label=">
 <img alt="Tool" src="https://img.shields.io/static/v1?style=for-the-badge&message=Cairo+Graphics&color=222222&logo=Cairo+Graphics&logoColor=F39914&label=">
@@ -21,8 +20,7 @@
 <p align="center">
   <a href="#overview">Overview</a> •
   <a href="#integration">Integration</a> •
-  <a href="#how-to-use">How To Use</a> •
-  <a href="#code-architecture">Code Architecture</a> •
+  <a href="#usage">Usage</a> •
   <a href="#credits">Credits</a> •
   <a href="#license">License</a>
 </p>
@@ -41,17 +39,6 @@ Cyd-UI is a C++ library for building native user interfaces. It is aimed at desk
 * **Reactive sizing of components** - Dimensions are specified as expressions that get recomputed as needed
 * **Multithreaded** - Each window runs in its own thread. A global thread handles system events and compositing
 * **Hardware Accelerated** - Components are composited together in the GPU when available
-
-## Road map
-
-* Better component styling:
-  - Integrate with CSS (or similar).
-  - Implement UI animations.
-  - Integrate OpenGL shaders into compositing.
-* Optimizations:
-  - Allow for shared OpenGL contexts, so that externally rendered buffers can be included in the UI without copying.
-* Cross-platform:
-  - Windows, macOS support.
 
 # Integration
 
@@ -77,12 +64,12 @@ include_directories(${cyd_ui_SOURCE_DIR}/include)
 
 As an alternative for projects that do not use CMake as a build system, this repository can be added as a submodule. The whole library can be found within the `include/` directory. Make sure module dependency scanning can find this directory.
 
-# How To Use
+# Usage
 
 ## Components 
 Components are declared with the macro `COMPONENT() {}`, which must be included from the file `include/cyd_ui/components/component_macros.h`. The syntax is as follows:
 
-```c++
+```cpp
 #include "cyd_ui/components/component_macros.h"
 
 struct COMPONENT(Name, { /* Props... */ } STATE { /* State Variables... */ }) {
@@ -94,7 +81,7 @@ The name must be a valid class name. The properties and state declarations are b
 
 Components may implement as many or as few event handlers as they need. User input events follow the pattern `ON_<EVENT> {}`. For instance, if a component needs to react to a key press, it should implement `ON_KEY_PRESS {}`:
 
-```c++
+```cpp
 struct COMPONENT(Name, { /* Props... */ } STATE { /* State Variables... */ }) {
   ON_KEY_PRESS {
     // Do something
@@ -115,13 +102,13 @@ Each Cyd-UI window provides its own thread-safe asynchronous bus which is expose
 
 Events are identified by their type and can be emitted with the following syntax:
 
-```c++
+```cpp
 window.emit< /* Event Type */ >({ /* Event Data */ });
 ```
 
 Where the event type is defined with the `EVENT() {}` macro as follows:
 
-```c++
+```cpp
 EVENT(SomeEvent) {
   /* Event Data Struct */
 };
@@ -129,7 +116,7 @@ EVENT(SomeEvent) {
 
 Components can then implement handlers for any event. These handlers will only be active for as long as the component is mounted and showing on the UI.
 
-```c++
+```cpp
 struct COMPONENT(Name, { /* Properties... */ } STATE { /* State Variables... */ }) {
   ON_EVENT( /* Event Type */ , /* Handler Statement */)
   
@@ -141,7 +128,7 @@ struct COMPONENT(Name, { /* Properties... */ } STATE { /* State Variables... */ 
 
 The coroutine runtime is still a work in progress and so only implements minimal features. Nonetheless, the syntax for enqueuing an asynchronous operation is as follows:
 
-```c++
+```cpp
 window.coroutine_enqueue([](/* Args... */) -> fabric::async::async</* Return Type */> {
   co_return /* ... */;
 }, /* args... */);
@@ -151,10 +138,12 @@ The return type and the use of `co_return` are needed to tell the compiler that 
 
 ## Contexts
 
+
+
 ## Example 
 This example declares two components. The first `SomeComponent` just draws a blue circle. The second component `ExampleComponent` draws an orange rectangle with black text inside as well as including the first component as a child.
 
-```c++
+```cpp
 // ExampleComponent.cppm
 
 module;
@@ -221,7 +210,7 @@ export struct COMPONENT(ExampleComponent, {
 
 In order to show the components on the screen, a window must be created. This is done as follows:
 
-```c++
+```cpp
 // main.cpp
 
 import ExampleComponent;
