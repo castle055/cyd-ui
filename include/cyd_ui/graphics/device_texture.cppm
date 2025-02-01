@@ -68,7 +68,7 @@ export namespace cyd::ui::compositing {
         SDL_Texture* old_texture = texture;
         texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_BGRA32, streaming_? SDL_TEXTUREACCESS_STREAMING: SDL_TEXTUREACCESS_TARGET, w, h);
 
-        if (texture != nullptr) {
+        if (old_texture != nullptr) {
           if (copy_old) {
             SDL_SetRenderTarget(renderer, texture);
             SDL_SetTextureBlendMode(old_texture, SDL_BLENDMODE_BLEND);
@@ -81,7 +81,7 @@ export namespace cyd::ui::compositing {
             SDL_RenderCopy(renderer, old_texture, &dst, &dst);
             SDL_SetRenderTarget(renderer, nullptr);
           }
-        SDL_DestroyTexture(old_texture);
+          SDL_DestroyTexture(old_texture);
         }
 
         this->w = w;
@@ -128,7 +128,7 @@ export namespace cyd::ui::compositing {
       SDL_UnlockTexture(texture);
     }
 
-    void copy_into(SDL_Renderer* renderer, device_texture_t& other, SDL_Rect* dst, bool blend = true) {
+    void copy_into(SDL_Renderer* renderer, device_texture_t& other, SDL_Rect* dst, bool blend = true, SDL_Rect* src_ = nullptr) {
       renderer_ = renderer;
       if (texture == nullptr) return;
       ZoneScopedN("Copying Texture");
@@ -144,6 +144,10 @@ export namespace cyd::ui::compositing {
         .w = this->w,
         .h = this->h
       };
+      if (src_ != nullptr) {
+        src = *src_;
+      }
+
       SDL_RenderCopy(renderer, texture, &src, dst);
       SDL_SetRenderTarget(renderer, nullptr);
     }

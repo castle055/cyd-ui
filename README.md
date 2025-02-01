@@ -11,223 +11,248 @@
 
 <p align="center">
 <img alt="Work In Progress" src="https://img.shields.io/badge/-WIP-red?&style=for-the-badge">
-<img alt="Language" src="https://img.shields.io/badge/LANG-C%2B%2B-blue?&style=for-the-badge&logo=c%2B%2B&logoColor=blue">
+<img alt="Language" src="https://img.shields.io/static/v1?style=for-the-badge&message=C%2B%2B&color=00599C&logo=C%2B%2B&logoColor=FFFFFF&label=">
+<img alt="Tool" src="https://img.shields.io/static/v1?style=for-the-badge&message=CMake&color=064F8C&logo=CMake&logoColor=FFFFFF&label=">
+<img alt="Tool" src="https://img.shields.io/static/v1?style=for-the-badge&message=Cairo+Graphics&color=222222&logo=Cairo+Graphics&logoColor=F39914&label=">
 <img alt="GitHub" src="https://img.shields.io/github/license/castle055/cyd-ui?style=for-the-badge">
 <img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/castle055/cyd-ui?color=%23fcae1e&label=latest&sort=semver&style=for-the-badge">
 </p>
 
-[TOC]
-
 <p align="center">
-  <a href="#key-features">Key Features</a> •
-  <a href="#installation">Installation</a> •
+  <a href="#overview">Overview</a> •
+  <a href="#integration">Integration</a> •
   <a href="#how-to-use">How To Use</a> •
   <a href="#code-architecture">Code Architecture</a> •
   <a href="#credits">Credits</a> •
   <a href="#license">License</a>
 </p>
 
-> **NOTE:** 
-> Currently, only **Linux** with the **X11 Window System** is supported.
+# Overview
+
+Cyd-UI is a C++ library for building native user interfaces. It is aimed at desktop applications and can be easily integrated into existing code bases. Cyd-UI is module based, only preprocessor macros can be included through header files.
 
 ## Key Features
 
 * **Declarative** - Or as close as it can get with c++ syntax and macros
 * **Event Driven** - Built-in event bus extensible with custom events
+* **Coroutines** - A coroutine runtime is available for asynchronous operations
 * **Component Oriented** - Declare encapsulated components and reuse them anywhere
-* **Header-only UIs** - A single component in a header file is renderable UI
-* **Reactive sizing of components** - Relations can be established between different dimensions
-* **Multi-threaded** - Separate event and render threads as well as a custom task runner
+* **Module Based** - The whole library is imported as a C++ module
+* **Reactive sizing of components** - Dimensions are specified as expressions that get recomputed as needed
+* **Multithreaded** - Each window runs in its own thread. A global thread handles system events and compositing
+* **Hardware Accelerated** - Components are composited together in the GPU when available
 
-### Road map
+## Road map
 
-* Better abstraction for component styling
-  - Integrate with CSS (or similar)
-* Cross-platform
-  - Windows, macOS and Linux ready.
+* Better component styling:
+  - Integrate with CSS (or similar).
+  - Implement UI animations.
+  - Integrate OpenGL shaders into compositing.
+* Optimizations:
+  - Allow for shared OpenGL contexts, so that externally rendered buffers can be included in the UI without copying.
+* Cross-platform:
+  - Windows, macOS support.
 
-## Installation
+# Integration
 
-Everything needed in order to use this library is located inside `dist/`, header files to be included in the project are in `dist/include`.
+## CMake project (recommended)
 
-Make sure the binary `dist/libcyd_ui.a` is linked to the project and that the header files are included:
-
-```cmake
-# ...
-
-include_directories(<PATH TO HEADER FILES DIRECTORY>)
-target_link_libraries(<EXECUTABLE> PUBLIC <PATH TO BINARY libcyd_ui.a>)
-```
-
-### Dependencies
-
-Any project using this library must also link against the following libraries:
-
-- X11
-- Xft
-- Xrender
-- fontconfig
-- yaml-cpp
-- jpeg
+Since this is a module library, the recommended way to integrate it into your project is with CMake. This is easy to do with `FetchContent`:
 
 ```cmake
-# ...
+# CmakeLists.txt
 
-# On some systems, it may be needed to include the headers directory
-# for freetype2. On Arch Linux: /usr/include/freetype2
-include_directories(<PATH TO FREETYPE2 HEADERS>)
+include(FetchContent)
 
-target_link_libraries(<EXECUTABLE> PUBLIC X11 Xft Xrender)
-target_link_libraries(<EXECUTABLE> PUBLIC fontconfig)
-target_link_libraries(<EXECUTABLE> PUBLIC yaml-cpp)
-target_link_libraries(<EXECUTABLE> PUBLIC jpeg)
+FetchContent_Declare(cyd_ui
+    GIT_REPOSITORY https://github.com/castle055/cyd-ui.git
+    GIT_TAG main # for the latest version, or a version tag such as 'v0.14.0'
+    FIND_PACKAGE_ARGS
+)
+FetchContent_MakeAvailable(cyd_ui)
+include_directories(${cyd_ui_SOURCE_DIR}/include)
 ```
 
-## How To Use
+## Submodule
 
-Each component must have a declaration for a state class and a component class. This is done with the `STATE(NAME){}` and `COMPONENT(NAME){}` macros.
+As an alternative for projects that do not use CMake as a build system, this repository can be added as a submodule. The whole library can be found within the `include/` directory. Make sure module dependency scanning can find this directory.
 
-The name must be a valid class name.
+# How To Use
 
+## Components 
+Components are declared with the macro `COMPONENT() {}`, which must be included from the file `include/cyd_ui/components/component_macros.h`. The syntax is as follows:
 
-### Example Component
-This example declares a component that displays an orange rectangle with black text inside.
-A third component is added 40 pixels down from the top.
+```c++
+#include "cyd_ui/components/component_macros.h"
 
-```cpp
-// SomeComponent.hpp
+struct COMPONENT(Name, { /* Props... */ } STATE { /* State Variables... */ }) {
+  // Event Handlers...
+};
+```
 
-#include "cydui.hpp"
+The name must be a valid class name. The properties and state declarations are both struct declarations, so fields must be separated by semicolons `;`.
 
-// Declare STATE class for component
-//   This one persists across renders
-STATE(SomeComponent) { // Expands to 'SomeComponentState'
-  // Color instances
-  color::Color fg_color = "#FCAE1E"_color;
-  color::Color fg_inv_color = "#000000"_color;
-  
-  // Font specification
-  font::Font font {
-    .name = "Fira Code Retina",
-    .size = 10,
-  };
-  
-  INIT_STATE(SomeComponent) {
-    // Optional initialization code...
+Components may implement as many or as few event handlers as they need. User input events follow the pattern `ON_<EVENT> {}`. For instance, if a component needs to react to a key press, it should implement `ON_KEY_PRESS {}`:
+
+```c++
+struct COMPONENT(Name, { /* Props... */ } STATE { /* State Variables... */ }) {
+  ON_KEY_PRESS {
+    // Do something
+    state.mark_dirty(); // Indicate this component has changed and need to be redrawn.
   }
 };
+```
 
-// Declare COMPONENT class for component
-//   This one may be created or destroyed at any moment
-//   In general, if it's not on screen it's not here either
-COMPONENT(SomeComponent) {
-  PROPS({ // Passed from parent on each render
-    std::string label;
+If the event handler determines that the component has changed and that it should be updated and redrawn, it must call `state.mark_dirty()`.
+
+There are two special handlers, `CHILDREN {}` and `FRAGMENT {}` which do not handle specific events. These are called when it is determined that a component has changed in any way. The `CHILDREN {}` handler specifies the children components, their attributes/props and their dimensions. The `FRAGMENT {}` handler specifies graphic elements to be drawn inside the component. Fragment elements are inspired by SVG element tags and allow for rendering primitives (line, rectangle, circle, ...) as well as text and more.
+
+In this way, the `CHILDREN {}` handler defines the structure of the UI whereas the `FRAGMENT {}` handler defines the actual visual elements that get drawn. Note that components may implement either or both depending on their role.
+
+## Events and Coroutines
+
+Each Cyd-UI window provides its own thread-safe asynchronous bus which is exposed to components as the `window` variable. This includes an event queue and a coroutine runtime.
+
+Events are identified by their type and can be emitted with the following syntax:
+
+```c++
+window.emit< /* Event Type */ >({ /* Event Data */ });
+```
+
+Where the event type is defined with the `EVENT() {}` macro as follows:
+
+```c++
+EVENT(SomeEvent) {
+  /* Event Data Struct */
+};
+```
+
+Components can then implement handlers for any event. These handlers will only be active for as long as the component is mounted and showing on the UI.
+
+```c++
+struct COMPONENT(Name, { /* Properties... */ } STATE { /* State Variables... */ }) {
+  ON_EVENT( /* Event Type */ , /* Handler Statement */)
+  
+  ON_EVENT( /* Event Type */ , {
+    /* Handler Block */
   })
+};
+```
+
+The coroutine runtime is still a work in progress and so only implements minimal features. Nonetheless, the syntax for enqueuing an asynchronous operation is as follows:
+
+```c++
+window.coroutine_enqueue([](/* Args... */) -> fabric::async::async</* Return Type */> {
+  co_return /* ... */;
+}, /* args... */);
+```
+
+The return type and the use of `co_return` are needed to tell the compiler that this is a coroutine. This enables the use of async constructs such as `co_await` and `co_yield`. However, the runtime is still in its early stages of development and may not properly handle this yet.
+
+## Contexts
+
+## Example 
+This example declares two components. The first `SomeComponent` just draws a blue circle. The second component `ExampleComponent` draws an orange rectangle with black text inside as well as including the first component as a child.
+
+```c++
+// ExampleComponent.cppm
+
+module;
+// Preprocessor macros cannot be exported from modules, so we must include a header file
+#include "cyd_ui/components/component_macros.h"
+
+export module ExampleComponent;
+import cydui;
+
+
+export struct COMPONENT(SomeComponent, {
+  // This component receives no props from the parent.
+} STATE {
+  // However, it does have persistent state across redraws.
+  bool selected = false;
+}) {
+  // This component has no children
   
-  INIT(SomeComponent) {
-    // Optional initialization code...
+  FRAGMENT {
+    // Draw vector graphic elements within this component.
+    fragment.draw<vg::circle>()
+        .x(0).y(0)
+        .r(std::min($width, $height))
+        .fill(state.selected? color::Red : color::Blue);
   }
   
-  REDRAW {
-    // Declare contents of this component
-    
-    // 'props' Holds the properties for this render as the type declared
-    //         above with PROPS({...}).
-    // 'state' Is a reference to the relevant SomeComponentState instance.
-    // 'dim'   Contains the dimensions of this instance of SomeComponent.
-    //         x/y   - position relative to parent
-    //         cx/cy - absolute position relative to top-left corner of the window
-    //         w/h   - absolute size
-    //         cw/ch - content size, accounting for padding and margin
-    add({
-      COMP(Rectangle)({
-        .props = {                  // Set properties of children component
-          .color = state->fg_color, //
-          .filled = true,           //
-        },
-        .w = dim->cw,               // Set dimensional relations (x,y,w,h)
-        .h = state->font.size * 2,  //
-      }),
-      COMP(Text)({
-        .props = {
-          .color = state->fg_inv_color,
-          .font = &state->font,
-          .text = props.label,
-        },
-        .y = state->font.size / 2,
-        // Optionally, you can provide an initialization function
-        .init = [this](Text* text) {
-          text->dim->x = dim->cw + (-1 * text->dim->w) - 5;
-        },
-      }),
-      COMP(OtherComponent)({
-        .props = {
-          .label = "Hello there..."
-        },
-        .x = 3,
-        .y = 40,
-      }),
-    });
-    // Rectangle and Text are Component primitives included in the library
-    // OtherComponent would be another component declared similar to SomeComponent
+  ON_BUTTON_PRESS {
+    // React to button press events
+    if (button == Button::PRIMARY) {
+        state.selected = not state.selected;
+        state.mark_dirty();
+    }
+  }
+};
+
+
+export struct COMPONENT(ExampleComponent, {
+  std::string label;
+}) {
+  CHILDREN {
+    // Add other components as children
+    return {
+        SomeComponent {}
+            .y(40_px)
+            .width($width)
+            .height($height - 40_px)
+    };
+  }
+  
+  FRAGMENT {
+    // Draw vector graphic elements within this component.
+    int font_size = 14;
+    fragment.draw<vg::rect>()
+        .x(0).y(0)
+        .w($width).h(font_size * 2)
+        .fill("#FCAE1E"_color);
+    fragment.draw<vg::text>(props.label)
+        .x(10_px).y(font_size * 1.5)
+        .font_family("Helvetica")
+        .fill(color::Black);
   }
 };
 ```
 
-In order to show the component on the screen, it must be instantiated along with its state.
-Then a layout is created with the component as the root.
-Finally, a window is constructed.
+In order to show the components on the screen, a window must be created. This is done as follows:
 
-```cpp
+```c++
 // main.cpp
 
-#include "SomeComponent.hpp"
+import ExampleComponent;
+import cydui;
 
 int main() {
-  // Instantiate a layout to hold the root component and handle events
-  cydui::layout::Layout* layout = cydui::layout::create<SomeComponent>({
-    .props = {
-      .label = "Hello, World!",
-    },
-  });
+  auto win = cyd::ui::CWindow::make<ExampleComponent>({.label = "Hello, world!"})
+             .size(800, 800)
+             .title("Example Window Title")
+             .show();
   
-  // Create the window that will display the layout
-  cydui::window::CWindow* win = cydui::window::create(
-    layout,
-    "Example Window Title",
-    "example-window-class",
-      0,   0, // X, Y of the window
-    800, 800  // W, H of the window
-  );
-  
-  // Hold main thread in a loop of do something else...
+  // Hold main thread in a loop or do something else...
   //while (1);
   return 0;
 }
 ```
 
-This will start the window on a separate thread.
+The moment the method `show()` is called, the window will appear on the screen and events will start being processed. The main thread is then free to do anything. Events can be used for communication between the main thread and the window thread. 
 
-## Code Architecture
-### Include Graph
+The window will self-terminate when the `CWindow` object is destroyed. For easier management of ownership, the window is wrapped within a `std::shared_ptr<>` on creation.
 
-<img alt="include graph" src="include_graph.png" width="100%"/>
-
-## Credits
+# Credits
 
 This software uses the following open source projects:
 
-- [X11, Xft, Xrender](https://xorg.freedesktop.org)
-- [Fontconfig](http://www.freedesktop.org/wiki/Software/fontconfig)
-- [Yaml-cpp](https://github.com/jbeder/yaml-cpp)
-- [Jpeg](https://libjpeg-turbo.org)
+- [Cairo Graphics](https://www.cairographics.org/)
+- [SDL2](https://www.libsdl.org/)
 
-## License
+# License
 
-GPL 3.0
-
-[LICENSE.md](LICENSE.md)
+GPL 3.0 &nbsp;&middot;&nbsp; [LICENSE.MD](LICENSE.md)
 
 ---
 

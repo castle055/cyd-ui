@@ -34,6 +34,22 @@ export namespace color {
     bool operator==(const Color& rhl) const {
       return r == rhl.r && g == rhl.g && b == rhl.b && a == rhl.a;
     }
+
+    static Color from_str(const std::string& data) {
+      u8 r = 0U;
+      (void)std::from_chars(&data[1], &data[3], r, 16);
+      u8 g = 0U;
+      (void)std::from_chars(&data[3], &data[5], g, 16);
+      u8 b = 0U;
+      (void)std::from_chars(&data[5], &data[7], b, 16);
+      if (data.size() == 9) {
+        u8 a = 0U;
+        (void)std::from_chars(&data[7], &data[9], a, 16);
+        return {(double)r / 255.0, (double)g / 255.0, (double)b / 255.0, (double)a / 255.0};
+      } else {
+        return {(double)r / 255.0, (double)g / 255.0, (double)b / 255.0, 1.0};
+      }
+    }
   };
 }
 

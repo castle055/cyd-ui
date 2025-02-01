@@ -46,13 +46,18 @@ export namespace cyd::ui::compositing {
       parent = parent_;
       is_flattened = (op.op == compositing_operation_t::OVERLAY)
                      && (parent != nullptr)
+                     && (op.x >= 0) && (op.y >= 0)
                      && ((op.x + op.w) <= parent->op.w)
                      && ((op.y + op.h) <= parent->op.h);
 
       if (is_flattened) {
         flattening_target = parent->flattening_target;
+        flatten_x = parent->flatten_x + op.x;
+        flatten_y = parent->flatten_y + op.y;
       } else {
         flattening_target = this;
+        flatten_x = 0;
+        flatten_y = 0;
       }
     }
 
@@ -70,20 +75,18 @@ export namespace cyd::ui::compositing {
 
     void start_render(graphics::window_t* render_target) {
       if (is_flattened) {
-        pixel_stride = parent->pixel_stride;
+        pixel_stride = flattening_target->pixel_stride;
         pixels = &parent->pixels[op.x + (pixel_stride >> 2) * op.y];
       } else {
-        if (op.w == 0 or op.h == 0) {
-          rendered_texture.resize(render_target->renderer, 1, 1);
-          return;
-        }
         ZoneScopedN("Start render");
 
-        if (op.w != rendered_texture.width() || op.h != rendered_texture.height()) {
+        if (op.w == 0 or op.h == 0) {
+          rendered_texture.resize(render_target->renderer, 1, 1);
+        } else if (op.w != rendered_texture.width() || op.h != rendered_texture.height()) {
           rendered_texture.resize(render_target->renderer, op.w, op.h);
         }
 
-        pixel_stride = op.w * sizeof(pixel_t);
+        pixel_stride = rendered_texture.width() * sizeof(pixel_t);
         pixels = static_cast<pixel_t*>(rendered_texture.lock());
       }
     }
@@ -133,8 +136,8 @@ export namespace cyd::ui::compositing {
     }
 
     void compose_own(graphics::window_t* render_target) {
-      if (is_flattened) return;
       ZoneScopedN("Compose Own");
+      if (is_flattened) return;
       flush_rendered_texture(render_target);
       SDL_Rect dst {
         .x = 0,
@@ -151,20 +154,29 @@ export namespace cyd::ui::compositing {
 
       auto& target = is_flattened? flattening_target->composite_texture : composite_texture;
 
+      int w_ = other->composite_texture.width();
+      int h_ = other->composite_texture.height();
+
       target.resize(
         renderer,
-        std::max(composite_texture.width(), other->op.x + other->composite_texture.width()),
-        std::max(composite_texture.height(), other->op.y + other->composite_texture.height()),
+        std::max(target.width(), flatten_x + other->op.x + w_),
+        std::max(target.height(), flatten_y + other->op.y + h_),
         true
       );
 
-      SDL_Rect dst {
-        .x = other->op.x,
-        .y = other->op.y,
-        .w = other->composite_texture.width(),
-        .h = other->composite_texture.height(),
+      SDL_Rect src {
+        .x = 0,
+        .y = 0,
+        .w = w_,
+        .h = h_,
       };
-      other->composite_texture.copy_into(renderer, target, &dst);
+      SDL_Rect dst {
+        .x = flatten_x + other->op.x,
+        .y = flatten_y + other->op.y,
+        .w = w_,
+        .h = h_,
+      };
+      other->composite_texture.copy_into(renderer, target, &dst, true, &src);
     }
 
   private:
@@ -175,6 +187,9 @@ export namespace cyd::ui::compositing {
     bool flattening_dirty = false;
     bool is_flattened = false;
     int pixel_stride = 0;
+
+    int flatten_x = 0;
+    int flatten_y = 0;
   public:
     unsigned long id = 0;
     compositing_operation_t op { };
