@@ -122,57 +122,7 @@ namespace cyd::ui::components {
         child->configure_event_handler();
 
         // Configure dimensional context
-        auto& ctx = *child->get_dimensional_context();
-        ctx.set_parameter("self_x", [child] {
-          return child->get_internal_relations().cx;
-        });
-        ctx.set_parameter("self_y", [child] {
-          return child->get_internal_relations().cy;
-        });
-        ctx.set_parameter("self_width", [child] {
-          return child->get_internal_relations().cw;
-        });
-        ctx.set_parameter("self_height", [child] {
-          return child->get_internal_relations().ch;
-        });
-
-        ctx.set_parameter("parent_x", [child] {
-          return child->parent.value()->get_internal_relations().cx;
-        });
-        ctx.set_parameter("parent_y", [child] {
-          return child->parent.value()->get_internal_relations().cy;
-        });
-        ctx.set_parameter("parent_width", [child] {
-          return child->parent.value()->get_internal_relations().cw;
-        });
-        ctx.set_parameter("parent_height", [child] {
-          return child->parent.value()->get_internal_relations().ch;
-        });
-
-        ctx.set_parameter("prev_x", [=] {
-          if (prev.has_value()) {
-            return prev.value()->get_dimensional_relations()._x;
-          }
-          return dimension_t {0_px};
-        });
-        ctx.set_parameter("prev_y", [=] {
-          if (prev.has_value()) {
-            return prev.value()->get_dimensional_relations()._y;
-          }
-          return dimension_t {0_px};
-        });
-        ctx.set_parameter("prev_width", [=] {
-          if (prev.has_value()) {
-            return prev.value()->get_dimensional_relations()._width;
-          }
-          return dimension_t {0_px};
-        });
-        ctx.set_parameter("prev_height", [=] {
-          if (prev.has_value()) {
-            return prev.value()->get_dimensional_relations()._height;
-          }
-          return dimension_t {0_px};
-        });
+        anchors::configure_anchors(child, prev);
 
         // Redraw child
         pending_redraw.push_back(child);

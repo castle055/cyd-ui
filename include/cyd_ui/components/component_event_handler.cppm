@@ -15,7 +15,7 @@ export import cydui.events;
 export import cydui.graphics;
 
 export import :base;
-
+export import :anchors;
 export {
   namespace cyd::ui::components {
 
@@ -138,26 +138,10 @@ export {
       typename Component::props_t& props;
       attrs_component<Component>&  attrs;
 
-      struct $self {
-        static constexpr dimension_parameter_t x{"self_x"};
-        static constexpr dimension_parameter_t y{"self_y"};
-        static constexpr dimension_parameter_t width{"self_width"};
-        static constexpr dimension_parameter_t height{"self_height"};
-      };
+      using $self = anchors::self_component;
+      using $parent = anchors::parent_component;
+      using $previous = anchors::previous_component;
 
-      struct $parent {
-        static constexpr dimension_parameter_t x{"parent_x"};
-        static constexpr dimension_parameter_t y{"parent_y"};
-        static constexpr dimension_parameter_t width{"parent_width"};
-        static constexpr dimension_parameter_t height{"parent_height"};
-      };
-
-      struct $previous {
-        static constexpr dimension_parameter_t x{"prev_x"};
-        static constexpr dimension_parameter_t y{"prev_y"};
-        static constexpr dimension_parameter_t width{"prev_width"};
-        static constexpr dimension_parameter_t height{"prev_height"};
-      };
     };
   } // namespace cyd::ui::components
 
