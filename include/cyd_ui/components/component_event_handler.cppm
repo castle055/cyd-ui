@@ -16,13 +16,22 @@ export import cydui.graphics;
 
 export import :base;
 export import :anchors;
-export {
-  namespace cyd::ui::components {
+
+#define TO_STRING(...) #__VA_ARGS__
+#define ANCHOR(PREFIX, NAME) \
+  struct NAME { \
+    static constexpr dimension_parameter_t x{TO_STRING(PREFIX##_##NAME##_x)}; \
+    static constexpr dimension_parameter_t y{TO_STRING(PREFIX##_##NAME##_y)}; \
+  }
 
 #define CYDUI_INTERNAL_EV_HANDLER_DECL(NAME) void on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
 
 #define CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(NAME)                                                 \
-  CYDUI_INTERNAL_EV_##NAME##_RETURN on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
+CYDUI_INTERNAL_EV_##NAME##_RETURN on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
+
+
+export {
+  namespace cyd::ui::components {
 
 
 #pragma clang diagnostic push
@@ -113,7 +122,6 @@ export {
 
 #pragma clang diagnostic pop
 
-
     template <typename Component>
     struct event_handler_data_t: public event_handler_t {
       event_handler_data_t(
@@ -123,25 +131,27 @@ export {
         const std::shared_ptr<typename Component::state_t>& state_,
         const std::shared_ptr<fabric::async::async_bus_t>&  window_,
         typename Component::props_t&                        props_,
-        attrs_component<Component>&                         attrs_
+        attrs_component<Component>&                         attrs_,
+        typename Component::style_t&                        style_
       )
           : event_handler_t(parent_, &$component_, $children_),
             $component($component_),
             state(*state_),
             window(*window_),
             props(props_),
-            attrs(attrs_) {}
+            attrs(attrs_),
+            style(style_) {}
 
       Component&                   $component;
       typename Component::state_t& state;
       fabric::async::async_bus_t&  window;
       typename Component::props_t& props;
       attrs_component<Component>&  attrs;
+      typename Component::style_t& style;
 
       using $self = anchors::self_component;
       using $parent = anchors::parent_component;
       using $previous = anchors::previous_component;
-
     };
   } // namespace cyd::ui::components
 
@@ -202,7 +212,4 @@ export {
     std::function<void()> post_;
     std::optional<fabric::async::listener<Event>> listener_ {std::nullopt};
   };
-
-  struct TestEvent {};
-
 }

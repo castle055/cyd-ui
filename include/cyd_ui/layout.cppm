@@ -18,6 +18,7 @@ import fabric.profiling;
 export import cydui.application;
 export import cydui.components;
 export import cydui.dimensions;
+export import cydui.styling;
 
 import cydui.window_events;
 
@@ -67,6 +68,7 @@ export namespace cyd::ui {
       bool clear_children = true
     );
 
+    void attach_stylesheet(const StyleSheet::sptr& style_sheet);
   private:
     void update_dimensions();
     void update_fragments();
@@ -90,7 +92,7 @@ export namespace cyd::ui {
     }
 
   private:
-    std::shared_ptr<CWindow> win = nullptr;
+    CWindow::sptr win = nullptr;
 
     components::component_state_ref root_state;
     components::component_base_t::sptr root;
@@ -100,15 +102,14 @@ export namespace cyd::ui {
 
     std::vector<fabric::async::raw_listener::sptr> listeners { };
 
+    StyleArchive::sptr style_archive = StyleArchive::make();
+
     std::atomic_flag is_compositing {false};
     std::atomic_flag composite_is_outdated {false};
   };
-}
 
 //* IMPL
 
-export namespace cyd::ui
-{
   template <components::ComponentConcept C>
   Layout* create(C&& root_component) {
     auto root                      = std::shared_ptr<C>{new C{root_component}};
@@ -126,9 +127,7 @@ export namespace cyd::ui
     auto* lay                      = new Layout(root_state, root);
     return lay;
   }
-}
 
-namespace cyd::ui {
 #define COMPUTE(DIM)                                                                               \
   {                                                                                                \
     auto compute_res = cyd::ui::dimensions::compute_dimension(DIM);                                         \
@@ -137,6 +136,9 @@ namespace cyd::ui {
     }                                                                                              \
   }
 
+}
+
+namespace cyd::ui {
   static bool compute_dimensions(cyd::ui::components::component_base_t* rt) {
     using namespace cyd::ui::dimensions;
     auto &dim     = rt->get_dimensional_relations();
@@ -235,7 +237,7 @@ namespace cyd::ui {
 
 #undef COMPUTE
 
-  void cyd::ui::Layout::recompute_dimensions(
+  void Layout::recompute_dimensions(
     const components::component_base_t::sptr &start_from
   ) {
     if (!compute_dimensions(start_from.get()) && start_from->parent.has_value()) {
@@ -307,17 +309,17 @@ namespace cyd::ui {
     }
   }
 
-  void cyd::ui::Layout::redraw_component(components::component_base_t* target) {
+  void Layout::redraw_component(components::component_base_t* target) {
     ZoneScopedN("Redraw Component");
     {
       ZoneScopedN("Update");
-      target->redraw();
+      target->redraw(*style_archive);
     }
   }
 
-  bool cyd::ui::Layout::update_if_dirty(components::component_base_t* c) {
+  bool Layout::update_if_dirty(components::component_base_t* c) {
     if (c->state()->_dirty) {
-      c->redraw();
+      c->redraw(*style_archive);
       return true;
     } else {
       bool any = false;
@@ -328,7 +330,7 @@ namespace cyd::ui {
     }
   }
 
-  bool cyd::ui::Layout::render_if_dirty(components::component_base_t* c) {
+  bool Layout::render_if_dirty(components::component_base_t* c) {
     ZoneScopedN("Render If Dirty");
     {
       ZoneScopedN("Update");
@@ -340,13 +342,18 @@ namespace cyd::ui {
     return true;
   }
 
-  components::component_base_t* cyd::ui::Layout::find_by_coords(
+  components::component_base_t* Layout::find_by_coords(
     dimensions::screen_measure x,
     dimensions::screen_measure y
   ) {
     ZoneScopedN("Find by coords");
     return root->find_by_coords(x, y);
   }
+
+  void Layout::attach_stylesheet(const StyleSheet::sptr &style_sheet) {
+    style_archive->add_stylesheet(style_sheet);
+  }
+
 
 //static event_handler_t* get_instance_ev_handler(component_state_t* component_state) {
 //
@@ -357,7 +364,7 @@ namespace cyd::ui {
     STATE_PTR->component_instance.value()
 
 
-  void cyd::ui::Layout::bind_window(const cyd::ui::CWindow::sptr &_win) {
+  void Layout::bind_window(const cyd::ui::CWindow::sptr &_win) {
     this->win = _win; {
       /// Configure root component
       root_state->window = this->win;
@@ -614,8 +621,19 @@ namespace cyd::ui {
     auto layout = cyd::ui::create(Component {props});
     return CWindow::builder_t(layout);
   }
+}
 
+namespace cyd::ui {
   void bind_layout(Layout* layout, const CWindow::sptr &window) {
     layout->bind_window(window);
+  }
+
+  void CWindow::builder_t::configure_layout_style() {
+    for (const auto& path: this->stylesheets_) {
+      this->layout_->attach_stylesheet(StyleSheet::parse(path));
+    }
+    for (const auto& str: this->styles_) {
+      this->layout_->attach_stylesheet(StyleSheet::parse(str));
+    }
   }
 }

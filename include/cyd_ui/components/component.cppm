@@ -19,19 +19,24 @@ export import :base;
 export using children_list = std::vector<cyd::ui::components::component_holder_t>;
 
 namespace cyd::ui::components {
+  export struct style_base_t {
+    vg::paint::type background{vg::paint::type::make(vg::paint::solid("#00000000"_color))};
+  };
+
   export template<typename T>
   struct component_t:
     public component_base_t,
     public attrs_component<T> {
   private:
-    auto& props() {
+    auto &props() {
       return (dynamic_cast<T*>(this)->props);
     }
 
-    bool update_with(std::shared_ptr<component_base_t> other) override {
+    bool update_with(std::shared_ptr<component_base_t> other) final {
       auto other_component = std::dynamic_pointer_cast<component_t>(other);
       if (!other_component) {
-        LOG::print{ERROR
+        LOG::print {
+          ERROR
         }("Attempted to update component of type ({}) with type ({})", this->name(), other->name());
         return false;
       }
@@ -39,11 +44,23 @@ namespace cyd::ui::components {
       bool dirty = false;
       if (not refl::deep_eq(props(), other_component->props())) {
         props() = other_component->props();
-        // std::memcpy(&props(), &other_component->props(), sizeof(typename T::props_t));
         dirty = true;
       }
-      if (not (*attrs() == *(other_component->attrs()))) {
-        attrs()->update_with(*(other_component->attrs()));
+      if (not(*as_attrs() == *(other_component->as_attrs()))) {
+        as_attrs()->update_with(*(other_component->as_attrs()));
+        dirty = true;
+      }
+
+      if (nullptr == other_component->style_override_ptr.get()) {
+        style_override_ptr = nullptr;
+        dirty = true;
+      } else if (nullptr == style_override_ptr.get()) {
+        style_override_ptr = std::move(other_component->style_override_ptr);
+        dirty = true;
+      } else if (not refl::deep_eq(style_override(), other_component->style_override())
+                 or not refl::deep_eq(*dynamic_cast<style_base_t *>(&style_override()),
+                                      *dynamic_cast<style_base_t *>(&other_component->style_override()))) {
+        style_override() = other_component->style_override();
         dirty = true;
       }
 
@@ -54,39 +71,40 @@ namespace cyd::ui::components {
       return dirty;
     }
 
-    bool update_fields(std::shared_ptr<component_t>& other) {
+    bool update_fields(std::shared_ptr<component_t> &other) {
       bool dirty = false;
-      [&]<std::size_t ...I>(std::index_sequence<I...>) {
+      [&]<std::size_t ... I>(std::index_sequence<I...>) {
         (update_field<I>(dirty, other), ...);
       }(std::make_index_sequence<refl::field_count<T>>());
       return dirty;
     }
 
-    template <std::size_t I>
-    void update_field(bool& dirty, std::shared_ptr<component_t>& other_) {
-      auto other = std::dynamic_pointer_cast<T>(other_);
-      using field = refl::field<T, I>;
+    template<std::size_t I>
+    void update_field(bool &dirty, std::shared_ptr<component_t> &other_) {
+      auto other       = std::dynamic_pointer_cast<T>(other_);
+      using field      = refl::field<T, I>;
       using field_type = typename field::type;
 
       if constexpr (packtl::is_type<fabric::wiring::signal, field_type>::value) {
-        auto& this_signal = field::from_instance(*dynamic_cast<T*>(this));
-        auto& other_signal = field::from_instance(*other);
+        auto &this_signal  = field::from_instance(*dynamic_cast<T*>(this));
+        auto &other_signal = field::from_instance(*other);
 
         if (this_signal != other_signal) {
           this_signal = other_signal;
-          dirty = true;
+          dirty       = true;
         }
       }
     }
 
     std::shared_ptr<component_base_t> mount_child(
-      const std::string&                            id,
-      std::shared_ptr<component_base_t>             child,
-      std::list<std::shared_ptr<component_base_t>>& pending_redraw,
+      const std::string &id,
+      std::shared_ptr<component_base_t> child,
+      std::list<std::shared_ptr<component_base_t>> &pending_redraw,
       std::unordered_map<
         std::shared_ptr<component_base_t>,
-        std::list<std::shared_ptr<component_base_t>>::iterator>& pending_remove,
-      std::optional<std::shared_ptr<component_base_t>> prev
+        std::list<std::shared_ptr<component_base_t>>::iterator> &pending_remove,
+      std::optional<std::shared_ptr<component_base_t>> prev,
+      StyleArchive &style_archive
     ) {
       std::shared_ptr<component_base_t> mounted_child {child};
       // Get or Create state for component
@@ -115,6 +133,9 @@ namespace cyd::ui::components {
         child->internal_relations.cy =
           this->internal_relations.cy + c_attrs->_y + c_attrs->_margin_top + c_attrs->_padding_top;
         child->set_state(child_state);
+        child->compile_style_rule_list(style_archive);
+        child->apply_style();
+
         child_state->component_instance = child;
         children.push_back(child);
 
@@ -132,20 +153,21 @@ namespace cyd::ui::components {
     }
 
     void add_children(
-      std::vector<component_holder_t> &             children_to_add,
-      std::list<std::shared_ptr<component_base_t>>& pending_redraw,
+      std::vector<component_holder_t> &children_to_add,
+      std::list<std::shared_ptr<component_base_t>> &pending_redraw,
       std::unordered_map<
         std::shared_ptr<component_base_t>,
-        std::list<std::shared_ptr<component_base_t>>::iterator>& pending_remove
+        std::list<std::shared_ptr<component_base_t> >::iterator> &pending_remove,
+      StyleArchive &style_archive
     ) {
       std::size_t id_i = 0;
-      std::optional<std::shared_ptr<component_base_t>> prev{std::nullopt};
-      for (auto& item: children_to_add) {
-        for (auto& component_pair: item.get_components()) {
+      std::optional<std::shared_ptr<component_base_t>> prev {std::nullopt};
+      for (auto &item: children_to_add) {
+        for (auto &component_pair: item.get_components()) {
           auto [id_, component] = component_pair;
           std::string id        = std::format("{}:{}", id_i, id_);
 
-          auto mounted_child = mount_child(id, component, pending_redraw, pending_remove, prev);
+          auto mounted_child = mount_child(id, component, pending_redraw, pending_remove, prev, style_archive);
           prev.reset();
           prev.emplace(mounted_child);
         }
@@ -153,7 +175,7 @@ namespace cyd::ui::components {
       }
     }
 
-    void unmount_child(const std::list<std::shared_ptr<component_base_t>>::iterator& child) {
+    void unmount_child(const std::list<std::shared_ptr<component_base_t>>::iterator &child) {
       (*child)->get_dimensional_context()->clear_parameters();
 
       // Delete event handler, this component will now stop reacting to events
@@ -168,6 +190,9 @@ namespace cyd::ui::components {
     component_t() {
       internal_relations.cx = this->_x + this->_margin_left + this->_padding_left;
       internal_relations.cy = this->_y + this->_margin_top + this->_padding_top;
+
+      using style_t = typename T::style_t;
+      style_ptr = std::make_shared<style_t>();
     }
 
     ~component_t() override {
@@ -179,15 +204,16 @@ namespace cyd::ui::components {
 
   private:
     void configure_event_handler() override {
-      using EVH      = typename T::event_handler_t;
-      event_handler_ptr = std::make_shared<EVH>(event_handler_data_t<T>{
+      using EVH         = typename T::event_handler_t;
+      event_handler_ptr = std::make_shared<EVH>(event_handler_data_t<T> {
         *static_cast<T*>(this),
-        parent.has_value()? (parent.value()->event_handler().get()): nullptr,
+        parent.has_value() ? (parent.value()->event_handler().get()) : nullptr,
         children,
         std::dynamic_pointer_cast<typename T::state_t>(state()),
         (std::dynamic_pointer_cast<typename T::state_t>(state()))->window,
         static_cast<T*>(this)->props,
         *static_cast<attrs_component<T>*>(this),
+        style()
       });
       auto event_handler_ = static_cast<EVH*>(event_handler_ptr.get());
 
@@ -198,29 +224,29 @@ namespace cyd::ui::components {
       }
     }
 
-    template <std::size_t... I>
+    template<std::size_t... I>
     void configure_event_handler_fields(std::index_sequence<I...>) {
-        (configure_event_handler_field<I>(), ...);
+      (configure_event_handler_field<I>(), ...);
     }
 
-    template <std::size_t FieldI>
+    template<std::size_t FieldI>
     void configure_event_handler_field() {
-      using EVH      = typename T::event_handler_t;
-      using field = refl::field<EVH, FieldI>;
-      using field_type = typename field::type;
+      using EVH           = typename T::event_handler_t;
+      using field         = refl::field<EVH, FieldI>;
+      using field_type    = typename field::type;
       auto event_handler_ = static_cast<EVH*>(event_handler_ptr.get());
 
       if constexpr (packtl::is_type<use_context, field_type>::value) {
         using context_type = typename field_type::context_type;
 
-        use_context<context_type>& ctx_ref = field::from_instance(*event_handler_);
+        use_context<context_type> &ctx_ref = field::from_instance(*event_handler_);
 
         auto ctx = find_context<context_type>();
 
         if (ctx.has_value()) {
           ctx_ref.ctx = ctx.value();
         } else {
-          ctx_ref.ctx = new context_type{};
+          ctx_ref.ctx          = new context_type { };
           ctx_ref.owns_context = true;
         }
 
@@ -229,30 +255,61 @@ namespace cyd::ui::components {
       } else if constexpr (packtl::is_type<provide_context, field_type>::value) {
         using context_type = typename field_type::context_type;
 
-        provide_context<context_type>& ctx_ref = field::from_instance(*event_handler_);
-        ctx_ref.state = state_.value().lock();
+        provide_context<context_type> &ctx_ref = field::from_instance(*event_handler_);
+        ctx_ref.state                          = state_.value().lock();
       }
     }
+
+    attrs_component<T>* as_attrs() {
+      // Yes, the order of casting matters here because a conversion from `this` to
+      // `(attrs_component<>*)` does not work since that type is not a base of this
+      // class. So we need to cast to the base class first and then to its `void`
+      // specialization.
+      return static_cast<attrs_component<T>*>(this);
+    }
+
+    auto& style_override() {
+      return *static_cast<typename T::style_t*>(style_override_ptr.get());
+    }
+
   public:
     void clear_children() override {
       children.clear();
     }
+
     attrs_component<>* attrs() override {
       // Yes, the order of casting matters here because a conversion from `this` to
       // `(attrs_component<>*)` does not work since that type is not a base of this
       // class. So we need to cast to the base class first and then to its `void`
       // specialization.
-      return reinterpret_cast<attrs_component<>*>(static_cast<attrs_component<T>*>(this));
+      return reinterpret_cast<attrs_component<>*>(as_attrs());
+    }
+
+    auto& style() {
+      return *static_cast<typename T::style_t*>(style_ptr.get());
+    }
+
+    std::string name() const final {
+      return std::string{refl::type_name<T>};
+    }
+
+    void set_style_override(const auto& new_style) {
+      if (style_override_ptr == nullptr) {
+        style_override_ptr = std::make_shared<typename T::style_t>(new_style);
+      } else {
+        auto &s = *static_cast<typename T::style_t *>(style_override_ptr.get());
+        s = new_style;
+      }
     }
 
     std::shared_ptr<component_state_t> create_state_instance() override {
       std::shared_ptr<component_state_t> state;
-      if constexpr (requires { new typename T::state_t{std::declval<typename T::props_t*>()}; }) {
-        state = std::shared_ptr<component_state_t>{
+      if constexpr (requires { new typename T::state_t {std::declval<typename T::props_t*>()}; }) {
+        state = std::shared_ptr<component_state_t> {
           new typename T::state_t(static_cast<typename T::props_t*>(get_props()))
         };
       } else {
-        state = std::shared_ptr<component_state_t>{new typename T::state_t()};
+        state = std::shared_ptr<component_state_t> {new typename T::state_t()};
       }
       state->set_component_name(this->name());
       set_state(state);
@@ -263,21 +320,23 @@ namespace cyd::ui::components {
       return event_handler_ptr;
     }
 
-    void redraw() override {
+    void redraw(StyleArchive& style_archive) override {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
-      state()->_dirty = false;
-      graphics_dirty_ = true;
+      state()->_dirty     = false;
+      graphics_dirty_     = true;
+
+      apply_style();
 
       std::unordered_map<
-        std::shared_ptr<component_base_t>,
-        std::list<std::shared_ptr<component_base_t>>::iterator>
-                                                   pending_remove{};
-      std::list<std::shared_ptr<component_base_t>> pending_redraw{};
+          std::shared_ptr<component_base_t>,
+          std::list<std::shared_ptr<component_base_t>>::iterator>
+        pending_remove { };
+      std::list<std::shared_ptr<component_base_t>> pending_redraw { };
       for (auto it = children.begin(); it != children.end(); ++it) {
         pending_remove.emplace(*it, it);
       }
 
-      component_builder_t content_children_builder{}; {
+      component_builder_t content_children_builder { }; {
         std::vector<component_builder_t> &content_children = this->_content;
         std::size_t id_i                                   = 0;
         for (auto &item: content_children) {
@@ -303,18 +362,19 @@ namespace cyd::ui::components {
         content_children_builder
       );
 
-      add_children(new_children, pending_redraw, pending_remove);
+      add_children(new_children, pending_redraw, pending_remove, style_archive);
 
-      for (const auto& remove: pending_remove) {
+      for (const auto &remove: pending_remove) {
         unmount_child(remove.second);
       }
-      for (const auto& child: pending_redraw) {
+      for (const auto &child: pending_redraw) {
         // Redraw children
-        child->redraw();
+        child->redraw(style_archive);
       }
     }
 
-    void get_fragment(cyd::ui::compositing::compositing_node_t& compositing_node
+    void get_fragment(
+      cyd::ui::compositing::compositing_node_t &compositing_node
     ) override {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       // for (auto& child: children) {
@@ -322,11 +382,11 @@ namespace cyd::ui::components {
       //   child->get_fragment(compositing_node.children.back());
       // }
       //
-      auto get_num_value = [](const auto& it) -> auto {
+      auto get_num_value = [](const auto &it) -> auto {
         return dimensions::get_value(it).template as<dimensions::screen::pixel>().value;
       };
 
-      auto& fragment = compositing_node.graphics;
+      auto &fragment = compositing_node.graphics;
       fragment.clear();
 
       int half_top_border    = this->_border_width_top >> 1;
@@ -352,7 +412,7 @@ namespace cyd::ui::components {
               .y(-dimensions::get_value(this->_padding_top))
               .w(dimensions::get_value(this->_width))
               .h(dimensions::get_value(this->_height))
-              .fill(this->_background);
+              .fill(style().background);
       fragment.draw<vg::line>()
               .x1(x1 - half_left_border).y1(y1)
               .x2(x2 + half_right_border).y2(y2)
@@ -417,7 +477,7 @@ namespace cyd::ui::components {
         auto my = get_value(c->get()->attrs()->_margin_top);
         auto px = get_value(c->get()->attrs()->_padding_left);
         auto py = get_value(c->get()->attrs()->_padding_top);
-        found = (*c)->find_by_coords(x - cx - mx - px, y - cy - my - py);
+        found   = (*c)->find_by_coords(x - cx - mx - px, y - cy - my - py);
         if (nullptr != found) {
           return found;
         }
@@ -432,15 +492,16 @@ namespace cyd::ui::components {
       return this;
     }
 
-    attrs_dimensions<>& get_dimensional_relations() override {
+    attrs_dimensions<> &get_dimensional_relations() override {
       return *reinterpret_cast<attrs_dimensions<>*>(static_cast<attrs_dimensions<T>*>(this));
     }
 
     std::shared_ptr<dimension_ctx_t> get_dimensional_context() override {
       return this->dimension_ctx;
     }
+
   public:
-    void dispatch_key_press(const KeyEvent& ev) final {
+    void dispatch_key_press(const KeyEvent &ev) final {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_key_press(
         ev,
@@ -454,7 +515,8 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_right)
       );
     }
-    void dispatch_key_release(const KeyEvent& ev) final {
+
+    void dispatch_key_release(const KeyEvent &ev) final {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_key_release(
         ev,
@@ -468,7 +530,8 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_right)
       );
     }
-    void dispatch_text_input(const TextInputEvent& ev) final {
+
+    void dispatch_text_input(const TextInputEvent &ev) final {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_text_input(
         ev,
@@ -482,8 +545,11 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_right)
       );
     }
+
     void dispatch_button_press(
-      const Button& button, dimension_t::value_type x, dimension_t::value_type y
+      const Button &button,
+      dimension_t::value_type x,
+      dimension_t::value_type y
     ) final {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_button_press(
@@ -500,8 +566,11 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_right)
       );
     }
+
     void dispatch_button_release(
-      const Button& button, dimension_t::value_type x, dimension_t::value_type y
+      const Button &button,
+      dimension_t::value_type x,
+      dimension_t::value_type y
     ) final {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_button_release(
@@ -518,6 +587,7 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_right)
       );
     }
+
     void dispatch_mouse_enter(dimension_t::value_type x, dimension_t::value_type y) final {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_mouse_enter(
@@ -533,6 +603,7 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_right)
       );
     }
+
     void dispatch_mouse_exit(dimension_t::value_type x, dimension_t::value_type y) final {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_mouse_exit(
@@ -548,6 +619,7 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_right)
       );
     }
+
     void dispatch_mouse_motion(dimension_t::value_type x, dimension_t::value_type y) final {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_mouse_motion(
@@ -563,6 +635,7 @@ namespace cyd::ui::components {
         dimensions::get_value(this->_padding_right)
       );
     }
+
     void dispatch_scroll(dimension_t::value_type dx, dimension_t::value_type dy) final {
       auto event_handler_ = static_cast<typename T::event_handler_t*>(event_handler_ptr.get());
       event_handler_->on_scroll(
@@ -579,8 +652,190 @@ namespace cyd::ui::components {
       );
     }
 
+  protected:
+    void set_style_transform(auto&& transform_func) {
+      style_transform = [transform_func](std::shared_ptr<void>& ptr) {
+        transform_func(*static_cast<typename T::style_t *>(ptr.get()));
+      };
+    }
+    void clear_style_transform() {
+      style_transform = [](std::shared_ptr<void> &) {
+      };
+    }
+  private:
+    void apply_style() final {
+      auto &s = style();
+      s = {};
+
+      if (style_override_ptr == nullptr) {
+        apply_style_rules();
+      } else {
+        const auto &so = *static_cast<typename T::style_t *>(style_override_ptr.get());
+        s = so;
+      }
+
+      style_transform(style_ptr);
+    }
+
+    void apply_style_rules() {
+      using style_t = typename T::style_t;
+      const auto& bti = refl::type_info::from<style_base_t>();
+      const auto& ti = refl::type_info::from<style_t>();
+
+      std::unordered_set<const refl::field_info*> pending_fields{};
+      for (const auto & fti : ti.fields()) {
+        pending_fields.insert(&fti);
+      }
+      std::unordered_set<const refl::field_info*> pending_base_fields{};
+      for (const auto & bfti : bti.fields()) {
+        pending_fields.insert(&bfti);
+      }
+
+      style_t& s = style();
+      style_base_t& base_s = *dynamic_cast<style_base_t*>(&s);
+      for (auto& [specificity, rule]: style_rules | std::views::reverse) {
+        if (check_style_comb_selector_vector(rule->selectors_, true, true)) {
+          //! Base fields
+          for (auto field_it = pending_base_fields.begin(); field_it != pending_base_fields.end();) {
+            apply_style_property(&base_s, field_it, pending_base_fields, rule);
+          }
+          //! Custom fields
+          for (auto field_it = pending_fields.begin(); field_it != pending_fields.end();) {
+            apply_style_property(&s, field_it, pending_fields, rule);
+          }
+        }
+      }
+    }
+
+    void apply_style_property(void* style_obj, std::unordered_set<const refl::field_info*>::iterator& field_it, std::unordered_set<const refl::field_info*>& pending_fields, const StyleRule::sptr& rule) {
+      const auto *field = *field_it;
+      if (rule->properties_.contains(field->name)) {
+        const auto &rule_field = rule->properties_.at(field->name);
+        if (rule_field.is(field->type())) {
+          field->type().assign_copy_of(rule_field.data(), field->get_ptr(style_obj));
+          field_it = pending_fields.erase(field_it);
+          return;
+        } else if (field->type().is_type<vg::paint::type>()) {
+          if (rule_field.is<color::Color>()) {
+            vg::paint::type &paint = field->get_ref<vg::paint::type>(style_obj);
+            const color::Color &paint_color = rule_field.as<color::Color>();
+            paint = vg::paint::type::make(vg::paint::solid{paint_color});
+            field_it = pending_fields.erase(field_it);
+            return;
+          }
+        }
+        LOG::print{WARN}("Property '{}::{}', expected type: '{}', found: '{}'",
+                         name(),
+                         field->name,
+                         field->type().name(),
+                         rule_field.type().name());
+      }
+      ++field_it;
+    }
+
+    void compile_style_rule_list(StyleArchive& style_archive, bool check_tags, bool check_pseudo_states) final {
+      style_rules.clear();
+
+      style_archive.for_each_rule(name(), [&](const StyleRule::sptr &rule) {
+        for (const auto & selector : rule->selectors_) {
+          if (check_style_comb_selector(selector, check_tags, check_pseudo_states)) {
+            style_rules.emplace_back(selector.specificity(), rule);
+            break;
+          }
+        }
+      });
+
+      std::stable_sort(style_rules.begin(), style_rules.end(), [](const auto &lhs, const auto &rhs) {
+        return lhs.first < rhs.first;
+      });
+    }
+
+    bool check_style_comb_selector_vector(const std::vector<StyleRuleCombinedSelector> &selectors,
+                                                 bool check_tags, bool check_pseudo_states) {
+      for (const auto &selector: selectors) {
+        if (check_style_comb_selector(selector, check_tags, check_pseudo_states)) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    bool check_style_comb_selector(const StyleRuleCombinedSelector& selector, bool check_tags, bool check_pseudo_states) {
+      auto it = selector.selectors.rbegin();
+      if (not check_style_selector(it->second, check_tags, check_pseudo_states)) {
+        return false;
+      }
+      StyleRuleCombinedSelector::kind_e kind = it->first;
+      ++it;
+
+      component_base_t* current = this;
+      while (it != selector.selectors.rend()) {
+        if (kind == StyleRuleCombinedSelector::CHILD_COMBINATOR) {
+          if (current->parent.has_value() and current->parent.value()->check_style_selector(it->second, check_tags, check_pseudo_states)) {
+            current = current->parent.value();
+          } else {
+            return false;
+          }
+        } else if (kind == StyleRuleCombinedSelector::DESCENDENT_COMBINATOR) {
+          bool found = false;
+          while (current->parent.has_value()) {
+            if (current->parent.value()->check_style_selector(it->second, check_tags, check_pseudo_states)) {
+              found = true;
+              break;
+            }
+            current = current->parent.value();
+          }
+
+          if (not found) {
+            return false;
+          }
+        }
+
+        kind = it->first;
+        ++it;
+      }
+
+      return true;
+    }
+
+    bool check_style_selector(const StyleRuleSelector& selector, bool check_tags, bool check_pseudo_states) final {
+      if (this->name() != selector.component) {
+        return false;
+      }
+
+      if (check_tags and this->style_tags != selector.tags) {
+        return false;
+      }
+
+      if (check_pseudo_states) {
+        if (selector.pseudo_states.contains("hover") and not state()->hovering) {
+          return false;
+        }
+        if (selector.pseudo_states.contains("focus") and not state()->focused) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+  public:
+    T& operator[](const std::string& tag) {
+      style_tags.insert(tag);
+      return *dynamic_cast<T*>(this);
+    }
+    T& operator[](const std::unordered_set<std::string>& tags) {
+      for (const auto & tag : tags) {
+        style_tags.insert(tag);
+      }
+      return *dynamic_cast<T*>(this);
+    }
   private:
     std::shared_ptr<event_handler_t> event_handler_ptr{};
+    std::shared_ptr<void> style_ptr{};
+    std::shared_ptr<void> style_override_ptr{nullptr};
+    std::function<void(std::shared_ptr<void>&)> style_transform{[](std::shared_ptr<void>&){}};
+    std::vector<std::pair<std::size_t, StyleRule::sptr>> style_rules{};
+    std::unordered_set<std::string> style_tags{};
   };
 }
 
@@ -590,5 +845,3 @@ constexpr bool is_type_complete_v = false;
 export template<typename T>
 constexpr bool is_type_complete_v
   <T, std::void_t<decltype(sizeof(T))>> = true;
-
-

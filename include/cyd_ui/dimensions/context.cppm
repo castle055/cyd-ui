@@ -9,9 +9,9 @@ import std;
 
 import fabric.logging;
 
-import :types;
+export import :types;
 
-template <typename Type>
+export template <typename Type>
 class cyd::ui::dimensions::context {
 public:
   using value_type = Type;

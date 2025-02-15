@@ -13,11 +13,8 @@
 #define CYDUI_EV_HANDLER_DATA_NAME(NAME) EventHandlerData##NAME
 
 
-
 // ? Every component class must have this data
 #define CYDUI_COMPONENT_METADATA(NAME_) \
-    static constexpr const char* NAME = #NAME_ ; \
-    std::string name() override { return std::string {NAME}; }
 
 // ? Macros for declaring component classes
 // ?>
@@ -27,29 +24,24 @@
 
 #define STATE ; public: struct init: public cyd::ui::components::component_state_t
 
-#define ATTRIBUTE(NAME, ...) \
-  public: \
-  auto& NAME (const __VA_ARGS__& value) { \
-    NAME##_ = value; \
-    return *this; \
-  } \
-private: \
-  __VA_ARGS__ NAME##_
-
 
 #define COMPONENT(NAME, ...)                                                                       \
   NAME: public cyd::ui::components::component_t<NAME> {                                            \
-    CYDUI_COMPONENT_METADATA(NAME)                                                                 \
     struct event_handler_t;                                                                        \
     struct init;                                                                                   \
+    struct style_type;                                                                             \
     struct props_t __VA_ARGS__;                                                                    \
                                                                                                    \
   public:                                                                                          \
     props_t props;                                                                                 \
-    using state_t = typename std::conditional<                                                     \
+    using state_t = std::conditional_t<                                                            \
       is_type_complete_v<struct init>,                                                             \
       init,                                                                                        \
-      cyd::ui::components::component_state_t>::type;                                               \
+      cyd::ui::components::component_state_t>;                                                     \
+    using style_t = std::conditional_t<                                                            \
+      is_type_complete_v<struct style_type>,                                                       \
+      style_type,                                                                                  \
+      cyd::ui::components::style_base_t>;                                                          \
     template <typename P = props_t>                                                                \
     explicit NAME(                                                                                 \
       typename std::enable_if<std::is_default_constructible_v<P>, props_t>::type props = {}        \
@@ -62,6 +54,14 @@ private: \
     ~NAME() override = default;                                                                    \
     void* get_props() override {                                                                   \
       return (void*)&(this->props);                                                                \
+    }                                                                                              \
+    NAME& style(style_t new_style) {                                                               \
+      component_t::set_style_override(new_style);                                                  \
+      return *this;                                                                                \
+    }                                                                                              \
+    NAME& style(std::function<void(style_t&)> style_transform) {                                   \
+      component_t::set_style_transform(style_transform);                                           \
+      return *this;                                                                                \
     }                                                                                              \
     friend struct event_handler_t;                                                                 \
     friend struct cyd::ui::components::event_handler_data_t<NAME>;                                 \
@@ -120,7 +120,6 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
     public CYDUI_EV_HANDLER_DATA_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT
 
 
-
 #define CYDUI_INTERNAL_EV_HANDLER_IMPL(NAME) \
   void                                       \
   on_##NAME                                  \
@@ -152,13 +151,22 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 
 #define SIGNAL(NAME) \
 ;private: \
-fabric::wiring::signal<> NAME{}; \
+  fabric::wiring::signal<> NAME{}; \
 public: \
-auto& on_##NAME(auto&& fun) { \
-  NAME.connect(fun); \
-  return *this; \
-}
+  auto& on_##NAME(auto&& fun) { \
+    NAME.connect(fun); \
+    return *this; \
+  }
 
+#define ATTRIBUTE(NAME, ...) \
+;public: \
+  auto& NAME (const __VA_ARGS__& value) { \
+    NAME##_ = value; \
+    return *this; \
+  } \
+private: \
+__VA_ARGS__ NAME##_
+#define STYLE ;struct style_type: cyd::ui::components::style_base_t
 
 
 #endif //CYD_UI_COMPONENT_MACROS_H

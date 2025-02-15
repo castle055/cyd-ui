@@ -9,9 +9,9 @@ import std;
 
 import fabric.logging;
 
-import :types;
-import :expression;
-import :impl;
+export import :types;
+export import :expression;
+export import :impl;
 
 
 namespace cyd::ui::dimensions {

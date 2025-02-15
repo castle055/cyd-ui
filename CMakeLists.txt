@@ -17,13 +17,11 @@
 #                                                                              #
 #[[  CMAKE STRUCTURE:                                                        ]]#
 #      - Project setup                                                         #
-#      - Configure dependencies:                                               #
-#          - CYD Fabric (dev)                                                  #
+#      - Configure dependencies                                                #
 #      - Configure CYD UI                                                      #
 #      - Configure CYD UI APPS                                                 #
 #      - Configure tests                                                       #
 #      - Configure Doxygen documentation                                       #
-#      - Configure install                                                     #
 #                                                                              #
 ################################################################################
 
@@ -105,6 +103,14 @@ compiler_flags(
 ################################################################################
 include(FetchContent)
 
+##[[                          CONFIGURE CPP REFLECT                           ]]#
+#FetchContent_Declare(cpp_reflect
+#        GIT_REPOSITORY https://github.com/castle055/cpp-reflect.git
+#        GIT_TAG dev
+#        FIND_PACKAGE_ARGS
+#)
+#FetchContent_MakeAvailable(cpp_reflect)
+
 #[[                           CONFIGURE CYD FABRIC                           ]]#
 FetchContent_Declare(cyd_fabric
         GIT_REPOSITORY https://github.com/castle055/cyd-fabric.git
@@ -177,7 +183,9 @@ target_sources(cyd_ui
 )
 
 target_link_libraries(cyd_ui
-        PUBLIC cyd_fabric quantify
+        PUBLIC
+         cyd_fabric
+         quantify
          TracyClient
 )
 
@@ -226,30 +234,3 @@ if (CYD_UI_DEV_MODE AND CYD_UI_BUILD_DOCS)
             BASE_DIR ${CYD_UI_DIR}
     )
 endif ()
-
-
-
-################################################################################
-#[[                            CONFIGURE INSTALL                             ]]#
-################################################################################
-if (CYD_UI_DEV_MODE AND CMAKE_BUILD_TYPE MATCHES "Release")
-    add_custom_command(TARGET cyd_ui POST_BUILD
-            COMMAND ${CMAKE_COMMAND} -E make_directory dist
-            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-    )
-    add_custom_command(TARGET cyd_ui POST_BUILD
-            COMMAND cp -v
-            $<TARGET_FILE:cyd_ui>
-            ${CMAKE_CURRENT_LIST_DIR}/dist/
-            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-            COMMENT "Copying binary into distribution directory..."
-    )
-    add_custom_command(TARGET cyd_ui POST_BUILD
-            COMMAND cp -rv
-            ${CYD_UI_INCLUDE_DIR}
-            ${CMAKE_CURRENT_LIST_DIR}/dist/
-            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-            COMMENT "Copying header files into distribution directory..."
-    )
-endif ()
-

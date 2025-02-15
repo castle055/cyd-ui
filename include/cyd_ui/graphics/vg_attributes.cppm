@@ -195,6 +195,11 @@ namespace vg {
           : paint_type(type_),
             paint_data(std::move(paint_data_)) {}
 
+      template <typename Paint>
+      static type make (Paint paint_data_) {
+        return type{paint_data_.get_type(), std::make_unique<Paint>(paint_data_)};
+      }
+
       type(const type& rhl)
           : paint_type(rhl.paint_type),
             paint_data(rhl.paint_data->make_copy()) {}

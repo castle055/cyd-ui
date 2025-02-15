@@ -11,6 +11,16 @@ export import quantify;
 export import cydui.dimensions;
 
 export namespace cyd::ui::components {
+  template<std::size_t N>
+  struct str_literal_t {
+    constexpr str_literal_t(const char (& str)[N]) {
+      std::copy_n(str, N, value);
+    }
+
+    char value[N];
+  };
+
+
   using dimension_t = dimensions::dimension<dimensions::screen_measure>;
   using dimension_parameter_t = dimensions::parameter<dimensions::screen_measure>;
   using dimension_ctx_t = dimensions::context<dimensions::screen_measure>;
@@ -34,7 +44,6 @@ export namespace cyd::ui::components {
     typename C::props_t;
     typename C::state_t;
     typename C::event_handler_t;
-    { C::NAME } -> std::convertible_to<std::string>;
   };
 
   struct internal_relations_t {

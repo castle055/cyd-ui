@@ -9,7 +9,7 @@ import std;
 
 import fabric.logging;
 
-import :types;
+export import :types;
 
 template <typename Type>
 class cyd::ui::dimensions::expression {

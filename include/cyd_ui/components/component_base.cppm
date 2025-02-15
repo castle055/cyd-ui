@@ -14,10 +14,10 @@ import fabric.async;
 import fabric.templates.functor_arguments;
 
 import cydui.graphics;
+export import cydui.styling;
 
 export import :attributes;
 export import :with_specialization;
-
 export import :state;
 
 export template<typename ContextType>
@@ -92,7 +92,7 @@ namespace cyd::ui::components {
     virtual void clear_children() = 0;
     virtual attrs_component<>* attrs() = 0;
     virtual void* get_props() = 0;
-    virtual std::string name() = 0;
+    virtual std::string name() const = 0;
 
     virtual std::shared_ptr<event_handler_t> event_handler() = 0;
     virtual void dispatch_key_press(const KeyEvent& ev) = 0;
@@ -105,7 +105,7 @@ namespace cyd::ui::components {
     virtual void dispatch_mouse_exit(dimension_t::value_type x, dimension_t::value_type y) = 0;
     virtual void dispatch_mouse_motion(dimension_t::value_type x, dimension_t::value_type y) = 0;
 
-    virtual void redraw() = 0;
+    virtual void redraw(StyleArchive& style_archive) = 0;
 
     virtual std::shared_ptr<component_state_t> create_state_instance() = 0;
 
@@ -121,6 +121,9 @@ namespace cyd::ui::components {
   protected:
     virtual void get_fragment(cyd::ui::compositing::compositing_node_t &compositing_node) = 0;
 
+    virtual void compile_style_rule_list(StyleArchive& style_archive, bool check_tags = false, bool check_pseudo_states = false) = 0;
+    virtual bool check_style_selector(const StyleRuleSelector& selector, bool check_tags = false, bool check_pseudo_states = false) = 0;
+    virtual void apply_style() = 0;
   public:
     void update_fragment(compositing::compositing_node_t *parent_node) {
       auto get_num_value = [](const auto& it) -> auto {

@@ -18,7 +18,7 @@ import fabric.profiling;
 
 export import cydui.graphics;
 export import cydui.window_events;
-
+export import cydui.styling;
 export import cydui.application;
 
 export namespace cyd::ui {
@@ -69,7 +69,22 @@ export namespace cyd::ui {
         return *this;
       }
 
-      sptr show() const {
+      builder_t &style(const std::string &style) {
+        styles_.push_back(style);
+        return *this;
+      }
+
+      builder_t &stylesheet(const std::filesystem::path &stylesheet) {
+        stylesheets_.push_back(stylesheet);
+        return *this;
+      }
+
+    private:
+      void configure_layout_style();
+
+    public:
+      sptr show() {
+        configure_layout_style();
         auto ptr = std::shared_ptr<CWindow>(new CWindow(layout_, title_, x_, y_, width_, height_));
         ptr->coroutine_enqueue([](Layout* lyt, sptr win) -> fabric::async::async<bool> {
           bind_layout(lyt, win);
@@ -81,12 +96,14 @@ export namespace cyd::ui {
       }
 
     private:
-      Layout* layout_    = nullptr;
-      int x_             = SDL_WINDOWPOS_UNDEFINED;
-      int y_             = SDL_WINDOWPOS_UNDEFINED;
-      int width_         = 1280;
-      int height_        = 720;
-      std::string title_ = "CYD-UI";
+      Layout* layout_                                 = nullptr;
+      int x_                                          = SDL_WINDOWPOS_UNDEFINED;
+      int y_                                          = SDL_WINDOWPOS_UNDEFINED;
+      int width_                                      = 1280;
+      int height_                                     = 720;
+      std::string title_                              = "CYD-UI";
+      std::vector<std::string> styles_                = {};
+      std::vector<std::filesystem::path> stylesheets_ = {};
     };
 
     static builder_t make(Layout* layout) {
