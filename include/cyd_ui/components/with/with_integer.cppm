@@ -5,7 +5,7 @@ export module cydui.components:with_integer;
 
 import std;
 
-export import :holder;
+export import cydui.components.base;
 
 import :with_iterable_container;
 

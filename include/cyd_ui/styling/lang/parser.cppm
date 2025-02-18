@@ -9,6 +9,7 @@ import std;
 export import reflect;
 import reflect.serialize;
 export import fabric.grammar;
+import fabric.grammar.operators;
 
 export import cydui.styling.selectors;
 export import cydui.styling.rules;

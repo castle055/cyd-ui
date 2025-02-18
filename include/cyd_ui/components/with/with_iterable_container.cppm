@@ -5,7 +5,7 @@ export module cydui.components:with_iterable_container;
 
 import std;
 
-export import :holder;
+export import cydui.components.base;
 
 export {
   template <typename I>

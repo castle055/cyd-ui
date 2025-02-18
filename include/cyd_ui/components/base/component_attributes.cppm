@@ -1,7 +1,7 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-export module cydui.components:attributes;
+export module cydui.components.base:attributes;
 
 import std;
 
@@ -147,94 +147,6 @@ export
 
       return true;
     }
-  };
-
-  template<typename E>
-  struct attr_background: public attribute_i {
-    template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>>
-    inline S &background(vg::paint::solid &_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::solid>(_background_);
-      this->_background.paint_type = vg::paint::type::SOLID;
-      return *(E*)this;
-    }
-
-    template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>>
-    inline S &background(vg::paint::solid &&_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::solid>(_background_);
-      this->_background.paint_type = vg::paint::type::SOLID;
-      return *(E*)this;
-    }
-
-    template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>>
-    inline S &background(vg::paint::gradient::linear &_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::gradient::linear>(_background_);
-      this->_background.paint_type = vg::paint::type::GRADIENT_LINEAR;
-      return *(E*)this;
-    }
-
-    template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>>
-    inline S &background(vg::paint::gradient::linear &&_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::gradient::linear>(_background_);
-      this->_background.paint_type = vg::paint::type::GRADIENT_LINEAR;
-      return *(E*)this;
-    }
-
-    template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>>
-    inline S &background(vg::paint::gradient::radial &_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::gradient::radial>(_background_);
-      this->_background.paint_type = vg::paint::type::GRADIENT_RADIAL;
-      return *(E*)this;
-    }
-
-    template<typename S = E, typename = std::enable_if_t<!std::is_void_v<S>>>
-    inline S &background(vg::paint::gradient::radial &&_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::gradient::radial>(_background_);
-      this->_background.paint_type = vg::paint::type::GRADIENT_RADIAL;
-      return *(E*)this;
-    }
-
-
-    template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>>
-    inline void background(vg::paint::solid &_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::solid>(_background_);
-      this->_background.paint_type = vg::paint::type::SOLID;
-    }
-
-    template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>>
-    inline void background(vg::paint::solid &&_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::solid>(_background_);
-      this->_background.paint_type = vg::paint::type::SOLID;
-    }
-
-    template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>>
-    inline void background(vg::paint::gradient::linear &_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::gradient::linear>(_background_);
-      this->_background.paint_type = vg::paint::type::GRADIENT_LINEAR;
-    }
-
-    template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>>
-    inline void background(vg::paint::gradient::linear &&_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::gradient::linear>(_background_);
-      this->_background.paint_type = vg::paint::type::GRADIENT_LINEAR;
-    }
-
-    template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>>
-    inline void background(vg::paint::gradient::radial &_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::gradient::radial>(_background_);
-      this->_background.paint_type = vg::paint::type::GRADIENT_RADIAL;
-    }
-
-    template<typename S = E, typename = std::enable_if_t<std::is_void_v<S>>>
-    inline void background(vg::paint::gradient::radial &&_background_) {
-      this->_background.paint_data = std::make_unique<vg::paint::gradient::radial>(_background_);
-      this->_background.paint_type = vg::paint::type::GRADIENT_RADIAL;
-    }
-
-    bool operator==(const attr_background &rhl) const {
-      return _background == rhl._background;
-    }
-
-    vg::paint::type _background {vg::paint::type::SOLID, std::make_unique<vg::paint::solid>()};
   };
 
   template<typename E>
@@ -930,19 +842,17 @@ export
                           attrs_border<T>,
                           attr_content<T>,
                           attr_opacity<T>,
-                          attr_rotation<T>,
-                          attr_background<T> {
+                          attr_rotation<T> {
     bool operator==(const attrs_component &rhl) const {
       return attrs_dimensions<T>::operator==(rhl) && attr_border<T>::operator==(rhl)
              && attr_content<T>::operator==(rhl) && attr_opacity<T>::operator==(rhl)
-             && attr_rotation<T>::operator==(rhl) && attr_background<T>::operator==(rhl);
+             && attr_rotation<T>::operator==(rhl);
     }
 
     attrs_component &update_with(const attrs_component &rhl) {
       attr_content<T>::operator=(rhl);
       attr_opacity<T>::operator=(rhl);
       attr_rotation<T>::operator=(rhl);
-      attr_background<T>::operator=(rhl);
       attrs_border<T>::operator=(rhl);
       attrs_dimensions<T>::update_with(rhl);
 

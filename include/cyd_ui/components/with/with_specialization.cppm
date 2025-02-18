@@ -5,8 +5,6 @@ export module cydui.components:with_specialization;
 
 import std;
 
-export import :holder;
-
 export import :with_bool;
 export import :with_integer;
 export import :with_iterable_container;

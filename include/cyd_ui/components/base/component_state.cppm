@@ -1,28 +1,17 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-export module cydui.components:state;
+export module cydui.components.base:state;
 
 import std;
 
 import fabric.logging;
-import fabric.memory.lazy_alloc;
 import fabric.async;
 
 export import cydui.events;
 
-export import :attributes;
+export import :holder;
 // export import :event_handler;
-export import :with_specialization;
-
-export namespace cyd::ui::components {
-  struct component_base_t;
-  template<typename T>
-  struct component_t;
-  struct component_state_t;
-  using component_state_ref = std::shared_ptr<component_state_t>;
-
-}
 
 export class with_context;
 
@@ -80,10 +69,6 @@ namespace cyd::ui::components {
     component_state_t* parent() {
       return parent_;
     }
-  private:
-    friend struct component_base_t;
-    template<typename T>
-    friend struct component_t;
 
     void add_children_state(const std::string& id, const component_state_ref &child) {
       children_states[id] = child;
@@ -91,6 +76,10 @@ namespace cyd::ui::components {
       child->window = window;
     }
 
+  private:
+    friend class component_base_t;
+
+  protected:
     void set_component_name(const std::string& name) {
       component_name_ = name;
     }

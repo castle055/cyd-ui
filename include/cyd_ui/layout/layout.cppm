@@ -16,9 +16,13 @@ import fabric.logging;
 import fabric.profiling;
 
 export import cydui.application;
-export import cydui.components;
 export import cydui.dimensions;
 export import cydui.styling;
+
+export import cydui.components;
+export import cydui.components.renderer;
+export import cydui.components.updater;
+export import cydui.components.stylist;
 
 import cydui.window_events;
 
@@ -40,6 +44,19 @@ export namespace cyd::ui {
         root(_root),
         focused(_root_state) {
       focused->focused = true;
+
+      component_renderer->compositing_signal.connect([this](compositing::compositing_node_t *node) {
+        this->win->compositor.compose(node);
+      });
+      component_updater->queue_render_signal.connect({
+        component_renderer.get(), &components::component_renderer_t::queue_render
+      });
+      component_updater->apply_style_signal.connect({
+        component_stylist.get(), &components::component_stylist_t::apply_style
+      });
+      component_updater->compiler_style_rules_signal.connect({
+        component_stylist.get(), &components::component_stylist_t::compile_style_rule_list
+      });
     }
 
   public:
@@ -52,13 +69,11 @@ export namespace cyd::ui {
   public:
     components::component_base_t* find_by_coords(dimensions::screen_measure x, dimensions::screen_measure y);
 
-    bool update_if_dirty(components::component_base_t* c);
+    bool update_all_dirty(const components::component_base_t::sptr& c);
 
-    bool render_if_dirty(components::component_base_t* c);
+    bool render_if_dirty(const components::component_base_t::sptr& c);
 
-    void redraw_component(components::component_base_t* target);
-
-    static void recompute_dimensions(const components::component_base_t::sptr &start_from);
+    void update_component(const components::component_base_t::sptr& target);
 
     static void clear_hovering_flag(const components::component_state_ref &state, const MotionEvent &ev);
 
@@ -71,9 +86,6 @@ export namespace cyd::ui {
     void attach_stylesheet(const StyleSheet::sptr& style_sheet);
   private:
     void update_dimensions();
-    void update_fragments();
-
-    void render();
 
   public:
     template<components::ComponentConcept C>
@@ -92,6 +104,9 @@ export namespace cyd::ui {
     }
 
   private:
+    std::vector<fabric::async::raw_listener::sptr> make_event_listeners();
+
+  private:
     CWindow::sptr win = nullptr;
 
     components::component_state_ref root_state;
@@ -102,18 +117,19 @@ export namespace cyd::ui {
 
     std::vector<fabric::async::raw_listener::sptr> listeners { };
 
-    StyleArchive::sptr style_archive = StyleArchive::make();
+    StyleArchive::sptr style_archive {StyleArchive::make()};
 
-    std::atomic_flag is_compositing {false};
-    std::atomic_flag composite_is_outdated {false};
+    components::component_renderer_t::sptr component_renderer {components::component_renderer_t::make()};
+    components::component_updater_t::sptr component_updater {components::component_updater_t::make()};
+    components::component_stylist_t::sptr component_stylist {components::component_stylist_t::make()};
   };
 
 //* IMPL
 
   template <components::ComponentConcept C>
   Layout* create(C&& root_component) {
-    auto root                      = std::shared_ptr<C>{new C{root_component}};
-    auto root_state                = root->create_state_instance();
+    auto root                      = std::make_shared<C>(std::forward<C>(root_component));
+    auto root_state                = cyd::ui::components::component_actor_t::create_state_instance(root.get());
     root_state->component_instance = root;
     auto* lay                      = new Layout(root_state, root);
     return lay;
@@ -121,8 +137,8 @@ export namespace cyd::ui {
 
   template <components::ComponentConcept C>
   Layout* create(C& root_component) {
-    auto root                      = std::shared_ptr<C>{new C{root_component}};
-    auto root_state                = root->create_state_instance();
+    auto root                      = std::make_shared<C>(root_component);
+    auto root_state                = cyd::ui::components::component_actor_t::create_state_instance(root.get());
     root_state->component_instance = root;
     auto* lay                      = new Layout(root_state, root);
     return lay;
@@ -237,11 +253,11 @@ namespace cyd::ui {
 
 #undef COMPUTE
 
-  void Layout::recompute_dimensions(
-    const components::component_base_t::sptr &start_from
-  ) {
-    if (!compute_dimensions(start_from.get()) && start_from->parent.has_value()) {
-      components::component_base_t* c = start_from->parent.value();
+  void Layout::update_dimensions() {
+    ZoneScopedN("Dimensions");
+
+    if (!compute_dimensions(root.get()) && root->parent.has_value()) {
+      components::component_base_t* c = root->parent.value();
       while (c && !compute_dimensions(c)) {
         if (!c->parent.has_value()) {
           LOG::print {ERROR}("Could not compute dimensions");
@@ -252,93 +268,34 @@ namespace cyd::ui {
     }
   }
 
-  void Layout::update_dimensions() {
-    ZoneScopedN("Dimensions");
-    recompute_dimensions(root);
+  void Layout::update_component(const components::component_base_t::sptr& target) {
+    ZoneScopedN("Update Component");
+    component_updater->update(target, *style_archive);
   }
 
-  void Layout::update_fragments() {
-    ZoneScopedN("Fragments");
-    root->update_fragment(nullptr);
-  }
-  void Layout::render() {
-    ZoneScopedN("Render Flow");
-    update_dimensions();
-    if (is_compositing.test_and_set()) {
-      composite_is_outdated.test_and_set();
-      return;
-    }
-    update_fragments();
-    {
-      ZoneScopedN("Start Render");
-
-      Application::run([](CWindow* w, components::component_base_t* root_) {
-        ZoneScopedN("Start layout render");
-        root_->start_render(w->native());
-      }, win.get(), root.get());
-
-    } {
-      ZoneScopedN("Render");
-
-      root->render(win->native());
-    } {
-      ZoneScopedN("Queuing Composition");
-      //compositing_tree->fix_dimensions();
-      Application::run_async([](Layout* self, std::atomic_flag* completion_flag, std::atomic_flag* is_outdated, CWindow* w, components::component_base_t* root_ptr) {
-        ZoneScopedN("Compositing Layout");
-        auto &&[root_node, must_recompose] = root_ptr->compose(w->native());
-
-        if (must_recompose) {
-          ZoneScopedN("Compositing Frame");
-          w->compositor.compose(root_node);
-        }
-
-        completion_flag->clear();
-        if (is_outdated->test()) {
-          //-IMPORTANT: Need to make copy of pointers so they aren't passed
-          // as references which will not survive
-          Layout& s = *self;
-          std::atomic_flag& flag = *is_outdated;
-          //---------------------------------------------------------------
-          w->run_async([](Layout* selff, std::atomic_flag* is_outdated) {
-            selff->render();
-            is_outdated->clear();
-          }, &s, &flag);
-        }
-      }, this, &is_compositing, &composite_is_outdated, win.get(), root.get());
-    }
-  }
-
-  void Layout::redraw_component(components::component_base_t* target) {
-    ZoneScopedN("Redraw Component");
-    {
-      ZoneScopedN("Update");
-      target->redraw(*style_archive);
-    }
-  }
-
-  bool Layout::update_if_dirty(components::component_base_t* c) {
+  bool Layout::update_all_dirty(const components::component_base_t::sptr& c) {
     if (c->state()->_dirty) {
-      c->redraw(*style_archive);
+      component_updater->update(c, *style_archive);
       return true;
     } else {
       bool any = false;
       for (auto &item: c->children)
-        any = update_if_dirty(item.get()) || any; // ! Order here matters
-      // ? render_if_dirty() needs to be called before `any` is checked.
+        any = update_all_dirty(item) || any; // ! Order here matters
+      // ? update_if_dirty() needs to be called before `any` is checked.
       return any;
     }
   }
 
-  bool Layout::render_if_dirty(components::component_base_t* c) {
+  bool Layout::render_if_dirty(const components::component_base_t::sptr& c) {
     ZoneScopedN("Render If Dirty");
     {
       ZoneScopedN("Update");
-      if (not update_if_dirty(c)) {
+      if (not update_all_dirty(c)) {
         return false;
       }
     }
-    render();
+    update_dimensions();
+    component_renderer->render(*win->native(), root);
     return true;
   }
 
@@ -359,11 +316,6 @@ namespace cyd::ui {
 //
 //}
 
-#define INSTANCE_EV_HANDLER(STATE_PTR) \
-  if (STATE_PTR->component_instance.has_value()) \
-    STATE_PTR->component_instance.value()
-
-
   void Layout::bind_window(const cyd::ui::CWindow::sptr &_win) {
     this->win = _win; {
       /// Configure root component
@@ -373,191 +325,13 @@ namespace cyd::ui {
       auto &dim   = root->get_dimensional_relations();
       dim._width  = cyd::ui::dimensions::screen_measure {double(w)}; //{};
       dim._height = cyd::ui::dimensions::screen_measure {double(h)}; //{};
-      root->configure_event_handler();
-      render();
+      components::component_actor_t::mount_component(root.get());
+      component_updater->update(root, *style_archive);
+      update_dimensions();
+      component_renderer->render(*win->native(), root);
     }
 
-    for (auto &item: listeners) {
-      item->remove();
-    }
-    listeners.clear();
-
-    auto make_listener = [&](auto &&fun) { return win->on_event(fun).raw(); };
-
-    listeners = {
-      make_listener([&](const RedrawEvent &ev) {
-        ZoneScopedN("Redraw Event");
-        auto _pev = this->win->profiling_ctx.scope_event("Redraw");
-        if (ev.component) {
-          components::component_state_t* target_state = ((components::component_state_t*)ev.component);
-          if (target_state->component_instance.has_value()) {
-            redraw_component(target_state->component_instance.value().get());
-          }
-        } else {
-          redraw_component(root.get());
-        }
-
-        render();
-      }),
-      make_listener([&](const KeyEvent &ev) {
-        ZoneScopedN("Key Event");
-        auto _pev = this->win->profiling_ctx.scope_event("Key");
-        if (ev.keysym.code == Keycode::SDLK_F12 && ev.pressed && not ev.holding) {
-          LOG::print {INFO}("Pressed Debug Key");
-          return;
-        }
-        if (focused && focused->component_instance) {
-          if (focused->focused) {
-            if (ev.pressed) {
-              INSTANCE_EV_HANDLER(focused)->dispatch_key_press(ev);
-            } else if (ev.released) {
-              INSTANCE_EV_HANDLER(focused)->dispatch_key_release(ev);
-            }
-            render_if_dirty(focused->component_instance.value().get());
-          } else {
-            focused = nullptr;
-          }
-        }
-      }),
-      make_listener([&](const TextInputEvent &ev) {
-        ZoneScopedN("Key Event");
-        auto _pev = this->win->profiling_ctx.scope_event("Key");
-        if (focused && focused->component_instance) {
-          if (focused->focused) {
-            INSTANCE_EV_HANDLER(focused)->dispatch_text_input(ev);
-            render_if_dirty(focused->component_instance.value().get());
-          } else {
-            focused = nullptr;
-          }
-        }
-      }),
-      make_listener([&](const ButtonEvent &ev) {
-        ZoneScopedN("Button Event");
-        auto _pev = this->win->profiling_ctx.scope_event("Button");
-
-        components::component_base_t* target           = root.get();
-        components::component_base_t* specified_target = find_by_coords(ev.x, ev.y);
-        if (specified_target) {
-          target = specified_target;
-        }
-
-        auto &dim     = target->get_dimensional_relations();
-        auto &int_rel = target->get_internal_relations();
-        auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
-        auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
-
-        if (focused != target->state()) {
-          if (focused) {
-            // if (focused->component_instance.has_value()) {
-            //   focused->component_instance.value()
-            //     ->event_handler()
-            //     ->on_button_release((Button) it.button, 0, 0);
-            // }
-            focused->focused = false;
-            focused->mark_dirty();
-            focused = nullptr;
-          }
-          focused          = target->state();
-          focused->focused = true;
-          focused->mark_dirty();
-        }
-
-        if (ev.pressed) {
-          target->dispatch_button_press((Button)ev.button, rel_x, rel_y);
-        } else {
-          target->dispatch_button_release((Button)ev.button, rel_x, rel_y);
-        }
-        render_if_dirty(root.get());
-      }),
-      make_listener([&](const ScrollEvent &ev) {
-        ZoneScopedN("Scroll Event");
-        auto _pev                                      = this->win->profiling_ctx.scope_event("Scroll");
-        components::component_base_t* target           = root.get();
-        components::component_base_t* specified_target = find_by_coords(ev.x, ev.y);
-        if (specified_target) {
-          target = specified_target;
-        }
-
-        target->dispatch_scroll(ev.dx, ev.dy);
-
-        render_if_dirty(root.get());
-      }),
-      make_listener([&](const MotionEvent &ev) {
-        auto _pev = this->win->profiling_ctx.scope_event("Motion");
-        ZoneScopedN("MotionEvent");
-
-        if (ev.x == dimensions::screen_measure {-1} && ev.y == dimensions::screen_measure {-1}) {
-          clear_hovering_flag(root_state, ev);
-        } else {
-          components::component_base_t* target           = root.get();
-          components::component_base_t* specified_target = find_by_coords(ev.x, ev.y);
-          if (specified_target)
-            target = specified_target;
-
-          if (not set_hovering_flag(target->state().get(), ev, true)) {
-            auto &int_rel = target->get_internal_relations();
-            auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
-            auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
-            target->dispatch_mouse_motion(rel_x, rel_y);
-          }
-        }
-
-        // Calling 'Drag' related event handlers
-        // cyd::ui::components::Component* target = root;
-        // cyd::ui::components::Component* specified_target =
-        //  find_by_coords(root, it.x, it.y);
-        // if (specified_target)
-        //  target = specified_target;
-        //
-        // if (it.dragging) {
-        //  if (dragging_context.dragging) {
-        //    int rel_x = it.x - (*target->state.unwrap())->dim.cx.val();
-        //    int rel_y = it.y - (*target->state.unwrap())->dim.cy.val();
-        //    dragging_context.dragging_item.drag_move(dragging_context.dragging_item, rel_x,
-        //    rel_y); target->on_drag_motion(rel_x, rel_y);
-        //  } else {
-        //    int rel_x = it.x - (*target->state.unwrap())->dim.cx.val();
-        //    int rel_y = it.y - (*target->state.unwrap())->dim.cy.val();
-        //    target->state.let(_(components::ComponentState * , {
-        //      for (auto &item : it->draggable_sources) {
-        //        if (item.x - 10 <= rel_x && rel_x <= item.x + 10
-        //          && item.y - 10 <= rel_y && rel_y <= item.y + 10) {
-        //          dragging_context.dragging_item = item.start_drag(rel_x, rel_y);
-        //          break;
-        //        }
-        //      }
-        //    }));
-        //    target->on_drag_start(rel_x, rel_y);
-        //    dragging_context.dragging = true;
-        //  }
-        //} else if (dragging_context.dragging) {
-        //  int rel_x = it.x - (*target->state.unwrap())->dim.cx.val();
-        //  int rel_y = it.y - (*target->state.unwrap())->dim.cy.val();
-        //  dragging_context.dragging_item.drag_end(dragging_context.dragging_item, rel_x, rel_y);
-        //  target->on_drag_finish(rel_x, rel_y);
-        //  dragging_context.dragging = false;
-        //  dragging_context.dragging_item = drag_n_drop::draggable_t {};
-        //}
-
-        render_if_dirty(root.get());
-      }),
-      make_listener([&](const ResizeEvent &ev) {
-        ZoneScopedN("Resize Event");
-        auto _pev = this->win->profiling_ctx.scope_event("Resize");
-
-        auto &dim   = root->get_dimensional_relations();
-        dim._width  = ev.w;
-        dim._height = ev.h;
-
-        update_dimensions();
-        // if (is_compositing.test()) {
-        //   composite_is_outdated.test_and_set();
-        //   return;
-        // }
-        // update_fragments();
-        // render();
-      }),
-    };
+    listeners = make_event_listeners();
   }
 
   bool Layout::set_hovering_flag(components::component_state_t* state, const MotionEvent &ev, bool clear_children) {
@@ -574,7 +348,7 @@ namespace cyd::ui {
         auto &int_rel = state->component_instance.value()->get_internal_relations();
         auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
         auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
-        state->component_instance.value()->dispatch_mouse_enter(rel_x, rel_y);
+        state->component_instance.value()->get_event_dispatcher()->dispatch_mouse_enter(rel_x, rel_y);
       }
 
       state->mark_dirty();
@@ -605,7 +379,7 @@ namespace cyd::ui {
         auto &h_int_rel = state->component_instance.value()->get_internal_relations();
         auto exit_rel_x = ev.x - dimensions::get_value(h_int_rel.cx);
         auto exit_rel_y = ev.y - dimensions::get_value(h_int_rel.cy);
-        state->component_instance.value()->dispatch_mouse_exit(exit_rel_x, exit_rel_y);
+        state->component_instance.value()->get_event_dispatcher()->dispatch_mouse_exit(exit_rel_x, exit_rel_y);
       }
 
       state->mark_dirty();

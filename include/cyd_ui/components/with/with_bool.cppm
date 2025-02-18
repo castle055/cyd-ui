@@ -5,8 +5,7 @@ export module cydui.components:with_bool;
 
 import std;
 
-export import :holder;
-export import :with_template;
+export import cydui.components.base;
 
 
 export template <>

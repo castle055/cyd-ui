@@ -2,20 +2,18 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 module;
-#include "./component_event_macros.h"
+#include "component_event_macros.h"
 
-export module cydui.components:event_handler;
+export module cydui.components.event_handler;
 
 export import std;
 
-export import :holder;
-export import :attributes;
+export import cydui.components.base;
+export import cydui.components.anchors;
 
 export import cydui.events;
 export import cydui.graphics;
 
-export import :base;
-export import :anchors;
 
 #define TO_STRING(...) #__VA_ARGS__
 #define ANCHOR(PREFIX, NAME) \
@@ -40,23 +38,15 @@ export {
     //! EVENT HANDLER STRUCT
     struct event_handler_t {
     public:
-      event_handler_t* parent = nullptr;
       component_base_t* component = nullptr;
 
     public:
       const std::list<std::shared_ptr<component_base_t>>& $children;
 
-      explicit event_handler_t(component_base_t* comp, const std::list<std::shared_ptr<component_base_t>>& $children_)
-          : parent(nullptr),
-            component(comp),
-            $children($children_) {}
-
-      event_handler_t(
-        event_handler_t* parent_, component_base_t* comp, const std::list<std::shared_ptr<component_base_t>>& $children_
-      )
-          : parent(parent_),
-            component(comp),
-            $children($children_) {}
+      event_handler_t(component_base_t *comp, const std::list<std::shared_ptr<component_base_t> > &$children_)
+        : component(comp),
+          $children($children_) {
+      }
 
       // virtual ~event_handler_t() {}
 
@@ -70,10 +60,10 @@ export {
       // ? MOUSE EVENTS
 #define CYDUI_INTERNAL_EV_button_PROPAGATE(NAME)                                                   \
   if (component->parent.has_value()) \
-    component->parent.value()->dispatch_button_##NAME(button, x + $x, y + $y);
+    component->parent.value()->get_event_dispatcher()->dispatch_button_##NAME(button, x + $x, y + $y);
 #define CYDUI_INTERNAL_EV_mouse_PROPAGATE(NAME)                                                    \
   if (component->parent.has_value()) \
-    component->parent.value()->dispatch_mouse_##NAME(x + $x, y + $y);
+    component->parent.value()->get_event_dispatcher()->dispatch_mouse_##NAME(x + $x, y + $y);
 
       // * button press
       CYDUI_INTERNAL_EV_HANDLER_DECL(button_press) {
@@ -98,19 +88,19 @@ export {
       // * mouse scroll
       CYDUI_INTERNAL_EV_HANDLER_DECL(scroll) {
         if (component->parent.has_value())
-          component->parent.value()->dispatch_scroll(dx, dy);
+          component->parent.value()->get_event_dispatcher()->dispatch_scroll(dx, dy);
       }
 
       // ? KEYBOARD EVENTS
       // * key press
       CYDUI_INTERNAL_EV_HANDLER_DECL(key_press) {
         if (component->parent.has_value())
-          component->parent.value()->dispatch_key_press(ev);
+          component->parent.value()->get_event_dispatcher()->dispatch_key_press(ev);
       }
       // * key release
       CYDUI_INTERNAL_EV_HANDLER_DECL(key_release) {
         if (component->parent.has_value())
-          component->parent.value()->dispatch_key_release(ev);
+          component->parent.value()->get_event_dispatcher()->dispatch_key_release(ev);
       }
 
       // * text input
@@ -126,7 +116,6 @@ export {
     struct event_handler_data_t: public event_handler_t {
       event_handler_data_t(
         Component&                                          $component_,
-        event_handler_t*                                    parent_,
         const std::list<std::shared_ptr<component_base_t>>& $children_,
         const std::shared_ptr<typename Component::state_t>& state_,
         const std::shared_ptr<fabric::async::async_bus_t>&  window_,
@@ -134,7 +123,7 @@ export {
         attrs_component<Component>&                         attrs_,
         typename Component::style_t&                        style_
       )
-          : event_handler_t(parent_, &$component_, $children_),
+          : event_handler_t(&$component_, $children_),
             $component($component_),
             state(*state_),
             window(*window_),

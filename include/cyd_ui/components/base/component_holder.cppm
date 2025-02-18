@@ -1,7 +1,7 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-export module cydui.components:holder;
+export module cydui.components.base:holder;
 
 import std;
 export import :with_template;

@@ -149,9 +149,9 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 
 #define FRAGMENT void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS
 
-#define SIGNAL(NAME) \
+#define SIGNAL(NAME, ...) \
 ;private: \
-  fabric::wiring::signal<> NAME{}; \
+  fabric::wiring::signal<__VA_ARGS__> NAME{}; \
 public: \
   auto& on_##NAME(auto&& fun) { \
     NAME.connect(fun); \
