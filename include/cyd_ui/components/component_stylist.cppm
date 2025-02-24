@@ -45,6 +45,7 @@ namespace cyd::ui::components {
     }
 
     void apply_style(const component_base_t::sptr& component) {
+      ZoneScopedN("Apply Style");
       auto& style_data = component->get_style_data();
       style_data.reset();
 
@@ -59,6 +60,7 @@ namespace cyd::ui::components {
 
   private:
     void apply_style_rules(const component_base_t::sptr& component) {
+      ZoneScopedN("Apply Rules");
       auto& style_data = component->get_style_data();
       auto& style_rules = style_data.rules;
       const auto& bti = refl::type_info::from<style_base_t>();
@@ -76,6 +78,7 @@ namespace cyd::ui::components {
       style_base_t& base_s = component->get_style();
       for (auto& [specificity, rule]: style_rules | std::views::reverse) {
         if (check_style_comb_selector_vector(component, rule->selectors_, true, true)) {
+          ZoneScopedN("Apply Rule");
           //! Base fields
           for (auto field_it = pending_base_fields.begin(); field_it != pending_base_fields.end();) {
             apply_style_property(component, &base_s, field_it, pending_base_fields, rule);
@@ -92,6 +95,7 @@ namespace cyd::ui::components {
                               std::unordered_set<const refl::field_info *>::iterator &field_it,
                               std::unordered_set<const refl::field_info *> &pending_fields,
                               const StyleRule::sptr &rule) {
+      ZoneScopedN("Apply Property");
       const auto *field = *field_it;
       if (rule->properties_.contains(field->name)) {
         const auto &rule_field = rule->properties_.at(field->name);
@@ -119,6 +123,7 @@ namespace cyd::ui::components {
 
     bool check_style_comb_selector_vector(const component_base_t::sptr& component, const std::vector<StyleRuleCombinedSelector> &selectors,
                                                  bool check_tags = false, bool check_pseudo_states = false) {
+      ZoneScopedN("Check Selectors");
       for (const auto &selector: selectors) {
         if (check_style_comb_selector(component, selector, check_tags, check_pseudo_states)) {
           return true;
@@ -166,6 +171,7 @@ namespace cyd::ui::components {
     }
 
     bool check_style_selector(component_base_t* component, const StyleRuleSelector& selector, bool check_tags, bool check_pseudo_states) {
+      ZoneScopedN("Check Selector");
       auto& style_data = component->get_style_data();
       if (component->name() != selector.component) {
         return false;

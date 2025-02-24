@@ -1,6 +1,9 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+module;
+#include <tracy/Tracy.hpp>
+
 export module cydui.components.event_dispatcher;
 
 import std;
@@ -19,6 +22,7 @@ namespace cyd::ui::components {
   class event_dispatcher_t final: public event_dispatcher_base_t {
   public:
     explicit event_dispatcher_t(component_base_t *component): component_(component) {
+      ZoneScopedN("event_dispatcher_t");
       auto &style = *static_cast<typename ComponentType::style_t *>(&component_->get_style_data().as_base());
       event_handler_ = std::make_shared<EventHandler>(event_handler_data_t<ComponentType> {
         *static_cast<ComponentType*>(component_),
@@ -38,6 +42,7 @@ namespace cyd::ui::components {
     }
 
     std::vector<component_holder_t> update(StyleArchive& style_archive, component_builder_t& content_children_builder) override {
+      ZoneScopedN("Update - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       return eh->on_redraw(
@@ -53,6 +58,7 @@ namespace cyd::ui::components {
       );
     }
     void paint_fragment(vg::vg_fragment_t &fragment) override {
+      ZoneScopedN("Paint Fragment - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       eh->draw_fragment(
@@ -69,6 +75,7 @@ namespace cyd::ui::components {
     }
 
     void dispatch_key_press(const KeyEvent &ev) override {
+      ZoneScopedN("Key Press - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       eh->on_key_press(
@@ -85,6 +92,7 @@ namespace cyd::ui::components {
     }
 
     void dispatch_key_release(const KeyEvent &ev) override {
+      ZoneScopedN("Key Release - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       eh->on_key_release(
@@ -101,6 +109,7 @@ namespace cyd::ui::components {
     }
 
     void dispatch_text_input(const TextInputEvent &ev) override {
+      ZoneScopedN("Text Input - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       eh->on_text_input(
@@ -121,6 +130,7 @@ namespace cyd::ui::components {
       dimension_t::value_type x,
       dimension_t::value_type y
     ) override {
+      ZoneScopedN("Button Press - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       eh->on_button_press(
@@ -143,6 +153,7 @@ namespace cyd::ui::components {
       dimension_t::value_type x,
       dimension_t::value_type y
     ) override {
+      ZoneScopedN("Button Release - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       eh->on_button_release(
@@ -161,6 +172,7 @@ namespace cyd::ui::components {
     }
 
     void dispatch_mouse_enter(dimension_t::value_type x, dimension_t::value_type y) override {
+      ZoneScopedN("Mouse Enter - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       eh->on_mouse_enter(
@@ -178,6 +190,7 @@ namespace cyd::ui::components {
     }
 
     void dispatch_mouse_exit(dimension_t::value_type x, dimension_t::value_type y) override {
+      ZoneScopedN("Mouse Exit - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       eh->on_mouse_exit(
@@ -195,6 +208,7 @@ namespace cyd::ui::components {
     }
 
     void dispatch_mouse_motion(dimension_t::value_type x, dimension_t::value_type y) override {
+      ZoneScopedN("Mouse Motion - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       eh->on_mouse_motion(
@@ -212,6 +226,7 @@ namespace cyd::ui::components {
     }
 
     void dispatch_scroll(dimension_t::value_type dx, dimension_t::value_type dy) override {
+      ZoneScopedN("Scroll - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       eh->on_scroll(
@@ -237,6 +252,7 @@ namespace cyd::ui::components {
 
     template<std::size_t... I>
     void configure_event_handler_fields(std::index_sequence<I...>) {
+      ZoneScopedN("Configure Fields");
       (configure_event_handler_field<I>(), ...);
     }
 
@@ -244,6 +260,7 @@ namespace cyd::ui::components {
     void configure_event_handler_field() {
       using field         = refl::field<EventHandler, FieldI>;
       using field_type    = typename field::type;
+      ZoneScopedN(field::name);
       auto* eh = static_cast<EventHandler*>(event_handler_.get());
 
       if constexpr (packtl::is_type<use_context, field_type>::value) {

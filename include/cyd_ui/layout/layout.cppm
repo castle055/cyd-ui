@@ -75,9 +75,9 @@ export namespace cyd::ui {
 
     void update_component(const components::component_base_t::sptr& target);
 
-    static void clear_hovering_flag(const components::component_state_ref &state, const MotionEvent &ev);
+    void clear_hovering_flag(const components::component_state_ref &state, const MotionEvent &ev);
 
-    static bool set_hovering_flag(
+    bool set_hovering_flag(
       components::component_state_t* state,
       const MotionEvent &ev,
       bool clear_children = true
@@ -128,6 +128,7 @@ export namespace cyd::ui {
 
   template <components::ComponentConcept C>
   Layout* create(C&& root_component) {
+    ZoneScopedN("Layout:create");
     auto root                      = std::make_shared<C>(std::forward<C>(root_component));
     auto root_state                = cyd::ui::components::component_actor_t::create_state_instance(root.get());
     root_state->component_instance = root;
@@ -137,6 +138,7 @@ export namespace cyd::ui {
 
   template <components::ComponentConcept C>
   Layout* create(C& root_component) {
+    ZoneScopedN("Layout:create");
     auto root                      = std::make_shared<C>(root_component);
     auto root_state                = cyd::ui::components::component_actor_t::create_state_instance(root.get());
     root_state->component_instance = root;
@@ -317,24 +319,45 @@ namespace cyd::ui {
 //}
 
   void Layout::bind_window(const cyd::ui::CWindow::sptr &_win) {
-    this->win = _win; {
-      /// Configure root component
-      root_state->window = this->win;
+    ZoneScopedN("Layout:bind_window");
+    this->win = _win;
 
-      auto [w, h] = win->get_size();
-      auto &dim   = root->get_dimensional_relations();
-      dim._width  = cyd::ui::dimensions::screen_measure {double(w)}; //{};
-      dim._height = cyd::ui::dimensions::screen_measure {double(h)}; //{};
-      components::component_actor_t::mount_component(root.get());
-      component_updater->update(root, *style_archive);
-      update_dimensions();
-      component_renderer->render(*win->native(), root);
-    }
+    /// Configure root component
+    root_state->window = this->win;
 
+    auto [w, h] = win->get_size();
+    auto& dim   = root->get_dimensional_relations();
+    dim._width  = cyd::ui::dimensions::screen_measure{double(w)}; //{};
+    dim._height = cyd::ui::dimensions::screen_measure{double(h)}; //{};
+    components::component_actor_t::mount_component(root.get());
+    component_stylist->apply_style(root);
+
+    // TODO - Not sure why this needs to be done twice
+    component_updater->update(root, *style_archive);
+    update_dimensions();
+    component_updater->update(root, *style_archive);
+    update_dimensions();
+    // ================================================
+
+    component_renderer->render(*win->native(), root);
+
+    /// Make event listeners
     listeners = make_event_listeners();
+
+    AnimationSystem& anim_system = win->get_system<AnimationSystem>();
+    anim_system.s_repaint.connect([&](const components::component_base_t::sptr& component) {
+      component_renderer->repaint_component(component);
+    });
+    anim_system.s_render_all.connect([&](bool& should_compose) {
+      should_compose = should_compose or component_renderer->render_all(*win->native(), root);
+    });
+    anim_system.s_compose_all.connect([&]() {
+      component_renderer->compose_all(*win->native(), root);
+    });
   }
 
   bool Layout::set_hovering_flag(components::component_state_t* state, const MotionEvent &ev, bool clear_children) {
+    ZoneScopedN("Layout:set_hovering_flag");
     if (clear_children) {
       for (const auto &c_state: std::ranges::views::values(state->children_states)) {
         clear_hovering_flag(c_state, ev);
@@ -349,6 +372,8 @@ namespace cyd::ui {
         auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
         auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
         state->component_instance.value()->get_event_dispatcher()->dispatch_mouse_enter(rel_x, rel_y);
+
+        component_stylist->apply_style(state->component_instance.value());
       }
 
       state->mark_dirty();
@@ -372,6 +397,7 @@ namespace cyd::ui {
   }
 
   void Layout::clear_hovering_flag(const components::component_state_ref &state, const MotionEvent &ev) {
+    ZoneScopedN("Layout:clear_hovering_flag");
     if (state->hovering) {
       state->hovering = false;
 
@@ -380,6 +406,8 @@ namespace cyd::ui {
         auto exit_rel_x = ev.x - dimensions::get_value(h_int_rel.cx);
         auto exit_rel_y = ev.y - dimensions::get_value(h_int_rel.cy);
         state->component_instance.value()->get_event_dispatcher()->dispatch_mouse_exit(exit_rel_x, exit_rel_y);
+
+        component_stylist->apply_style(state->component_instance.value());
       }
 
       state->mark_dirty();
@@ -392,6 +420,7 @@ namespace cyd::ui {
 
   template<typename Component>
   CWindow::builder_t CWindow::make(typename Component::props_t props) {
+    ZoneScopedN("CWindow:make");
     auto layout = cyd::ui::create(Component {props});
     return CWindow::builder_t(layout);
   }
@@ -403,6 +432,7 @@ namespace cyd::ui {
   }
 
   void CWindow::builder_t::configure_layout_style() {
+    ZoneScopedN("CWindow:builder:configure_layout_style");
     for (const auto& path: this->stylesheets_) {
       this->layout_->attach_stylesheet(StyleSheet::parse(path));
     }

@@ -30,6 +30,7 @@ export namespace cyd::ui::components {
 
     virtual void clear_style_override() = 0;
     virtual std::shared_ptr<void> get_style_override_ptr() = 0;
+    virtual style_base_t& get_style_override_as_base() = 0;
     virtual void set_style_override_ptr(const std::shared_ptr<void>& other) = 0;
 
     std::unordered_set<std::string> tags{};
@@ -70,6 +71,10 @@ export namespace cyd::ui::components {
     std::shared_ptr<void> get_style_override_ptr() final {
       return override_ptr_;
     }
+    style_base_t& get_style_override_as_base() final {
+      return *static_cast<style_base_t*>(override_ptr_.get());
+    }
+
     void set_style_override_ptr(const std::shared_ptr<void>& other) final {
       override_ptr_ = other;
     }

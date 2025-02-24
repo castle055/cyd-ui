@@ -118,6 +118,7 @@ export namespace cyd::ui::compositing {
       ZoneScopedN("Lock Texture");
       void* pixels = nullptr;
       int pitch;
+      locked_ = true;
       SDL_LockTexture(texture, nullptr, &pixels, &pitch);
       return pixels;
     }
@@ -126,6 +127,11 @@ export namespace cyd::ui::compositing {
       if (texture == nullptr) return;
       ZoneScopedN("Unlock Texture");
       SDL_UnlockTexture(texture);
+      locked_ = false;
+    }
+
+    bool is_locked() const {
+      return locked_;
     }
 
     void copy_into(SDL_Renderer* renderer, device_texture_t& other, SDL_Rect* dst, bool blend = true, SDL_Rect* src_ = nullptr) {
@@ -183,5 +189,6 @@ export namespace cyd::ui::compositing {
     texture_ptr texture {nullptr};
     int w, h;
     bool streaming_ = false;
+    bool locked_ = false;
   };
 }

@@ -30,7 +30,7 @@ namespace stdui::input {
     }
 
     FRAGMENT {
-      fragment.draw<vg::rect>().w($width).h($height).fill("#222222"_color);
+      // fragment.draw<vg::rect>().w($width).h($height).fill("#222222"_color);
       fragment.append(build_text(*props.text).fill("#FFFFFF"_color));
 
       if (state.focused) {

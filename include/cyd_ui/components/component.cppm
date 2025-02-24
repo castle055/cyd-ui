@@ -1,6 +1,9 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+module;
+#include <tracy/Tracy.hpp>
+
 export module cydui.components;
 
 import std;
@@ -13,7 +16,7 @@ export import cydui.components.event_dispatcher;
 
 namespace cyd::ui::components {
   export template<typename T>
-  struct component_t:
+  class component_t:
     public component_base_t,
     public attrs_component<T> {
   public:
@@ -32,28 +35,12 @@ namespace cyd::ui::components {
     };
 
   public:
-    void clear_children() final {
-      children.clear();
-    }
-
     attrs_component<>* attrs() final {
       // Yes, the order of casting matters here because a conversion from `this` to
       // `(attrs_component<>*)` does not work since that type is not a base of this
       // class. So we need to cast to the base class first and then to its `void`
       // specialization.
       return reinterpret_cast<attrs_component<>*>(as_attrs());
-    }
-
-    style_base_t& get_style() final {
-      return style_data->as_base();
-    }
-
-    style_data_base_t& get_style_data() final {
-      return *(style_data.get());
-    }
-
-    event_dispatcher_base_t* get_event_dispatcher() final {
-      return event_dispatcher.has_value()? event_dispatcher.value().get(): nullptr;
     }
 
     std::string name() const final {
@@ -114,6 +101,7 @@ namespace cyd::ui::components {
     }
 
     bool update_with(std::shared_ptr<component_base_t> other) final {
+      ZoneScopedN("Update With");
       auto other_component = std::dynamic_pointer_cast<component_t>(other);
       if (!other_component) {
         LOG::print {
@@ -142,7 +130,10 @@ namespace cyd::ui::components {
         auto & self_so = *static_cast<typename T::style_t*>(style_data->get_style_override_ptr().get());
         auto & other_so = *static_cast<typename T::style_t*>(other_component->style_data->get_style_override_ptr().get());
         if (not refl::deep_eq(self_so, other_so)
-            or not refl::deep_eq(style_data->as_base(), other_component->style_data->as_base())) {
+            or not refl::deep_eq(
+              style_data->get_style_override_as_base(),
+              other_component->style_data->get_style_override_as_base()
+            )) {
           style_data->set_style_override_ptr(std::move(other_component->style_data->get_style_override_ptr()));
           dirty = true;
         }
@@ -183,6 +174,11 @@ namespace cyd::ui::components {
       for (const auto & tag : tags) {
         style_data->tags.insert(tag);
       }
+      return *dynamic_cast<T*>(this);
+    }
+
+    T& id(const std::string& id_) {
+      this->set_id(id_);
       return *dynamic_cast<T*>(this);
     }
   protected:
@@ -233,10 +229,6 @@ namespace cyd::ui::components {
         }
       }
     }
-
-  private:
-    std::shared_ptr<style_data_base_t> style_data{};
-    std::optional<std::shared_ptr<event_dispatcher_base_t>> event_dispatcher{std::nullopt};
   };
 }
 

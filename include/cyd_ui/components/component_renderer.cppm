@@ -38,7 +38,7 @@ namespace cyd::ui::components {
       data.graphics_dirty_ = true;
     }
 
-    void render(graphics::window_t& win, const component_base_t::sptr &component) {
+    void render(graphics::window_t& window, const component_base_t::sptr &component) {
       ZoneScopedN("Render Flow");
       if (is_compositing.test_and_set()) {
         composite_is_outdated.test_and_set();
@@ -51,21 +51,85 @@ namespace cyd::ui::components {
         Application::run([](component_renderer_t* self, graphics::window_t* w, components::component_base_t *component_) {
           ZoneScopedN("Start layout render");
           self->start_render(component_, w);
-        }, this, &win, component.get());
+        }, this, &window, component.get());
       }
       bool needs_compositing = false;
       {
         ZoneScopedN("Render");
 
-        needs_compositing = repaint(component.get(), &win);
+        needs_compositing = repaint(component.get(), &window);
       }
       if (needs_compositing) {
         ZoneScopedN("Queuing Composition");
-        //compositing_tree->fix_dimensions();
-        Application::run_async([](component_renderer_t *self, std::atomic_flag *completion_flag, std::atomic_flag *is_outdated,
-                                  graphics::window_t *w, components::component_base_t::sptr root_ptr) {
+        // compositing_tree->fix_dimensions();
+        Application::run_async(
+          [](
+            component_renderer_t*              self,
+            std::atomic_flag*                  completion_flag,
+            std::atomic_flag*                  is_outdated,
+            graphics::window_t*                w,
+            components::component_base_t::sptr root_ptr
+          ) {
+            ZoneScopedN("Compositing Layout");
+            auto&& [root_node, must_recompose] = self->compose(root_ptr.get(), w);
+
+            if (must_recompose) {
+              ZoneScopedN("Compositing Frame");
+              self->compositing_signal.emit(root_node);
+            }
+
+            completion_flag->clear();
+            if (is_outdated->test()) {
+              //-IMPORTANT: Need to make copy of pointers so they aren't passed
+              // as references which will not survive
+              component_renderer_t& s    = *self;
+              graphics::window_t&   ww   = *w;
+              std::atomic_flag&     flag = *is_outdated;
+              //---------------------------------------------------------------
+              w->bus->coroutine_enqueue(
+                [](
+                  component_renderer_t*              selff,
+                  std::atomic_flag*                  is_outdated,
+                  graphics::window_t*                w_,
+                  components::component_base_t::sptr root_ptr_
+                ) -> fabric::async::async<bool> {
+                  selff->render(*w_, root_ptr_);
+                  is_outdated->clear();
+                  co_return true;
+                },
+                &s,
+                &flag,
+                &ww,
+                root_ptr
+              );
+            }
+          },
+          this,
+          &is_compositing,
+          &composite_is_outdated,
+          &window,
+          component
+        );
+      }
+    }
+
+    void compose_all(graphics::window_t& window, const component_base_t::sptr &root_component) {
+      ZoneScopedN("Compose All");
+      if (is_compositing.test_and_set()) {
+        composite_is_outdated.test_and_set();
+        return;
+      }
+
+      Application::run_async(
+        [](
+          component_renderer_t*              self,
+          std::atomic_flag*                  completion_flag,
+          std::atomic_flag*                  is_outdated,
+          graphics::window_t*                w,
+          components::component_base_t::sptr root_ptr
+        ) {
           ZoneScopedN("Compositing Layout");
-          auto &&[root_node, must_recompose] = self->compose(root_ptr.get(), w);
+          auto&& [root_node, must_recompose] = self->compose(root_ptr.get(), w);
 
           if (must_recompose) {
             ZoneScopedN("Compositing Frame");
@@ -76,30 +140,89 @@ namespace cyd::ui::components {
           if (is_outdated->test()) {
             //-IMPORTANT: Need to make copy of pointers so they aren't passed
             // as references which will not survive
-            component_renderer_t &s = *self;
-            graphics::window_t& ww = *w;
-            std::atomic_flag &flag = *is_outdated;
+            component_renderer_t& s    = *self;
+            graphics::window_t&   ww   = *w;
+            std::atomic_flag&     flag = *is_outdated;
             //---------------------------------------------------------------
-            w->bus->coroutine_enqueue([](component_renderer_t *selff, std::atomic_flag *is_outdated, graphics::window_t *w_, components::component_base_t::sptr root_ptr_) -> fabric::async::async<bool> {
-              selff->render(*w_, root_ptr_);
-              is_outdated->clear();
-              co_return true;
-            }, &s, &flag, &ww, root_ptr);
+            w->bus->coroutine_enqueue(
+              [](
+                component_renderer_t*              selff,
+                std::atomic_flag*                  is_outdated,
+                graphics::window_t*                w_,
+                components::component_base_t::sptr root_ptr_
+              ) -> fabric::async::async<bool> {
+                selff->render(*w_, root_ptr_);
+                is_outdated->clear();
+                co_return true;
+              },
+              &s,
+              &flag,
+              &ww,
+              root_ptr
+            );
           }
-        }, this, &is_compositing, &composite_is_outdated, &win, component);
+        },
+        this,
+        &is_compositing,
+        &composite_is_outdated,
+        &window,
+        root_component
+      );
+    }
+
+    void repaint_component(const component_base_t::sptr &component) {
+      ZoneScopedN("Repaint Component");
+      auto* parent = component->parent.has_value()
+                       ? &(component->parent.value()->get_data<render_data_t>().compositing_node_)
+                       : nullptr;
+      queue_render(component);
+      update_fragment(component.get(), parent);
+    }
+
+    bool render_all(graphics::window_t& win, const component_base_t::sptr &root) {
+      ZoneScopedN("Render All");
+      if (is_compositing.test()) {
+        return false;
       }
+
+      {
+        ZoneScopedN("Start Render");
+
+        Application::run([](component_renderer_t* self, graphics::window_t* w, components::component_base_t *component_) {
+          ZoneScopedN("Start render");
+          self->start_render(component_, w);
+        }, this, &win, root.get());
+      }
+
+      bool needs_compositing = false;
+      {
+        ZoneScopedN("Render");
+
+        needs_compositing = repaint(root.get(), &win);
+      }
+
+      return needs_compositing;
     }
 
   private:
     void update_fragments(const component_base_t::sptr& component) {
       ZoneScopedN("Fragments");
-      update_fragment(component.get(), nullptr);
+      auto* parent = component->parent.has_value()
+                       ? &(component->parent.value()->get_data<render_data_t>().compositing_node_)
+                       : nullptr;
+      update_fragment(component.get(), parent);
+
+      for (auto& child : component->children) {
+        update_fragments(child);
+      }
     }
 
-    void update_fragment(component_base_t* component, compositing::compositing_node_t *parent_node) {
+    bool update_compositing_operation(component_base_t* component, compositing::compositing_node_t *parent_node) {
+      ZoneScopedN("Update Compose Op");
       static auto get_num_value = [](const auto& it) -> auto {
         return dimensions::get_value(it).template as<dimensions::screen::pixel>().value;
       };
+
       auto& data = component->get_data<render_data_t>();
 
       int old_w = data.compositing_node_.op.w;
@@ -117,21 +240,25 @@ namespace cyd::ui::components {
         .rot     = at->_rotation,   // dim->rot.val(),
         .scale_x = 1.0,             // dim->scale_x.val(),
         .scale_y = 1.0,             // dim->scale_y.val(),
+        .animated = component->state()->is_animated(),
       };
 
       data.compositing_node_.set_parent(parent_node);
 
-      if (old_w != data.compositing_node_.op.w or old_h != data.compositing_node_.op.h) {
+      return old_w != data.compositing_node_.op.w or old_h != data.compositing_node_.op.h;
+    }
+
+    void update_fragment(component_base_t* component, compositing::compositing_node_t *parent_node) {
+      ZoneScopedN("Update Fragment");
+      auto& data = component->get_data<render_data_t>();
+
+      if (update_compositing_operation(component, parent_node)) {
         data.graphics_dirty_ = true;
       }
 
       if (data.graphics_dirty_) {
         data.compositing_node_.mark_flattening_target_dirty();
         paint_fragment(component, data.compositing_node_);
-      }
-
-      for (auto& child : component->children) {
-        update_fragment(child.get(), &data.compositing_node_);
       }
     }
 

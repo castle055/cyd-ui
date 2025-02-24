@@ -30,7 +30,7 @@ namespace cyd::ui::window_events {
         busses->at(id)->emit(ev);
         return;
       }
-      LOG::print {INFO}("Received event for window {}, but it does not exits", id);
+      LOG::print {INFO}("Received event for window {}, but it does not exit", id);
     };
 
     switch (event.event) {
@@ -42,7 +42,7 @@ namespace cyd::ui::window_events {
         break;
       case SDL_WINDOWEVENT_CLOSE:
         LOG::print {INFO}("Closing...");
-        std::exit(0);
+        bus(event.windowID, WindowClosed { });
         break;
       case SDL_WINDOWEVENT_EXPOSED:
         bus(event.windowID, RedrawEvent { });
@@ -94,6 +94,7 @@ namespace cyd::ui::window_events {
 
     switch (event.type) {
       case SDL_QUIT:
+        std::exit(0);
         break;
       case SDL_WINDOWEVENT:
         dispatch_window_event(busses, event.window);

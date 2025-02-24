@@ -21,6 +21,8 @@ struct provide_context;
 export using children_list = std::vector<cyd::ui::components::component_holder_t>;
 
 namespace cyd::ui::components {
+  export class component_state_delegate_t;
+
   struct component_state_t {
     virtual ~component_state_t() = default;
 
@@ -76,8 +78,14 @@ namespace cyd::ui::components {
       child->window = window;
     }
 
+    bool is_animated() const {
+      return animated;
+    }
+
   private:
     friend class component_base_t;
+    friend class component_state_delegate_t;
+
 
   protected:
     void set_component_name(const std::string& name) {
@@ -96,5 +104,15 @@ namespace cyd::ui::components {
     bool _dirty = false;
     bool focused = false;
     bool hovering = false;
+
+  private:
+    bool animated = false;
+  };
+
+  class component_state_delegate_t {
+  public:
+    static void set_animated(component_state_t* it, bool animated) {
+      it->animated = animated;
+    }
   };
 }

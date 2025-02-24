@@ -20,6 +20,7 @@ export import cydui.graphics;
 export import cydui.window_events;
 export import cydui.styling;
 export import cydui.application;
+export import cydui.animations;
 
 export namespace cyd::ui {
   class CWindow;
@@ -84,8 +85,13 @@ export namespace cyd::ui {
 
     public:
       sptr show() {
+        ZoneScopedN("CWindow:builder:show");
         configure_layout_style();
         auto ptr = std::shared_ptr<CWindow>(new CWindow(layout_, title_, x_, y_, width_, height_));
+        std::string t = title_;
+        ptr->add_init([=] {
+          tracy::SetThreadNameWithHint(std::format("window[{}]", t).c_str(), 1);
+        });
         ptr->coroutine_enqueue([](Layout* lyt, sptr win) -> fabric::async::async<bool> {
           bind_layout(lyt, win);
           LOG::print {INFO}("Layout bound to window");
@@ -162,8 +168,14 @@ export namespace cyd::ui {
     int height
   ): win_ref(std::make_unique<graphics::window_t>(this, nullptr, width, height)),
      layout(layout) {
+    using namespace std::chrono_literals;
+    ZoneScopedN("CWindow{}");
+
+    add_system<AnimationSystem>({.enabled = false, .period = 16ms});
+
     add_init([=,this] {
       Application::run([=](CWindow* self) {
+        ZoneScopedN("CWindow{}:init");
         self->win_ref->window = SDL_CreateWindow(
           title.c_str(),
           SDL_WINDOWPOS_UNDEFINED,

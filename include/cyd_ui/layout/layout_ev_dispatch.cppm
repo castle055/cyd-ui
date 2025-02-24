@@ -26,6 +26,7 @@ export namespace cyd::ui {
 
 
   std::vector<fabric::async::raw_listener::sptr> Layout::make_event_listeners() {
+    ZoneScopedN("Layout:make_event_listeners");
     std::vector<fabric::async::raw_listener::sptr> listeners { };
 
     static auto make_listener = [&](auto &&fun) { return win->on_event(fun).raw(); };
@@ -95,17 +96,18 @@ export namespace cyd::ui {
 
         if (focused != target->state()) {
           if (focused) {
-            // if (focused->component_instance.has_value()) {
-            //   focused->component_instance.value()
-            //     ->event_handler()
-            //     ->on_button_release((Button) it.button, 0, 0);
-            // }
             focused->focused = false;
+            if (focused->component_instance.has_value()) {
+              component_stylist->apply_style(focused->component_instance.value());
+            }
             focused->mark_dirty();
             focused = nullptr;
           }
           focused          = target->state();
           focused->focused = true;
+          if (focused->component_instance.has_value()) {
+            component_stylist->apply_style(focused->component_instance.value());
+          }
           focused->mark_dirty();
         }
 

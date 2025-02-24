@@ -30,10 +30,11 @@ namespace cyd::ui::components {
     fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&, StyleArchive&> compiler_style_rules_signal{};
   public:
     void update(component_base_t::sptr component, StyleArchive& style_archive) {
+      ZoneScopedN("Update");
       component->state()->_dirty     = false;
       queue_render_signal.emit(component);
 
-      apply_style_signal.emit(component);
+      // apply_style_signal.emit(component);
 
 
       std::unordered_map<
@@ -84,6 +85,7 @@ namespace cyd::ui::components {
         std::list<std::shared_ptr<component_base_t> >::iterator> &pending_remove,
       StyleArchive &style_archive
     ) {
+      ZoneScopedN("Add Children");
       std::size_t id_i = 0;
       std::optional<std::shared_ptr<component_base_t>> prev {std::nullopt};
       for (auto &item: children_to_add) {
@@ -110,6 +112,7 @@ namespace cyd::ui::components {
       std::optional<std::shared_ptr<component_base_t>> prev,
       StyleArchive &style_archive
     ) {
+      ZoneScopedN("Mount Children");
       std::shared_ptr<component_base_t> mounted_child {child};
       // Get or Create state for component
       component_state_ref child_state;
@@ -149,6 +152,9 @@ namespace cyd::ui::components {
         // Configure dimensional context
         anchors::configure_anchors(child, prev);
 
+        // Apply style
+        apply_style_signal.emit(child);
+
         // Redraw child
         pending_redraw.push_back(child);
       }
@@ -157,6 +163,7 @@ namespace cyd::ui::components {
     }
 
     void unmount_child(component_base_t::sptr component, const std::list<std::shared_ptr<component_base_t>>::iterator &child) {
+      ZoneScopedN("Unmount Children");
       component_actor_t::dismount_component(child->get());
       component->children.erase(child);
     }

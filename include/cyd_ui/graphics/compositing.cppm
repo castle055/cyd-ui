@@ -36,6 +36,7 @@ export namespace cyd::ui::compositing {
     double rot = 0.0;
     double scale_x = 1.0;
     double scale_y = 1.0;
+    bool animated = false;
 
     std::function<void(compositing_operation_t &op)> _fix_dimensions = [](compositing_operation_t &op) {
     };
@@ -44,11 +45,12 @@ export namespace cyd::ui::compositing {
   struct compositing_node_t {
     void set_parent(compositing_node_t* parent_) {
       parent = parent_;
-      is_flattened = (op.op == compositing_operation_t::OVERLAY)
-                     && (parent != nullptr)
-                     && (op.x >= 0) && (op.y >= 0)
-                     && ((op.x + op.w) <= parent->op.w)
-                     && ((op.y + op.h) <= parent->op.h);
+      is_flattened = (not op.animated)
+                     and ((op.op == compositing_operation_t::OVERLAY)
+                     and (parent != nullptr)
+                     and (op.x >= 0) && (op.y >= 0)
+                     and ((op.x + op.w) <= parent->op.w)
+                     and ((op.y + op.h) <= parent->op.h));
 
       if (is_flattened) {
         flattening_target = parent->flattening_target;
@@ -80,6 +82,9 @@ export namespace cyd::ui::compositing {
       } else {
         ZoneScopedN("Start render");
 
+        if (rendered_texture.is_locked()) {
+          rendered_texture.unlock();
+        }
         if (op.w == 0 or op.h == 0) {
           rendered_texture.resize(render_target->renderer, 1, 1);
         } else if (op.w != rendered_texture.width() || op.h != rendered_texture.height()) {

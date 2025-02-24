@@ -169,4 +169,15 @@ __VA_ARGS__ NAME##_
 #define STYLE ;struct style_type: cyd::ui::components::style_base_t
 
 
+//! ANIMATIONS
+
+#define ANONYMOUS_STRUCT(...)   \
+decltype([&] {                  \
+    struct _anon_ __VA_ARGS__;  \
+    return _anon_{};            \
+}())
+
+#define KEYFRAME(POS, ...)      cyd::ui::keyframe::make(POS, __VA_ARGS__)
+#define AUTO_KEYFRAME(POS, ...) cyd::ui::keyframe::make(POS, ANONYMOUS_STRUCT(__VA_ARGS__){})
+
 #endif //CYD_UI_COMPONENT_MACROS_H

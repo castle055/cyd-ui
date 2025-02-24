@@ -25,6 +25,7 @@ namespace cyd::ui::components {
   export class component_base_t {
   public:
     using sptr = std::shared_ptr<component_base_t>;
+    using wptr = std::weak_ptr<component_base_t>;
 
   public:
     virtual ~component_base_t() = default; //{
@@ -34,7 +35,6 @@ namespace cyd::ui::components {
     //    state.value()->component_instance = std::nullopt;
     //  }
     //}
-    virtual void clear_children() = 0;
     virtual void* get_props() = 0;
 
     virtual component_base_t* find_by_coords(dimension_t::value_type x, dimension_t::value_type y) = 0;
@@ -42,15 +42,10 @@ namespace cyd::ui::components {
     virtual attrs_dimensions<>& get_dimensional_relations() = 0;
     virtual std::shared_ptr<dimension_ctx_t> get_dimensional_context() = 0;
 
-    virtual style_base_t& get_style() = 0;
-    virtual style_data_base_t& get_style_data() = 0;
     virtual const refl::type_info& get_style_type_info() const = 0;
 
     virtual attrs_component<>* attrs() = 0;
     virtual std::string name() const = 0;
-
-    virtual event_dispatcher_base_t* get_event_dispatcher() = 0;
-
 
   private:
     virtual std::shared_ptr<component_state_t> create_state_instance() = 0;
@@ -123,6 +118,58 @@ namespace cyd::ui::components {
       return internal_relations;
     }
 
+    event_dispatcher_base_t* get_event_dispatcher() {
+      return event_dispatcher.has_value()? event_dispatcher.value().get(): nullptr;
+    }
+
+    style_base_t& get_style() {
+      return style_data->as_base();
+    }
+
+    style_data_base_t& get_style_data() {
+      return *(style_data.get());
+    }
+
+
+    void clear_children() {
+      children.clear();
+    }
+
+    void set_id(const std::string& id) {
+      id_ = id;
+    }
+
+    std::string get_id() const {
+      return id_;
+    }
+
+    std::optional<sptr> find_child(const std::string& id) {
+      for (const auto & child : children) {
+        if (child->get_id() == id) {
+          return child;
+        }
+        auto descendant = child->find_child(id);
+        if (descendant.has_value()) {
+          return descendant;
+        }
+      }
+      return std::nullopt;
+    }
+
+    std::list<sptr> find_children(const std::string& id) {
+      std::list<sptr> result{};
+      for (const auto & child : children) {
+        if (child->get_id() == id) {
+          result.push_back(child);
+        }
+        auto descendants = child->find_children(id);
+        for (const auto & d : descendants) {
+          result.push_back(d);
+        }
+      }
+      return result;
+    }
+
   protected:
     void set_state(const component_state_ref& state) {
       state_ = state;
@@ -144,17 +191,22 @@ namespace cyd::ui::components {
     }
 
   public:
+    friend struct component_actor_t;
+
     std::optional<component_base_t*> parent = std::nullopt;
     std::list<std::shared_ptr<component_base_t>> children{};
 
-    friend struct component_actor_t;
   protected:
     internal_relations_t internal_relations{};
+    std::optional<std::shared_ptr<event_dispatcher_base_t>> event_dispatcher{std::nullopt};
+    std::shared_ptr<style_data_base_t> style_data{};
 
   private:
     std::optional<std::weak_ptr<component_state_t>> state_ = std::nullopt;
     context_store_t context_store_{};
     std::unordered_map<refl::type_id_t, refl::any> data_map_ { };
+
+    std::string id_{};
   };
 
   struct component_actor_t {

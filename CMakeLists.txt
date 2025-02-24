@@ -41,6 +41,8 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif ()
 
 #[[                           CONFIGURE OPTIONS                              ]]#
+#option(CYD_UI_PROFILING "whether or not to enable Tracy profiler" OFF)
+option(CYD_UI_PROFILING "whether or not to enable Tracy profiler" ON)
 if (CYD_UI_DEV_MODE)
     option(CYD_UI_BUILD_APPS "whether or not app executables should be built" ON)
 else ()
@@ -127,7 +129,10 @@ FetchContent_Declare(quantify
 )
 FetchContent_MakeAvailable(quantify)
 
-#[[                                 TRACY                                    ]]#
+#[[                            CONFIGURE TRACY                               ]]#
+
+option(TRACY_ENABLE "" ${CYD_UI_PROFILING})
+option(TRACY_ON_DEMAND "" OFF)
 FetchContent_Declare (
         tracy
         GIT_REPOSITORY https://github.com/wolfpld/tracy.git
@@ -137,6 +142,7 @@ FetchContent_Declare (
 )
 FetchContent_MakeAvailable(tracy)
 
+#[[                             CONFIGURE SDL                                ]]#
 # Look for a SDL2 package, 2. look for the SDL2 component and 3. fail if none can be found
 find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
 

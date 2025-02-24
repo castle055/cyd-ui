@@ -54,7 +54,7 @@ export namespace vg {
         (std::derived_from<std::remove_reference_t<T>, vg_element_t> && ...),
         "Elements must derive from vg_element_t."
       );
-      (elements.emplace_back(new std::remove_reference_t<T>{std::forward<T &&>(_elements)}), ...);
+      (elements.push_back(make_element<std::remove_reference_t<T>>(std::forward<std::remove_reference_t<T>>(_elements))), ...);
     }
 
     template<typename T, typename... Args>
@@ -65,6 +65,13 @@ export namespace vg {
       );
       elements.emplace_back(new std::remove_reference_t<T>{std::forward<Args &&>(args)...});
       return *static_cast<T*>(elements.back().get());
+    }
+
+  private:
+    template<typename T>
+    static std::shared_ptr<vg_element_t> make_element(T&& element) {
+      T* ptr = new T{std::forward<T>(element)};
+      return std::shared_ptr<vg_element_t>(ptr);
     }
   };
 

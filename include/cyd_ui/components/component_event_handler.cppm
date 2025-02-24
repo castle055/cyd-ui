@@ -37,7 +37,7 @@ export {
 
     //! EVENT HANDLER STRUCT
     struct event_handler_t {
-    public:
+    private:
       component_base_t* component = nullptr;
 
     public:

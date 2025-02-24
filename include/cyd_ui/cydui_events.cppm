@@ -85,4 +85,6 @@ export {
       int selection{0};
     } compositing_state { };
   };
+
+  EVENT(WindowClosed) {};
 }

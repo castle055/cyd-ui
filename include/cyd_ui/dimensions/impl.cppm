@@ -31,7 +31,7 @@ namespace cyd::ui::dimensions {
 
     friend dimension<T>;
     friend expression<T>;
-    friend expression<T>::node_t;
+    friend typename expression<T>::node_t;
 
     template <typename S>
     friend const S& get_value(dimension<S>& dim);
