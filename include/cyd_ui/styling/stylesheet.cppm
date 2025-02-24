@@ -72,6 +72,9 @@ namespace cyd::ui {
 
       if (not ok) {
         LOG::print {ERROR}("Couldn't parse stylesheet");
+        for (const auto & line: log) {
+          LOG::print {ERROR}("{}: {}", line.first, line.second);
+        }
         return std::make_shared<StyleSheet>();
       }
       // print_ast_node(std::cout, ast.get(), 0);

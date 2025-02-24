@@ -163,7 +163,7 @@ namespace syntax {
       A | B | C | D | E | F);
     TRULE(hex_digit)(hex_digit_chars{} | digit{});
 
-    RULE(number)                        ((plus | minus | digit_excluding_zero{}), *digit{}, ~(dot, *digit{}));
+    RULE(number)                        (~(plus | minus), ((*digit{}, dot, +digit{}) | +digit{}));
 
     TRULE(alpha)                        (a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z );
     TRULE(ALPHA)                        (A | B | C | D | E | F | G | H | I | J | K | L | M | N | O | P | Q | R | S | T | U | V | W | X | Y | Z );
