@@ -39,15 +39,15 @@ namespace cyd::ui::components {
         }
       });
 
-      std::stable_sort(style_rules.begin(), style_rules.end(), [](const auto &lhs, const auto &rhs) {
-        return lhs.first < rhs.first;
+      std::stable_sort(style_rules.begin(), style_rules.end(), [](const style_rule_instance_t &lhs, const style_rule_instance_t &rhs) {
+        return lhs.specificity > rhs.specificity;
       });
     }
 
     void apply_style(const component_base_t::sptr& component) {
       ZoneScopedN("Apply Style");
       auto& style_data = component->get_style_data();
-      style_data.reset();
+      // style_data.reset();
 
       if (style_data.has_override()) {
         style_data.apply_override();
@@ -66,32 +66,124 @@ namespace cyd::ui::components {
       const auto& bti = refl::type_info::from<style_base_t>();
       const auto& ti = component->get_style_type_info();
 
+      std::unordered_set<const refl::field_info*> pending_base_fields{};
+      for (const auto & bfti : bti.fields()) {
+        pending_base_fields.insert(&bfti);
+      }
       std::unordered_set<const refl::field_info*> pending_fields{};
       for (const auto & fti : ti.fields()) {
         pending_fields.insert(&fti);
       }
-      std::unordered_set<const refl::field_info*> pending_base_fields{};
-      for (const auto & bfti : bti.fields()) {
-        pending_fields.insert(&bfti);
-      }
+
+      // keep track of which fields where just activated from rules being deactivated
+      std::unordered_set<const refl::field_info*> activated_base_fields{};
+      std::unordered_set<const refl::field_info*> activated_fields{};
+
+      // keep track of which fields where just deactivated from rules being deactivated
+      std::unordered_set<const refl::field_info*> deactivated_base_fields{};
+      std::unordered_set<const refl::field_info*> deactivated_fields{};
 
       style_base_t& base_s = component->get_style();
-      for (auto& [specificity, rule]: style_rules | std::views::reverse) {
-        if (check_style_comb_selector_vector(component, rule->selectors_, true, true)) {
-          ZoneScopedN("Apply Rule");
+      for (auto& rule_instance: style_rules) {
+        auto& [specificity, rule, is_active, _, __] = rule_instance;
+        const bool should_be_active = check_style_comb_selector_vector(component, rule->selectors_, true, true);
+        if (not is_active and should_be_active) {
+          // Activate rule
+          ZoneScopedN("Activate Rule");
           //! Base fields
           for (auto field_it = pending_base_fields.begin(); field_it != pending_base_fields.end();) {
-            apply_style_property(component, &base_s, field_it, pending_base_fields, rule);
+            const refl::field_info* field = *field_it;
+            if (apply_style_property(component, &base_s, field_it, pending_base_fields, rule)) {
+              rule_instance.active_base_properties.insert(field);
+              activated_base_fields.insert(field);
+            }
           }
           //! Custom fields
           for (auto field_it = pending_fields.begin(); field_it != pending_fields.end();) {
-            apply_style_property(component, style_data.as_raw(), field_it, pending_fields, rule);
+            const refl::field_info* field = *field_it;
+            if (apply_style_property(component, style_data.as_raw(), field_it, pending_fields, rule)) {
+              rule_instance.active_properties.insert(field);
+              activated_fields.insert(field);
+            }
           }
+
+          rule_instance.active = true;
+        } else if (is_active and not should_be_active) {
+          ZoneScopedN("Deactivate Rule");
+          // Deactivate rule
+          for (const auto& prop: rule_instance.active_base_properties) {
+            deactivated_base_fields.insert(prop);
+          }
+          for (const auto& prop: rule_instance.active_properties) {
+            deactivated_fields.insert(prop);
+          }
+          rule_instance.active_base_properties.clear();
+          rule_instance.active_properties.clear();
+          rule_instance.active = false;
+        } else if (is_active and should_be_active) {
+          // Activate rule
+          ZoneScopedN("Update Rule");
+          //! Remove fields that have been overriden by a more specific rule
+          //! Base fields
+          for (auto field_it = activated_base_fields.begin(); field_it != activated_base_fields.end(); ++field_it) {
+            rule_instance.active_base_properties.erase(*field_it);
+          }
+          //! Custom fields
+          for (auto field_it = activated_fields.begin(); field_it != activated_fields.end(); ++field_it) {
+            rule_instance.active_properties.erase(*field_it);
+          }
+
+          //! Check-apply fields that are no longer being overriden by a more specific rule
+          //! Base fields
+          for (auto field_it = deactivated_base_fields.begin(); field_it != deactivated_base_fields.end();) {
+            const refl::field_info* field = *field_it;
+            if (apply_style_property(component, &base_s, field_it, deactivated_base_fields, rule)) {
+              rule_instance.active_base_properties.insert(field);
+            }
+          }
+          //! Custom fields
+          for (auto field_it = deactivated_fields.begin(); field_it != deactivated_fields.end();) {
+            const refl::field_info* field = *field_it;
+            if (apply_style_property(component, style_data.as_raw(), field_it, deactivated_fields, rule)) {
+              rule_instance.active_properties.insert(field);
+            }
+          }
+
+          //! Remove pending fields that are active in this rule
+          //! Base fields
+          for (auto field_it = pending_base_fields.begin(); field_it != pending_base_fields.end();) {
+            if (rule_instance.active_base_properties.contains(*field_it)) {
+              field_it = pending_base_fields.erase(field_it);
+            } else {
+              ++field_it;
+            }
+          }
+          //! Custom fields
+          for (auto field_it = pending_fields.begin(); field_it != pending_fields.end();) {
+            if (rule_instance.active_properties.contains(*field_it)) {
+              field_it = pending_fields.erase(field_it);
+            } else {
+              ++field_it;
+            }
+          }
+
         }
+      }
+
+      // Merge pending with deactivated fields
+      pending_fields.insert_range(deactivated_fields);
+      pending_base_fields.insert_range(deactivated_base_fields);
+
+      // Set pending fields with default values
+      for (const auto & field : pending_base_fields) {
+        style_data.reset_field(field, true);
+      }
+      for (const auto & field : pending_fields) {
+        style_data.reset_field(field, false);
       }
     }
 
-    void apply_style_property(const component_base_t::sptr &component, void *style_obj,
+    bool apply_style_property(const component_base_t::sptr &component, void *style_obj,
                               std::unordered_set<const refl::field_info *>::iterator &field_it,
                               std::unordered_set<const refl::field_info *> &pending_fields,
                               const StyleRule::sptr &rule) {
@@ -102,14 +194,14 @@ namespace cyd::ui::components {
         if (rule_field.is(field->type())) {
           field->type().assign_copy_of(rule_field.data(), field->get_ptr(style_obj));
           field_it = pending_fields.erase(field_it);
-          return;
+          return true;
         } else if (field->type().is_type<vg::paint::type>()) {
           if (rule_field.is<color::Color>()) {
             vg::paint::type &paint = field->get_ref<vg::paint::type>(style_obj);
             const color::Color &paint_color = rule_field.as<color::Color>();
             paint = vg::paint::type::make(vg::paint::solid{paint_color});
             field_it = pending_fields.erase(field_it);
-            return;
+            return true;
           }
         }
         LOG::print{WARN}("Property '{}::{}', expected type: '{}', found: '{}'",
@@ -119,6 +211,7 @@ namespace cyd::ui::components {
                          rule_field.type().name());
       }
       ++field_it;
+      return false;
     }
 
     bool check_style_comb_selector_vector(const component_base_t::sptr& component, const std::vector<StyleRuleCombinedSelector> &selectors,

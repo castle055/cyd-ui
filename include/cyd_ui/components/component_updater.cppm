@@ -162,7 +162,7 @@ namespace cyd::ui::components {
       return mounted_child;
     }
 
-    void unmount_child(component_base_t::sptr component, const std::list<std::shared_ptr<component_base_t>>::iterator &child) {
+    void unmount_child(const component_base_t::sptr& component, const std::list<std::shared_ptr<component_base_t>>::iterator &child) {
       ZoneScopedN("Unmount Children");
       component_actor_t::dismount_component(child->get());
       component->children.erase(child);
