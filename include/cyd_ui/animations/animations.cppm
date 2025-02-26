@@ -339,27 +339,30 @@ namespace cyd::ui {
       std::forward_list<components::component_base_t::sptr> c_pending_repaint{};
       std::forward_list<components::component_base_t::sptr> c_pending_reflow{};
       std::forward_list<components::component_base_t::sptr> c_pending_full_update{};
+      std::forward_list<components::component_base_t::sptr> c_pending_deanimation{};
 
       {
         ZoneScopedN("advance");
         for (auto anim = active_animations_.begin(); anim != active_animations_.end();) {
+          switch (anim->complexity) {
+            case animation_complexity_e::REFLOW:
+              c_pending_reflow.push_front(anim->component.lock());
+              break;
+            case animation_complexity_e::REPAINT:
+              c_pending_repaint.push_front(anim->component.lock());
+              break;
+            case animation_complexity_e::COMPOSE:
+              c_pending_compose.push_front(anim->component.lock());
+              break;
+            case animation_complexity_e::FULL_UPDATE:
+              c_pending_full_update.push_front(anim->component.lock());
+              break;
+          }
+
           if (not advance_animation(anim, now)) {
+            c_pending_deanimation.push_front(anim->component.lock());
             anim = active_animations_.erase(anim);
           } else {
-            switch (anim->complexity) {
-              case animation_complexity_e::REFLOW:
-                c_pending_reflow.push_front(anim->component.lock());
-                break;
-              case animation_complexity_e::REPAINT:
-                c_pending_repaint.push_front(anim->component.lock());
-                break;
-              case animation_complexity_e::COMPOSE:
-                c_pending_compose.push_front(anim->component.lock());
-                break;
-              case animation_complexity_e::FULL_UPDATE:
-                c_pending_full_update.push_front(anim->component.lock());
-                break;
-            }
             ++anim;
           }
         }
@@ -386,6 +389,11 @@ namespace cyd::ui {
       // Recompose components that need it
       if (not c_pending_compose.empty() or needs_compositing) {
         s_compose_all.emit();
+      }
+
+      // De-animate components that need it
+      for (const auto& c: c_pending_deanimation) {
+        components::component_state_delegate_t::set_animated(c->state().get(), false);
       }
     }
 
@@ -430,24 +438,25 @@ namespace cyd::ui {
       const bool is_complete = x > 1.0;
       if (is_complete or anim->component.expired()) {
         if (not anim->component.expired()) {
-          components::component_state_delegate_t::set_animated(
-            anim->component.lock()->state().get(), false
-          );
+          apply_animation_frame(anim, 1.0);
         }
         return false;
       }
 
+      apply_animation_frame(anim, x);
+      return true;
+    }
+
+    void apply_animation_frame(std::list<animation_state>::iterator& anim, float frame_x) {
       auto component = anim->component.lock();
       for (const auto & [prop_id, prop_info] : anim->property_map) {
         const auto& [field_info, initial_value] = prop_info;
         auto& prop_timeline = anim->anim.data_->timelines_.at(prop_id);
 
-        refl::any interpolated_value = prop_timeline.interpolate(x, initial_value);
+        refl::any interpolated_value = prop_timeline.interpolate(frame_x, initial_value);
         void*     field_ptr          = field_info->get_ptr(component->get_style_data().as_raw());
         field_info->type().assign_copy_of(interpolated_value.data(), field_ptr);
       }
-
-      return true;
     }
 
   private:
