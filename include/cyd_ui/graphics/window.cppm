@@ -5,7 +5,7 @@
 
 module;
 #define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 
 export module cydui.graphics.window;

@@ -14,7 +14,7 @@ namespace stdui::input {
   struct TextInputContext {
 
   };
-  export struct COMPONENT(
+  export COMPONENT(
     text, { std::string* text; } STATE { int caret_pos = 0; };
     ATTRIBUTE(on_enter, std::function<void()>){[] {}};
     ATTRIBUTE(on_escape, std::function<void()>){[] {}};
@@ -40,19 +40,19 @@ namespace stdui::input {
     }
 
     ON_KEY_PRESS {
-      if (ev.keysym.code == Keycode::SDLK_LEFT) {
+      if (ev.keysym.code == SDLK_LEFT) {
         state.caret_pos = advance_from(state.caret_pos, -1);
-      } else if (ev.keysym.code == Keycode::SDLK_RIGHT) {
+      } else if (ev.keysym.code == SDLK_RIGHT) {
         state.caret_pos = advance_from(state.caret_pos);
-      } else if (ev.keysym.code == Keycode::SDLK_HOME) {
+      } else if (ev.keysym.code == SDLK_HOME) {
         state.caret_pos = 0;
-      } else if (ev.keysym.code == Keycode::SDLK_END) {
+      } else if (ev.keysym.code == SDLK_END) {
         state.caret_pos = props.text->size();
-      } else if (ev.keysym.code == Keycode::SDLK_RETURN) {
+      } else if (ev.keysym.code == SDLK_RETURN) {
         $component.on_enter_();
-      } else if (ev.keysym.code == Keycode::SDLK_ESCAPE) {
+      } else if (ev.keysym.code == SDLK_ESCAPE) {
         $component.on_escape_();
-      } else if (ev.keysym.code == Keycode::SDLK_BACKSPACE) {
+      } else if (ev.keysym.code == SDLK_BACKSPACE) {
         if (state.caret_pos == static_cast<int>(props.text->size())) {
           while (!props.text->empty()) {
             const unsigned char c = (*props.text)[props.text->size() - 1];

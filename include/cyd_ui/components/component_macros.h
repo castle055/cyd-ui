@@ -5,7 +5,7 @@
 #define CYD_UI_COMPONENT_MACROS_H
 
 #include "./component_event_macros.h"
-
+#include <SDL3/SDL_keycode.h>
 
 // ? Overridable macros in case of name collision
 #define CYDUI_STATE_NAME(NAME) State##NAME
@@ -24,9 +24,10 @@
 
 #define STATE ; public: struct init: public cyd::ui::components::component_state_t
 
+#define EXTENDS(...) , __VA_ARGS__
 
 #define COMPONENT(NAME, ...)                                                                       \
-  NAME: public cyd::ui::components::component_t<NAME> {                                            \
+  struct NAME: public cyd::ui::components::component_t<NAME> {                                     \
     struct event_handler_t;                                                                        \
     struct init;                                                                                   \
     struct style_type;                                                                             \
@@ -55,11 +56,11 @@
     void* get_props() override {                                                                   \
       return (void*)&(this->props);                                                                \
     }                                                                                              \
-    NAME& style(style_t new_style) {                                                               \
+    auto& style(style_t new_style) {                                                               \
       component_t::set_style_override(new_style);                                                  \
       return *this;                                                                                \
     }                                                                                              \
-    NAME& style(std::function<void(style_t&)> style_transform) {                                   \
+    auto& style(std::function<void(style_t&)> style_transform) {                                   \
       component_t::set_style_transform(style_transform);                                           \
       return *this;                                                                                \
     }                                                                                              \
@@ -140,7 +141,9 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 #define ON_SCROLL           CYDUI_INTERNAL_EV_HANDLER_IMPL(scroll)
 #define ON_KEY_PRESS        CYDUI_INTERNAL_EV_HANDLER_IMPL(key_press)
 #define ON_KEY_RELEASE      CYDUI_INTERNAL_EV_HANDLER_IMPL(key_release)
-#define ON_TEXT_INPUT       CYDUI_INTERNAL_EV_HANDLER_IMPL(text_input)
+#define ON_TEXT_INPUT                                                                              \
+  static constexpr bool handles_text_input = true;                                                 \
+  CYDUI_INTERNAL_EV_HANDLER_IMPL(text_input)
 
 #define ON_EVENT(EVENT, ...) \
   custom_event_listener< EVENT > on_##EVENT{&window, [&](const EVENT& event) { \
@@ -150,7 +153,7 @@ struct CYDUI_EV_HANDLER_NAME(NAME)    \
 #define FRAGMENT void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS
 
 #define SIGNAL(NAME, ...) \
-;private: \
+private: \
   fabric::wiring::signal<__VA_ARGS__> NAME{}; \
 public: \
   auto& on_##NAME(auto&& fun) { \
@@ -159,14 +162,15 @@ public: \
   }
 
 #define ATTRIBUTE(NAME, ...) \
-;public: \
+public: \
   auto& NAME (const __VA_ARGS__& value) { \
     NAME##_ = value; \
     return *this; \
   } \
 private: \
 __VA_ARGS__ NAME##_
-#define STYLE ;struct style_type: cyd::ui::components::style_base_t
+
+#define STYLE struct style_type: cyd::ui::components::style_base_t
 
 
 //! ANIMATIONS

@@ -12,8 +12,11 @@ export import cydui.dimensions;
 export import cydui.graphics;
 export import cydui.styling;
 
+import cydui.animations.complexity;
+
 export namespace cyd::ui::components {
   struct style_base_t {
+    [[meta(AnimationComplexity::REPAINT)]]
     vg::paint::type background{vg::paint::type::make(vg::paint::solid("#00000000"_color))};
   };
 

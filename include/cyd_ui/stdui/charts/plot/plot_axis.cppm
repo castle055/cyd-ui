@@ -24,7 +24,7 @@ namespace charts {
   constexpr la::scalar DEFAULT_AXIS_STEP      = 0.1;
 
 
-  export struct COMPONENT(PlotAxis, {
+  export COMPONENT(PlotAxis, {
     la::vec<2> axis_direction{0, 0};
     la::vec<2> label_direction{0, 0};
     la::scalar label_offset{0};
@@ -265,7 +265,7 @@ namespace charts {
   };
 
 
-  export struct COMPONENT(
+  export COMPONENT(
     NumericAxisLabel, { la::scalar value = 0; };
     static cyd::ui::components::component_holder_t builder(const la::scalar value) {
       return NumericAxisLabel{{value}};
@@ -291,7 +291,7 @@ namespace charts {
     }
   };
 
-  export struct COMPONENT(
+  export COMPONENT(
     PiRatioAxisLabel, { la::scalar value = 0; };
     static cyd::ui::components::component_holder_t builder(const la::scalar value) {
       return PiRatioAxisLabel{{value}};

@@ -143,11 +143,8 @@ FetchContent_Declare (
 FetchContent_MakeAvailable(tracy)
 
 #[[                             CONFIGURE SDL                                ]]#
-# Look for a SDL2 package, 2. look for the SDL2 component and 3. fail if none can be found
-find_package(SDL2 REQUIRED CONFIG REQUIRED COMPONENTS SDL2)
-
-# Look for a SDL2 package, 2. Look for the SDL2maincomponent and 3. DO NOT fail when SDL2main is not available
-find_package(SDL2 REQUIRED CONFIG COMPONENTS SDL2main)
+# Look for a SDL3 package, 2. look for the SDL3 component and 3. fail if none can be found
+find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3)
 
 ################################################################################
 #[[                             CONFIGURE CYD UI                             ]]#
@@ -190,19 +187,11 @@ target_sources(cyd_ui
 
 target_link_libraries(cyd_ui
         PUBLIC
-         cyd_fabric
-         quantify
-         TracyClient
+        cyd_fabric
+        quantify
+        TracyClient
+        SDL3::SDL3
 )
-
-# SDL2::SDL2main may or may not be available. It is e.g. required by Windows GUI applications
-if(TARGET SDL2::SDL2main)
-    # It has an implicit dependency on SDL2 functions, so it MUST be added before SDL2::SDL2 (or SDL2::SDL2-static)
-    target_link_libraries(cyd_ui PRIVATE SDL2::SDL2main)
-endif()
-
-# Link to the actual SDL2 library. SDL2::SDL2 is the shared SDL library, SDL2::SDL2-static is the static SDL libarary.
-target_link_libraries(cyd_ui PRIVATE SDL2::SDL2)
 
 
 ################################################################################

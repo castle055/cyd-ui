@@ -82,6 +82,10 @@ namespace cyd::ui::components {
       return animated;
     }
 
+    bool is_text_input() const {
+      return is_text_input_;
+    }
+
   private:
     friend class component_base_t;
     friend class component_state_delegate_t;
@@ -107,12 +111,17 @@ namespace cyd::ui::components {
 
   private:
     bool animated = false;
+    bool is_text_input_ = false;
   };
 
   class component_state_delegate_t {
   public:
     static void set_animated(component_state_t* it, bool animated) {
       it->animated = animated;
+    }
+
+    static void set_is_text_input(component_state_t* it, bool is_text_input) {
+      it->is_text_input_ = is_text_input;
     }
   };
 }

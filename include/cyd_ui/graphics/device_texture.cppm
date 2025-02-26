@@ -6,7 +6,7 @@ module;
 #include <tracy/Tracy.hpp>
 
 #define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 export module cydui.graphics:dev_texture;
 
@@ -61,7 +61,7 @@ export namespace cyd::ui::compositing {
       SDL_DestroyTexture(texture);
     }
 
-    void resize(SDL_Renderer* renderer, int w, int h, bool copy_old = false) {
+    void resize(SDL_Renderer* renderer, float w, float h, bool copy_old = false) {
       renderer_ = renderer;
       if (w != this->w || h != this->h) {
         ZoneScopedN("Resize Texture");
@@ -72,13 +72,13 @@ export namespace cyd::ui::compositing {
           if (copy_old) {
             SDL_SetRenderTarget(renderer, texture);
             SDL_SetTextureBlendMode(old_texture, SDL_BLENDMODE_BLEND);
-            SDL_Rect dst {
+            SDL_FRect dst {
               .x = 0,
               .y = 0,
               .w = std::min(w, this->w),
               .h = std::min(h, this->h)
             };
-            SDL_RenderCopy(renderer, old_texture, &dst, &dst);
+            SDL_RenderTexture(renderer, old_texture, &dst, &dst);
             SDL_SetRenderTarget(renderer, nullptr);
           }
           SDL_DestroyTexture(old_texture);
@@ -134,7 +134,7 @@ export namespace cyd::ui::compositing {
       return locked_;
     }
 
-    void copy_into(SDL_Renderer* renderer, device_texture_t& other, SDL_Rect* dst, bool blend = true, SDL_Rect* src_ = nullptr) {
+    void copy_into(SDL_Renderer* renderer, device_texture_t& other, SDL_FRect* dst, bool blend = true, SDL_FRect* src_ = nullptr) {
       renderer_ = renderer;
       if (texture == nullptr) return;
       ZoneScopedN("Copying Texture");
@@ -144,7 +144,7 @@ export namespace cyd::ui::compositing {
       } else {
         SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_NONE);
       }
-      SDL_Rect src {
+      SDL_FRect src {
         .x = 0,
         .y = 0,
         .w = this->w,
@@ -154,29 +154,29 @@ export namespace cyd::ui::compositing {
         src = *src_;
       }
 
-      SDL_RenderCopy(renderer, texture, &src, dst);
+      SDL_RenderTexture(renderer, texture, &src, dst);
       SDL_SetRenderTarget(renderer, nullptr);
     }
 
-    void copy_into(SDL_Renderer* renderer, device_texture_t& other, SDL_Rect* dst) const {
+    void copy_into(SDL_Renderer* renderer, device_texture_t& other, SDL_FRect* dst) const {
       if (texture == nullptr) return;
       ZoneScopedN("Copying Texture");
       SDL_SetRenderTarget(renderer, other.texture);
       SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-      SDL_Rect src {
+      SDL_FRect src {
         .x = 0,
         .y = 0,
         .w = this->w,
         .h = this->h
       };
-      SDL_RenderCopy(renderer, texture, &src, dst);
+      SDL_RenderTexture(renderer, texture, &src, dst);
       SDL_SetRenderTarget(renderer, nullptr);
     }
 
-    int width() const {
+    float width() const {
       return w;
     }
-    int height() const {
+    float height() const {
       return h;
     }
 
@@ -187,7 +187,7 @@ export namespace cyd::ui::compositing {
   private:
     SDL_Renderer* renderer_ = nullptr;
     texture_ptr texture {nullptr};
-    int w, h;
+    float w, h;
     bool streaming_ = false;
     bool locked_ = false;
   };

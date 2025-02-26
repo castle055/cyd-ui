@@ -13,6 +13,7 @@ import fabric.wiring.signals;
 export import cydui.components.base;
 export import cydui.easing_functions;
 export import cydui.interpolation;
+export import cydui.animations.complexity;
 
 
 #define ANONYMOUS_STRUCT(...)   \
@@ -38,13 +39,6 @@ struct std::hash<cyd::ui::property_id_t> {
 };
 
 namespace cyd::ui {
-  enum class animation_complexity_e {
-    COMPOSE     = 0, // Only needs compositing
-    REPAINT     = 1, // Requires updating and repainting the fragment
-    REFLOW      = 2, // Requires recomputing dimensions
-    FULL_UPDATE = 3, // Requires an entire component update
-  };
-
   struct property_timeline_t {
     refl::any interpolate(double x, refl::any initial_value) const {
       if (keyframes.empty()) {
@@ -321,7 +315,7 @@ namespace cyd::ui {
     components::component_base_t::wptr component;
     std::chrono::system_clock::time_point started;
   private:
-    animation_complexity_e complexity = animation_complexity_e::REPAINT;
+    AnimationComplexity complexity = AnimationComplexity::REPAINT;
     std::unordered_map<std::pair<refl::type_id_t, std::string>, std::tuple<const refl::field_info*, refl::any>> property_map{};
   };
 
@@ -345,16 +339,16 @@ namespace cyd::ui {
         ZoneScopedN("advance");
         for (auto anim = active_animations_.begin(); anim != active_animations_.end();) {
           switch (anim->complexity) {
-            case animation_complexity_e::REFLOW:
+            case AnimationComplexity::REFLOW:
               c_pending_reflow.push_front(anim->component.lock());
               break;
-            case animation_complexity_e::REPAINT:
+            case AnimationComplexity::REPAINT:
               c_pending_repaint.push_front(anim->component.lock());
               break;
-            case animation_complexity_e::COMPOSE:
+            case AnimationComplexity::COMPOSE:
               c_pending_compose.push_front(anim->component.lock());
               break;
-            case animation_complexity_e::FULL_UPDATE:
+            case AnimationComplexity::FULL_UPDATE:
               c_pending_full_update.push_front(anim->component.lock());
               break;
           }
@@ -413,7 +407,7 @@ namespace cyd::ui {
 
         for (const auto & field_ti : style_ti.fields()) {
           if (field_ti.type().id() == type_id and field_ti.name == prop_name) {
-            animation_complexity_e complexity = animation_complexity_e::REPAINT;
+            AnimationComplexity complexity = AnimationComplexity::REPAINT;
 
             void* field_ptr = field_ti.get_ptr(component->get_style_data().as_raw());
             refl::any initial_value = refl::any::make(field_ti.type(), field_ptr);

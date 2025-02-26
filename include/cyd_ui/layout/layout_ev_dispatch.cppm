@@ -6,7 +6,7 @@
 module;
 #include <tracy/Tracy.hpp>
 #define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 
 export module cydui:layout_ev_dispatch;
@@ -50,7 +50,7 @@ export namespace cyd::ui {
       make_listener([&](const KeyEvent &ev) {
         ZoneScopedN("Key Event");
         auto _pev = this->win->profiling_ctx.scope_event("Key");
-        if (ev.keysym.code == Keycode::SDLK_F12 && ev.pressed && not ev.holding) {
+        if (ev.keysym.code == SDLK_F12 && ev.pressed && not ev.holding) {
           LOG::print {INFO}("Pressed Debug Key");
           return;
         }
@@ -97,6 +97,9 @@ export namespace cyd::ui {
         if (focused != target->state()) {
           if (focused) {
             focused->focused = false;
+            if (focused->is_text_input()) {
+              SDL_StopTextInput(win->native()->window);
+            }
             if (focused->component_instance.has_value()) {
               component_stylist->apply_style(focused->component_instance.value());
             }
@@ -105,6 +108,9 @@ export namespace cyd::ui {
           }
           focused          = target->state();
           focused->focused = true;
+          if (focused->is_text_input()) {
+            SDL_StartTextInput(win->native()->window);
+          }
           if (focused->component_instance.has_value()) {
             component_stylist->apply_style(focused->component_instance.value());
           }

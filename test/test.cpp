@@ -9,9 +9,10 @@
 
 import fabric.logging;
 import cydui.std;
-import cydui.debugger;
+import cydui.animations;
 
 using namespace stdui;
+using namespace std::chrono_literals;
 
 void setup() {
 }
@@ -24,92 +25,110 @@ struct test_context {
 struct styletype {
   color::Color bg{"#ff0000"_color};
 };
-struct COMPONENT(TestWithContext, { std::string* text; } SIGNAL(pressed) //
-                 STYLE {
-                 }) {
+COMPONENT(
+  TestWithContext, //
+  { std::string* text; };
+  SIGNAL(pressed);
+  STYLE EXTENDS(styletype) {
+    cyd::ui::components::dimension_t some_dim{0_px};
+    double                           val{0};
+  };
+) {
   use_context<test_context> test_ctx;
   CHILDREN {
+    style_t sasd{{.background = vg::paint::type::make<vg::paint::solid>("#ffffff"_color)}};
     // $component.background(test_ctx->color);
     // $component.background(style.background);
 
-    return {
-    };
+    // style.some_dim
+
+    return {};
   }
 
-  ON_BUTTON_PRESS {
+  ON_BUTTON_RELEASE {
     // test_ctx->color = "#00FF00"_color;
     // test_ctx.notify();
-    // $component.pressed.emit();
+    $component.pressed.emit();
   }
 
   FRAGMENT {
-    // fragment.draw<vg::line>()
-    //         .x1(-100).x2(10 * $width)
-    //         .y1(-5).y2(-5)
-    //         .stroke("#0000FF"_color)
-    //         .stroke_width(11);
+    if (style.val > 0) {
+      // LOG::print{DEBUG}("val: {}", style.val);
+    }
+    fragment.draw<vg::line>()
+      .x1(style.val * $width)
+      .x2(style.val * $width)
+      .y1(0)
+      .y2($height)
+      .stroke("#0000FF"_color)
+      .stroke_width(4);
   }
 };
 
-struct COMPONENT(TestComponent, { std::string* text; }) {
-  provide_context<test_context> test_ctx { };
+
+cyd::ui::animation anim{
+  {                                                                   //
+   cyd::ui::keyframe::make(1.0, TestWithContext::style_t{.val = 1.0}) //
+     .interp("val", cyd::ui::interp::bezier{{1.0, 0.2}, {0.4, 0.0}})
+  },
+  cyd::ui::animation_opts{} //
+    .easing(cyd::ui::easing::linear)
+    .duration(3000ms),
+};
+
+COMPONENT(TestComponent, { std::string* text; }) {
+  provide_context<test_context> test_ctx{};
   CHILDREN {
-    // $component.background("#00AAAA"_color);
-    // FCAE1E
-    color::Color color {"#00FF00"_color};
     return {
       test_ctx > with_context {
         input::text {{props.text}}.height(30_px).width($parent::width / 2).on_enter([&] {
           std::cout << "ENTER!" << std::endl;
         }),
-        // TestWithContext { }.x(0_px).width(20_px).height(20_px),
-        // TestWithContext { }.x(20_px).width(20_px).height(20_px),
-        TestWithContext { }.x(50_px).y(75_px).width(20_px).height(20_px),
-        TestWithContext { }.x(75_px).y(50_px).width(20_px).height(20_px),
-        TestWithContext { }.x(50_px).y(50_px).width(20_px).height(20_px)
+        TestWithContext { }.x(50_px).y(50_px)
+                           .width(200_px).height(200_px)
+                           .id("animation_target")
+                           .on_pressed([&] {
+                             auto c = $component.find_child("animation_target").value();
+                             cyd::ui::animate(c, anim);
+                           })
                            .border("#00FF00"_color)
                            .border_width(2)["some-tag"]
       },
-      // TestWithContext { }.x(70_px).width(20_px).height(20_px),
-      // with {true}.then({})
     };
   }
-
-  // FRAGMENT {
-  //   fragment.draw<vg::line>().x2($width).y2($height).stroke("#00FF00"_color);
-  // }
 };
 
-struct COMPONENT(OtherComponent, { }) {
+COMPONENT(OtherComponent, {}) {
   std::string text1 = "Well, hello there!";
   std::string text2 = "Well, hello there!";
   CHILDREN {
     return {
-      TestComponent {{&text1}}.width($width).height($height / 2 - 1),
-      TestComponent {{&text2}}.width($width).height($height / 2 - 1).y($height / 2 + 1),
+      TestComponent{{&text1}}.width($width).height($height / 2 - 1),
+      TestComponent{{&text2}}.width($width).height($height / 2 - 1).y($height / 2 + 1),
     };
   }
 };
 
 
 TEST("Debug panel") {
-  using namespace cyd::ui::debug;
+  // using namespace cyd::ui::debug;
 
   LOG::INIT { }.filter({".*", "stdout"});
 
   std::string text {"TEXT: "};
 
-  auto win = cyd::ui::CWindow::make<DebugPanel>()
-             .size(777, 480)
-             .title("Debug panel")
-             .show();
-
-  while (win->is_open());
+  // auto win = cyd::ui::CWindow::make<DebugPanel>()
+  //            .size(777, 480)
+  //            .title("Debug panel")
+  //            .show();
+  //
+  // while (win->is_open());
   return 0;
 }
 
 TEST("Text Input") {
   LOG::INIT { }.filter({".*", "stdout"});
+
   std::string text {"TEXT: "};
   std::string text1 {"TEXT: "};
 
@@ -118,7 +137,6 @@ TEST("Text Input") {
              .title("[TEST] Text input")
              .style(R"TSS(
 stdui/input/text {
-  background: #222222;
 }
 stdui/input/text:hover {
   background: #333333;
@@ -127,7 +145,8 @@ stdui/input/text:focus {
   background: #552222;
 }
 TestWithContext {
-  background: #FFFFFF;
+  background: #FF0000;
+  val: 0.2;
 }
 TestWithContext#some-tag {
   background: #00FF00;
@@ -146,7 +165,9 @@ TestWithContext#some-tag:hover {
   //             .title("[TEST] Text input")
   //             .show();
 
-  while (win->is_open());
+  while (win->is_open()) {
+    std::this_thread::sleep_for(60s);
+  }
   return 0;
 }
 

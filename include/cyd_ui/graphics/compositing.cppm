@@ -6,7 +6,7 @@ module;
 #include <tracy/Tracy.hpp>
 
 #define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 export module cydui.graphics:compositing;
 
@@ -144,7 +144,7 @@ export namespace cyd::ui::compositing {
       ZoneScopedN("Compose Own");
       if (is_flattened) return;
       flush_rendered_texture(render_target);
-      SDL_Rect dst {
+      SDL_FRect dst {
         .x = 0,
         .y = 0,
         .w = rendered_texture.width(),
@@ -159,25 +159,25 @@ export namespace cyd::ui::compositing {
 
       auto& target = is_flattened? flattening_target->composite_texture : composite_texture;
 
-      int w_ = other->composite_texture.width();
-      int h_ = other->composite_texture.height();
+      float w_ = other->composite_texture.width();
+      float h_ = other->composite_texture.height();
 
       target.resize(
         renderer,
-        std::max(target.width(), flatten_x + other->op.x + w_),
+        std::max(float{target.width()}, flatten_x + other->op.x + w_),
         std::max(target.height(), flatten_y + other->op.y + h_),
         true
       );
 
-      SDL_Rect src {
+      SDL_FRect src {
         .x = 0,
         .y = 0,
         .w = w_,
         .h = h_,
       };
-      SDL_Rect dst {
-        .x = flatten_x + other->op.x,
-        .y = flatten_y + other->op.y,
+      SDL_FRect dst {
+        .x = static_cast<float>(flatten_x + other->op.x),
+        .y = static_cast<float>(flatten_y + other->op.y),
         .w = w_,
         .h = h_,
       };
@@ -228,14 +228,15 @@ export namespace cyd::ui::compositing {
         SDL_RenderClear(rtarget->renderer);
 
         SDL_Texture* texture = root->composite_texture.sdl_texture();
-        SDL_Rect src {
+        SDL_FRect src {
           .x = 0,
           .y = 0,
           .w = root->composite_texture.width(),
           .h = root->composite_texture.height()
         };
-        SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-        SDL_RenderCopy(rtarget->renderer, texture, &src, &src);
+        SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND_PREMULTIPLIED);
+
+        SDL_RenderTexture(rtarget->renderer, texture, &src, &src);
         SDL_RenderPresent(rtarget->renderer);
       }
     }

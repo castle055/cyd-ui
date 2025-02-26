@@ -19,7 +19,7 @@ export import :view;
 export using la = with_precision<double>;
 
 namespace charts {
-  export struct COMPONENT(plot, {
+  export COMPONENT(plot, {
     std::vector<data_series_t> series{};
   };
   axis_t<plot>     top_axis     {*this, {1,0}, {0,-1}, {1,0}, false, 20, 50};

@@ -19,7 +19,7 @@ using la = with_precision<double>;
 
 
 namespace charts {
-  struct COMPONENT(PlotView, {
+  COMPONENT(PlotView, {
     const data_series_t*                                  series;
     la::scalar                                            min_x = 0, max_x = 1;
     la::scalar                                            min_y = 0, max_y = 1;

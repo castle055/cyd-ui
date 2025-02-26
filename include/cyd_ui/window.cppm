@@ -7,7 +7,7 @@ module;
 #include <cyd_fabric_modules/headers/macros/async_events.h>
 #include <tracy/Tracy.hpp>
 #define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 export module cydui:window;
 
@@ -176,24 +176,21 @@ export namespace cyd::ui {
     add_init([=,this] {
       Application::run([=](CWindow* self) {
         ZoneScopedN("CWindow{}:init");
-        self->win_ref->window = SDL_CreateWindow(
-          title.c_str(),
-          SDL_WINDOWPOS_UNDEFINED,
-          SDL_WINDOWPOS_UNDEFINED,
-          width,
-          height,
-          SDL_WINDOW_RESIZABLE
-        );
+          SDL_CreateWindowAndRenderer(
+            title.c_str(),
+            width,
+            height,
+            SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL,
+            &self->win_ref->window,
+            &self->win_ref->renderer
+          );
         SDL_SetWindowPosition(self->win_ref->window, x, y);
-        SDL_SetWindowSize(self->win_ref->window, width, height);
         // SDL_FlashWindow(win_ref->window, SDL_FLASH_UNTIL_FOCUSED);
 
         Application::register_window(self->win_ref->window_id(), self);
 
-        self->win_ref->renderer = SDL_CreateRenderer(self->win_ref->window, -1, SDL_RENDERER_ACCELERATED);
-
         self->compositor.set_render_target(self->win_ref.get(), &self->profiling_ctx);
-        LOG::print {INFO}("SDL2 Window initialized.");
+        LOG::print {INFO}("SDL3 Window initialized.");
       }, this);
     });
   }
@@ -229,7 +226,7 @@ export namespace cyd::ui {
   std::pair<int, int> CWindow::get_size() {
     int w, h;
     Application::run([](int* w, int* h, CWindow* self) {
-      SDL_GetRendererOutputSize(self->win_ref->renderer, w, h);
+      SDL_GetCurrentRenderOutputSize(self->win_ref->renderer, w, h);
     }, &w, &h, this);
     return {w, h};
   }

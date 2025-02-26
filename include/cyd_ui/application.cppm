@@ -5,7 +5,8 @@ module;
 #include <cyd_fabric_modules/headers/macros/async_events.h>
 #include <tracy/Tracy.hpp>
 #define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_main.h>
 
 export module cydui.application;
 
@@ -40,7 +41,7 @@ export namespace cyd::ui {
         if (0 != SDL_Init(SDL_INIT_VIDEO)) {
           SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
         }
-        LOG::print {INFO}("SDL2 initialized.");
+        LOG::print {INFO}("SDL3 initialized.");
         application_initialization_latch.count_down();
       });
 

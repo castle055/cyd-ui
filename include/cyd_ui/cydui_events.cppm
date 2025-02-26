@@ -3,7 +3,7 @@
 
 module;
 #include <cyd_fabric_modules/headers/macros/async_events.h>
-#include <SDL2/SDL_keyboard.h>
+#include <SDL3/SDL_events.h>
 
 export module cydui.events;
 
@@ -61,7 +61,7 @@ export {
   };
 
   using Scancode = SDL_Scancode;
-  using Keycode = SDL_KeyCode;
+  using Keycode = SDL_Keycode;
   using Keymod = Uint16;
 
   struct Keysym {

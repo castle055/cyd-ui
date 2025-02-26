@@ -42,6 +42,7 @@ export {
 
     public:
       const std::list<std::shared_ptr<component_base_t>>& $children;
+      static constexpr bool handles_text_input = false;
 
       event_handler_t(component_base_t *comp, const std::list<std::shared_ptr<component_base_t> > &$children_)
         : component(comp),

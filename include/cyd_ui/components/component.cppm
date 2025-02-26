@@ -156,6 +156,13 @@ namespace cyd::ui::components {
         state = std::shared_ptr<component_state_t> {new typename T::state_t()};
       }
       state->set_component_name(this->name());
+
+      using EVH = typename T::event_handler_t;
+      if (EVH::handles_text_input) {
+        LOG::print {DEBUG}("Component {} handles text input", name());
+        component_state_delegate_t::set_is_text_input(state.get(), true);
+      }
+
       set_state(state);
       return state;
     }

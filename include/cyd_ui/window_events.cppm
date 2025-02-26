@@ -5,7 +5,7 @@
 module;
 #include <tracy/Tracy.hpp>
 #define SDL_MAIN_HANDLED
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 export module cydui.window_events;
 
@@ -33,29 +33,29 @@ namespace cyd::ui::window_events {
       LOG::print {INFO}("Received event for window {}, but it does not exit", id);
     };
 
-    switch (event.event) {
-      case SDL_WINDOWEVENT_RESIZED:
+    switch (event.type) {
+      case SDL_EVENT_WINDOW_RESIZED:
         bus(event.windowID, ResizeEvent {
           .w = event.data1,
           .h = event.data2,
         });
         break;
-      case SDL_WINDOWEVENT_CLOSE:
+      case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
         LOG::print {INFO}("Closing...");
         bus(event.windowID, WindowClosed { });
         break;
-      case SDL_WINDOWEVENT_EXPOSED:
+      case SDL_EVENT_WINDOW_EXPOSED:
         bus(event.windowID, RedrawEvent { });
         break;
-      case SDL_WINDOWEVENT_LEAVE:
+      case SDL_EVENT_WINDOW_MOUSE_ENTER:
+        break;
+      case SDL_EVENT_WINDOW_MOUSE_LEAVE:
         bus(event.windowID, MotionEvent {
           .x = -1,
           .y = -1,
         });
         break;
       default: break;
-    }
-    if (event.type == SDL_QUIT) {
     }
   }
 
@@ -68,18 +68,16 @@ namespace cyd::ui::window_events {
       LOG::print {INFO}("Received event for window {}, but it does not exits", id);
     };
 
-    switch (event.event) {
-      case SDL_DISPLAYEVENT_ORIENTATION:
+    switch (event.type) {
+      case SDL_EVENT_DISPLAY_ORIENTATION:
         break;
-      case SDL_DISPLAYEVENT_CONNECTED:
+      case SDL_EVENT_DISPLAY_ADDED:
         break;
-      case SDL_DISPLAYEVENT_DISCONNECTED:
+      case SDL_EVENT_DISPLAY_REMOVED:
         break;
-      case SDL_DISPLAYEVENT_MOVED:
+      case SDL_EVENT_DISPLAY_MOVED:
         break;
       default: break;
-    }
-    if (event.type == SDL_QUIT) {
     }
   }
 
@@ -92,95 +90,119 @@ namespace cyd::ui::window_events {
       LOG::print {INFO}("Received event for window {}, but it does not exits", id);
     };
 
-    switch (event.type) {
-      case SDL_QUIT:
-        std::exit(0);
-        break;
-      case SDL_WINDOWEVENT:
+    if (event.type >= SDL_EVENT_WINDOW_FIRST and event.type <= SDL_EVENT_WINDOW_LAST) {
         dispatch_window_event(busses, event.window);
-        break;
-      case SDL_DISPLAYEVENT:
+    } else if (event.type >= SDL_EVENT_DISPLAY_FIRST and event.type <= SDL_EVENT_DISPLAY_LAST) {
         dispatch_display_event(busses, event.display);
-        break;
-      case SDL_SYSWMEVENT:
-        break;
-      case SDL_RENDER_TARGETS_RESET:
-      case SDL_RENDER_DEVICE_RESET:
-        break;
-      case SDL_MOUSEBUTTONDOWN:
-      case SDL_MOUSEBUTTONUP:
-        bus(event.button.windowID, ButtonEvent {
-          .button = event.button.button,
-          .x = event.button.x,
-          .y = event.button.y,
-          .pressed = event.button.state == SDL_PRESSED,
-          .released = event.button.state == SDL_RELEASED,
-        });
-        break;
-      case SDL_MOUSEWHEEL:
-        bus(event.wheel.windowID, ScrollEvent {
-          .dy = event.wheel.preciseY * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED? -1: 1),
-          .dx = event.wheel.preciseX * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED? -1: 1),
-          .x = event.wheel.mouseX,
-          .y = event.wheel.mouseY
-        });
-        break;
-      case SDL_MOUSEMOTION:
-        bus(event.motion.windowID, MotionEvent {
-          .x = event.motion.x,
-          .y = event.motion.y,
-        });
-        break;
-      case SDL_FINGERDOWN:
-      case SDL_FINGERUP:
-      case SDL_FINGERMOTION:
-        break;
-      case SDL_KEYDOWN:
-      case SDL_KEYUP:
-        bus(event.key.windowID, KeyEvent {
-          .keysym = {
-            .scancode = event.key.keysym.scancode,
-            .code = event.key.keysym.sym,
-            .mod = event.key.keysym.mod
-          },
-          .pressed = event.key.state == SDL_PRESSED,
-          .released = event.key.state == SDL_RELEASED,
-        });
-        break;
-      case SDL_TEXTINPUT:
-        bus(event.text.windowID, TextInputEvent {
-          .text = event.text.text,
-        });
-        break;
-      case SDL_TEXTEDITING:
-        bus(event.edit.windowID, TextInputEvent {
-          .text = std::string {event.edit.text, static_cast<std::size_t>(event.edit.length)},
-          .compositing_event = true,
-          .compositing_state = {
-            .cursor = event.edit.start,
-            .selection = event.edit.length,
-          }
-        });
-        break;
-      case SDL_TEXTEDITING_EXT:
-        bus(event.editExt.windowID, TextInputEvent {
-          .text = std::string {event.editExt.text, static_cast<std::size_t>(event.edit.length)},
-          .compositing_event = true,
-          .compositing_state = {
-            .cursor = event.editExt.start,
-            .selection = event.editExt.length,
-          }
-        });
-        SDL_free(event.editExt.text);
-        break;
-      case SDL_KEYMAPCHANGED:
-        break;
-      case SDL_DROPFILE:
-      case SDL_DROPTEXT:
-      case SDL_DROPBEGIN:
-      case SDL_DROPCOMPLETE:
-        break;
-      default: break;
+    } else {
+      switch (event.type) {
+        case SDL_EVENT_QUIT:
+          std::exit(0);
+          break;
+        case SDL_EVENT_RENDER_TARGETS_RESET:
+        case SDL_EVENT_RENDER_DEVICE_RESET:
+          break;
+        case SDL_EVENT_MOUSE_BUTTON_DOWN:
+        case SDL_EVENT_MOUSE_BUTTON_UP:
+          bus(
+            event.button.windowID,
+            ButtonEvent{
+              .button   = event.button.button,
+              .x        = event.button.x,
+              .y        = event.button.y,
+              .pressed  = event.button.down,
+              .released = not event.button.down,
+            }
+          );
+          break;
+        case SDL_EVENT_MOUSE_WHEEL:
+          bus(
+            event.wheel.windowID,
+            ScrollEvent{
+              .dy =
+                event.wheel.y * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED ? -1 : 1),
+              .dx =
+                event.wheel.x * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED ? -1 : 1),
+              .x = event.wheel.mouse_x,
+              .y = event.wheel.mouse_y
+            }
+          );
+          break;
+        case SDL_EVENT_MOUSE_MOTION:
+          bus(
+            event.motion.windowID,
+            MotionEvent{
+              .x = event.motion.x,
+              .y = event.motion.y,
+            }
+          );
+          break;
+        case SDL_EVENT_FINGER_DOWN:
+        case SDL_EVENT_FINGER_UP:
+        case SDL_EVENT_FINGER_MOTION:
+          break;
+        case SDL_EVENT_KEY_DOWN:
+        case SDL_EVENT_KEY_UP:
+          bus(
+            event.key.windowID,
+            KeyEvent{
+              .keysym =
+                {.scancode = event.key.scancode,
+                 .code     = event.key.key,
+                 .mod      = event.key.mod},
+              .pressed  = event.key.down,
+              .released = not event.key.down,
+            }
+          );
+          break;
+        case SDL_EVENT_TEXT_INPUT:
+          bus(
+            event.text.windowID,
+            TextInputEvent{
+              .text = event.text.text,
+            }
+          );
+          break;
+        case SDL_EVENT_TEXT_EDITING:
+          bus(
+            event.edit.windowID,
+            TextInputEvent{
+              .text = std::string{event.edit.text, static_cast<std::size_t>(event.edit.length)},
+              .compositing_event = true,
+              .compositing_state =
+                {
+                  .cursor    = event.edit.start,
+                  .selection = event.edit.length,
+                }
+            }
+          );
+          break;
+        case SDL_EVENT_TEXT_EDITING_CANDIDATES:
+          // TODO
+          // bus(
+          //   event.edit_candidates.windowID,
+          //   TextInputEvent{
+          //     .text = std::string{event.edit_candidates., static_cast<std::size_t>(event.edit.length)},
+          //     .compositing_event = true,
+          //     .compositing_state =
+          //       {
+          //         .cursor    = event.edit_candidates.start,
+          //         .selection = event.edit_candidates.length,
+          //       }
+          //   }
+          // );
+          // SDL_free(event.editExt.text);
+          break;
+        case SDL_EVENT_KEYMAP_CHANGED:
+          break;
+        case SDL_EVENT_DROP_FILE:
+        case SDL_EVENT_DROP_TEXT:
+        case SDL_EVENT_DROP_BEGIN:
+        case SDL_EVENT_DROP_COMPLETE:
+          break;
+        default:
+          break;
+      }
     }
   }
 

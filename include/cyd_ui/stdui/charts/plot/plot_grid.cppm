@@ -17,7 +17,7 @@ import :axis;
 using la = with_precision<double>;
 
 namespace charts {
-  struct COMPONENT(PlotGrid, {
+  COMPONENT(PlotGrid, {
     la::scalar   min_x = 0, max_x = 1, step_x = 0.1;
     bool         major_ticks_x_show  = false;
     bool         minor_ticks_x_show  = false;
