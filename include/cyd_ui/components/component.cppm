@@ -3,6 +3,7 @@
 
 module;
 #include <tracy/Tracy.hpp>
+#include "./style_setters_detail.h"
 
 export module cydui.components;
 
