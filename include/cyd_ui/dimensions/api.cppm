@@ -14,7 +14,7 @@ export import :compute;
 export import :dimension;
 
 
-export namespace cyd::ui::dimensions {
+export namespace cydui::dimensions {
  template <typename T>
  compute_result_t<T> compute(dimension<T>& dimension) {
   return compute_dimension(dimension);

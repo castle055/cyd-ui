@@ -9,13 +9,13 @@ export import cydui.components.base;
 
 
 export template <>
-struct with<bool>: public cyd::ui::components::with_data_t<bool> {
+struct with<bool>: public cydui::components::with_data_t<bool> {
   explicit with(bool& val)
-      : cyd::ui::components::with_data_t<bool>(val) {}
+      : cydui::components::with_data_t<bool>(val) {}
   explicit with(bool&& val)
-      : cyd::ui::components::with_data_t<bool>(val) {}
+      : cydui::components::with_data_t<bool>(val) {}
 
-  with& then(const std::vector<cyd::ui::components::component_builder_t>& components) {
+  with& then(const std::vector<cydui::components::component_builder_t>& components) {
     if (val) {
       selection.clear();
 
@@ -33,7 +33,7 @@ struct with<bool>: public cyd::ui::components::with_data_t<bool> {
     return *this;
   }
 
-  with<bool>& or_else(const std::vector<cyd::ui::components::component_builder_t>& components) {
+  with<bool>& or_else(const std::vector<cydui::components::component_builder_t>& components) {
     if (!val) {
       selection.clear();
 

@@ -11,7 +11,7 @@ import reflect;
 import fabric.logging;
 export import cydui.styling.selectors;
 
-namespace cyd::ui {
+namespace cydui {
   export struct StyleRule {
     using sptr = std::shared_ptr<StyleRule>;
 

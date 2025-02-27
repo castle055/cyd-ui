@@ -7,7 +7,7 @@ import std;
 
 // #include <cyd_fabric/templates/template_str_buffer.h>
 
-export namespace cyd::ui::graphics::font {
+export namespace cydui::graphics::font {
     struct Font {
       std::string name;
       int size;

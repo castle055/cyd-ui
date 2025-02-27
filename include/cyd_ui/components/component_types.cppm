@@ -10,7 +10,7 @@ export import quantify;
 
 export import cydui.dimensions;
 
-export namespace cyd::ui::components {
+export namespace cydui::components {
   template<std::size_t N>
   struct str_literal_t {
     constexpr str_literal_t(const char (& str)[N]) {
@@ -76,4 +76,4 @@ export namespace cyd::ui::components {
     dimension_t& padding_left;
     dimension_t& padding_right;
   };
-} // namespace cyd::ui::components
+} // namespace cydui::components

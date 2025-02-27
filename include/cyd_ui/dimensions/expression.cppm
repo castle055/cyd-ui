@@ -12,7 +12,7 @@ import fabric.logging;
 export import :types;
 
 export template <typename Type>
-class cyd::ui::dimensions::expression {
+class cydui::dimensions::expression {
 public:
   using dimension = dimension<Type>;
   using parameter = parameter<Type>;

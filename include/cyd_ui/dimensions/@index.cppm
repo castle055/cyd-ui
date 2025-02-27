@@ -11,7 +11,7 @@ export import :impl;
 export import :dimension;
 export import :expression;
 
-export namespace cyd::ui {
+export namespace cydui {
   using dimension_t = dimensions::dimension<dimensions::screen_measure>;
   using dimension_parameter_t = dimensions::parameter<dimensions::screen_measure>;
   using dimension_ctx_t = dimensions::context<dimensions::screen_measure>;

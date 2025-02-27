@@ -13,7 +13,7 @@ export import :types;
 export import :expression;
 export import :context;
 
-namespace cyd::ui::dimensions {
+namespace cydui::dimensions {
   export template<typename S>
   const S &get_value(dimension<S> &dimension);
 
@@ -134,15 +134,15 @@ namespace cyd::ui::dimensions {
 }
 
 template <typename T>
-struct std::hash<std::weak_ptr<cyd::ui::dimensions::dimension_impl<T>>> {
-    std::size_t operator()(const std::weak_ptr<cyd::ui::dimensions::dimension_impl<T>>& it) const {
+struct std::hash<std::weak_ptr<cydui::dimensions::dimension_impl<T>>> {
+    std::size_t operator()(const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it) const {
         return reinterpret_cast<std::size_t>(it.lock().get());
     }
 };
 
 template <typename T>
-struct std::equal_to<std::weak_ptr<cyd::ui::dimensions::dimension_impl<T>>> {
-    bool operator()(const std::weak_ptr<cyd::ui::dimensions::dimension_impl<T>>& it1, const std::weak_ptr<cyd::ui::dimensions::dimension_impl<T>>& it2) const {
+struct std::equal_to<std::weak_ptr<cydui::dimensions::dimension_impl<T>>> {
+    bool operator()(const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it1, const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it2) const {
         return it1.lock() == it2.lock();
     }
 };

@@ -22,14 +22,14 @@ export {
 
   struct map_to_result_t {
     std::string                      id;
-    std::vector<cyd::ui::components::component_builder_t> result;
+    std::vector<cydui::components::component_builder_t> result;
 
-    map_to_result_t(std::initializer_list<cyd::ui::components::component_builder_t> result)
+    map_to_result_t(std::initializer_list<cydui::components::component_builder_t> result)
         : result(result) {}
   };
 
   template <IterableContainer I>
-  struct with<I>: public cyd::ui::components::with_data_t<I> {
+  struct with<I>: public cydui::components::with_data_t<I> {
     with<I>& map_to(
       std::function<map_to_result_t(std::size_t index, typename I::value_type& value)> transform
     ) {

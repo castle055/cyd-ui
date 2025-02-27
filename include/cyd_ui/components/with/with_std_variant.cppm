@@ -9,9 +9,9 @@ export import cydui.components.base;
 
 export {
   template <typename... Ts>
-  struct with<std::variant<Ts...>>: cyd::ui::components::with_data_t<std::variant<Ts...>> {
+  struct with<std::variant<Ts...>>: cydui::components::with_data_t<std::variant<Ts...>> {
     template <typename T>
-    with& if_type_is(const std::function<std::vector<cyd::ui::components::component_builder_t>(T& value)>& builder) {
+    with& if_type_is(const std::function<std::vector<cydui::components::component_builder_t>(T& value)>& builder) {
       std::variant<Ts...> v = this->val;
       if (std::holds_alternative<T>(this->val)) {
         T&          value = std::get<T>(this->val);
@@ -41,7 +41,7 @@ export {
       return *this;
     }
     template <typename T>
-    with& if_type_is(std::vector<cyd::ui::components::component_builder_t>& cs) {
+    with& if_type_is(std::vector<cydui::components::component_builder_t>& cs) {
       std::variant<Ts...> v = this->val;
       if (std::holds_alternative<T>(this->val)) {
         T&          value = std::get<T>(this->val);
@@ -70,7 +70,7 @@ export {
       return *this;
     }
     template <typename T>
-    with& if_type_is(std::vector<cyd::ui::components::component_builder_t>&& cs) {
+    with& if_type_is(std::vector<cydui::components::component_builder_t>&& cs) {
       return if_type_is<T>(cs);
     }
   };

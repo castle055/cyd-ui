@@ -2,10 +2,10 @@
 //* for dimension-T
 
 template <typename T, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-static cyd::ui::dimensions::expression<T>
-OPERATOR(V value, const cyd::ui::dimensions::dimension<T>& dim) {
-  using namespace cyd::ui::dimensions;
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+static cydui::dimensions::expression<T>
+OPERATOR(V value, const cydui::dimensions::dimension<T>& dim) {
+  using namespace cydui::dimensions;
   expression<T> expr{};
   expr.add_dependency(dim.impl_);
 
@@ -24,10 +24,10 @@ OPERATOR(V value, const cyd::ui::dimensions::dimension<T>& dim) {
 }
 
 template <typename T>
-static cyd::ui::dimensions::expression<T> OPERATOR(
-  const cyd::ui::dimensions::dimension<T>& dim1, const cyd::ui::dimensions::dimension<T>& dim2
+static cydui::dimensions::expression<T> OPERATOR(
+  const cydui::dimensions::dimension<T>& dim1, const cydui::dimensions::dimension<T>& dim2
 ) {
-  using namespace cyd::ui::dimensions;
+  using namespace cydui::dimensions;
   expression<T> expr{};
   expr.add_dependency(dim1.impl_);
   expr.add_dependency(dim2.impl_);
@@ -47,10 +47,10 @@ static cyd::ui::dimensions::expression<T> OPERATOR(
 }
 
 template <typename T, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-static cyd::ui::dimensions::expression<T>
-OPERATOR(const cyd::ui::dimensions::dimension<T>& dim, V value) {
-  using namespace cyd::ui::dimensions;
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+static cydui::dimensions::expression<T>
+OPERATOR(const cydui::dimensions::dimension<T>& dim, V value) {
+  using namespace cydui::dimensions;
   expression<T> expr{};
   expr.add_dependency(dim.impl_);
 
@@ -71,10 +71,10 @@ OPERATOR(const cyd::ui::dimensions::dimension<T>& dim, V value) {
 
 //* for expression-T
 template <typename T, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-static cyd::ui::dimensions::expression<T>
-OPERATOR(V value, const cyd::ui::dimensions::expression<T>& expr) {
-  using namespace cyd::ui::dimensions;
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+static cydui::dimensions::expression<T>
+OPERATOR(V value, const cydui::dimensions::expression<T>& expr) {
+  using namespace cydui::dimensions;
   expression<T> expr_{};
 
   auto const_value         = expr_.make_node(expression<T>::node_t::CONSTANT);
@@ -90,10 +90,10 @@ OPERATOR(V value, const cyd::ui::dimensions::expression<T>& expr) {
 }
 
 template <typename T, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-static cyd::ui::dimensions::expression<T>
-OPERATOR(V value, cyd::ui::dimensions::expression<T>&& expr) {
-  using namespace cyd::ui::dimensions;
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+static cydui::dimensions::expression<T>
+OPERATOR(V value, cydui::dimensions::expression<T>&& expr) {
+  using namespace cydui::dimensions;
   auto const_value         = expr.make_node(expression<T>::node_t::CONSTANT);
   const_value->const_value = value;
 
@@ -106,10 +106,10 @@ OPERATOR(V value, cyd::ui::dimensions::expression<T>&& expr) {
 }
 
 template <typename T>
-static cyd::ui::dimensions::expression<T> OPERATOR(
-  const cyd::ui::dimensions::expression<T>& expr1, const cyd::ui::dimensions::expression<T>& expr2
+static cydui::dimensions::expression<T> OPERATOR(
+  const cydui::dimensions::expression<T>& expr1, const cydui::dimensions::expression<T>& expr2
 ) {
-  using namespace cyd::ui::dimensions;
+  using namespace cydui::dimensions;
   expression<T> expr{};
 
   auto node      = expr.make_node(expression<T>::node_t::ENUM);
@@ -124,10 +124,10 @@ static cyd::ui::dimensions::expression<T> OPERATOR(
 }
 
 template <typename T>
-static cyd::ui::dimensions::expression<T> OPERATOR(
-  cyd::ui::dimensions::expression<T>&& expr1, const cyd::ui::dimensions::expression<T>& expr2
+static cydui::dimensions::expression<T> OPERATOR(
+  cydui::dimensions::expression<T>&& expr1, const cydui::dimensions::expression<T>& expr2
 ) {
-  using namespace cyd::ui::dimensions;
+  using namespace cydui::dimensions;
   auto node = expr1.make_node(expression<T>::node_t::ENUM);
   node->children.push_back(expr1.tree_);
   node->children.push_back(expr2.tree_);
@@ -138,10 +138,10 @@ static cyd::ui::dimensions::expression<T> OPERATOR(
 }
 
 template <typename T, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-static cyd::ui::dimensions::expression<T>
-OPERATOR(const cyd::ui::dimensions::expression<T>& expr1, V value) {
-  using namespace cyd::ui::dimensions;
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+static cydui::dimensions::expression<T>
+OPERATOR(const cydui::dimensions::expression<T>& expr1, V value) {
+  using namespace cydui::dimensions;
   expression<T> expr{};
 
   auto const_value         = expr.make_node(expression<T>::node_t::CONSTANT);
@@ -158,10 +158,10 @@ OPERATOR(const cyd::ui::dimensions::expression<T>& expr1, V value) {
 
 //* for expression-dimension
 template <typename T>
-static cyd::ui::dimensions::expression<T> OPERATOR(
-  const cyd::ui::dimensions::dimension<T>& dim, const cyd::ui::dimensions::expression<T>& expr1
+static cydui::dimensions::expression<T> OPERATOR(
+  const cydui::dimensions::dimension<T>& dim, const cydui::dimensions::expression<T>& expr1
 ) {
-  using namespace cyd::ui::dimensions;
+  using namespace cydui::dimensions;
   expression<T> expr{};
 
   auto dim_       = expr.make_node(expression<T>::node_t::DIMENSION);
@@ -178,10 +178,10 @@ static cyd::ui::dimensions::expression<T> OPERATOR(
 }
 
 template <typename T>
-static cyd::ui::dimensions::expression<T> OPERATOR(
-  const cyd::ui::dimensions::expression<T>& expr1, const cyd::ui::dimensions::dimension<T>& dim
+static cydui::dimensions::expression<T> OPERATOR(
+  const cydui::dimensions::expression<T>& expr1, const cydui::dimensions::dimension<T>& dim
 ) {
-  using namespace cyd::ui::dimensions;
+  using namespace cydui::dimensions;
   expression<T> expr{};
 
   auto dim_       = expr.make_node(expression<T>::node_t::DIMENSION);
@@ -200,10 +200,10 @@ static cyd::ui::dimensions::expression<T> OPERATOR(
 
 // Parameters
 template <typename S>
-static cyd::ui::dimensions::expression<S> OPERATOR(
-  const cyd::ui::dimensions::dimension<S>& lhs, const cyd::ui::dimensions::parameter<S>& rhs
+static cydui::dimensions::expression<S> OPERATOR(
+  const cydui::dimensions::dimension<S>& lhs, const cydui::dimensions::parameter<S>& rhs
 ) {
-  using namespace cyd::ui::dimensions;
+  using namespace cydui::dimensions;
   expression<S> expr{};
 
   expr.add_dependency(lhs.impl_);
@@ -223,10 +223,10 @@ static cyd::ui::dimensions::expression<S> OPERATOR(
 }
 
 template <typename S>
-static cyd::ui::dimensions::expression<S> OPERATOR(
-  const cyd::ui::dimensions::parameter<S>& lhs, const cyd::ui::dimensions::dimension<S>& rhs
+static cydui::dimensions::expression<S> OPERATOR(
+  const cydui::dimensions::parameter<S>& lhs, const cydui::dimensions::dimension<S>& rhs
 ) {
-  using namespace cyd::ui::dimensions;
+  using namespace cydui::dimensions;
   expression<S> expr{};
 
   expr.add_dependency(rhs.impl_);
@@ -246,10 +246,10 @@ static cyd::ui::dimensions::expression<S> OPERATOR(
 }
 
 template <typename S>
-static cyd::ui::dimensions::expression<S> OPERATOR(
-  const cyd::ui::dimensions::expression<S>& lhs, const cyd::ui::dimensions::parameter<S>& rhs
+static cydui::dimensions::expression<S> OPERATOR(
+  const cydui::dimensions::expression<S>& lhs, const cydui::dimensions::parameter<S>& rhs
 ) {
-  using namespace cyd::ui::dimensions;
+  using namespace cydui::dimensions;
   expression<S> expr{};
 
   expr.dependencies_.insert(lhs.dependencies_.begin(), lhs.dependencies_.end());
@@ -266,10 +266,10 @@ static cyd::ui::dimensions::expression<S> OPERATOR(
 }
 
 template <typename S>
-static cyd::ui::dimensions::expression<S> OPERATOR(
-  const cyd::ui::dimensions::parameter<S>& lhs, const cyd::ui::dimensions::expression<S>& rhs
+static cydui::dimensions::expression<S> OPERATOR(
+  const cydui::dimensions::parameter<S>& lhs, const cydui::dimensions::expression<S>& rhs
 ) {
-  using namespace cyd::ui::dimensions;
+  using namespace cydui::dimensions;
   expression<S> expr{};
 
   expr.dependencies_.insert_range(rhs.dependencies_.begin(), rhs.dependencies_.end());
@@ -286,10 +286,10 @@ static cyd::ui::dimensions::expression<S> OPERATOR(
 }
 
 template <typename S, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-static cyd::ui::dimensions::expression<S>
-OPERATOR(V lhs, const cyd::ui::dimensions::parameter<S>& rhs) {
-  using namespace cyd::ui::dimensions;
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+static cydui::dimensions::expression<S>
+OPERATOR(V lhs, const cydui::dimensions::parameter<S>& rhs) {
+  using namespace cydui::dimensions;
   expression<S> expr{};
 
   auto const_value         = expr.make_node(expression<S>::node_t::CONSTANT);
@@ -307,10 +307,10 @@ OPERATOR(V lhs, const cyd::ui::dimensions::parameter<S>& rhs) {
 }
 
 template <typename S, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-static cyd::ui::dimensions::expression<S>
-OPERATOR(const cyd::ui::dimensions::parameter<S>& lhs, V rhs) {
-  using namespace cyd::ui::dimensions;
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+static cydui::dimensions::expression<S>
+OPERATOR(const cydui::dimensions::parameter<S>& lhs, V rhs) {
+  using namespace cydui::dimensions;
   expression<S> expr{};
 
   auto param_node       = expr.make_node(expression<S>::node_t::PARAMETER);
@@ -328,10 +328,10 @@ OPERATOR(const cyd::ui::dimensions::parameter<S>& lhs, V rhs) {
 }
 
 template <typename S>
-static cyd::ui::dimensions::expression<S> OPERATOR(
-  const cyd::ui::dimensions::parameter<S>& lhs, const cyd::ui::dimensions::parameter<S>& rhs
+static cydui::dimensions::expression<S> OPERATOR(
+  const cydui::dimensions::parameter<S>& lhs, const cydui::dimensions::parameter<S>& rhs
 ) {
-  using namespace cyd::ui::dimensions;
+  using namespace cydui::dimensions;
   expression<S> expr{};
 
   auto param1_node       = expr.make_node(expression<S>::node_t::PARAMETER);

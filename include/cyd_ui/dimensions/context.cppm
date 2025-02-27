@@ -12,7 +12,7 @@ import fabric.logging;
 export import :types;
 
 export template <typename Type>
-class cyd::ui::dimensions::context {
+class cydui::dimensions::context {
 public:
   using value_type = Type;
   using getter_t   = std::function<dimension<value_type>()>;

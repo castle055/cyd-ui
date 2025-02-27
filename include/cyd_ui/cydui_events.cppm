@@ -11,7 +11,7 @@ export import std;
 export import fabric.async;
 export import cydui.dimensions;
 
-using cyd::ui::dimensions::screen_measure;
+using cydui::dimensions::screen_measure;
 
 export {
   EVENT(RedrawEvent) {

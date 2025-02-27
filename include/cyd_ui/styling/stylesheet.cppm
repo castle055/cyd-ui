@@ -15,7 +15,7 @@ export import cydui.styling.selectors;
 export import cydui.styling.rules;
 
 
-namespace cyd::ui {
+namespace cydui {
   template<typename O>
   void print_ast_node(O &o, const fabric::node_t *node, int indent = 0) {
     for (int i = 0; i < indent; ++i) {

@@ -15,9 +15,9 @@ export import fabric.wiring.signals;
 
 export import cydui.components.event_handler;
 
-export using children_list = std::vector<cyd::ui::components::component_holder_t>;
+export using children_list = std::vector<cydui::components::component_holder_t>;
 
-namespace cyd::ui::components {
+namespace cydui::components {
   export template <typename ComponentType, typename EventHandler>
   class event_dispatcher_t final: public event_dispatcher_base_t {
   public:

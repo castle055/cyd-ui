@@ -19,7 +19,7 @@ struct ContextUpdate {
 
 export class with_context {
 public:
-  with_context(std::initializer_list<cyd::ui::components::component_holder_t> &&components) {
+  with_context(std::initializer_list<cydui::components::component_holder_t> &&components) {
     std::size_t i {0};
     for (auto &&holder: components) {
       for (auto &[id, c]: holder.get_components()) {
@@ -29,16 +29,16 @@ public:
     }
   }
 
-  cyd::ui::components::component_holder_t build() const {
-    return cyd::ui::components::component_holder_t {components_};
+  cydui::components::component_holder_t build() const {
+    return cydui::components::component_holder_t {components_};
   }
 
 private:
-  // std::vector<cyd::ui::components::component_holder_t> components_;
-  std::vector<std::pair<std::string, std::shared_ptr<cyd::ui::components::component_base_t>>> components_ { };
+  // std::vector<cydui::components::component_holder_t> components_;
+  std::vector<std::pair<std::string, std::shared_ptr<cydui::components::component_base_t>>> components_ { };
 };
 
-export namespace cyd::ui::components {
+export namespace cydui::components {
   class context_store_t {
   public:
     context_store_t() = default;
@@ -143,7 +143,7 @@ private:
   // This object will own the context if it couldn't be found and thus a default one was created
   bool owns_context                                  = false;
   context_type* ctx                                  = nullptr;
-  cyd::ui::components::component_state_ref state     = nullptr;
+  cydui::components::component_state_ref state     = nullptr;
 
   std::optional<fabric::async::listener<ContextUpdate<context_type>>> listener {std::nullopt};
 };
@@ -177,7 +177,7 @@ struct provide_context {
     state->emit<ContextUpdate<context_type>>({context_.get()});
   }
 
-  cyd::ui::components::component_holder_t operator >(with_context &&components);
+  cydui::components::component_holder_t operator >(with_context &&components);
 
   operator std::shared_ptr<context_type>() {
     return context_;
@@ -185,7 +185,7 @@ struct provide_context {
 
 private:
   // This object will own the context if it couldn't be found and thus a default one was created
-  cyd::ui::components::component_state_ref state = nullptr;
+  cydui::components::component_state_ref state = nullptr;
   std::shared_ptr<context_type> context_         = std::make_shared<context_type>();
 };
 
@@ -193,7 +193,7 @@ private:
 
 struct use_context_delegate {
   template<typename ContextType>
-  static void set_state(use_context<ContextType>* it, const cyd::ui::components::component_state_ref& state) {
+  static void set_state(use_context<ContextType>* it, const cydui::components::component_state_ref& state) {
     it->state = state;
   }
   template<typename ContextType>
@@ -212,7 +212,7 @@ struct use_context_delegate {
 
 struct provide_context_delegate {
   template<typename ContextType>
-  static void set_state(provide_context<ContextType>* it, const cyd::ui::components::component_state_ref& state) {
+  static void set_state(provide_context<ContextType>* it, const cydui::components::component_state_ref& state) {
     it->state = state;
   }
   template<typename ContextType>

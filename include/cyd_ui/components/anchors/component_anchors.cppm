@@ -17,7 +17,7 @@ export import cydui.dimensions;
 
 export
 {
-  namespace cyd::ui::components::anchors {
+  namespace cydui::components::anchors {
     using dimension_parameter_t = dimensions::parameter<dimensions::screen_measure>;
     struct self_component {
       static constexpr dimension_parameter_t x {"self_x"};
@@ -75,5 +75,5 @@ export
 
       ANCHOR(prev, bottom_right);
     };
-  } // namespace cyd::ui::components
+  } // namespace cydui::components
 }

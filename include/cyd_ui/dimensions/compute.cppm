@@ -14,7 +14,7 @@ export import :expression;
 export import :impl;
 
 
-namespace cyd::ui::dimensions {
+namespace cydui::dimensions {
  export template <typename T>
  struct cycle_t {
   std::deque<typename dimension_impl<T>::sptr> dimensions { };

@@ -6,7 +6,7 @@ export module cydui.interpolation:mappings;
 
 import std;
 
-export namespace cyd::ui {
+export namespace cydui {
   template <typename T>
   struct interp_mapping;
 
@@ -29,10 +29,10 @@ export namespace cyd::ui {
 }
 
 export template <>
-struct cyd::ui::interp_mapping<int>: cyd::ui::static_cast_interp_mapping<int>{};
+struct cydui::interp_mapping<int>: cydui::static_cast_interp_mapping<int>{};
 
 export template <>
-struct cyd::ui::interp_mapping<long>: cyd::ui::static_cast_interp_mapping<long>{};
+struct cydui::interp_mapping<long>: cydui::static_cast_interp_mapping<long>{};
 
 export template <>
-struct cyd::ui::interp_mapping<double>: cyd::ui::static_cast_interp_mapping<double>{};
+struct cydui::interp_mapping<double>: cydui::static_cast_interp_mapping<double>{};

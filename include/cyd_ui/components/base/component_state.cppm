@@ -18,9 +18,9 @@ export class with_context;
 export template<typename ContextType>
 struct provide_context;
 
-export using children_list = std::vector<cyd::ui::components::component_holder_t>;
+export using children_list = std::vector<cydui::components::component_holder_t>;
 
-namespace cyd::ui::components {
+namespace cydui::components {
   export class component_state_delegate_t;
 
   struct component_state_t {

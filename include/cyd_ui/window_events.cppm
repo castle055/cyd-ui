@@ -18,7 +18,7 @@ import fabric.async;
 export import cydui.events;
 
 
-namespace cyd::ui::window_events {
+namespace cydui::window_events {
   std::unique_ptr<std::thread> thread_ptr{nullptr};
   std::atomic_flag running{};
 
@@ -215,7 +215,7 @@ namespace cyd::ui::window_events {
   }
 }
 
-export namespace cyd::ui::window_events {
+export namespace cydui::window_events {
   // void start_thread_if_needed() {
   //   thread::running.test_and_set();
   //   if (thread::thread_ptr == nullptr) {

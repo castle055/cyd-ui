@@ -16,7 +16,7 @@ export import cydui.components.base;
 export import cydui.components.anchors;
 export import cydui.components.event_dispatcher;
 
-namespace cyd::ui::components {
+namespace cydui::components {
   export template<typename T>
   class component_t:
     public component_base_t,

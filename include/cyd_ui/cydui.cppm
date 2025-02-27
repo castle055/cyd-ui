@@ -14,6 +14,6 @@ export import :layout;
 
 export import reflect;
 
-export namespace font = cyd::ui::graphics::font;
+export namespace font = cydui::graphics::font;
 
 // using cyd::fabric::async::async;

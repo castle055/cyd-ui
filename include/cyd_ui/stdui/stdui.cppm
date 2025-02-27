@@ -35,7 +35,7 @@ export import cydui.std.charts;
 
 //       struct props_t {
 //         Direction                                   dir     = Direction::HORIZONTAL;
-//         cyd::ui::dimensions::dimensional_relation_t spacing = 0;
+//         cydui::dimensions::dimensional_relation_t spacing = 0;
 //       };
 //       ATTR_PROP(dir) ATTR_PROP(spacing)
 
@@ -49,7 +49,7 @@ export import cydui.std.charts;
 
 //     ) {
 //       void horizontal_fixed_width() {
-//         std::unordered_set<cyd::ui::dimensions::dimension_t*> deps{};
+//         std::unordered_set<cydui::dimensions::dimension_t*> deps{};
 //         deps.insert(&attrs->_w);
 //         auto chi = $children;
 
@@ -59,7 +59,7 @@ export import cydui.std.charts;
 //         for (auto& child: chi) {
 //           auto ats = child->attrs();
 //           ats->h($height);
-//           ats->x(cyd::ui::dimensions::dimensional_relation_t{
+//           ats->x(cydui::dimensions::dimensional_relation_t{
 //             [=, this]() {
 //               int total_w = 0;
 //               for (const auto& dim: deps) {
@@ -81,7 +81,7 @@ export import cydui.std.charts;
 //         }
 //       }
 //       void vertical_fixed_height() {
-//         std::unordered_set<cyd::ui::dimensions::dimension_t*> deps{};
+//         std::unordered_set<cydui::dimensions::dimension_t*> deps{};
 //         deps.insert(&attrs->_h);
 //         auto chi = $children();
 
@@ -92,7 +92,7 @@ export import cydui.std.charts;
 //         for (auto& child: chi) {
 //           auto ats = child->attrs();
 //           ats->w($width);
-//           ats->y(cyd::ui::dimensions::dimensional_relation_t{
+//           ats->y(cydui::dimensions::dimensional_relation_t{
 //             [=, this]() {
 //               int total_h = 0;
 //               for (const auto& dim: deps) {
@@ -120,14 +120,14 @@ export import cydui.std.charts;
 //         }
 //       }
 //       void horizontal_free_width() {
-//         auto* spacing = new cyd::ui::dimensions::dimension_t{props.spacing};
-//         std::unordered_set<cyd::ui::dimensions::dimension_t*> deps{};
+//         auto* spacing = new cydui::dimensions::dimension_t{props.spacing};
+//         std::unordered_set<cydui::dimensions::dimension_t*> deps{};
 //         deps.insert(spacing);
 //         auto chi = $children();
 //         for (auto& child: chi) {
 //           auto ats = child->attrs();
 //           ats->h($height);
-//           ats->x(cyd::ui::dimensions::dimensional_relation_t{
+//           ats->x(cydui::dimensions::dimensional_relation_t{
 //             [=, this]() {
 //               int res = 0;
 //               for (const auto& dim: deps) {
@@ -144,14 +144,14 @@ export import cydui.std.charts;
 //         }
 //       }
 //       void vertical_free_height() {
-//         auto* spacing = new cyd::ui::dimensions::dimension_t{props.spacing};
-//         std::unordered_set<cyd::ui::dimensions::dimension_t*> deps{};
+//         auto* spacing = new cydui::dimensions::dimension_t{props.spacing};
+//         std::unordered_set<cydui::dimensions::dimension_t*> deps{};
 //         deps.insert(spacing);
 //         auto chi = $children();
 //         for (auto& child: chi) {
 //           auto ats = child->attrs();
 //           ats->w($width);
-//           ats->y(cyd::ui::dimensions::dimensional_relation_t{
+//           ats->y(cydui::dimensions::dimensional_relation_t{
 //             [=, this]() {
 //               int res = 0;
 //               for (const auto& dim: deps) {
@@ -199,15 +199,15 @@ export import cydui.std.charts;
 //         int          y_gap = 0;
 //       };
 //       ATTR_PROP(rows) ATTR_PROP(cols) ATTR_PROP(x_gap) ATTR_PROP(y_gap) STATE {
-//         std::unordered_map<cyd::ui::components::component_base_t*, std::pair<int, int>> positions{};
-//         std::unordered_map<cyd::ui::components::component_base_t*, std::pair<int, int>> sizes{};
+//         std::unordered_map<cydui::components::component_base_t*, std::pair<int, int>> positions{};
+//         std::unordered_map<cydui::components::component_base_t*, std::pair<int, int>> sizes{};
 //       }
 //     ) {
 //       ON_REDRAW {
 //         state.positions.clear();
 //         state.sizes.clear();
 //         auto                                                  chi = $children();
-//         std::unordered_set<cyd::ui::dimensions::dimension_t*> deps{};
+//         std::unordered_set<cydui::dimensions::dimension_t*> deps{};
 //         deps.insert(&attrs->_w);
 //         deps.insert(&attrs->_h);
 
@@ -216,7 +216,7 @@ export import cydui.std.charts;
 //           state.positions[child] = {ats->_x, ats->_y};
 //           state.sizes[child]     = {ats->_w, ats->_h};
 
-//           ats->x(cyd::ui::dimensions::dimensional_relation_t{
+//           ats->x(cydui::dimensions::dimensional_relation_t{
 //             [=, this]() {
 //               auto [grid_x, _] = state.positions[child];
 //               int total_w      = attrs->_w;
@@ -225,7 +225,7 @@ export import cydui.std.charts;
 //             },
 //             deps
 //           });
-//           ats->y(cyd::ui::dimensions::dimensional_relation_t{
+//           ats->y(cydui::dimensions::dimensional_relation_t{
 //             [=, this]() {
 //               auto [_, grid_y] = state.positions[child];
 //               int total_h      = attrs->_h;
@@ -234,7 +234,7 @@ export import cydui.std.charts;
 //             },
 //             deps
 //           });
-//           ats->w(cyd::ui::dimensions::dimensional_relation_t{
+//           ats->w(cydui::dimensions::dimensional_relation_t{
 //             [=, this]() {
 //               auto [grid_w, _] = state.sizes[child];
 //               int total_w      = attrs->_w;
@@ -243,7 +243,7 @@ export import cydui.std.charts;
 //             },
 //             deps
 //           });
-//           ats->h(cyd::ui::dimensions::dimensional_relation_t{
+//           ats->h(cydui::dimensions::dimensional_relation_t{
 //             [=, this]() {
 //               auto [_, grid_h] = state.sizes[child];
 //               int total_h      = attrs->_h;

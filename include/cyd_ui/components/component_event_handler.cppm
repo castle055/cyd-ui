@@ -29,7 +29,7 @@ CYDUI_INTERNAL_EV_##NAME##_RETURN on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
 
 
 export {
-  namespace cyd::ui::components {
+  namespace cydui::components {
 
 
 #pragma clang diagnostic push
@@ -143,7 +143,7 @@ export {
       using $parent = anchors::parent_component;
       using $previous = anchors::previous_component;
     };
-  } // namespace cyd::ui::components
+  } // namespace cydui::components
 
   template <typename Event>
   class custom_event_listener {

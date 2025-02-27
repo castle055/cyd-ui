@@ -29,13 +29,13 @@ namespace charts {
   grid_t<plot>     grid         {*this};
   view_map_t<plot> series       {*this};
 
-  explicit plot(std::initializer_list<data_series_t>&& series_): cyd::ui::components::component_t<plot>(), props(series_) {
+  explicit plot(std::initializer_list<data_series_t>&& series_): cydui::components::component_t<plot>(), props(series_) {
     for (std::size_t i = 0; i < series_.size(); ++i) {
       (void)series[i];
     }
   }
 
-  plot(const plot& rhl): cyd::ui::components::component_t<plot>() {
+  plot(const plot& rhl): cydui::components::component_t<plot>() {
     props = rhl.props;
     top_axis = rhl.top_axis;
     bottom_axis = rhl.bottom_axis;
@@ -48,7 +48,7 @@ namespace charts {
   }
   ) {
     ON_REDRAW {
-      using cyd::ui::dimensions::screen_measure;
+      using cydui::dimensions::screen_measure;
       double title_h = 0;
 
       double axis_title_size = 25;
@@ -71,7 +71,7 @@ namespace charts {
         right_axis_w += axis_title_size;
       }
 
-      std::vector<cyd::ui::components::component_holder_t> result{};
+      std::vector<cydui::components::component_holder_t> result{};
 
       result.emplace_back($component.grid.build_component(
         screen_measure{left_axis_w},

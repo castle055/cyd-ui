@@ -15,7 +15,7 @@ export import :expression;
 export import :impl;
 
 export template <typename Type>
-class cyd::ui::dimensions::dimension {
+class cydui::dimensions::dimension {
 public:
   using value_type = Type;
   using expression = expression<value_type>;
@@ -145,7 +145,7 @@ private:
 };
 
 
-struct cyd::ui::dimensions::dimensional_operators {
+struct cydui::dimensions::dimensional_operators {
   dimensional_operators() = delete;
 
 #define OPERATOR add

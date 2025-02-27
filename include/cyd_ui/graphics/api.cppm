@@ -10,7 +10,7 @@ export import fabric.async;
 export import fabric.profiling;
 
 
-namespace cyd::ui::graphics {
+namespace cydui::graphics {
 }
-export namespace cyd::ui::graphics {
-} // namespace cyd::ui::graphics
+export namespace cydui::graphics {
+} // namespace cydui::graphics

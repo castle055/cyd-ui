@@ -20,14 +20,14 @@
 // ?>
 
 //#define STATE(NAME) \
-//struct CYDUI_STATE_NAME(NAME): public cyd::ui::components::component_state_t
+//struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
 
-#define STATE ; public: struct init: public cyd::ui::components::component_state_t
+#define STATE ; public: struct init: public cydui::components::component_state_t
 
 #define EXTENDS(...) , __VA_ARGS__
 
 #define COMPONENT(NAME, ...)                                                                       \
-  struct NAME: public cyd::ui::components::component_t<NAME> {                                     \
+  struct NAME: public cydui::components::component_t<NAME> {                                     \
     struct event_handler_t;                                                                        \
     struct init;                                                                                   \
     struct style_type;                                                                             \
@@ -38,19 +38,19 @@
     using state_t = std::conditional_t<                                                            \
       is_type_complete_v<struct init>,                                                             \
       init,                                                                                        \
-      cyd::ui::components::component_state_t>;                                                     \
+      cydui::components::component_state_t>;                                                     \
     using style_t = std::conditional_t<                                                            \
       is_type_complete_v<struct style_type>,                                                       \
       style_type,                                                                                  \
-      cyd::ui::components::simple_style_t>;                                                          \
+      cydui::components::simple_style_t>;                                                          \
     template <typename P = props_t>                                                                \
     explicit NAME(                                                                                 \
       typename std::enable_if<std::is_default_constructible_v<P>, props_t>::type props = {}        \
     )                                                                                              \
-        : cyd::ui::components::component_t<NAME>(),                                                \
+        : cydui::components::component_t<NAME>(),                                                \
           props(std::move(props)) {}                                                               \
     explicit NAME(props_t props)                                                                   \
-        : cyd::ui::components::component_t<NAME>(),                                                \
+        : cydui::components::component_t<NAME>(),                                                \
           props(std::move(props)) {}                                                               \
     ~NAME() override = default;                                                                    \
     void* get_props() override {                                                                   \
@@ -61,16 +61,16 @@
       return *this;                                                                                \
     }                                                                                              \
     friend struct event_handler_t;                                                                 \
-    friend struct cyd::ui::components::event_handler_data_t<NAME>;                                 \
+    friend struct cydui::components::event_handler_data_t<NAME>;                                 \
   };                                                                                               \
   struct NAME::event_handler_t                                                                     \
-      : public cyd::ui::components::event_handler_data_t<NAME>
+      : public cydui::components::event_handler_data_t<NAME>
 
 
 // ?>
 #define STATE_TEMPLATE(NAME) \
 template SET_COMPONENT_TEMPLATE   \
-struct CYDUI_STATE_NAME(NAME): public cyd::ui::components::component_state_t
+struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
 
 
 // ?>
@@ -81,7 +81,7 @@ template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct CYDUI_EV_HANDLER_NAME(NAME);   \
 template SET_COMPONENT_TEMPLATE_DEFAULT \
 struct NAME:                          \
-  public cyd::ui::components::component_t<          \
+  public cydui::components::component_t<          \
     CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT, \
     NAME SET_COMPONENT_TEMPLATE_SHORT \
   > {                                 \
@@ -93,7 +93,7 @@ struct NAME:                          \
     props_t props;                    \
     NAME() = default;                 \
     explicit NAME(props_t props)      \
-      : cyd::ui::components::component_t<           \
+      : cydui::components::component_t<           \
         CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT,        \
         NAME SET_COMPONENT_TEMPLATE_SHORT                     \
       >()                             \
@@ -113,7 +113,7 @@ struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \
 };                                    \
 template SET_COMPONENT_TEMPLATE       \
 struct CYDUI_EV_HANDLER_NAME(NAME)    \
-  : public cyd::ui::components::event_handler_t,    \
+  : public cydui::components::event_handler_t,    \
     public CYDUI_EV_HANDLER_DATA_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT
 
 
@@ -166,7 +166,7 @@ public: \
 private: \
 __VA_ARGS__ NAME##_
 
-#define STYLE struct style_type: cyd::ui::components::style_base_t
+#define STYLE struct style_type: cydui::components::style_base_t
 
 
 //! ANIMATIONS
@@ -177,7 +177,7 @@ decltype([&] {                  \
     return _anon_{};            \
 }())
 
-#define KEYFRAME(POS, ...)      cyd::ui::keyframe::make(POS, __VA_ARGS__)
-#define AUTO_KEYFRAME(POS, ...) cyd::ui::keyframe::make(POS, ANONYMOUS_STRUCT(__VA_ARGS__){})
+#define KEYFRAME(POS, ...)      cydui::keyframe::make(POS, __VA_ARGS__)
+#define AUTO_KEYFRAME(POS, ...) cydui::keyframe::make(POS, ANONYMOUS_STRUCT(__VA_ARGS__){})
 
 #endif //CYD_UI_COMPONENT_MACROS_H

@@ -9,8 +9,8 @@ export import cydui.components.base;
 
 export {
   template <>
-  struct with<std::string>: public cyd::ui::components::with_data_t<std::string> {
-    with& match(const std::unordered_map<std::string, cyd::ui::components::component_builder_t>& map) {
+  struct with<std::string>: public cydui::components::with_data_t<std::string> {
+    with& match(const std::unordered_map<std::string, cydui::components::component_builder_t>& map) {
       if ((not this->val.empty()) && map.contains(this->val)) {
         auto& cs = map.at(this->val);
         std::string id;
@@ -29,7 +29,7 @@ export {
       }
       return *this;
     }
-    with& match(const std::vector<std::pair<std::string, cyd::ui::components::component_builder_t>>& map) {
+    with& match(const std::vector<std::pair<std::string, cydui::components::component_builder_t>>& map) {
       if ((not this->val.empty())) {
         for (const auto& [str, builder]: map) {
           if (str != this->val) {

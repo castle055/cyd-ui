@@ -27,18 +27,18 @@ decltype([&] {                  \
 //! Alternate - if the above one doensn't work
   // #define AUTO_KEYFRAME(POS, ...) {POS, keyframe::make(ANONYMOUS_STRUCT __VA_ARGS__)}
 
-export namespace cyd::ui {
+export namespace cydui {
   using property_id_t = std::pair<refl::type_id_t, std::string>;
 }
 
 template <>
-struct std::hash<cyd::ui::property_id_t> {
-  std::size_t operator()(const cyd::ui::property_id_t& x) const noexcept {
+struct std::hash<cydui::property_id_t> {
+  std::size_t operator()(const cydui::property_id_t& x) const noexcept {
     return std::hash<std::size_t>{}(x.first) ^ (std::hash<std::string>{}(x.second) << 1);
   }
 };
 
-namespace cyd::ui {
+namespace cydui {
   struct property_timeline_t {
     refl::any interpolate(double x, refl::any initial_value) const {
       if (keyframes.empty()) {
@@ -391,13 +391,13 @@ namespace cyd::ui {
       }
     }
 
-    void start_animation(animation& anim, const cyd::ui::components::component_base_t::sptr& component) {
+    void start_animation(animation& anim, const cydui::components::component_base_t::sptr& component) {
       components::component_state_delegate_t::set_animated(component->state().get(), true);
       active_animations_.push_back(make_animation_state(anim, component));
     }
 
   private:
-    animation_state make_animation_state(animation& anim, const cyd::ui::components::component_base_t::sptr& component) {
+    animation_state make_animation_state(animation& anim, const cydui::components::component_base_t::sptr& component) {
       animation_state state{anim, component, std::chrono::system_clock::now()};
 
       const refl::type_info& style_ti = component->get_style_type_info();

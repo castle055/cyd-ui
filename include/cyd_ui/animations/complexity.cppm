@@ -4,7 +4,7 @@
 
 export module cydui.animations.complexity;
 
-export namespace cyd::ui {
+export namespace cydui {
   enum class AnimationComplexity {
     COMPOSE     = 0, // Only needs compositing
     REPAINT     = 1, // Requires updating and repainting the fragment

@@ -18,7 +18,7 @@ export
     virtual ~attribute_i() = default;
   };
 
-  using content = std::vector<cyd::ui::components::component_builder_t>;
+  using content = std::vector<cydui::components::component_builder_t>;
 
   template<typename E>
   struct attr_content: public attribute_i {

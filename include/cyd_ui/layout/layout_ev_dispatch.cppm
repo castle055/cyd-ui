@@ -19,7 +19,7 @@ import cydui.window_events;
 
 export import :layout;
 
-export namespace cyd::ui {
+export namespace cydui {
 #define INSTANCE_EV_HANDLER(STATE_PTR) \
   if (STATE_PTR->component_instance.has_value()) \
     STATE_PTR->component_instance.value()->get_event_dispatcher()
@@ -158,8 +158,8 @@ export namespace cyd::ui {
         }
 
         // Calling 'Drag' related event handlers
-        // cyd::ui::components::Component* target = root;
-        // cyd::ui::components::Component* specified_target =
+        // cydui::components::Component* target = root;
+        // cydui::components::Component* specified_target =
         //  find_by_coords(root, it.x, it.y);
         // if (specified_target)
         //  target = specified_target;

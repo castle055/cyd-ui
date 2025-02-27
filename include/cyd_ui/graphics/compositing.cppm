@@ -22,7 +22,7 @@ import cydui.graphics.window;
 
 export import :dev_texture;
 
-export namespace cyd::ui::compositing {
+export namespace cydui::compositing {
   using namespace vg;
   using namespace std::chrono_literals;
 

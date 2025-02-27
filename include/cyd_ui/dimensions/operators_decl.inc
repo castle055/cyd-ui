@@ -1,64 +1,64 @@
 template <typename S, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-cyd::ui::dimensions::expression<S> operator OPERATOR(V, const cyd::ui::dimensions::dimension<S>&);
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+cydui::dimensions::expression<S> operator OPERATOR(V, const cydui::dimensions::dimension<S>&);
 
 template <typename S>
-cyd::ui::dimensions::expression<S>
-operator OPERATOR(const cyd::ui::dimensions::dimension<S>&, const cyd::ui::dimensions::dimension<S>&);
+cydui::dimensions::expression<S>
+operator OPERATOR(const cydui::dimensions::dimension<S>&, const cydui::dimensions::dimension<S>&);
 
 template <typename S, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-cyd::ui::dimensions::expression<S> operator OPERATOR(const cyd::ui::dimensions::dimension<S>&, V);
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+cydui::dimensions::expression<S> operator OPERATOR(const cydui::dimensions::dimension<S>&, V);
 
 template <typename S, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-cyd::ui::dimensions::expression<S> operator OPERATOR(V, const cyd::ui::dimensions::expression<S>&);
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+cydui::dimensions::expression<S> operator OPERATOR(V, const cydui::dimensions::expression<S>&);
 
 template <typename S, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-cyd::ui::dimensions::expression<S> operator OPERATOR(V, const cyd::ui::dimensions::expression<S>&&);
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+cydui::dimensions::expression<S> operator OPERATOR(V, const cydui::dimensions::expression<S>&&);
 
 template <typename S>
-cyd::ui::dimensions::expression<S>
-operator OPERATOR(const cyd::ui::dimensions::expression<S>&, const cyd::ui::dimensions::expression<S>&);
+cydui::dimensions::expression<S>
+operator OPERATOR(const cydui::dimensions::expression<S>&, const cydui::dimensions::expression<S>&);
 
 template <typename S>
-cyd::ui::dimensions::expression<S>
-operator OPERATOR(const cyd::ui::dimensions::expression<S>&&, const cyd::ui::dimensions::expression<S>&);
+cydui::dimensions::expression<S>
+operator OPERATOR(const cydui::dimensions::expression<S>&&, const cydui::dimensions::expression<S>&);
 
 template <typename S, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-cyd::ui::dimensions::expression<S> operator OPERATOR(const cyd::ui::dimensions::expression<S>&, V);
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+cydui::dimensions::expression<S> operator OPERATOR(const cydui::dimensions::expression<S>&, V);
 
 template <typename S>
-cyd::ui::dimensions::expression<S>
-operator OPERATOR(const cyd::ui::dimensions::dimension<S>&, const cyd::ui::dimensions::expression<S>&);
+cydui::dimensions::expression<S>
+operator OPERATOR(const cydui::dimensions::dimension<S>&, const cydui::dimensions::expression<S>&);
 
 template <typename S>
-cyd::ui::dimensions::expression<S>
-operator OPERATOR(const cyd::ui::dimensions::expression<S>&, const cyd::ui::dimensions::dimension<S>&);
+cydui::dimensions::expression<S>
+operator OPERATOR(const cydui::dimensions::expression<S>&, const cydui::dimensions::dimension<S>&);
 
 
 // Parameters
 template <typename S>
-cyd::ui::dimensions::expression<S> operator OPERATOR(const cyd::ui::dimensions::dimension<S>&, const cyd::ui::dimensions::parameter<S>&);
+cydui::dimensions::expression<S> operator OPERATOR(const cydui::dimensions::dimension<S>&, const cydui::dimensions::parameter<S>&);
 
 template <typename S>
-cyd::ui::dimensions::expression<S> operator OPERATOR(const cyd::ui::dimensions::parameter<S>&, const cyd::ui::dimensions::dimension<S>&);
+cydui::dimensions::expression<S> operator OPERATOR(const cydui::dimensions::parameter<S>&, const cydui::dimensions::dimension<S>&);
 
 template <typename S>
-cyd::ui::dimensions::expression<S> operator OPERATOR(const cyd::ui::dimensions::expression<S>&, const cyd::ui::dimensions::parameter<S>&);
+cydui::dimensions::expression<S> operator OPERATOR(const cydui::dimensions::expression<S>&, const cydui::dimensions::parameter<S>&);
 
 template <typename S>
-cyd::ui::dimensions::expression<S> operator OPERATOR(const cyd::ui::dimensions::parameter<S>&, const cyd::ui::dimensions::expression<S>&);
+cydui::dimensions::expression<S> operator OPERATOR(const cydui::dimensions::parameter<S>&, const cydui::dimensions::expression<S>&);
 
 template <typename S, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-cyd::ui::dimensions::expression<S> operator OPERATOR(V, const cyd::ui::dimensions::parameter<S>&);
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+cydui::dimensions::expression<S> operator OPERATOR(V, const cydui::dimensions::parameter<S>&);
 
 template <typename S, typename V>
-  requires(not cyd::ui::dimensions::is_dimension_v<V> && not cyd::ui::dimensions::is_expression_v<V>)
-cyd::ui::dimensions::expression<S> operator OPERATOR(const cyd::ui::dimensions::parameter<S>&, V);
+  requires(not cydui::dimensions::is_dimension_v<V> && not cydui::dimensions::is_expression_v<V>)
+cydui::dimensions::expression<S> operator OPERATOR(const cydui::dimensions::parameter<S>&, V);
 
 template <typename S>
-cyd::ui::dimensions::expression<S> operator OPERATOR(const cyd::ui::dimensions::parameter<S>&, const cyd::ui::dimensions::parameter<S>&);
+cydui::dimensions::expression<S> operator OPERATOR(const cydui::dimensions::parameter<S>&, const cydui::dimensions::parameter<S>&);

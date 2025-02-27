@@ -17,7 +17,7 @@ export import fabric.profiling;
 export import fabric.type_aliases;
 
 
-export namespace cyd::ui::graphics {
+export namespace cydui::graphics {
   struct window_t {
     window_t(
       fabric::async::async_bus_t* async_bus,

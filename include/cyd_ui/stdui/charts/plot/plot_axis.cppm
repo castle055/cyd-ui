@@ -16,7 +16,7 @@ import fabric.logging;
 using la = with_precision<double>;
 using as_no_unit = quantify::quantity_t<quantify::no_unit, double>;
 // using la = with_precision<quantity_t<no_unit, double>>;
-// using la = with_precision<cyd::ui::dimensions::screen_measure>;
+// using la = with_precision<cydui::dimensions::screen_measure>;
 
 namespace charts {
   constexpr la::scalar DEFAULT_AXIS_MIN_VALUE = -1.0;
@@ -36,13 +36,13 @@ namespace charts {
     std::string       title             = "";
     vg::text_anchor_e title_align{vg::text_anchor_e::MIDDLE};
     la::scalar        title_offset{0};
-    std::function<cyd::ui::components::component_holder_t(la::scalar)> label_component;
+    std::function<cydui::components::component_holder_t(la::scalar)> label_component;
     std::function<void(la::scalar)>                                    move_callback;
     std::function<void()>                                              reset_callback;
   }) {
     ON_REDRAW {
-      using cyd::ui::dimensions::screen_measure;
-      std::vector<cyd::ui::components::component_holder_t> result{};
+      using cydui::dimensions::screen_measure;
+      std::vector<cydui::components::component_holder_t> result{};
 
       // labels
       auto start     = props.step * std::floor((props.min / props.step));
@@ -146,21 +146,21 @@ namespace charts {
         for (la::scalar X = start; X < props.max; X += props.step) {
           auto pos = props.axis_direction * ((X - props.min) / (props.max - props.min));
 
-          x1 = cyd::ui::dimensions::screen_measure{line_length * pos[0]} + offset_x;
-          y1 = cyd::ui::dimensions::screen_measure{line_length * pos[1]} + offset_y;
+          x1 = cydui::dimensions::screen_measure{line_length * pos[0]} + offset_x;
+          y1 = cydui::dimensions::screen_measure{line_length * pos[1]} + offset_y;
           if (X >= props.min && X <= props.max) {
             fragment.append(vg::line{}
                               .x1(x1)
                               .y1(y1)
                               .x2(
                                 x1 +
-                                cyd::ui::dimensions::screen_measure{
+                                cydui::dimensions::screen_measure{
                                   props.label_direction[0] * props.label_offset * 0.25
                                 }
                               )
                               .y2(
                                 y1 +
-                                cyd::ui::dimensions::screen_measure{
+                                cydui::dimensions::screen_measure{
                                   props.label_direction[1] * props.label_offset * 0.25
                                 }
                               )
@@ -175,21 +175,21 @@ namespace charts {
                  Y            += minor_step) {
               pos = props.axis_direction * (((X + Y) - props.min) / (props.max - props.min));
 
-              x1 = cyd::ui::dimensions::screen_measure{line_length * pos[0]} + offset_x;
-              y1 = cyd::ui::dimensions::screen_measure{line_length * pos[1]} + offset_y;
+              x1 = cydui::dimensions::screen_measure{line_length * pos[0]} + offset_x;
+              y1 = cydui::dimensions::screen_measure{line_length * pos[1]} + offset_y;
               if ((X + Y) >= props.min && (X + Y) <= props.max) {
                 fragment.append(vg::line{}
                                   .x1(x1)
                                   .y1(y1)
                                   .x2(
                                     x1 +
-                                    cyd::ui::dimensions::screen_measure{
+                                    cydui::dimensions::screen_measure{
                                       props.label_direction[0] * props.label_offset * 0.15
                                     }
                                   )
                                   .y2(
                                     y1 +
-                                    cyd::ui::dimensions::screen_measure{
+                                    cydui::dimensions::screen_measure{
                                       props.label_direction[1] * props.label_offset * 0.15
                                     }
                                   )
@@ -232,8 +232,8 @@ namespace charts {
         auto angle =
           std::atan2(props.axis_direction[1], props.axis_direction[0]) * 180.0 / std::numbers::pi;
 
-        title.x(cyd::ui::dimensions::screen_measure{pos[0] - text_offset_x} + offset_x);
-        title.y(cyd::ui::dimensions::screen_measure{pos[1] + text_offset_y} + offset_y);
+        title.x(cydui::dimensions::screen_measure{pos[0] - text_offset_x} + offset_x);
+        title.y(cydui::dimensions::screen_measure{pos[1] + text_offset_y} + offset_y);
         title.rotate(angle);
         fragment.append(title);
       }
@@ -267,14 +267,14 @@ namespace charts {
 
   export COMPONENT(
     NumericAxisLabel, { la::scalar value = 0; };
-    static cyd::ui::components::component_holder_t builder(const la::scalar value) {
+    static cydui::components::component_holder_t builder(const la::scalar value) {
       return NumericAxisLabel{{value}};
     }
   ) {
     ON_REDRAW {
       const auto label_footprint = label_fragment().get_footprint();
-      $width                     = cyd::ui::dimensions::screen_measure{(double)label_footprint.w.value_as_base_unit()};
-      $height                    = cyd::ui::dimensions::screen_measure{(double)label_footprint.h.value_as_base_unit()};
+      $width                     = cydui::dimensions::screen_measure{(double)label_footprint.w.value_as_base_unit()};
+      $height                    = cydui::dimensions::screen_measure{(double)label_footprint.h.value_as_base_unit()};
       return {};
     }
 
@@ -293,14 +293,14 @@ namespace charts {
 
   export COMPONENT(
     PiRatioAxisLabel, { la::scalar value = 0; };
-    static cyd::ui::components::component_holder_t builder(const la::scalar value) {
+    static cydui::components::component_holder_t builder(const la::scalar value) {
       return PiRatioAxisLabel{{value}};
     }
   ) {
     ON_REDRAW {
       const auto label_footprint = label_fragment().get_footprint();
-      $width                     = cyd::ui::dimensions::screen_measure{(double)label_footprint.w.value_as_base_unit()};
-      $height                    = cyd::ui::dimensions::screen_measure{(double)label_footprint.h.value_as_base_unit()};
+      $width                     = cydui::dimensions::screen_measure{(double)label_footprint.w.value_as_base_unit()};
+      $height                    = cydui::dimensions::screen_measure{(double)label_footprint.h.value_as_base_unit()};
       return {};
     }
 
@@ -397,7 +397,7 @@ namespace charts {
 
 
     C& label_component(
-      const std::function<cyd::ui::components::component_holder_t(la::scalar)>& builder
+      const std::function<cydui::components::component_holder_t(la::scalar)>& builder
     ) {
       label_builder_ = [&](const la::scalar value) { return builder(value); };
       return *ref_;
@@ -493,7 +493,7 @@ namespace charts {
     la::vec<2>                                                          axis_direction_{0, 0};
     la::vec<2>                                                          label_direction_{0, 0};
     la::vec<2>                                                          label_orientation_{0, 0};
-    std::function<cyd::ui::components::component_builder_t(la::scalar)> label_builder_{
+    std::function<cydui::components::component_builder_t(la::scalar)> label_builder_{
       [](const la::scalar value) { return NumericAxisLabel{{value}}; }
     };
   };

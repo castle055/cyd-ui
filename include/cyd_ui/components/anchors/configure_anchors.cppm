@@ -18,7 +18,7 @@ export import cydui.components.anchors;
 
 export
 {
-  namespace cyd::ui::components::anchors {
+  namespace cydui::components::anchors {
     void configure_anchors(
       std::shared_ptr<component_base_t> child,
       std::optional<std::shared_ptr<component_base_t>> prev
@@ -110,5 +110,5 @@ export
       PREV_PARAM(bottom_right_x, x + w);
       PREV_PARAM(bottom_right_y, y + h);
     }
-  } // namespace cyd::ui::components
+  } // namespace cydui::components
 }

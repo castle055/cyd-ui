@@ -13,7 +13,7 @@ export import cydui.styling;
 
 import cydui.animations.complexity;
 
-export namespace cyd::ui::components {
+export namespace cydui::components {
   template <typename T>
   struct four_sided_property {
   public:
@@ -211,4 +211,4 @@ export namespace cyd::ui::components {
     std::function<void(std::shared_ptr<void>&)> style_transform{[](std::shared_ptr<void>&){}};
     std::shared_ptr<dimension_ctx_t> dimension_ctx_;
   };
-} // namespace cyd::ui::components
+} // namespace cydui::components

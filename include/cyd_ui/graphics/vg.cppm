@@ -11,8 +11,8 @@ import std;
 import fabric.memory.multidim_data;
 import fabric.type_aliases;
 
-export import :vg_attributes;
 export import cydui.dimensions;
+export import :vg_attributes;
 
 export namespace vg {
   struct vg_element_t {
@@ -29,10 +29,10 @@ export namespace vg {
 
     struct footprint {
       // int x, y, w, h;
-      cyd::ui::dimensions::screen_measure x;
-      cyd::ui::dimensions::screen_measure y;
-      cyd::ui::dimensions::screen_measure w;
-      cyd::ui::dimensions::screen_measure h;
+      cydui::dimensions::screen_measure x;
+      cydui::dimensions::screen_measure y;
+      cydui::dimensions::screen_measure w;
+      cydui::dimensions::screen_measure h;
     };
     virtual footprint get_footprint() const = 0;
   };

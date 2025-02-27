@@ -17,7 +17,7 @@ import fabric.profiling;
 import cydui.graphics.types;
 import cydui.application;
 
-export namespace cyd::ui::compositing {
+export namespace cydui::compositing {
   struct device_texture_t {
     using texture_ptr = SDL_Texture*;
 

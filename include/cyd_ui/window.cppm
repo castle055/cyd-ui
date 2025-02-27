@@ -22,16 +22,16 @@ export import cydui.styling;
 export import cydui.application;
 export import cydui.animations;
 
-export namespace cyd::ui {
+export namespace cydui {
   class CWindow;
   class Layout;
 }
 
-namespace cyd::ui {
-  void bind_layout(cyd::ui::Layout* layout, const std::shared_ptr<cyd::ui::CWindow> &window);
+namespace cydui {
+  void bind_layout(cydui::Layout* layout, const std::shared_ptr<cydui::CWindow> &window);
 }
 
-export namespace cyd::ui {
+export namespace cydui {
   class CWindow: public fabric::async::async_bus_t {
     CWindow(
       Layout* layout,

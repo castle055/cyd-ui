@@ -11,7 +11,7 @@ import :with_iterable_container;
 
 export {
   template <>
-  struct with<int>: public cyd::ui::components::with_data_t<int> {
+  struct with<int>: public cydui::components::with_data_t<int> {
     with<int>& eq() {
       return *this;
     }

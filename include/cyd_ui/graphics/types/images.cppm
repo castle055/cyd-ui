@@ -5,7 +5,7 @@ export module cydui.graphics.types:images;
 
 import std;
 
-export namespace cyd::ui::graphics::images {
+export namespace cydui::graphics::images {
     struct image_t {
       std::string path;
     };

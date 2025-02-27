@@ -183,7 +183,7 @@ namespace syntax {
     RULE(tss_element_selector)          (tss_identifier{}, *(forward_slash, tss_identifier{}));
 
     struct selector_data {
-      cyd::ui::StyleRuleSelector selector{};
+      cydui::StyleRuleSelector selector{};
     };
     ARULE(tss_descendent_selector_item)  (tss_element_selector{}, *(tss_class_selector{} | tss_id_selector{} | tss_pseudo_state_selector{}))
     (selector_data)({
@@ -220,7 +220,7 @@ namespace syntax {
     RULE(tss_children_selector_item)     (!left_angle_brackets, tss_descendent_selector_item{});
 
     struct combined_selector_data {
-      cyd::ui::StyleRuleCombinedSelector selector{};
+      cydui::StyleRuleCombinedSelector selector{};
       std::string key_element{};
     };
     ARULE(tss_combined_selector)       (tss_descendent_selector_item{}, !skip_wn{}, *((tss_children_selector_item{} | tss_descendent_selector_item{}), !skip_wn{}))
@@ -229,7 +229,7 @@ namespace syntax {
       auto& key = $node->data.key_element;
 
       selector.selectors.emplace_back( //
-        cyd::ui::StyleRuleCombinedSelector::FIRST_SELECTOR,
+        cydui::StyleRuleCombinedSelector::FIRST_SELECTOR,
         $node->children[0]->as<tss_descendent_selector_item>()->data.selector
       );
 
@@ -240,13 +240,13 @@ namespace syntax {
             const auto *cs = child->as<tss_children_selector_item>()
                      ->children[0]->as<tss_descendent_selector_item>();
             selector.selectors.emplace_front( //
-              cyd::ui::StyleRuleCombinedSelector::CHILD_COMBINATOR,
+              cydui::StyleRuleCombinedSelector::CHILD_COMBINATOR,
               cs->data.selector
             );
           } else if (child->is_type<tss_descendent_selector_item>()) {
             const auto *ss = child->as<tss_descendent_selector_item>();
             selector.selectors.emplace_front( //
-              cyd::ui::StyleRuleCombinedSelector::DESCENDENT_COMBINATOR,
+              cydui::StyleRuleCombinedSelector::DESCENDENT_COMBINATOR,
               ss->data.selector
             );
           }
@@ -259,7 +259,7 @@ namespace syntax {
     TRULE(tss_grouping_selector)        (*(tss_combined_selector{}, !comma_separator{}), tss_combined_selector{}, !skip_wn{});
 
     struct selector_list_data {
-      std::vector<cyd::ui::StyleRuleCombinedSelector> selectors{};
+      std::vector<cydui::StyleRuleCombinedSelector> selectors{};
       std::vector<std::string> selector_keys{};
     };
     ARULE(tss_selector)                  (asterisc | tss_grouping_selector{})
@@ -356,8 +356,8 @@ namespace syntax {
 
     // RULES
     ARULE(tss_rule)(!skip_wn{}, tss_selector{}, !braces_begin{}, tss_declaration_list{}, !braces_end{})
-    (cyd::ui::StyleRule::sptr)({
-      $node->data = std::make_shared<cyd::ui::StyleRule>();
+    (cydui::StyleRule::sptr)({
+      $node->data = std::make_shared<cydui::StyleRule>();
 
       if ($node->children[0]->is_type<tss_selector>()) {
         const auto* sel = $node->children[0]->as<tss_selector>();
@@ -371,7 +371,7 @@ namespace syntax {
     });
 
     struct stylesheet_data {
-      std::vector<cyd::ui::StyleRule::sptr> rules{};
+      std::vector<cydui::StyleRule::sptr> rules{};
     };
     ARULE(tss_stylesheet)(*tss_rule())
     (stylesheet_data)({

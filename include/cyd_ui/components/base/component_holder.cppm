@@ -8,7 +8,7 @@ export import :with_template;
 
 export
 {
-  namespace cyd::ui::components {
+  namespace cydui::components {
     struct component_builder_t {
 
       component_builder_t() = default;

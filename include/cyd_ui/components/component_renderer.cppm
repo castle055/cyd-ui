@@ -15,7 +15,7 @@ import cydui.application;
 import cydui.graphics;
 export import cydui.components.base;
 
-namespace cyd::ui::components {
+namespace cydui::components {
   export class component_renderer_t {
   public:
     using sptr = std::shared_ptr<component_renderer_t>;

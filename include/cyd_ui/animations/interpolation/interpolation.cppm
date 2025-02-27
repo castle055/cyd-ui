@@ -54,7 +54,7 @@ std::optional<float> find_root(std::function<float(float)> fun, float x0, float 
   return std::nullopt;
 }
 
-namespace cyd::ui {
+namespace cydui {
   export class interpolator_base {
   public:
     using sptr = std::shared_ptr<interpolator_base>;
@@ -74,7 +74,7 @@ namespace cyd::ui {
 
     export class easing final: public interpolator_base {
     public:
-      using function_type = cyd::ui::easing::function_type;
+      using function_type = cydui::easing::function_type;
       explicit easing(function_type fun): fun_(fun) {}
       float_type interpolate(float_type x0, float_type x1, float_type t) const override {
         const float_type s = normalize(t, fun_);
@@ -141,4 +141,4 @@ namespace cyd::ui {
       float_type As, Bs, Cs;
     };
   }
-} // namespace cyd::ui
+} // namespace cydui

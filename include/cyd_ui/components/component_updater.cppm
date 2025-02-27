@@ -16,7 +16,7 @@ import cydui.graphics;
 export import cydui.components.base;
 export import cydui.components.configure_anchors;
 
-namespace cyd::ui::components {
+namespace cydui::components {
   export class component_updater_t {
   public:
     using sptr = std::shared_ptr<component_updater_t>;

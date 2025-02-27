@@ -21,7 +21,7 @@ export import :attributes;
 export import :contexts;
 export import :state;
 
-namespace cyd::ui::components {
+namespace cydui::components {
   export class component_base_t {
   public:
     using sptr = std::shared_ptr<component_base_t>;
@@ -231,7 +231,7 @@ namespace cyd::ui::components {
 }
 
 template<typename ContextType>
-cyd::ui::components::component_holder_t provide_context<ContextType>::operator >(with_context &&components) {
+cydui::components::component_holder_t provide_context<ContextType>::operator >(with_context &&components) {
   auto holder = components.build();
 
   for (auto &[_, c]: holder.get_components()) {

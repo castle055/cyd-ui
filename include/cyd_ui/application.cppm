@@ -17,7 +17,7 @@ export import fabric.logging;
 
 export import cydui.window_events;
 
-export namespace cyd::ui {
+export namespace cydui {
   class Application: public fabric::async::async_bus_t {
   private:
     struct WindowEventSystem final: fabric::async::system_base_t {

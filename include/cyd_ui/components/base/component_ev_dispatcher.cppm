@@ -13,7 +13,7 @@ export import cydui.events;
 export import cydui.styling;
 export import cydui.graphics;
 
-export namespace cyd::ui::components {
+export namespace cydui::components {
   class event_dispatcher_base_t {
   public:
     virtual ~event_dispatcher_base_t() = default;

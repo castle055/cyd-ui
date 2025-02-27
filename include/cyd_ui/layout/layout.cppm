@@ -28,7 +28,7 @@ import cydui.window_events;
 
 export import :window;
 
-export namespace cyd::ui {
+export namespace cydui {
   template<components::ComponentConcept C>
   Layout* create(C &&root_component);
 
@@ -130,7 +130,7 @@ export namespace cyd::ui {
   Layout* create(C&& root_component) {
     ZoneScopedN("Layout:create");
     auto root                      = std::make_shared<C>(std::forward<C>(root_component));
-    auto root_state                = cyd::ui::components::component_actor_t::create_state_instance(root.get());
+    auto root_state                = cydui::components::component_actor_t::create_state_instance(root.get());
     root_state->component_instance = root;
     auto* lay                      = new Layout(root_state, root);
     return lay;
@@ -140,7 +140,7 @@ export namespace cyd::ui {
   Layout* create(C& root_component) {
     ZoneScopedN("Layout:create");
     auto root                      = std::make_shared<C>(root_component);
-    auto root_state                = cyd::ui::components::component_actor_t::create_state_instance(root.get());
+    auto root_state                = cydui::components::component_actor_t::create_state_instance(root.get());
     root_state->component_instance = root;
     auto* lay                      = new Layout(root_state, root);
     return lay;
@@ -148,7 +148,7 @@ export namespace cyd::ui {
 
 #define COMPUTE(DIM)                                                                               \
   {                                                                                                \
-    auto compute_res = cyd::ui::dimensions::compute_dimension(DIM);                                         \
+    auto compute_res = cydui::dimensions::compute_dimension(DIM);                                         \
     if (not compute_res) {                                                                         \
       return false;                                                                                \
     }                                                                                              \
@@ -156,9 +156,9 @@ export namespace cyd::ui {
 
 }
 
-namespace cyd::ui {
-  static bool compute_dimensions(cyd::ui::components::component_base_t* rt) {
-    using namespace cyd::ui::dimensions;
+namespace cydui {
+  static bool compute_dimensions(cydui::components::component_base_t* rt) {
+    using namespace cydui::dimensions;
     auto dim     = rt->get_dimensional_relations();
     auto &int_rel = rt->get_internal_relations();
 
@@ -318,7 +318,7 @@ namespace cyd::ui {
 //
 //}
 
-  void Layout::bind_window(const cyd::ui::CWindow::sptr &_win) {
+  void Layout::bind_window(const cydui::CWindow::sptr &_win) {
     ZoneScopedN("Layout:bind_window");
     this->win = _win;
 
@@ -431,12 +431,12 @@ namespace cyd::ui {
   template<typename Component>
   CWindow::builder_t CWindow::make(typename Component::props_t props) {
     ZoneScopedN("CWindow:make");
-    auto layout = cyd::ui::create(Component {props});
+    auto layout = cydui::create(Component {props});
     return CWindow::builder_t(layout);
   }
 }
 
-namespace cyd::ui {
+namespace cydui {
   void bind_layout(Layout* layout, const CWindow::sptr &window) {
     layout->bind_window(window);
   }
