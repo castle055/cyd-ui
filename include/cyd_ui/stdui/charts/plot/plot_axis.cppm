@@ -58,32 +58,32 @@ namespace charts {
         auto  label     = result.back().get_components()[0].second;
         auto  label_dim = label->get_dimensional_relations();
         if (props.axis_direction[0] > la::scalar{0}) {
-          label_dim._x = $width * screen_measure{pos[0]} - (label_dim._width / 2_px) +
+          label_dim.x = $width * screen_measure{pos[0]} - (label_dim.width / 2_px) +
                          (props.label_direction[0] * props.label_offset);
         } else if (props.axis_direction[0] < la::scalar{0}) {
-          label_dim._x = $width * screen_measure{pos[0]} - (label_dim._width / screen_measure{2}) +
+          label_dim.x = $width * screen_measure{pos[0]} - (label_dim.width / screen_measure{2}) +
                          (props.label_direction[0] * props.label_offset) + $width;
         } else {
           if (props.label_direction[0] > 0) {
-            label_dim._x = $width * pos[0] - (label_dim._width / 2) +
+            label_dim.x = $width * pos[0] - (label_dim.width / 2) +
                            (props.label_direction[0] * props.label_offset);
           } else {
-            label_dim._x = $width * pos[0] - (label_dim._width / 2) +
+            label_dim.x = $width * pos[0] - (label_dim.width / 2) +
                            (props.label_direction[0] * props.label_offset) + $width;
           }
         }
         if (props.axis_direction[1] > 0) {
-          label_dim._y = $height * pos[1] + (label_dim._height / 2) +
+          label_dim.y = $height * pos[1] + (label_dim.height / 2) +
                          (props.label_direction[1] * props.label_offset);
         } else if (props.axis_direction[1] < 0) {
-          label_dim._y = $height * pos[1] + (label_dim._height / 2) +
+          label_dim.y = $height * pos[1] + (label_dim.height / 2) +
                          (props.label_direction[1] * props.label_offset) + $height;
         } else {
           if (props.label_direction[1] > 0) {
-            label_dim._y = $height * pos[1] + (label_dim._height / 2) +
+            label_dim.y = $height * pos[1] + (label_dim.height / 2) +
                            (props.label_direction[1] * props.label_offset);
           } else {
-            label_dim._y = $height * pos[1] + (label_dim._height / 2) +
+            label_dim.y = $height * pos[1] + (label_dim.height / 2) +
                            (props.label_direction[1] * props.label_offset) + $height;
           }
         }

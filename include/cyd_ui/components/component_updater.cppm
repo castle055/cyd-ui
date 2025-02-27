@@ -134,11 +134,11 @@ namespace cyd::ui::components {
       } else {
         // Set child's variables
         child->parent                = component.get();
-        attrs_component<>* c_attrs   = child->attrs();
-        child->get_internal_relations().cx = component->get_internal_relations().cx + c_attrs->_x +
-                                       c_attrs->_margin_left + c_attrs->_padding_left;
+        auto c_dims   = child->get_dimensional_relations();
+        child->get_internal_relations().cx = component->get_internal_relations().cx + c_dims.x +
+                                       c_dims.margin_left + c_dims.padding_left;
         child->get_internal_relations().cy =
-          component->get_internal_relations().cy + c_attrs->_y + c_attrs->_margin_top + c_attrs->_padding_top;
+          component->get_internal_relations().cy + c_dims.y + c_dims.margin_top + c_dims.padding_top;
 
         component_actor_t::set_component_state(child.get(), child_state);
         compiler_style_rules_signal.emit(child, style_archive);

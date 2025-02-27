@@ -168,7 +168,8 @@ namespace charts {
       return *ref_;
     }
 
-    PlotGrid build_component(auto&& x, auto&& y, auto&& w, auto&& h) const {
+    template <typename T1, typename T2, typename T3, typename T4>
+    PlotGrid build_component(T1&& x, T2&& y, T3&& w, T4&& h) const {
       PlotGrid pa{{
         .min_x               = x_axis_ref_->min_value_,
         .max_x               = x_axis_ref_->max_value_,
@@ -183,7 +184,7 @@ namespace charts {
         .minor_ticks_y_show  = y_axis.minor_ticks_show_,
         .minor_ticks_y_count = y_axis_ref_->minor_ticks_count_,
       }};
-      pa.x(x).y(y).width(w).height(h);
+      pa.x(std::forward<T1>(x)).y(std::forward<T2>(y)).width(std::forward<T3>(w)).height(std::forward<T4>(h));
       return pa;
     }
 

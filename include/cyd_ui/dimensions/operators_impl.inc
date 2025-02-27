@@ -152,6 +152,7 @@ OPERATOR(const cyd::ui::dimensions::expression<T>& expr1, V value) {
   node->children.push_back(const_value);
 
   expr.tree_ = node;
+  expr.dependencies_.insert(expr1.dependencies_.begin(), expr1.dependencies_.end());
   return expr;
 }
 

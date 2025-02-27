@@ -159,55 +159,55 @@ export namespace cyd::ui {
 namespace cyd::ui {
   static bool compute_dimensions(cyd::ui::components::component_base_t* rt) {
     using namespace cyd::ui::dimensions;
-    auto &dim     = rt->get_dimensional_relations();
+    auto dim     = rt->get_dimensional_relations();
     auto &int_rel = rt->get_internal_relations();
 
     /// COMPUTE SOME VALUES
-    COMPUTE(dim._x)
-    COMPUTE(dim._y)
+    COMPUTE(dim.x)
+    COMPUTE(dim.y)
 
-    COMPUTE(dim._margin_top)
-    COMPUTE(dim._margin_right)
-    COMPUTE(dim._margin_bottom)
-    COMPUTE(dim._margin_left)
+    COMPUTE(dim.margin_top)
+    COMPUTE(dim.margin_right)
+    COMPUTE(dim.margin_bottom)
+    COMPUTE(dim.margin_left)
 
-    COMPUTE(dim._padding_top)
-    COMPUTE(dim._padding_right)
-    COMPUTE(dim._padding_bottom)
-    COMPUTE(dim._padding_left)
+    COMPUTE(dim.padding_top)
+    COMPUTE(dim.padding_right)
+    COMPUTE(dim.padding_bottom)
+    COMPUTE(dim.padding_left)
 
     /// COMPUTE CHILDREN ORIGIN POINT (cx, cy)
     if (rt->parent.has_value()) {
-      auto &parent_dim     = rt->parent.value()->get_dimensional_relations();
+      auto parent_dim     = rt->parent.value()->get_dimensional_relations();
       auto &parent_int_rel = rt->parent.value()->get_internal_relations();
 
-      int_rel.cx = dimensions::get_value(parent_int_rel.cx) + dimensions::get_value(dim._x)
-                   + dimensions::get_value(dim._margin_left)
-                   + dimensions::get_value(dim._padding_left);
-      int_rel.cy = dimensions::get_value(parent_int_rel.cy) + dimensions::get_value(dim._y)
-                   + dimensions::get_value(dim._margin_top) + dimensions::get_value(dim._padding_top);
+      int_rel.cx = dimensions::get_value(parent_int_rel.cx) + dimensions::get_value(dim.x)
+                   + dimensions::get_value(dim.margin_left)
+                   + dimensions::get_value(dim.padding_left);
+      int_rel.cy = dimensions::get_value(parent_int_rel.cy) + dimensions::get_value(dim.y)
+                   + dimensions::get_value(dim.margin_top) + dimensions::get_value(dim.padding_top);
     } else {
-      int_rel.cx = dimensions::get_value(dim._x) + dimensions::get_value(dim._margin_left)
-                   + dimensions::get_value(dim._padding_left);
-      int_rel.cy = dimensions::get_value(dim._y) + dimensions::get_value(dim._margin_top)
-                   + dimensions::get_value(dim._padding_top);
+      int_rel.cx = dimensions::get_value(dim.x) + dimensions::get_value(dim.margin_left)
+                   + dimensions::get_value(dim.padding_left);
+      int_rel.cy = dimensions::get_value(dim.y) + dimensions::get_value(dim.margin_top)
+                   + dimensions::get_value(dim.padding_top);
     }
     COMPUTE(int_rel.cx)
     COMPUTE(int_rel.cy)
 
     /// COMPUTE SIZE
-    if (dim._width.is_set()) {
-      COMPUTE(dim._width)
-      int_rel.cw = dimensions::get_value(dim._width) - dimensions::get_value(dim._padding_left) - dimensions::get_value(
-                     dim._padding_right)
-                   - dimensions::get_value(dim._margin_left) - dimensions::get_value(dim._margin_right);
+    if (dim.width.is_set()) {
+      COMPUTE(dim.width)
+      int_rel.cw = dimensions::get_value(dim.width) - dimensions::get_value(dim.padding_left) - dimensions::get_value(
+                     dim.padding_right)
+                   - dimensions::get_value(dim.margin_left) - dimensions::get_value(dim.margin_right);
       COMPUTE(int_rel.cw)
     }
-    if (dim._height.is_set()) {
-      COMPUTE(dim._height)
-      int_rel.ch = dimensions::get_value(dim._height) - dimensions::get_value(dim._padding_top) - dimensions::get_value(
-                     dim._padding_bottom)
-                   - dimensions::get_value(dim._margin_top) - dimensions::get_value(dim._margin_bottom);
+    if (dim.height.is_set()) {
+      COMPUTE(dim.height)
+      int_rel.ch = dimensions::get_value(dim.height) - dimensions::get_value(dim.padding_top) - dimensions::get_value(
+                     dim.padding_bottom)
+                   - dimensions::get_value(dim.margin_top) - dimensions::get_value(dim.margin_bottom);
       COMPUTE(int_rel.ch)
     }
 
@@ -220,9 +220,9 @@ namespace cyd::ui {
       //compute_dimensions(child);
       // if error (circular dependency), skip for now, and then recalculate
       if (compute_dimensions(child.get())) {
-        auto &c_dim      = child->get_dimensional_relations();
-        auto child_max_w = dimensions::get_value(c_dim._x) + dimensions::get_value(c_dim._width);
-        auto child_max_h = dimensions::get_value(c_dim._y) + dimensions::get_value(c_dim._height);
+        auto c_dim      = child->get_dimensional_relations();
+        auto child_max_w = dimensions::get_value(c_dim.x) + dimensions::get_value(c_dim.width);
+        auto child_max_h = dimensions::get_value(c_dim.y) + dimensions::get_value(c_dim.height);
         total_w          = std::max(total_w, child_max_w);
         total_h          = std::max(total_h, child_max_h);
       } else {
@@ -230,24 +230,24 @@ namespace cyd::ui {
       }
     }
 
-    if (not dim._width.is_set()) {
+    if (not dim.width.is_set()) {
       // If not given, or given has error (ie: circular dep)
       int_rel.cw = total_w;
       COMPUTE(int_rel.cw)
-      dim._width = dimensions::get_value(int_rel.cw) + dimensions::get_value(dim._padding_left) + dimensions::get_value(
-                     dim._padding_right)
-                   + dimensions::get_value(dim._margin_left) + dimensions::get_value(dim._margin_right);
-      COMPUTE(dim._width)
+      dim.width = dimensions::get_value(int_rel.cw) + dimensions::get_value(dim.padding_left) + dimensions::get_value(
+                     dim.padding_right)
+                   + dimensions::get_value(dim.margin_left) + dimensions::get_value(dim.margin_right);
+      COMPUTE(dim.width)
     }
 
-    if (not dim._height.is_set()) {
+    if (not dim.height.is_set()) {
       // If not given, or given has error (ie: circular dep)
       int_rel.ch = total_h;
       COMPUTE(int_rel.ch)
-      dim._height = dimensions::get_value(int_rel.ch) + dimensions::get_value(dim._padding_top) + dimensions::get_value(
-                      dim._padding_bottom)
-                    + dimensions::get_value(dim._margin_top) + dimensions::get_value(dim._margin_bottom);
-      COMPUTE(dim._height)
+      dim.height = dimensions::get_value(int_rel.ch) + dimensions::get_value(dim.padding_top) + dimensions::get_value(
+                      dim.padding_bottom)
+                    + dimensions::get_value(dim.margin_top) + dimensions::get_value(dim.margin_bottom);
+      COMPUTE(dim.height)
     }
 
     return std::all_of(pending.begin(), pending.end(), [](const auto &it) { return compute_dimensions(it.get()); });
@@ -326,9 +326,19 @@ namespace cyd::ui {
     root_state->window = this->win;
 
     auto [w, h] = win->get_size();
-    auto& dim   = root->get_dimensional_relations();
-    dim._width  = cyd::ui::dimensions::screen_measure{double(w)}; //{};
-    dim._height = cyd::ui::dimensions::screen_measure{double(h)}; //{};
+    auto dim   = root->get_dimensional_relations();
+    static const auto* width_field = refl::type_info::from<components::style_base_t>()
+                                 .field_by_offset(offsetof(components::style_base_t, width))
+                                 .value();
+    static const auto* height_field = refl::type_info::from<components::style_base_t>()
+                                 .field_by_offset(offsetof(components::style_base_t, height))
+                                 .value();
+    root->get_style_data().set_base_field_override(
+      width_field, dimension_t{dimensions::screen_measure{double(w)}}
+    );
+    root->get_style_data().set_base_field_override(
+      height_field, dimension_t{dimensions::screen_measure{double(h)}}
+    );
     components::component_actor_t::mount_component(root.get());
     component_stylist->apply_style(root);
 

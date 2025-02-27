@@ -73,17 +73,18 @@ export
       PARENT_PARAM(bottom_right_y, cy + ch);
 
       //! PREV
-#define PREV_PARAM(NAME, ...) DIMENSIONAL_PARAM(prev, NAME, [=] { \
-          if (prev.has_value()) { \
-            auto& dims = prev.value()->get_dimensional_relations(); \
-            auto x = dims._x; \
-            auto y = dims._y; \
-            auto w = dims._width; \
-            auto h = dims._height; \
-            return dimension_t {__VA_ARGS__}; \
-          } \
-          return dimension_t {0_px}; \
-        })
+#define PREV_PARAM(NAME, ...)                                                                      \
+  DIMENSIONAL_PARAM(prev, NAME, [=] {                                                              \
+    if (prev.has_value()) {                                                                        \
+      auto dims = prev.value()->get_dimensional_relations();                                       \
+      auto x    = dims.x;                                                                          \
+      auto y    = dims.y;                                                                          \
+      auto w    = dims.width;                                                                      \
+      auto h    = dims.height;                                                                     \
+      return dimension_t{__VA_ARGS__};                                                             \
+    }                                                                                              \
+    return dimension_t{0_px};                                                                      \
+  })
 
       PREV_PARAM(x, x);
       PREV_PARAM(y, y);

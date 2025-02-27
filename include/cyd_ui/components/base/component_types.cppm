@@ -20,11 +20,6 @@ export namespace cyd::ui::components {
     char value[N];
   };
 
-
-  using dimension_t = dimensions::dimension<dimensions::screen_measure>;
-  using dimension_parameter_t = dimensions::parameter<dimensions::screen_measure>;
-  using dimension_ctx_t = dimensions::context<dimensions::screen_measure>;
-
   struct component_state_t;
   using component_state_ref = std::shared_ptr<component_state_t>;
   class component_base_t;
@@ -49,15 +44,10 @@ export namespace cyd::ui::components {
   struct component_dimensional_relations_t {
     dimension_t& x;
     dimension_t& y;
-    dimension_t& w;
-    dimension_t& h;
-    bool&        fixed_w;
-    bool&        fixed_h;
-
-    dimension_t& cx;
-    dimension_t& cy;
-    dimension_t& cw;
-    dimension_t& ch;
+    dimension_t& width;
+    dimension_t& height;
+    // bool&        fixed_w;
+    // bool&        fixed_h;
 
     dimension_t& margin_top;
     dimension_t& margin_bottom;

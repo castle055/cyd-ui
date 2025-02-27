@@ -12,6 +12,7 @@ import fabric.logging;
 
 export import :with_specialization;
 export import cydui.components.base;
+export import cydui.components.anchors;
 export import cydui.components.event_dispatcher;
 
 namespace cyd::ui::components {
@@ -21,10 +22,11 @@ namespace cyd::ui::components {
     public attrs_component<T> {
   public:
     component_t() {
-      internal_relations.cx = this->_x + this->_margin_left + this->_padding_left;
-      internal_relations.cy = this->_y + this->_margin_top + this->_padding_top;
-
       style_data = std::make_shared<style_data_t<typename T::style_t>>();
+
+      auto dim = get_dimensional_relations();
+      internal_relations.cx = dim.x + dim.margin_left + dim.padding_left;
+      internal_relations.cy = dim.y + dim.margin_top + dim.padding_top;
     }
 
     ~component_t() override {
@@ -53,12 +55,13 @@ namespace cyd::ui::components {
 
       component_base_t* found = nullptr;
       for (auto c = children.rbegin(); c != children.rend(); ++c) {
-        auto cx = get_value(c->get()->attrs()->_x);
-        auto cy = get_value(c->get()->attrs()->_y);
-        auto mx = get_value(c->get()->attrs()->_margin_left);
-        auto my = get_value(c->get()->attrs()->_margin_top);
-        auto px = get_value(c->get()->attrs()->_padding_left);
-        auto py = get_value(c->get()->attrs()->_padding_top);
+        auto dim = c->get()->get_dimensional_relations();
+        auto cx = get_value(dim.x);
+        auto cy = get_value(dim.y);
+        auto mx = get_value(dim.margin_left);
+        auto my = get_value(dim.margin_top);
+        auto px = get_value(dim.padding_left);
+        auto py = get_value(dim.padding_top);
         found   = (*c)->find_by_coords(x - cx - mx - px, y - cy - my - py);
         if (nullptr != found) {
           return found;
@@ -66,20 +69,36 @@ namespace cyd::ui::components {
       }
 
       if (x < 0 ||
-          x >= get_value(this->_width) ||
+          x >= get_value(get_style().width) ||
           y < 0 ||
-          y >= get_value(this->_height)) {
+          y >= get_value(get_style().height)) {
         return nullptr;
       }
       return this;
     }
 
-    attrs_dimensions<> &get_dimensional_relations() final {
-      return *reinterpret_cast<attrs_dimensions<>*>(static_cast<attrs_dimensions<T>*>(this));
+    component_dimensional_relations_t get_dimensional_relations() final {
+      style_base_t& s = style_data->as_base();
+      return {
+        .x              = s.x,
+        .y              = s.y,
+        .width          = s.width,
+        .height         = s.height,
+        // .fixed_w = ,
+        // .fixed_h = ,
+        .margin_top     = s.margin.top,
+        .margin_bottom  = s.margin.bottom,
+        .margin_left    = s.margin.left,
+        .margin_right   = s.margin.right,
+        .padding_top    = s.padding.top,
+        .padding_bottom = s.padding.bottom,
+        .padding_left   = s.padding.left,
+        .padding_right  = s.padding.right
+      };
     }
 
     std::shared_ptr<dimension_ctx_t> get_dimensional_context() final {
-      return this->dimension_ctx;
+      return style_data->get_dimensional_ctx();
     }
 
     const refl::type_info& get_style_type_info() const final {
@@ -120,23 +139,9 @@ namespace cyd::ui::components {
         dirty = true;
       }
 
-      if (not other_component->style_data->has_override()) {
-        style_data->clear_style_override();
-        dirty = true;
-      } else if (not style_data->has_override()) {
-        style_data->set_style_override_ptr(std::move(other_component->style_data->get_style_override_ptr()));
-        dirty = true;
-      } else {
-        auto & self_so = *static_cast<typename T::style_t*>(style_data->get_style_override_ptr().get());
-        auto & other_so = *static_cast<typename T::style_t*>(other_component->style_data->get_style_override_ptr().get());
-        if (not refl::deep_eq(self_so, other_so)
-            or not refl::deep_eq(
-              style_data->get_style_override_as_base(),
-              other_component->style_data->get_style_override_as_base()
-            )) {
-          style_data->set_style_override_ptr(std::move(other_component->style_data->get_style_override_ptr()));
-          dirty = true;
-        }
+      if (style_data->update_override_with(other_component->style_data->style_override_data)) {
+        // TODO - Need to improve equality on dimension_t or change the eq function in refl::type_info
+        // dirty = true;
       }
 
       if (update_fields(other_component)) {
@@ -168,11 +173,6 @@ namespace cyd::ui::components {
     }
 
   public:
-    void set_style_override(const auto& new_style) {
-      auto &self_so = *dynamic_cast<style_data_t<typename T::style_t>*>(style_data.get());
-      self_so.set_style_override(new_style);
-    }
-
     T& operator[](const std::string& tag) {
       style_data->tags.insert(tag);
       return *dynamic_cast<T*>(this);
@@ -236,6 +236,9 @@ namespace cyd::ui::components {
         }
       }
     }
+
+  public:
+#include "./style_setters.inc"
   };
 }
 

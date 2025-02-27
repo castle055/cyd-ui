@@ -360,12 +360,12 @@ namespace cyd::ui {
             ++anim;
           }
         }
-
-        if (active_animations_.empty()) {
-          // LOG::print{DEBUG}("Animations OFF");
-          this->disable();
-        }
         // LOG::print {DEBUG}("Animations ON");
+      }
+
+      // De-animate components that need it
+      for (const auto& c: c_pending_deanimation) {
+        components::component_state_delegate_t::set_animated(c->state().get(), false);
       }
 
       bool needs_compositing = false;
@@ -385,9 +385,9 @@ namespace cyd::ui {
         s_compose_all.emit();
       }
 
-      // De-animate components that need it
-      for (const auto& c: c_pending_deanimation) {
-        components::component_state_delegate_t::set_animated(c->state().get(), false);
+      if (active_animations_.empty()) {
+        // LOG::print{DEBUG}("Animations OFF");
+        this->disable();
       }
     }
 

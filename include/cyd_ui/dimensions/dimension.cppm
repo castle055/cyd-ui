@@ -6,6 +6,7 @@
 export module cydui.dimensions:dimension;
 
 import std;
+import reflect;
 
 import fabric.logging;
 
@@ -21,26 +22,40 @@ public:
   using context = context<value_type>;
 
   dimension()
-      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {}
+      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
+    impl_->self = impl_;
+  }
 
   explicit dimension(expression&& expr)
       : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
+    impl_->self = impl_;
+    impl_->set_expression(expr);
+  }
+
+  explicit dimension(const expression& expr)
+      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
+    impl_->self = impl_;
     impl_->set_expression(expr);
   }
 
   explicit dimension(const std::shared_ptr<context>& ctx)
-      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>{ctx}}) {}
+      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>{ctx}}) {
+    impl_->self = impl_;
+  }
 
   explicit dimension(const std::shared_ptr<context>& ctx, expression&& expr)
       : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>{ctx}}) {
+    impl_->self = impl_;
     impl_->set_expression(expr);
   }
 
   dimension(const dimension& other)
       : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
+    impl_->self = impl_;
     impl_->set_expression(other.impl_->expr_);
     impl_->value_ = other.impl_->value_;
     impl_->unknown_ = other.impl_->unknown_;
+    set_context(other.get_context());
   }
 
   dimension& operator=(const dimension& other) {
@@ -60,7 +75,20 @@ public:
     return *this;
   }
 
+  dimension& operator=(value_type&& expr) {
+    impl_->value_ = std::move(expr);
+    impl_->set_expression(std::move(expr));
+    return *this;
+  }
+
+  dimension& operator=(const value_type& expr) {
+    impl_->value_ = expr;
+    impl_->set_expression(expr);
+    return *this;
+  }
+
   bool operator==(const dimension& rhl) const {
+    // TODO - I don't think this is right, what if we call this on a yet not computed dimension
     return value() == rhl.value();
   }
 
@@ -78,7 +106,14 @@ public:
   const std::shared_ptr<context>& get_context() const {
     return impl_->context_;
   }
+  void set_context(const std::shared_ptr<context>& ctx) {
+    std::shared_ptr<context> new_ctx = ctx;
+    impl_->context_.swap(new_ctx);
+  }
 
+  const expression& get_expression() const {
+    return impl_->expr_;
+  }
 
   friend struct dimensional_operators;
 
@@ -105,6 +140,7 @@ private:
     return impl_;
   }
 
+  [[meta(refl::eq_policy::shallow)]]
   typename dimension_impl<value_type>::sptr impl_;
 };
 

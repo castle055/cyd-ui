@@ -89,7 +89,7 @@ export namespace cyd::ui {
           target = specified_target;
         }
 
-        auto &dim     = target->get_dimensional_relations();
+        auto dim     = target->get_dimensional_relations();
         auto &int_rel = target->get_internal_relations();
         auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
         auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
@@ -200,9 +200,18 @@ export namespace cyd::ui {
         ZoneScopedN("Resize Event");
         auto _pev = this->win->profiling_ctx.scope_event("Resize");
 
-        auto &dim   = root->get_dimensional_relations();
-        dim._width  = ev.w;
-        dim._height = ev.h;
+        auto dim   = root->get_dimensional_relations();
+        static const auto* width_field =
+          refl::type_info::from<components::style_base_t>()
+            .field_by_offset(offsetof(components::style_base_t, width))
+            .value();
+        static const auto* height_field =
+          refl::type_info::from<components::style_base_t>()
+            .field_by_offset(offsetof(components::style_base_t, height))
+            .value();
+        root->get_style_data().set_base_field_override(width_field, dimension_t{ev.w});
+        root->get_style_data().set_base_field_override(height_field, dimension_t{ev.h});
+        component_stylist->apply_style(root);
 
         update_dimensions();
         // if (is_compositing.test()) {

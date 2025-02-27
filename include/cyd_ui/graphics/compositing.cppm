@@ -40,6 +40,13 @@ export namespace cyd::ui::compositing {
 
     std::function<void(compositing_operation_t &op)> _fix_dimensions = [](compositing_operation_t &op) {
     };
+
+    bool operator==(const compositing_operation_t &other) const {
+      return x == other.x && y == other.y && orig_x == other.orig_x && orig_y == other.orig_y
+             && w == other.w && h == other.h && scale_x == other.scale_x && scale_y == other.scale_y
+             && rot == other.rot && animated == other.animated;
+
+    }
   };
 
   struct compositing_node_t {

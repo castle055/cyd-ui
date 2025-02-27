@@ -12,7 +12,7 @@ import fabric.logging;
 import fabric.async;
 import fabric.templates.functor_arguments;
 
-import cydui.graphics;
+export import cydui.graphics;
 export import cydui.styling;
 export import cydui.components.base.style;
 
@@ -39,7 +39,7 @@ namespace cyd::ui::components {
 
     virtual component_base_t* find_by_coords(dimension_t::value_type x, dimension_t::value_type y) = 0;
 
-    virtual attrs_dimensions<>& get_dimensional_relations() = 0;
+    virtual component_dimensional_relations_t get_dimensional_relations() = 0;
     virtual std::shared_ptr<dimension_ctx_t> get_dimensional_context() = 0;
 
     virtual const refl::type_info& get_style_type_info() const = 0;

@@ -42,7 +42,7 @@
     using style_t = std::conditional_t<                                                            \
       is_type_complete_v<struct style_type>,                                                       \
       style_type,                                                                                  \
-      cyd::ui::components::style_base_t>;                                                          \
+      cyd::ui::components::simple_style_t>;                                                          \
     template <typename P = props_t>                                                                \
     explicit NAME(                                                                                 \
       typename std::enable_if<std::is_default_constructible_v<P>, props_t>::type props = {}        \
@@ -55,10 +55,6 @@
     ~NAME() override = default;                                                                    \
     void* get_props() override {                                                                   \
       return (void*)&(this->props);                                                                \
-    }                                                                                              \
-    auto& style(style_t new_style) {                                                               \
-      component_t::set_style_override(new_style);                                                  \
-      return *this;                                                                                \
     }                                                                                              \
     auto& style(std::function<void(style_t&)> style_transform) {                                   \
       component_t::set_style_transform(style_transform);                                           \

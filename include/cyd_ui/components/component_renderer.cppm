@@ -225,27 +225,28 @@ namespace cyd::ui::components {
 
       auto& data = component->get_data<render_data_t>();
 
-      int old_w = data.compositing_node_.op.w;
-      int old_h = data.compositing_node_.op.h;
+      auto old_op = data.compositing_node_.op;
+      bool old_is_flattened = data.compositing_node_.is_flattened_node();
 
-      auto* at = component->attrs();
+      auto& at = component->get_style();
       data.compositing_node_.id = (unsigned long)(component->state().get());
       data.compositing_node_.op = {
-        .x       = static_cast<int>(get_num_value(at->_x) + get_num_value(at->_margin_left)),
-        .y       = static_cast<int>(get_num_value(at->_y) + get_num_value(at->_margin_top)),
-        .orig_x  = static_cast<int>(get_num_value(at->_padding_left)),
-        .orig_y  = static_cast<int>(get_num_value(at->_padding_top)),
-        .w       = static_cast<int>(get_num_value(at->_width)),
-        .h       = static_cast<int>(get_num_value(at->_height)),
-        .rot     = at->_rotation,   // dim->rot.val(),
-        .scale_x = 1.0,             // dim->scale_x.val(),
-        .scale_y = 1.0,             // dim->scale_y.val(),
+        .x        = static_cast<int>(get_num_value(at.x) + get_num_value(at.margin.left)),
+        .y        = static_cast<int>(get_num_value(at.y) + get_num_value(at.margin.top)),
+        .orig_x   = static_cast<int>(get_num_value(at.padding.left)),
+        .orig_y   = static_cast<int>(get_num_value(at.padding.top)),
+        .w        = static_cast<int>(get_num_value(at.width)),
+        .h        = static_cast<int>(get_num_value(at.height)),
+        .rot      = at.rotation.value_as_base_unit(), // dim->rot.val(),
+        .scale_x  = 1.0,                              // dim->scale_x.val(),
+        .scale_y  = 1.0,                              // dim->scale_y.val(),
         .animated = component->state()->is_animated(),
       };
 
       data.compositing_node_.set_parent(parent_node);
 
-      return old_w != data.compositing_node_.op.w or old_h != data.compositing_node_.op.h;
+      return old_op != data.compositing_node_.op
+             or old_is_flattened != data.compositing_node_.is_flattened_node();
     }
 
     void update_fragment(component_base_t* component, compositing::compositing_node_t *parent_node) {
@@ -273,55 +274,55 @@ namespace cyd::ui::components {
       auto &fragment = compositing_node.graphics;
       fragment.clear();
 
-      auto* at = component->attrs();
-      int half_top_border    = at->_border_width_top >> 1;
-      int half_bottom_border = (at->_border_width_bottom >> 1) + (at->_border_width_bottom & 1);
-      int half_left_border   = at->_border_width_left >> 1;
-      int half_right_border  = (at->_border_width_right >> 1) + (at->_border_width_right & 1);
+      auto& at = component->get_style();
+      int half_top_border    = at.border_width.top >> 1;
+      int half_bottom_border = (at.border_width.bottom >> 1) + (at.border_width.bottom & 1);
+      int half_left_border   = at.border_width.left >> 1;
+      int half_right_border  = (at.border_width.right >> 1) + (at.border_width.right & 1);
 
       // The four border corners, in reading order (left -> right, top ->bottom)
-      int x1 = (half_left_border) - get_num_value(at->_padding_left);
-      int y1 = (half_top_border) - get_num_value(at->_padding_top);
+      int x1 = (half_left_border) - get_num_value(at.padding.left);
+      int y1 = (half_top_border) - get_num_value(at.padding.top);
 
-      int x2 = x1 + get_num_value(at->_width) - (half_left_border) - (half_right_border);
+      int x2 = x1 + get_num_value(at.width) - (half_left_border) - (half_right_border);
       int y2 = y1;
 
       int x3 = x1;
-      int y3 = y1 + get_num_value(at->_height) - (half_top_border) - (half_bottom_border);
+      int y3 = y1 + get_num_value(at.height) - (half_top_border) - (half_bottom_border);
 
       int x4 = x2;
       int y4 = y3;
 
       fragment.draw<vg::rect>()
-              .x(-dimensions::get_value(at->_padding_left))
-              .y(-dimensions::get_value(at->_padding_top))
-              .w(dimensions::get_value(at->_width))
-              .h(dimensions::get_value(at->_height))
+              .x(-dimensions::get_value(at.padding.left))
+              .y(-dimensions::get_value(at.padding.top))
+              .w(dimensions::get_value(at.width))
+              .h(dimensions::get_value(at.height))
               .fill(component->get_style().background);
       fragment.draw<vg::line>()
               .x1(x1 - half_left_border).y1(y1)
               .x2(x2 + half_right_border).y2(y2)
-              .stroke(at->_border_top)
-              .stroke_width(at->_border_width_top)
-              .stroke_dasharray(at->_border_dasharray_top);
+              .stroke(at.border.top)
+              .stroke_width(at.border_width.top)
+              .stroke_dasharray(at.border_dasharray.top);
       fragment.draw<vg::line>()
               .x1(x4 + half_right_border).y1(y4)
               .x2(x3 - half_left_border).y2(y3)
-              .stroke(at->_border_bottom)
-              .stroke_width(at->_border_width_bottom)
-              .stroke_dasharray(at->_border_dasharray_bottom);
+              .stroke(at.border.bottom)
+              .stroke_width(at.border_width.bottom)
+              .stroke_dasharray(at.border_dasharray.bottom);
       fragment.draw<vg::line>()
               .x1(x3).y1(y3 + half_bottom_border)
               .x2(x1).y2(y1 - half_top_border)
-              .stroke(at->_border_left)
-              .stroke_width(at->_border_width_left)
-              .stroke_dasharray(at->_border_dasharray_left);
+              .stroke(at.border.left)
+              .stroke_width(at.border_width.left)
+              .stroke_dasharray(at.border_dasharray.left);
       fragment.draw<vg::line>()
               .x1(x2).y1(y2 - half_top_border)
               .x2(x4).y2(y4 + half_bottom_border)
-              .stroke(at->_border_right)
-              .stroke_width(at->_border_width_right)
-              .stroke_dasharray(at->_border_dasharray_right);
+              .stroke(at.border.right)
+              .stroke_width(at.border_width.right)
+              .stroke_dasharray(at.border_dasharray.right);
 
 
       component->get_event_dispatcher()->paint_fragment(fragment);

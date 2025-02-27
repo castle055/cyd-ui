@@ -38,8 +38,9 @@ export namespace cyd::ui {
         tracy::SetThreadNameWithHint("Application", 1);
         ZoneScopedN("Application Init");
         SDL_SetMainReady();
-        if (0 != SDL_Init(SDL_INIT_VIDEO)) {
+        if (not SDL_Init(SDL_INIT_VIDEO)) {
           SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
+          LOG::print{ERROR}("Couldn't initialize SDL3: {}", SDL_GetError());
         }
         LOG::print {INFO}("SDL3 initialized.");
         application_initialization_latch.count_down();

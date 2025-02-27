@@ -11,7 +11,7 @@ import fabric.logging;
 
 export import :types;
 
-template <typename Type>
+export template <typename Type>
 class cyd::ui::dimensions::expression {
 public:
   using dimension = dimension<Type>;

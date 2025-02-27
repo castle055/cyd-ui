@@ -47,14 +47,9 @@ namespace cyd::ui::components {
     void apply_style(const component_base_t::sptr& component) {
       ZoneScopedN("Apply Style");
       auto& style_data = component->get_style_data();
-      // style_data.reset();
 
-      if (style_data.has_override()) {
-        style_data.apply_override();
-      } else {
-        apply_style_rules(component);
-      }
-
+      apply_style_rules(component);
+      style_data.apply_override();
       style_data.apply_transform();
     }
 
@@ -170,15 +165,11 @@ namespace cyd::ui::components {
         }
       }
 
-      // Merge pending with deactivated fields
-      pending_fields.insert_range(deactivated_fields);
-      pending_base_fields.insert_range(deactivated_base_fields);
-
-      // Set pending fields with default values
-      for (const auto & field : pending_base_fields) {
+      // Set deactivated fields to default values
+      for (const auto & field : deactivated_base_fields) {
         style_data.reset_field(field, true);
       }
-      for (const auto & field : pending_fields) {
+      for (const auto & field : deactivated_fields) {
         style_data.reset_field(field, false);
       }
     }

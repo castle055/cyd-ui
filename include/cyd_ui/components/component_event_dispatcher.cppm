@@ -46,14 +46,14 @@ namespace cyd::ui::components {
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();
       return eh->on_redraw(
-        at->_x,
-        at->_y,
+        at.x,
+        at.y,
         ir.cw,
         ir.ch,
-        at->_padding_top,
-        at->_padding_bottom,
-        at->_padding_left,
-        at->_padding_right,
+        at.padding_top,
+        at.padding_bottom,
+        at.padding_left,
+        at.padding_right,
         content_children_builder
       );
     }
@@ -67,10 +67,10 @@ namespace cyd::ui::components {
         dimensions::get_value(ir.cy),
         dimensions::get_value(ir.cw),
         dimensions::get_value(ir.ch),
-        dimensions::get_value(at->_padding_top),
-        dimensions::get_value(at->_padding_bottom),
-        dimensions::get_value(at->_padding_left),
-        dimensions::get_value(at->_padding_right)
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
       );
     }
 
@@ -80,14 +80,14 @@ namespace cyd::ui::components {
       auto [at, ir] = component_data();
       eh->on_key_press(
         ev,
-        dimensions::get_value(at->_x),
-        dimensions::get_value(at->_y),
+        dimensions::get_value(at.x),
+        dimensions::get_value(at.y),
         dimensions::get_value(ir.cw),
         dimensions::get_value(ir.ch),
-        dimensions::get_value(at->_padding_top),
-        dimensions::get_value(at->_padding_bottom),
-        dimensions::get_value(at->_padding_left),
-        dimensions::get_value(at->_padding_right)
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
       );
     }
 
@@ -97,14 +97,14 @@ namespace cyd::ui::components {
       auto [at, ir] = component_data();
       eh->on_key_release(
         ev,
-        dimensions::get_value(at->_x),
-        dimensions::get_value(at->_y),
+        dimensions::get_value(at.x),
+        dimensions::get_value(at.y),
         dimensions::get_value(ir.cw),
         dimensions::get_value(ir.ch),
-        dimensions::get_value(at->_padding_top),
-        dimensions::get_value(at->_padding_bottom),
-        dimensions::get_value(at->_padding_left),
-        dimensions::get_value(at->_padding_right)
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
       );
     }
 
@@ -114,14 +114,14 @@ namespace cyd::ui::components {
       auto [at, ir] = component_data();
       eh->on_text_input(
         ev,
-        dimensions::get_value(at->_x),
-        dimensions::get_value(at->_y),
+        dimensions::get_value(at.x),
+        dimensions::get_value(at.y),
         dimensions::get_value(ir.cw),
         dimensions::get_value(ir.ch),
-        dimensions::get_value(at->_padding_top),
-        dimensions::get_value(at->_padding_bottom),
-        dimensions::get_value(at->_padding_left),
-        dimensions::get_value(at->_padding_right)
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
       );
     }
 
@@ -137,14 +137,14 @@ namespace cyd::ui::components {
         button,
         x,
         y,
-        dimensions::get_value(at->_x),
-        dimensions::get_value(at->_y),
+        dimensions::get_value(at.x),
+        dimensions::get_value(at.y),
         dimensions::get_value(ir.cw),
         dimensions::get_value(ir.ch),
-        dimensions::get_value(at->_padding_top),
-        dimensions::get_value(at->_padding_bottom),
-        dimensions::get_value(at->_padding_left),
-        dimensions::get_value(at->_padding_right)
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
       );
     }
 
@@ -160,14 +160,14 @@ namespace cyd::ui::components {
         button,
         x,
         y,
-        dimensions::get_value(at->_x),
-        dimensions::get_value(at->_y),
+        dimensions::get_value(at.x),
+        dimensions::get_value(at.y),
         dimensions::get_value(ir.cw),
         dimensions::get_value(ir.ch),
-        dimensions::get_value(at->_padding_top),
-        dimensions::get_value(at->_padding_bottom),
-        dimensions::get_value(at->_padding_left),
-        dimensions::get_value(at->_padding_right)
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
       );
     }
 
@@ -178,14 +178,14 @@ namespace cyd::ui::components {
       eh->on_mouse_enter(
         x,
         y,
-        dimensions::get_value(at->_x),
-        dimensions::get_value(at->_y),
+        dimensions::get_value(at.x),
+        dimensions::get_value(at.y),
         dimensions::get_value(ir.cw),
         dimensions::get_value(ir.ch),
-        dimensions::get_value(at->_padding_top),
-        dimensions::get_value(at->_padding_bottom),
-        dimensions::get_value(at->_padding_left),
-        dimensions::get_value(at->_padding_right)
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
       );
     }
 
@@ -196,14 +196,14 @@ namespace cyd::ui::components {
       eh->on_mouse_exit(
         x,
         y,
-        dimensions::get_value(at->_x),
-        dimensions::get_value(at->_y),
+        dimensions::get_value(at.x),
+        dimensions::get_value(at.y),
         dimensions::get_value(ir.cw),
         dimensions::get_value(ir.ch),
-        dimensions::get_value(at->_padding_top),
-        dimensions::get_value(at->_padding_bottom),
-        dimensions::get_value(at->_padding_left),
-        dimensions::get_value(at->_padding_right)
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
       );
     }
 
@@ -214,14 +214,14 @@ namespace cyd::ui::components {
       eh->on_mouse_motion(
         x,
         y,
-        dimensions::get_value(at->_x),
-        dimensions::get_value(at->_y),
+        dimensions::get_value(at.x),
+        dimensions::get_value(at.y),
         dimensions::get_value(ir.cw),
         dimensions::get_value(ir.ch),
-        dimensions::get_value(at->_padding_top),
-        dimensions::get_value(at->_padding_bottom),
-        dimensions::get_value(at->_padding_left),
-        dimensions::get_value(at->_padding_right)
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
       );
     }
 
@@ -232,22 +232,20 @@ namespace cyd::ui::components {
       eh->on_scroll(
         dx,
         dy,
-        dimensions::get_value(at->_x),
-        dimensions::get_value(at->_y),
+        dimensions::get_value(at.x),
+        dimensions::get_value(at.y),
         dimensions::get_value(ir.cw),
         dimensions::get_value(ir.ch),
-        dimensions::get_value(at->_padding_top),
-        dimensions::get_value(at->_padding_bottom),
-        dimensions::get_value(at->_padding_left),
-        dimensions::get_value(at->_padding_right)
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
       );
     }
 
   private:
-    std::pair<attrs_component<>*, internal_relations_t&> component_data() {
-      auto* at = component_->attrs();
-      auto& ir = component_->get_internal_relations();
-      return {at, ir};
+    std::pair<component_dimensional_relations_t, internal_relations_t&> component_data() {
+      return {component_->get_dimensional_relations(), component_->get_internal_relations()};
     }
 
     template<std::size_t... I>

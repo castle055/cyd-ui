@@ -27,7 +27,11 @@ namespace cyd::ui::dimensions {
     using wptr       = std::weak_ptr<dimension_impl>;
     using sptr       = std::shared_ptr<dimension_impl>;
 
-    ~dimension_impl() = default;
+    ~dimension_impl() {
+      for (auto dependency : expr_.dependencies_) {
+        dependency->dependents_.erase(self);
+      }
+    }
 
     friend dimension<T>;
     friend expression<T>;
@@ -56,6 +60,11 @@ namespace cyd::ui::dimensions {
 
     void clear() {
       expr_.clear();
+
+      for (auto dependency : expr_.dependencies_) {
+        dependency->dependents_.erase(self);
+      }
+
       mark_unknown();
     }
 
@@ -70,7 +79,16 @@ namespace cyd::ui::dimensions {
       if (expression == expr_) {
         return;
       }
+
+      for (auto dependency : expression.dependencies_) {
+        dependency->dependents_.erase(self);
+      }
+
       expr_ = expression;
+
+      for (auto dependency : expression.dependencies_) {
+        dependency->dependents_.insert(self);
+      }
       mark_unknown();
     }
 
@@ -105,6 +123,8 @@ namespace cyd::ui::dimensions {
     bool                        unknown_ = true;
     std::unordered_set<wptr>    dependents_{};
     std::shared_ptr<context<T>> context_;
+
+    wptr self;
   };
 
   template <typename T>
