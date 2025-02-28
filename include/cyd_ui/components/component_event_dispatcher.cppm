@@ -263,8 +263,9 @@ namespace cydui::components {
 
       if constexpr (packtl::is_type<use_context, field_type>::value) {
         using context_type = typename field_type::context_type;
+        using ret_context_type = typename field_type::ret_context_type;
 
-        use_context<context_type> &ctx_ref = field::from_instance(*eh);
+        use_context<ret_context_type> &ctx_ref = field::from_instance(*eh);
 
         auto ctx = component_->find_context<context_type>();
 

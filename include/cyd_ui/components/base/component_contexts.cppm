@@ -204,6 +204,10 @@ struct use_context_delegate {
     it->ctx = ctx;
   }
   template<typename ContextType>
+  static void set_context(use_context<const ContextType>* it, ContextType* ctx) {
+    it->ctx = ctx;
+  }
+  template<typename ContextType>
   static void set_owns_context(use_context<ContextType>* it, bool value) {
     it->owns_context = value;
   }
