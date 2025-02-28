@@ -13,6 +13,7 @@ export import :window;
 export import :layout;
 
 export import reflect;
+export import quantify;
 
 export namespace font = cydui::graphics::font;
 

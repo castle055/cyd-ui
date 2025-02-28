@@ -3,6 +3,7 @@
  *!
  */
 module;
+#include <cyd_fabric_modules/headers/macros/async_events.h>
 #include <tracy/Tracy.hpp>
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
@@ -17,6 +18,10 @@ import fabric.async;
 
 export import cydui.events;
 
+
+export namespace cydui {
+  EVENT(StopApplicationEvent) {};
+}
 
 namespace cydui::window_events {
   std::unique_ptr<std::thread> thread_ptr{nullptr};
@@ -81,7 +86,7 @@ namespace cydui::window_events {
     }
   }
 
-  void dispatch_event(window_map *busses, const SDL_Event &event) {
+  void dispatch_event(fabric::async::async_bus_t* app_bus, window_map *busses, const SDL_Event &event) {
     auto bus = [&](std::size_t id, auto&& ev) {
       if (busses->contains(id)) {
         busses->at(id)->emit(ev);
@@ -97,7 +102,7 @@ namespace cydui::window_events {
     } else {
       switch (event.type) {
         case SDL_EVENT_QUIT:
-          std::exit(0);
+          app_bus->emit<StopApplicationEvent>();
           break;
         case SDL_EVENT_RENDER_TARGETS_RESET:
         case SDL_EVENT_RENDER_DEVICE_RESET:
@@ -206,11 +211,11 @@ namespace cydui::window_events {
     }
   }
 
-  void task(window_map *busses) {
+  void task(fabric::async::async_bus_t* app_bus, window_map *busses) {
     ZoneScopedN("Polling events");
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-      dispatch_event(busses, event);
+      dispatch_event(app_bus, busses, event);
     }
   }
 }
@@ -223,7 +228,7 @@ export namespace cydui::window_events {
   //   }
   // }
   //
-  void poll_events(window_map *busses) {
-    task(busses);
+  void poll_events(fabric::async::async_bus_t* app_bus, window_map *busses) {
+    task(app_bus, busses);
   }
 }

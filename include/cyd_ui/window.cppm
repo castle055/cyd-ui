@@ -205,10 +205,12 @@ export namespace cydui {
   }
 
   void CWindow::terminate() {
-    // TODO - Implement
-    // delete layout;
-    // graphics::terminate(win_ref);
-    // win_ref = nullptr;
+    Application::run([&]() {
+      SDL_DestroyWindow(win_ref->window);
+      SDL_DestroyRenderer(win_ref->renderer);
+      win_ref.reset();
+    });
+    emit<fabric::async::StopBusEvent>();
   }
 
   bool CWindow::is_open() const {

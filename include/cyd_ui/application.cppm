@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 module;
-#include <cyd_fabric_modules/headers/macros/async_events.h>
 #include <tracy/Tracy.hpp>
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
@@ -21,18 +20,30 @@ export namespace cydui {
   class Application: public fabric::async::async_bus_t {
   private:
     struct WindowEventSystem final: fabric::async::system_base_t {
+      WindowEventSystem(fabric::async::async_bus_t* app_bus)
+          : app_bus_(app_bus) {}
+
       void run() override {
         ZoneScopedN("WindowEventSystem");
         std::scoped_lock lk{get_instance().window_map_mtx_};
-        window_events::poll_events(&get_instance().window_map_);
+        window_events::poll_events(app_bus_, &get_instance().window_map_);
       }
+    private:
+      fabric::async::async_bus_t* app_bus_;
     };
 
-    Application() {
+    Application()
+        : stop_application_listener_(on_event([&](const StopApplicationEvent&) {
+            if (this->window_map_.empty()) {
+              this->emit<fabric::async::StopBusEvent>();
+            }
+            this->stop_application_flag_.test_and_set();
+            this->stop_application_flag_.notify_all();
+          })) {
       ZoneScopedN("Application{}");
       std::latch application_initialization_latch {1};
       using namespace std::chrono_literals;
-      add_system<WindowEventSystem>({.enabled = true, .period = 16ms});
+      add_system<WindowEventSystem>({.enabled = true, .period = 16ms}, this);
 
       add_init([&] {
         tracy::SetThreadNameWithHint("Application", 1);
@@ -93,8 +104,13 @@ export namespace cydui {
     }
     static void unregister_window(std::size_t id) {
       ZoneScopedN("Application:unregister_window");
-      std::scoped_lock lk{get_instance().window_map_mtx_};
-      get_instance().window_map_.erase(id);
+      Application& instance = get_instance();
+      std::scoped_lock lk{instance.window_map_mtx_};
+      instance.window_map_.erase(id);
+      if (instance.window_map_.empty() and instance.stop_application_flag_.test()) {
+        instance.stop_application_flag_.clear();
+        instance.emit<fabric::async::StopBusEvent>();
+      }
       LOG::print {INFO}("Window unregistered ID={}", id);
     }
 
@@ -104,6 +120,8 @@ export namespace cydui {
   private:
     TracyLockable(std::mutex, window_map_mtx_);
     std::map<std::size_t, fabric::async::async_bus_t*> window_map_{};
+    fabric::async::listener<StopApplicationEvent>      stop_application_listener_;
+    std::atomic_flag                                   stop_application_flag_{false};
   };
 }
 

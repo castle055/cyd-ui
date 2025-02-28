@@ -32,6 +32,9 @@ export namespace cydui {
     static auto make_listener = [&](auto &&fun) { return win->on_event(fun).raw(); };
 
     listeners = {
+      make_listener([&](const WindowClosed &ev) {
+        win->terminate();
+      }),
       make_listener([&](const RedrawEvent &ev) {
         ZoneScopedN("Redraw Event");
         auto _pev = this->win->profiling_ctx.scope_event("Redraw");
