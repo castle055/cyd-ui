@@ -116,23 +116,23 @@ export {
     template <typename Component>
     struct event_handler_data_t: public event_handler_t {
       event_handler_data_t(
-        Component&                                          $component_,
-        const std::list<std::shared_ptr<component_base_t>>& $children_,
+        Component&                                          component_,
+        const std::list<std::shared_ptr<component_base_t>>& children_,
         const std::shared_ptr<typename Component::state_t>& state_,
         const std::shared_ptr<fabric::async::async_bus_t>&  window_,
         typename Component::props_t&                        props_,
         attrs_component<Component>&                         attrs_,
         typename Component::style_t&                        style_
       )
-          : event_handler_t(&$component_, $children_),
-            $component($component_),
+          : event_handler_t(&component_, children_),
+            component(component_),
             state(*state_),
             window(*window_),
             props(props_),
             attrs(attrs_),
             style(style_) {}
 
-      Component&                   $component;
+      Component&                   component;
       typename Component::state_t& state;
       fabric::async::async_bus_t&  window;
       typename Component::props_t& props;

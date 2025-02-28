@@ -27,7 +27,7 @@
 #define EXTENDS(...) , __VA_ARGS__
 
 #define COMPONENT(NAME, ...)                                                                       \
-  struct NAME: public cydui::components::component_t<NAME> {                                     \
+  struct NAME: public cydui::components::component_t<NAME> {                                       \
     struct event_handler_t;                                                                        \
     struct init;                                                                                   \
     struct style_type;                                                                             \
@@ -35,86 +35,69 @@
                                                                                                    \
   public:                                                                                          \
     props_t props;                                                                                 \
-    using state_t = std::conditional_t<                                                            \
-      is_type_complete_v<struct init>,                                                             \
-      init,                                                                                        \
-      cydui::components::component_state_t>;                                                     \
+    using state_t = std::                                                                          \
+      conditional_t<is_type_complete_v<struct init>, init, cydui::components::component_state_t>;  \
     using style_t = std::conditional_t<                                                            \
       is_type_complete_v<struct style_type>,                                                       \
       style_type,                                                                                  \
       cydui::components::simple_style_t>;                                                          \
     template <typename P = props_t>                                                                \
-    explicit NAME(                                                                                 \
-      typename std::enable_if<std::is_default_constructible_v<P>, props_t>::type props = {}        \
-    )                                                                                              \
-        : cydui::components::component_t<NAME>(),                                                \
+    explicit NAME(std::enable_if_t<std::is_default_constructible_v<P>, props_t> props = {})        \
+        : cydui::components::component_t<NAME>(),                                                  \
           props(std::move(props)) {}                                                               \
     explicit NAME(props_t props)                                                                   \
-        : cydui::components::component_t<NAME>(),                                                \
+        : cydui::components::component_t<NAME>(),                                                  \
           props(std::move(props)) {}                                                               \
     ~NAME() override = default;                                                                    \
     void* get_props() override {                                                                   \
       return (void*)&(this->props);                                                                \
     }                                                                                              \
     auto& style(std::function<void(style_t&)> style_transform) {                                   \
-      component_t::set_style_transform(style_transform);                                           \
+      this->set_style_transform(style_transform);                                                  \
       return *this;                                                                                \
     }                                                                                              \
     friend struct event_handler_t;                                                                 \
-    friend struct cydui::components::event_handler_data_t<NAME>;                                 \
+    friend struct cydui::components::event_handler_data_t<NAME>;                                   \
   };                                                                                               \
-  struct NAME::event_handler_t                                                                     \
-      : public cydui::components::event_handler_data_t<NAME>
+  struct NAME::event_handler_t: public cydui::components::event_handler_data_t<NAME>
 
 
-// ?>
-#define STATE_TEMPLATE(NAME) \
-template SET_COMPONENT_TEMPLATE   \
-struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
-
-
-// ?>
-#define SET_COMPONENT_TEMPLATE_DEFAULT SET_COMPONENT_TEMPLATE
-
-#define COMPONENT_TEMPLATE(NAME, ...) \
-template SET_COMPONENT_TEMPLATE_DEFAULT \
-struct CYDUI_EV_HANDLER_NAME(NAME);   \
-template SET_COMPONENT_TEMPLATE_DEFAULT \
-struct NAME:                          \
-  public cydui::components::component_t<          \
-    CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT, \
-    NAME SET_COMPONENT_TEMPLATE_SHORT \
-  > {                                 \
-    CYDUI_COMPONENT_METADATA(NAME)    \
-    using state_t = CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \
-    using event_handler_t = CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT; \
-    struct props_t                    \
-      __VA_ARGS__;                    \
-    props_t props;                    \
-    NAME() = default;                 \
-    explicit NAME(props_t props)      \
-      : cydui::components::component_t<           \
-        CYDUI_EV_HANDLER_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT,        \
-        NAME SET_COMPONENT_TEMPLATE_SHORT                     \
-      >()                             \
-      , props(std::move(props)) { }   \
-    ~NAME() override = default;       \
-    void* get_props() override {      \
-      return (void*)&(this->props);   \
-    }                                 \
-};                                    \
-template SET_COMPONENT_TEMPLATE_DEFAULT \
-struct CYDUI_EV_HANDLER_DATA_NAME(NAME) {                     \
-  std::shared_ptr<CYDUI_STATE_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT> state = nullptr;  \
-  cyd::fabric::async::async_bus_t* window = nullptr;       \
-  NAME SET_COMPONENT_TEMPLATE_SHORT::props_t* props = nullptr;\
-  attrs_component<NAME SET_COMPONENT_TEMPLATE_SHORT>* attrs = nullptr;   \
-  logging::logger log{.name = #NAME}; \
-};                                    \
-template SET_COMPONENT_TEMPLATE       \
-struct CYDUI_EV_HANDLER_NAME(NAME)    \
-  : public cydui::components::event_handler_t,    \
-    public CYDUI_EV_HANDLER_DATA_NAME(NAME) SET_COMPONENT_TEMPLATE_SHORT
+#define TCOMPONENT(NAME, ...)                                                                      \
+  template NAME##_TEMPLATE struct NAME                                                             \
+      : public cydui::components::component_t<NAME NAME##_TEMPLATE_SHORT> {                        \
+    struct event_handler_t;                                                                        \
+    struct init;                                                                                   \
+    struct style_type;                                                                             \
+    struct props_t __VA_ARGS__;                                                                    \
+                                                                                                   \
+  public:                                                                                          \
+    props_t props;                                                                                 \
+    using state_t = std::                                                                          \
+      conditional_t<is_type_complete_v<struct init>, init, cydui::components::component_state_t>;  \
+    using style_t = std::conditional_t<                                                            \
+      is_type_complete_v<struct style_type>,                                                       \
+      style_type,                                                                                  \
+      cydui::components::simple_style_t>;                                                          \
+    template <typename P = props_t>                                                                \
+    explicit NAME(std::enable_if_t<std::is_default_constructible_v<P>, props_t> props = {})        \
+        : cydui::components::component_t<NAME NAME##_TEMPLATE_SHORT>(),                            \
+          props(std::move(props)) {}                                                               \
+    explicit NAME(props_t props)                                                                   \
+        : cydui::components::component_t<NAME NAME##_TEMPLATE_SHORT>(),                            \
+          props(std::move(props)) {}                                                               \
+    ~NAME() override = default;                                                                    \
+    void* get_props() override {                                                                   \
+      return (void*)&(this->props);                                                                \
+    }                                                                                              \
+    auto& style(std::function<void(style_t&)> style_transform) {                                   \
+      this->set_style_transform(style_transform);                                                  \
+      return *this;                                                                                \
+    }                                                                                              \
+    friend struct event_handler_t;                                                                 \
+    friend struct cydui::components::event_handler_data_t<NAME NAME##_TEMPLATE_SHORT>;             \
+  };                                                                                               \
+  template NAME##_TEMPLATE struct NAME NAME##_TEMPLATE_SHORT::event_handler_t                      \
+      : public cydui::components::event_handler_data_t<NAME NAME##_TEMPLATE_SHORT>
 
 
 #define CYDUI_INTERNAL_EV_HANDLER_IMPL(NAME) \
