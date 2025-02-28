@@ -72,7 +72,10 @@ export struct use_context_delegate;
 
 export template<typename ContextType>
 struct use_context {
-  using context_type = ContextType;
+  using ret_context_type = ContextType;
+  using context_type = std::remove_const_t<ContextType>;
+  static constexpr bool is_readonly = std::is_const_v<ContextType>;
+
   friend struct use_context_delegate;
 
   use_context() = default;
@@ -110,11 +113,11 @@ struct use_context {
     }
   }
 
-  context_type* operator->() {
+  ret_context_type* operator->() {
     return ctx;
   }
 
-  context_type &operator*() {
+  ret_context_type &operator*() {
     return *ctx;
   }
 
@@ -140,12 +143,12 @@ struct use_context {
     }
 
 private:
-  // This object will own the context if it couldn't be found and thus a default one was created
-  bool owns_context                                  = false;
-  context_type* ctx                                  = nullptr;
-  cydui::components::component_state_ref state     = nullptr;
+    // This object will own the context if it couldn't be found and thus a default one was created
+    bool                                   owns_context = false;
+    context_type*                          ctx          = nullptr;
+    cydui::components::component_state_ref state        = nullptr;
 
-  std::optional<fabric::async::listener<ContextUpdate<context_type>>> listener {std::nullopt};
+    std::optional<fabric::async::listener<ContextUpdate<context_type>>> listener{std::nullopt};
 };
 
 export struct provide_context_delegate;
