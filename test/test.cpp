@@ -30,13 +30,13 @@ COMPONENT(
   { std::string* text; };
   SIGNAL(pressed);
   STYLE EXTENDS(styletype) {
-    cyd::ui::components::dimension_t some_dim{0_px};
-    double                           val{0};
+    cydui::dimension_t some_dim{0_px};
+    double               val{0};
   };
 ) {
   use_context<test_context> test_ctx;
   CHILDREN {
-    style_t sasd{{.background = vg::paint::type::make<vg::paint::solid>("#ffffff"_color)}};
+    // style_t sasd{{.background = vg::paint::type::make<vg::paint::solid>("#ffffff"_color)}};
     // $component.background(test_ctx->color);
     // $component.background(style.background);
 
@@ -48,7 +48,7 @@ COMPONENT(
   ON_BUTTON_RELEASE {
     // test_ctx->color = "#00FF00"_color;
     // test_ctx.notify();
-    $component.pressed.emit();
+    component.pressed.emit();
   }
 
   FRAGMENT {
@@ -66,33 +66,34 @@ COMPONENT(
 };
 
 
-cyd::ui::animation anim{
+cydui::animation anim{
   {                                                                   //
-   cyd::ui::keyframe::make(1.0, TestWithContext::style_t{.val = 1.0}) //
-     .interp("val", cyd::ui::interp::bezier{{1.0, 0.2}, {0.4, 0.0}})
+   cydui::keyframe::make(1.0, TestWithContext::style_t{.val = 1.0}) //
+     .interp("val", cydui::interp::bezier{{1.0, 0.2}, {0.4, 0.0}})
   },
-  cyd::ui::animation_opts{} //
-    .easing(cyd::ui::easing::linear)
+  cydui::animation_opts{} //
+    .easing(cydui::easing::linear)
     .duration(3000ms),
 };
 
 COMPONENT(TestComponent, { std::string* text; }) {
-  provide_context<test_context> test_ctx{};
+  use_context<test_context> dependency_test_ctx{};
+  cydui::provide_context<test_context> test_ctx{};
   CHILDREN {
     return {
       test_ctx > with_context {
-        input::text {{props.text}}.height(30_px).width($parent::width / 2).on_enter([&] {
-          std::cout << "ENTER!" << std::endl;
-        }),
         TestWithContext { }.x(50_px).y(50_px)
                            .width(200_px).height(200_px)
                            .id("animation_target")
                            .on_pressed([&] {
-                             auto c = $component.find_child("animation_target").value();
-                             cyd::ui::animate(c, anim);
+                             auto c = component.find_child("animation_target").value();
+                             cydui::animate(c, anim);
                            })
                            .border("#00FF00"_color)
-                           .border_width(2)["some-tag"]
+                           .border_width(2)["some-tag"],
+        input::text {{props.text}}.height(30_px).width($width / 2).on_enter([&] {
+          std::cout << "ENTER!" << std::endl;
+        }),
       },
     };
   }
@@ -110,14 +111,60 @@ COMPONENT(OtherComponent, {}) {
 };
 
 
+template <std::size_t N>
+struct str_t {
+  constexpr str_t(const char (&s)[N]) {
+    std::copy_n(s, N, val);
+  }
+  char val[N];
+};
+
+template <str_t Str>
+struct something {
+  static constexpr const char* str = "h";//Str.val;
+};
+
+void sdfasdf() {
+  using asdf = something<"hello">;
+  static constexpr const char* sss = asdf::str;
+  static constexpr const char* c = __func__;
+}
+
+
+
+template <typename T, auto T::*Ptr>
+struct field_ptr {
+  using value_type = decltype(Ptr);
+  using field_type = decltype(Ptr);
+};
+
+struct test_struct {
+  int b;
+  int a;
+};
+
+void fdasfdsa() {
+  int test_struct::* fasd{};
+  static constexpr test_struct ts{};
+  using f = field_ptr<test_struct, &test_struct::a>;
+
+  using vt = f::value_type;
+  using ft = f::field_type;
+
+  using ttt = decltype(&test_struct::a);
+  ttt tt = &test_struct::a;
+}
+
+
+
 TEST("Debug panel") {
-  // using namespace cyd::ui::debug;
+  // using namespace cydui::debug;
 
   LOG::INIT { }.filter({".*", "stdout"});
 
   std::string text {"TEXT: "};
 
-  // auto win = cyd::ui::CWindow::make<DebugPanel>()
+  // auto win = cydui::CWindow::make<DebugPanel>()
   //            .size(777, 480)
   //            .title("Debug panel")
   //            .show();
@@ -132,7 +179,7 @@ TEST("Text Input") {
   std::string text {"TEXT: "};
   std::string text1 {"TEXT: "};
 
-  auto win = cyd::ui::CWindow::make<OtherComponent>()
+  auto win = cydui::CWindow::make<OtherComponent>()
              .size(640, 100)
              .title("[TEST] Text input")
              .style(R"TSS(
@@ -160,13 +207,13 @@ TestWithContext#some-tag:hover {
 )TSS")
              .show();
 
-  // auto win1 = cyd::ui::CWindow::make<TestComponent>({&text1})
+  // auto win1 = cydui::CWindow::make<TestComponent>({&text1})
   //             .size(640, 100)
   //             .title("[TEST] Text input")
   //             .show();
 
   while (win->is_open()) {
-    std::this_thread::sleep_for(60s);
+    std::this_thread::sleep_for(100ms);
   }
   return 0;
 }
@@ -176,7 +223,7 @@ TestWithContext#some-tag:hover {
 // struct TestComp;
 // struct EventHandlerTestComp;
 
-// struct ImplTestComp: public cyd::ui::components::component_t<EventHandlerTestComp, ImplTestComp> {
+// struct ImplTestComp: public cydui::components::component_t<EventHandlerTestComp, ImplTestComp> {
 //   using sptr = std::shared_ptr<ImplTestComp>;
 
 //   static constexpr const char* NAME = "TestComp";
@@ -190,15 +237,15 @@ TestWithContext#some-tag:hover {
 
 // public:
 //   props_t props;
-//   using state_t = std::conditional<is_type_complete_v<struct init>, init, cyd::ui::components::component_state_t>::type;
+//   using state_t = std::conditional<is_type_complete_v<struct init>, init, cydui::components::component_state_t>::type;
 
 //   template<typename P = props_t>
 //   explicit ImplTestComp(
 //     std::enable_if_t<std::is_default_constructible_v<P>, props_t> props = { }
-//   ) : cyd::ui::components::component_t<EventHandlerTestComp, ImplTestComp>(), props(std::move(props)) {
+//   ) : cydui::components::component_t<EventHandlerTestComp, ImplTestComp>(), props(std::move(props)) {
 //   }
 
-//   explicit ImplTestComp(props_t props) : cyd::ui::components::component_t<EventHandlerTestComp, ImplTestComp>(),
+//   explicit ImplTestComp(props_t props) : cydui::components::component_t<EventHandlerTestComp, ImplTestComp>(),
 //                                      props(std::move(props)) {
 //   }
 
@@ -247,7 +294,7 @@ TestWithContext#some-tag:hover {
 //   ImplTestComp::sptr impl;
 // };
 
-// struct EventHandlerDataTestComp: public cyd::ui::components::event_handler_t {
+// struct EventHandlerDataTestComp: public cydui::components::event_handler_t {
 //   EventHandlerDataTestComp(
 //     event_handler_t &parent_,
 //     const std::vector<std::shared_ptr<component_base_t>> &$children_,
@@ -270,7 +317,7 @@ TestWithContext#some-tag:hover {
 // };
 
 // struct EventHandlerTestComp final: public EventHandlerDataTestComp {
-//   std::vector<cyd::ui::components::component_holder_t> on_redraw() override {
+//   std::vector<cydui::components::component_holder_t> on_redraw() override {
 //     return {
 //       input::text {{props.text}}.h($ch() / 2 - 1).w($cw()).on_enter([&] {
 //         std::cout << "ENTER!" << std::endl;

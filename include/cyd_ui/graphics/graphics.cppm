@@ -7,7 +7,7 @@ import std;
 
 export import cydui.graphics.types;
 export import cydui.graphics.window;
+export import cydui.graphics.vector;
 
-export import :vg;
 export import :api;
 export import :compositing;

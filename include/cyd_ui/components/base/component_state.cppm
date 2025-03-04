@@ -61,6 +61,7 @@ namespace cydui::components {
      * Use that instead.
      */
     void force_redraw() {
+      mark_dirty();
       emit<RedrawEvent>({.component = this});
     }
 

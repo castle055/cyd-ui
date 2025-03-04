@@ -4,13 +4,12 @@
 module;
 #include <cairomm-1.16/cairomm/cairomm.h>
 
-export module cydui.graphics:vg_attributes;
+export module cydui.graphics.vector.attributes;
 
 import std;
-
 export import quantify;
 
-export import :pixelmap_editor;
+export import cydui.graphics.pixelmap_editor;
 
 export
 namespace vg {

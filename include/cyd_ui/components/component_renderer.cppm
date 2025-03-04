@@ -293,7 +293,7 @@ namespace cydui::components {
       int x4 = x2;
       int y4 = y3;
 
-      fragment.draw<vg::rect>()
+      fragment.draw<vg::rectangle>()
               .x(-dimensions::get_value(at.padding.left))
               .y(-dimensions::get_value(at.padding.top))
               .w(dimensions::get_value(at.width))

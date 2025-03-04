@@ -127,17 +127,17 @@ export {
           : event_handler_t(&component_, children_),
             component(component_),
             state(*state_),
-            window(*window_),
+            window(*static_cast<typename Component::window_type*>(window_.get())),
             props(props_),
             attrs(attrs_),
             style(style_) {}
 
-      Component&                   component;
-      typename Component::state_t& state;
-      fabric::async::async_bus_t&  window;
-      typename Component::props_t& props;
-      attrs_component<Component>&  attrs;
-      typename Component::style_t& style;
+      Component&                       component;
+      typename Component::state_t&     state;
+      typename Component::window_type& window;
+      typename Component::props_t&     props;
+      attrs_component<Component>&      attrs;
+      typename Component::style_t&     style;
 
       using $self = anchors::self_component;
       using $parent = anchors::parent_component;

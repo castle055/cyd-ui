@@ -21,7 +21,7 @@ export namespace cydui::components {
     virtual std::vector<component_holder_t> update(StyleArchive &style_archive,
                                                    component_builder_t &content_children_builder) = 0;
 
-    virtual void paint_fragment(vg::vg_fragment_t &fragment) = 0;
+    virtual void paint_fragment(vg::fragment_t &fragment) = 0;
 
     virtual void dispatch_key_press(const KeyEvent& ev) = 0;
     virtual void dispatch_key_release(const KeyEvent& ev) = 0;

@@ -25,10 +25,10 @@ namespace charts {
     la::scalar                                            min_y = 0, max_y = 1;
     bool                                                  show_data_points = true;
     bool                                                  show_lines       = true;
-    std::function<void(vg::vg_fragment_t&, int x, int y)> data_point_fragment =
-      [](vg::vg_fragment_t&, int, int) {};
-    std::function<void(vg::vg_fragment_t&, int x1, int y1, int x2, int y2)> line_fragment =
-      [](vg::vg_fragment_t&, int, int, int, int) {};
+    std::function<void(vg::fragment_t&, int x, int y)> data_point_fragment =
+      [](vg::fragment_t&, int, int) {};
+    std::function<void(vg::fragment_t&, int x1, int y1, int x2, int y2)> line_fragment =
+      [](vg::fragment_t&, int, int, int, int) {};
   }) {
     ON_REDRAW {
       return {};
@@ -144,14 +144,14 @@ namespace charts {
           .max_y = ref_->left_axis.max_value_,
           .show_data_points = show_data_points_,
           .show_lines = show_line_,
-          .data_point_fragment = [](vg::vg_fragment_t& fragment, int x, int y) {
+          .data_point_fragment = [](vg::fragment_t& fragment, int x, int y) {
             fragment.append(vg::circle { }
                             .cx(x).cy(y)
                             .r(3)
                             .fill("#FCAE1E"_color)
                             .stroke_width(1));
           },
-          .line_fragment = [](vg::vg_fragment_t& fragment, int x1, int y1, int x2, int y2) {
+          .line_fragment = [](vg::fragment_t& fragment, int x1, int y1, int x2, int y2) {
             fragment.append(vg::line { }
                             .x1(x1).y1(y1)
                             .x2(x2).y2(y2)

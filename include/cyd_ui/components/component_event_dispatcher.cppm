@@ -57,7 +57,7 @@ namespace cydui::components {
         content_children_builder
       );
     }
-    void paint_fragment(vg::vg_fragment_t &fragment) override {
+    void paint_fragment(vg::fragment_t &fragment) override {
       ZoneScopedN("Paint Fragment - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());
       auto [at, ir] = component_data();

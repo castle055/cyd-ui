@@ -22,21 +22,24 @@
 //#define STATE(NAME) \
 //struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
 
-#define STATE ; public: struct init: public cydui::components::component_state_t
+#define STATE ; public: struct state_type: public cydui::components::component_state_t
 
 #define EXTENDS(...) , __VA_ARGS__
 
 #define COMPONENT(NAME, ...)                                                                       \
   struct NAME: public cydui::components::component_t<NAME> {                                       \
     struct event_handler_t;                                                                        \
-    struct init;                                                                                   \
+    struct state_type;                                                                             \
     struct style_type;                                                                             \
     struct props_t __VA_ARGS__;                                                                    \
                                                                                                    \
   public:                                                                                          \
     props_t props;                                                                                 \
-    using state_t = std::                                                                          \
-      conditional_t<is_type_complete_v<struct init>, init, cydui::components::component_state_t>;  \
+    using window_type = cydui::CWindow;                                                            \
+    using state_t     = std::conditional_t<                                                        \
+          is_type_complete_v<struct state_type>,                                                   \
+          state_type,                                                                              \
+          cydui::components::component_state_t>;                                                   \
     using style_t = std::conditional_t<                                                            \
       is_type_complete_v<struct style_type>,                                                       \
       style_type,                                                                                  \
@@ -66,14 +69,17 @@
   template NAME##_TEMPLATE struct NAME                                                             \
       : public cydui::components::component_t<NAME NAME##_TEMPLATE_SHORT> {                        \
     struct event_handler_t;                                                                        \
-    struct init;                                                                                   \
+    struct state_type;                                                                             \
     struct style_type;                                                                             \
     struct props_t __VA_ARGS__;                                                                    \
                                                                                                    \
   public:                                                                                          \
     props_t props;                                                                                 \
-    using state_t = std::                                                                          \
-      conditional_t<is_type_complete_v<struct init>, init, cydui::components::component_state_t>;  \
+    using window_type = cydui::CWindow;                                                            \
+    using state_t     = std::conditional_t<                                                        \
+          is_type_complete_v<struct state_type>,                                                   \
+          state_type,                                                                              \
+          cydui::components::component_state_t>;                                                   \
     using style_t = std::conditional_t<                                                            \
       is_type_complete_v<struct style_type>,                                                       \
       style_type,                                                                                  \

@@ -19,7 +19,7 @@ namespace stdui::input {
     ATTRIBUTE(on_enter, std::function<void()>){[] {}};
     ATTRIBUTE(on_escape, std::function<void()>){[] {}};
   ) {
-    provide_context<TextInputContext> text_input_ctx{};
+    cydui::provide_context<TextInputContext> text_input_ctx{};
 
     CHILDREN {
       return {
@@ -35,7 +35,7 @@ namespace stdui::input {
 
       if (state.focused) {
         const auto [x, y, w, h] = build_text(props.text->substr(0, state.caret_pos)).get_footprint();
-        fragment.draw<vg::rect>().x(x + w - 1_px).y(y - 3_px).w(2_px).h(h + 3_px).fill("#FFFFFF"_color);
+        fragment.draw<vg::rectangle>().x(x + w - 1_px).y(y - 3_px).w(2_px).h(h + 3_px).fill("#FFFFFF"_color);
       }
     }
 
@@ -49,9 +49,9 @@ namespace stdui::input {
       } else if (ev.keysym.code == SDLK_END) {
         state.caret_pos = props.text->size();
       } else if (ev.keysym.code == SDLK_RETURN) {
-        $component.on_enter_();
+        component.on_enter_();
       } else if (ev.keysym.code == SDLK_ESCAPE) {
-        $component.on_escape_();
+        component.on_escape_();
       } else if (ev.keysym.code == SDLK_BACKSPACE) {
         if (state.caret_pos == static_cast<int>(props.text->size())) {
           while (!props.text->empty()) {

@@ -24,7 +24,7 @@ decltype([&] {                  \
 
 #define KEYFRAME(POS, ...)      {POS, keyframe::make(__VA_ARGS__)}
 #define AUTO_KEYFRAME(POS, ...) {POS, keyframe::make(ANONYMOUS_STRUCT(__VA_ARGS__){})}
-//! Alternate - if the above one doensn't work
+// Alternate - if the above one doensn't work
   // #define AUTO_KEYFRAME(POS, ...) {POS, keyframe::make(ANONYMOUS_STRUCT __VA_ARGS__)}
 
 export namespace cydui {

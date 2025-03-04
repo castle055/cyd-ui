@@ -15,7 +15,7 @@ import std;
 import fabric.profiling;
 
 import :api;
-import :vg;
+export import cydui.graphics.vector;
 
 import cydui.application;
 import cydui.graphics.window;
@@ -205,7 +205,7 @@ export namespace cydui::compositing {
   public:
     unsigned long id = 0;
     compositing_operation_t op { };
-    vg_fragment_t graphics { };
+    fragment_t graphics { };
 
     device_texture_t rendered_texture {true};
     device_texture_t composite_texture { };

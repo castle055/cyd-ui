@@ -4,7 +4,7 @@
 module;
 #include <cairomm-1.16/cairomm/cairomm.h>
 
-export module cydui.graphics:pixelmap_editor;
+export module cydui.graphics.pixelmap_editor;
 
 export import cydui.graphics.types;
 
