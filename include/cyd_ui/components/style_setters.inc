@@ -33,27 +33,27 @@ STYLE_SETTER(background, vg::paint::gradient::radial, {
 STYLE_SETTER(opacity, la::scalar, { return value; })
 STYLE_SETTER(translate_x, la::scalar, { return value; })
 STYLE_SETTER(translate_y, la::scalar, { return value; })
-auto& translate(const la::vec<2>& value) {
+STYLE_SETTER_RETURN_TYPE translate(const la::vec<2>& value) {
   translate_x(value[0]);
   translate_y(value[1]);
-  return *static_cast<T*>(this);
+  STYLE_SETTER_RETURN_EXPR
 }
-auto& translate(la::vec<2>&& value) {
+STYLE_SETTER_RETURN_TYPE translate(la::vec<2>&& value) {
   translate_x(value[0]);
   translate_y(value[1]);
-  return *static_cast<T*>(this);
+  STYLE_SETTER_RETURN_EXPR
 }
 STYLE_SETTER(scale_x, la::scalar, { return value; })
 STYLE_SETTER(scale_y, la::scalar, { return value; })
-auto& scale(const la::vec<2>& value) {
+STYLE_SETTER_RETURN_TYPE scale(const la::vec<2>& value) {
   scale_x(value[0]);
   scale_y(value[1]);
-  return *static_cast<T*>(this);
+  STYLE_SETTER_RETURN_EXPR
 }
-auto& scale(la::vec<2>&& value) {
+STYLE_SETTER_RETURN_TYPE scale(la::vec<2>&& value) {
   scale_x(value[0]);
   scale_y(value[1]);
-  return *static_cast<T*>(this);
+  STYLE_SETTER_RETURN_EXPR
 }
 STYLE_SETTER(rotation, angle_type, { return value; })
 

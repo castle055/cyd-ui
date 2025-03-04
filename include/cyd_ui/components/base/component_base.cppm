@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 module;
+#include <__stddef_offsetof.h>
 #include "cyd_fabric_modules/headers/macros/async_events.h"
+
+#define STYLE_SETTER_RETURN_TYPE void
+#define STYLE_SETTER_RETURN_EXPR
+#include "../style_setters_detail.h"
 
 export module cydui.components.base;
 
@@ -169,6 +174,8 @@ namespace cydui::components {
       }
       return result;
     }
+
+#include "../style_setters.inc"
 
   protected:
     void set_state(const component_state_ref& state) {

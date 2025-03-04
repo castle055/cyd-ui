@@ -3,6 +3,9 @@
 
 module;
 #include <tracy/Tracy.hpp>
+
+#define STYLE_SETTER_RETURN_TYPE T&
+#define STYLE_SETTER_RETURN_EXPR return *static_cast<T*>(this);
 #include "./style_setters_detail.h"
 
 export module cydui.components;
