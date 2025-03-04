@@ -108,6 +108,10 @@ export {
       CYDUI_INTERNAL_EV_HANDLER_DECL(text_input) {
       }
 
+      // * focus changed input
+      CYDUI_INTERNAL_EV_HANDLER_DECL(focus_changed) {
+      }
+
       void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS {}
     };
 

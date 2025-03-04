@@ -7,21 +7,6 @@
 #include "./component_event_macros.h"
 #include <SDL3/SDL_keycode.h>
 
-// ? Overridable macros in case of name collision
-#define CYDUI_STATE_NAME(NAME) State##NAME
-#define CYDUI_EV_HANDLER_NAME(NAME) EventHandler##NAME
-#define CYDUI_EV_HANDLER_DATA_NAME(NAME) EventHandlerData##NAME
-
-
-// ? Every component class must have this data
-#define CYDUI_COMPONENT_METADATA(NAME_) \
-
-// ? Macros for declaring component classes
-// ?>
-
-//#define STATE(NAME) \
-//struct CYDUI_STATE_NAME(NAME): public cydui::components::component_state_t
-
 #define STATE ; public: struct state_type: public cydui::components::component_state_t
 
 #define EXTENDS(...) , __VA_ARGS__
@@ -126,6 +111,7 @@
 #define ON_SCROLL           CYDUI_INTERNAL_EV_HANDLER_IMPL(scroll)
 #define ON_KEY_PRESS        CYDUI_INTERNAL_EV_HANDLER_IMPL(key_press)
 #define ON_KEY_RELEASE      CYDUI_INTERNAL_EV_HANDLER_IMPL(key_release)
+#define ON_FOCUS_CHANGED    CYDUI_INTERNAL_EV_HANDLER_IMPL(focus_changed)
 #define ON_TEXT_INPUT                                                                              \
   static constexpr bool handles_text_input = true;                                                 \
   CYDUI_INTERNAL_EV_HANDLER_IMPL(text_input)

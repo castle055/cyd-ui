@@ -194,6 +194,8 @@ enable_testing()
 if (CYD_UI_DEV_MODE AND CYD_UI_BUILD_TESTS)
     target_configure_test_directory(cyd_ui ${CYD_UI_TEST_DIR})
     reflect_target(TEST_test)
+    reflect_target(TEST_data_binding.test)
+    set_target_properties(TEST_test TEST_data_binding.test PROPERTIES FOLDER Tests)
 endif ()
 
 

@@ -243,6 +243,22 @@ namespace cydui::components {
       );
     }
 
+    void dispatch_focus_changed() override {
+      ZoneScopedN("Scroll - Component EV");
+      auto eh = static_cast<EventHandler*>(event_handler_.get());
+      auto [at, ir] = component_data();
+      eh->on_focus_changed(
+        dimensions::get_value(at.x),
+        dimensions::get_value(at.y),
+        dimensions::get_value(ir.cw),
+        dimensions::get_value(ir.ch),
+        dimensions::get_value(at.padding_top),
+        dimensions::get_value(at.padding_bottom),
+        dimensions::get_value(at.padding_left),
+        dimensions::get_value(at.padding_right)
+      );
+    }
+
   private:
     std::pair<component_dimensional_relations_t, internal_relations_t&> component_data() {
       return {component_->get_dimensional_relations(), component_->get_internal_relations()};

@@ -87,6 +87,16 @@
    const cydui::dimension_t::value_type& $padding_left,                                            \
    const cydui::dimension_t::value_type& $padding_right)
 
+#define CYDUI_INTERNAL_EV_focus_changed_ARGS                                                       \
+  (const cydui::dimension_t::value_type& $x,                                                       \
+   const cydui::dimension_t::value_type& $y,                                                       \
+   const cydui::dimension_t::value_type& $width,                                                   \
+   const cydui::dimension_t::value_type& $height,                                                  \
+   const cydui::dimension_t::value_type& $padding_top,                                             \
+   const cydui::dimension_t::value_type& $padding_bottom,                                          \
+   const cydui::dimension_t::value_type& $padding_left,                                            \
+   const cydui::dimension_t::value_type& $padding_right)
+
 #define CYDUI_INTERNAL_EV_button_press_ARGS   CYDUI_INTERNAL_EV_button_ARGS
 #define CYDUI_INTERNAL_EV_button_release_ARGS CYDUI_INTERNAL_EV_button_ARGS
 

@@ -100,6 +100,7 @@ export namespace cydui {
         if (focused != target->state()) {
           if (focused) {
             focused->focused = false;
+            INSTANCE_EV_HANDLER(focused)->dispatch_focus_changed();
             if (focused->is_text_input()) {
               SDL_StopTextInput(win->native()->window);
             }
@@ -111,6 +112,7 @@ export namespace cydui {
           }
           focused          = target->state();
           focused->focused = true;
+          INSTANCE_EV_HANDLER(focused)->dispatch_focus_changed();
           if (focused->is_text_input()) {
             SDL_StartTextInput(win->native()->window);
           }

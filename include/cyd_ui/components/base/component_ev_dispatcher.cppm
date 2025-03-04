@@ -32,5 +32,6 @@ export namespace cydui::components {
     virtual void dispatch_mouse_enter(dimension_t::value_type x, dimension_t::value_type y) = 0;
     virtual void dispatch_mouse_exit(dimension_t::value_type x, dimension_t::value_type y) = 0;
     virtual void dispatch_mouse_motion(dimension_t::value_type x, dimension_t::value_type y) = 0;
+    virtual void dispatch_focus_changed() = 0;
   };
 }

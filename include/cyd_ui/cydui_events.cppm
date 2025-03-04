@@ -20,6 +20,7 @@ export {
     int           y         = 0;
     void*         component = nullptr;
   };
+
   EVENT(ButtonEvent) {
     const unsigned long  win      = 0;
     const unsigned int   button   = 0;
@@ -29,6 +30,7 @@ export {
     const bool           released = false;
     const bool           holding  = false;
   };
+
   EVENT(ScrollEvent) {
     unsigned long        win = 0;
     const screen_measure dy  = 0;
@@ -36,6 +38,7 @@ export {
     const screen_measure x   = 0;
     const screen_measure y   = 0;
   };
+
   EVENT(MotionEvent) {
     unsigned long        win      = 0;
     const screen_measure x        = 0;
@@ -45,6 +48,7 @@ export {
 
     bool                 dragging = false;
   };
+
   EVENT(ResizeEvent) {
     unsigned long        win = 0;
     const screen_measure w   = 0;
