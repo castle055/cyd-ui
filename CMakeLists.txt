@@ -62,42 +62,19 @@ set(CMAKE_BUILD_TYPE "Release" CACHE STRING "")
 
 cmake_minimum_required(VERSION 3.29.20240518 FATAL_ERROR)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-project(cyd_ui LANGUAGES CXX)
-
+set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "0e5b6991-d74f-4b3d-a41c-cf096e0b2508")
+set(CMAKE_CXX_MODULE_STD ON)
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED YES)
-set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -pthread")
+
+project(cyd_ui LANGUAGES CXX)
 
 SET(CYD_UI_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(CYD_UI_TEST_DIR ${CYD_UI_DIR}/test)
 SET(CYD_UI_INCLUDE_DIR ${CYD_UI_DIR}/include)
 SET(CYD_UI_SOURCE_DIR ${CYD_UI_DIR}/src)
 SET(CYD_UI_APPS_DIR ${CYD_UI_DIR}/apps)
-
-include(cmake/compiler_flags.cmake)
-compiler_flags(
-        "-stdlib=libc++"
-        "-Wall"
-        "-Wextra"
-        "-pedantic"
-#        "-Werror"
-
-        "-Wliteral-suffix"
-
-        "-Wno-dollar-in-identifier-extension"
-        "-Wno-macro-redefine"
-        "-Wno-unused-function"
-        "-Wno-unused-lambda-capture"
-        "-Wno-unused-parameter"
-        "-Wno-unused-variable"
-        "-Wno-unused-value"
-        "-Wno-unused-but-set-variable"
-        "-Wno-missing-field-initializers"
-        #"-Wno-error=unused"
-
-        "-Wno-unknown-pragmas"
-        "-Wno-extra-semi"
-)
 
 
 ################################################################################
