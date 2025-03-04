@@ -34,7 +34,7 @@ COMPONENT(
     double               val{0};
   };
 ) {
-  use_context<test_context> test_ctx;
+  cydui::use_context<test_context> test_ctx;
   CHILDREN {
     // style_t sasd{{.background = vg::paint::type::make<vg::paint::solid>("#ffffff"_color)}};
     // $component.background(test_ctx->color);
@@ -77,7 +77,7 @@ cydui::animation anim{
 };
 
 COMPONENT(TestComponent, { std::string* text; }) {
-  use_context<test_context> dependency_test_ctx{};
+  cydui::use_context<test_context> dependency_test_ctx{};
   cydui::provide_context<test_context> test_ctx{};
   CHILDREN {
     return {

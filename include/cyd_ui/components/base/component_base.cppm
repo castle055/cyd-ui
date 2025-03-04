@@ -179,7 +179,7 @@ namespace cydui::components {
     friend class ::with_context;
 
     template<typename ContextType>
-    friend struct ::provide_context;
+    friend struct cydui::provide_context;
 
     template<typename ContextType>
     void add_context(const std::shared_ptr<ContextType> &ptr) {
@@ -231,7 +231,7 @@ namespace cydui::components {
 }
 
 template<typename ContextType>
-cydui::components::component_holder_t provide_context<ContextType>::operator >(with_context &&components) {
+cydui::components::component_holder_t cydui::provide_context<ContextType>::operator >(with_context &&components) {
   auto holder = components.build();
 
   for (auto &[_, c]: holder.get_components()) {

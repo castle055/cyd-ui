@@ -37,7 +37,7 @@ COMPONENT(
     double             val{0};
   };
 ) {
-  use_context<const model_context> model_ctx;
+  cydui::use_context<const model_context> model_ctx;
   CHILDREN {
     return {//
     };
@@ -62,8 +62,7 @@ COMPONENT(
 };
 
 COMPONENT(Presenter, { std::string* text; }) {
-  cydui::provide_context<model_context> model =
-    bind{&props_t::text}.transform([](std::string* const & s) { return s; });
+  cydui::provide_context<model_context> model;
   CHILDREN {
     return {
       model > with_context {

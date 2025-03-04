@@ -15,8 +15,10 @@ export import :holder;
 
 export class with_context;
 
-export template<typename ContextType>
-struct provide_context;
+namespace cydui {
+  export template <typename ContextType>
+  struct provide_context;
+}
 
 export using children_list = std::vector<cydui::components::component_holder_t>;
 
