@@ -134,6 +134,8 @@ namespace syntax {
     TERMINAL_W_NAME(' ', whitespace);
     TERMINAL_W_NAME('\n', newline);
     TERMINAL_W_NAME('\r', return_);
+    TERMINAL_W_NAME('\'', quote);
+    TERMINAL_W_NAME('"', double_quote);
 
     TERMINAL_W_NAME('[', left_brackets);
     TERMINAL_W_NAME(']', right_brackets);
@@ -172,6 +174,21 @@ namespace syntax {
 
     TRULE(tss_identifier)               ((alpha{} | ALPHA{} | minus), *(alphanum{} | minus));
 
+    TRULE(tss_single_quoted_str_char)(
+      alphanum{} | colon | semicolon | plus | minus | shebang | dot | comma | asterisc | whitespace
+      | newline | return_ | double_quote | left_brackets | right_brackets | left_braces
+      | right_braces | left_parens | right_parens | left_angle_brackets | right_angle_brackets
+      | forward_slash
+    );
+    TRULE(tss_single_quoted_str)        (quote, *tss_single_quoted_str_char{}, quote);
+
+    TRULE(tss_double_quoted_str_char)(
+      alphanum{} | colon | semicolon | plus | minus | shebang | dot | comma | asterisc | whitespace
+      | newline | return_ | quote | left_brackets | right_brackets | left_braces
+      | right_braces | left_parens | right_parens | left_angle_brackets | right_angle_brackets
+      | forward_slash
+    );
+    TRULE(tss_double_quoted_str)        (double_quote, *tss_double_quoted_str_char{}, double_quote);
 
     // SELECTORS
     RULE(tss_class_selector)            (dot, tss_identifier{});
@@ -300,7 +317,12 @@ namespace syntax {
       }
     });
 
-    ARULE(tss_decl_expression)(tss_decl_color_literal{} | tss_decl_function_call{} | tss_identifier{} | tss_decl_number_literal{})
+    ARULE(tss_decl_string_literal)       (tss_single_quoted_str{} | tss_double_quoted_str{})
+    (std::string)({
+      $node->data = $node->children[0]->text;
+    });
+
+    ARULE(tss_decl_expression)(tss_decl_color_literal{} | tss_decl_function_call{} | tss_identifier{} | tss_decl_number_literal{} | tss_decl_string_literal{})
     (refl::any)({
       const auto& child = $node->children[0];
       refl::any& value = $node->data;
@@ -308,6 +330,8 @@ namespace syntax {
       if (child->is_type<tss_decl_color_literal>()) {
         value = refl::any::make<color::Color>(child->as<tss_decl_color_literal>()->data);
       } else if (child->is_type<tss_decl_function_call>()) {
+      } else if (child->is_type<tss_decl_string_literal>()) {
+        value = refl::any::make<std::string>(child->as<tss_decl_string_literal>()->data);
       } else if (child->is_type<tss_decl_number_literal>()) {
         value = refl::any::make<double>(child->as<tss_decl_number_literal>()->data.value);
       }
