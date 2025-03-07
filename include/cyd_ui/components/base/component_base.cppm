@@ -148,7 +148,7 @@ namespace cydui::components {
       return id_;
     }
 
-    void state_id(const std::string& id) const {
+    void state_id(const std::string& id) {
       state_id_ = id;
     }
 

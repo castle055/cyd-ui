@@ -111,7 +111,7 @@ namespace cydui::components {
       return ti;
     }
 
-    T& state_id(const std::string& id) const {
+    T& state_id(const std::string& id) {
       component_base_t::state_id(id);
       return *static_cast<T*>(this);
     }
