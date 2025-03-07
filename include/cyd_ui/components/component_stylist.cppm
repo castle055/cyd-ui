@@ -182,11 +182,33 @@ namespace cydui::components {
       const auto *field = *field_it;
       if (rule->properties_.contains(field->name)) {
         const auto &rule_field = rule->properties_.at(field->name);
+
         if (rule_field.is(field->type())) {
           field->type().assign_copy_of(rule_field.data(), field->get_ptr(style_obj));
           field_it = pending_fields.erase(field_it);
           return true;
-        } else if (field->type().is_type<vg::paint::type>()) {
+        }
+
+        if (rule_field.is(refl::type_info::from<std::string>())
+                   and field->has_metadata<custom_style_parser>()) {
+          const std::string& str = rule_field.as<std::string>();
+          refl::any          rule_field_parsed =
+            field->get_metadata<custom_style_parser>().parser_function(str);
+          if (rule_field_parsed.is(field->type())) {
+            field->type().assign_copy_of(rule_field_parsed.data(), field->get_ptr(style_obj));
+            field_it = pending_fields.erase(field_it);
+            return true;
+          } else {
+            LOG::print{WARN} //
+            ("Custom parser type mismatch '{}::{}', expected: '{}', found: '{}'",
+             component->name(),
+             field->name,
+             field->type().name(),
+             rule_field_parsed.type().name());
+          }
+        }
+
+        if (field->type().is_type<vg::paint::type>()) {
           if (rule_field.is<color::Color>()) {
             vg::paint::type &paint = field->get_ref<vg::paint::type>(style_obj);
             const color::Color &paint_color = rule_field.as<color::Color>();
@@ -195,7 +217,8 @@ namespace cydui::components {
             return true;
           }
         }
-        LOG::print{WARN}("Property '{}::{}', expected type: '{}', found: '{}'",
+
+        LOG::print{WARN}("Type mismatch '{}::{}', expected: '{}', found: '{}'",
                          component->name(),
                          field->name,
                          field->type().name(),

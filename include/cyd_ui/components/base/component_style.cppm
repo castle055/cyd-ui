@@ -13,6 +13,15 @@ export import cydui.styling;
 
 import cydui.animations.complexity;
 
+namespace cydui {
+  export struct custom_style_parser {
+    explicit constexpr custom_style_parser(refl::any (*fun)(const std::string&))
+        : parser_function(fun) {}
+
+    refl::any (*parser_function)(const std::string&);
+  };
+}
+
 export namespace cydui::components {
   template <typename T>
   struct four_sided_property {
