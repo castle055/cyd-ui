@@ -127,6 +127,7 @@ namespace syntax {
     TERMINAL_W_NAME(';', semicolon);
     TERMINAL_W_NAME('+', plus);
     TERMINAL_W_NAME('-', minus);
+    TERMINAL_W_NAME('_', underscore);
     TERMINAL_W_NAME('#', shebang);
     TERMINAL_W_NAME('.', dot);
     TERMINAL_W_NAME(',', comma);
@@ -172,10 +173,10 @@ namespace syntax {
 
     TRULE(alphanum)                     (alpha{} | ALPHA{} | digit{});
 
-    TRULE(tss_identifier)               ((alpha{} | ALPHA{} | minus), *(alphanum{} | minus));
+    TRULE(tss_identifier)               ((alpha{} | ALPHA{} | minus | underscore), *(alphanum{} | minus | underscore));
 
     TRULE(tss_single_quoted_str_char)(
-      alphanum{} | colon | semicolon | plus | minus | shebang | dot | comma | asterisc | whitespace
+      alphanum{} | colon | semicolon | plus | minus | underscore | shebang | dot | comma | asterisc | whitespace
       | newline | return_ | double_quote | left_brackets | right_brackets | left_braces
       | right_braces | left_parens | right_parens | left_angle_brackets | right_angle_brackets
       | forward_slash
@@ -183,7 +184,7 @@ namespace syntax {
     TRULE(tss_single_quoted_str)        (quote, *tss_single_quoted_str_char{}, quote);
 
     TRULE(tss_double_quoted_str_char)(
-      alphanum{} | colon | semicolon | plus | minus | shebang | dot | comma | asterisc | whitespace
+      alphanum{} | colon | semicolon | plus | minus | underscore | shebang | dot | comma | asterisc | whitespace
       | newline | return_ | quote | left_brackets | right_brackets | left_braces
       | right_braces | left_parens | right_parens | left_angle_brackets | right_angle_brackets
       | forward_slash
