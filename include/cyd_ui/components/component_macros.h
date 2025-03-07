@@ -40,7 +40,7 @@
     void* get_props() override {                                                                   \
       return (void*)&(this->props);                                                                \
     }                                                                                              \
-    auto& style(const std::function<void(style_t&)&> style_transform) {                            \
+    auto& style(const std::function<void(style_t&)>& style_transform) {                            \
       this->set_style_transform(style_transform);                                                  \
       return *this;                                                                                \
     }                                                                                              \
