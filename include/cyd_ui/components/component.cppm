@@ -111,6 +111,11 @@ namespace cydui::components {
       return ti;
     }
 
+    T& state_id(const std::string& id) const {
+      component_base_t::state_id(id);
+      return *static_cast<T*>(this);
+    }
+
   private:
     void mount() final {
       event_dispatcher.emplace(std::make_shared<event_dispatcher_t<T, typename T::event_handler_t>>(this));

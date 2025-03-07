@@ -91,7 +91,8 @@ namespace cydui::components {
       for (auto &item: children_to_add) {
         for (auto &component_pair: item.get_components()) {
           auto [id_, child] = component_pair;
-          std::string id        = std::format("{}:{}", id_i, id_);
+          std::string state_id = child->get_state_id();
+          std::string id       = state_id.empty()? std::format("{}:{}", id_i, id_): std::format("{}:{}:{}", id_i, id_, state_id);
 
           auto mounted_child = mount_child(component, id, child, pending_redraw, pending_remove, prev, style_archive);
           prev.reset();

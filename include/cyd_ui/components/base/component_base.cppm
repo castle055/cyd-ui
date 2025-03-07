@@ -148,6 +148,14 @@ namespace cydui::components {
       return id_;
     }
 
+    void state_id(const std::string& id) const {
+      state_id_ = id;
+    }
+
+    std::string get_state_id() const {
+      return state_id_;
+    }
+
     std::optional<sptr> find_child(const std::string& id) {
       for (const auto & child : children) {
         if (child->get_id() == id) {
@@ -214,6 +222,7 @@ namespace cydui::components {
     std::unordered_map<refl::type_id_t, refl::any> data_map_ { };
 
     std::string id_{};
+    std::string state_id_{""};
   };
 
   struct component_actor_t {
