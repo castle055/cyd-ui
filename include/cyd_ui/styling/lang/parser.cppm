@@ -11,6 +11,7 @@ import reflect.serialize;
 export import fabric.grammar;
 import fabric.grammar.operators;
 
+export import cydui.dimensions;
 export import cydui.styling.selectors;
 export import cydui.styling.rules;
 export import cydui.graphics.types;
@@ -334,7 +335,12 @@ namespace syntax {
       } else if (child->is_type<tss_decl_string_literal>()) {
         value = refl::any::make<std::string>(child->as<tss_decl_string_literal>()->data);
       } else if (child->is_type<tss_decl_number_literal>()) {
-        value = refl::any::make<double>(child->as<tss_decl_number_literal>()->data.value);
+        auto d = child->as<tss_decl_number_literal>()->data;
+        if (d.unit.empty()) {
+          value = refl::any::make<double>(d.value);
+        } else if (d.unit == "px") {
+          value = refl::any::make<cydui::dimensions::screen_measure>(d.value);
+        }
       }
     });
 
