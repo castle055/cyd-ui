@@ -76,11 +76,11 @@ export
 #define PREV_PARAM(NAME, ...)                                                                      \
   DIMENSIONAL_PARAM(prev, NAME, [=] {                                                              \
     if (prev.has_value()) {                                                                        \
-      auto dims = prev.value()->get_dimensional_relations();                                       \
-      auto x    = dims.x;                                                                          \
-      auto y    = dims.y;                                                                          \
-      auto w    = dims.width;                                                                      \
-      auto h    = dims.height;                                                                     \
+      auto  dims = prev.value()->get_dimensional_relations();                                      \
+      auto& x    = dims.x;                                                                         \
+      auto& y    = dims.y;                                                                         \
+      auto& w    = dims.width;                                                                     \
+      auto& h    = dims.height;                                                                    \
       return dimension_t{__VA_ARGS__};                                                             \
     }                                                                                              \
     return dimension_t{0_px};                                                                      \
