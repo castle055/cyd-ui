@@ -62,6 +62,9 @@ namespace cydui::components {
 
       std::vector<component_holder_t> new_children = component->get_event_dispatcher()->update(style_archive, content_children_builder);
 
+      // Update handler may add to style override
+      component->get_style_data().apply_override();
+
       add_children(component, new_children, pending_redraw, pending_remove, style_archive);
 
       for (const auto &remove: pending_remove) {
