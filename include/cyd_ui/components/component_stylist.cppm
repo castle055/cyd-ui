@@ -51,6 +51,14 @@ namespace cydui::components {
       apply_style_rules(component);
       style_data.apply_override();
       style_data.apply_transform();
+
+      // TODO - This is a possibly expensive workaround
+      // EXPLANATION: I need to update the style of any component
+      //              that depends on this one through a combined
+      //              selector.
+      for (const auto& c : component->children) {
+        apply_style(c);
+      }
     }
 
   private:
