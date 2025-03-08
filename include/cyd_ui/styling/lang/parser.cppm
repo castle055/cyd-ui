@@ -257,13 +257,13 @@ namespace syntax {
           if (child->is_type<tss_children_selector_item>()) {
             const auto *cs = child->as<tss_children_selector_item>()
                      ->children[0]->as<tss_descendent_selector_item>();
-            selector.selectors.emplace_front( //
+            selector.selectors.emplace_back( //
               cydui::StyleRuleCombinedSelector::CHILD_COMBINATOR,
               cs->data.selector
             );
           } else if (child->is_type<tss_descendent_selector_item>()) {
             const auto *ss = child->as<tss_descendent_selector_item>();
-            selector.selectors.emplace_front( //
+            selector.selectors.emplace_back( //
               cydui::StyleRuleCombinedSelector::DESCENDENT_COMBINATOR,
               ss->data.selector
             );
