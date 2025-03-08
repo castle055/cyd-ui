@@ -235,7 +235,7 @@ namespace syntax {
       // std::cout << std::endl;
     });
 
-    RULE(tss_children_selector_item)     (!right_angle_brackets, tss_descendent_selector_item{});
+    RULE(tss_children_selector_item)     (!right_angle_brackets, !skip_wn{}, tss_descendent_selector_item{});
 
     struct combined_selector_data {
       cydui::StyleRuleCombinedSelector selector{};
