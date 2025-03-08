@@ -18,7 +18,7 @@
    cydui::components::component_builder_t & $content)
 
 #define CYDUI_INTERNAL_EV_button_ARGS                                                              \
-  (Button                                button,                                                   \
+  (cydui::Button                         button,                                                   \
    const cydui::dimension_t::value_type& x,                                                        \
    const cydui::dimension_t::value_type& y,                                                        \
    const cydui::dimension_t::value_type& $x,                                                       \

@@ -55,14 +55,16 @@ export {
     const screen_measure h   = 0;
   };
 
-  enum class Button {
-    PRIMARY   = 1,
-    SECONDARY = 3,
-    WHEEL     = 2,
-    BUTTON1   = PRIMARY,
-    BUTTON2   = WHEEL,
-    BUTTON3   = SECONDARY,
-  };
+  namespace cydui {
+    enum class Button {
+      PRIMARY   = 1,
+      SECONDARY = 3,
+      WHEEL     = 2,
+      BUTTON1   = PRIMARY,
+      BUTTON2   = WHEEL,
+      BUTTON3   = SECONDARY,
+    };
+  }
 
   using Scancode = SDL_Scancode;
   using Keycode = SDL_Keycode;

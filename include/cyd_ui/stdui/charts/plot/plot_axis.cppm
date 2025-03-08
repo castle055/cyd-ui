@@ -250,7 +250,7 @@ namespace charts {
     }
 
     ON_BUTTON_RELEASE {
-      if (button == Button::WHEEL) {
+      if (button == cydui::Button::WHEEL) {
         props.reset_callback();
         state.parent()->mark_dirty();
       }
