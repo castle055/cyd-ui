@@ -193,6 +193,16 @@ namespace cydui::components {
       return *dynamic_cast<T*>(this);
     }
 
+    T& tag(const std::string& tag_) {
+      style_data->tags.insert(tag_);
+      return *dynamic_cast<T*>(this);
+    }
+
+    T& untag(const std::string& tag_) {
+      style_data->tags.erase(tag_);
+      return *dynamic_cast<T*>(this);
+    }
+
     T& id(const std::string& id_) {
       this->set_id(id_);
       return *dynamic_cast<T*>(this);

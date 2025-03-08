@@ -156,6 +156,18 @@ namespace cydui::components {
       return state_id_;
     }
 
+    void tag(const std::string& tag_) {
+      style_data->tags.insert(tag_);
+    }
+
+    void untag(const std::string& tag_) {
+      style_data->tags.erase(tag_);
+    }
+
+    bool has_tag(const std::string& tag_) const {
+      return style_data->tags.contains(tag_);
+    }
+
     std::optional<sptr> find_child(const std::string& id) {
       for (const auto & child : children) {
         if (child->get_id() == id) {
