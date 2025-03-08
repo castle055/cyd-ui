@@ -34,8 +34,7 @@ namespace cydui::components {
       component->state()->_dirty     = false;
       queue_render_signal.emit(component);
 
-      // apply_style_signal.emit(component);
-
+      apply_style_signal.emit(component);
 
       std::unordered_map<
           std::shared_ptr<component_base_t>,
