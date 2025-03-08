@@ -46,13 +46,13 @@
     }                                                                                              \
     friend struct event_handler_t;                                                                 \
     friend struct cydui::components::event_handler_data_t<NAME>;                                   \
-  };
+  }
 
 #define COMPONENT_IMPL(NAME)                                                                       \
   struct NAME::event_handler_t: public cydui::components::event_handler_data_t<NAME>
 
 #define COMPONENT(NAME, ...)                                                                       \
-  COMPONENT_DECL(NAME, __VA_ARGS__)                                                                \
+  COMPONENT_DECL(NAME, __VA_ARGS__);                                                               \
   COMPONENT_IMPL(NAME)
 
 
