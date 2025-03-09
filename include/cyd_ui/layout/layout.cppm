@@ -54,7 +54,7 @@ export namespace cydui {
       component_updater->apply_style_signal.connect({
         component_stylist.get(), &components::component_stylist_t::apply_style
       });
-      component_updater->compiler_style_rules_signal.connect({
+      component_updater->compile_style_rules_signal.connect({
         component_stylist.get(), &components::component_stylist_t::compile_style_rule_list
       });
     }

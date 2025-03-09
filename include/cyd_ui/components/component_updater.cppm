@@ -27,7 +27,7 @@ namespace cydui::components {
 
     fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&> queue_render_signal{};
     fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&> apply_style_signal{};
-    fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&, StyleArchive&> compiler_style_rules_signal{};
+    fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&, StyleArchive&> compile_style_rules_signal{};
   public:
     void update(component_base_t::sptr component, StyleArchive& style_archive) {
       ZoneScopedN("Update");
@@ -68,7 +68,7 @@ namespace cydui::components {
       add_children(component, new_children, pending_redraw, pending_remove, style_archive);
 
       for (const auto &remove: pending_remove) {
-        unmount_child(component, remove.second);
+        dismount_child(component, remove.second);
       }
 
       for (const auto &child: pending_redraw) {
@@ -136,15 +136,15 @@ namespace cydui::components {
         }
       } else {
         // Set child's variables
-        child->parent                = component.get();
-        auto c_dims   = child->get_dimensional_relations();
-        child->get_internal_relations().cx = component->get_internal_relations().cx + c_dims.x +
-                                       c_dims.margin_left + c_dims.padding_left;
-        child->get_internal_relations().cy =
-          component->get_internal_relations().cy + c_dims.y + c_dims.margin_top + c_dims.padding_top;
+        child->parent                      = component.get();
+        auto c_dims                        = child->get_dimensional_relations();
+        child->get_internal_relations().cx = component->get_internal_relations().cx + c_dims.x
+                                             + c_dims.margin_left + c_dims.padding_left;
+        child->get_internal_relations().cy = component->get_internal_relations().cy + c_dims.y
+                                             + c_dims.margin_top + c_dims.padding_top;
 
         component_actor_t::set_component_state(child.get(), child_state);
-        compiler_style_rules_signal.emit(child, style_archive);
+        compile_style_rules_signal.emit(child, style_archive);
 
         child_state->component_instance = child;
         component->children.push_back(child);
@@ -165,7 +165,7 @@ namespace cydui::components {
       return mounted_child;
     }
 
-    void unmount_child(const component_base_t::sptr& component, const std::list<std::shared_ptr<component_base_t>>::iterator &child) {
+    void dismount_child(const component_base_t::sptr& component, const std::list<std::shared_ptr<component_base_t>>::iterator &child) {
       ZoneScopedN("Unmount Children");
       component_actor_t::dismount_component(child->get());
       component->children.erase(child);

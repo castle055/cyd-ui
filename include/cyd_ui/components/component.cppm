@@ -121,11 +121,15 @@ namespace cydui::components {
       event_dispatcher.emplace(std::make_shared<event_dispatcher_t<T, typename T::event_handler_t>>(this));
     }
     void dismount() final {
+      for (const auto & c : children) {
+        component_actor_t::dismount_component(c.get());
+      }
+      children.clear();
+
       // Delete event handler, this component will now stop reacting to events
       event_dispatcher = std::nullopt;
 
       state()->component_instance = std::nullopt;
-      get_dimensional_context()->clear_parameters();
     }
 
     bool update_with(std::shared_ptr<component_base_t> other) final {
