@@ -272,11 +272,13 @@ namespace cydui {
 
   void Layout::update_component(const components::component_base_t::sptr& target) {
     ZoneScopedN("Update Component");
+    std::scoped_lock lock{component_renderer->compositing_mutex()};
     component_updater->update(target, *style_archive);
   }
 
   bool Layout::update_all_dirty(const components::component_base_t::sptr& c) {
     if (c->state()->_dirty) {
+      std::scoped_lock lock{component_renderer->compositing_mutex()};
       component_updater->update(c, *style_archive);
       return true;
     } else {

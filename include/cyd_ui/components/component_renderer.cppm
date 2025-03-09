@@ -33,6 +33,14 @@ namespace cydui::components {
       bool compositing_dirty_ = true;
     };
 
+    bool is_compositing() const {
+      return is_compositing_.test();
+    }
+
+    std::mutex& compositing_mutex() {
+      return compositing_mtx;
+    }
+
     void queue_render(const component_base_t::sptr& component) {
       auto& data = component->get_data<render_data_t>();
       data.graphics_dirty_ = true;
@@ -40,7 +48,7 @@ namespace cydui::components {
 
     void render(graphics::window_t& window, const component_base_t::sptr &component) {
       ZoneScopedN("Render Flow");
-      if (is_compositing.test_and_set()) {
+      if (is_compositing_.test_and_set()) {
         composite_is_outdated.test_and_set();
         return;
       }
@@ -65,12 +73,14 @@ namespace cydui::components {
         Application::run_async(
           [](
             component_renderer_t*              self,
+            std::mutex*                        mtx,
             std::atomic_flag*                  completion_flag,
             std::atomic_flag*                  is_outdated,
             graphics::window_t*                w,
             components::component_base_t::sptr root_ptr
           ) {
             ZoneScopedN("Compositing Layout");
+            std::scoped_lock lock(*mtx);
             auto&& [root_node, must_recompose] = self->compose(root_ptr.get(), w);
 
             if (must_recompose) {
@@ -105,7 +115,8 @@ namespace cydui::components {
             }
           },
           this,
-          &is_compositing,
+          &compositing_mtx,
+          &is_compositing_,
           &composite_is_outdated,
           &window,
           component
@@ -115,7 +126,7 @@ namespace cydui::components {
 
     void compose_all(graphics::window_t& window, const component_base_t::sptr &root_component) {
       ZoneScopedN("Compose All");
-      if (is_compositing.test_and_set()) {
+      if (is_compositing_.test_and_set()) {
         composite_is_outdated.test_and_set();
         return;
       }
@@ -123,12 +134,14 @@ namespace cydui::components {
       Application::run_async(
         [](
           component_renderer_t*              self,
+          std::mutex*                        mtx,
           std::atomic_flag*                  completion_flag,
           std::atomic_flag*                  is_outdated,
           graphics::window_t*                w,
           components::component_base_t::sptr root_ptr
         ) {
           ZoneScopedN("Compositing Layout");
+          std::scoped_lock lock(*mtx);
           auto&& [root_node, must_recompose] = self->compose(root_ptr.get(), w);
 
           if (must_recompose) {
@@ -163,7 +176,8 @@ namespace cydui::components {
           }
         },
         this,
-        &is_compositing,
+        &compositing_mtx,
+        &is_compositing_,
         &composite_is_outdated,
         &window,
         root_component
@@ -181,7 +195,7 @@ namespace cydui::components {
 
     bool render_all(graphics::window_t& win, const component_base_t::sptr &root) {
       ZoneScopedN("Render All");
-      if (is_compositing.test()) {
+      if (is_compositing_.test()) {
         return false;
       }
 
@@ -395,7 +409,9 @@ namespace cydui::components {
     }
 
   private:
-    std::atomic_flag is_compositing {false};
+    std::atomic_flag is_compositing_ {false};
     std::atomic_flag composite_is_outdated {false};
+
+    std::mutex compositing_mtx{};
   };
 }
