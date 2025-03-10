@@ -89,11 +89,11 @@ export namespace cydui {
     template <typename... Args>
     static void run_async(auto&& fun, Args&&... args) {
       ZoneScopedN("Application:run_async");
-      get_instance().coroutine_enqueue([&](auto funn, Args... argss) -> fabric::async::async<bool> {
+      get_instance().coroutine_enqueue([=](Args... argss) -> fabric::async::async<bool> {
         ZoneScopedN("Application:run_async:()");
-        funn(std::forward<Args>(argss)...);
+        fun(std::forward<Args>(argss)...);
         co_return true;
-      }, fun, std::forward<Args>(args)...);
+      }, std::forward<Args>(args)...);
     }
 
     static void register_window(std::size_t id, fabric::async::async_bus_t* window) {

@@ -147,7 +147,7 @@ export namespace cydui {
 
     template <typename... Args>
     void run_async(auto&& fun, Args&&... args) {
-      this->coroutine_enqueue([&](Args... argss) -> fabric::async::async<bool> {
+      this->coroutine_enqueue([=](Args... argss) -> fabric::async::async<bool> {
         fun(std::forward<Args>(argss)...);
         co_return true;
       }, std::forward<Args>(args)...);
