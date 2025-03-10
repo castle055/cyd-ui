@@ -20,7 +20,8 @@ export namespace cydui::components {
     char value[N];
   };
 
-  struct component_state_t;
+  class component_state_t;
+  class component_state_delegate_t;
   using component_state_ref = std::shared_ptr<component_state_t>;
   class component_base_t;
   struct component_actor_t;
@@ -30,7 +31,7 @@ export namespace cydui::components {
     requires std::
       derived_from<std::remove_reference_t<C>, component_base_t>;
     typename C::props_t;
-    typename C::state_type;
+    typename C::state_t;
     typename C::event_handler_t;
   };
 

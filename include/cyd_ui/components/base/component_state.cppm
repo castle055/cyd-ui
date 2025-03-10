@@ -23,9 +23,8 @@ namespace cydui {
 export using children_list = std::vector<cydui::components::component_holder_t>;
 
 namespace cydui::components {
-  export class component_state_delegate_t;
-
-  struct component_state_t {
+  export class component_state_t {
+  public:
     virtual ~component_state_t() = default;
 
     component_state_t() = default;

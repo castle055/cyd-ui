@@ -22,6 +22,7 @@ export import cydui.styling;
 export import cydui.components.base.style;
 export import cydui.components.base.identifier;
 
+export import :type;
 export import :event_dispatcher;
 export import :attributes;
 export import :contexts;
