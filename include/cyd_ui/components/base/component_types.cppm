@@ -30,7 +30,7 @@ export namespace cydui::components {
     requires std::
       derived_from<std::remove_reference_t<C>, component_base_t>;
     typename C::props_t;
-    typename C::state_t;
+    typename C::state_type;
     typename C::event_handler_t;
   };
 
