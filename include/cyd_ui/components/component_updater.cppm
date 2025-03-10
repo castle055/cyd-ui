@@ -47,15 +47,10 @@ namespace cydui::components {
 
       component_builder_t content_children_builder { }; {
         std::vector<component_builder_t> &content_children = component->attrs()->_content;
-        std::size_t id_i                                   = 0;
         for (auto &item: content_children) {
-          for (auto &component_pair: item.get_component_constructors()) {
-            auto [id_, component] = component_pair;
-            const std::string id  = std::format("content:{}:{}", id_i, id_);
-
-            content_children_builder.append_component(id, component);
+          for (auto &component: item.get_component_constructors()) {
+            content_children_builder.append_component(component);
           }
-          ++id_i;
         }
       }
 
@@ -88,19 +83,29 @@ namespace cydui::components {
       StyleArchive &style_archive
     ) {
       ZoneScopedN("Add Children");
-      std::size_t id_i = 0;
       std::optional<std::shared_ptr<component_base_t>> prev {std::nullopt};
+
+      // Keep track of used IDs just in case some are duplicated.
+      // The type is part of the ID, so if there is a mix up there won't be a SEGFAULT
+      std::unordered_map<std::string, std::size_t> used_ids{};
+
       for (auto &item: children_to_add) {
-        for (auto &component_pair: item.get_components()) {
-          auto [id_, child] = component_pair;
-          std::string state_id = child->get_state_id();
-          std::string id       = state_id.empty()? std::format("{}:{}", id_i, id_): std::format("{}:{}:{}", id_i, id_, state_id);
+        for (const auto &child: item.get_components()) {
+          std::string name     = child->name();
+          std::string _id = child->get_id();
+          std::string id = std::format("{}:{}", name, _id);
+
+          if (used_ids.contains(id)) {
+            id = std::format("{}[{}]", id, used_ids[id]++);
+          } else {
+            id = std::format("{}[0]", id);
+            used_ids[id] = 1;
+          }
 
           auto mounted_child = mount_child(component, id, child, pending_redraw, pending_remove, prev, style_archive);
           prev.reset();
           prev.emplace(mounted_child);
         }
-        ++id_i;
       }
     }
 

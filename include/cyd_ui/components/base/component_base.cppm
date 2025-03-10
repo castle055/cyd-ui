@@ -20,6 +20,7 @@ import fabric.templates.functor_arguments;
 export import cydui.graphics;
 export import cydui.styling;
 export import cydui.components.base.style;
+export import cydui.components.base.identifier;
 
 export import :event_dispatcher;
 export import :attributes;
@@ -33,6 +34,9 @@ namespace cydui::components {
     using wptr = std::weak_ptr<component_base_t>;
 
   public:
+    explicit component_base_t(identifier_t identifier = {})
+        : id_(identifier) { }
+
     virtual ~component_base_t() = default; //{
     //  ! All of this is done in the `component_t` class destructor
     //  clear_subscribed_listeners();
@@ -141,19 +145,15 @@ namespace cydui::components {
     }
 
     void set_id(const std::string& id) {
-      id_ = id;
+      id_.set_id(id);
+    }
+
+    std::string get_id() {
+      return id_.str();
     }
 
     std::string get_id() const {
-      return id_;
-    }
-
-    void state_id(const std::string& id) {
-      state_id_ = id;
-    }
-
-    std::string get_state_id() const {
-      return state_id_;
+      return id_.str();
     }
 
     void tag(const std::string& tag_) {
@@ -233,8 +233,7 @@ namespace cydui::components {
     context_store_t context_store_{};
     std::unordered_map<refl::type_id_t, refl::any> data_map_ { };
 
-    std::string id_{};
-    std::string state_id_{""};
+    identifier_t id_{};
   };
 
   struct component_actor_t {
@@ -262,7 +261,7 @@ template<typename ContextType>
 cydui::components::component_holder_t cydui::provide_context<ContextType>::operator >(with_context &&components) {
   auto holder = components.build();
 
-  for (auto &[_, c]: holder.get_components()) {
+  for (auto &c: holder.get_components()) {
     if (not c->get_context_store().find_context<ContextType>().has_value()) {
       c->add_context(context_);
     }

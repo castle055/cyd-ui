@@ -82,15 +82,14 @@ COMPONENT(TestComponent, { std::string* text; }) {
   CHILDREN {
     return {
       test_ctx > with_context {
-        TestWithContext { }.x(50_px).y(50_px)
+        TestWithContext {{}, "animation_target"}.x(50_px).y(50_px)
                            .width(200_px).height(200_px)
-                           .id("animation_target")
                            .on_pressed([&] {
                              auto c = component.find_child("animation_target").value();
                              cydui::animate(c, anim);
                            })
                            .border("#00FF00"_color)
-                           .border_width(2)["some-tag"],
+                           .border_width(2),
         input::text {{props.text}}.height(30_px).width($width / 2).on_enter([&] {
           std::cout << "ENTER!" << std::endl;
         }),

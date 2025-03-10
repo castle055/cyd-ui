@@ -19,23 +19,18 @@ struct ContextUpdate {
 
 export class with_context {
 public:
-  with_context(std::initializer_list<cydui::components::component_holder_t> &&components) {
-    std::size_t i {0};
-    for (auto &&holder: components) {
-      for (auto &[id, c]: holder.get_components()) {
-        components_.emplace_back(std::format(":{}{}", i, id), c);
-      }
-      ++i;
+  explicit with_context(std::initializer_list<cydui::components::component_holder_t> &&components) {
+    for (auto c: components) {
+      components_.append(c);
     }
   }
 
   cydui::components::component_holder_t build() const {
-    return cydui::components::component_holder_t {components_};
+    return components_;
   }
 
 private:
-  // std::vector<cydui::components::component_holder_t> components_;
-  std::vector<std::pair<std::string, std::shared_ptr<cydui::components::component_base_t>>> components_ { };
+  cydui::components::component_holder_t components_ { };
 };
 
 export namespace cydui::components {

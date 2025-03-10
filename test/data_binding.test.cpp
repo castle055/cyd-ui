@@ -67,14 +67,13 @@ COMPONENT(Presenter, { std::string* text; }) {
     return {
       model > with_context {
         input::text{{props.text}}.height(30_px).width($width / 2),
-        View {{props.text}}.x(50_px).y(50_px)
+        View {{props.text}, "animation_target"}.x(50_px).y(50_px)
                 .width(200_px).height(200_px)
-                .id("animation_target")
                 .on_pressed([&] {
                   auto c = component.find_child("animation_target").value();
                 })
                 .border("#00FF00"_color)
-                .border_width(2)["some-tag"],
+                .border_width(2),
       },
     };
   }

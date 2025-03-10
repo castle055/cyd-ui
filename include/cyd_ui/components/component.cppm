@@ -14,7 +14,6 @@ import std;
 
 import fabric.logging;
 
-export import :with_specialization;
 export import cydui.components.base;
 export import cydui.components.anchors;
 export import cydui.components.event_dispatcher;
@@ -25,7 +24,7 @@ namespace cydui::components {
     public component_base_t,
     public attrs_component<T> {
   public:
-    component_t() {
+    explicit component_t(identifier_t identifier = {}): component_base_t(identifier) {
       style_data = std::make_shared<style_data_t<typename T::style_t>>();
 
       auto dim = get_dimensional_relations();
@@ -111,11 +110,6 @@ namespace cydui::components {
       return ti;
     }
 
-    T& state_id(const std::string& id) {
-      component_base_t::state_id(id);
-      return *static_cast<T*>(this);
-    }
-
   private:
     void mount() final {
       event_dispatcher.emplace(std::make_shared<event_dispatcher_t<T, typename T::event_handler_t>>(this));
@@ -186,11 +180,7 @@ namespace cydui::components {
     }
 
   public:
-    T& operator[](const std::string& tag) {
-      style_data->tags.insert(tag);
-      return *dynamic_cast<T*>(this);
-    }
-    T& operator[](const std::unordered_set<std::string>& tags) {
+    T& tag(const std::unordered_set<std::string>& tags) {
       for (const auto & tag : tags) {
         style_data->tags.insert(tag);
       }
@@ -202,12 +192,19 @@ namespace cydui::components {
       return *dynamic_cast<T*>(this);
     }
 
+    T& untag(const std::unordered_set<std::string>& tags) {
+      for (const auto & tag : tags) {
+        style_data->tags.erase(tag);
+      }
+      return *dynamic_cast<T*>(this);
+    }
+
     T& untag(const std::string& tag_) {
       style_data->tags.erase(tag_);
       return *dynamic_cast<T*>(this);
     }
 
-    T& id(const std::string& id_) {
+    T& set_id(const std::string& id_) {
       this->set_id(id_);
       return *dynamic_cast<T*>(this);
     }

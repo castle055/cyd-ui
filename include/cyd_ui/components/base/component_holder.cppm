@@ -4,7 +4,7 @@
 export module cydui.components.base:holder;
 
 import std;
-export import :with_template;
+export import :type;
 
 export
 {
@@ -15,25 +15,15 @@ export
 
       template<ComponentConcept C>
       component_builder_t(C comp) {
-        components.emplace_back("", [=] {
+        components.emplace_back([=] {
           return std::shared_ptr<component_base_t> {new C {comp}};
         });
-
-        //components[""] = std::make_unique<C>(comp);
       }
 
-      template<typename T>
-      component_builder_t(::with<T> _with) {
-        for (const auto &item: _with.get_selection()) {
-          components.emplace_back(item);
-        }
-      }
-
-      std::vector<std::pair<std::string, std::shared_ptr<component_base_t>>> get_components() const {
-        std::vector<std::pair<std::string, std::shared_ptr<component_base_t>>> _components { };
-        for (const auto &item: components) {
-          const auto &[id, builder] = item;
-          _components.emplace_back(id, builder());
+      std::vector<std::shared_ptr<component_base_t>> get_components() const {
+        std::vector<std::shared_ptr<component_base_t>> _components { };
+        for (const auto &builder: components) {
+          _components.emplace_back(builder());
         }
         return _components;
       }
@@ -42,13 +32,12 @@ export
         return components;
       }
 
-      void append_component(std::string id, const std::function<std::shared_ptr<component_base_t>()>& component) {
-        components.emplace_back(id, component);
+      void append_component(const std::function<std::shared_ptr<component_base_t>()>& component) {
+        components.emplace_back(component);
       }
 
       void transform(auto&& fun) {
-        for (auto &item: components) {
-          auto &[id, builder] = item;
+        for (auto &builder: components) {
           auto original_builder = builder;
           builder = [=]() {
             return fun(original_builder());
@@ -57,7 +46,7 @@ export
       }
 
     private:
-      std::vector<std::pair<std::string, std::function<std::shared_ptr<component_base_t>()>>> components { };
+      std::vector<std::function<std::shared_ptr<component_base_t>()>> components { };
     };
 
     struct component_holder_t {
@@ -74,26 +63,21 @@ export
       //}
       component_holder_t() = default;
 
+      template<ComponentConcept ...C>
+      component_holder_t(C... comps) noexcept {
+        (components.emplace_back(std::shared_ptr<component_base_t>{new C{comps}}), ...);
+      }
+
       template<ComponentConcept C>
       component_holder_t(std::vector<C> comps) noexcept {
-        std::size_t index = 0;
         for (auto &comp: comps) {
-          components.emplace_back(std::to_string(index), std::shared_ptr<component_base_t> {new C {comp}});
-          ++index;
+          components.emplace_back(std::shared_ptr<component_base_t> {new C {comp}});
         }
       }
 
       template<ComponentConcept C>
       component_holder_t(C comp) {
-        components.emplace_back("", std::shared_ptr<component_base_t> {new C {comp}});
-        //components[""] = std::make_unique<C>(comp);
-      }
-
-      template<typename T>
-      component_holder_t(::with<T> _with) {
-        for (const auto &item: _with.get_selection()) {
-          components.emplace_back(item.first, item.second());
-        }
+        components.emplace_back(std::shared_ptr<component_base_t> {new C {comp}});
       }
 
       component_holder_t(const component_builder_t &builder) {
@@ -102,8 +86,31 @@ export
         }
       }
 
+      component_holder_t(const component_holder_t &other) {
+        components.insert_range(components.end(), other.components);
+      }
+
+      component_holder_t(component_holder_t &&other) noexcept {
+        components.insert_range(components.end(), std::move(other.components));
+      }
+
+      component_holder_t& operator=(const component_holder_t &other) {
+        components = other.components;
+        return *this;
+      }
+
+      component_holder_t& operator=(component_holder_t &&other) noexcept {
+        components = std::move(other.components);
+        return *this;
+      }
+
+      component_holder_t& append(const component_holder_t &other) {
+        components.insert_range(components.end(), other.components);
+        return *this;
+      }
+
       component_holder_t(
-        const std::vector<std::pair<std::string, std::shared_ptr<component_base_t>>> &components_
+        const std::vector<std::shared_ptr<component_base_t>> &components_
       ): components(components_) {
       }
 
@@ -121,8 +128,8 @@ export
       //
       //}
 
-      void append_component(std::string id, std::shared_ptr<component_base_t> component) {
-        components.emplace_back(id, component);
+      void append_component(std::shared_ptr<component_base_t> component) {
+        components.emplace_back(component);
       }
 
       auto begin() {
@@ -142,7 +149,7 @@ export
       }
 
     private:
-      std::vector<std::pair<std::string, std::shared_ptr<component_base_t>>> components { };
+      std::vector<std::shared_ptr<component_base_t>> components { };
     };
   }
 }

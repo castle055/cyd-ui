@@ -19,6 +19,7 @@
     struct props_t __VA_ARGS__;                                                                    \
                                                                                                    \
   public:                                                                                          \
+    static constexpr std::source_location declaration_loc = std::source_location::current();       \
     props_t props;                                                                                 \
     using window_type = cydui::CWindow;                                                            \
     using state_t     = std::conditional_t<                                                        \
@@ -30,11 +31,14 @@
       style_type,                                                                                  \
       cydui::components::simple_style_t>;                                                          \
     template <typename P = props_t>                                                                \
-    explicit NAME(std::enable_if_t<std::is_default_constructible_v<P>, props_t> props = {})        \
-        : cydui::components::component_t<NAME>(),                                                  \
+    explicit NAME(                                                                                 \
+      std::enable_if_t<std::is_default_constructible_v<P>, props_t> props = {},                    \
+      cydui::components::identifier_t identifier                          = {}                     \
+    )                                                                                              \
+        : cydui::components::component_t<NAME>(identifier),                                        \
           props(std::move(props)) {}                                                               \
-    explicit NAME(props_t props)                                                                   \
-        : cydui::components::component_t<NAME>(),                                                  \
+    explicit NAME(props_t props, cydui::components::identifier_t identifier = {})                  \
+        : cydui::components::component_t<NAME>(identifier),                                        \
           props(std::move(props)) {}                                                               \
     ~NAME() override = default;                                                                    \
     void* get_props() override {                                                                   \

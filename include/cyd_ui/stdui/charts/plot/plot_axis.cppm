@@ -55,7 +55,7 @@ namespace charts {
         auto pos = props.axis_direction * ((X - props.min) / (props.max - props.min));
         result.push_back(props.label_component(X));
 
-        auto  label     = result.back().get_components()[0].second;
+        auto  label     = result.back().get_components()[0];
         auto  label_dim = label->get_dimensional_relations();
         if (props.axis_direction[0] > la::scalar{0}) {
           label_dim.x = $width * screen_measure{pos[0]} - (label_dim.width / 2_px) +
