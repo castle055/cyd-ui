@@ -98,8 +98,8 @@ namespace cydui::components {
           if (used_ids.contains(id)) {
             id = std::format("{}[{}]", id, used_ids[id]++);
           } else {
-            id = std::format("{}[0]", id);
             used_ids[id] = 1;
+            id = std::format("{}[0]", id);
           }
 
           auto mounted_child = mount_child(component, id, child, pending_redraw, pending_remove, prev, style_archive);
