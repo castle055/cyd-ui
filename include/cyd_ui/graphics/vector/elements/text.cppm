@@ -13,31 +13,34 @@ export import cydui.dimensions;
 export import cydui.graphics.vector.element;
 
 export namespace vg {
-  struct text:
-    element_t,
-    attrs_core<text>,
-    attrs_fill<text>,
-    //attrs_stroke<text>,
-    attrs_font<text>,
-    attr_x<text>,
-    attr_y<text>,
-    attr_rotate<text>,
-    attr_pivot_x<text>,
-    attr_pivot_y<text>,
-    attr_scale_x<text>,
-    attr_scale_y<text>,
-    attr_w<text>,
-    attr_h<text> {
+  using font_extents_t = Cairo::FontExtents;
+  using text_extents_t = Cairo::TextExtents;
+
+  struct text: element_t,
+               attrs_core<text>,
+               attrs_fill<text>,
+               // attrs_stroke<text>,
+               attrs_font<text>,
+               attr_x<text>,
+               attr_y<text>,
+               attr_rotate<text>,
+               attr_pivot_x<text>,
+               attr_pivot_y<text>,
+               attr_scale_x<text>,
+               attr_scale_y<text>,
+               attr_w<text>,
+               attr_h<text> {
     std::string _text;
-    explicit text(std::string _text): _text(std::move(_text)) {
-      //TracyAllocN(this, sizeof(decltype(*this)), "fragment_elements");
+    explicit text(std::string _text)
+        : _text(std::move(_text)) {
+      // TracyAllocN(this, sizeof(decltype(*this)), "fragment_elements");
     }
     ~text() override {
-      //TracyFreeN(this, "fragment_elements");
+      // TracyFreeN(this, "fragment_elements");
     }
-    void apply_to(pixelmap_editor_t &editor) const override {
+    void apply_to(pixelmap_editor_t& editor) const override {
       apply_font(editor);
-      //apply_stroke(editor);
+      // apply_stroke(editor);
       apply_fill(editor);
 
       Cairo::FontExtents fextents;
@@ -55,16 +58,16 @@ export namespace vg {
       editor->show_text(_text);
       editor->restore();
 
-      //editor->move_to(origin_x + _x, origin_y + _y + fextents.ascent);
-      //editor->show_text(_text);
-      //editor->move_to(origin_x + _x + 5, origin_y + _y + fextents.height);
-      //editor->show_text(_text);
-      //editor->move_to(origin_x + _x + 10, origin_y + _y + extents.height);
-      //editor->show_text(_text);
+      // editor->move_to(origin_x + _x, origin_y + _y + fextents.ascent);
+      // editor->show_text(_text);
+      // editor->move_to(origin_x + _x + 5, origin_y + _y + fextents.height);
+      // editor->show_text(_text);
+      // editor->move_to(origin_x + _x + 10, origin_y + _y + extents.height);
+      // editor->show_text(_text);
     }
 
     footprint get_footprint() const override {
-      pixelmap_t pm{0, 0};
+      pixelmap_t        pm{0, 0};
       pixelmap_editor_t pe{pm};
 
       apply_font(pe);
@@ -84,8 +87,8 @@ export namespace vg {
       };
     }
 
-    Cairo::FontExtents get_font_extents() const {
-      pixelmap_t pm{0, 0};
+    font_extents_t get_font_extents() const {
+      pixelmap_t        pm{0, 0};
       pixelmap_editor_t pe{pm};
 
       apply_font(pe);
@@ -96,8 +99,8 @@ export namespace vg {
       return fextents;
     }
 
-    Cairo::TextExtents get_text_extents() const {
-      pixelmap_t pm{0, 0};
+    text_extents_t get_text_extents() const {
+      pixelmap_t        pm{0, 0};
       pixelmap_editor_t pe{pm};
 
       apply_font(pe);
@@ -108,4 +111,4 @@ export namespace vg {
       return extents;
     }
   };
-}
+} // namespace vg
