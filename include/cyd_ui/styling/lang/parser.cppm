@@ -182,7 +182,7 @@ namespace syntax {
       | right_braces | left_parens | right_parens | left_angle_brackets | right_angle_brackets
       | forward_slash
     );
-    TRULE(tss_single_quoted_str)        (quote, *tss_single_quoted_str_char{}, quote);
+    TRULE(tss_single_quoted_str)        (!quote, *tss_single_quoted_str_char{}, !quote);
 
     TRULE(tss_double_quoted_str_char)(
       alphanum{} | colon | semicolon | plus | minus | underscore | shebang | dot | comma | asterisc | whitespace
@@ -190,7 +190,7 @@ namespace syntax {
       | right_braces | left_parens | right_parens | left_angle_brackets | right_angle_brackets
       | forward_slash
     );
-    TRULE(tss_double_quoted_str)        (double_quote, *tss_double_quoted_str_char{}, double_quote);
+    TRULE(tss_double_quoted_str)        (!double_quote, *tss_double_quoted_str_char{}, !double_quote);
 
     // SELECTORS
     RULE(tss_class_selector)            (dot, tss_identifier{});

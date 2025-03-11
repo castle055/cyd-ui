@@ -200,7 +200,7 @@ namespace cydui::components {
         if (rule_field.is(refl::type_info::from<std::string>())
                    and field->has_metadata<custom_style_parser>()) {
           std::string str = rule_field.as<std::string>();
-          str = str.substr(1, str.size() - 2);
+
           refl::any          rule_field_parsed =
             field->get_metadata<custom_style_parser>().parser_function(str);
           if (rule_field_parsed.is(field->type())) {
