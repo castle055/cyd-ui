@@ -79,9 +79,33 @@ export namespace vg {
       return {
         .x = static_cast<int>(_x),
         .y = static_cast<int>(_y - fextents.ascent),
-        .w = (int) extents.x_advance,
-        .h = (int) fextents.height,
+        .w = static_cast<int>(extents.x_advance),
+        .h = static_cast<int>(fextents.height),
       };
+    }
+
+    Cairo::FontExtents get_font_extents() const {
+      pixelmap_t pm{0, 0};
+      pixelmap_editor_t pe{pm};
+
+      apply_font(pe);
+
+      Cairo::FontExtents fextents;
+      pe->get_font_extents(fextents);
+
+      return fextents;
+    }
+
+    Cairo::TextExtents get_text_extents() const {
+      pixelmap_t pm{0, 0};
+      pixelmap_editor_t pe{pm};
+
+      apply_font(pe);
+
+      Cairo::TextExtents extents;
+      pe->get_text_extents(_text, extents);
+
+      return extents;
     }
   };
 }
