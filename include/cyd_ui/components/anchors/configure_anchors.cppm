@@ -26,15 +26,27 @@ export
       //! SELF
       dimension_ctx_t &ctx = *child->get_dimensional_context();
       ctx.set_parameter("self_x", [child] {
-        return child->get_internal_relations().cx;
+        return child->get_dimensional_relations().x;
       });
       ctx.set_parameter("self_y", [child] {
-        return child->get_internal_relations().cy;
+        return child->get_dimensional_relations().y;
       });
       ctx.set_parameter("self_width", [child] {
-        return child->get_internal_relations().cw;
+        return child->get_dimensional_relations().width;
       });
       ctx.set_parameter("self_height", [child] {
+        return child->get_dimensional_relations().height;
+      });
+      ctx.set_parameter("self_screen_x", [child] {
+        return child->get_internal_relations().cx;
+      });
+      ctx.set_parameter("self_screen_y", [child] {
+        return child->get_internal_relations().cy;
+      });
+      ctx.set_parameter("self_content_width", [child] {
+        return child->get_internal_relations().cw;
+      });
+      ctx.set_parameter("self_content_height", [child] {
         return child->get_internal_relations().ch;
       });
 

@@ -24,6 +24,10 @@ export
       static constexpr dimension_parameter_t y {"self_y"};
       static constexpr dimension_parameter_t width {"self_width"};
       static constexpr dimension_parameter_t height {"self_height"};
+      static constexpr dimension_parameter_t screen_x {"self_screen_x"};
+      static constexpr dimension_parameter_t screen_y {"self_screen_y"};
+      static constexpr dimension_parameter_t content_width {"self_content_width"};
+      static constexpr dimension_parameter_t content_height {"self_content_height"};
     };
 
     struct parent_component {
