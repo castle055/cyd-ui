@@ -25,7 +25,7 @@ namespace cydui::components {
     public attrs_component<T> {
   public:
     explicit component_t(identifier_t identifier = {}): component_base_t(identifier) {
-      style_data = std::make_shared<style_data_t<typename T::style_t>>();
+      style_data = std::make_shared<style_data_t<typename T::style_t>>(std::string{name()});
 
       auto dim = get_dimensional_relations();
       internal_relations.cx = dim.x + dim.margin_left + dim.padding_left;

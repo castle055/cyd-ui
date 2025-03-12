@@ -124,24 +124,25 @@ export namespace cydui::components {
   template <typename Style>
   class style_data_t final: public style_data_base_t {
   public:
-    style_data_t()
+    style_data_t(const std::string& ctx_name)
       : ptr_(std::make_shared<Style>()), dimension_ctx_(std::make_shared<dimension_ctx_t>()) {
+      dimension_ctx_->set_name(ctx_name);
 
       auto& base = as_base();
-      base.x.set_context(dimension_ctx_);
-      base.y.set_context(dimension_ctx_);
-      base.width.set_context(dimension_ctx_);
-      base.height.set_context(dimension_ctx_);
+      base.x.set_context(dimension_ctx_, "x");
+      base.y.set_context(dimension_ctx_, "y");
+      base.width.set_context(dimension_ctx_, "width");
+      base.height.set_context(dimension_ctx_, "height");
 
-      base.margin.top.set_context(dimension_ctx_);
-      base.margin.right.set_context(dimension_ctx_);
-      base.margin.bottom.set_context(dimension_ctx_);
-      base.margin.left.set_context(dimension_ctx_);
+      base.margin.top.set_context(dimension_ctx_, "margin_top");
+      base.margin.right.set_context(dimension_ctx_, "margin_right");
+      base.margin.bottom.set_context(dimension_ctx_, "margin_bottom");
+      base.margin.left.set_context(dimension_ctx_, "margin_left");
 
-      base.padding.top.set_context(dimension_ctx_);
-      base.padding.right.set_context(dimension_ctx_);
-      base.padding.bottom.set_context(dimension_ctx_);
-      base.padding.left.set_context(dimension_ctx_);
+      base.padding.top.set_context(dimension_ctx_, "padding_top");
+      base.padding.right.set_context(dimension_ctx_, "padding_right");
+      base.padding.bottom.set_context(dimension_ctx_, "padding_bottom");
+      base.padding.left.set_context(dimension_ctx_, "padding_left");
     }
 
     void reset() override {

@@ -46,10 +46,19 @@ public:
     return getters.contains(name);
   }
 
+  void set_name(const std::string& name_) {
+    name = name_;
+  }
+
+  const std::string& get_name() const {
+    return name;
+  }
+
   auto& operator[](const std::string& name) {
     return getters.at(name);
   }
 
 private:
   std::unordered_map<std::string, dimension<value_type>> getters{};
+  std::string name{};
 };

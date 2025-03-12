@@ -1,5 +1,5 @@
 /*! \file  impl.cppm
- *! \brief 
+ *! \brief
  *!
  */
 
@@ -14,11 +14,11 @@ export import :expression;
 export import :context;
 
 namespace cydui::dimensions {
-  export template<typename S>
-  const S &get_value(dimension<S> &dimension);
+  export template <typename S>
+  const S& get_value(dimension<S>& dimension);
 
-  export template<typename S>
-  const S &get_value(const dimension<S> &dimension);
+  export template <typename S>
+  const S& get_value(const dimension<S>& dimension);
 
   template <typename T>
   class dimension_impl {
@@ -28,7 +28,7 @@ namespace cydui::dimensions {
     using sptr       = std::shared_ptr<dimension_impl>;
 
     ~dimension_impl() {
-      for (auto dependency : expr_.dependencies_) {
+      for (auto dependency: expr_.dependencies_) {
         dependency->dependents_.erase(self);
       }
     }
@@ -44,14 +44,19 @@ namespace cydui::dimensions {
     friend const S& get_value(const dimension<S>& dim);
 
     template <typename S>
-    friend compute_result_t<S> compute_dimension(dimension<S>& dim_, const std::unordered_map<std::string, dimension<S>>& parameters);
+    friend compute_result_t<S> compute_dimension(
+      dimension<S>& dim_, const std::unordered_map<std::string, dimension<S>>& parameters
+    );
     template <typename S>
-    friend bool evaluate_expression(typename dimension_impl<S>::sptr dim, const std::unordered_map<std::string, dimension<S>>& parameters);
+    friend bool evaluate_expression(
+      typename dimension_impl<S>::sptr                     dim,
+      const std::unordered_map<std::string, dimension<S>>& parameters
+    );
     template <typename S>
     friend bool find_cycle(
-      cycle_t<S>&                      cycle,
-      typename dimension_impl<S>::sptr start,
-      typename dimension_impl<S>::sptr head,
+      cycle_t<S>&                                          cycle,
+      typename dimension_impl<S>::sptr                     start,
+      typename dimension_impl<S>::sptr                     head,
       const std::unordered_map<std::string, dimension<S>>& global_parameters
     );
 
@@ -62,7 +67,7 @@ namespace cydui::dimensions {
     void clear() {
       expr_.clear();
 
-      for (auto dependency : expr_.dependencies_) {
+      for (auto dependency: expr_.dependencies_) {
         dependency->dependents_.erase(self);
       }
 
@@ -81,13 +86,13 @@ namespace cydui::dimensions {
         return;
       }
 
-      for (auto dependency : expression.dependencies_) {
+      for (auto dependency: expression.dependencies_) {
         dependency->dependents_.erase(self);
       }
 
       expr_ = expression;
 
-      for (auto dependency : expression.dependencies_) {
+      for (auto dependency: expression.dependencies_) {
         dependency->dependents_.insert(self);
       }
       mark_unknown();
@@ -124,6 +129,7 @@ namespace cydui::dimensions {
     bool                        unknown_ = true;
     std::unordered_set<wptr>    dependents_{};
     std::shared_ptr<context<T>> context_;
+    std::string                 name_{};
 
     wptr self;
   };
@@ -132,18 +138,21 @@ namespace cydui::dimensions {
   typename dimension_impl<T>::sptr make_dimension_impl() {
     return std::make_shared<dimension_impl<T>>();
   }
-}
+} // namespace cydui::dimensions
 
 template <typename T>
 struct std::hash<std::weak_ptr<cydui::dimensions::dimension_impl<T>>> {
-    std::size_t operator()(const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it) const {
-        return reinterpret_cast<std::size_t>(it.lock().get());
-    }
+  std::size_t operator()(const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it) const {
+    return reinterpret_cast<std::size_t>(it.lock().get());
+  }
 };
 
 template <typename T>
 struct std::equal_to<std::weak_ptr<cydui::dimensions::dimension_impl<T>>> {
-    bool operator()(const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it1, const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it2) const {
-        return it1.lock() == it2.lock();
-    }
+  bool operator()(
+    const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it1,
+    const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it2
+  ) const {
+    return it1.lock() == it2.lock();
+  }
 };

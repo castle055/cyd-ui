@@ -55,7 +55,7 @@ public:
     impl_->set_expression(other.impl_->expr_);
     impl_->value_ = other.impl_->value_;
     impl_->unknown_ = other.impl_->unknown_;
-    set_context(other.get_context());
+    set_context(other.get_context(), other.impl_->name_);
   }
 
   dimension& operator=(const dimension& other) {
@@ -106,9 +106,10 @@ public:
   const std::shared_ptr<context>& get_context() const {
     return impl_->context_;
   }
-  void set_context(const std::shared_ptr<context>& ctx) {
+  void set_context(const std::shared_ptr<context>& ctx, const std::string& name = "") {
     std::shared_ptr<context> new_ctx = ctx;
     impl_->context_.swap(new_ctx);
+    impl_->name_ = name;
   }
 
   const expression& get_expression() const {
