@@ -35,8 +35,8 @@ export {
 #define TO_STRING(...) #__VA_ARGS__
 #define DIMENSIONAL_PARAM(PREFIX, NAME, ...)                                                       \
   ctx.set_parameter(TO_STRING(PREFIX##_##NAME), __VA_ARGS__)
-#define PARENT_PARAM(NAME, ...) DIMENSIONAL_PARAM(parent, NAME, __VA_ARGS__)
-#define SELF_PARAM(NAME, ...)   DIMENSIONAL_PARAM(self, NAME, __VA_ARGS__)
+#define PARENT_PARAM(NAME, ...) DIMENSIONAL_PARAM(parent, NAME, __VA_ARGS__ + 0_px)
+#define SELF_PARAM(NAME, ...)   DIMENSIONAL_PARAM(self, NAME, __VA_ARGS__ + 0_px)
 
       {
         //! PARENT
@@ -94,7 +94,7 @@ export {
 
       {
         //! PREV
-#define PREV_PARAM(NAME, ...) DIMENSIONAL_PARAM(prev, NAME, __VA_ARGS__)
+#define PREV_PARAM(NAME, ...) DIMENSIONAL_PARAM(prev, NAME, __VA_ARGS__ + 0_px)
 
         if (prev.has_value()) {
           auto  dims = prev.value()->get_dimensional_relations();
