@@ -45,6 +45,14 @@ export
         }
       }
 
+      bool empty() const {
+        return components.empty();
+      }
+
+      std::size_t size() const {
+        return components.size();
+      }
+
     private:
       std::vector<std::function<std::shared_ptr<component_base_t>()>> components { };
     };
