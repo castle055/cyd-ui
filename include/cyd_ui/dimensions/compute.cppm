@@ -230,7 +230,7 @@ namespace cydui::dimensions {
               LOG::print{ERROR}("Dependency cycle in dimensions:");
               i = 0;
               for (const auto& v: cycle.dimensions) {
-                LOG::print{ERROR}("  {}: {}::{}", i++, v->context_->get_name(), v->name_);
+                LOG::print{ERROR}("  {}: {}::{} = {}", i++, v->context_->get_name(), v->name_, v->expr().to_string());
               }
             }
             cycles.emplace_back(cycle);
