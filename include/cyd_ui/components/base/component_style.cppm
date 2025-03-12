@@ -182,10 +182,10 @@ export namespace cydui::components {
       style_override_data.fields[field_info] = value;
     }
     bool has_base_field_override(refl::field_path field_info) override {
-      return style_override_data.base_fields.contains[field_info];
+      return style_override_data.base_fields.contains(field_info);
     }
     bool has_field_override(refl::field_path field_info) override {
-      return style_override_data.fields.contains[field_info];
+      return style_override_data.fields.contains(field_info);
     }
     void clear_style_override() override {
       style_override_data.clear();
