@@ -182,11 +182,11 @@ namespace cydui::dimensions {
     std::deque<typename dimension_impl<T>::sptr>         stack{};
     std::vector<cycle_t<T>>                              cycles{};
     stack.emplace_back(dim);
-    visited.insert(dim);
 
     while (!stack.empty()) {
       auto                                                   top = stack.back();
       std::unordered_set<std::shared_ptr<dimension_impl<T>>> deps{};
+      visited.insert(top);
       for (const auto& dep: top->expr().dependencies()) {
         deps.insert(dep);
       }
@@ -224,7 +224,6 @@ namespace cydui::dimensions {
             }
             cycles.emplace_back(cycle);
           } else {
-            visited.insert(dep);
             stack.emplace_back(dep);
             work_to_do = true;
           }
