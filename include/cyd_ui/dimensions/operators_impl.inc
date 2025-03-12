@@ -85,7 +85,8 @@ OPERATOR(V value, const cydui::dimensions::expression<T>& expr) {
   node->children.push_back(expr_.tree_);
 
   expr_.tree_ = node;
-  expr_.dependencies_.insert_range(expr.dependencies_.begin(), expr.dependencies_.end());
+  expr_.dependencies_.insert(expr.dependencies_.begin(), expr.dependencies_.end());
+  expr_.parameters_.insert(expr.parameters_.begin(), expr.parameters_.end());
   return expr_;
 }
 
@@ -118,8 +119,10 @@ static cydui::dimensions::expression<T> OPERATOR(
   node->children.push_back(expr2.tree_);
 
   expr.tree_ = node;
-  expr.dependencies_.insert_range(expr1.dependencies_.begin(), expr1.dependencies_.end());
-  expr.dependencies_.insert_range(expr2.dependencies_.begin(), expr2.dependencies_.end());
+  expr.dependencies_.insert(expr1.dependencies_.begin(), expr1.dependencies_.end());
+  expr.dependencies_.insert(expr2.dependencies_.begin(), expr2.dependencies_.end());
+  expr.parameters_.insert(expr1.parameters_.begin(), expr1.parameters_.end());
+  expr.parameters_.insert(expr2.parameters_.begin(), expr2.parameters_.end());
   return expr;
 }
 
@@ -134,6 +137,7 @@ static cydui::dimensions::expression<T> OPERATOR(
 
   expr1.tree_ = node;
   expr1.dependencies_.insert(expr2.dependencies_.begin(), expr2.dependencies_.end());
+  expr1.parameters_.insert(expr2.parameters_.begin(), expr2.parameters_.end());
   return expr1;
 }
 
@@ -153,6 +157,7 @@ OPERATOR(const cydui::dimensions::expression<T>& expr1, V value) {
 
   expr.tree_ = node;
   expr.dependencies_.insert(expr1.dependencies_.begin(), expr1.dependencies_.end());
+  expr.parameters_.insert(expr1.parameters_.begin(), expr1.parameters_.end());
   return expr;
 }
 
@@ -174,6 +179,7 @@ static cydui::dimensions::expression<T> OPERATOR(
 
   expr.tree_ = node;
   expr.dependencies_.insert(expr1.dependencies_.begin(), expr1.dependencies_.end());
+  expr.parameters_.insert(expr1.parameters_.begin(), expr1.parameters_.end());
   return expr;
 }
 
@@ -194,6 +200,7 @@ static cydui::dimensions::expression<T> OPERATOR(
 
   expr.tree_ = node;
   expr.dependencies_.insert(expr1.dependencies_.begin(), expr1.dependencies_.end());
+  expr.parameters_.insert(expr1.parameters_.begin(), expr1.parameters_.end());
   return expr;
 }
 
@@ -218,6 +225,7 @@ static cydui::dimensions::expression<S> OPERATOR(
   node->children.push_back(dim_node);
   node->children.push_back(param_node);
 
+  expr.parameters_.insert(rhs);
   expr.tree_ = node;
   return expr;
 }
@@ -241,6 +249,7 @@ static cydui::dimensions::expression<S> OPERATOR(
   node->children.push_back(param_node);
   node->children.push_back(dim_node);
 
+  expr.parameters_.insert(lhs);
   expr.tree_ = node;
   return expr;
 }
@@ -253,6 +262,7 @@ static cydui::dimensions::expression<S> OPERATOR(
   expression<S> expr{};
 
   expr.dependencies_.insert(lhs.dependencies_.begin(), lhs.dependencies_.end());
+  expr.parameters_.insert(lhs.parameters_.begin(), lhs.parameters_.end());
 
   auto param_node       = expr.make_node(expression<S>::node_t::PARAMETER);
   param_node->parameter = rhs;
@@ -261,6 +271,7 @@ static cydui::dimensions::expression<S> OPERATOR(
   node->children.push_back(lhs.tree_);
   node->children.push_back(param_node);
 
+  expr.parameters_.insert(rhs);
   expr.tree_ = node;
   return expr;
 }
@@ -272,7 +283,8 @@ static cydui::dimensions::expression<S> OPERATOR(
   using namespace cydui::dimensions;
   expression<S> expr{};
 
-  expr.dependencies_.insert_range(rhs.dependencies_.begin(), rhs.dependencies_.end());
+  expr.dependencies_.insert(rhs.dependencies_.begin(), rhs.dependencies_.end());
+  expr.parameters_.insert(rhs.parameters_.begin(), rhs.parameters_.end());
 
   auto param_node       = expr.make_node(expression<S>::node_t::PARAMETER);
   param_node->parameter = lhs;
@@ -281,6 +293,7 @@ static cydui::dimensions::expression<S> OPERATOR(
   node->children.push_back(param_node);
   node->children.push_back(rhs.tree_);
 
+  expr.parameters_.insert(lhs);
   expr.tree_ = node;
   return expr;
 }
@@ -302,6 +315,7 @@ OPERATOR(V lhs, const cydui::dimensions::parameter<S>& rhs) {
   node->children.push_back(const_value);
   node->children.push_back(param_node);
 
+  expr.parameters_.insert(rhs);
   expr.tree_ = node;
   return expr;
 }
@@ -323,6 +337,7 @@ OPERATOR(const cydui::dimensions::parameter<S>& lhs, V rhs) {
   node->children.push_back(param_node);
   node->children.push_back(const_value);
 
+  expr.parameters_.insert(lhs);
   expr.tree_ = node;
   return expr;
 }
@@ -344,6 +359,8 @@ static cydui::dimensions::expression<S> OPERATOR(
   node->children.push_back(param1_node);
   node->children.push_back(param2_node);
 
+  expr.parameters_.insert(lhs);
+  expr.parameters_.insert(rhs);
   expr.tree_ = node;
   return expr;
 }

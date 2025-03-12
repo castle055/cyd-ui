@@ -51,7 +51,8 @@ namespace cydui::dimensions {
     friend bool find_cycle(
       cycle_t<S>&                      cycle,
       typename dimension_impl<S>::sptr start,
-      typename dimension_impl<S>::sptr head
+      typename dimension_impl<S>::sptr head,
+      const std::unordered_map<std::string, dimension<S>>& global_parameters
     );
 
     bool is_set() const {

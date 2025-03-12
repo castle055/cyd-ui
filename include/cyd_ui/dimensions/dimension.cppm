@@ -130,6 +130,13 @@ public:
   friend const S& get_value(dimension<S>& dim);
   template <typename S>
   friend const S& get_value(const dimension<S>& dim);
+  template <typename S>
+  friend bool find_cycle(
+    cycle_t<S>&                      cycle,
+    typename dimension_impl<S>::sptr start,
+    typename dimension_impl<S>::sptr head,
+    const std::unordered_map<std::string, dimension<S>>& global_parameters
+  );
 
 private:
   const value_type& value() const {

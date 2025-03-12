@@ -87,6 +87,13 @@ operator""_param(const char* str, unsigned long len) noexcept {
   return {std::string{str, len}};
 }
 
+export template<typename T>
+struct std::hash<cydui::dimensions::parameter<T>> {
+  std::size_t operator()(const cydui::dimensions::parameter<T>& param) const noexcept {
+    return std::hash<std::string>{}(param.name);
+  }
+};
+
 export {
 #define OPERATOR +
 #include "operators_decl.inc"

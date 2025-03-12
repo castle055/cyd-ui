@@ -218,10 +218,19 @@ public:
     return dependencies_;
   }
 
+  auto& parameters() {
+    return parameters_;
+  }
+
+  const auto& parameters() const {
+    return parameters_;
+  }
+
   friend struct dimensional_operators;
   friend dimension_impl<Type>;
 
 private:
   typename node_t::sptr tree_ = nullptr;
   std::unordered_set<std::shared_ptr<dimension_impl<Type>>> dependencies_{};
+  std::unordered_set<parameter> parameters_{};
 };
