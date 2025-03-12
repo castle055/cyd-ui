@@ -102,7 +102,10 @@ namespace cydui::components {
             id = std::format("{}[0]", id);
           }
 
-          auto mounted_child = mount_child(component, id, child, pending_redraw, pending_remove, prev, style_archive);
+          auto mounted_child = mount_child(component, id, child, pending_redraw, pending_remove, style_archive);
+          // Configure dimensional context
+          anchors::configure_anchors(mounted_child, prev);
+
           prev.reset();
           prev.emplace(mounted_child);
         }
@@ -117,7 +120,6 @@ namespace cydui::components {
       std::unordered_map<
         std::shared_ptr<component_base_t>,
         std::list<std::shared_ptr<component_base_t>>::iterator> &pending_remove,
-      std::optional<std::shared_ptr<component_base_t>> prev,
       StyleArchive &style_archive
     ) {
       ZoneScopedN("Mount Children");
@@ -163,9 +165,6 @@ namespace cydui::components {
         // Redraw child
         pending_redraw.push_back(child);
       }
-
-      // Configure dimensional context
-      anchors::configure_anchors(child, prev);
 
       return mounted_child;
     }
