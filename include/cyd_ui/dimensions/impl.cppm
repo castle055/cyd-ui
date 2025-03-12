@@ -110,6 +110,26 @@ namespace cydui::dimensions {
       mark_unknown();
     }
 
+    void set_context(const std::shared_ptr<context<T>>& ctx, const std::string& name = "") {
+      std::shared_ptr<context<T>> new_ctx = ctx;
+      for (const auto& param: expr_.parameters_) {
+        if (context_->contains(param.name)) {
+          auto& param_dim = context_->operator[](param.name);
+          param_dim.impl_->dependents_.erase(self);
+        }
+      }
+
+      context_.swap(new_ctx);
+      name_ = name;
+
+      for (const auto& param: expr_.parameters_) {
+        if (context_->contains(param.name)) {
+          auto& param_dim = context_->operator[](param.name);
+          param_dim.impl_->dependents_.insert(self);
+        }
+      }
+    }
+
     void mark_unknown() {
       unknown_ = true;
       for (auto dependent: dependents_) {

@@ -107,9 +107,7 @@ public:
     return impl_->context_;
   }
   void set_context(const std::shared_ptr<context>& ctx, const std::string& name = "") {
-    std::shared_ptr<context> new_ctx = ctx;
-    impl_->context_.swap(new_ctx);
-    impl_->name_ = name;
+    impl_->set_context(ctx, name);
   }
 
   const expression& get_expression() const {
