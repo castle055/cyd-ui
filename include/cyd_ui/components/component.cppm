@@ -171,7 +171,7 @@ namespace cydui::components {
 
       using EVH = typename T::event_handler_t;
       if (EVH::handles_text_input) {
-        LOG::print {DEBUG}("Component {} handles text input", name());
+        // LOG::print {DEBUG}("Component {} handles text input", name());
         component_state_delegate_t::set_is_text_input(state.get(), true);
       }
 

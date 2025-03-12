@@ -42,7 +42,7 @@ namespace cydui::dimensions {
     }
     for (const auto& param: head->expr().parameters()) {
       if (head->context_->contains(param.name)) {
-        auto param_dim = head->context_->operator[](param.name)();
+        auto& param_dim = head->context_->operator[](param.name);
         deps.insert(param_dim.impl());
       } else if (global_parameters.contains(param.name)) {
         auto& param_dim = global_parameters.at(param.name);
@@ -101,8 +101,8 @@ namespace cydui::dimensions {
           break;
         case expression::node_t::PARAMETER:
           if (dim->context_->contains(top->parameter.name)) {
-            auto d = (*dim->context_)[top->parameter.name]();
-            result_stack.top().second.push_back((*dim->context_)[top->parameter.name]().value());
+            auto d = (*dim->context_)[top->parameter.name];
+            result_stack.top().second.push_back((*dim->context_)[top->parameter.name].value());
             stack.pop_back();
           } else if (parameters.contains(top->parameter.name)) {
             result_stack.top().second.push_back(parameters.at(top->parameter.name).value());
@@ -192,7 +192,7 @@ namespace cydui::dimensions {
       }
       for (const auto& param: top->expr().parameters()) {
         if (dim->context_->contains(param.name)) {
-          auto param_dim = dim->context_->operator[](param.name)();
+          auto& param_dim = dim->context_->operator[](param.name);
           deps.insert(param_dim.impl());
         } else if (parameters.contains(param.name)) {
           auto& param_dim = parameters.at(param.name);

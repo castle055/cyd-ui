@@ -157,15 +157,15 @@ namespace cydui::components {
         // Configure event handler
         component_actor_t::mount_component(child.get());
 
-        // Configure dimensional context
-        anchors::configure_anchors(child, prev);
-
         // Apply style
         apply_style_signal.emit(child);
 
         // Redraw child
         pending_redraw.push_back(child);
       }
+
+      // Configure dimensional context
+      anchors::configure_anchors(child, prev);
 
       return mounted_child;
     }

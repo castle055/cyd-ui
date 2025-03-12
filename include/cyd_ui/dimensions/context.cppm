@@ -1,5 +1,5 @@
 /*! \file  dimension.cppm
- *! \brief 
+ *! \brief
  *!
  */
 
@@ -15,10 +15,14 @@ export template <typename Type>
 class cydui::dimensions::context {
 public:
   using value_type = Type;
-  using getter_t   = std::function<dimension<value_type>()>;
 
-  void set_parameter(const std::string& name, auto&& getter) {
-    getters[name] = getter;
+  template <typename V>
+  void set_parameter(const std::string& name, V&& getter) {
+    if (getters.contains(name)) {
+      getters.at(name) = getter;
+    } else {
+      getters.emplace(name, std::forward<V>(getter));
+    }
   }
 
   void delete_parameter(const std::string& name) {
@@ -42,9 +46,10 @@ public:
     return getters.contains(name);
   }
 
-  getter_t& operator[](const std::string& name) {
+  auto& operator[](const std::string& name) {
     return getters.at(name);
   }
+
 private:
-  std::unordered_map<std::string, getter_t> getters{};
+  std::unordered_map<std::string, dimension<value_type>> getters{};
 };
