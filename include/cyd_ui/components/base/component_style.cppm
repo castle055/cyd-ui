@@ -105,6 +105,8 @@ export namespace cydui::components {
 
     virtual void set_base_field_override(refl::field_path field_path, refl::any value) = 0;
     virtual void set_field_override(refl::field_path field_path, refl::any value) = 0;
+    virtual bool has_base_field_override(refl::field_path field_path) = 0;
+    virtual bool has_field_override(refl::field_path field_path) = 0;
     virtual void clear_style_override() = 0;
 
     bool update_override_with(const style_override_data_t& override_data) {
@@ -178,6 +180,12 @@ export namespace cydui::components {
     }
     void set_field_override(refl::field_path field_info, refl::any value) override {
       style_override_data.fields[field_info] = value;
+    }
+    bool has_base_field_override(refl::field_path field_info) override {
+      return style_override_data.base_fields.contains[field_info];
+    }
+    bool has_field_override(refl::field_path field_info) override {
+      return style_override_data.fields.contains[field_info];
     }
     void clear_style_override() override {
       style_override_data.clear();

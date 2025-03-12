@@ -159,8 +159,17 @@ export namespace cydui {
 namespace cydui {
   static bool compute_dimensions(cydui::components::component_base_t* rt) {
     using namespace cydui::dimensions;
+
+    static const refl::field_info* width_fi =
+      refl::type_info::from<components::style_base_t>().field_by_name("width").value();
+    static const refl::field_info* height_fi =
+      refl::type_info::from<components::style_base_t>().field_by_name("height").value();
+
     auto dim     = rt->get_dimensional_relations();
     auto &int_rel = rt->get_internal_relations();
+
+    bool fixed_w = rt->get_style_data().has_base_field_override(width_fi);
+    bool fixed_h = rt->get_style_data().has_base_field_override(height_fi);
 
     /// COMPUTE SOME VALUES
     COMPUTE(dim.x)
@@ -190,13 +199,13 @@ namespace cydui {
     COMPUTE(int_rel.cy)
 
     /// COMPUTE SIZE
-    if (dim.width.is_set()) {
+    if (fixed_w) {
       COMPUTE(dim.width)
       int_rel.cw =
         dim.width - dim.padding_left - dim.padding_right - dim.margin_left - dim.margin_right;
       COMPUTE(int_rel.cw)
     }
-    if (dim.height.is_set()) {
+    if (fixed_h) {
       COMPUTE(dim.height)
       int_rel.ch =
         dim.height - dim.padding_top - dim.padding_bottom - dim.margin_top - dim.margin_bottom;
@@ -222,7 +231,7 @@ namespace cydui {
       }
     }
 
-    if (not dim.width.is_set()) {
+    if (not fixed_w) {
       // If not given, or given has error (ie: circular dep)
       int_rel.cw = total_w;
       COMPUTE(int_rel.cw)
@@ -231,7 +240,7 @@ namespace cydui {
       COMPUTE(dim.width)
     }
 
-    if (not dim.height.is_set()) {
+    if (not fixed_h) {
       // If not given, or given has error (ie: circular dep)
       int_rel.ch = total_h;
       COMPUTE(int_rel.ch)
