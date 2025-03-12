@@ -116,6 +116,8 @@ public:
     return impl_->expr_;
   }
 
+  friend class dimension_impl<Type>;
+
   friend struct dimensional_operators;
 
   template <typename S>

@@ -86,13 +86,25 @@ namespace cydui::dimensions {
         return;
       }
 
-      for (auto dependency: expression.dependencies_) {
+      for (const auto& param: expr_.parameters_) {
+        if (context_->contains(param.name)) {
+          auto& param_dim = context_->operator[](param.name);
+          param_dim.impl_->dependents_.erase(self);
+        }
+      }
+      for (auto dependency: expr_.dependencies_) {
         dependency->dependents_.erase(self);
       }
 
       expr_ = expression;
 
-      for (auto dependency: expression.dependencies_) {
+      for (const auto& param: expr_.parameters_) {
+        if (context_->contains(param.name)) {
+          auto& param_dim = context_->operator[](param.name);
+          param_dim.impl_->dependents_.insert(self);
+        }
+      }
+      for (auto dependency: expr_.dependencies_) {
         dependency->dependents_.insert(self);
       }
       mark_unknown();
