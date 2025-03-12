@@ -178,19 +178,13 @@ namespace cydui {
 
     /// COMPUTE CHILDREN ORIGIN POINT (cx, cy)
     if (rt->parent.has_value()) {
-      auto parent_dim     = rt->parent.value()->get_dimensional_relations();
-      auto &parent_int_rel = rt->parent.value()->get_internal_relations();
+      auto& parent_int_rel = rt->parent.value()->get_internal_relations();
 
-      int_rel.cx = dimensions::get_value(parent_int_rel.cx) + dimensions::get_value(dim.x)
-                   + dimensions::get_value(dim.margin_left)
-                   + dimensions::get_value(dim.padding_left);
-      int_rel.cy = dimensions::get_value(parent_int_rel.cy) + dimensions::get_value(dim.y)
-                   + dimensions::get_value(dim.margin_top) + dimensions::get_value(dim.padding_top);
+      int_rel.cx = parent_int_rel.cx + dim.x + dim.margin_left + dim.padding_left;
+      int_rel.cy = parent_int_rel.cy + dim.y + dim.margin_top + dim.padding_top;
     } else {
-      int_rel.cx = dimensions::get_value(dim.x) + dimensions::get_value(dim.margin_left)
-                   + dimensions::get_value(dim.padding_left);
-      int_rel.cy = dimensions::get_value(dim.y) + dimensions::get_value(dim.margin_top)
-                   + dimensions::get_value(dim.padding_top);
+      int_rel.cx = dim.x + dim.margin_left + dim.padding_left;
+      int_rel.cy = dim.y + dim.margin_top + dim.padding_top;
     }
     COMPUTE(int_rel.cx)
     COMPUTE(int_rel.cy)
@@ -198,16 +192,14 @@ namespace cydui {
     /// COMPUTE SIZE
     if (dim.width.is_set()) {
       COMPUTE(dim.width)
-      int_rel.cw = dimensions::get_value(dim.width) - dimensions::get_value(dim.padding_left) - dimensions::get_value(
-                     dim.padding_right)
-                   - dimensions::get_value(dim.margin_left) - dimensions::get_value(dim.margin_right);
+      int_rel.cw =
+        dim.width - dim.padding_left - dim.padding_right - dim.margin_left - dim.margin_right;
       COMPUTE(int_rel.cw)
     }
     if (dim.height.is_set()) {
       COMPUTE(dim.height)
-      int_rel.ch = dimensions::get_value(dim.height) - dimensions::get_value(dim.padding_top) - dimensions::get_value(
-                     dim.padding_bottom)
-                   - dimensions::get_value(dim.margin_top) - dimensions::get_value(dim.margin_bottom);
+      int_rel.ch =
+        dim.height - dim.padding_top - dim.padding_bottom - dim.margin_top - dim.margin_bottom;
       COMPUTE(int_rel.ch)
     }
 
@@ -234,9 +226,8 @@ namespace cydui {
       // If not given, or given has error (ie: circular dep)
       int_rel.cw = total_w;
       COMPUTE(int_rel.cw)
-      dim.width = dimensions::get_value(int_rel.cw) + dimensions::get_value(dim.padding_left) + dimensions::get_value(
-                     dim.padding_right)
-                   + dimensions::get_value(dim.margin_left) + dimensions::get_value(dim.margin_right);
+      dim.width =
+        int_rel.cw + dim.padding_left + dim.padding_right + dim.margin_left + dim.margin_right;
       COMPUTE(dim.width)
     }
 
@@ -244,9 +235,8 @@ namespace cydui {
       // If not given, or given has error (ie: circular dep)
       int_rel.ch = total_h;
       COMPUTE(int_rel.ch)
-      dim.height = dimensions::get_value(int_rel.ch) + dimensions::get_value(dim.padding_top) + dimensions::get_value(
-                      dim.padding_bottom)
-                    + dimensions::get_value(dim.margin_top) + dimensions::get_value(dim.margin_bottom);
+      dim.height =
+        int_rel.ch + dim.padding_top + dim.padding_bottom + dim.margin_top + dim.margin_bottom;
       COMPUTE(dim.height)
     }
 
