@@ -116,16 +116,21 @@ export namespace cydui::components {
       }
     }
 
+    std::shared_ptr<dimension_ctx_t> get_dimension_ctx() {
+      return dimension_ctx_;
+    };
+
     std::unordered_set<std::string> tags{};
     std::vector<style_rule_instance_t> rules{};
     style_override_data_t style_override_data{};
+    std::shared_ptr<dimension_ctx_t> dimension_ctx_{std::make_shared<dimension_ctx_t>()};
   };
 
   template <typename Style>
   class style_data_t final: public style_data_base_t {
   public:
     style_data_t(const std::string& ctx_name)
-      : ptr_(std::make_shared<Style>()), dimension_ctx_(std::make_shared<dimension_ctx_t>()) {
+      : ptr_(std::make_shared<Style>()) {
       dimension_ctx_->set_name(ctx_name);
 
       auto& base = as_base();
@@ -219,6 +224,5 @@ export namespace cydui::components {
   private:
     std::shared_ptr<void> ptr_{};
     std::function<void(std::shared_ptr<void>&)> style_transform{[](std::shared_ptr<void>&){}};
-    std::shared_ptr<dimension_ctx_t> dimension_ctx_;
   };
 } // namespace cydui::components

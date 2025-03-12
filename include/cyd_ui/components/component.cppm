@@ -27,6 +27,12 @@ namespace cydui::components {
     explicit component_t(identifier_t identifier = {}): component_base_t(identifier) {
       style_data = std::make_shared<style_data_t<typename T::style_t>>(std::string{name()});
 
+      auto dim_ctx = style_data.get_dimension_ctx();
+      internal_relations.cx.set_context(dim_ctx, "cx");
+      internal_relations.cy.set_context(dim_ctx, "cy");
+      internal_relations.cw.set_context(dim_ctx, "cw");
+      internal_relations.ch.set_context(dim_ctx, "ch");
+
       auto dim = get_dimensional_relations();
       internal_relations.cx = dim.x + dim.margin_left + dim.padding_left;
       internal_relations.cy = dim.y + dim.margin_top + dim.padding_top;
