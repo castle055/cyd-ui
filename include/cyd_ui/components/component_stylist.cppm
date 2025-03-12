@@ -96,7 +96,7 @@ namespace cydui::components {
           //! Base fields
           for (auto field_it = pending_base_fields.begin(); field_it != pending_base_fields.end();) {
             const refl::field_info* field = *field_it;
-            if (apply_style_property(component, &base_s, field_it, pending_base_fields, rule)) {
+            if (apply_rule(component, &base_s, field_it, pending_base_fields, rule)) {
               rule_instance.active_base_properties.insert(field);
               activated_base_fields.insert(field);
             }
@@ -104,7 +104,7 @@ namespace cydui::components {
           //! Custom fields
           for (auto field_it = pending_fields.begin(); field_it != pending_fields.end();) {
             const refl::field_info* field = *field_it;
-            if (apply_style_property(component, style_data.as_raw(), field_it, pending_fields, rule)) {
+            if (apply_rule(component, style_data.as_raw(), field_it, pending_fields, rule)) {
               rule_instance.active_properties.insert(field);
               activated_fields.insert(field);
             }
@@ -140,14 +140,14 @@ namespace cydui::components {
           //! Base fields
           for (auto field_it = deactivated_base_fields.begin(); field_it != deactivated_base_fields.end();) {
             const refl::field_info* field = *field_it;
-            if (apply_style_property(component, &base_s, field_it, deactivated_base_fields, rule)) {
+            if (apply_rule(component, &base_s, field_it, deactivated_base_fields, rule)) {
               rule_instance.active_base_properties.insert(field);
             }
           }
           //! Custom fields
           for (auto field_it = deactivated_fields.begin(); field_it != deactivated_fields.end();) {
             const refl::field_info* field = *field_it;
-            if (apply_style_property(component, style_data.as_raw(), field_it, deactivated_fields, rule)) {
+            if (apply_rule(component, style_data.as_raw(), field_it, deactivated_fields, rule)) {
               rule_instance.active_properties.insert(field);
             }
           }
@@ -182,58 +182,68 @@ namespace cydui::components {
       }
     }
 
-    bool apply_style_property(const component_base_t::sptr &component, void *style_obj,
+    bool apply_rule(const component_base_t::sptr &component, void *style_obj,
                               std::unordered_set<const refl::field_info *>::iterator &field_it,
                               std::unordered_set<const refl::field_info *> &pending_fields,
                               const StyleRule::sptr &rule) {
-      ZoneScopedN("Apply Property");
+      ZoneScopedN("Apply Rule");
       const auto *field = *field_it;
       if (rule->properties_.contains(field->name)) {
         const auto &rule_field = rule->properties_.at(field->name);
 
-        if (rule_field.is(field->type())) {
-          field->type().assign_copy_of(rule_field.data(), field->get_ptr(style_obj));
+        if (apply_rule_property(component, style_obj, *field_it, rule_field)) {
           field_it = pending_fields.erase(field_it);
           return true;
         }
-
-        if (rule_field.is(refl::type_info::from<std::string>())
-                   and field->has_metadata<custom_style_parser>()) {
-          std::string str = rule_field.as<std::string>();
-
-          refl::any          rule_field_parsed =
-            field->get_metadata<custom_style_parser>().parser_function(str);
-          if (rule_field_parsed.is(field->type())) {
-            field->type().assign_copy_of(rule_field_parsed.data(), field->get_ptr(style_obj));
-            field_it = pending_fields.erase(field_it);
-            return true;
-          } else {
-            LOG::print{WARN} //
-            ("Custom parser type mismatch '{}::{}', expected: '{}', found: '{}'",
-             component->name(),
-             field->name,
-             field->type().name(),
-             rule_field_parsed.type().name());
-          }
-        }
-
-        if (field->type().is_type<vg::paint::type>()) {
-          if (rule_field.is<color::Color>()) {
-            vg::paint::type &paint = field->get_ref<vg::paint::type>(style_obj);
-            const color::Color &paint_color = rule_field.as<color::Color>();
-            paint = vg::paint::type::make(vg::paint::solid{paint_color});
-            field_it = pending_fields.erase(field_it);
-            return true;
-          }
-        }
-
-        LOG::print{WARN}("Type mismatch '{}::{}', expected: '{}', found: '{}'",
-                         component->name(),
-                         field->name,
-                         field->type().name(),
-                         rule_field.type().name());
       }
       ++field_it;
+      return false;
+    }
+
+    bool apply_rule_property(const component_base_t::sptr &component, void *style_obj,
+                              const refl::field_info* field,
+                              const refl::any &value) {
+      ZoneScopedN("Apply Property");
+      if (value.is(field->type())) {
+        field->type().assign_copy_of(value.data(), field->get_ptr(style_obj));
+        return true;
+      }
+
+      if (value.is(refl::type_info::from<std::string>())
+          and field->has_metadata<custom_style_parser>()) {
+        std::string str = value.as<std::string>();
+
+        refl::any rule_field_parsed =
+          field->get_metadata<custom_style_parser>().parser_function(str);
+        if (rule_field_parsed.is(field->type())) {
+          field->type().assign_copy_of(rule_field_parsed.data(), field->get_ptr(style_obj));
+          return true;
+        } else {
+          LOG::print{WARN} //
+          ("Custom parser type mismatch '{}::{}', expected: '{}', found: '{}'",
+           component->name(),
+           field->name,
+           field->type().name(),
+           rule_field_parsed.type().name());
+        }
+      }
+
+      if (field->type().is_type<vg::paint::type>()) {
+        if (value.is<color::Color>()) {
+          vg::paint::type&    paint       = field->get_ref<vg::paint::type>(style_obj);
+          const color::Color& paint_color = value.as<color::Color>();
+          paint                           = vg::paint::type::make(vg::paint::solid{paint_color});
+          return true;
+        }
+      }
+
+      LOG::print{WARN} //
+      ("Type mismatch '{}::{}', expected: '{}', found: '{}'",
+       component->name(),
+       field->name,
+       field->type().name(),
+       value.type().name());
+
       return false;
     }
 

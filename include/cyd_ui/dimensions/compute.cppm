@@ -218,16 +218,16 @@ namespace cydui::dimensions {
           if (visited.contains(dep)) {
             //! Cycle detected
             cycle_t<T> cycle{};
-            LOG::print{WARN}("Possible cycle detected:");
             std::size_t i = 0;
-            for (const auto& v: visited) {
-              LOG::print{WARN}("  {}: {}::{}", i++, v->context_->get_name(), v->name_);
-            }
+            // LOG::print{WARN}("Possible cycle detected:");
+            // for (const auto& v: visited) {
+            //   LOG::print{WARN}("  {}: {}::{}", i++, v->context_->get_name(), v->name_);
+            // }
 
             if (!find_cycle(cycle, dep, dep, parameters)) {
               LOG::print{FATAL}("Cycle detection gave a false positive.");
             } else {
-              LOG::print{ERROR}("Confirmed cycle:");
+              LOG::print{ERROR}("Dependency cycle in dimensions:");
               i = 0;
               for (const auto& v: cycle.dimensions) {
                 LOG::print{ERROR}("  {}: {}::{}", i++, v->context_->get_name(), v->name_);
