@@ -167,14 +167,9 @@ public:
   static typename node_t::sptr make_node(node_t::operation op) { return node_t::make(op); }
 
   bool operator==(const expression& other) const {
-    if (other.dependencies_.size() != dependencies_.size())
+    if (other.dependencies_ != dependencies_)
         return false;
 
-    for (const auto& dep: dependencies_) {
-        if (not other.dependencies_.contains(dep))
-            return false;
-    }
-    
     if (tree_ == other.tree_) {
       return true;
     } else if (tree_ == nullptr || other.tree_ == nullptr) {

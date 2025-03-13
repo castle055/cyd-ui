@@ -102,8 +102,7 @@ public:
   }
 
   bool operator==(const dimension& rhl) const {
-    // TODO - I don't think this is right, what if we call this on a yet not computed dimension
-    return value() == rhl.value();
+    return get_expression() == rhl.get_expression();
   }
 
   bool is_set() const {
