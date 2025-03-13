@@ -144,7 +144,7 @@ private:
     return impl_->value_;
   }
 
-  dimension_impl<value_type>::sptr impl() const {
+  typename dimension_impl<value_type>::sptr impl() const {
     return impl_;
   }
 

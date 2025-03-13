@@ -191,8 +191,8 @@ namespace cydui::dimensions {
         deps.insert(dep);
       }
       for (const auto& param: top->expr().parameters()) {
-        if (dim->context_->contains(param.name)) {
-          auto& param_dim = dim->context_->operator[](param.name);
+        if (top->context_->contains(param.name)) {
+          auto& param_dim = top->context_->operator[](param.name);
           deps.insert(param_dim.impl());
         } else if (parameters.contains(param.name)) {
           auto& param_dim = parameters.at(param.name);
@@ -219,9 +219,10 @@ namespace cydui::dimensions {
             //! Cycle detected
             cycle_t<T> cycle{};
             std::size_t i = 0;
-            // LOG::print{WARN}("Possible cycle detected:");
+            // LOG::print{INFO}("Possible cycle detected:");
+            // LOG::print{INFO}("START: [0x{:X}] {}::{} = {}", (unsigned long)(dim_.impl()->get()), dim_.impl()->context_->get_name(), dim_.impl()->name_, dim_.impl()->expr().to_string());
             // for (const auto& v: visited) {
-            //   LOG::print{WARN}("  {}: {}::{}", i++, v->context_->get_name(), v->name_);
+            // LOG::print{INFO}("  {}: [0x{:X}] {}::{} = {}", i++, (unsigned long)(v.get()), v->context_->get_name(), v->name_, v->expr().to_string());
             // }
 
             if (!find_cycle(cycle, dep, dep, parameters)) {
