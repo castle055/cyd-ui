@@ -185,6 +185,13 @@ namespace cydui::dimensions {
 
     while (!stack.empty()) {
       auto                                                   top = stack.back();
+
+      if (not top->is_unknown()) {
+        stack.pop_back();
+        visited.erase(top);
+        continue;
+      }
+
       std::unordered_set<std::shared_ptr<dimension_impl<T>>> deps{};
       visited.insert(top);
       for (const auto& dep: top->expr().dependencies()) {
