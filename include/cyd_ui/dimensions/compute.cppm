@@ -101,7 +101,7 @@ namespace cydui::dimensions {
           break;
         case expression::node_t::PARAMETER:
           if (dim->context_->contains(top->parameter.name)) {
-            auto d = (*dim->context_)[top->parameter.name];
+            auto& d = (*dim->context_)[top->parameter.name];
             result_stack.top().second.push_back((*dim->context_)[top->parameter.name].value());
             stack.pop_back();
           } else if (parameters.contains(top->parameter.name)) {

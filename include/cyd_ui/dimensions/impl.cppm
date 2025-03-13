@@ -107,7 +107,6 @@ namespace cydui::dimensions {
       for (auto dependency: expr_.dependencies_) {
         dependency->dependents_.insert(self);
       }
-      mark_unknown();
     }
 
     void set_context(const std::shared_ptr<context<T>>& ctx, const std::string& name = "") {

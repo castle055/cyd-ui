@@ -1,5 +1,5 @@
 /*! \file  dimension.cppm
- *! \brief 
+ *! \brief
  *!
  */
 
@@ -19,7 +19,7 @@ class cydui::dimensions::dimension {
 public:
   using value_type = Type;
   using expression = expression<value_type>;
-  using context = context<value_type>;
+  using context    = context<value_type>;
 
   dimension()
       : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
@@ -30,23 +30,27 @@ public:
       : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
     impl_->self = impl_;
     impl_->set_expression(expr);
+    impl_->mark_unknown();
   }
 
   explicit dimension(const expression& expr)
       : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
     impl_->self = impl_;
     impl_->set_expression(expr);
+    impl_->mark_unknown();
   }
 
   explicit dimension(const std::shared_ptr<context>& ctx)
       : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>{ctx}}) {
     impl_->self = impl_;
+    impl_->mark_unknown();
   }
 
   explicit dimension(const std::shared_ptr<context>& ctx, expression&& expr)
       : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>{ctx}}) {
     impl_->self = impl_;
     impl_->set_expression(expr);
+    impl_->mark_unknown();
   }
 
   dimension(const dimension& other)
@@ -54,13 +58,17 @@ public:
     impl_->self = impl_;
     impl_->set_expression(other.impl_->expr_);
     impl_->value_ = other.impl_->value_;
-    impl_->unknown_ = other.impl_->unknown_;
     set_context(other.get_context(), other.impl_->name_);
+    impl_->unknown_ = false;
+    if (other.impl_->unknown_) {
+      impl_->mark_unknown();
+    }
   }
 
   dimension& operator=(const dimension& other) {
     impl_->set_expression(other.impl_->expr_);
-    impl_->value_ = other.impl_->value_;
+    impl_->value_   = other.impl_->value_;
+    impl_->unknown_ = false;
     if (other.impl_->unknown_) {
       impl_->mark_unknown();
     }
@@ -69,23 +77,27 @@ public:
 
   dimension& operator=(expression&& expr) {
     impl_->set_expression(expr);
+    impl_->mark_unknown();
     return *this;
   }
 
   dimension& operator=(const expression& expr) {
     impl_->set_expression(expr);
+    impl_->mark_unknown();
     return *this;
   }
 
   dimension& operator=(value_type&& expr) {
     impl_->value_ = std::move(expr);
     impl_->set_expression(std::move(expr));
+    impl_->unknown_ = false;
     return *this;
   }
 
   dimension& operator=(const value_type& expr) {
     impl_->value_ = expr;
     impl_->set_expression(expr);
+    impl_->unknown_ = false;
     return *this;
   }
 
@@ -135,9 +147,9 @@ public:
   friend const S& get_value(const dimension<S>& dim);
   template <typename S>
   friend bool find_cycle(
-    cycle_t<S>&                      cycle,
-    typename dimension_impl<S>::sptr start,
-    typename dimension_impl<S>::sptr head,
+    cycle_t<S>&                                          cycle,
+    typename dimension_impl<S>::sptr                     start,
+    typename dimension_impl<S>::sptr                     head,
     const std::unordered_map<std::string, dimension<S>>& global_parameters
   );
 
