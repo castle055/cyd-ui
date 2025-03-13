@@ -61,7 +61,9 @@ public:
   dimension& operator=(const dimension& other) {
     impl_->set_expression(other.impl_->expr_);
     impl_->value_ = other.impl_->value_;
-    impl_->unknown_ = other.impl_->unknown_;
+    if (other.impl_->unknown_) {
+      impl_->mark_unknown();
+    }
     return *this;
   }
 
