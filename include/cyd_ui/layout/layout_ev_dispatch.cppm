@@ -216,9 +216,9 @@ export namespace cydui {
             .value();
         root->get_style_data().set_base_field_override(width_field, dimension_t{ev.w});
         root->get_style_data().set_base_field_override(height_field, dimension_t{ev.h});
-        component_stylist->apply_style(root);
+        // component_stylist->apply_style(root);
 
-        update_dimensions();
+        // update_dimensions();
         // if (is_compositing.test()) {
         //   composite_is_outdated.test_and_set();
         //   return;
