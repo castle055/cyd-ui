@@ -16,16 +16,16 @@ export import cydui.graphics;
 
 
 #define TO_STRING(...) #__VA_ARGS__
-#define ANCHOR(PREFIX, NAME) \
-  struct NAME { \
-    static constexpr dimension_parameter_t x{TO_STRING(PREFIX##_##NAME##_x)}; \
-    static constexpr dimension_parameter_t y{TO_STRING(PREFIX##_##NAME##_y)}; \
+#define ANCHOR(PREFIX, NAME)                                                                       \
+  struct NAME {                                                                                    \
+    static constexpr dimension_parameter_t x{TO_STRING(PREFIX##_##NAME##_x)};                      \
+    static constexpr dimension_parameter_t y{TO_STRING(PREFIX##_##NAME##_y)};                      \
   }
 
 #define CYDUI_INTERNAL_EV_HANDLER_DECL(NAME) void on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
 
 #define CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(NAME)                                                 \
-CYDUI_INTERNAL_EV_##NAME##_RETURN on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
+  CYDUI_INTERNAL_EV_##NAME##_RETURN on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
 
 
 export {
@@ -42,12 +42,13 @@ export {
 
     public:
       const std::list<std::shared_ptr<component_base_t>>& $children;
-      static constexpr bool handles_text_input = false;
+      static constexpr bool                               handles_text_input = false;
 
-      event_handler_t(component_base_t *comp, const std::list<std::shared_ptr<component_base_t> > &$children_)
-        : component(comp),
-          $children($children_) {
-      }
+      event_handler_t(
+        component_base_t* comp, const std::list<std::shared_ptr<component_base_t>>& $children_
+      )
+          : component(comp),
+            $children($children_) {}
 
       // virtual ~event_handler_t() {}
 
@@ -60,10 +61,12 @@ export {
 
       // ? MOUSE EVENTS
 #define CYDUI_INTERNAL_EV_button_PROPAGATE(NAME)                                                   \
-  if (component->parent.has_value()) \
-    component->parent.value()->get_event_dispatcher()->dispatch_button_##NAME(button, x + $x, y + $y);
+  if (component->parent.has_value())                                                               \
+    component->parent.value()->get_event_dispatcher()->dispatch_button_##NAME(                     \
+      button, x + $x, y + $y                                                                       \
+    );
 #define CYDUI_INTERNAL_EV_mouse_PROPAGATE(NAME)                                                    \
-  if (component->parent.has_value()) \
+  if (component->parent.has_value())                                                               \
     component->parent.value()->get_event_dispatcher()->dispatch_mouse_##NAME(x + $x, y + $y);
 
       // * button press
@@ -105,12 +108,10 @@ export {
       }
 
       // * text input
-      CYDUI_INTERNAL_EV_HANDLER_DECL(text_input) {
-      }
+      CYDUI_INTERNAL_EV_HANDLER_DECL(text_input) {}
 
       // * focus changed input
-      CYDUI_INTERNAL_EV_HANDLER_DECL(focus_changed) {
-      }
+      CYDUI_INTERNAL_EV_HANDLER_DECL(focus_changed) {}
 
       void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS {}
     };
@@ -143,8 +144,8 @@ export {
       attrs_component<Component>&      attrs;
       typename Component::style_t&     style;
 
-      using $self = anchors::self_component;
-      using $parent = anchors::parent_component;
+      using $self     = anchors::self_component;
+      using $parent   = anchors::parent_component;
       using $previous = anchors::previous_component;
     };
   } // namespace cydui::components
@@ -152,7 +153,14 @@ export {
   template <typename Event>
   class custom_event_listener {
   public:
-    custom_event_listener(fabric::async::async_bus_t*  window, std::function<void(const Event&)> callback, std::function<void()> post): window_(window), callback_(callback), post_(post) {
+    custom_event_listener(
+      fabric::async::async_bus_t*                 window,
+      std::function<fabric::task<>(const Event&)> callback,
+      std::function<fabric::task<>()>             post
+    )
+        : window_(window),
+          callback_(callback),
+          post_(post) {
       start_listening();
     }
 
@@ -160,38 +168,46 @@ export {
       stop_listening();
     }
 
-    custom_event_listener(const custom_event_listener& other): window_(other.window_), callback_(other.callback_), post_(other.post_) {
+    custom_event_listener(const custom_event_listener& other)
+        : window_(other.window_),
+          callback_(other.callback_),
+          post_(other.post_) {
       start_listening();
     }
     custom_event_listener& operator=(const custom_event_listener& other) {
       stop_listening();
-      this->window_ = other.window_;
+      this->window_   = other.window_;
       this->callback_ = other.callback_;
-      this->post_ = other.post_;
+      this->post_     = other.post_;
       start_listening();
       return *this;
     }
 
-    custom_event_listener(custom_event_listener&& other) noexcept: window_(other.window_), callback_(other.callback_), post_(other.post_) {
+    custom_event_listener(custom_event_listener&& other) noexcept
+        : window_(other.window_),
+          callback_(other.callback_),
+          post_(other.post_) {
       other.stop_listening();
       start_listening();
     }
     custom_event_listener& operator=(custom_event_listener&& other) {
       stop_listening();
-      this->window_ = other.window_;
+      this->window_   = other.window_;
       this->callback_ = other.callback_;
-      this->post_ = other.post_;
+      this->post_     = other.post_;
       other.stop_listening();
       start_listening();
       return *this;
     }
+
   private:
     void start_listening() {
       stop_listening();
 
-      listener_ = window_->on_event([&](const Event& ev) {
-        callback_(ev);
-        post_();
+      listener_ = window_->on_event([&](const Event& ev) -> fabric::task<> {
+        co_await callback_(ev);
+        co_await post_();
+        co_return;
       });
     }
     void stop_listening() {
@@ -200,10 +216,11 @@ export {
         listener_ = std::nullopt;
       }
     }
+
   private:
-    fabric::async::async_bus_t*  window_;
-    std::function<void(const Event&)> callback_;
-    std::function<void()> post_;
-    std::optional<fabric::async::listener<Event>> listener_ {std::nullopt};
+    fabric::async::async_bus_t*                   window_;
+    std::function<fabric::task<>(const Event&)>   callback_;
+    std::function<fabric::task<>()>               post_;
+    std::optional<fabric::async::listener<Event>> listener_{std::nullopt};
   };
 }

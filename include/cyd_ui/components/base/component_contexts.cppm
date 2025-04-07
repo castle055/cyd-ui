@@ -127,10 +127,11 @@ namespace cydui {
     void start_listening() {
       stop_listening();
 
-      listener = state->window->on_event([&](ContextUpdate<context_type> ev) {
+      listener = state->window->on_event([&](ContextUpdate<context_type> ev) -> fabric::task<> {
         if (ev.ptr == ctx) {
           state->force_redraw();
         }
+        co_return;
       });
     }
     void stop_listening() {

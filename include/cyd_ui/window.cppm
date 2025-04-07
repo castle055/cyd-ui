@@ -47,6 +47,43 @@ export namespace cydui {
 
     ~CWindow();
 
+    template <typename... Args>
+    auto run_async(auto&& fun, Args&&... args) {
+      ZoneScopedN("Application:run_async");
+      return get_executor()->schedule(
+        [=](Args... argss) -> fabric::task<decltype(fun(std::forward<Args>(argss)...))> {
+          ZoneScopedN("Application:run_async:()");
+          co_return fun(std::forward<Args>(argss)...);
+        },
+        std::forward<Args>(args)...
+      );
+    }
+
+    template <typename... Args>
+    auto run(auto&& fun, Args&&... args) {
+      ZoneScopedN("Application:run");
+      return run_async(fun, std::forward<Args>(args)...).get();
+    }
+
+    template <typename... Args>
+    auto schedule(auto&& fun, Args&&... args) {
+      ZoneScopedN("Application:run_async");
+      return get_executor()->schedule(fun, std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    auto schedule(fabric::tasks::time_point tp, auto&& fun, Args&&... args) {
+      ZoneScopedN("Application:run_async");
+      return get_executor()->schedule(tp, fun, std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    auto schedule(fabric::tasks::duration duration, auto&& fun, Args&&... args) {
+      ZoneScopedN("Application:run_async");
+      return get_executor()->schedule(duration, fun, std::forward<Args>(args)...);
+    }
+
+
     struct builder_t {
       builder_t(Layout* layout): layout_(layout) {
       }
@@ -80,6 +117,7 @@ export namespace cydui {
         return *this;
       }
 
+
     private:
       void configure_layout_style();
 
@@ -89,15 +127,14 @@ export namespace cydui {
         configure_layout_style();
         auto ptr = std::shared_ptr<CWindow>(new CWindow(layout_, title_, x_, y_, width_, height_));
         std::string t = title_;
-        ptr->add_init([=] {
+        ptr->run([=] {
           tracy::SetThreadNameWithHint(std::format("window[{}]", t).c_str(), 1);
         });
-        ptr->coroutine_enqueue([](Layout* lyt, sptr win) -> fabric::async::async<bool> {
+        ptr->schedule([](Layout* lyt, sptr win) -> fabric::task<> {
           bind_layout(lyt, win);
           LOG::print {INFO}("Layout bound to window");
-          co_return true;
+          co_return;
         }, layout_, ptr);
-        ptr->start();
         return ptr;
       }
 
@@ -134,24 +171,6 @@ export namespace cydui {
 
     std::pair<int, int> get_size();
 
-    template <typename... Args>
-    void run(auto&& fun, Args&&... args) {
-      std::latch completion_latch {1};
-      this->coroutine_enqueue([&](Args... argss) -> fabric::async::async<bool> {
-        fun(std::forward<Args>(argss)...);
-        completion_latch.count_down();
-        co_return true;
-      }, std::forward<Args>(args)...);
-      completion_latch.wait();
-    }
-
-    template <typename... Args>
-    void run_async(auto&& fun, Args&&... args) {
-      this->coroutine_enqueue([=](Args... argss) -> fabric::async::async<bool> {
-        fun(std::forward<Args>(argss)...);
-        co_return true;
-      }, std::forward<Args>(args)...);
-    }
 
 
     compositing::LayoutCompositor compositor { };
@@ -171,9 +190,9 @@ export namespace cydui {
     using namespace std::chrono_literals;
     ZoneScopedN("CWindow{}");
 
-    add_system<AnimationSystem>({.enabled = false, .period = 16ms});
+    get_executor()->get_spawn_context()->set_resource<AnimationSystem>(std::make_shared<AnimationSystem>(get_executor()));
 
-    add_init([=,this] {
+    run([=,this] {
       Application::run([=](CWindow* self) {
         ZoneScopedN("CWindow{}:init");
           SDL_CreateWindowAndRenderer(
@@ -197,7 +216,6 @@ export namespace cydui {
 
   CWindow::~CWindow() {
     Application::unregister_window(win_ref->window_id());
-    this->stop();
   }
 
   graphics::window_t* CWindow::native() {
@@ -205,12 +223,12 @@ export namespace cydui {
   }
 
   void CWindow::terminate() {
+    emit<fabric::async::StopBusEvent>();
     Application::run([&]() {
       SDL_DestroyWindow(win_ref->window);
       SDL_DestroyRenderer(win_ref->renderer);
       win_ref.reset();
     });
-    emit<fabric::async::StopBusEvent>();
   }
 
   bool CWindow::is_open() const {

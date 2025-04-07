@@ -185,6 +185,7 @@ export namespace cydui::compositing {
     }
 
   private:
+    [[refl::ignore]]
     SDL_Renderer* renderer_ = nullptr;
     texture_ptr texture {nullptr};
     float w, h;

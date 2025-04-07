@@ -1,5 +1,5 @@
 /*! \file  layout.cppm
- *! \brief 
+ *! \brief
  *!
  */
 
@@ -20,26 +20,28 @@ import cydui.window_events;
 export import :layout;
 
 export namespace cydui {
-#define INSTANCE_EV_HANDLER(STATE_PTR) \
-  if (STATE_PTR->component_instance.has_value()) \
-    STATE_PTR->component_instance.value()->get_event_dispatcher()
+#define INSTANCE_EV_HANDLER(STATE_PTR)                                                             \
+  if (STATE_PTR->component_instance.has_value())                                                   \
+  STATE_PTR->component_instance.value()->get_event_dispatcher()
 
 
   std::vector<fabric::async::raw_listener::sptr> Layout::make_event_listeners() {
     ZoneScopedN("Layout:make_event_listeners");
-    std::vector<fabric::async::raw_listener::sptr> listeners { };
+    std::vector<fabric::async::raw_listener::sptr> listeners{};
 
-    static auto make_listener = [&](auto &&fun) { return win->on_event(fun).raw(); };
+    static auto make_listener = [&](auto&& fun) { return win->on_event(fun).raw(); };
 
     listeners = {
-      make_listener([&](const WindowClosed &ev) {
+      make_listener([&](const WindowClosed& ev) -> fabric::task<> {
         win->terminate();
+        co_return;
       }),
-      make_listener([&](const RedrawEvent &ev) {
+      make_listener([&](const RedrawEvent& ev) -> fabric::task<> {
         ZoneScopedN("Redraw Event");
         auto _pev = this->win->profiling_ctx.scope_event("Redraw");
         if (ev.component) {
-          components::component_state_t* target_state = ((components::component_state_t*)ev.component);
+          components::component_state_t* target_state =
+            ((components::component_state_t*)ev.component);
           if (target_state->component_instance.has_value()) {
             update_component(target_state->component_instance.value());
           }
@@ -49,13 +51,14 @@ export namespace cydui {
 
         update_dimensions();
         component_renderer->render(*win->native(), root);
+        co_return;
       }),
-      make_listener([&](const KeyEvent &ev) {
+      make_listener([&](const KeyEvent& ev) -> fabric::task<> {
         ZoneScopedN("Key Event");
         auto _pev = this->win->profiling_ctx.scope_event("Key");
         if (ev.keysym.code == SDLK_F12 && ev.pressed && not ev.holding) {
-          LOG::print {INFO}("Pressed Debug Key");
-          return;
+          LOG::print{INFO}("Pressed Debug Key");
+          co_return;
         }
         if (focused && focused->component_instance) {
           if (focused->focused) {
@@ -69,8 +72,9 @@ export namespace cydui {
             focused = nullptr;
           }
         }
+        co_return;
       }),
-      make_listener([&](const TextInputEvent &ev) {
+      make_listener([&](const TextInputEvent& ev) -> fabric::task<> {
         ZoneScopedN("Key Event");
         auto _pev = this->win->profiling_ctx.scope_event("Key");
         if (focused && focused->component_instance) {
@@ -81,8 +85,9 @@ export namespace cydui {
             focused = nullptr;
           }
         }
+        co_return;
       }),
-      make_listener([&](const ButtonEvent &ev) {
+      make_listener([&](const ButtonEvent& ev) -> fabric::task<> {
         ZoneScopedN("Button Event");
         auto _pev = this->win->profiling_ctx.scope_event("Button");
 
@@ -92,10 +97,10 @@ export namespace cydui {
           target = specified_target;
         }
 
-        auto dim     = target->get_dimensional_relations();
-        auto &int_rel = target->get_internal_relations();
-        auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
-        auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
+        auto  dim     = target->get_dimensional_relations();
+        auto& int_rel = target->get_internal_relations();
+        auto  rel_x   = ev.x - dimensions::get_value(int_rel.cx);
+        auto  rel_y   = ev.y - dimensions::get_value(int_rel.cy);
 
         if (focused != target->state()) {
           if (focused) {
@@ -128,11 +133,12 @@ export namespace cydui {
           target->get_event_dispatcher()->dispatch_button_release((Button)ev.button, rel_x, rel_y);
         }
         render_if_dirty(root);
+        co_return;
       }),
-      make_listener([&](const ScrollEvent &ev) {
+      make_listener([&](const ScrollEvent& ev) -> fabric::task<> {
         ZoneScopedN("Scroll Event");
-        auto _pev                                      = this->win->profiling_ctx.scope_event("Scroll");
-        components::component_base_t* target           = root.get();
+        auto                          _pev   = this->win->profiling_ctx.scope_event("Scroll");
+        components::component_base_t* target = root.get();
         components::component_base_t* specified_target = find_by_coords(ev.x, ev.y);
         if (specified_target) {
           target = specified_target;
@@ -141,12 +147,13 @@ export namespace cydui {
         target->get_event_dispatcher()->dispatch_scroll(ev.dx, ev.dy);
 
         render_if_dirty(root);
+        co_return;
       }),
-      make_listener([&](const MotionEvent &ev) {
+      make_listener([&](const MotionEvent& ev) -> fabric::task<> {
         auto _pev = this->win->profiling_ctx.scope_event("Motion");
         ZoneScopedN("MotionEvent");
 
-        if (ev.x == dimensions::screen_measure {-1} && ev.y == dimensions::screen_measure {-1}) {
+        if (ev.x == dimensions::screen_measure{-1} && ev.y == dimensions::screen_measure{-1}) {
           clear_hovering_flag(root_state, ev);
         } else {
           components::component_base_t* target           = root.get();
@@ -155,9 +162,9 @@ export namespace cydui {
             target = specified_target;
 
           if (not set_hovering_flag(target->state().get(), ev, true)) {
-            auto &int_rel = target->get_internal_relations();
-            auto rel_x    = ev.x - dimensions::get_value(int_rel.cx);
-            auto rel_y    = ev.y - dimensions::get_value(int_rel.cy);
+            auto& int_rel = target->get_internal_relations();
+            auto  rel_x   = ev.x - dimensions::get_value(int_rel.cx);
+            auto  rel_y   = ev.y - dimensions::get_value(int_rel.cy);
             target->get_event_dispatcher()->dispatch_mouse_motion(rel_x, rel_y);
           }
         }
@@ -200,12 +207,13 @@ export namespace cydui {
         //}
 
         render_if_dirty(root);
+        co_return;
       }),
-      make_listener([&](const ResizeEvent &ev) {
+      make_listener([&](const ResizeEvent& ev) -> fabric::task<> {
         ZoneScopedN("Resize Event");
         auto _pev = this->win->profiling_ctx.scope_event("Resize");
 
-        auto dim   = root->get_dimensional_relations();
+        auto               dim = root->get_dimensional_relations();
         static const auto* width_field =
           refl::type_info::from<components::style_base_t>()
             .field_by_offset(offsetof(components::style_base_t, width))
@@ -216,6 +224,7 @@ export namespace cydui {
             .value();
         root->get_style_data().set_base_field_override(width_field, dimension_t{ev.w});
         root->get_style_data().set_base_field_override(height_field, dimension_t{ev.h});
+        co_return;
         // component_stylist->apply_style(root);
 
         // update_dimensions();
@@ -230,4 +239,4 @@ export namespace cydui {
 
     return listeners;
   }
-}
+} // namespace cydui

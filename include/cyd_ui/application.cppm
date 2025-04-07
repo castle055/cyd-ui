@@ -19,110 +19,121 @@ export import cydui.window_events;
 export namespace cydui {
   class Application: public fabric::async::async_bus_t {
   private:
-    struct WindowEventSystem final: fabric::async::system_base_t {
-      WindowEventSystem(fabric::async::async_bus_t* app_bus)
-          : app_bus_(app_bus) {}
-
-      void run() override {
-        ZoneScopedN("WindowEventSystem");
-        std::scoped_lock lk{get_instance().window_map_mtx_};
-        window_events::poll_events(app_bus_, &get_instance().window_map_);
-      }
-    private:
-      fabric::async::async_bus_t* app_bus_;
-    };
-
     Application()
-        : stop_application_listener_(on_event([&](const StopApplicationEvent&) {
+        : stop_application_listener_(on_event([&](const StopApplicationEvent&) -> fabric::task<> {
             if (this->window_map_.empty()) {
               this->emit<fabric::async::StopBusEvent>();
             }
             this->stop_application_flag_.test_and_set();
             this->stop_application_flag_.notify_all();
+            co_return;
           })) {
       ZoneScopedN("Application{}");
-      std::latch application_initialization_latch {1};
       using namespace std::chrono_literals;
-      add_system<WindowEventSystem>({.enabled = true, .period = 16ms}, this);
+      LOG::print{INFO}("Initializing application...");
 
-      add_init([&] {
-        tracy::SetThreadNameWithHint("Application", 1);
-        ZoneScopedN("Application Init");
-        SDL_SetMainReady();
-        if (not SDL_Init(SDL_INIT_VIDEO)) {
-          SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
-          LOG::print{ERROR}("Couldn't initialize SDL3: {}", SDL_GetError());
+      get_executor()
+        ->schedule([] -> fabric::task<> {
+          tracy::SetThreadNameWithHint("Application", 1);
+          ZoneScopedN("Application Init");
+          SDL_SetMainReady();
+          if (not SDL_Init(SDL_INIT_VIDEO)) {
+            SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
+            LOG::print{ERROR}("Couldn't initialize SDL3: {}", SDL_GetError());
+          }
+          LOG::print{INFO}("SDL3 initialized.");
+          co_return;
+        })
+        .wait();
+
+      get_executor()->schedule([&] -> fabric::task<> {
+        while (true) { // will be stopped at the co_await when the executor is destroyed
+          {
+            std::scoped_lock lk{get_instance().window_map_mtx_};
+            window_events::poll_events(this, &get_instance().window_map_);
+          }
+          co_await 16ms;
         }
-        LOG::print {INFO}("SDL3 initialized.");
-        application_initialization_latch.count_down();
+        co_return;
       });
-
-      start();
-      application_initialization_latch.wait();
+      LOG::print{INFO}("Application initialized...");
     }
 
   public:
     ~Application() {
       ZoneScopedN("~Application");
-      stop();
     }
 
   public:
-    static Application &get_instance() {
+    static Application& get_instance() {
       static Application instance;
       return instance;
     }
 
     template <typename... Args>
-    static void run(auto&& fun, Args&&... args) {
-      ZoneScopedN("Application:run");
-      std::latch completion_latch {1};
-      get_instance().coroutine_enqueue([&](Args... argss) -> fabric::async::async<bool> {
-        ZoneScopedN("Application:run:()");
-        fun(std::forward<Args>(argss)...);
-        completion_latch.count_down();
-        co_return true;
-      }, std::forward<Args>(args)...);
-      completion_latch.wait();
+    static auto run_async(auto&& fun, Args&&... args) {
+      ZoneScopedN("Application:run_async");
+      return get_instance()->schedule(
+        [=](Args... argss) -> fabric::task<decltype(fun(std::forward<Args>(argss)...))> {
+          ZoneScopedN("Application:run_async:()");
+          co_return fun(std::forward<Args>(argss)...);
+        },
+        std::forward<Args>(args)...
+      );
     }
 
     template <typename... Args>
-    static void run_async(auto&& fun, Args&&... args) {
+    static auto run(auto&& fun, Args&&... args) {
+      ZoneScopedN("Application:run");
+      return run_async(fun, std::forward<Args>(args)...).get();
+    }
+
+    template <typename... Args>
+    static auto schedule(auto&& fun, Args&&... args) {
       ZoneScopedN("Application:run_async");
-      get_instance().coroutine_enqueue([=](Args... argss) -> fabric::async::async<bool> {
-        ZoneScopedN("Application:run_async:()");
-        fun(std::forward<Args>(argss)...);
-        co_return true;
-      }, std::forward<Args>(args)...);
+      return get_instance()->schedule(fun, std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    static auto schedule(fabric::tasks::time_point tp, auto&& fun, Args&&... args) {
+      ZoneScopedN("Application:run_async");
+      return get_instance()->schedule(tp, fun, std::forward<Args>(args)...);
+    }
+
+    template <typename... Args>
+    static auto schedule(fabric::tasks::duration duration, auto&& fun, Args&&... args) {
+      ZoneScopedN("Application:run_async");
+      return get_instance()->schedule(duration, fun, std::forward<Args>(args)...);
     }
 
     static void register_window(std::size_t id, fabric::async::async_bus_t* window) {
       ZoneScopedN("Application:register_window");
       std::scoped_lock lk{get_instance().window_map_mtx_};
       get_instance().window_map_[id] = window;
-      LOG::print {INFO}("Window registered ID={}", id);
+      LOG::print{INFO}("Window registered ID={}", id);
     }
     static void unregister_window(std::size_t id) {
       ZoneScopedN("Application:unregister_window");
-      Application& instance = get_instance();
+      Application&     instance = get_instance();
       std::scoped_lock lk{instance.window_map_mtx_};
       instance.window_map_.erase(id);
       if (instance.window_map_.empty() and instance.stop_application_flag_.test()) {
         instance.stop_application_flag_.clear();
         instance.emit<fabric::async::StopBusEvent>();
       }
-      LOG::print {INFO}("Window unregistered ID={}", id);
+      LOG::print{INFO}("Window unregistered ID={}", id);
     }
 
     static void terminate() {
-      get_instance().stop();
+      get_instance()->request_stop();
     }
+
   private:
     TracyLockable(std::mutex, window_map_mtx_);
     std::map<std::size_t, fabric::async::async_bus_t*> window_map_{};
     fabric::async::listener<StopApplicationEvent>      stop_application_listener_;
     std::atomic_flag                                   stop_application_flag_{false};
   };
-}
+} // namespace cydui
 
 // using cyd::fabric::async::async;

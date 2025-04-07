@@ -361,7 +361,8 @@ namespace cydui {
     /// Make event listeners
     listeners = make_event_listeners();
 
-    AnimationSystem& anim_system = win->get_system<AnimationSystem>();
+    AnimationSystem& anim_system =
+      *win->get_executor()->get_spawn_context()->get_resource<AnimationSystem>();
     anim_system.s_repaint.connect([&](const components::component_base_t::sptr& component) {
       component_renderer->repaint_component(component);
     });
