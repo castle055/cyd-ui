@@ -207,7 +207,7 @@ namespace cydui::components {
     }
 
     T& set_id(const std::string& id_) {
-      this->set_id(id_);
+      component_base_t::set_id(id_);
       return *dynamic_cast<T*>(this);
     }
 
