@@ -158,10 +158,12 @@ namespace cydui::dimensions {
     expression<T>               expr_{};
     T                           value_{};
     bool                        unknown_ = true;
+    [[refl::ignore]]
     std::unordered_set<wptr>    dependents_{};
     std::shared_ptr<context<T>> context_;
     std::string                 name_{};
 
+    [[refl::ignore]]
     wptr self;
   };
 
