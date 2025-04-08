@@ -128,13 +128,13 @@ public:                                                                         
 
 #define ON_EVENT(EVENT, ...)                                                                       \
   custom_event_listener<EVENT> on_##EVENT{                                                         \
-    &window,                                                                                       \
+    &this->window,                                                                                       \
     [&](const EVENT& event) -> fabric::task<> {                                                    \
       __VA_ARGS__;                                                                                 \
       co_return;                                                                                   \
     },                                                                                             \
     [&]() -> fabric::task<> {                                                                      \
-      state.force_redraw();                                                                        \
+      this->state.force_redraw();                                                                        \
       co_return;                                                                                   \
     }                                                                                              \
   };
