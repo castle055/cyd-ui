@@ -79,11 +79,9 @@ export {
       }
       // * mouse enter
       CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_enter) {
-        CYDUI_INTERNAL_EV_mouse_PROPAGATE(enter);
       }
       // * mouse exit
       CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_exit) {
-        CYDUI_INTERNAL_EV_mouse_PROPAGATE(exit);
       }
       // * mouse motion
       CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_motion) {
