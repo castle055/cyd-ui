@@ -4,8 +4,6 @@
  */
 
 module;
-#include <cyd_fabric_modules/headers/macros/async_events.h>
-
 #include <tracy/Tracy.hpp>
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
@@ -20,12 +18,6 @@ import fabric.profiling;
 import cydui.window_events;
 
 export import :layout;
-
-export {
-  EVENT(RequestComponentFocus) {
-    std::shared_ptr<cydui::components::component_base_t> component;
-  };
-}
 
 export namespace cydui {
 #define INSTANCE_EV_HANDLER(STATE_PTR)                                                             \

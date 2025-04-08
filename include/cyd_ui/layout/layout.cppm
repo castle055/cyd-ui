@@ -4,6 +4,8 @@
  */
 
 module;
+#include <cyd_fabric_modules/headers/macros/async_events.h>
+
 #include <tracy/Tracy.hpp>
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
@@ -29,6 +31,10 @@ import cydui.window_events;
 export import :window;
 
 export namespace cydui {
+  EVENT(RequestComponentFocus) {
+    std::shared_ptr<cydui::components::component_base_t> component;
+  };
+
   template <components::ComponentConcept C>
   Layout* create(C&& root_component);
 
