@@ -41,8 +41,8 @@ namespace cydui::window_events {
         accs[bus_id] = {x, y};
       } else {
         auto& [ax, ay] = accs.at(bus_id);
-        ax = x;
-        ay = y;
+        ax             = x;
+        ay             = y;
       }
     }
 
@@ -78,8 +78,8 @@ namespace cydui::window_events {
         accs[bus_id] = {w, h};
       } else {
         auto& [aw, ah] = accs.at(bus_id);
-        aw = w;
-        ah = h;
+        aw             = w;
+        ah             = h;
       }
     }
 
@@ -103,6 +103,31 @@ namespace cydui::window_events {
     }
   } resize_accumulator{};
 
+  struct {
+    std::unordered_set<std::size_t> accs{};
+
+    void reset() {
+      accs.clear();
+    }
+
+    void accumulate(const std::size_t bus_id) {
+      accs.insert(bus_id);
+    }
+
+    void dispatch(window_map* busses) {
+      auto bus = [&](std::size_t id, auto&& ev) {
+        if (busses->contains(id)) {
+          busses->at(id)->emit(ev);
+          return;
+        }
+        LOG::print{INFO}("Received event for window {}, but it does not exit", id);
+      };
+      for (const auto& id: accs) {
+        bus(id, RedrawEvent{});
+      }
+    }
+  } redraw_accumulator{};
+
   void dispatch_window_event(window_map* busses, const SDL_WindowEvent& event) {
     auto bus = [&](std::size_t id, auto&& ev) {
       if (busses->contains(id)) {
@@ -121,18 +146,12 @@ namespace cydui::window_events {
         bus(event.windowID, WindowClosed{});
         break;
       case SDL_EVENT_WINDOW_EXPOSED:
-        bus(event.windowID, RedrawEvent{});
+        redraw_accumulator.accumulate(event.windowID);
         break;
       case SDL_EVENT_WINDOW_MOUSE_ENTER:
         break;
       case SDL_EVENT_WINDOW_MOUSE_LEAVE:
-        bus(
-          event.windowID,
-          MotionEvent{
-            .x = -1,
-            .y = -1,
-          }
-        );
+        motion_accumulator.accumulate(event.windowID, -1, -1);
         break;
       default:
         break;
@@ -280,6 +299,7 @@ namespace cydui::window_events {
 
   void task(fabric::async::async_bus_t* app_bus, window_map* busses) {
     ZoneScopedN("Polling events");
+    redraw_accumulator.reset();
     motion_accumulator.reset();
     resize_accumulator.reset();
 
@@ -290,6 +310,7 @@ namespace cydui::window_events {
 
     motion_accumulator.dispatch(busses);
     resize_accumulator.dispatch(busses);
+    redraw_accumulator.dispatch(busses);
   }
 } // namespace cydui::window_events
 
