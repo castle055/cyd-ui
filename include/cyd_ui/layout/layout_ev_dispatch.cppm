@@ -4,6 +4,8 @@
  */
 
 module;
+#include <cyd_fabric_modules/headers/macros/async_events.h>
+
 #include <tracy/Tracy.hpp>
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
@@ -19,6 +21,12 @@ import cydui.window_events;
 
 export import :layout;
 
+export {
+  EVENT(RequestComponentFocus) {
+    std::shared_ptr<cydui::components::component_base_t> component;
+  };
+}
+
 export namespace cydui {
 #define INSTANCE_EV_HANDLER(STATE_PTR)                                                             \
   if (STATE_PTR->component_instance.has_value())                                                   \
@@ -32,6 +40,39 @@ export namespace cydui {
     static auto make_listener = [&](auto&& fun) { return win->on_event(fun).raw(); };
 
     listeners = {
+      make_listener([&](const RequestComponentFocus& ev) -> fabric::task<> {
+        const auto& target = ev.component;
+        if (nullptr == target) {
+          co_return;
+        }
+        if (focused != target->state()) {
+          if (focused) {
+            focused->focused = false;
+            INSTANCE_EV_HANDLER(focused)->dispatch_focus_changed();
+            if (focused->is_text_input()) {
+              SDL_StopTextInput(win->native()->window);
+            }
+            if (focused->component_instance.has_value()) {
+              component_stylist->apply_style(focused->component_instance.value());
+            }
+            focused->mark_dirty();
+            focused = nullptr;
+          }
+          focused          = target->state();
+          focused->focused = true;
+          INSTANCE_EV_HANDLER(focused)->dispatch_focus_changed();
+          if (focused->is_text_input()) {
+            SDL_StartTextInput(win->native()->window);
+          }
+          if (focused->component_instance.has_value()) {
+            component_stylist->apply_style(focused->component_instance.value());
+          }
+          focused->mark_dirty();
+        }
+
+        render_if_dirty(root);
+        co_return;
+      }),
       make_listener([&](const WindowClosed& ev) -> fabric::task<> {
         win->terminate();
         co_return;
