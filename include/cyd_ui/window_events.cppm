@@ -1,5 +1,5 @@
 /*! \file  window_events.cppm
- *! \brief 
+ *! \brief
  *!
  */
 module;
@@ -20,57 +20,124 @@ export import cydui.events;
 
 
 export namespace cydui {
-  EVENT(StopApplicationEvent) {};
+  EVENT(StopApplicationEvent){};
 }
 
 namespace cydui::window_events {
   std::unique_ptr<std::thread> thread_ptr{nullptr};
-  std::atomic_flag running{};
+  std::atomic_flag             running{};
 
   using window_map = std::map<std::size_t, fabric::async::async_bus_t*>;
 
-  void dispatch_window_event(window_map *busses, const SDL_WindowEvent &event) {
+  struct {
+    std::unordered_map<std::size_t, std::pair<float, float>> accs{};
+
+    void reset() {
+      accs.clear();
+    }
+
+    void accumulate(const std::size_t bus_id, const float x, const float y) {
+      accs[bus_id].first  += x;
+      accs[bus_id].second += y;
+    }
+
+    void dispatch(window_map* busses) {
+      auto bus = [&](std::size_t id, auto&& ev) {
+        if (busses->contains(id)) {
+          busses->at(id)->emit(ev);
+          return;
+        }
+        LOG::print{INFO}("Received event for window {}, but it does not exit", id);
+      };
+      for (const auto& [id, motion]: accs) {
+        bus(
+          id,
+          MotionEvent{
+            .x = motion.first,
+            .y = motion.second,
+          }
+        );
+      }
+      reset();
+    }
+  } motion_accumulator{};
+
+  struct {
+    std::unordered_map<std::size_t, std::pair<float, float>> accs{};
+
+    void reset() {
+      accs.clear();
+    }
+
+    void accumulate(const std::size_t bus_id, const float w, const float h) {
+      accs[bus_id].first  = w;
+      accs[bus_id].second = h;
+    }
+
+    void dispatch(window_map* busses) {
+      auto bus = [&](std::size_t id, auto&& ev) {
+        if (busses->contains(id)) {
+          busses->at(id)->emit(ev);
+          return;
+        }
+        LOG::print{INFO}("Received event for window {}, but it does not exit", id);
+      };
+      for (const auto& [id, size]: accs) {
+        bus(
+          id,
+          ResizeEvent{
+            .w = size.first,
+            .h = size.second,
+          }
+        );
+      }
+      reset();
+    }
+  } resize_accumulator{};
+
+  void dispatch_window_event(window_map* busses, const SDL_WindowEvent& event) {
     auto bus = [&](std::size_t id, auto&& ev) {
       if (busses->contains(id)) {
         busses->at(id)->emit(ev);
         return;
       }
-      LOG::print {INFO}("Received event for window {}, but it does not exit", id);
+      LOG::print{INFO}("Received event for window {}, but it does not exit", id);
     };
 
     switch (event.type) {
       case SDL_EVENT_WINDOW_RESIZED:
-        bus(event.windowID, ResizeEvent {
-          .w = event.data1,
-          .h = event.data2,
-        });
+        resize_accumulator.accumulate(event.windowID, event.data1, event.data2);
         break;
       case SDL_EVENT_WINDOW_CLOSE_REQUESTED:
-        LOG::print {INFO}("Closing...");
-        bus(event.windowID, WindowClosed { });
+        LOG::print{INFO}("Closing...");
+        bus(event.windowID, WindowClosed{});
         break;
       case SDL_EVENT_WINDOW_EXPOSED:
-        bus(event.windowID, RedrawEvent { });
+        bus(event.windowID, RedrawEvent{});
         break;
       case SDL_EVENT_WINDOW_MOUSE_ENTER:
         break;
       case SDL_EVENT_WINDOW_MOUSE_LEAVE:
-        bus(event.windowID, MotionEvent {
-          .x = -1,
-          .y = -1,
-        });
+        bus(
+          event.windowID,
+          MotionEvent{
+            .x = -1,
+            .y = -1,
+          }
+        );
         break;
-      default: break;
+      default:
+        break;
     }
   }
 
-  void dispatch_display_event(window_map *busses, const SDL_DisplayEvent &event) {
+  void dispatch_display_event(window_map* busses, const SDL_DisplayEvent& event) {
     auto bus = [&](std::size_t id, auto&& ev) {
       if (busses->contains(id)) {
         busses->at(id)->emit(ev);
         return;
       }
-      LOG::print {INFO}("Received event for window {}, but it does not exits", id);
+      LOG::print{INFO}("Received event for window {}, but it does not exits", id);
     };
 
     switch (event.type) {
@@ -82,23 +149,25 @@ namespace cydui::window_events {
         break;
       case SDL_EVENT_DISPLAY_MOVED:
         break;
-      default: break;
+      default:
+        break;
     }
   }
 
-  void dispatch_event(fabric::async::async_bus_t* app_bus, window_map *busses, const SDL_Event &event) {
+  void
+  dispatch_event(fabric::async::async_bus_t* app_bus, window_map* busses, const SDL_Event& event) {
     auto bus = [&](std::size_t id, auto&& ev) {
       if (busses->contains(id)) {
         busses->at(id)->emit(ev);
         return;
       }
-      LOG::print {INFO}("Received event for window {}, but it does not exits", id);
+      LOG::print{INFO}("Received event for window {}, but it does not exits", id);
     };
 
     if (event.type >= SDL_EVENT_WINDOW_FIRST and event.type <= SDL_EVENT_WINDOW_LAST) {
-        dispatch_window_event(busses, event.window);
+      dispatch_window_event(busses, event.window);
     } else if (event.type >= SDL_EVENT_DISPLAY_FIRST and event.type <= SDL_EVENT_DISPLAY_LAST) {
-        dispatch_display_event(busses, event.display);
+      dispatch_display_event(busses, event.display);
     } else {
       switch (event.type) {
         case SDL_EVENT_QUIT:
@@ -124,23 +193,15 @@ namespace cydui::window_events {
           bus(
             event.wheel.windowID,
             ScrollEvent{
-              .dy =
-                event.wheel.y * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED ? -1 : 1),
-              .dx =
-                event.wheel.x * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED ? -1 : 1),
-              .x = event.wheel.mouse_x,
-              .y = event.wheel.mouse_y
+              .dy = event.wheel.y * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED ? -1 : 1),
+              .dx = event.wheel.x * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED ? -1 : 1),
+              .x  = event.wheel.mouse_x,
+              .y  = event.wheel.mouse_y
             }
           );
           break;
         case SDL_EVENT_MOUSE_MOTION:
-          bus(
-            event.motion.windowID,
-            MotionEvent{
-              .x = event.motion.x,
-              .y = event.motion.y,
-            }
-          );
+          motion_accumulator.accumulate(event.motion.windowID, event.motion.x, event.motion.y);
           break;
         case SDL_EVENT_FINGER_DOWN:
         case SDL_EVENT_FINGER_UP:
@@ -152,9 +213,7 @@ namespace cydui::window_events {
             event.key.windowID,
             KeyEvent{
               .keysym =
-                {.scancode = event.key.scancode,
-                 .code     = event.key.key,
-                 .mod      = event.key.mod},
+                {.scancode = event.key.scancode, .code = event.key.key, .mod = event.key.mod},
               .pressed  = event.key.down,
               .released = not event.key.down,
             }
@@ -187,8 +246,8 @@ namespace cydui::window_events {
           // bus(
           //   event.edit_candidates.windowID,
           //   TextInputEvent{
-          //     .text = std::string{event.edit_candidates., static_cast<std::size_t>(event.edit.length)},
-          //     .compositing_event = true,
+          //     .text = std::string{event.edit_candidates.,
+          //     static_cast<std::size_t>(event.edit.length)}, .compositing_event = true,
           //     .compositing_state =
           //       {
           //         .cursor    = event.edit_candidates.start,
@@ -211,14 +270,17 @@ namespace cydui::window_events {
     }
   }
 
-  void task(fabric::async::async_bus_t* app_bus, window_map *busses) {
+  void task(fabric::async::async_bus_t* app_bus, window_map* busses) {
     ZoneScopedN("Polling events");
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
       dispatch_event(app_bus, busses, event);
     }
+
+    motion_accumulator.dispatch(busses);
+    resize_accumulator.dispatch(busses);
   }
-}
+} // namespace cydui::window_events
 
 export namespace cydui::window_events {
   // void start_thread_if_needed() {
@@ -228,7 +290,7 @@ export namespace cydui::window_events {
   //   }
   // }
   //
-  void poll_events(fabric::async::async_bus_t* app_bus, window_map *busses) {
+  void poll_events(fabric::async::async_bus_t* app_bus, window_map* busses) {
     task(app_bus, busses);
   }
-}
+} // namespace cydui::window_events
