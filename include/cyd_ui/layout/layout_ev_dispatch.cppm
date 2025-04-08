@@ -160,6 +160,7 @@ export namespace cydui {
           focused->mark_dirty();
         }
 
+        render_if_dirty(root);
         if (ev.pressed) {
           target->get_event_dispatcher()->dispatch_button_press((Button)ev.button, rel_x, rel_y);
         } else {
