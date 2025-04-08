@@ -40,7 +40,7 @@ export namespace cydui::components {
     }
 
     void set_id(const std::string& id) {
-      computed_id_ = compute_id();
+      computed_id_ = id;
     }
 
     const std::source_location& loc() const {
