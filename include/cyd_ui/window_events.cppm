@@ -37,8 +37,13 @@ namespace cydui::window_events {
     }
 
     void accumulate(const std::size_t bus_id, const float x, const float y) {
-      accs[bus_id].first  += x;
-      accs[bus_id].second += y;
+      if (not accs.contains(bus_id)) {
+        accs[bus_id] = {x, y};
+      } else {
+        auto& [ax, ay] = accs.at(bus_id);
+        ax = x;
+        ay = y;
+      }
     }
 
     void dispatch(window_map* busses) {
@@ -58,7 +63,6 @@ namespace cydui::window_events {
           }
         );
       }
-      reset();
     }
   } motion_accumulator{};
 
@@ -70,8 +74,13 @@ namespace cydui::window_events {
     }
 
     void accumulate(const std::size_t bus_id, const float w, const float h) {
-      accs[bus_id].first  = w;
-      accs[bus_id].second = h;
+      if (not accs.contains(bus_id)) {
+        accs[bus_id] = {w, h};
+      } else {
+        auto& [aw, ah] = accs.at(bus_id);
+        aw = w;
+        ah = h;
+      }
     }
 
     void dispatch(window_map* busses) {
@@ -91,7 +100,6 @@ namespace cydui::window_events {
           }
         );
       }
-      reset();
     }
   } resize_accumulator{};
 
@@ -272,6 +280,9 @@ namespace cydui::window_events {
 
   void task(fabric::async::async_bus_t* app_bus, window_map* busses) {
     ZoneScopedN("Polling events");
+    motion_accumulator.reset();
+    resize_accumulator.reset();
+
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
       dispatch_event(app_bus, busses, event);
