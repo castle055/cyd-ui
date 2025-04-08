@@ -59,6 +59,7 @@ export namespace cydui::components {
       return context_map_.empty();
     }
   private:
+    [[refl::ignore]]
     std::unordered_map<refl::type_id_t, std::shared_ptr<void>> context_map_ { };
   };
 }

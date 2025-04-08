@@ -226,6 +226,7 @@ namespace cydui::components {
 
   protected:
     internal_relations_t internal_relations{};
+    [[refl::ignore]]
     std::optional<std::shared_ptr<event_dispatcher_base_t>> event_dispatcher{std::nullopt};
     std::shared_ptr<style_data_base_t> style_data{};
 
