@@ -1102,7 +1102,8 @@ EXAMPLE_RECURSIVE      = NO
 # that contain images that are to be included in the documentation (see the
 # \image command).
 
-IMAGE_PATH             =
+# I know some of these are not images, but they are assets and behave similarly
+IMAGE_PATH             = ./docs/images \
 
 # The INPUT_FILTER tag can be used to specify a program that doxygen should
 # invoke to filter for each input file. Doxygen will invoke the filter program
@@ -1362,9 +1363,9 @@ HTML_STYLESHEET        =
 # documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET  = @AWESOME_CSS_DIR@/doxygen-awesome.css \
-                         @AWESOME_CSS_DIR@/doxygen-awesome-sidebar-only.css \
-                         @AWESOME_CSS_DIR@/doxygen-awesome-sidebar-only-darkmode-toggle.css \
+HTML_EXTRA_STYLESHEET  = ./docs/images/doxygen-awesome.css \
+                         ./docs/images/doxygen-awesome-sidebar-only.css \
+                         ./docs/images/doxygen-awesome-sidebar-only-darkmode-toggle.css \
                          ./docs/overrides.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
@@ -1375,9 +1376,9 @@ HTML_EXTRA_STYLESHEET  = @AWESOME_CSS_DIR@/doxygen-awesome.css \
 # files will be copied as-is; there are no commands or markers available.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_FILES       = @AWESOME_CSS_DIR@/doxygen-awesome-darkmode-toggle.js \
-                         @AWESOME_CSS_DIR@/doxygen-awesome-paragraph-link.js \
-                         @AWESOME_CSS_DIR@/doxygen-awesome-interactive-toc.js
+HTML_EXTRA_FILES       = ./docs/images/doxygen-awesome-darkmode-toggle.js \
+                         ./docs/images/doxygen-awesome-paragraph-link.js \
+                         ./docs/images/doxygen-awesome-interactive-toc.js
 
 # The HTML_COLORSTYLE tag can be used to specify if the generated HTML output
 # should be rendered with a dark or light theme.

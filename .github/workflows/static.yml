@@ -15,11 +15,9 @@ permissions:
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   # Single deploy job since we're just deploying
@@ -32,10 +30,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run Doxygen
-        uses: mattnotmitt/doxygen-action@v1.9.5
+        uses: mattnotmitt/doxygen-action@edge
         with:
-          # These are default values, but included for clarity
-          doxyfile-path: ./Doxyfile
+          doxyfile-path: docs/Doxyfile
           working-directory: .
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -43,7 +40,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: './docs/html'
+          path: './docs/build/html'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
