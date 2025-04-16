@@ -1,7 +1,7 @@
-
 <h1 align="center">
   <br>
   <img src="logo.png" alt="Cyd UI" width="200">
+  <br>
   <br>
   CYD UI
   <br>
@@ -9,27 +9,29 @@
 
 <h4 align="center">A C++ library for building native user interfaces</h4>
 
-<p align="center">
-<img alt="Language" src="https://img.shields.io/static/v1?style=for-the-badge&message=C%2B%2B&color=00599C&logo=C%2B%2B&logoColor=FFFFFF&label=">
-<img alt="Tool" src="https://img.shields.io/static/v1?style=for-the-badge&message=CMake&color=064F8C&logo=CMake&logoColor=FFFFFF&label=">
-<img alt="Tool" src="https://img.shields.io/static/v1?style=for-the-badge&message=Cairo+Graphics&color=222222&logo=Cairo+Graphics&logoColor=F39914&label=">
-<img alt="GitHub" src="https://img.shields.io/github/license/castle055/cyd-ui?style=for-the-badge">
-<img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/castle055/cyd-ui?color=%23fcae1e&label=latest&sort=semver&style=for-the-badge">
-</p>
+<div align="center" width="100%">
+  <img alt="Language" src="https://img.shields.io/static/v1?style=for-the-badge&message=C%2B%2B&color=00599C&logo=C%2B%2B&logoColor=FFFFFF&label=">
+  <img alt="Tool" src="https://img.shields.io/static/v1?style=for-the-badge&message=CMake&color=064F8C&logo=CMake&logoColor=FFFFFF&label=">
+  <img alt="Tool" src="https://img.shields.io/static/v1?style=for-the-badge&message=Cairo+Graphics&color=222222&logo=Cairo+Graphics&logoColor=F39914&label=">
+  <img alt="GitHub" src="https://img.shields.io/github/license/castle055/cyd-ui?style=for-the-badge">
+  <img alt="GitHub tag (latest SemVer)" src="https://img.shields.io/github/v/tag/castle055/cyd-ui?color=%23fcae1e&label=latest&sort=semver&style=for-the-badge">
+</div>
 
-<p align="center">
+<div align="center" width="100%">
   <a href="#overview">Overview</a> •
   <a href="#integration">Integration</a> •
   <a href="#usage">Usage</a> •
   <a href="#credits">Credits</a> •
   <a href="#license">License</a>
-</p>
+</div>
 
-# Overview
+[TOC]
+
+## Overview
 
 Cyd-UI is a C++ library for building native user interfaces. It is aimed at desktop applications and can be easily integrated into existing code bases. Cyd-UI is module based, only preprocessor macros can be included through header files.
 
-## Key Features
+### Key Features
 
 * **Declarative** - Or as close as it can get with c++ syntax and macros
 * **Event Driven** - Built-in event bus extensible with custom events
@@ -40,9 +42,9 @@ Cyd-UI is a C++ library for building native user interfaces. It is aimed at desk
 * **Multithreaded** - Each window runs in its own thread. A global thread handles system events and compositing
 * **Hardware Accelerated** - Components are composited together in the GPU when available
 
-# Integration
+## Integration
 
-## CMake project (recommended)
+### CMake project (recommended)
 
 Since this is a module library, the recommended way to integrate it into your project is with CMake. This is easy to do with `FetchContent`:
 
@@ -60,13 +62,13 @@ FetchContent_MakeAvailable(cyd_ui)
 include_directories(${cyd_ui_SOURCE_DIR}/include)
 ```
 
-## Submodule
+### Submodule
 
 As an alternative for projects that do not use CMake as a build system, this repository can be added as a submodule. The whole library can be found within the `include/` directory. Make sure module dependency scanning can find this directory.
 
-# Usage
+## Usage
 
-## Components 
+### Components 
 Components are declared with the macro `COMPONENT() {}`, which must be included from the file `include/cyd_ui/components/component_macros.h`. The syntax is as follows:
 
 ```cpp
@@ -96,7 +98,7 @@ There are two special handlers, `CHILDREN {}` and `FRAGMENT {}` which do not han
 
 In this way, the `CHILDREN {}` handler defines the structure of the UI whereas the `FRAGMENT {}` handler defines the actual visual elements that get drawn. Note that components may implement either or both depending on their role.
 
-## Events and Coroutines
+### Events and Coroutines
 
 Each Cyd-UI window provides its own thread-safe asynchronous bus which is exposed to components as the `window` variable. This includes an event queue and a coroutine runtime.
 
@@ -136,11 +138,11 @@ window.coroutine_enqueue([](/* Args... */) -> fabric::async::async</* Return Typ
 
 The return type and the use of `co_return` are needed to tell the compiler that this is a coroutine. This enables the use of async constructs such as `co_await` and `co_yield`. However, the runtime is still in its early stages of development and may not properly handle this yet.
 
-## Contexts
+### Contexts
 
 
 
-## Example 
+### Example 
 This example declares two components. The first `SomeComponent` just draws a blue circle. The second component `ExampleComponent` draws an orange rectangle with black text inside as well as including the first component as a child.
 
 ```cpp
@@ -232,16 +234,16 @@ The moment the method `show()` is called, the window will appear on the screen a
 
 The window will self-terminate when the `CWindow` object is destroyed. For easier management of ownership, the window is wrapped within a `std::shared_ptr<>` on creation.
 
-# Credits
+## Credits
 
 This software uses the following open source projects:
 
 - [Cairo Graphics](https://www.cairographics.org/)
 - [SDL2](https://www.libsdl.org/)
 
-# License
+## License
 
-GPL 3.0 &nbsp;&middot;&nbsp; [LICENSE.MD](LICENSE.md)
+GPL 3.0 &nbsp;&middot;&nbsp; [LICENSE.MD](license.html)
 
 ---
 

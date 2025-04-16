@@ -39,6 +39,6 @@
 .build/
 build/
 
-docs/
+docs/build
 
 dist/
