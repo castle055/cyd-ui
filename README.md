@@ -243,7 +243,7 @@ This software uses the following open source projects:
 
 ## License
 
-GPL 3.0 &nbsp;&middot;&nbsp; [LICENSE.MD](license.html)
+GPL 3.0 &nbsp;&middot;&nbsp; [LICENSE.MD](https://castle055.github.io/cyd-ui/license.html)
 
 ---
 
