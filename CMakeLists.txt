@@ -202,4 +202,9 @@ endif ()
 ################################################################################
 #[[                     CONFIGURE DOXYGEN DOCUMENTATION                      ]]#
 ################################################################################
-add_subdirectory(docs)
+if (CYD_UI_DEV_MODE AND CYD_UI_BUILD_DOCS)
+    target_configure_doxygen(cyd_ui
+            DOXYFILE ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile
+            BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+endif ()
