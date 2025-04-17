@@ -256,14 +256,6 @@ namespace charts {
       }
     }
   };
-  export struct I {
-    struct WILL {
-      struct MURDER {
-        int murder_you;
-      };
-    };
-  };
-
 
   export COMPONENT(
     NumericAxisLabel, { la::scalar value = 0; };
