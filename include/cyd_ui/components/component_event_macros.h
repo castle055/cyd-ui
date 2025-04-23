@@ -5,6 +5,27 @@
 #ifndef COMPONENT_EVENT_MACROS_H
 #define COMPONENT_EVENT_MACROS_H
 
+#define CYDUI_INTERNAL_EV_mount_ARGS                                                               \
+  (cydui::dimension_t & $x,                                                                        \
+   cydui::dimension_t & $y,                                                                        \
+   cydui::dimension_t & $width,                                                                    \
+   cydui::dimension_t & $height,                                                                   \
+   cydui::dimension_t & $padding_top,                                                              \
+   cydui::dimension_t & $padding_bottom,                                                           \
+   cydui::dimension_t & $padding_left,                                                             \
+   cydui::dimension_t & $padding_right,                                                            \
+   cydui::components::component_builder_t & $content)
+
+#define CYDUI_INTERNAL_EV_dismount_ARGS                                                            \
+  (cydui::dimension_t & $x,                                                                        \
+   cydui::dimension_t & $y,                                                                        \
+   cydui::dimension_t & $width,                                                                    \
+   cydui::dimension_t & $height,                                                                   \
+   cydui::dimension_t & $padding_top,                                                              \
+   cydui::dimension_t & $padding_bottom,                                                           \
+   cydui::dimension_t & $padding_left,                                                             \
+   cydui::dimension_t & $padding_right)
+
 #define CYDUI_INTERNAL_EV_redraw_RETURN std::vector<cydui::components::component_holder_t>
 #define CYDUI_INTERNAL_EV_redraw_ARGS                                                              \
   (cydui::dimension_t & $x,                                                                        \

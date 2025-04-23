@@ -117,8 +117,19 @@ namespace cydui::components {
       event_dispatcher.emplace(
         std::make_shared<event_dispatcher_t<T, typename T::event_handler_t>>(this)
       );
+      component_builder_t content_children_builder { }; {
+        std::vector<component_builder_t> &content_children = this->_content;
+        for (auto &item: content_children) {
+          for (auto &component: item.get_component_constructors()) {
+            content_children_builder.append_component(component);
+          }
+        }
+      }
+      event_dispatcher.value()->dispatch_mount(content_children_builder);
     }
     void dismount() final {
+      event_dispatcher.value()->dispatch_dismount();
+
       for (const auto& c: children) {
         component_actor_t::dismount_component(c.get());
       }

@@ -111,6 +111,8 @@ public:                                                                         
 #define CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(NAME)                                                 \
   CYDUI_INTERNAL_EV_##NAME##_RETURN on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
 
+#define ON_MOUNT          CYDUI_INTERNAL_EV_HANDLER_IMPL(mount)
+#define ON_DISMOUNT       CYDUI_INTERNAL_EV_HANDLER_IMPL(dismount)
 #define ON_REDRAW         CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(redraw)
 #define CHILDREN          CYDUI_INTERNAL_EV_HANDLER_IMPL_W_RET(redraw)
 #define ON_BUTTON_PRESS   CYDUI_INTERNAL_EV_HANDLER_IMPL(button_press)

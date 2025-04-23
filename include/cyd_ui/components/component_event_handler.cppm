@@ -52,6 +52,10 @@ export {
 
       // virtual ~event_handler_t() {}
 
+      // * mount/dismount
+      CYDUI_INTERNAL_EV_HANDLER_DECL(mount) {}
+      CYDUI_INTERNAL_EV_HANDLER_DECL(dismount) {}
+
       CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(redraw) {
         return {};
       }
@@ -78,11 +82,9 @@ export {
         CYDUI_INTERNAL_EV_button_PROPAGATE(release);
       }
       // * mouse enter
-      CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_enter) {
-      }
+      CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_enter) {}
       // * mouse exit
-      CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_exit) {
-      }
+      CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_exit) {}
       // * mouse motion
       CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_motion) {
         CYDUI_INTERNAL_EV_mouse_PROPAGATE(motion);

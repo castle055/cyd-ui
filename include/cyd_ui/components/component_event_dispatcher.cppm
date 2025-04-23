@@ -41,6 +41,37 @@ namespace cydui::components {
       }
     }
 
+    void dispatch_mount(component_builder_t& content_children_builder) override {
+      ZoneScopedN("Mount - Component EV");
+      auto eh = static_cast<EventHandler*>(event_handler_.get());
+      auto [at, ir] = component_data();
+      eh->on_mount(
+        at.x,
+        at.y,
+        ir.cw,
+        ir.ch,
+        at.padding_top,
+        at.padding_bottom,
+        at.padding_left,
+        at.padding_right,
+        content_children_builder
+      );
+    }
+    void dispatch_dismount() override {
+      ZoneScopedN("Mount - Component EV");
+      auto eh = static_cast<EventHandler*>(event_handler_.get());
+      auto [at, ir] = component_data();
+      eh->on_dismount(
+        at.x,
+        at.y,
+        ir.cw,
+        ir.ch,
+        at.padding_top,
+        at.padding_bottom,
+        at.padding_left,
+        at.padding_right
+      );
+    }
     std::vector<component_holder_t> update(StyleArchive& style_archive, component_builder_t& content_children_builder) override {
       ZoneScopedN("Update - Component EV");
       auto eh = static_cast<EventHandler*>(event_handler_.get());

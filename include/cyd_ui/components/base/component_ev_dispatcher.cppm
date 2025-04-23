@@ -23,6 +23,8 @@ export namespace cydui::components {
 
     virtual void paint_fragment(vg::fragment_t &fragment) = 0;
 
+    virtual void dispatch_mount(component_builder_t& content_children_builder) = 0;
+    virtual void dispatch_dismount() = 0;
     virtual void dispatch_key_press(const KeyEvent& ev) = 0;
     virtual void dispatch_key_release(const KeyEvent& ev) = 0;
     virtual void dispatch_text_input(const TextInputEvent& ev) = 0;
