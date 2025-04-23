@@ -11,8 +11,7 @@ export import quantify;
 
 export import cydui.graphics.pixelmap_editor;
 
-export
-namespace vg {
+export namespace vg {
   namespace paint {
     enum paint_type_e {
       SOLID,
@@ -195,7 +194,7 @@ namespace vg {
             paint_data(std::move(paint_data_)) {}
 
       template <typename Paint>
-      static type make (Paint paint_data_) {
+      static type make(Paint paint_data_) {
         return type{paint_data_.get_type(), std::make_unique<Paint>(paint_data_)};
       }
 
@@ -293,12 +292,12 @@ namespace vg {
   template <typename E>                                                                            \
   struct attr_##NAME: public attribute_i {                                                         \
     template <typename UNIT, typename T>                                                           \
-    inline E& NAME(const quantify::quantity_t<UNIT, T>& _##NAME##_) {                         \
+    inline E& NAME(const quantify::quantity<UNIT, T>& _##NAME##_) {                                \
       this->_##NAME = _##NAME##_.value_as_base_unit();                                             \
       return *(E*)this;                                                                            \
     }                                                                                              \
     template <typename UNIT, typename T>                                                           \
-    inline E& NAME(quantify::quantity_t<UNIT, T>&& _##NAME##_) {                              \
+    inline E& NAME(quantify::quantity<UNIT, T>&& _##NAME##_) {                                     \
       this->_##NAME = _##NAME##_.value_as_base_unit();                                             \
       return *(E*)this;                                                                            \
     }                                                                                              \
@@ -528,7 +527,7 @@ namespace vg {
       // attr_style_class<T>,
       attr_hidden<T>,
       attr_opacity<T> {};
-}
+} // namespace vg
 
 
 //! @brief preserveAspectRatio
@@ -752,4 +751,3 @@ namespace vg {
 //! @brief xml:space
 //! @brief yChannelSelector
 //! @brief zoomAndPan
-
