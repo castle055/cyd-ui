@@ -127,6 +127,10 @@ public:
     return impl_->expr_;
   }
 
+  typename expression::dep_t as_dependency() const {
+    return impl_;
+  }
+
   friend class dimension_impl<Type>;
 
   friend struct dimensional_operators;

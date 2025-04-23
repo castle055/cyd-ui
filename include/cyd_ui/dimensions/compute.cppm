@@ -113,6 +113,10 @@ namespace cydui::dimensions {
             return false;
           }
           break;
+        case expression::node_t::FUNCTION:
+          result_stack.top().second.push_back(top->fun.operator()());
+          stack.pop_back();
+          break;
         case expression::node_t::ADDITION:
         case expression::node_t::SUBTRACTION:
         case expression::node_t::MULTIPLICATION:

@@ -1,5 +1,5 @@
 /*! \file  expression.cppm
- *! \brief 
+ *! \brief
  *!
  */
 
@@ -11,9 +11,17 @@ import fabric.logging;
 
 export import :types;
 
+export namespace cydui::dimensions {
+  template <typename Type>
+  struct function: std::function<Type()> {
+    std::unordered_set<std::shared_ptr<dimension_impl<Type>>> dependencies{};
+  };
+} // namespace cydui::dimensions
+
 export template <typename Type>
 class cydui::dimensions::expression {
 public:
+  using dep_t = std::shared_ptr<dimension_impl<Type>>;
   using dimension = dimension<Type>;
   using parameter = parameter<Type>;
   class node_t {
@@ -28,6 +36,7 @@ public:
       CONSTANT,
       DIMENSION,
       PARAMETER,
+      FUNCTION,
     } op;
 
     explicit node_t(operation op_)
@@ -44,6 +53,7 @@ public:
           break;
         case CONSTANT:
         case PARAMETER:
+        case FUNCTION:
         default:
           break;
       }
@@ -62,6 +72,7 @@ public:
           break;
         case CONSTANT:
         case PARAMETER:
+        case FUNCTION:
         default:
           break;
       }
@@ -94,6 +105,8 @@ public:
               return false;
           }
           return true;
+        case FUNCTION:
+          return false;
       }
     }
 
@@ -109,6 +122,9 @@ public:
           break;
         case PARAMETER:
           sts << std::format("[{}]", parameter.name);
+          break;
+        case FUNCTION:
+          sts << "fun()"; // std::format("[{}]", parameter.name);
           break;
         case ADDITION:
         case SUBTRACTION:
@@ -151,24 +167,51 @@ public:
     std::shared_ptr<dimension_impl<Type>> dimension{nullptr};
     std::list<sptr>                       children{};
     parameter                             parameter{};
+    function<Type>                        fun{};
   };
 
   expression() = default;
   expression(const Type& value) {
-    auto node = make_node(node_t::CONSTANT);
+    auto node         = make_node(node_t::CONSTANT);
     node->const_value = value;
-    tree_ = node;
+    tree_             = node;
+  }
+
+  expression(const function<Type>& fun_) {
+    auto node = make_node(node_t::FUNCTION);
+    node->fun = fun_;
+    tree_     = node;
+
+    for (const auto & dependency : tree_->fun.dependencies) {
+      add_dependency(dependency);
+    }
+  }
+
+  expression& operator=(const function<Type>& fun_) {
+    this->clear();
+
+    auto node = make_node(node_t::FUNCTION);
+    node->fun = fun_;
+    tree_     = node;
+
+    for (const auto & dependency : tree_->fun.dependencies) {
+      add_dependency(dependency);
+    }
+
+    return *this;
   }
 
   void add_dependency(std::shared_ptr<dimension_impl<Type>> dependency) {
     dependencies_.insert(dependency);
   }
 
-  static typename node_t::sptr make_node(node_t::operation op) { return node_t::make(op); }
+  static typename node_t::sptr make_node(node_t::operation op) {
+    return node_t::make(op);
+  }
 
   bool operator==(const expression& other) const {
     if (other.dependencies_ != dependencies_)
-        return false;
+      return false;
 
     if (tree_ == other.tree_) {
       return true;
@@ -225,7 +268,7 @@ public:
   friend dimension_impl<Type>;
 
 private:
-  typename node_t::sptr tree_ = nullptr;
+  typename node_t::sptr                                     tree_ = nullptr;
   std::unordered_set<std::shared_ptr<dimension_impl<Type>>> dependencies_{};
-  std::unordered_set<parameter> parameters_{};
+  std::unordered_set<parameter>                             parameters_{};
 };

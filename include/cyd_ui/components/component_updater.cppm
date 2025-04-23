@@ -25,48 +25,127 @@ namespace cydui::components {
       return std::make_shared<component_updater_t>();
     }
 
-    fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&> queue_render_signal{};
-    fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&> apply_style_signal{};
-    fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&, StyleArchive&> compile_style_rules_signal{};
+    fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&>
+      queue_render_signal{};
+    fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&>
+      apply_style_signal{};
+    fabric::wiring::output_signal<component_updater_t, const component_base_t::sptr&, StyleArchive&>
+      compile_style_rules_signal{};
+
   public:
     void update(component_base_t::sptr component, StyleArchive& style_archive) {
       ZoneScopedN("Update");
-      component->state()->_dirty     = false;
+      component->state()->_dirty = false;
       queue_render_signal.emit(component);
 
       // apply_style_signal.emit(component);
 
       std::unordered_map<
-          std::shared_ptr<component_base_t>,
-          std::list<std::shared_ptr<component_base_t>>::iterator>
-        pending_remove { };
-      std::list<std::shared_ptr<component_base_t>> pending_redraw { };
+        std::shared_ptr<component_base_t>,
+        std::list<std::shared_ptr<component_base_t>>::iterator>
+                                                   pending_remove{};
+      std::list<std::shared_ptr<component_base_t>> pending_redraw{};
       for (auto it = component->children.begin(); it != component->children.end(); ++it) {
         pending_remove.emplace(*it, it);
       }
 
-      component_builder_t content_children_builder { }; {
-        std::vector<component_builder_t> &content_children = component->attrs()->_content;
-        for (auto &item: content_children) {
-          for (auto &component: item.get_component_constructors()) {
+      component_builder_t content_children_builder{};
+      {
+        std::vector<component_builder_t>& content_children = component->attrs()->_content;
+        for (auto& item: content_children) {
+          for (auto& component: item.get_component_constructors()) {
             content_children_builder.append_component(component);
           }
         }
       }
 
 
-      std::vector<component_holder_t> new_children = component->get_event_dispatcher()->update(style_archive, content_children_builder);
+      std::vector<component_holder_t> new_children =
+        component->get_event_dispatcher()->update(style_archive, content_children_builder);
 
       // Update handler may add to style override
       component->get_style_data().apply_override();
 
       add_children(component, new_children, pending_redraw, pending_remove, style_archive);
 
-      for (const auto &remove: pending_remove) {
+      // Check if size is fixed
+      static const refl::field_info* width_fi =
+        refl::type_info::from<components::style_base_t>().field_by_name("width").value();
+      static const refl::field_info* height_fi =
+        refl::type_info::from<components::style_base_t>().field_by_name("height").value();
+
+      bool fixed_w = component->get_style_data().has_base_field_override(width_fi);
+      bool fixed_h = component->get_style_data().has_base_field_override(height_fi);
+
+      auto  dim     = component->get_dimensional_relations();
+      auto& int_rel = component->get_internal_relations();
+
+      dimensions::expression total_w = 0_px;
+      dimensions::expression total_h = 0_px;
+
+      std::vector<dimensions::dimension<dimensions::screen_measure>>                child_widths{};
+      std::unordered_set<dimensions::expression<dimensions::screen_measure>::dep_t> width_deps{};
+      std::vector<dimensions::dimension<dimensions::screen_measure>>                child_heights{};
+      std::unordered_set<dimensions::expression<dimensions::screen_measure>::dep_t> height_deps{};
+      for (auto& child_holder: new_children) {
+        for (auto& child: child_holder) {
+          auto c_dim = child->get_dimensional_relations();
+          child_widths.emplace_back(c_dim.x + c_dim.width);
+          width_deps.insert(c_dim.x.as_dependency());
+          width_deps.insert(c_dim.width.as_dependency());
+
+          child_heights.emplace_back(c_dim.y + c_dim.height);
+          width_deps.insert(c_dim.y.as_dependency());
+          width_deps.insert(c_dim.height.as_dependency());
+        }
+      }
+
+      total_w = dimensions::function<dimensions::screen_measure>{
+        [=] {
+          auto max = 0_px;
+          for (auto w: child_widths) {
+            max = std::max(max, dimensions::get_value(w));
+          }
+          return max;
+        },
+        width_deps
+      };
+      total_h = dimensions::function<dimensions::screen_measure>{
+        [=] {
+          auto max = 0_px;
+          for (auto h: child_heights) {
+            dimensions::compute(h);
+            max = std::max(max, dimensions::get_value(h));
+          }
+          return max;
+        },
+        height_deps
+      };
+
+      if (fixed_w) {
+        int_rel.cw =
+          dim.width - dim.padding_left - dim.padding_right - dim.margin_left - dim.margin_right;
+      } else {
+        // If not given, or given has error (ie: circular dep)
+        int_rel.cw = total_w;
+        dim.width =
+          int_rel.cw + dim.padding_left + dim.padding_right + dim.margin_left + dim.margin_right;
+      }
+      if (fixed_h) {
+        int_rel.ch =
+          dim.height - dim.padding_top - dim.padding_bottom - dim.margin_top - dim.margin_bottom;
+      } else {
+        // If not given, or given has error (ie: circular dep)
+        int_rel.ch = total_h;
+        dim.height =
+          int_rel.ch + dim.padding_top + dim.padding_bottom + dim.margin_top + dim.margin_bottom;
+      }
+
+      for (const auto& remove: pending_remove) {
         dismount_child(component, remove.second);
       }
 
-      for (const auto &child: pending_redraw) {
+      for (const auto& child: pending_redraw) {
         // Update children
         update(child, style_archive);
       }
@@ -74,35 +153,36 @@ namespace cydui::components {
 
   private:
     void add_children(
-      component_base_t::sptr component,
-      std::vector<component_holder_t> &children_to_add,
-      std::list<std::shared_ptr<component_base_t>> &pending_redraw,
+      component_base_t::sptr                        component,
+      std::vector<component_holder_t>&              children_to_add,
+      std::list<std::shared_ptr<component_base_t>>& pending_redraw,
       std::unordered_map<
         std::shared_ptr<component_base_t>,
-        std::list<std::shared_ptr<component_base_t> >::iterator> &pending_remove,
-      StyleArchive &style_archive
+        std::list<std::shared_ptr<component_base_t>>::iterator>& pending_remove,
+      StyleArchive&                                              style_archive
     ) {
       ZoneScopedN("Add Children");
-      std::optional<std::shared_ptr<component_base_t>> prev {std::nullopt};
+      std::optional<std::shared_ptr<component_base_t>> prev{std::nullopt};
 
       // Keep track of used IDs just in case some are duplicated.
       // The type is part of the ID, so if there is a mix up there won't be a SEGFAULT
       std::unordered_map<std::string, std::size_t> used_ids{};
 
-      for (auto &item: children_to_add) {
-        for (const auto &child: item.get_components()) {
-          std::string name     = child->name();
-          std::string _id = child->get_id();
-          std::string id = std::format("{}:{}", name, _id);
+      for (auto& item: children_to_add) {
+        for (const auto& child: item.get_components()) {
+          std::string name = child->name();
+          std::string _id  = child->get_id();
+          std::string id   = std::format("{}:{}", name, _id);
 
           if (used_ids.contains(id)) {
             id = std::format("{}[{}]", id, used_ids[id]++);
           } else {
             used_ids[id] = 1;
-            id = std::format("{}[0]", id);
+            id           = std::format("{}[0]", id);
           }
 
-          auto mounted_child = mount_child(component, id, child, pending_redraw, pending_remove, style_archive);
+          auto mounted_child =
+            mount_child(component, id, child, pending_redraw, pending_remove, style_archive);
           // Configure dimensional context
           anchors::configure_anchors(mounted_child, prev);
 
@@ -113,19 +193,19 @@ namespace cydui::components {
     }
 
     std::shared_ptr<component_base_t> mount_child(
-      component_base_t::sptr component,
-      const std::string &id,
-      std::shared_ptr<component_base_t> child,
-      std::list<std::shared_ptr<component_base_t>> &pending_redraw,
+      component_base_t::sptr                        component,
+      const std::string&                            id,
+      std::shared_ptr<component_base_t>             child,
+      std::list<std::shared_ptr<component_base_t>>& pending_redraw,
       std::unordered_map<
         std::shared_ptr<component_base_t>,
-        std::list<std::shared_ptr<component_base_t>>::iterator> &pending_remove,
-      StyleArchive &style_archive
+        std::list<std::shared_ptr<component_base_t>>::iterator>& pending_remove,
+      StyleArchive&                                              style_archive
     ) {
       ZoneScopedN("Mount Children");
-      std::shared_ptr<component_base_t> mounted_child {child};
+      std::shared_ptr<component_base_t> mounted_child{child};
       // Get or Create state for component
-      component_state_ref child_state;
+      component_state_ref               child_state;
       if (component->state()->children_states.contains(id)) {
         child_state = component->state()->children_states[id];
       } else {
@@ -138,7 +218,9 @@ namespace cydui::components {
         mounted_child = child_state->component_instance.value();
 
         // Redraw child
-        if (component_actor_t::update_component_with(child_state->component_instance.value().get(), child)) {
+        if (component_actor_t::update_component_with(
+              child_state->component_instance.value().get(), child
+            )) {
           pending_redraw.push_back(child_state->component_instance.value());
         }
       } else {
@@ -169,11 +251,13 @@ namespace cydui::components {
       return mounted_child;
     }
 
-    void dismount_child(const component_base_t::sptr& component, const std::list<std::shared_ptr<component_base_t>>::iterator &child) {
+    void dismount_child(
+      const component_base_t::sptr&                                 component,
+      const std::list<std::shared_ptr<component_base_t>>::iterator& child
+    ) {
       ZoneScopedN("Unmount Children");
       component_actor_t::dismount_component(child->get());
       component->children.erase(child);
     }
-
   };
-}
+} // namespace cydui::components

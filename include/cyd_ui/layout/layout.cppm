@@ -211,51 +211,33 @@ namespace cydui {
     /// COMPUTE SIZE
     if (fixed_w) {
       COMPUTE(dim.width)
-      int_rel.cw =
-        dim.width - dim.padding_left - dim.padding_right - dim.margin_left - dim.margin_right;
       COMPUTE(int_rel.cw)
     }
     if (fixed_h) {
       COMPUTE(dim.height)
-      int_rel.ch =
-        dim.height - dim.padding_top - dim.padding_bottom - dim.margin_top - dim.margin_bottom;
       COMPUTE(int_rel.ch)
     }
 
     /// COMPUTE DIMENSIONS FOR CHILDREN RECURSIVELY
     std::vector<std::shared_ptr<components::component_base_t>> pending;
 
-    auto total_w = 0_px;
-    auto total_h = 0_px;
     for (auto& child: rt->children) {
       // compute_dimensions(child);
       //  if error (circular dependency), skip for now, and then recalculate
-      if (compute_dimensions(child.get())) {
-        auto c_dim       = child->get_dimensional_relations();
-        auto child_max_w = dimensions::get_value(c_dim.x) + dimensions::get_value(c_dim.width);
-        auto child_max_h = dimensions::get_value(c_dim.y) + dimensions::get_value(c_dim.height);
-        total_w          = std::max(total_w, child_max_w);
-        total_h          = std::max(total_h, child_max_h);
-      } else {
+      if (not compute_dimensions(child.get())) {
         pending.push_back(child);
       }
     }
 
     if (not fixed_w) {
       // If not given, or given has error (ie: circular dep)
-      int_rel.cw = total_w;
       COMPUTE(int_rel.cw)
-      dim.width =
-        int_rel.cw + dim.padding_left + dim.padding_right + dim.margin_left + dim.margin_right;
       COMPUTE(dim.width)
     }
 
     if (not fixed_h) {
       // If not given, or given has error (ie: circular dep)
-      int_rel.ch = total_h;
       COMPUTE(int_rel.ch)
-      dim.height =
-        int_rel.ch + dim.padding_top + dim.padding_bottom + dim.margin_top + dim.margin_bottom;
       COMPUTE(dim.height)
     }
 
