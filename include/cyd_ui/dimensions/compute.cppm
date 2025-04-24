@@ -71,6 +71,7 @@ namespace cydui::dimensions {
     typename dimension_impl<T>::sptr                     dim,
     const std::unordered_map<std::string, dimension<T>>& parameters
   ) {
+    // LOG::print{DEBUG}("Evaluating expression: {} = {}", dim->name_, dim->expr_.to_string());
     using expression = expression<T>;
     expression& expr = dim->expr();
 
@@ -188,7 +189,7 @@ namespace cydui::dimensions {
     stack.emplace_back(dim);
 
     while (!stack.empty()) {
-      auto                                                   top = stack.back();
+      auto top = stack.back();
 
       if (not top->is_unknown()) {
         stack.pop_back();
@@ -214,9 +215,7 @@ namespace cydui::dimensions {
       }
 
       if (deps.empty()) {
-        if (top->is_unknown()) {
-          evaluate_expression<T>(top, parameters);
-        }
+        evaluate_expression<T>(top, parameters);
         stack.pop_back();
         visited.erase(top);
       } else {
@@ -228,12 +227,14 @@ namespace cydui::dimensions {
             continue;
           if (visited.contains(dep)) {
             //! Cycle detected
-            cycle_t<T> cycle{};
+            cycle_t<T>  cycle{};
             std::size_t i = 0;
             // LOG::print{INFO}("Possible cycle detected:");
-            // LOG::print{INFO}("START: [0x{:X}] {}::{} = {}", (unsigned long)(dim_.impl()->get()), dim_.impl()->context_->get_name(), dim_.impl()->name_, dim_.impl()->expr().to_string());
-            // for (const auto& v: visited) {
-            // LOG::print{INFO}("  {}: [0x{:X}] {}::{} = {}", i++, (unsigned long)(v.get()), v->context_->get_name(), v->name_, v->expr().to_string());
+            // LOG::print{INFO}("START: [0x{:X}] {}::{} = {}", (unsigned long)(dim_.impl()->get()),
+            // dim_.impl()->context_->get_name(), dim_.impl()->name_,
+            // dim_.impl()->expr().to_string()); for (const auto& v: visited) { LOG::print{INFO}("
+            // {}: [0x{:X}] {}::{} = {}", i++, (unsigned long)(v.get()), v->context_->get_name(),
+            // v->name_, v->expr().to_string());
             // }
 
             if (!find_cycle(cycle, dep, dep, parameters)) {
@@ -242,7 +243,9 @@ namespace cydui::dimensions {
               LOG::print{ERROR}("Dependency cycle in dimensions:");
               i = 0;
               for (const auto& v: cycle.dimensions) {
-                LOG::print{ERROR}("  {}: {}::{} = {}", i++, v->context_->get_name(), v->name_, v->expr().to_string());
+                LOG::print{ERROR
+                }("  {}: {}::{} = {}", i++, v->context_->get_name(), v->name_, v->expr().to_string()
+                );
               }
             }
             cycles.emplace_back(cycle);
@@ -253,9 +256,7 @@ namespace cydui::dimensions {
         }
 
         if (!work_to_do) {
-          if (top->is_unknown()) {
-            evaluate_expression<T>(top, parameters);
-          }
+          evaluate_expression<T>(top, parameters);
           stack.pop_back();
           visited.erase(top);
         }

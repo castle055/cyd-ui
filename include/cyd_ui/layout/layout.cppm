@@ -209,14 +209,10 @@ namespace cydui {
     COMPUTE(int_rel.cy)
 
     /// COMPUTE SIZE
-    if (fixed_w) {
-      COMPUTE(dim.width)
-      COMPUTE(int_rel.cw)
-    }
-    if (fixed_h) {
-      COMPUTE(dim.height)
-      COMPUTE(int_rel.ch)
-    }
+    COMPUTE(dim.width)
+    COMPUTE(int_rel.cw)
+    COMPUTE(dim.height)
+    COMPUTE(int_rel.ch)
 
     /// COMPUTE DIMENSIONS FOR CHILDREN RECURSIVELY
     std::vector<std::shared_ptr<components::component_base_t>> pending;
@@ -227,18 +223,6 @@ namespace cydui {
       if (not compute_dimensions(child.get())) {
         pending.push_back(child);
       }
-    }
-
-    if (not fixed_w) {
-      // If not given, or given has error (ie: circular dep)
-      COMPUTE(int_rel.cw)
-      COMPUTE(dim.width)
-    }
-
-    if (not fixed_h) {
-      // If not given, or given has error (ie: circular dep)
-      COMPUTE(int_rel.ch)
-      COMPUTE(dim.height)
     }
 
     return std::all_of(pending.begin(), pending.end(), [](const auto& it) {

@@ -238,6 +238,7 @@ public:
     tree_.reset();
     tree_ = {nullptr};
     dependencies_.clear();
+    parameters_.clear();
   }
 
   auto& tree() {

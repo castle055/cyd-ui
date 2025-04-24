@@ -87,23 +87,22 @@ namespace cydui::components {
       std::unordered_set<dimensions::expression<dimensions::screen_measure>::dep_t> width_deps{};
       std::vector<dimensions::dimension<dimensions::screen_measure>>                child_heights{};
       std::unordered_set<dimensions::expression<dimensions::screen_measure>::dep_t> height_deps{};
-      for (auto& child_holder: new_children) {
-        for (auto& child: child_holder) {
-          auto c_dim = child->get_dimensional_relations();
-          child_widths.emplace_back(c_dim.x + c_dim.width);
-          width_deps.insert(c_dim.x.as_dependency());
-          width_deps.insert(c_dim.width.as_dependency());
+      for (auto& child: component->children) {
+        auto c_dim = child->get_dimensional_relations();
+        child_widths.emplace_back(c_dim.x + c_dim.width);
+        width_deps.insert(c_dim.x.as_dependency());
+        width_deps.insert(c_dim.width.as_dependency());
 
-          child_heights.emplace_back(c_dim.y + c_dim.height);
-          width_deps.insert(c_dim.y.as_dependency());
-          width_deps.insert(c_dim.height.as_dependency());
-        }
+        child_heights.emplace_back(c_dim.y + c_dim.height);
+        height_deps.insert(c_dim.y.as_dependency());
+        height_deps.insert(c_dim.height.as_dependency());
       }
 
       total_w = dimensions::function<dimensions::screen_measure>{
         [=] {
           auto max = 0_px;
           for (auto w: child_widths) {
+            dimensions::compute(w);
             max = std::max(max, dimensions::get_value(w));
           }
           return max;
