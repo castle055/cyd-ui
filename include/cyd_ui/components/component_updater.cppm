@@ -121,23 +121,33 @@ namespace cydui::components {
         height_deps
       };
 
+      if (component->parent.has_value()) {
+        auto& parent_int_rel = component->parent.value()->get_internal_relations();
+
+        int_rel.cx = parent_int_rel.cx + dim.x + dim.margin_left + dim.padding_left;
+        int_rel.cy = parent_int_rel.cy + dim.y + dim.margin_top + dim.padding_top;
+      } else {
+        int_rel.cx = dim.x + dim.margin_left + dim.padding_left;
+        int_rel.cy = dim.y + dim.margin_top + dim.padding_top;
+      }
+
       if (fixed_w) {
         int_rel.cw =
-          dim.width - dim.padding_left - dim.padding_right - dim.margin_left - dim.margin_right;
+          dim.width - dim.padding_left - dim.padding_right;
       } else {
         // If not given, or given has error (ie: circular dep)
         int_rel.cw = total_w;
         dim.width =
-          int_rel.cw + dim.padding_left + dim.padding_right + dim.margin_left + dim.margin_right;
+          int_rel.cw + dim.padding_left + dim.padding_right;
       }
       if (fixed_h) {
         int_rel.ch =
-          dim.height - dim.padding_top - dim.padding_bottom - dim.margin_top - dim.margin_bottom;
+          dim.height - dim.padding_top - dim.padding_bottom;
       } else {
         // If not given, or given has error (ie: circular dep)
         int_rel.ch = total_h;
         dim.height =
-          int_rel.ch + dim.padding_top + dim.padding_bottom + dim.margin_top + dim.margin_bottom;
+          int_rel.ch + dim.padding_top + dim.padding_bottom;
       }
 
       for (const auto& remove: pending_remove) {

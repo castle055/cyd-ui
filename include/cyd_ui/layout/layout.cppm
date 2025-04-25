@@ -196,15 +196,6 @@ namespace cydui {
     COMPUTE(dim.padding_left)
 
     /// COMPUTE CHILDREN ORIGIN POINT (cx, cy)
-    if (rt->parent.has_value()) {
-      auto& parent_int_rel = rt->parent.value()->get_internal_relations();
-
-      int_rel.cx = parent_int_rel.cx + dim.x + dim.margin_left + dim.padding_left;
-      int_rel.cy = parent_int_rel.cy + dim.y + dim.margin_top + dim.padding_top;
-    } else {
-      int_rel.cx = dim.x + dim.margin_left + dim.padding_left;
-      int_rel.cy = dim.y + dim.margin_top + dim.padding_top;
-    }
     COMPUTE(int_rel.cx)
     COMPUTE(int_rel.cy)
 

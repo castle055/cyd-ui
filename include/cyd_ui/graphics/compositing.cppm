@@ -61,8 +61,8 @@ export namespace cydui::compositing {
 
       if (is_flattened) {
         flattening_target = parent->flattening_target;
-        flatten_x = parent->flatten_x + op.x;
-        flatten_y = parent->flatten_y + op.y;
+        flatten_x = parent->flatten_x + parent->op.orig_x + op.x;
+        flatten_y = parent->flatten_y + parent->op.orig_y + op.y;
       } else {
         flattening_target = this;
         flatten_x = 0;
@@ -85,7 +85,7 @@ export namespace cydui::compositing {
     void start_render(graphics::window_t* render_target) {
       if (is_flattened) {
         pixel_stride = flattening_target->pixel_stride;
-        pixels = &parent->pixels[op.x + (pixel_stride >> 2) * op.y];
+        pixels = &parent->pixels[(parent->op.orig_x + op.x) + (pixel_stride >> 2) * (parent->op.orig_y + op.y)];
       } else {
         ZoneScopedN("Start render");
 
@@ -183,8 +183,8 @@ export namespace cydui::compositing {
         .h = h_,
       };
       SDL_FRect dst {
-        .x = static_cast<float>(flatten_x + other->op.x),
-        .y = static_cast<float>(flatten_y + other->op.y),
+        .x = static_cast<float>(flatten_x + op.orig_x + other->op.x),
+        .y = static_cast<float>(flatten_y + op.orig_y + other->op.y),
         .w = w_,
         .h = h_,
       };

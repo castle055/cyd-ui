@@ -42,6 +42,7 @@ export {
         //! PARENT
         if (child->parent.has_value()) {
           auto& [cx, cy, cw, ch] = child->parent.value()->get_internal_relations();
+          
           PARENT_PARAM(x, cx);
           PARENT_PARAM(y, cy);
           PARENT_PARAM(width, cw);
@@ -103,6 +104,11 @@ export {
           auto& w    = dims.width;
           auto& h    = dims.height;
 
+          auto& mt = dims.margin_top;
+          auto& mr = dims.margin_right;
+          auto& mb = dims.margin_bottom;
+          auto& ml = dims.margin_left;
+
           PREV_PARAM(x, x);
           PREV_PARAM(y, y);
           PREV_PARAM(width, w);
@@ -110,22 +116,22 @@ export {
 
           PREV_PARAM(top_left_x, x);
           PREV_PARAM(top_left_y, y);
-          PREV_PARAM(top_center_x, x + (w / 2));
+          PREV_PARAM(top_center_x, x + ((w + ml + mr) / 2));
           PREV_PARAM(top_center_y, y);
-          PREV_PARAM(top_right_x, x + w);
+          PREV_PARAM(top_right_x, x + w + ml + mr);
           PREV_PARAM(top_right_y, y);
           PREV_PARAM(middle_left_x, x);
-          PREV_PARAM(middle_left_y, y + (h / 2));
-          PREV_PARAM(center_x, x + (w / 2));
-          PREV_PARAM(center_y, y + (h / 2));
-          PREV_PARAM(middle_right_x, x + w);
-          PREV_PARAM(middle_right_y, y + (h / 2));
+          PREV_PARAM(middle_left_y, y + ((h + mt + mb) / 2));
+          PREV_PARAM(center_x, x + ((w + ml + mr) / 2));
+          PREV_PARAM(center_y, y + ((h + mt + mb) / 2));
+          PREV_PARAM(middle_right_x, x + w + ml + mr);
+          PREV_PARAM(middle_right_y, y + ((h+mt+mb) / 2));
           PREV_PARAM(bottom_left_x, x);
-          PREV_PARAM(bottom_left_y, y + h);
-          PREV_PARAM(bottom_center_x, x + (w / 2));
-          PREV_PARAM(bottom_center_y, y + h);
-          PREV_PARAM(bottom_right_x, x + w);
-          PREV_PARAM(bottom_right_y, y + h);
+          PREV_PARAM(bottom_left_y, y + h + mt + mb);
+          PREV_PARAM(bottom_center_x, x + ((w + ml + mr) / 2));
+          PREV_PARAM(bottom_center_y, y + h + mt + mb);
+          PREV_PARAM(bottom_right_x, x + w + ml + mr);
+          PREV_PARAM(bottom_right_y, y + h + mt + mb);
         } else {
           PREV_PARAM(x, 0_px);
           PREV_PARAM(y, 0_px);
