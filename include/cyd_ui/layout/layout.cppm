@@ -178,9 +178,6 @@ namespace cydui {
     auto  dim     = rt->get_dimensional_relations();
     auto& int_rel = rt->get_internal_relations();
 
-    bool fixed_w = rt->get_style_data().has_base_field_override(width_fi);
-    bool fixed_h = rt->get_style_data().has_base_field_override(height_fi);
-
     COMPUTE(dim.scroll_x)
     COMPUTE(dim.scroll_y)
 
@@ -246,7 +243,6 @@ namespace cydui {
     ZoneScopedN("Update Component");
     std::scoped_lock lock{component_renderer->compositing_mutex()};
     component_updater->update(target, *style_archive);
-    component_stylist->apply_style(target);
   }
 
   bool Layout::update_all_dirty(const components::component_base_t::sptr& c) {
@@ -271,7 +267,6 @@ namespace cydui {
         return false;
       }
     }
-    component_stylist->apply_style(root);
     update_dimensions();
     component_renderer->render(*win->native(), root);
     return true;

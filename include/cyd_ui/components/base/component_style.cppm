@@ -1,6 +1,9 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+module;
+#include <tracy/Tracy.hpp>
+
 export module cydui.components.base.style;
 
 import std;
@@ -235,6 +238,7 @@ export namespace cydui::components {
     }
 
     void apply_override() override {
+      ZoneScopedN("Apply Override");
       auto&         s      = get_style();
       style_base_t& base_s = as_base();
 
@@ -247,6 +251,7 @@ export namespace cydui::components {
     }
 
     void apply_transform() override {
+      ZoneScopedN("Apply Transform");
       style_transform(ptr_);
     }
 
