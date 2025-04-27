@@ -57,3 +57,5 @@ STYLE_SETTER_RETURN_TYPE scale(la::vec<2>&& value) {
 }
 STYLE_SETTER(rotation, angle_type, { return value; })
 
+STYLE_SETTER(overflow_x, cydui::overflow_e, { return value; })
+STYLE_SETTER(overflow_y, cydui::overflow_e, { return value; })

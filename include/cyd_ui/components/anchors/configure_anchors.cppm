@@ -41,8 +41,12 @@ export {
       {
         //! PARENT
         if (child->parent.has_value()) {
-          auto& [cx, cy, cw, ch] = child->parent.value()->get_internal_relations();
-          
+          auto& irel = child->parent.value()->get_internal_relations();
+          auto& cx = irel.cx;
+          auto& cy = irel.cy;
+          auto& cw = irel.cw;
+          auto& ch = irel.ch;
+
           PARENT_PARAM(x, cx);
           PARENT_PARAM(y, cy);
           PARENT_PARAM(width, cw);

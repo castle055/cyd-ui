@@ -40,6 +40,9 @@ export namespace cydui::components {
     dimension_t cy{};
     dimension_t cw{};
     dimension_t ch{};
+
+    dimension_t children_total_width{};
+    dimension_t children_total_height{};
   };
 
   struct component_dimensional_relations_t {
@@ -59,5 +62,8 @@ export namespace cydui::components {
     dimension_t& padding_bottom;
     dimension_t& padding_left;
     dimension_t& padding_right;
+
+    dimension_t& scroll_x;
+    dimension_t& scroll_y;
   };
 } // namespace cydui::components

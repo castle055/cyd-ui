@@ -60,6 +60,21 @@ namespace cydui::components {
     component_base_t* find_by_coords(dimension_t::value_type x, dimension_t::value_type y) final {
       using namespace dimensions;
 
+      auto& style = get_style();
+
+      if (style.overflow_x != overflow_e::GROW) {
+        if (x < 0 || x >= get_value(style.width)) {
+          return nullptr;
+        }
+      }
+      if (style.overflow_y != overflow_e::GROW) {
+        if (y < 0 || y >= get_value(style.height)) {
+          return nullptr;
+        }
+      }
+
+      auto sx  = get_value(style.scroll_x);
+      auto sy  = get_value(style.scroll_y);
       component_base_t* found = nullptr;
       for (auto c = children.rbegin(); c != children.rend(); ++c) {
         auto dim = c->get()->get_dimensional_relations();
@@ -69,14 +84,14 @@ namespace cydui::components {
         auto my  = get_value(dim.margin_top);
         auto px  = get_value(dim.padding_left);
         auto py  = get_value(dim.padding_top);
-        found    = (*c)->find_by_coords(x - cx - mx - px, y - cy - my - py);
+        found    = (*c)->find_by_coords(x - cx - mx - px + sx, y - cy - my - py + sy);
         if (nullptr != found) {
           return found;
         }
       }
 
-      if (x < 0 || x >= get_value(get_style().width) || y < 0
-          || y >= get_value(get_style().height)) {
+      if (x < 0 || x >= get_value(style.width) || y < 0
+          || y >= get_value(style.height)) {
         return nullptr;
       }
       return this;
@@ -98,7 +113,9 @@ namespace cydui::components {
         .padding_top    = s.padding.top,
         .padding_bottom = s.padding.bottom,
         .padding_left   = s.padding.left,
-        .padding_right  = s.padding.right
+        .padding_right  = s.padding.right,
+        .scroll_x = s.scroll_x,
+        .scroll_y = s.scroll_y,
       };
     }
 
@@ -117,10 +134,11 @@ namespace cydui::components {
       event_dispatcher.emplace(
         std::make_shared<event_dispatcher_t<T, typename T::event_handler_t>>(this)
       );
-      component_builder_t content_children_builder { }; {
-        std::vector<component_builder_t> &content_children = this->_content;
-        for (auto &item: content_children) {
-          for (auto &component: item.get_component_constructors()) {
+      component_builder_t content_children_builder{};
+      {
+        std::vector<component_builder_t>& content_children = this->_content;
+        for (auto& item: content_children) {
+          for (auto& component: item.get_component_constructors()) {
             content_children_builder.append_component(component);
           }
         }

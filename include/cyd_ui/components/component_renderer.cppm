@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 module;
+#include <SDL3/SDL.h>
 #include <tracy/Tracy.hpp>
 #include "cyd_fabric_modules/headers/macros/async_events.h"
-#include <SDL3/SDL.h>
 
 export module cydui.components.renderer;
 
@@ -269,16 +269,18 @@ namespace cydui::components {
       auto& at                  = component->get_style();
       data.compositing_node_.id = (unsigned long)(component->state().get());
       data.compositing_node_.op = {
-        .x        = static_cast<int>(get_num_value(at.x) + get_num_value(at.margin.left)),
-        .y        = static_cast<int>(get_num_value(at.y) + get_num_value(at.margin.top)),
-        .orig_x   = static_cast<int>(get_num_value(at.padding.left)),
-        .orig_y   = static_cast<int>(get_num_value(at.padding.top)),
-        .w        = static_cast<int>(get_num_value(at.width)),
-        .h        = static_cast<int>(get_num_value(at.height)),
-        .rot      = at.rotation.value_as_base_unit(), // dim->rot.val(),
-        .scale_x  = 1.0,                              // dim->scale_x.val(),
-        .scale_y  = 1.0,                              // dim->scale_y.val(),
-        .animated = component->state()->is_animated(),
+        .x          = static_cast<int>(get_num_value(at.x) + get_num_value(at.margin.left)),
+        .y          = static_cast<int>(get_num_value(at.y) + get_num_value(at.margin.top)),
+        .orig_x     = static_cast<int>(get_num_value(at.padding.left) - get_num_value(at.scroll_x)),
+        .orig_y     = static_cast<int>(get_num_value(at.padding.top) - get_num_value(at.scroll_y)),
+        .w          = static_cast<int>(get_num_value(at.width)),
+        .h          = static_cast<int>(get_num_value(at.height)),
+        .rot        = at.rotation.value_as_base_unit(), // dim->rot.val(),
+        .scale_x    = 1.0,                              // dim->scale_x.val(),
+        .scale_y    = 1.0,                              // dim->scale_y.val(),
+        .animated   = component->state()->is_animated(),
+        .x_overflow = at.overflow_x,
+        .y_overflow = at.overflow_y,
       };
 
       data.compositing_node_.set_parent(parent_node);
@@ -388,6 +390,10 @@ namespace cydui::components {
 
     void start_render(component_base_t* component, graphics::window_t* render_target) {
       auto& data = component->get_data<render_data_t>();
+      if (data.compositing_node_.is_out_of_bounds()) {
+        return;
+      }
+
       if (data.graphics_dirty_ or data.compositing_node_.is_flattened_node()) {
         data.compositing_node_.start_render(render_target);
       }
@@ -399,6 +405,10 @@ namespace cydui::components {
 
     bool repaint(component_base_t* component, graphics::window_t* render_target) {
       auto& data = component->get_data<render_data_t>();
+      if (data.compositing_node_.is_out_of_bounds()) {
+        return false;
+      }
+
       if (data.graphics_dirty_ or data.compositing_node_.is_dirty_from_flattening()) {
         data.graphics_dirty_    = false;
         data.compositing_dirty_ = true;

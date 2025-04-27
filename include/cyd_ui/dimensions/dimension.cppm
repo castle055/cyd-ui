@@ -90,14 +90,16 @@ public:
   dimension& operator=(value_type&& expr) {
     impl_->value_ = std::move(expr);
     impl_->set_expression(std::move(expr));
-    impl_->unknown_ = false;
+    impl_->mark_unknown();
+    // impl_->unknown_ = false;
     return *this;
   }
 
   dimension& operator=(const value_type& expr) {
     impl_->value_ = expr;
     impl_->set_expression(expr);
-    impl_->unknown_ = false;
+    impl_->mark_unknown();
+    // impl_->unknown_ = false;
     return *this;
   }
 
@@ -145,9 +147,7 @@ public:
     const std::unordered_map<std::string, dimension<S>>& parameters
   );
   template <typename S>
-  friend const S& get_value(dimension<S>& dim);
-  template <typename S>
-  friend const S& get_value(const dimension<S>& dim);
+  friend const S& get_value(const dimension<S>& dimension);
   template <typename S>
   friend bool find_cycle(
     cycle_t<S>&                                          cycle,

@@ -181,7 +181,9 @@ namespace cydui {
     bool fixed_w = rt->get_style_data().has_base_field_override(width_fi);
     bool fixed_h = rt->get_style_data().has_base_field_override(height_fi);
 
-    /// COMPUTE SOME VALUES
+    COMPUTE(dim.scroll_x)
+    COMPUTE(dim.scroll_y)
+
     COMPUTE(dim.x)
     COMPUTE(dim.y)
 
@@ -200,6 +202,8 @@ namespace cydui {
     COMPUTE(int_rel.cy)
 
     /// COMPUTE SIZE
+    COMPUTE(int_rel.children_total_width)
+    COMPUTE(int_rel.children_total_height)
     COMPUTE(dim.width)
     COMPUTE(int_rel.cw)
     COMPUTE(dim.height)

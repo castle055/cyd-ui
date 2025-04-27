@@ -42,6 +42,8 @@ export namespace cydui::components {
     [[meta(AnimationComplexity::REFLOW)]] dimension_t                      height;
     [[meta(AnimationComplexity::REFLOW)]] four_sided_property<dimension_t> margin;
     [[meta(AnimationComplexity::REFLOW)]] four_sided_property<dimension_t> padding;
+    [[meta(AnimationComplexity::REFLOW)]] dimension_t                      scroll_x;
+    [[meta(AnimationComplexity::REFLOW)]] dimension_t                      scroll_y;
 
     [[meta(AnimationComplexity::REPAINT)]]
     vg::paint::type background{vg::paint::type::make(vg::paint::solid("#00000000"_color))};
@@ -67,6 +69,12 @@ export namespace cydui::components {
 
     [[meta(AnimationComplexity::COMPOSE)]]
     angle_type rotation{0.0f};
+
+
+    [[meta(AnimationComplexity::FULL_UPDATE)]]
+    overflow_e overflow_x{overflow_e::HIDE};
+    [[meta(AnimationComplexity::FULL_UPDATE)]]
+    overflow_e overflow_y{overflow_e::HIDE};
   };
   struct simple_style_t: style_base_t {};
 

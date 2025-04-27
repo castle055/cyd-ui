@@ -80,9 +80,6 @@ namespace cydui::components {
       auto  dim     = component->get_dimensional_relations();
       auto& int_rel = component->get_internal_relations();
 
-      dimensions::expression total_w = 0_px;
-      dimensions::expression total_h = 0_px;
-
       std::vector<dimensions::dimension<dimensions::screen_measure>>                child_widths{};
       std::unordered_set<dimensions::expression<dimensions::screen_measure>::dep_t> width_deps{};
       std::vector<dimensions::dimension<dimensions::screen_measure>>                child_heights{};
@@ -98,7 +95,7 @@ namespace cydui::components {
         height_deps.insert(c_dim.height.as_dependency());
       }
 
-      total_w = dimensions::function<dimensions::screen_measure>{
+      int_rel.children_total_width = dimensions::function<dimensions::screen_measure>{
         [=] {
           auto max = 0_px;
           for (auto w: child_widths) {
@@ -109,7 +106,7 @@ namespace cydui::components {
         },
         width_deps
       };
-      total_h = dimensions::function<dimensions::screen_measure>{
+      int_rel.children_total_height = dimensions::function<dimensions::screen_measure>{
         [=] {
           auto max = 0_px;
           for (auto h: child_heights) {
@@ -124,11 +121,11 @@ namespace cydui::components {
       if (component->parent.has_value()) {
         auto& parent_int_rel = component->parent.value()->get_internal_relations();
 
-        int_rel.cx = parent_int_rel.cx + dim.x + dim.margin_left + dim.padding_left;
-        int_rel.cy = parent_int_rel.cy + dim.y + dim.margin_top + dim.padding_top;
+        int_rel.cx = parent_int_rel.cx + dim.x + dim.margin_left + dim.padding_left - dim.scroll_x;
+        int_rel.cy = parent_int_rel.cy + dim.y + dim.margin_top + dim.padding_top - dim.scroll_y;
       } else {
-        int_rel.cx = dim.x + dim.margin_left + dim.padding_left;
-        int_rel.cy = dim.y + dim.margin_top + dim.padding_top;
+        int_rel.cx = dim.x + dim.margin_left + dim.padding_left - dim.scroll_x;
+        int_rel.cy = dim.y + dim.margin_top + dim.padding_top - dim.scroll_y;
       }
 
       if (fixed_w) {
@@ -136,7 +133,7 @@ namespace cydui::components {
           dim.width - dim.padding_left - dim.padding_right;
       } else {
         // If not given, or given has error (ie: circular dep)
-        int_rel.cw = total_w;
+        int_rel.cw = int_rel.children_total_width;
         dim.width =
           int_rel.cw + dim.padding_left + dim.padding_right;
       }
@@ -145,7 +142,7 @@ namespace cydui::components {
           dim.height - dim.padding_top - dim.padding_bottom;
       } else {
         // If not given, or given has error (ie: circular dep)
-        int_rel.ch = total_h;
+        int_rel.ch = int_rel.children_total_height;
         dim.height =
           int_rel.ch + dim.padding_top + dim.padding_bottom;
       }

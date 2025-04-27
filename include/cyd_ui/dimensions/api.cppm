@@ -21,11 +21,6 @@ export namespace cydui::dimensions {
  }
 
  template <typename S>
- const S& get_value(dimension<S>& dimension) {
-  return dimension.impl()->value_;
- }
-
- template <typename S>
  const S& get_value(const dimension<S>& dimension) {
   return dimension.impl()->value_;
  }

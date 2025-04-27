@@ -22,6 +22,10 @@ import cydui.graphics.window;
 
 export import :dev_texture;
 
+export namespace cydui {
+  enum class overflow_e { GROW, HIDE, SCROLL };
+}
+
 export namespace cydui::compositing {
   using namespace vg;
   using namespace std::chrono_literals;
@@ -31,42 +35,93 @@ export namespace cydui::compositing {
       OVERLAY,
     } op = OVERLAY;
 
-    int x, y, orig_x, orig_y;
-    int w, h;
-    double rot = 0.0;
-    double scale_x = 1.0;
-    double scale_y = 1.0;
-    bool animated = false;
+    int    x, y, orig_x, orig_y;
+    int    w, h;
+    double rot      = 0.0;
+    double scale_x  = 1.0;
+    double scale_y  = 1.0;
+    bool   animated = false;
 
-    std::function<void(compositing_operation_t &op)> _fix_dimensions = [](compositing_operation_t &op) {
-    };
+    overflow_e x_overflow = overflow_e::HIDE;
+    overflow_e y_overflow = overflow_e::HIDE;
 
-    bool operator==(const compositing_operation_t &other) const {
+    std::function<void(compositing_operation_t& op)> _fix_dimensions =
+      [](compositing_operation_t& op) {};
+
+    bool operator==(const compositing_operation_t& other) const {
       return x == other.x && y == other.y && orig_x == other.orig_x && orig_y == other.orig_y
              && w == other.w && h == other.h && scale_x == other.scale_x && scale_y == other.scale_y
              && rot == other.rot && animated == other.animated;
-
     }
   };
 
   struct compositing_node_t {
+    bool is_out_of_bounds() {
+      if (nullptr != parent) {
+        auto& pop             = parent->op;
+        bool  x_out_of_bounds = pop.orig_x + op.x > pop.w or pop.orig_x + op.x < -op.w;
+        bool  y_out_of_bounds = pop.orig_y + op.y > pop.h or pop.orig_y + op.y < -op.h;
+        if (pop.x_overflow == overflow_e::GROW) {
+          x_out_of_bounds = false;
+        }
+        if (pop.y_overflow == overflow_e::GROW) {
+          y_out_of_bounds = false;
+        }
+        return x_out_of_bounds or y_out_of_bounds;
+      }
+      return false;
+    }
+    compositing_node_t* get_parent() {
+      return parent;
+    }
     void set_parent(compositing_node_t* parent_) {
       parent = parent_;
-      is_flattened = (not op.animated)
-                     and ((op.op == compositing_operation_t::OVERLAY)
-                     and (parent != nullptr)
-                     and (op.x >= 0) && (op.y >= 0)
-                     and ((op.x + op.w) <= parent->op.w)
-                     and ((op.y + op.h) <= parent->op.h));
+      is_flattened =
+        (not op.animated) and ((op.op == compositing_operation_t::OVERLAY) and (parent != nullptr));
+      // and (op.x >= 0) && (op.y >= 0)
+      // and ((op.x + op.w) <= parent->op.w)
+      // and ((op.y + op.h) <= parent->op.h));
 
       if (is_flattened) {
+        auto rel_x        = parent->op.orig_x + op.x;
+        auto rel_y        = parent->op.orig_y + op.y;
         flattening_target = parent->flattening_target;
-        flatten_x = parent->flatten_x + parent->op.orig_x + op.x;
-        flatten_y = parent->flatten_y + parent->op.orig_y + op.y;
+        flatten_x         = parent->flatten_x + rel_x;
+        flatten_y         = parent->flatten_y + rel_y;
       } else {
         flattening_target = this;
-        flatten_x = 0;
-        flatten_y = 0;
+        flatten_x         = 0;
+        flatten_y         = 0;
+      }
+      if (nullptr == parent) {
+        flatten_vbox_x = 0;
+        flatten_vbox_y = 0;
+        flatten_vbox_w = op.w;
+        flatten_vbox_h = op.h;
+      } else {
+        auto rel_x     = parent->op.orig_x - parent->flatten_vbox_x + op.x;
+        auto rel_y     = parent->op.orig_y - parent->flatten_vbox_y + op.y;
+        flatten_vbox_x = std::max(0, -rel_x);
+        flatten_vbox_y = std::max(0, -rel_y);
+        if (rel_x < 0) {
+          flatten_vbox_w = std::min(rel_x + op.w, parent->flatten_vbox_w);
+        } else {
+          flatten_vbox_w = std::min(op.w, parent->flatten_vbox_w - rel_x);
+        }
+        if (rel_y < 0) {
+          flatten_vbox_h = std::min(rel_y + op.h, parent->flatten_vbox_h);
+        } else {
+          flatten_vbox_h = std::min(op.h, parent->flatten_vbox_h - rel_y);
+        }
+
+        if (parent->op.x_overflow == overflow_e::GROW) {
+          flatten_vbox_x = 0;
+          flatten_vbox_w = op.w;
+        }
+        if (parent->op.y_overflow == overflow_e::GROW) {
+          flatten_vbox_y = 0;
+          flatten_vbox_h = op.h;
+        }
       }
     }
 
@@ -85,7 +140,8 @@ export namespace cydui::compositing {
     void start_render(graphics::window_t* render_target) {
       if (is_flattened) {
         pixel_stride = flattening_target->pixel_stride;
-        pixels = &parent->pixels[(parent->op.orig_x + op.x) + (pixel_stride >> 2) * (parent->op.orig_y + op.y)];
+        pixels       = &parent->pixels
+                    [(parent->op.orig_x + op.x) + (pixel_stride >> 2) * (parent->op.orig_y + op.y)];
       } else {
         ZoneScopedN("Start render");
 
@@ -99,7 +155,7 @@ export namespace cydui::compositing {
         }
 
         pixel_stride = rendered_texture.width() * sizeof(pixel_t);
-        pixels = static_cast<pixel_t*>(rendered_texture.lock());
+        pixels       = static_cast<pixel_t*>(rendered_texture.lock());
       }
     }
 
@@ -109,21 +165,18 @@ export namespace cydui::compositing {
       }
       ZoneScopedN("Render Node");
 
-      pixelmap_editor_t editor {op.w, op.h, pixels, pixel_stride};
+      pixelmap_editor_t editor{op.w, op.h, pixels, pixel_stride};
 
       if (not is_flattened) {
         editor.clear();
       }
       editor->begin_new_path();
-      editor->rectangle(0, 0, op.w, op.h);
+      editor->rectangle(flatten_vbox_x, flatten_vbox_y, flatten_vbox_w, flatten_vbox_h);
       editor->clip();
 
       if (not graphics.empty()) {
-        for (const auto &element: graphics.elements) {
-          element->_internal_set_origin(
-            op.orig_x,
-            op.orig_y
-          );
+        for (const auto& element: graphics.elements) {
+          element->_internal_set_origin(op.orig_x, op.orig_y);
           element->apply_to(editor);
         }
       }
@@ -135,7 +188,9 @@ export namespace cydui::compositing {
       if (dirty_) {
         ZoneScopedN("Flush Rendered Texture");
         rendered_texture.unlock();
-        composite_texture.resize(render_target->renderer, rendered_texture.width(), rendered_texture.height());
+        composite_texture.resize(
+          render_target->renderer, rendered_texture.width(), rendered_texture.height()
+        );
         dirty_ = false;
       }
     }
@@ -149,9 +204,10 @@ export namespace cydui::compositing {
 
     void compose_own(graphics::window_t* render_target) {
       ZoneScopedN("Compose Own");
-      if (is_flattened) return;
+      if (is_flattened)
+        return;
       flush_rendered_texture(render_target);
-      SDL_FRect dst {
+      SDL_FRect dst{
         .x = 0,
         .y = 0,
         .w = rendered_texture.width(),
@@ -164,68 +220,89 @@ export namespace cydui::compositing {
       ZoneScopedN("Compose Child");
       SDL_Renderer* renderer = render_target->renderer;
 
-      auto& target = is_flattened? flattening_target->composite_texture : composite_texture;
+      auto& target = is_flattened ? flattening_target->composite_texture : composite_texture;
 
       float w_ = other->composite_texture.width();
       float h_ = other->composite_texture.height();
 
-      target.resize(
-        renderer,
-        std::max(float{target.width()}, flatten_x + other->op.x + w_),
-        std::max(target.height(), flatten_y + other->op.y + h_),
-        true
-      );
-
-      SDL_FRect src {
-        .x = 0,
-        .y = 0,
-        .w = w_,
-        .h = h_,
+      SDL_FRect src{
+        .x = static_cast<float>(other->flatten_vbox_x),
+        .y = static_cast<float>(other->flatten_vbox_y),
+        .w = static_cast<float>(other->flatten_vbox_w),
+        .h = static_cast<float>(other->flatten_vbox_h),
       };
-      SDL_FRect dst {
+      SDL_FRect dst{
         .x = static_cast<float>(flatten_x + op.orig_x + other->op.x),
         .y = static_cast<float>(flatten_y + op.orig_y + other->op.y),
-        .w = w_,
-        .h = h_,
+        .w = static_cast<float>(other->flatten_vbox_w),
+        .h = static_cast<float>(other->flatten_vbox_h),
       };
+
+      float new_w = target.width();
+      float new_h = target.height();
+
+      if (op.x_overflow == overflow_e::GROW) {
+        new_w = std::max(target.width(), flatten_x + op.orig_x + other->op.x + w_);
+      } else {
+        if (dst.x > target.width() or dst.x < -w_) {
+          return;
+        }
+        dst.x += flatten_vbox_x;
+      }
+
+      if (op.y_overflow == overflow_e::GROW) {
+        new_h = std::max(target.height(), flatten_y + op.orig_y + other->op.y + h_);
+      } else {
+        if (dst.y > target.height() or dst.y < -w_) {
+          return;
+        }
+        dst.y += flatten_vbox_y;
+      }
+
+      target.resize(renderer, new_w, new_h, true);
+
       other->composite_texture.copy_into(renderer, target, &dst, true, &src);
     }
 
   private:
     bool dirty_ = true;
 
-    compositing_node_t* parent = nullptr;
+    compositing_node_t* parent            = nullptr;
     compositing_node_t* flattening_target = nullptr;
-    bool flattening_dirty = false;
-    bool is_flattened = false;
-    int pixel_stride = 0;
+    bool                flattening_dirty  = false;
+    bool                is_flattened      = false;
+    int                 pixel_stride      = 0;
 
     int flatten_x = 0;
     int flatten_y = 0;
-  public:
-    unsigned long id = 0;
-    compositing_operation_t op { };
-    fragment_t graphics { };
 
-    device_texture_t rendered_texture {true};
-    device_texture_t composite_texture { };
-    pixel_t* pixels;
+    int flatten_vbox_x = 0;
+    int flatten_vbox_y = 0;
+    int flatten_vbox_w = 0;
+    int flatten_vbox_h = 0;
+
+  public:
+    unsigned long           id = 0;
+    compositing_operation_t op{};
+    fragment_t              graphics{};
+
+    device_texture_t rendered_texture{true};
+    device_texture_t composite_texture{};
+    pixel_t*         pixels;
   };
 
   class LayoutCompositor {
     graphics::window_t* render_target = nullptr;
-    prof::context_t* profiler = nullptr;
+    prof::context_t*    profiler      = nullptr;
 
   public:
-    LayoutCompositor() {
-    }
+    LayoutCompositor() {}
 
-    ~LayoutCompositor() {
-    }
+    ~LayoutCompositor() {}
 
     void set_render_target(graphics::window_t* _render_target, prof::context_t* _profiler) {
       render_target = _render_target;
-      profiler = _profiler;
+      profiler      = _profiler;
     }
 
     void compose(compositing_node_t* root) {
@@ -235,11 +312,11 @@ export namespace cydui::compositing {
         SDL_RenderClear(rtarget->renderer);
 
         SDL_Texture* texture = root->composite_texture.sdl_texture();
-        SDL_FRect src {
-          .x = 0,
-          .y = 0,
-          .w = root->composite_texture.width(),
-          .h = root->composite_texture.height()
+        SDL_FRect    src{
+             .x = 0,
+             .y = 0,
+             .w = root->composite_texture.width(),
+             .h = root->composite_texture.height()
         };
         SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND_PREMULTIPLIED);
 
@@ -248,4 +325,4 @@ export namespace cydui::compositing {
       }
     }
   };
-}
+} // namespace cydui::compositing

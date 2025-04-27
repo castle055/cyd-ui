@@ -91,8 +91,40 @@ export {
       }
       // * mouse scroll
       CYDUI_INTERNAL_EV_HANDLER_DECL(scroll) {
-        if (component->parent.has_value())
-          component->parent.value()->get_event_dispatcher()->dispatch_scroll(dx, dy);
+        auto& style     = component->get_style();
+        auto& int_rel   = component->get_internal_relations();
+        bool  processed = false;
+        if (style.overflow_x == overflow_e::SCROLL) {
+          auto c_width = dimensions::get_value(int_rel.children_total_width);
+          if ($width < c_width) {
+            auto new_scroll = dimensions::get_value(style.scroll_x) + dx;
+            if (new_scroll < 0_px)
+              new_scroll = 0_px;
+            if (new_scroll > (c_width - $width))
+              new_scroll = c_width - $width;
+            style.scroll_x = new_scroll;
+            processed      = true;
+          }
+        }
+        if (style.overflow_y == overflow_e::SCROLL) {
+          auto c_height = dimensions::get_value(int_rel.children_total_height);
+          if ($height < c_height) {
+            auto new_scroll = dimensions::get_value(style.scroll_y) - dy; // vertical scroll must be flipped
+            if (new_scroll < 0_px)
+              new_scroll = 0_px;
+            if (new_scroll > (c_height - $height))
+              new_scroll = c_height - $height;
+            style.scroll_y = new_scroll;
+            processed      = true;
+          }
+        }
+        if (processed) {
+          component->state()->mark_dirty();
+        } else {
+          // Propagate event to parent
+          if (component->parent.has_value())
+            component->parent.value()->get_event_dispatcher()->dispatch_scroll(dx, dy);
+        }
       }
 
       // ? KEYBOARD EVENTS

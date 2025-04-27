@@ -15,9 +15,6 @@ export import :context;
 
 namespace cydui::dimensions {
   export template <typename S>
-  const S& get_value(dimension<S>& dimension);
-
-  export template <typename S>
   const S& get_value(const dimension<S>& dimension);
 
   template <typename T>
@@ -38,10 +35,7 @@ namespace cydui::dimensions {
     friend typename expression<T>::node_t;
 
     template <typename S>
-    friend const S& get_value(dimension<S>& dim);
-
-    template <typename S>
-    friend const S& get_value(const dimension<S>& dim);
+    friend const S& get_value(const dimension<S>& dimension);
 
     template <typename S>
     friend compute_result_t<S> compute_dimension(

@@ -220,8 +220,8 @@ namespace cydui::window_events {
           bus(
             event.wheel.windowID,
             ScrollEvent{
-              .dy = event.wheel.y * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED ? -1 : 1),
-              .dx = event.wheel.x * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED ? -1 : 1),
+              .dy = 12 * event.wheel.y * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED ? -1 : 1),
+              .dx = 12 * event.wheel.x * (event.wheel.direction == SDL_MOUSEWHEEL_FLIPPED ? -1 : 1),
               .x  = event.wheel.mouse_x,
               .y  = event.wheel.mouse_y
             }
