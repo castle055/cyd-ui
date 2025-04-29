@@ -66,32 +66,26 @@ public:
   }
 
   dimension& operator=(const dimension& other) {
-    impl_->set_expression(other.impl_->expr_);
-    impl_->value_   = other.impl_->value_;
-    impl_->unknown_ = false;
-    if (other.impl_->unknown_) {
+    if (impl_->expr_ != other.impl_->expr_) {
+      impl_->set_expression(other.impl_->expr_);
       impl_->mark_unknown();
     }
     return *this;
   }
 
   dimension& operator=(expression&& expr) {
-    impl_->set_expression(expr);
-    impl_->mark_unknown();
+    if (impl_->expr_ != expr) {
+      impl_->set_expression(expr);
+      impl_->mark_unknown();
+    }
     return *this;
   }
 
   dimension& operator=(const expression& expr) {
-    impl_->set_expression(expr);
-    impl_->mark_unknown();
-    return *this;
-  }
-
-  dimension& operator=(value_type&& expr) {
-    impl_->value_ = std::move(expr);
-    impl_->set_expression(std::move(expr));
-    impl_->mark_unknown();
-    // impl_->unknown_ = false;
+    if (impl_->expr_ != expr) {
+      impl_->set_expression(expr);
+      impl_->mark_unknown();
+    }
     return *this;
   }
 
@@ -99,7 +93,7 @@ public:
     impl_->value_ = expr;
     impl_->set_expression(expr);
     impl_->mark_unknown();
-    // impl_->unknown_ = false;
+    impl_->unknown_ = false;
     return *this;
   }
 

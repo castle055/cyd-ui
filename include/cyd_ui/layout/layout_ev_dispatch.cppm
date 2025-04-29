@@ -62,7 +62,7 @@ export namespace cydui {
           focused->mark_dirty();
         }
 
-        render_if_dirty(root);
+        schedule_update();
         co_return;
       }),
       make_listener([&](const WindowClosed& ev) -> fabric::task<> {
@@ -72,18 +72,7 @@ export namespace cydui {
       make_listener([&](const RedrawEvent& ev) -> fabric::task<> {
         ZoneScopedN("Redraw Event");
         auto _pev = this->win->profiling_ctx.scope_event("Redraw");
-        if (ev.component) {
-          components::component_state_t* target_state =
-            ((components::component_state_t*)ev.component);
-          if (target_state->component_instance.has_value()) {
-            update_component(target_state->component_instance.value());
-          }
-        } else {
-          update_component(root);
-        }
-
-        update_dimensions();
-        component_renderer->render(*win->native(), root);
+        schedule_update();
         co_return;
       }),
       make_listener([&](const KeyEvent& ev) -> fabric::task<> {
@@ -100,7 +89,7 @@ export namespace cydui {
             } else if (ev.released) {
               INSTANCE_EV_HANDLER(focused)->dispatch_key_release(ev);
             }
-            render_if_dirty(focused->component_instance.value());
+            schedule_update();
           } else {
             focused = nullptr;
           }
@@ -113,7 +102,7 @@ export namespace cydui {
         if (focused && focused->component_instance) {
           if (focused->focused) {
             INSTANCE_EV_HANDLER(focused)->dispatch_text_input(ev);
-            render_if_dirty(focused->component_instance.value());
+            schedule_update();
           } else {
             focused = nullptr;
           }
@@ -160,13 +149,12 @@ export namespace cydui {
           focused->mark_dirty();
         }
 
-        render_if_dirty(root);
         if (ev.pressed) {
           target->get_event_dispatcher()->dispatch_button_press((Button)ev.button, rel_x, rel_y);
         } else {
           target->get_event_dispatcher()->dispatch_button_release((Button)ev.button, rel_x, rel_y);
         }
-        render_if_dirty(root);
+        schedule_update();
         co_return;
       }),
       make_listener([&](const ScrollEvent& ev) -> fabric::task<> {
@@ -180,7 +168,7 @@ export namespace cydui {
 
         target->get_event_dispatcher()->dispatch_scroll(ev.dx, ev.dy);
 
-        render_if_dirty(root);
+        schedule_update();
         co_return;
       }),
       make_listener([&](const MotionEvent& ev) -> fabric::task<> {
@@ -240,7 +228,7 @@ export namespace cydui {
         //  dragging_context.dragging_item = drag_n_drop::draggable_t {};
         //}
 
-        render_if_dirty(root);
+        schedule_update();
         co_return;
       }),
       make_listener([&](const ResizeEvent& ev) -> fabric::task<> {
@@ -258,16 +246,8 @@ export namespace cydui {
             .value();
         root->get_style_data().set_base_field_override(width_field, dimension_t{ev.w});
         root->get_style_data().set_base_field_override(height_field, dimension_t{ev.h});
+        schedule_update();
         co_return;
-        // component_stylist->apply_style(root);
-
-        // update_dimensions();
-        // if (is_compositing.test()) {
-        //   composite_is_outdated.test_and_set();
-        //   return;
-        // }
-        // update_fragments();
-        // render();
       }),
     };
 

@@ -18,11 +18,7 @@ public:
 
   template <typename V>
   void set_parameter(const std::string& name, V&& getter) {
-    if (getters.contains(name)) {
-      getters.at(name) = getter;
-    } else {
-      getters.emplace(name, std::forward<V>(getter));
-    }
+    getters[name] = std::forward<V>(getter);
   }
 
   void delete_parameter(const std::string& name) {

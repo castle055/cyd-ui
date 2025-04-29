@@ -78,7 +78,7 @@ export namespace cydui {
 
     bool update_all_dirty(const components::component_base_t::sptr& c);
 
-    bool render_if_dirty(const components::component_base_t::sptr& c);
+    void schedule_update();
 
     void update_component(const components::component_base_t::sptr& target);
 
@@ -124,6 +124,8 @@ export namespace cydui {
     std::vector<fabric::async::raw_listener::sptr> listeners{};
 
     StyleArchive::sptr style_archive{StyleArchive::make()};
+
+    fabric::tasks::time_point last_update{std::chrono::milliseconds{0}};
 
     components::component_renderer_t::sptr component_renderer{
       components::component_renderer_t::make()
@@ -259,17 +261,23 @@ namespace cydui {
     }
   }
 
-  bool Layout::render_if_dirty(const components::component_base_t::sptr& c) {
-    ZoneScopedN("Render If Dirty");
-    {
-      ZoneScopedN("Update");
-      if (not update_all_dirty(c)) {
-        return false;
-      }
+  void Layout::schedule_update() {
+    const auto now = fabric::tasks::clock::now();
+    if (last_update <= now) {
+      win->schedule(last_update + std::chrono::milliseconds{16}, [&]() -> fabric::task<> {
+        ZoneScopedN("Render If Dirty");
+        last_update = fabric::tasks::clock::now();
+        {
+          ZoneScopedN("Update");
+          if (not update_all_dirty(root)) {
+            co_return;
+          }
+        }
+        update_dimensions();
+        component_renderer->render(*win->native(), root);
+        co_return;
+      });
     }
-    update_dimensions();
-    component_renderer->render(*win->native(), root);
-    return true;
   }
 
   components::component_base_t*

@@ -129,22 +129,18 @@ namespace cydui::components {
       }
 
       if (fixed_w) {
-        int_rel.cw =
-          dim.width - dim.padding_left - dim.padding_right;
+        int_rel.cw = dim.width - dim.padding_left - dim.padding_right;
       } else {
         // If not given, or given has error (ie: circular dep)
         int_rel.cw = int_rel.children_total_width;
-        dim.width =
-          int_rel.cw + dim.padding_left + dim.padding_right;
+        dim.width  = int_rel.cw + dim.padding_left + dim.padding_right;
       }
       if (fixed_h) {
-        int_rel.ch =
-          dim.height - dim.padding_top - dim.padding_bottom;
+        int_rel.ch = dim.height - dim.padding_top - dim.padding_bottom;
       } else {
         // If not given, or given has error (ie: circular dep)
         int_rel.ch = int_rel.children_total_height;
-        dim.height =
-          int_rel.ch + dim.padding_top + dim.padding_bottom;
+        dim.height = int_rel.ch + dim.padding_top + dim.padding_bottom;
       }
 
       for (const auto& remove: pending_remove) {
@@ -189,8 +185,11 @@ namespace cydui::components {
 
           auto mounted_child =
             mount_child(component, id, child, pending_redraw, pending_remove, style_archive);
+
           // Configure dimensional context
-          anchors::configure_anchors(mounted_child, prev);
+          anchors::configure_self_anchors(mounted_child);
+          anchors::configure_parent_anchors(mounted_child);
+          anchors::configure_prev_anchors(mounted_child, prev);
 
           prev.reset();
           prev.emplace(mounted_child);
@@ -220,35 +219,28 @@ namespace cydui::components {
       }
 
       if (child_state->component_instance.has_value()) {
-        pending_remove.erase(child_state->component_instance.value());
         mounted_child = child_state->component_instance.value();
+        pending_remove.erase(mounted_child);
 
         // Redraw child
-        if (component_actor_t::update_component_with(
-              child_state->component_instance.value().get(), child
-            )) {
-          pending_redraw.push_back(child_state->component_instance.value());
+        if (component_actor_t::update_component_with(mounted_child.get(), child)) {
+          pending_redraw.push_back(mounted_child);
         }
       } else {
         // Set child's variables
-        child->parent                      = component.get();
-        auto c_dims                        = child->get_dimensional_relations();
-        child->get_internal_relations().cx = component->get_internal_relations().cx + c_dims.x
-                                             + c_dims.margin_left + c_dims.padding_left;
-        child->get_internal_relations().cy = component->get_internal_relations().cy + c_dims.y
-                                             + c_dims.margin_top + c_dims.padding_top;
+        mounted_child->parent = component.get();
 
-        component_actor_t::set_component_state(child.get(), child_state);
-        compile_style_rules_signal.emit(child, style_archive);
+        component_actor_t::set_component_state(mounted_child.get(), child_state);
+        compile_style_rules_signal.emit(mounted_child, style_archive);
 
-        child_state->component_instance = child;
-        component->children.push_back(child);
+        child_state->component_instance = mounted_child;
+        component->children.push_back(mounted_child);
 
         // Configure event handler
-        component_actor_t::mount_component(child.get());
+        component_actor_t::mount_component(mounted_child.get());
 
         // Redraw child
-        pending_redraw.push_back(child);
+        pending_redraw.push_back(mounted_child);
       }
 
       return mounted_child;

@@ -42,10 +42,10 @@ export namespace cydui {
 
     template <typename... Args>
     auto run_async(auto&& fun, Args&&... args) {
-      ZoneScopedN("Application:run_async");
+      ZoneScopedN("CWindow:run_async");
       return get_executor()->schedule(
         [=](Args... argss) -> fabric::task<decltype(fun(std::forward<Args>(argss)...))> {
-          ZoneScopedN("Application:run_async:()");
+          ZoneScopedN("CWindow:run_async:()");
           co_return fun(std::forward<Args>(argss)...);
         },
         std::forward<Args>(args)...
@@ -54,19 +54,19 @@ export namespace cydui {
 
     template <typename... Args>
     auto run(auto&& fun, Args&&... args) {
-      ZoneScopedN("Application:run");
+      ZoneScopedN("CWindow:run");
       return run_async(fun, std::forward<Args>(args)...).get();
     }
 
     template <typename... Args>
     auto schedule(auto&& fun, Args&&... args) {
-      ZoneScopedN("Application:run_async");
+      ZoneScopedN("CWindow:run_async");
       return get_executor()->schedule(fun, std::forward<Args>(args)...);
     }
 
     template <typename... Args>
     auto schedule(fabric::tasks::time_point tp, auto&& fun, Args&&... args) {
-      ZoneScopedN("Application:run_async");
+      ZoneScopedN("CWindow:run_async");
       return get_executor()->schedule(tp, fun, std::forward<Args>(args)...);
     }
 

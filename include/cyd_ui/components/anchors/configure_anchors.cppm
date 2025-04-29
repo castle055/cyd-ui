@@ -18,19 +18,26 @@ export import cydui.components.anchors;
 
 export {
   namespace cydui::components::anchors {
-    void configure_anchors(
-      std::shared_ptr<component_base_t> child, std::optional<std::shared_ptr<component_base_t>> prev
-    ) {
-      //! SELF
+    void configure_self_anchors(std::shared_ptr<component_base_t> child) {
       dimension_ctx_t& ctx = *child->get_dimensional_context();
-      ctx.set_parameter("self_x", child->get_dimensional_relations().x);
-      ctx.set_parameter("self_y", child->get_dimensional_relations().y);
-      ctx.set_parameter("self_width", child->get_dimensional_relations().width);
-      ctx.set_parameter("self_height", child->get_dimensional_relations().height);
-      ctx.set_parameter("self_screen_x", child->get_internal_relations().cx);
-      ctx.set_parameter("self_screen_y", child->get_internal_relations().cy);
-      ctx.set_parameter("self_content_width", child->get_internal_relations().cw);
-      ctx.set_parameter("self_content_height", child->get_internal_relations().ch);
+
+      //! SELF
+      auto  dim     = child->get_dimensional_relations();
+      auto& int_rel = child->get_internal_relations();
+      ctx.set_parameter("self_x", dim.x);
+      ctx.set_parameter("self_y", dim.y);
+      ctx.set_parameter("self_width", dim.width);
+      ctx.set_parameter("self_height", dim.height);
+      ctx.set_parameter("self_screen_x", int_rel.cx);
+      ctx.set_parameter("self_screen_y", int_rel.cy);
+      ctx.set_parameter("self_content_width", int_rel.cw);
+      ctx.set_parameter("self_content_height", int_rel.ch);
+    }
+
+    void configure_parent_anchors(
+      std::shared_ptr<component_base_t> child
+    ) {
+      dimension_ctx_t& ctx = *child->get_dimensional_context();
 
 #define TO_STRING(...) #__VA_ARGS__
 #define DIMENSIONAL_PARAM(PREFIX, NAME, ...)                                                       \
@@ -42,10 +49,10 @@ export {
         //! PARENT
         if (child->parent.has_value()) {
           auto& irel = child->parent.value()->get_internal_relations();
-          auto& cx = irel.cx;
-          auto& cy = irel.cy;
-          auto& cw = irel.cw;
-          auto& ch = irel.ch;
+          auto& cx   = irel.cx;
+          auto& cy   = irel.cy;
+          auto& cw   = irel.cw;
+          auto& ch   = irel.ch;
 
           PARENT_PARAM(x, cx);
           PARENT_PARAM(y, cy);
@@ -96,6 +103,16 @@ export {
           PARENT_PARAM(bottom_right_y, 0_px);
         }
       }
+    }
+
+    void configure_prev_anchors(
+      std::shared_ptr<component_base_t> child, std::optional<std::shared_ptr<component_base_t>> prev
+    ) {
+      //! SELF
+      dimension_ctx_t& ctx = *child->get_dimensional_context();
+#define TO_STRING(...) #__VA_ARGS__
+#define DIMENSIONAL_PARAM(PREFIX, NAME, ...)                                                       \
+  ctx.set_parameter(TO_STRING(PREFIX##_##NAME), __VA_ARGS__)
 
       {
         //! PREV
@@ -129,7 +146,7 @@ export {
           PREV_PARAM(center_x, x + ((w + ml + mr) / 2));
           PREV_PARAM(center_y, y + ((h + mt + mb) / 2));
           PREV_PARAM(middle_right_x, x + w + ml + mr);
-          PREV_PARAM(middle_right_y, y + ((h+mt+mb) / 2));
+          PREV_PARAM(middle_right_y, y + ((h + mt + mb) / 2));
           PREV_PARAM(bottom_left_x, x);
           PREV_PARAM(bottom_left_y, y + h + mt + mb);
           PREV_PARAM(bottom_center_x, x + ((w + ml + mr) / 2));
@@ -162,6 +179,13 @@ export {
           PREV_PARAM(bottom_right_y, 0_px);
         }
       }
+    }
+    void configure_anchors(
+      std::shared_ptr<component_base_t> child, std::optional<std::shared_ptr<component_base_t>> prev
+    ) {
+      configure_self_anchors(child);
+      configure_parent_anchors(child);
+      configure_prev_anchors(child, prev);
     }
   } // namespace cydui::components::anchors
 }

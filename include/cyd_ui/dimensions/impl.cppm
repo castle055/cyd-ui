@@ -3,6 +3,9 @@
  *!
  */
 
+module;
+#include <tracy/Tracy.hpp>
+
 export module cydui.dimensions:impl;
 
 import std;
@@ -25,9 +28,7 @@ namespace cydui::dimensions {
     using sptr       = std::shared_ptr<dimension_impl>;
 
     ~dimension_impl() {
-      for (auto dependency: expr_.dependencies_) {
-        dependency->dependents_.erase(self);
-      }
+      clear_dependencies();
     }
 
     friend dimension<T>;
@@ -59,11 +60,9 @@ namespace cydui::dimensions {
     }
 
     void clear() {
-      expr_.clear();
+      clear_dependencies();
 
-      for (auto dependency: expr_.dependencies_) {
-        dependency->dependents_.erase(self);
-      }
+      expr_.clear();
 
       mark_unknown();
     }
@@ -75,64 +74,53 @@ namespace cydui::dimensions {
     explicit dimension_impl(const std::shared_ptr<context<T>> ctx)
         : context_(ctx) {}
 
+    void clear_dependencies() {
+      for (const auto& param: expr_.parameters_) {
+        if (context_->contains(param.name)) {
+          auto& param_dim = context_->operator[](param.name);
+          param_dim.impl_->dependents_.erase(this);
+        }
+      }
+      for (auto dependency: expr_.dependencies_) {
+        dependency->dependents_.erase(this);
+      }
+    }
+    void set_dependencies() {
+      for (const auto& param: expr_.parameters_) {
+        if (context_->contains(param.name)) {
+          auto& param_dim = context_->operator[](param.name);
+          param_dim.impl_->dependents_.insert(this);
+        }
+      }
+      for (auto dependency: expr_.dependencies_) {
+        dependency->dependents_.insert(this);
+      }
+    }
+
     void set_expression(const expression<T>& expression) {
-      if (expression == expr_) {
-        return;
-      }
-
-      for (const auto& param: expr_.parameters_) {
-        if (context_->contains(param.name)) {
-          auto& param_dim = context_->operator[](param.name);
-          param_dim.impl_->dependents_.erase(self);
-        }
-      }
-      for (auto dependency: expr_.dependencies_) {
-        dependency->dependents_.erase(self);
-      }
-
+      clear_dependencies();
       expr_ = expression;
-
-      for (const auto& param: expr_.parameters_) {
-        if (context_->contains(param.name)) {
-          auto& param_dim = context_->operator[](param.name);
-          param_dim.impl_->dependents_.insert(self);
-        }
-      }
-      for (auto dependency: expr_.dependencies_) {
-        dependency->dependents_.insert(self);
-      }
+      set_dependencies();
     }
 
     void set_context(const std::shared_ptr<context<T>>& ctx, const std::string& name = "") {
       std::shared_ptr<context<T>> new_ctx = ctx;
-      for (const auto& param: expr_.parameters_) {
-        if (context_->contains(param.name)) {
-          auto& param_dim = context_->operator[](param.name);
-          param_dim.impl_->dependents_.erase(self);
-        }
-      }
-
+      clear_dependencies();
       context_.swap(new_ctx);
       name_ = name;
-
-      for (const auto& param: expr_.parameters_) {
-        if (context_->contains(param.name)) {
-          auto& param_dim = context_->operator[](param.name);
-          param_dim.impl_->dependents_.insert(self);
-        }
-      }
+      set_dependencies();
     }
 
     void mark_unknown() {
+      ZoneScopedN("mark_unknown");
+      if (unknown_) {
+        return;
+      }
       unknown_ = true;
-      for (auto dependent: dependents_) {
-        if (dependent.expired()) {
-          dependents_.erase(dependent);
-        } else {
-          if (!dependent.lock()->unknown_) {
-            dependent.lock()->mark_unknown();
-          }
-        }
+
+      // TODO - unroll this recursion
+      for (const auto& dependent: dependents_) {
+        dependent->mark_unknown();
       }
     }
 
@@ -149,13 +137,13 @@ namespace cydui::dimensions {
     }
 
   private:
-    expression<T>               expr_{};
-    T                           value_{};
-    bool                        unknown_ = true;
+    expression<T> expr_{};
+    T             value_{};
+    bool          unknown_ = true;
     [[refl::ignore]]
-    std::unordered_set<wptr>    dependents_{};
-    std::shared_ptr<context<T>> context_;
-    std::string                 name_{};
+    std::unordered_set<dimension_impl*> dependents_{};
+    std::shared_ptr<context<T>>         context_;
+    std::string                         name_{};
 
     [[refl::ignore]]
     wptr self;
@@ -166,20 +154,3 @@ namespace cydui::dimensions {
     return std::make_shared<dimension_impl<T>>();
   }
 } // namespace cydui::dimensions
-
-template <typename T>
-struct std::hash<std::weak_ptr<cydui::dimensions::dimension_impl<T>>> {
-  std::size_t operator()(const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it) const {
-    return reinterpret_cast<std::size_t>(it.lock().get());
-  }
-};
-
-template <typename T>
-struct std::equal_to<std::weak_ptr<cydui::dimensions::dimension_impl<T>>> {
-  bool operator()(
-    const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it1,
-    const std::weak_ptr<cydui::dimensions::dimension_impl<T>>& it2
-  ) const {
-    return it1.lock() == it2.lock();
-  }
-};

@@ -6,6 +6,8 @@ module;
 #include <tracy/Tracy.hpp>
 #include "cyd_fabric_modules/headers/macros/async_events.h"
 
+#define GET_DIM_VALUE(...) dimensions::get_value(__VA_ARGS__).template as<dimensions::screen::pixel>().value
+
 export module cydui.components.renderer;
 
 import std;
@@ -257,9 +259,6 @@ namespace cydui::components {
       component_base_t* component, compositing::compositing_node_t* parent_node
     ) {
       ZoneScopedN("Update Compose Op");
-      static auto get_num_value = [](const auto& it) -> auto {
-        return dimensions::get_value(it).template as<dimensions::screen::pixel>().value;
-      };
 
       auto& data = component->get_data<render_data_t>();
 
@@ -269,12 +268,12 @@ namespace cydui::components {
       auto& at                  = component->get_style();
       data.compositing_node_.id = (unsigned long)(component->state().get());
       data.compositing_node_.op = {
-        .x          = static_cast<int>(get_num_value(at.x) + get_num_value(at.margin.left)),
-        .y          = static_cast<int>(get_num_value(at.y) + get_num_value(at.margin.top)),
-        .orig_x     = static_cast<int>(get_num_value(at.padding.left) - get_num_value(at.scroll_x)),
-        .orig_y     = static_cast<int>(get_num_value(at.padding.top) - get_num_value(at.scroll_y)),
-        .w          = static_cast<int>(get_num_value(at.width)),
-        .h          = static_cast<int>(get_num_value(at.height)),
+        .x          = static_cast<int>(GET_DIM_VALUE(at.x) + GET_DIM_VALUE(at.margin.left)),
+        .y          = static_cast<int>(GET_DIM_VALUE(at.y) + GET_DIM_VALUE(at.margin.top)),
+        .orig_x     = static_cast<int>(GET_DIM_VALUE(at.padding.left) - GET_DIM_VALUE(at.scroll_x)),
+        .orig_y     = static_cast<int>(GET_DIM_VALUE(at.padding.top) - GET_DIM_VALUE(at.scroll_y)),
+        .w          = static_cast<int>(GET_DIM_VALUE(at.width)),
+        .h          = static_cast<int>(GET_DIM_VALUE(at.height)),
         .rot        = at.rotation.value_as_base_unit(), // dim->rot.val(),
         .scale_x    = 1.0,                              // dim->scale_x.val(),
         .scale_y    = 1.0,                              // dim->scale_y.val(),

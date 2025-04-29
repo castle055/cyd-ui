@@ -243,9 +243,11 @@ export namespace cydui::components {
       style_base_t& base_s = as_base();
 
       for (const auto& [field_info, value]: style_override_data.base_fields) {
+        ZoneScopedN("Base Field");
         field_info.type().assign_copy_of(value.data(), field_info.get_ptr(&base_s));
       }
       for (const auto& [field_info, value]: style_override_data.fields) {
+        ZoneScopedN("Field");
         field_info.type().assign_copy_of(value.data(), field_info.get_ptr(&s));
       }
     }
