@@ -1,7 +1,7 @@
 
 #define STYLE_BASE_FIELD(NAME)                                                                     \
   refl::type_info::from<style_base_t>()                                                            \
-    .field_by_offset(offsetof(cydui::components::style_base_t, NAME))                              \
+    .field_by_offset(__builtin_offsetof(cydui::components::style_base_t, NAME))                              \
     .value()
 
 #define STYLE_SETTER(NAME, TYPE, ...)                                                              \
@@ -21,18 +21,18 @@
 #define INNER_STYLE_SETTER(NAME, TYPE, INNER_NAME, INNER_TYPE, ...)                                \
   STYLE_SETTER_RETURN_TYPE NAME##_##INNER_NAME(const INNER_TYPE& value) {                          \
     static const auto* field =                                                                     \
-      refl::type_info::from<style_base_t>().field_by_offset(offsetof(style_base_t, NAME)).value(); \
+      refl::type_info::from<style_base_t>().field_by_offset(__builtin_offsetof(style_base_t, NAME)).value(); \
     static const auto* inner_field =                                                               \
-      field->type().field_by_offset(offsetof(TYPE, INNER_NAME)).value();                           \
+      field->type().field_by_offset(__builtin_offsetof(TYPE, INNER_NAME)).value();                           \
     auto val = [&] -> auto __VA_ARGS__();                                                          \
     this->get_style_data().set_base_field_override({field, inner_field}, refl::any::make(val));    \
     STYLE_SETTER_RETURN_EXPR;                                                                      \
   }                                                                                                \
   STYLE_SETTER_RETURN_TYPE NAME##_##INNER_NAME(INNER_TYPE&& value) {                               \
     static const auto* field =                                                                     \
-      refl::type_info::from<style_base_t>().field_by_offset(offsetof(style_base_t, NAME)).value(); \
+      refl::type_info::from<style_base_t>().field_by_offset(__builtin_offsetof(style_base_t, NAME)).value(); \
     static const auto* inner_field =                                                               \
-      field->type().field_by_offset(offsetof(TYPE, INNER_NAME)).value();                           \
+      field->type().field_by_offset(__builtin_offsetof(TYPE, INNER_NAME)).value();                           \
     auto val = [&] -> auto __VA_ARGS__();                                                          \
     this->get_style_data().set_base_field_override({field, inner_field}, refl::any::make(val));    \
     STYLE_SETTER_RETURN_EXPR;                                                                      \

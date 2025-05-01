@@ -22,43 +22,39 @@ public:
   using context    = context<value_type>;
 
   dimension()
-      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
-    impl_->self = impl_;
+      : impl_(make_dimension_impl<value_type>()) {
   }
 
   explicit dimension(expression&& expr)
-      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
-    impl_->self = impl_;
+      : impl_(make_dimension_impl<value_type>()) {
     impl_->set_expression(expr);
     impl_->mark_unknown();
   }
 
   explicit dimension(const expression& expr)
-      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
-    impl_->self = impl_;
+      : impl_(make_dimension_impl<value_type>()) {
     impl_->set_expression(expr);
     impl_->mark_unknown();
   }
 
   explicit dimension(const std::shared_ptr<context>& ctx)
-      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>{ctx}}) {
-    impl_->self = impl_;
+      : impl_(make_dimension_impl<value_type>()) {
+    impl_->set_context(ctx);
     impl_->mark_unknown();
   }
 
   explicit dimension(const std::shared_ptr<context>& ctx, expression&& expr)
-      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>{ctx}}) {
-    impl_->self = impl_;
+      : impl_(make_dimension_impl<value_type>()) {
+    impl_->set_context(ctx);
     impl_->set_expression(expr);
     impl_->mark_unknown();
   }
 
   dimension(const dimension& other)
-      : impl_(std::shared_ptr<dimension_impl<value_type>>{new dimension_impl<value_type>}) {
-    impl_->self = impl_;
+      : impl_(make_dimension_impl<value_type>()) {
+    set_context(other.get_context(), other.impl_->name_);
     impl_->set_expression(other.impl_->expr_);
     impl_->value_ = other.impl_->value_;
-    set_context(other.get_context(), other.impl_->name_);
     impl_->unknown_ = false;
     if (other.impl_->unknown_) {
       impl_->mark_unknown();
@@ -106,9 +102,6 @@ public:
   }
 
   void clear() {
-    for (const auto& dep: impl_->expr_.dependencies_) {
-      dep->dependents_.erase({impl_});
-    }
     impl_->clear();
   }
 

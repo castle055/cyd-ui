@@ -39,12 +39,7 @@ namespace cydui::components {
         : id_(identifier) { }
 
     virtual ~component_base_t() = default; //{
-    //  ! All of this is done in the `component_t` class destructor
-    //  clear_subscribed_listeners();
-    //  if (state.has_value()) {
-    //    state.value()->component_instance = std::nullopt;
-    //  }
-    //}
+
     virtual void* get_props() = 0;
 
     virtual component_base_t* find_by_coords(dimension_t::value_type x, dimension_t::value_type y) = 0;

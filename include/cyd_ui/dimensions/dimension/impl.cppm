@@ -11,6 +11,7 @@ export module cydui.dimensions:impl;
 import std;
 
 import fabric.logging;
+export import cydui.digraph;
 
 export import :types;
 export import :expression;
@@ -21,14 +22,20 @@ namespace cydui::dimensions {
   const S& get_value(const dimension<S>& dimension);
 
   template <typename T>
-  class dimension_impl {
+  class dimension_impl: public digraph_node<dimension_impl<T>> {
+    expression<T>               expr_{};
+    T                           value_{};
+    bool                        unknown_ = true;
+    std::shared_ptr<context<T>> context_;
+    std::string                 name_{};
+    
   public:
     using value_type = T;
     using wptr       = std::weak_ptr<dimension_impl>;
     using sptr       = std::shared_ptr<dimension_impl>;
 
     ~dimension_impl() {
-      clear_dependencies();
+      this->clear_inputs();
     }
 
     friend dimension<T>;
@@ -60,55 +67,42 @@ namespace cydui::dimensions {
     }
 
     void clear() {
-      clear_dependencies();
+      this->clear_inputs();
 
       expr_.clear();
 
       mark_unknown();
     }
 
-  private:
     dimension_impl()
         : context_(new context<T>{}) {}
 
-    explicit dimension_impl(const std::shared_ptr<context<T>> ctx)
-        : context_(ctx) {}
+  private:
 
-    void clear_dependencies() {
+    void set_inputs() {
       for (const auto& param: expr_.parameters_) {
         if (context_->contains(param.name)) {
           auto& param_dim = context_->operator[](param.name);
-          param_dim.impl_->dependents_.erase(this);
+          this->add_input(param_dim.impl_);
         }
       }
       for (auto dependency: expr_.dependencies_) {
-        dependency->dependents_.erase(this);
-      }
-    }
-    void set_dependencies() {
-      for (const auto& param: expr_.parameters_) {
-        if (context_->contains(param.name)) {
-          auto& param_dim = context_->operator[](param.name);
-          param_dim.impl_->dependents_.insert(this);
-        }
-      }
-      for (auto dependency: expr_.dependencies_) {
-        dependency->dependents_.insert(this);
+        this->add_input(dependency);
       }
     }
 
     void set_expression(const expression<T>& expression) {
-      clear_dependencies();
+      this->clear_inputs();
       expr_ = expression;
-      set_dependencies();
+      set_inputs();
     }
 
     void set_context(const std::shared_ptr<context<T>>& ctx, const std::string& name = "") {
       std::shared_ptr<context<T>> new_ctx = ctx;
-      clear_dependencies();
+      this->clear_inputs();
       context_.swap(new_ctx);
       name_ = name;
-      set_dependencies();
+      set_inputs();
     }
 
     void mark_unknown() {
@@ -119,8 +113,8 @@ namespace cydui::dimensions {
       unknown_ = true;
 
       // TODO - unroll this recursion
-      for (const auto& dependent: dependents_) {
-        dependent->mark_unknown();
+      for (const auto& dependent: this->get_outputs()) {
+        dependent->data().mark_unknown();
       }
     }
 
@@ -135,22 +129,10 @@ namespace cydui::dimensions {
     bool is_unknown() const {
       return unknown_;
     }
-
-  private:
-    expression<T> expr_{};
-    T             value_{};
-    bool          unknown_ = true;
-    [[refl::ignore]]
-    std::unordered_set<dimension_impl*> dependents_{};
-    std::shared_ptr<context<T>>         context_;
-    std::string                         name_{};
-
-    [[refl::ignore]]
-    wptr self;
   };
 
-  template <typename T>
+  export template <typename T>
   typename dimension_impl<T>::sptr make_dimension_impl() {
-    return std::make_shared<dimension_impl<T>>();
+    return digraph::make_node<dimension_impl<T>>();
   }
 } // namespace cydui::dimensions

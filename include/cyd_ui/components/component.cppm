@@ -73,8 +73,8 @@ namespace cydui::components {
         }
       }
 
-      auto sx  = get_value(style.scroll_x);
-      auto sy  = get_value(style.scroll_y);
+      auto              sx    = get_value(style.scroll_x);
+      auto              sy    = get_value(style.scroll_y);
       component_base_t* found = nullptr;
       for (auto c = children.rbegin(); c != children.rend(); ++c) {
         auto dim = c->get()->get_dimensional_relations();
@@ -90,8 +90,7 @@ namespace cydui::components {
         }
       }
 
-      if (x < 0 || x >= get_value(style.width) || y < 0
-          || y >= get_value(style.height)) {
+      if (x < 0 || x >= get_value(style.width) || y < 0 || y >= get_value(style.height)) {
         return nullptr;
       }
       return this;
@@ -114,8 +113,8 @@ namespace cydui::components {
         .padding_bottom = s.padding.bottom,
         .padding_left   = s.padding.left,
         .padding_right  = s.padding.right,
-        .scroll_x = s.scroll_x,
-        .scroll_y = s.scroll_y,
+        .scroll_x       = s.scroll_x,
+        .scroll_y       = s.scroll_y,
       };
     }
 

@@ -110,7 +110,7 @@ namespace cydui::dimensions {
             stack.pop_back();
           } else {
             LOG::print{FATAL
-            }("Missing parameter while evaluating expression: {}", top->parameter.name);
+            }("Missing parameter ({}) while evaluating expression: {}", top->parameter.name, expr.to_string());
             return false;
           }
           break;
