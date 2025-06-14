@@ -38,7 +38,7 @@ export namespace cydui::backends {
       if (other.texture != nullptr) {
         texture = SDL_CreateTexture(
           renderer_,
-          SDL_PIXELFORMAT_BGRA32,
+          streaming_ ? SDL_PIXELFORMAT_BGRA32 : SDL_PIXELFORMAT_RGBA8888,
           streaming_ ? SDL_TEXTUREACCESS_STREAMING : SDL_TEXTUREACCESS_TARGET,
           w,
           h
@@ -54,7 +54,7 @@ export namespace cydui::backends {
       if (other.texture != nullptr) {
         texture = SDL_CreateTexture(
           renderer_,
-          SDL_PIXELFORMAT_BGRA32,
+          streaming_ ? SDL_PIXELFORMAT_BGRA32 : SDL_PIXELFORMAT_RGBA8888,
           streaming_ ? SDL_TEXTUREACCESS_STREAMING : SDL_TEXTUREACCESS_TARGET,
           w,
           h
@@ -105,7 +105,7 @@ export namespace cydui::backends {
         SDL_Texture* old_texture = texture;
         texture                  = SDL_CreateTexture(
           renderer,
-          SDL_PIXELFORMAT_BGRA32,
+          streaming_ ? SDL_PIXELFORMAT_BGRA32 : SDL_PIXELFORMAT_RGBA8888,
           streaming_ ? SDL_TEXTUREACCESS_STREAMING : SDL_TEXTUREACCESS_TARGET,
           w,
           h
