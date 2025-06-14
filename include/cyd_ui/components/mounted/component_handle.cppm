@@ -100,6 +100,10 @@ namespace cydui::components {
       return cydui::animate(*component, animation);
     }
 
+    mounted_component_t* get() const {
+      return component;
+    }
+
 #include "../styling/style_setters.inc"
   };
 
