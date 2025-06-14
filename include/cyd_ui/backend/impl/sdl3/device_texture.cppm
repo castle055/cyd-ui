@@ -8,7 +8,10 @@ module;
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
 
-#define ASSERT_OK(...) if (not (__VA_ARGS__)) { throw std::runtime_error(SDL_GetError()); }
+#define ASSERT_OK(...)                                                                             \
+  if (not(__VA_ARGS__)) {                                                                          \
+    throw std::runtime_error(SDL_GetError());                                                      \
+  }
 
 export module cydui.backends.sdl3:dev_texture;
 
@@ -39,7 +42,7 @@ export namespace cydui::backends {
         texture = SDL_CreateTexture(
           renderer_,
           streaming_ ? SDL_PIXELFORMAT_BGRA32 : SDL_PIXELFORMAT_RGBA8888,
-          streaming_ ? SDL_TEXTUREACCESS_STREAMING : SDL_TEXTUREACCESS_TARGET,
+          SDL_TEXTUREACCESS_TARGET,
           w,
           h
         );
@@ -55,7 +58,7 @@ export namespace cydui::backends {
         texture = SDL_CreateTexture(
           renderer_,
           streaming_ ? SDL_PIXELFORMAT_BGRA32 : SDL_PIXELFORMAT_RGBA8888,
-          streaming_ ? SDL_TEXTUREACCESS_STREAMING : SDL_TEXTUREACCESS_TARGET,
+          SDL_TEXTUREACCESS_TARGET,
           w,
           h
         );
@@ -106,7 +109,7 @@ export namespace cydui::backends {
         texture                  = SDL_CreateTexture(
           renderer,
           streaming_ ? SDL_PIXELFORMAT_BGRA32 : SDL_PIXELFORMAT_RGBA8888,
-          streaming_ ? SDL_TEXTUREACCESS_STREAMING : SDL_TEXTUREACCESS_TARGET,
+          SDL_TEXTUREACCESS_TARGET,
           w,
           h
         );
@@ -128,6 +131,9 @@ export namespace cydui::backends {
 
       this->w = w;
       this->h = h;
+
+      pitch_ = this->dev_w * 4;
+      pixels_.resize(this->dev_w * this->dev_h * 4);
     }
 
     void clear(SDL_Renderer* renderer) {
@@ -163,20 +169,21 @@ export namespace cydui::backends {
       if (texture == nullptr)
         return {nullptr, 0};
       ZoneScopedN("Lock Texture");
-      pixels_ = nullptr;
-      pitch_  = 0;
-      ASSERT_OK(SDL_LockTexture(texture, nullptr, &pixels_, &pitch_));
+      // ASSERT_OK(SDL_LockTexture(texture, nullptr, &pixels_, &pitch_));
       locked_ = true;
-      return {pixels_, pitch_};
+      return {pixels_.data(), pitch_};
     }
 
     void unlock() {
       if (texture == nullptr)
         return;
       ZoneScopedN("Unlock Texture");
-      SDL_UnlockTexture(texture);
+      // SDL_UnlockTexture(texture);
+      SDL_Rect rect{
+        .x = 0, .y = 0, .w = static_cast<int>(width()), .h = static_cast<int>(height())
+      };
+      ASSERT_OK(SDL_UpdateTexture(texture, &rect, pixels_.data(), pitch_));
       locked_ = false;
-      pixels_ = nullptr;
     }
 
     bool is_locked() const {
@@ -243,7 +250,7 @@ export namespace cydui::backends {
       if (not is_locked()) {
         return lock();
       }
-      return {pixels_, pitch_};
+      return {pixels_.data(), pitch_};
     }
 
     void end_render() override {
@@ -254,13 +261,13 @@ export namespace cydui::backends {
 
   private:
     [[refl::ignore]]
-    SDL_Renderer* renderer_ = nullptr;
-    texture_ptr   texture{nullptr};
-    float         w, h;
-    float         dev_w, dev_h;
-    bool          streaming_ = false;
-    bool          locked_    = false;
-    void*         pixels_    = nullptr;
-    int           pitch_     = 0;
+    SDL_Renderer*        renderer_ = nullptr;
+    texture_ptr          texture{nullptr};
+    float                w, h;
+    float                dev_w, dev_h;
+    bool                 streaming_ = false;
+    bool                 locked_    = false;
+    std::vector<pixel_t> pixels_{};
+    int                  pitch_ = 0;
   };
 } // namespace cydui::backends
