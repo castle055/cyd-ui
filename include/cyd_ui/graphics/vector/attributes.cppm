@@ -219,7 +219,7 @@ export namespace vg {
 #define VG_ATTRIBUTE(TYPE, NAME, DEFAULT)                                                          \
   template <typename E>                                                                            \
   struct attr_##NAME: public attribute_i {                                                         \
-    inline E& NAME(TYPE& _##NAME##_) {                                                             \
+    inline E& NAME(const TYPE& _##NAME##_) {                                                       \
       this->_##NAME = _##NAME##_;                                                                  \
       return *(E*)this;                                                                            \
     }                                                                                              \
@@ -247,7 +247,7 @@ export namespace vg {
 #define VG_ATTRIBUTE_PAINT(NAME)                                                                   \
   template <typename E>                                                                            \
   struct attr_##NAME: public attribute_i {                                                         \
-    inline E& NAME(vg::paint::type& _##NAME##_) {                                                  \
+    inline E& NAME(const vg::paint::type& _##NAME##_) {                                            \
       this->_##NAME = _##NAME##_;                                                                  \
       return *(E*)this;                                                                            \
     }                                                                                              \
@@ -255,7 +255,7 @@ export namespace vg {
       this->_##NAME = _##NAME##_;                                                                  \
       return *(E*)this;                                                                            \
     }                                                                                              \
-    inline E& NAME(vg::paint::solid& _##NAME##_) {                                                 \
+    inline E& NAME(const vg::paint::solid& _##NAME##_) {                                           \
       this->_##NAME.paint_data = std::make_unique<vg::paint::solid>(_##NAME##_);                   \
       this->_##NAME.paint_type = vg::paint::type::SOLID;                                           \
       return *(E*)this;                                                                            \
@@ -265,7 +265,7 @@ export namespace vg {
       this->_##NAME.paint_type = vg::paint::type::SOLID;                                           \
       return *(E*)this;                                                                            \
     }                                                                                              \
-    inline E& NAME(vg::paint::gradient::linear& _##NAME##_) {                                      \
+    inline E& NAME(const vg::paint::gradient::linear& _##NAME##_) {                                \
       this->_##NAME.paint_data = std::make_unique<vg::paint::gradient::linear>(_##NAME##_);        \
       this->_##NAME.paint_type = vg::paint::type::GRADIENT_LINEAR;                                 \
       return *(E*)this;                                                                            \
@@ -275,7 +275,7 @@ export namespace vg {
       this->_##NAME.paint_type = vg::paint::type::GRADIENT_LINEAR;                                 \
       return *(E*)this;                                                                            \
     }                                                                                              \
-    inline E& NAME(vg::paint::gradient::radial& _##NAME##_) {                                      \
+    inline E& NAME(const vg::paint::gradient::radial& _##NAME##_) {                                \
       this->_##NAME.paint_data = std::make_unique<vg::paint::gradient::radial>(_##NAME##_);        \
       this->_##NAME.paint_type = vg::paint::type::GRADIENT_RADIAL;                                 \
       return *(E*)this;                                                                            \

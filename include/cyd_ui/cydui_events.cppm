@@ -18,7 +18,7 @@ export {
     unsigned long win       = 0;
     int           x         = 0;
     int           y         = 0;
-    void*         component = nullptr;
+    void*         component = nullptr; // Points to the target `mounted_component_t`
   };
 
   EVENT(ButtonEvent) {

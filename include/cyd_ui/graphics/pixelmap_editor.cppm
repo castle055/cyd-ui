@@ -53,8 +53,8 @@ public:
   }
 
 public:
-  Cairo::RefPtr<Cairo::Context> operator->() {
-    return ctx;
+  Cairo::Context* operator->() {
+    return ctx.get();
   }
   
   void clear() {

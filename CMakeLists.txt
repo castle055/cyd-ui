@@ -41,8 +41,8 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
 endif ()
 
 #[[                           CONFIGURE OPTIONS                              ]]#
-#option(CYD_UI_PROFILING "whether or not to enable Tracy profiler" OFF)
-option(CYD_UI_PROFILING "whether or not to enable Tracy profiler" ON)
+option(CYD_UI_PROFILING "whether or not to enable Tracy profiler" OFF)
+#option(CYD_UI_PROFILING "whether or not to enable Tracy profiler" ON)
 if (CYD_UI_DEV_MODE)
     option(CYD_UI_BUILD_APPS "whether or not app executables should be built" ON)
 else ()
@@ -113,7 +113,7 @@ option(TRACY_ON_DEMAND "" OFF)
 FetchContent_Declare (
         tracy
         GIT_REPOSITORY https://github.com/wolfpld/tracy.git
-        GIT_TAG v0.11.1
+        GIT_TAG v0.12.0
         GIT_SHALLOW TRUE
         GIT_PROGRESS TRUE
 )

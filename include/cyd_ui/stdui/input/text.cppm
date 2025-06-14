@@ -3,7 +3,7 @@
 //
 
 module;
-#include "cyd_ui/components/component_macros.h"
+#include "cyd_ui/macros.h"
 
 export module cydui.std.input.text;
 
@@ -11,31 +11,34 @@ import fabric.logging;
 import cydui;
 
 namespace stdui::input {
-  struct TextInputContext {
-
-  };
+  struct TextInputContext {};
   export COMPONENT(
-    text, { std::string* text; } STATE { int caret_pos = 0; };
+    text, { std::string* text; };
     ATTRIBUTE(on_enter, std::function<void()>){[] {}};
     ATTRIBUTE(on_escape, std::function<void()>){[] {}};
   ) {
+    STATE {
+      int caret_pos = 0;
+    };
     cydui::provide_context<TextInputContext> text_input_ctx{};
 
     CHILDREN {
-      return {
-        text_input_ctx > with_context {
-          $content
-        }
-      };
+      return {$content};
     }
 
     FRAGMENT {
       // fragment.draw<vg::rect>().w($width).h($height).fill("#222222"_color);
       fragment.append(build_text(*props.text).fill("#FFFFFF"_color));
 
-      if (state.focused) {
-        const auto [x, y, w, h] = build_text(props.text->substr(0, state.caret_pos)).get_footprint();
-        fragment.draw<vg::rectangle>().x(x + w - 1_px).y(y - 3_px).w(2_px).h(h + 3_px).fill("#FFFFFF"_color);
+      if (component.is_focused()) {
+        const auto [x, y, w, h] =
+          build_text(props.text->substr(0, state.caret_pos)).get_footprint();
+        fragment.draw<vg::rectangle>()
+          .x(x + w - 1_px)
+          .y(y - 3_px)
+          .w(2_px)
+          .h(h + 3_px)
+          .fill("#FFFFFF"_color);
       }
     }
 
@@ -49,9 +52,9 @@ namespace stdui::input {
       } else if (ev.keysym.code == SDLK_END) {
         state.caret_pos = props.text->size();
       } else if (ev.keysym.code == SDLK_RETURN) {
-        component.on_enter_();
+        component.get_blueprint().on_enter_();
       } else if (ev.keysym.code == SDLK_ESCAPE) {
-        component.on_escape_();
+        component.get_blueprint().on_escape_();
       } else if (ev.keysym.code == SDLK_BACKSPACE) {
         if (state.caret_pos == static_cast<int>(props.text->size())) {
           while (!props.text->empty()) {
@@ -83,7 +86,7 @@ namespace stdui::input {
           }
         }
       }
-      state.mark_dirty();
+      component.mark_dirty();
     }
 
     ON_TEXT_INPUT {
@@ -94,7 +97,7 @@ namespace stdui::input {
           props.text->insert(state.caret_pos, ev.text);
         }
         state.caret_pos += static_cast<int>(ev.text.size());
-        state.mark_dirty();
+        component.mark_dirty();
       }
     }
 
@@ -103,7 +106,9 @@ namespace stdui::input {
       auto prev         = build_text(props.text->substr(0, advance_from(0))).get_footprint();
       {
         const auto d1 = std::abs(x.value_as_base_unit() - prev.x.value_as_base_unit());
-        const auto d2 = std::abs(x.value_as_base_unit() - (prev.x.value_as_base_unit() + prev.w.value_as_base_unit()));
+        const auto d2 = std::abs(
+          x.value_as_base_unit() - (prev.x.value_as_base_unit() + prev.w.value_as_base_unit())
+        );
         if (d1 < d2) {
           state.caret_pos = 0;
           min_distance    = d1;
@@ -130,7 +135,7 @@ namespace stdui::input {
         }
         prev = curr;
       }
-      state.mark_dirty();
+      component.mark_dirty();
     }
 
   private:
@@ -139,8 +144,8 @@ namespace stdui::input {
         while (n-- > 0) {
           if (((*props.text)[index] & 0xC0) == 0xC0) {
             ++index;
-            while (((*props.text)[index] & 0xC0) == 0x80 && index < static_cast<int>(props.text->size())
-            ) {
+            while (((*props.text)[index] & 0xC0) == 0x80
+                   && index < static_cast<int>(props.text->size())) {
               ++index;
             }
             index = std::min(index, static_cast<int>(props.text->size()));
@@ -166,4 +171,4 @@ namespace stdui::input {
       return vg::text{s}.x(0).y(25).font_family("Helvetica");
     }
   };
-}
+} // namespace stdui::input

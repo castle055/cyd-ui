@@ -1,9 +1,6 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-module;
-#include "../components/component_macros.h"
-
 export module cydui.std;
 
 import std;
@@ -11,7 +8,6 @@ export import cydui;
 
 export import cydui.std.structural;
 export import cydui.std.input;
-export import cydui.std.charts;
 
 // namespace stdui {
 // #define ATTR_PROP(PROP)                                                                            \

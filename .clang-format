@@ -25,7 +25,7 @@ AlignOperands: true
 AlignTrailingComments: true
 #BinPackParameters: AlwaysOnePerLine
 BinPackArguments: false
-BinPackParameters: false
+BinPackParameters: AlwaysOnePerLine
 BreakBeforeBinaryOperators: NonAssignment
 PackConstructorInitializers: Never
 BraceWrapping:
