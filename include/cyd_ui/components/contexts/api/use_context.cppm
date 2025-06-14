@@ -83,7 +83,7 @@ namespace cydui {
     void start_listening(auto&& callback) {
       stop_listening();
 
-      listener = window_->on_event([&](ContextUpdate<context_type> ev) -> fabric::task<> {
+      listener = window_->on_event([=](ContextUpdate<context_type> ev) -> fabric::task<> {
         if (ev.ptr == ctx) {
           callback();
         }
