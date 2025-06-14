@@ -175,7 +175,7 @@ namespace cydui::components {
       return *dynamic_cast<T*>(this);
     }
 
-    T& operator()(content_type& _content_) {
+    T& operator()(const content_type& _content_) {
       this->content_ = _content_;
       return *dynamic_cast<T*>(this);
     }
