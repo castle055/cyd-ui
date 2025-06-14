@@ -11,6 +11,7 @@ export import cydui.styling.style_base;
 
 export namespace cydui::components {
   class sparse_field_map {
+    [[refl::ignore]]
     const refl::type_info&                type_;
     std::map<refl::field_path, refl::any> fields_{};
 
@@ -33,7 +34,8 @@ export namespace cydui::components {
     }
 
     bool erase(const refl::field_path& field_path) {
-      assert_path_root_type(field_path);
+      if (not assert_path_root_type(field_path))
+        return false;
       const bool changed = fields_.contains(field_path);
       fields_.erase(field_path);
       return changed;
@@ -43,14 +45,16 @@ export namespace cydui::components {
       const refl::field_path& field_path,
       const refl::any&        value
     ) {
-      assert_path_root_type(field_path);
-      const bool changed  = (not fields_.contains(field_path)) or (fields_.at(field_path) != value);
+      if (not assert_path_root_type(field_path))
+        return false;
+      const bool changed  = (not fields_.contains(field_path)) or (fields_[field_path] != value);
       fields_[field_path] = value;
       return changed;
     }
 
     std::optional<refl::any_ref> get(const refl::field_path& field_path) {
-      assert_path_root_type(field_path);
+      if (not assert_path_root_type(field_path))
+        return std::nullopt;
       refl::field_path path = field_path;
       while (path.depth() > 0) {
         if (fields_.contains(path)) {
@@ -71,7 +75,8 @@ export namespace cydui::components {
     }
 
     std::optional<refl::any> get(const refl::field_path& field_path) const {
-      assert_path_root_type(field_path);
+      if (not assert_path_root_type(field_path))
+        return std::nullopt;
       refl::field_path path = field_path;
       while (path.depth() > 0) {
         if (fields_.contains(path)) {
@@ -94,7 +99,8 @@ export namespace cydui::components {
     }
 
     bool contains_value(const refl::field_path& field_path) const {
-      assert_path_root_type(field_path);
+      if (not assert_path_root_type(field_path))
+        return false;
       refl::field_path path = field_path;
       while (path.depth() > 0) {
         if (fields_.contains(path)) {
@@ -106,7 +112,8 @@ export namespace cydui::components {
     }
 
     bool contains_specific_value(const refl::field_path& field_path) const {
-      assert_path_root_type(field_path);
+      if (not assert_path_root_type(field_path))
+        return false;
       return fields_.contains(field_path);
     }
 
@@ -135,14 +142,13 @@ export namespace cydui::components {
     }
 
   private:
-    void assert_path_root_type(const refl::field_path& path) const {
+    bool assert_path_root_type(const refl::field_path& path) const {
       if (path.root_type() != type_) {
-        throw std::runtime_error(
-          std::format(
-            "Field belongs to type '{}', expected '{}'", path.root_type().name(), type_.name()
-          )
-        );
+        LOG::print{ERROR
+        }("Field belongs to type '{}', expected '{}'", path.root_type().name(), type_.name());
+        return false;
       }
+      return true;
     }
   };
 
@@ -161,13 +167,11 @@ export namespace cydui::components {
 
     sparse_style_map& operator=(const sparse_style_map& other) {
       if (other.get_type().id() != this->get_type().id()) {
-        throw std::runtime_error(
-          std::format(
-            "Assigning style map of type {} to map of type {}",
-            other.get_type().name(),
-            this->get_type().name()
-          )
-        );
+        LOG::print{ERROR
+        }("Assigning style map of type {} to map of type {}",
+          other.get_type().name(),
+          this->get_type().name());
+        return *this;
       }
       this->base_fields_ = other.base_fields_;
       this->impl_fields_ = other.impl_fields_;
@@ -176,13 +180,11 @@ export namespace cydui::components {
 
     sparse_style_map& operator=(sparse_style_map&& other) {
       if (other.get_type().id() != this->get_type().id()) {
-        throw std::runtime_error(
-          std::format(
-            "Assigning style map of type {} to map of type {}",
-            other.get_type().name(),
-            this->get_type().name()
-          )
-        );
+        LOG::print{ERROR
+        }("Assigning style map of type {} to map of type {}",
+          other.get_type().name(),
+          this->get_type().name());
+        return *this;
       }
       this->base_fields_ = std::move(other.base_fields_);
       this->impl_fields_ = std::move(other.impl_fields_);
@@ -242,9 +244,10 @@ export namespace cydui::components {
 
         LOG::print{ERROR
         }("expected type '{}', found '{}'", path.type().name(), value.type().name());
-        throw std::runtime_error(
-          std::format("expected type '{}', found '{}'", path.type().name(), value.type().name())
-        );
+        // throw std::runtime_error(
+        //   std::format("expected type '{}', found '{}'", path.type().name(), value.type().name())
+        // );
+        return false;
       } else {
         return set_field_as_is(path, value);
       }
