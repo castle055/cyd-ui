@@ -10,6 +10,7 @@ export import :api;
 export import :impl;
 export import :dimension;
 export import :expression;
+export import :function;
 
 export namespace cydui {
   using dimension_t = dimensions::dimension<dimensions::screen_measure>;

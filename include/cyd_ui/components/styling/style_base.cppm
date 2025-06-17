@@ -44,6 +44,8 @@ export namespace cydui::components {
     [[meta(AnimationComplexity::FULL_UPDATE)]] position_e position_y{position_e::RELATIVE};
     [[meta(AnimationComplexity::REFLOW)]] expression_t    width;
     [[meta(AnimationComplexity::REFLOW)]] expression_t    height;
+    [[meta(AnimationComplexity::REFLOW)]] expression_t    max_width;
+    [[meta(AnimationComplexity::REFLOW)]] expression_t    max_height;
     [[meta(AnimationComplexity::REFLOW)]] four_sided_property<expression_t> margin;
     [[meta(AnimationComplexity::REFLOW)]] four_sided_property<expression_t> padding;
     [[meta(AnimationComplexity::REFLOW)]] expression_t                      scroll_x;

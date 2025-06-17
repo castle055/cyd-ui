@@ -10,13 +10,7 @@ import std;
 import fabric.logging;
 
 export import :types;
-
-export namespace cydui::dimensions {
-  template <typename Type>
-  struct function: std::function<Type()> {
-    std::unordered_set<std::shared_ptr<dimension_impl<Type>>> dependencies{};
-  };
-} // namespace cydui::dimensions
+export import :function;
 
 export template <typename Type>
 class cydui::dimensions::expression {
@@ -167,7 +161,7 @@ public:
     std::shared_ptr<dimension_impl<Type>> dimension{nullptr};
     std::list<sptr>                       children{};
     parameter                             parameter{};
-    function<Type>                        fun{};
+    function<Type>                        fun{[] { return 0_px; }, {}};
   };
 
   expression() = default;

@@ -9,6 +9,7 @@ import std;
 export import reflect;
 
 export import cydui.dimensions;
+export import cydui.dimensions.functions;
 
 export namespace cydui {
   enum class edge { TOP, RIGHT, BOTTOM, LEFT };
@@ -37,6 +38,7 @@ namespace cydui::geometry {
     //** Inputs
     std::array<dimension_t, AXIS_COUNT>                position{};
     std::array<dimension_t, AXIS_COUNT>                size{};
+    std::array<dimension_t, AXIS_COUNT>                max_size{};
     std::array<dimension_t, AXIS_COUNT>                content_size{};
     std::array<dimension_t, AXIS_COUNT>                scroll{};
     std::array<std::array<dimension_t, 2>, AXIS_COUNT> margin{};
@@ -240,6 +242,7 @@ namespace cydui::geometry {
 
   private:
     void set_sizing_relations(axis axis) {
+      using namespace dimensions;
       switch (sizing[axis]) {
         case component_sizing::FIXED:
           box_size[axis]        = size[axis];
@@ -249,7 +252,11 @@ namespace cydui::geometry {
           screen_size[axis]     = margin_box_size[axis];
           break;
         case component_sizing::GROW:
-          viewport_size[axis]   = content_size[axis];
+          viewport_size[axis] = dimfn::max(
+            std::vector{
+              size[axis], dimension_t{dimfn::min(std::vector{max_size[axis], content_size[axis]})}
+            }
+          );
           background_size[axis] = viewport_size[axis] + padding[axis][0] + padding[axis][1];
           box_size[axis] = background_size[axis] + border_width[axis][0] + border_width[axis][1];
           margin_box_size[axis] = box_size[axis] + margin[axis][0] + margin[axis][1];

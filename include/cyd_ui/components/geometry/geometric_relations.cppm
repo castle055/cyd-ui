@@ -19,6 +19,7 @@ export import reflect;
 
 export import cydui.components.mounted;
 export import cydui.geometry;
+export import cydui.dimensions.functions;
 
 namespace cydui::geometry {
   export void update_content_size_in_axis(
@@ -27,27 +28,14 @@ namespace cydui::geometry {
   ) {
     auto& geom = component.get_geometry();
 
-    std::vector<dimension_t>                                                      dims{};
-    std::unordered_set<dimensions::expression<dimensions::screen_measure>::dep_t> deps{};
+    std::vector<dimension_t> dims{};
     for (auto& child: component.get_children()) {
       auto& c_geom = child->get_geometry();
       if (c_geom.positioning[axis] == component_positioning::RELATIVE) {
-        dims.emplace_back(c_geom.position[axis] + c_geom.screen_size[axis]);
-        deps.insert(c_geom.position[axis].as_dependency());
-        deps.insert(c_geom.screen_size[axis].as_dependency());
+        dims.push_back(dimension_t{c_geom.position[axis] + c_geom.screen_size[axis]});
       }
     }
-    geom.content_size[axis] = dimensions::function<dimensions::screen_measure>{
-      [=] {
-        auto max = 0_px;
-        for (auto d: dims) {
-          dimensions::compute(d);
-          max = std::max(max, dimensions::get_value(d));
-        }
-        return max;
-      },
-      deps
-    };
+    geom.content_size[axis] = dimensions::dimfn::max(dims);
   }
 
   export void update_content_size(components::mounted_component_t& component) {
@@ -72,6 +60,16 @@ namespace cydui::geometry {
     } else if (style.position_y == position_e::RELATIVE and not component.is_root()) {
       geom.set_position_relative(Y_AXIS, component.get_parent()->get_geometry());
     }
+
+    //* Max Size
+    geom.max_size[X_AXIS] = style.max_width.empty()
+                              ? dimensions::screen_measure{std::numeric_limits<
+                                  dimensions::screen_measure::data_type>::max()}
+                              : style.max_width;
+    geom.max_size[Y_AXIS] = style.max_height.empty()
+                              ? dimensions::screen_measure{std::numeric_limits<
+                                  dimensions::screen_measure::data_type>::max()}
+                              : style.max_height;
 
     //* Size
     geom.size[X_AXIS] = style.width;

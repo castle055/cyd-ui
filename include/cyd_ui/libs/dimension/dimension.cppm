@@ -80,14 +80,7 @@ namespace cydui::dimensions {
     }
 
     dimension(const dimension& other)
-        : impl_(make_dimension_impl<value_type>()) {
-      set_context(other.get_context(), other.impl_->name_);
-      impl_->set_expression(other.impl_->expr_);
-      impl_->value_   = other.impl_->value_;
-      impl_->unknown_ = false;
-      if (other.impl_->unknown_) {
-        impl_->mark_unknown();
-      }
+        : impl_(other.impl_) {
     }
 
     dimension& operator=(const dimension& other) {
