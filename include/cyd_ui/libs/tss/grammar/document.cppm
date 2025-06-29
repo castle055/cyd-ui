@@ -19,7 +19,7 @@ namespace syntax {
   export GRAMMAR(tss_document)
       : tss_rules {
     struct stylesheet_data {
-      std::vector<cydui::StyleRule::sptr> rules{};
+      std::vector<tss::StyleRule::sptr> rules{};
     };
     ARULE(tss_stylesheet) (*tss_rule())(stylesheet_data)({
       for (const auto& child: $node->children) {

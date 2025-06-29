@@ -145,7 +145,7 @@ namespace cydui {
 
     void update_component(
       components::mounted_component_t& component,
-      StyleArchive&                    style_archive
+      tss::StyleArchive&                    style_archive
     ) {
       PROF_SCOPE(Update Component)
       component.clear_dirty_flag();

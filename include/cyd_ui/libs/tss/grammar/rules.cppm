@@ -25,10 +25,10 @@ namespace syntax {
   export GRAMMAR(tss_rules)
       : tss_expressions,
         tss_selectors {
-    ARULE(tss_rule)(!skip_wn{}, tss_selector{}, !braces_begin{}, tss_declaration_list{}, !braces_end{})(cydui::
+    ARULE(tss_rule)(!skip_wn{}, tss_selector{}, !braces_begin{}, tss_declaration_list{}, !braces_end{})(tss::
                                                                                                           StyleRule::
                                                                                                             sptr)({
-      $node->data = std::make_shared<cydui::StyleRule>();
+      $node->data = std::make_shared<tss::StyleRule>();
 
       if ($node->children[0]->is_type<tss_selector>()) {
         const auto* sel                   = $node->children[0]->as<tss_selector>();

@@ -53,16 +53,16 @@ namespace cydui {
       impl_ = UI_impl::make(frame, std::move(root), options);
     }
 
-    void attach_stylesheet(const StyleSheet::sptr& style_sheet) const {
+    void attach_stylesheet(const tss::StyleSheet::sptr& style_sheet) const {
       impl_->get_style().attach_stylesheet(style_sheet);
     }
 
     void attach_stylesheet(const std::filesystem::path& style_sheet) const {
-      impl_->get_style().attach_stylesheet(StyleSheet::parse(style_sheet));
+      impl_->get_style().attach_stylesheet(tss::StyleSheet::parse(style_sheet));
     }
 
     void add_style(const std::string& style_string) const {
-      impl_->attach_stylesheet(StyleSheet::parse(style_string));
+      impl_->attach_stylesheet(tss::StyleSheet::parse(style_string));
     }
   };
 

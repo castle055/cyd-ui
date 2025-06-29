@@ -37,14 +37,14 @@ export import cydui.animations;
 
 namespace cydui {
   export struct UI_options {
-    std::vector<StyleSheet::sptr> stylesheets;
+    std::vector<tss::StyleSheet::sptr> stylesheets;
 
     void attach_stylesheet(const std::filesystem::path& style_sheet) {
-      stylesheets.push_back(StyleSheet::parse(style_sheet));
+      stylesheets.push_back(tss::StyleSheet::parse(style_sheet));
     }
 
     void attach_style(const std::string& style_str) {
-      stylesheets.push_back(StyleSheet::parse(style_str));
+      stylesheets.push_back(tss::StyleSheet::parse(style_str));
     }
   };
 
@@ -119,9 +119,9 @@ namespace cydui {
         .get();
     }
 
-    void attach_stylesheet(const StyleSheet::sptr& style_sheet) {
+    void attach_stylesheet(const tss::StyleSheet::sptr& style_sheet) {
       frame_.get_bus()->schedule(
-        [&](StyleSheet::sptr style_sheet_) -> fabric::task<> {
+        [&](tss::StyleSheet::sptr style_sheet_) -> fabric::task<> {
           style_.attach_stylesheet(style_sheet_);
           style_.compile_rules_recurse(*tree_.root);
           updater_.schedule_update();

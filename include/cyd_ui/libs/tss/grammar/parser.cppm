@@ -21,7 +21,7 @@ namespace syntax {
   };
 } // namespace syntax
 
-export namespace lang::tss {
+export namespace tss {
   using parse_result = fabric::parse_result<syntax::tss>;
 
   template <typename Input>

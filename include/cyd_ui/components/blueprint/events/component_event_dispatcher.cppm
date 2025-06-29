@@ -88,7 +88,7 @@ namespace cydui::components {
       );
     }
     content_type update(
-      StyleArchive&       style_archive,
+      tss::StyleArchive&       style_archive,
       const content_type& content_children_builder
     ) override {
       ZoneScopedN("Update - Component EV");

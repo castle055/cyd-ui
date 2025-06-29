@@ -13,10 +13,9 @@ import fabric.logging;
 import cydui.styling.lang.parser;
 export import cydui.styling.lang.selectors;
 export import cydui.styling.lang.rules;
-export import cydui.styling.lang.custom_style_parser;
 
 
-namespace cydui {
+namespace tss {
   template<typename O>
   void print_ast_node(O &o, const fabric::node_t *node, int indent = 0) {
     for (int i = 0; i < indent; ++i) {
@@ -69,7 +68,7 @@ namespace cydui {
     }
 
     static sptr parse(auto input) {
-      auto [ok, ast, log] = lang::tss::parse(input);
+      auto [ok, ast, log] = tss::parse(input);
 
       if (not ok) {
         LOG::print {ERROR}("Couldn't parse stylesheet");

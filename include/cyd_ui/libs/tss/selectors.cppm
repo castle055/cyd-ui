@@ -10,7 +10,7 @@ import reflect;
 
 import fabric.logging;
 
-namespace cydui {
+namespace tss {
   export struct StyleRuleSelector {
     std::size_t specificity() const {
       return compute_specificity();

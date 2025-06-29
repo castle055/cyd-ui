@@ -34,7 +34,7 @@ export namespace cydui::components {
     virtual ~event_dispatcher_base_t() = default;
 
     virtual content_type update(
-      StyleArchive&       style_archive,
+      tss::StyleArchive&       style_archive,
       const content_type& content_children_builder
     ) = 0;
 

@@ -216,7 +216,7 @@ export namespace cydui::styling {
   bool apply_style(components::mounted_component_t& component) {
     auto& style      = component.get_style_stack();
 
-    style.manage_rules([&](const StyleRuleInstance& rule) -> bool {
+    style.manage_rules([&](const tss::StyleRuleInstance& rule) -> bool {
       return check_style_comb_selector_vector(component, rule.rule->selectors_, true, true);
     });
     bool style_changed = style.apply();

@@ -19,7 +19,7 @@ export import cydui.styling.lang;
 namespace cydui::styling {
   bool check_style_selector(
     components::mounted_component_t& component,
-    const StyleRuleSelector&         selector,
+    const tss::StyleRuleSelector&         selector,
     bool                             check_tags,
     bool                             check_pseudo_states
   ) {
@@ -50,7 +50,7 @@ namespace cydui::styling {
 
   bool check_style_comb_selector(
     components::mounted_component_t& component,
-    const StyleRuleCombinedSelector& selector,
+    const tss::StyleRuleCombinedSelector& selector,
     bool                             check_tags = false,
     bool check_pseudo_states                    = false
   ) {
@@ -58,12 +58,12 @@ namespace cydui::styling {
     if (not check_style_selector(component, it->second, check_tags, check_pseudo_states)) {
       return false;
     }
-    StyleRuleCombinedSelector::kind_e kind = it->first;
+    tss::StyleRuleCombinedSelector::kind_e kind = it->first;
     ++it;
 
     components::mounted_component_t* current = &component;
     while (it != selector.selectors.rend()) {
-      if (kind == StyleRuleCombinedSelector::CHILD_COMBINATOR) {
+      if (kind == tss::StyleRuleCombinedSelector::CHILD_COMBINATOR) {
         auto& parent = *current->get_parent();
         if (not current->is_root()
             and check_style_selector(parent, it->second, check_tags, check_pseudo_states)) {
@@ -71,7 +71,7 @@ namespace cydui::styling {
         } else {
           return false;
         }
-      } else if (kind == StyleRuleCombinedSelector::DESCENDENT_COMBINATOR) {
+      } else if (kind == tss::StyleRuleCombinedSelector::DESCENDENT_COMBINATOR) {
         bool found = false;
         while (not current->is_root()) {
           auto& parent = *current->get_parent();
@@ -98,11 +98,11 @@ namespace cydui::styling {
 export namespace cydui::styling {
   void compile_style_rule_list(
     components::mounted_component_t& component,
-    StyleArchive&                    style_archive
+    tss::StyleArchive&                    style_archive
   ) {
-    std::vector<StyleRuleInstance> style_rules{};
+    std::vector<tss::StyleRuleInstance> style_rules{};
 
-    style_archive.for_each_rule(component.get_name(), [&](const StyleRule::sptr& rule) {
+    style_archive.for_each_rule(component.get_name(), [&](const tss::StyleRule::sptr& rule) {
       for (const auto& selector: rule->selectors_) {
         if (check_style_comb_selector(component, selector)) {
           style_rules.emplace_back(selector.specificity(), rule);
@@ -114,7 +114,7 @@ export namespace cydui::styling {
     std::stable_sort(
       style_rules.begin(),
       style_rules.end(),
-      [](const StyleRuleInstance& lhs, const StyleRuleInstance& rhs) {
+      [](const tss::StyleRuleInstance& lhs, const tss::StyleRuleInstance& rhs) {
         return lhs.specificity < rhs.specificity;
       }
     );
@@ -124,7 +124,7 @@ export namespace cydui::styling {
 
   bool check_style_comb_selector_vector(
     components::mounted_component_t&              component,
-    const std::vector<StyleRuleCombinedSelector>& selectors,
+    const std::vector<tss::StyleRuleCombinedSelector>& selectors,
     bool                                          check_tags = false,
     bool check_pseudo_states                                 = false
   ) {

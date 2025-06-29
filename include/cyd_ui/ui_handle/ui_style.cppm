@@ -20,17 +20,17 @@ import cydui.geometric_relations;
 
 namespace cydui {
   export class ui_style {
-    StyleArchive::sptr style_archive{StyleArchive::make()};
+    tss::StyleArchive::sptr style_archive{tss::StyleArchive::make()};
 
   public:
     ui_style() = default;
 
-    StyleArchive& get_style_archive() {
+    tss::StyleArchive& get_style_archive() {
       PROF_SCOPE(get_style_archive);
       return *style_archive;
     }
 
-    void attach_stylesheet(const StyleSheet::sptr& style_sheet) {
+    void attach_stylesheet(const tss::StyleSheet::sptr& style_sheet) {
       PROF_SCOPE(attach_stylesheet);
       style_archive->add_stylesheet(style_sheet);
     }

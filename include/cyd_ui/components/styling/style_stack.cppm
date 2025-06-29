@@ -11,14 +11,14 @@ export import cydui.styling.style_override;
 
 export namespace cydui::components {
   class style_rule_map {
-    std::vector<StyleRuleInstance> applicable_rules_;
+    std::vector<tss::StyleRuleInstance> applicable_rules_;
     sparse_style_map               style_map_;
 
   public:
     explicit style_rule_map(const refl::type_info& style_ti)
         : style_map_(style_ti) {}
 
-    bool update_rule_list(const std::vector<StyleRuleInstance>& new_rules) {
+    bool update_rule_list(const std::vector<tss::StyleRuleInstance>& new_rules) {
       if (new_rules != applicable_rules_) {
         applicable_rules_ = new_rules;
         return update_projection();
@@ -113,7 +113,7 @@ export namespace cydui::components {
       return style_rule_map_;
     }
 
-    void update_rule_list(const std::vector<StyleRuleInstance>& new_rules) {
+    void update_rule_list(const std::vector<tss::StyleRuleInstance>& new_rules) {
       bool rule_projection_changed = style_rule_map_.update_rule_list(new_rules);
       if (rule_projection_changed) {
         style_object_dirty_ = true;

@@ -15,10 +15,13 @@ import std;
 export import reflect;
 import fabric.logging;
 
-export import cydui.components.base.style;
-export import cydui.styling.style_override;
 export import cydui.components.identifier;
 export import cydui.components.state;
+export import cydui.graphics.vector;
+export import cydui.graphics.compositing_operation;
+export import cydui.styling.lang;
+export import cydui.styling.style_base;
+export import cydui.styling.style_override;
 
 
 export namespace cydui::components {

@@ -32,7 +32,7 @@ namespace syntax {
     RULE(tss_element_selector)          (tss_identifier{}, *(forward_slash, tss_identifier{}));
 
     struct selector_data {
-      cydui::StyleRuleSelector selector{};
+      tss::StyleRuleSelector selector{};
     };
     ARULE(tss_descendent_selector_item)  (tss_element_selector{}, *(tss_class_selector{} | tss_tag_selector{} | tss_pseudo_state_selector{}))
     (selector_data)({
@@ -69,7 +69,7 @@ namespace syntax {
     RULE(tss_children_selector_item)     (!right_angle_brackets, !skip_wn{}, tss_descendent_selector_item{});
 
     struct combined_selector_data {
-      cydui::StyleRuleCombinedSelector selector{};
+      tss::StyleRuleCombinedSelector selector{};
       std::string key_element{};
     };
     ARULE(tss_combined_selector)       (tss_descendent_selector_item{}, !skip_wn{}, *((tss_children_selector_item{} | tss_descendent_selector_item{}), !skip_wn{}))
@@ -78,7 +78,7 @@ namespace syntax {
       auto& key = $node->data.key_element;
 
       selector.selectors.emplace_back( //
-        cydui::StyleRuleCombinedSelector::FIRST_SELECTOR,
+        tss::StyleRuleCombinedSelector::FIRST_SELECTOR,
         $node->children[0]->as<tss_descendent_selector_item>()->data.selector
       );
 
@@ -89,13 +89,13 @@ namespace syntax {
             const auto *cs = child->as<tss_children_selector_item>()
                      ->children[0]->as<tss_descendent_selector_item>();
             selector.selectors.emplace_back( //
-              cydui::StyleRuleCombinedSelector::CHILD_COMBINATOR,
+              tss::StyleRuleCombinedSelector::CHILD_COMBINATOR,
               cs->data.selector
             );
           } else if (child->is_type<tss_descendent_selector_item>()) {
             const auto *ss = child->as<tss_descendent_selector_item>();
             selector.selectors.emplace_back( //
-              cydui::StyleRuleCombinedSelector::DESCENDENT_COMBINATOR,
+              tss::StyleRuleCombinedSelector::DESCENDENT_COMBINATOR,
               ss->data.selector
             );
           }
@@ -108,7 +108,7 @@ namespace syntax {
     TRULE(tss_grouping_selector)        (*(tss_combined_selector{}, !comma_separator{}), tss_combined_selector{}, !skip_wn{});
 
     struct selector_list_data {
-      std::vector<cydui::StyleRuleCombinedSelector> selectors{};
+      std::vector<tss::StyleRuleCombinedSelector> selectors{};
       std::vector<std::string> selector_keys{};
     };
     ARULE(tss_selector)                  (asterisc | tss_grouping_selector{})
