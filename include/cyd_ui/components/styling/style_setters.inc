@@ -34,6 +34,8 @@ STYLE_SETTER(background, vg::paint::gradient::radial, {
   return vg::paint::type::make<vg::paint::gradient::radial>(value);
 })
 
+STYLE_SETTER(position_x, cydui::position_e, { return value; })
+STYLE_SETTER(position_y, cydui::position_e, { return value; })
 STYLE_SETTER(opacity, la::scalar, { return value; })
 STYLE_SETTER(translate_x, la::scalar, { return value; })
 STYLE_SETTER(translate_y, la::scalar, { return value; })

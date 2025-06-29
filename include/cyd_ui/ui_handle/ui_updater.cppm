@@ -205,6 +205,8 @@ namespace cydui {
           .animated   = component.is_animated(),
           .x_overflow = at.overflow_x,
           .y_overflow = at.overflow_y,
+          .x_position = at.position_x,
+          .y_position = at.position_y,
         });
         node.mark_flattening_target_dirty();
         define_background(component, node.background_graphics);

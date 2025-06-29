@@ -115,23 +115,14 @@ namespace cydui::geometry {
   ) {
     using namespace dimensions;
 
-    const auto& geom  = component.get_geometry();
-    const auto& style = component.get_style();
-
-    if (style.overflow_x != overflow_e::GROW) {
-      if (not geom.box_contains_point_in_axis(geometry::X_AXIS, x)) {
-        return nullptr;
-      }
-    }
-    if (style.overflow_y != overflow_e::GROW) {
-      if (not geom.box_contains_point_in_axis(geometry::Y_AXIS, y)) {
-        return nullptr;
-      }
-    }
+    const auto& geom               = component.get_geometry();
+    bool        point_in_component = geom.viewport_contains_point(x, y);
 
     components::mounted_component_t* found = nullptr;
-    if (geom.viewport_contains_point(x, y)) {
-      for (auto c = component.get_children().rbegin(); c != component.get_children().rend(); ++c) {
+    for (auto c = component.get_children().rbegin(); c != component.get_children().rend(); ++c) {
+      auto& style = (*c)->get_style();
+      if (point_in_component or style.position_x == position_e::ABSOLUTE
+          or style.position_y == position_e::ABSOLUTE) {
         // iterator to unique_ptr -> double trouble (dereferencing)
         found = find_by_coords(*(*c), x, y);
         if (nullptr != found) {

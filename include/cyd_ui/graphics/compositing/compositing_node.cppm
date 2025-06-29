@@ -72,6 +72,12 @@ export namespace cydui::compositing {
         if (pop.y_overflow == overflow_e::GROW) {
           y_out_of_bounds = false;
         }
+        if (op.x_position == position_e::ABSOLUTE) {
+          x_out_of_bounds = false;
+        }
+        if (op.y_position == position_e::ABSOLUTE) {
+          y_out_of_bounds = false;
+        }
         return x_out_of_bounds or y_out_of_bounds;
       }
       return false;
@@ -92,9 +98,9 @@ export namespace cydui::compositing {
             rendered_texture.reset();
           }
 
-          pixel_stride      = flattening_target->pixel_stride;
-          auto pixel_offset = (parent_->op.orig_x + op.x)
-                              + (pixel_stride >> 2) * (parent_->op.orig_y + op.y);
+          pixel_stride = flattening_target->pixel_stride;
+          auto pixel_offset =
+            (parent_->op.orig_x + op.x) + (pixel_stride >> 2) * (parent_->op.orig_y + op.y);
           // LOG::print {INFO}("pixel_offset: {}", pixel_offset);
           pixels = &parent_->pixels[pixel_offset];
         } else {
@@ -174,7 +180,9 @@ export namespace cydui::compositing {
       }
       ZoneScopedN("Render Node");
 
-      pixelmap_editor_t editor{flatten_vbox_x + flatten_vbox_w, flatten_vbox_y + flatten_vbox_h, pixels, pixel_stride};
+      pixelmap_editor_t editor{
+        flatten_vbox_x + flatten_vbox_w, flatten_vbox_y + flatten_vbox_h, pixels, pixel_stride
+      };
 
       if (not is_flattened) {
         editor.clear();
@@ -249,8 +257,8 @@ export namespace cydui::compositing {
         .h = static_cast<float>(flatten_vbox_h),
       };
       backends::renderer_base::rect dst{
-        .x = static_cast<float>(flatten_x),
-        .y = static_cast<float>(flatten_y),
+        .x = static_cast<float>(op.x_position == position_e::ABSOLUTE? op.x: flatten_x),
+        .y = static_cast<float>(op.y_position == position_e::ABSOLUTE? op.y: flatten_y),
         .w = static_cast<float>(flatten_vbox_w),
         .h = static_cast<float>(flatten_vbox_h),
       };
@@ -282,8 +290,10 @@ export namespace cydui::compositing {
 
   private:
     void update_placement() {
-      is_flattened = (not op.animated)
-                     and ((op.op == compositing_operation_t::OVERLAY) and (parent_ != nullptr));
+      bool pos_is_relative = (op.x_position == position_e::RELATIVE and op.y_position == position_e::RELATIVE);
+      is_flattened =
+        (not op.animated) and ((op.op == compositing_operation_t::OVERLAY) and (parent_ != nullptr))
+        and pos_is_relative;
       // and (op.x >= 0) && (op.y >= 0)
       // and ((op.x + op.w) <= parent->op.w)
       // and ((op.y + op.h) <= parent->op.h));
@@ -300,7 +310,7 @@ export namespace cydui::compositing {
         flatten_y         = 0;
       }
 
-      if (nullptr == parent_) {
+      if ((nullptr == parent_) or not pos_is_relative) {
         flatten_vbox_x = 0;
         flatten_vbox_y = 0;
         flatten_vbox_w = op.w;
@@ -336,15 +346,6 @@ export namespace cydui::compositing {
         } else {
           flatten_vbox_h = std::min(op.h, avail_h - (rel_y - clip_y));
         }
-        //
-        // if (parent_->op.x_overflow == overflow_e::GROW) {
-        //   flatten_vbox_x = 0;
-        //   flatten_vbox_w = op.w;
-        // }
-        // if (parent_->op.y_overflow == overflow_e::GROW) {
-        //   flatten_vbox_y = 0;
-        //   flatten_vbox_h = op.h;
-        // }
       }
     }
   };

@@ -30,6 +30,9 @@ export namespace cydui::compositing {
     overflow_e x_overflow = overflow_e::HIDE;
     overflow_e y_overflow = overflow_e::HIDE;
 
+    position_e x_position = position_e::RELATIVE;
+    position_e y_position = position_e::RELATIVE;
+
     bool operator==(const compositing_operation_t& other) const {
       return x == other.x && y == other.y && orig_x == other.orig_x && orig_y == other.orig_y
              && w == other.w && h == other.h && scale_x == other.scale_x && scale_y == other.scale_y

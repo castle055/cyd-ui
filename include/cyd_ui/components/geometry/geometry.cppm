@@ -94,6 +94,7 @@ namespace cydui::geometry {
       positioning[axis] = component_positioning::RELATIVE;
       screen_position[axis] =
         relative_to.box_position[axis] + relative_to.content_origin[axis] + position[axis];
+      set_position_relations(axis);
     }
 
     void set_position_absolute(axis axis) {
@@ -102,6 +103,7 @@ namespace cydui::geometry {
       }
       positioning[axis]     = component_positioning::ABSOLUTE;
       screen_position[axis] = position[axis];
+      set_position_relations(axis);
     }
 
     dimension_t& get_padding(edge edge_) {

@@ -67,7 +67,11 @@ namespace cydui {
       }
 
       for (auto& child: children_to_add) {
-        auto mounted_child =
+        const auto& style_override = child->get_style_override();
+        auto pxo = style_override.get_field("position_x");
+        auto pyo = style_override.get_field("position_y");
+
+        auto        mounted_child =
           mount_child(component, std::move(child), pending_redraw, pending_remove);
 
         // Configure dimensional context
@@ -75,7 +79,17 @@ namespace cydui {
         geometry::anchors::configure_parent_anchors(*mounted_child);
         geometry::anchors::configure_prev_anchors(*mounted_child, prev);
 
-        prev = mounted_child;
+        const auto& style = mounted_child->get_style();
+
+        bool px  = pxo.has_value() ? pxo.value().as<position_e>() == position_e::RELATIVE
+                                   : style.position_x == position_e::RELATIVE;
+
+        bool py  = pyo.has_value() ? pyo.value().as<position_e>() == position_e::RELATIVE
+                                   : style.position_y == position_e::RELATIVE;
+
+        if (px and py) {
+          prev = mounted_child;
+        }
       }
 
       for (const auto& remove: pending_remove) {
