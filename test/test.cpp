@@ -181,28 +181,28 @@ COMPONENT(
         .overflow_x(cydui::overflow_e::SCROLL)
         .overflow_y(cydui::overflow_e::SCROLL)
         .width(400_px)
-        .height(200_px)
-        .border("#FCAE1E"_color)
-        .border_width(10),
+        .height(200_px),
+      // .border("#FCAE1E"_color)
+      // .border_width(10),
       SizeTestComponent{}
         .y(200_px)
         .overflow_y(cydui::overflow_e::GROW)
         .overflow_x(cydui::overflow_e::SCROLL)
         .x(250_px)
         .width(200_px)
-        .height(100_px)
-        .border("#FCAE1E"_color)
-        .border_width(2),
+        .height(100_px),
+      // .border("#FCAE1E"_color)
+      // .border_width(2),
       SizeTestComponent{}
         .y(200_px)
         .overflow_x(cydui::overflow_e::GROW)
         .overflow_y(cydui::overflow_e::SCROLL)
         .x(500_px)
         .width(200_px)
-        .height(100_px)
-        .border("#FCAE1E"_color)
-        .border_width(4),
-      SizeTestComponent{}.x($width / 2 + 10_px).border("#FCAE1E"_color).border_width(8),
+        .height(100_px),
+      // .border("#FCAE1E"_color)
+      // .border_width(4),
+      SizeTestComponent{}.x($width / 2 + 10_px) //.border("#FCAE1E"_color).border_width(8),
     };
   }
 
@@ -270,12 +270,13 @@ TEST("Debug panel") {
 }
 
 TEST("Text Input") {
-  LOG::INIT{}
-    .filter({"include/.*", "stdout"})
-    .filter({"test/.*", "stdout"})
-    .filter()
-    .path("async/.*")
-    .levels({WARN, ERROR, FATAL})["stdout"];
+  LOG::INIT{}.log_everything();
+  // LOG::INIT{}
+  //   .filter({"include/.*", "stdout"})
+  //   .filter({"test/.*", "stdout"})
+  //   .filter()
+  //   .path("async/.*")
+  //   .levels({WARN, ERROR, FATAL})["stdout"];
 
   cydui::init();
   cydui::init_backend<cydui::backends::SDL3_backend>();
@@ -300,6 +301,16 @@ TEST("Text Input") {
   opts.attach_style(R"TSS(
 SizeTestComponent {
   background: #226622;
+  border.left: #ff0000;
+  border: #ff0000 #00ff00 #0000ff #fcae1e;
+  border_width: 1 1 1 1;
+  border_width.left: 1;
+  border_width: {
+    top: 5;
+    left: 10;
+    right: 15;
+    bottom: 20;
+  };
 }
 SizeTestComponent:hover {
   background: #337733;

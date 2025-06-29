@@ -7,6 +7,7 @@ module;
 export module cydui.styling.style_base;
 
 import std;
+import fabric.logging;
 export import reflect;
 
 export import quantify;
@@ -24,8 +25,74 @@ export namespace cydui {
     static consteval CustomConversion from(refl::any (*converter_)(const refl::any&)) noexcept {
       return CustomConversion{refl::type_id<T>, converter_};
     }
+
+    static CustomConversion from(
+      refl::type_id_t type_id,
+      refl::any       (*converter_)(const refl::any&)
+    ) noexcept {
+      return CustomConversion{type_id, converter_};
+    }
   };
 } // namespace cydui
+
+namespace cydui {
+  std::unordered_map<refl::type_id_t, std::unordered_map<refl::type_id_t, CustomConversion>>
+    runtime_custom_conversions{};
+}
+
+export namespace cydui::style {
+  void set_custom_type_conversion(
+    refl::type_id_t from,
+    refl::type_id_t to,
+    refl::any       (*converter_)(const refl::any&)
+  ) {
+    if (not runtime_custom_conversions.contains(from)) {
+      runtime_custom_conversions[from] = {};
+    }
+    runtime_custom_conversions[from][to] = CustomConversion::from(from, converter_);
+  }
+
+  template <
+    typename From,
+    typename To>
+  void set_custom_type_conversion(refl::any (*converter_)(const refl::any&)) {
+    set_custom_type_conversion(refl::type_id<From>, refl::type_id<To>, converter_);
+  }
+
+  std::optional<CustomConversion> get_custom_type_conversion(
+    refl::type_id_t from,
+    refl::type_id_t to
+  ) {
+    if (runtime_custom_conversions.contains(from)
+        and runtime_custom_conversions.at(from).contains(to)) {
+      return runtime_custom_conversions.at(from).at(to);
+    }
+    return std::nullopt;
+  }
+
+  template <
+    typename From,
+    typename To>
+  std::optional<CustomConversion> get_custom_type_conversion() {
+    return get_custom_type_conversion(refl::type_id<From>, refl::type_id<To>);
+  }
+} // namespace cydui::style
+
+struct __static_init {
+  __static_init() {
+    cydui::style::set_custom_type_conversion<color::Color, vg::paint::type>(
+      [](const refl::any& it) {
+        return refl::any::make<vg::paint::type>(
+          vg::paint::type::make(vg::paint::solid(it.as<color::Color>()))
+        );
+      }
+    );
+    cydui::style::set_custom_type_conversion<double, int>([](const refl::any& it) {
+      int iti = static_cast<int>(it.as<double>());
+      return refl::any::make<int>(iti);
+    });
+  }
+} __static_init{};
 
 export namespace cydui::components {
   template <typename T>

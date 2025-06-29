@@ -231,6 +231,7 @@ export namespace cydui::components {
       const refl::any&        value
     ) {
       if (not value.is(path.type())) {
+        // Try field specific conversion
         if (path.back()->has_metadata<const CustomConversion>()) {
           for (const auto& [t_info, ptr]: path.back()->metadata) {
             if (t_info().id() == refl::type_id<const CustomConversion>) {
@@ -242,11 +243,58 @@ export namespace cydui::components {
           }
         }
 
+        // Try type specific conversion
+        const refl::type_id_t from_t        = value.type().id();
+        const refl::type_id_t to_t          = path.back()->type().id();
+        auto                  rt_conversion = style::get_custom_type_conversion(from_t, to_t);
+        if (rt_conversion.has_value()) {
+          return set_field_as_is(path, rt_conversion.value().converter(value));
+        }
+
+        // Try reflecting into type
+        if (from_t == refl::type_id<std::vector<refl::any>>) {
+          const auto& expr_vector = value.as<std::vector<refl::any>>();
+          const auto& ti          = path.back()->type();
+          if (not ti.fields().empty()) {
+            if (ti.fields().size() >= expr_vector.size()) {
+              auto it      = ti.fields().begin();
+              bool changed = false;
+              for (std::size_t i = 0; i < expr_vector.size(); ++i) {
+                refl::field_path inner_path{path};
+                inner_path  = inner_path.append(&(*it));
+                changed    |= set_field(inner_path, expr_vector[i]);
+                ++it;
+              }
+              return changed;
+            }
+
+            LOG::print{ERROR
+            }("({}) expected type '{}', found too many expressions",
+              path.to_string(),
+              path.type().name());
+          }
+        } else if (from_t == refl::type_id<refl::archive>) {
+          const auto& archive = value.as<refl::archive>();
+          bool        changed = false;
+          for (const auto& [item_name, item_value]: archive) {
+            refl::field_path inner_path{path};
+            auto             field = path.type().field_by_name(item_name);
+            if (field.has_value()) {
+              inner_path  = inner_path.append(field.value());
+              changed    |= set_field(inner_path, item_value);
+            } else {
+              LOG::print{WARN
+              }("({}) unknown field '{}' in '{}'", path.to_string(), item_name, path.type().name());
+            }
+          }
+          return changed;
+        }
+
         LOG::print{ERROR
-        }("expected type '{}', found '{}'", path.type().name(), value.type().name());
-        // throw std::runtime_error(
-        //   std::format("expected type '{}', found '{}'", path.type().name(), value.type().name())
-        // );
+        }("({}) expected type '{}', found '{}'",
+          path.to_string(),
+          path.type().name(),
+          value.type().name());
         return false;
       } else {
         return set_field_as_is(path, value);
