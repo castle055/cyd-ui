@@ -72,10 +72,8 @@ export namespace cydui::compositing {
         if (pop.y_overflow == overflow_e::GROW) {
           y_out_of_bounds = false;
         }
-        if (op.x_position == position_e::ABSOLUTE) {
+        if (op.position == position_e::ABSOLUTE) {
           x_out_of_bounds = false;
-        }
-        if (op.y_position == position_e::ABSOLUTE) {
           y_out_of_bounds = false;
         }
         return x_out_of_bounds or y_out_of_bounds;
@@ -257,8 +255,8 @@ export namespace cydui::compositing {
         .h = static_cast<float>(flatten_vbox_h),
       };
       backends::renderer_base::rect dst{
-        .x = static_cast<float>(op.x_position == position_e::ABSOLUTE? op.x: flatten_x),
-        .y = static_cast<float>(op.y_position == position_e::ABSOLUTE? op.y: flatten_y),
+        .x = static_cast<float>(op.position == position_e::ABSOLUTE ? op.x : flatten_x),
+        .y = static_cast<float>(op.position == position_e::ABSOLUTE ? op.y : flatten_y),
         .w = static_cast<float>(flatten_vbox_w),
         .h = static_cast<float>(flatten_vbox_h),
       };
@@ -290,10 +288,10 @@ export namespace cydui::compositing {
 
   private:
     void update_placement() {
-      bool pos_is_relative = (op.x_position == position_e::RELATIVE and op.y_position == position_e::RELATIVE);
-      is_flattened =
-        (not op.animated) and ((op.op == compositing_operation_t::OVERLAY) and (parent_ != nullptr))
-        and pos_is_relative;
+      bool pos_is_relative = (op.position == position_e::RELATIVE);
+      is_flattened         = (not op.animated)
+                     and ((op.op == compositing_operation_t::OVERLAY) and (parent_ != nullptr))
+                     and pos_is_relative;
       // and (op.x >= 0) && (op.y >= 0)
       // and ((op.x + op.w) <= parent->op.w)
       // and ((op.y + op.h) <= parent->op.h));

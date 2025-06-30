@@ -49,16 +49,14 @@ namespace cydui::geometry {
 
     //* Position
     geom.position[X_AXIS] = style.x;
-    if (style.position_x == position_e::ABSOLUTE or component.is_root()) {
-      geom.set_position_absolute(X_AXIS);
-    } else if (style.position_x == position_e::RELATIVE and not component.is_root()) {
-      geom.set_position_relative(X_AXIS, component.get_parent()->get_geometry());
-    }
     geom.position[Y_AXIS] = style.y;
-    if (style.position_y == position_e::ABSOLUTE or component.is_root()) {
+    if (style.position == position_e::ABSOLUTE or component.is_root()) {
+      geom.set_position_absolute(X_AXIS);
       geom.set_position_absolute(Y_AXIS);
-    } else if (style.position_y == position_e::RELATIVE and not component.is_root()) {
-      geom.set_position_relative(Y_AXIS, component.get_parent()->get_geometry());
+    } else if (style.position == position_e::RELATIVE and not component.is_root()) {
+      auto pgeom = component.get_parent()->get_geometry();
+      geom.set_position_relative(X_AXIS, pgeom);
+      geom.set_position_relative(Y_AXIS, pgeom);
     }
 
     //* Max Size
@@ -108,33 +106,97 @@ namespace cydui::geometry {
     geom.get_border_width(edge::TOP)    = style.border_width.top;
   }
 
+  struct screen_region_t {
+    dimension_t::value_type x, y, w, h;
+
+    screen_region_t() = default;
+    explicit screen_region_t(const component_geometry& geometry)
+        : x(dimensions::get_value(geometry.screen_position[X_AXIS])),
+          y(dimensions::get_value(geometry.screen_position[Y_AXIS])),
+          w(dimensions::get_value(geometry.screen_size[X_AXIS])),
+          h(dimensions::get_value(geometry.screen_size[Y_AXIS])) {}
+
+    std::optional<screen_region_t> clip_with(const screen_region_t& other) const {
+      if ((x >= (other.x + other.w)) or (y >= (other.y + other.h)) or ((x + w) < other.x)
+          or ((y + h) < other.y)) {
+        return std::nullopt;
+      }
+
+      screen_region_t sr{};
+
+      if (x >= other.x) {
+        sr.x = x;
+        sr.w = std::min((other.x + other.w) - x, w);
+      } else {
+        sr.x = other.x;
+        sr.w = std::min((x + w) - other.x, other.w);
+      }
+
+      if (y >= other.y) {
+        sr.y = y;
+        sr.h = std::min((other.y + other.h) - y, h);
+      } else {
+        sr.y = other.y;
+        sr.h = std::min((y + h) - other.y, other.h);
+      }
+
+      return sr;
+    }
+
+    bool contains_point(
+      dimension_t::value_type _x,
+      dimension_t::value_type _y
+    ) const {
+      return (_x >= x) and (_x < (x + w)) and (_y >= y) and (_y < (y + h));
+    }
+  };
+
   export components::mounted_component_t* find_by_coords(
+    components::mounted_component_t& component,
+    dimension_t::value_type          x,
+    dimension_t::value_type          y
+  );
+
+  components::mounted_component_t* find_by_coords(
+    components::mounted_component_t& component,
+    dimension_t::value_type          x,
+    dimension_t::value_type          y,
+    screen_region_t                  screen_region
+  ) {
+    using namespace dimensions;
+
+    components::mounted_component_t* found = nullptr;
+    for (auto c = component.get_children().rbegin(); c != component.get_children().rend(); ++c) {
+      auto&           style = (*c)->get_style();
+      auto&           cgeom = (*c)->get_geometry();
+      screen_region_t sr{cgeom};
+      auto            cliped_region = sr.clip_with(screen_region);
+      if (style.position == position_e::ABSOLUTE) {
+        found = find_by_coords(*(*c), x, y);
+      } else if (cliped_region.has_value()) {
+        // iterator to unique_ptr -> double trouble (dereferencing)
+        found = find_by_coords(*(*c), x, y, cliped_region.value());
+      }
+      if (nullptr != found) {
+        return found;
+      }
+    }
+
+    if (not screen_region.contains_point(x, y)) {
+      return nullptr;
+    }
+    return &component;
+  }
+
+  components::mounted_component_t* find_by_coords(
     components::mounted_component_t& component,
     dimension_t::value_type          x,
     dimension_t::value_type          y
   ) {
     using namespace dimensions;
 
-    const auto& geom               = component.get_geometry();
-    bool        point_in_component = geom.viewport_contains_point(x, y);
-
-    components::mounted_component_t* found = nullptr;
-    for (auto c = component.get_children().rbegin(); c != component.get_children().rend(); ++c) {
-      auto& style = (*c)->get_style();
-      if (point_in_component or style.position_x == position_e::ABSOLUTE
-          or style.position_y == position_e::ABSOLUTE) {
-        // iterator to unique_ptr -> double trouble (dereferencing)
-        found = find_by_coords(*(*c), x, y);
-        if (nullptr != found) {
-          return found;
-        }
-      }
-    }
-
-    if (not geom.box_contains_point(x, y)) {
-      return nullptr;
-    }
-    return &component;
+    const auto& geom = component.get_geometry();
+    return find_by_coords(component, x, y, screen_region_t{geom});
   }
 
   export void compute_geometry(components::mounted_component_t& component) {

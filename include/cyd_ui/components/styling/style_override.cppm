@@ -13,7 +13,7 @@ export namespace cydui::components {
   class sparse_field_map {
     [[refl::ignore]]
     const refl::type_info&                type_;
-    std::map<refl::field_path, refl::any> fields_{};
+    std::unordered_map<refl::field_path, refl::any> fields_{};
 
   public:
     explicit sparse_field_map(const refl::type_info& type)

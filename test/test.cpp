@@ -151,12 +151,36 @@ COMPONENT(
 ;
 
 COMPONENT(
-  SizeTestComponent,
+  HoverPressTest,
   {}
+) {
+
+  ON_BUTTON_PRESS {
+    component.get_blueprint().tag("pressed");
+    component.mark_dirty();
+  }
+
+  ON_BUTTON_RELEASE {
+    component.get_blueprint().untag("pressed");
+    component.mark_dirty();
+  }
+
+  ON_MOUSE_EXIT {
+    component.get_blueprint().untag("pressed");
+    component.mark_dirty();
+  }
+};
+
+COMPONENT(
+  SizeTestComponent,
+  { bool abs = false; }
 ){         //
   CHILDREN{// component.background("#226622"_color);
            return {
-             SelfSizedComponent{}.x($height / 2), //.margin_top(5_px),
+             SelfSizedComponent{}
+               .x($height / 2)
+               .position(props.abs ? cydui::position_e::ABSOLUTE : cydui::position_e::RELATIVE)
+             , //.margin_top(5_px),
              AutoSizedComponent{}.y($previous::bottom_center::y).x($height / 2).padding_top(50_px),
              AutoSizedSuperComponent{}.y($previous::bottom_center::y).x($self::height),
              AutoSizedSuperComponent{}.y($previous::bottom_center::y),
@@ -184,7 +208,7 @@ COMPONENT(
         .height(200_px),
       // .border("#FCAE1E"_color)
       // .border_width(10),
-      SizeTestComponent{}
+      SizeTestComponent{{true}}
         .y(200_px)
         .overflow_y(cydui::overflow_e::GROW)
         .overflow_x(cydui::overflow_e::SCROLL)
@@ -202,7 +226,8 @@ COMPONENT(
         .height(100_px),
       // .border("#FCAE1E"_color)
       // .border_width(4),
-      SizeTestComponent{}.x($width / 2 + 10_px) //.border("#FCAE1E"_color).border_width(8),
+      SizeTestComponent{}.x($width / 2 + 10_px), //.border("#FCAE1E"_color).border_width(8),
+      HoverPressTest{}.x(200_px).y($height - 150_px).width(50_px).height(50_px),
     };
   }
 
@@ -299,6 +324,18 @@ TEST("Text Input") {
 
   cydui::UI_options opts{};
   opts.attach_style(R"TSS(
+HoverPressTest {
+  background: #111177;
+}
+
+HoverPressTest:hover#pressed {
+  background: #1155CC;
+}
+
+HoverPressTest:hover {
+  background: #1111AA;
+}
+
 SizeTestComponent {
   background: #226622;
   border.left: #ff0000;

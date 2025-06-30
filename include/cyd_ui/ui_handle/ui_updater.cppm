@@ -69,13 +69,13 @@ namespace cydui {
         FrameMarkEnd("Update");
         co_return;
       }
-      style_.update_style(*tree_.root);
+      bool style_changed = style_.update_style(*tree_.root);
       update_dimensions();
 
       {
         PROF_SCOPE(Update Hover)
         // Update Hover again in case something moved under the cursor
-        if (hover_state_.update_hover()) {
+        if (hover_state_.update_hover() or style_changed) {
           update_ui();
           style_.update_style(*tree_.root);
           update_dimensions();
@@ -145,7 +145,7 @@ namespace cydui {
 
     void update_component(
       components::mounted_component_t& component,
-      tss::StyleArchive&                    style_archive
+      tss::StyleArchive&               style_archive
     ) {
       PROF_SCOPE(Update Component)
       component.clear_dirty_flag();
@@ -205,8 +205,7 @@ namespace cydui {
           .animated   = component.is_animated(),
           .x_overflow = at.overflow_x,
           .y_overflow = at.overflow_y,
-          .x_position = at.position_x,
-          .y_position = at.position_y,
+          .position   = at.position,
         });
         node.mark_flattening_target_dirty();
         define_background(component, node.background_graphics);

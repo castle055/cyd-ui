@@ -107,8 +107,7 @@ export namespace cydui::components {
   struct style_base_t {
     [[meta(AnimationComplexity::REFLOW)]] expression_t    x;
     [[meta(AnimationComplexity::REFLOW)]] expression_t    y;
-    [[meta(AnimationComplexity::FULL_UPDATE)]] position_e position_x{position_e::RELATIVE};
-    [[meta(AnimationComplexity::FULL_UPDATE)]] position_e position_y{position_e::RELATIVE};
+    [[meta(AnimationComplexity::FULL_UPDATE)]] position_e position{position_e::RELATIVE};
     [[meta(AnimationComplexity::REFLOW)]] expression_t    width;
     [[meta(AnimationComplexity::REFLOW)]] expression_t    height;
     [[meta(AnimationComplexity::REFLOW)]] expression_t    max_width;

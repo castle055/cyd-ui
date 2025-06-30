@@ -67,11 +67,10 @@ namespace cydui {
       }
 
       for (auto& child: children_to_add) {
-        const auto& style_override = child->get_style_override();
-        auto pxo = style_override.get_field("position_x");
-        auto pyo = style_override.get_field("position_y");
+        const auto& style_override     = child->get_style_override();
+        auto        overriden_position = style_override.get_field("position");
 
-        auto        mounted_child =
+        auto mounted_child =
           mount_child(component, std::move(child), pending_redraw, pending_remove);
 
         // Configure dimensional context
@@ -81,13 +80,12 @@ namespace cydui {
 
         const auto& style = mounted_child->get_style();
 
-        bool px  = pxo.has_value() ? pxo.value().as<position_e>() == position_e::RELATIVE
-                                   : style.position_x == position_e::RELATIVE;
+        bool position_is_relative =
+          (overriden_position.has_value() ? overriden_position.value().as<position_e>()
+                                          : style.position)
+          == position_e::RELATIVE;
 
-        bool py  = pyo.has_value() ? pyo.value().as<position_e>() == position_e::RELATIVE
-                                   : style.position_y == position_e::RELATIVE;
-
-        if (px and py) {
+        if (position_is_relative) {
           prev = mounted_child;
         }
       }

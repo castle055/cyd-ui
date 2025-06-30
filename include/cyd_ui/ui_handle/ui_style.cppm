@@ -38,7 +38,7 @@ namespace cydui {
     void compile_rules_recurse(components::mounted_component_t& component) {
       PROF_SCOPE(compile_rules);
       compile_rules(component);
-      for (auto & child : component.get_children()) {
+      for (auto& child: component.get_children()) {
         compile_rules_recurse(*child);
       }
     }
@@ -48,16 +48,17 @@ namespace cydui {
       styling::compile_style_rule_list(component, *style_archive);
     }
 
-    void update_style(components::mounted_component_t& root_component) {
+    bool update_style(components::mounted_component_t& root_component) {
       PROF_SCOPE(Update Style);
-      update_component_style_recurse(root_component);
+      return update_component_style_recurse(root_component);
     }
 
   private:
-    void update_component_style_recurse(components::mounted_component_t& component) {
+    bool update_component_style_recurse(components::mounted_component_t& component) {
+      bool style_changed{false};
       {
         PROF_SCOPE(Update Component Style);
-        bool style_changed = styling::apply_style(component);
+        style_changed = styling::apply_style(component);
 
         if (style_changed) {
           component.get_compositing_node().queue_graphics_update();
@@ -66,8 +67,9 @@ namespace cydui {
       }
 
       for (auto& child: component.get_children()) {
-        update_component_style_recurse(*child);
+        style_changed |= update_component_style_recurse(*child);
       }
+      return style_changed;
     }
   };
 } // namespace cydui
