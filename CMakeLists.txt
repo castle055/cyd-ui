@@ -119,6 +119,14 @@ FetchContent_Declare (
 )
 FetchContent_MakeAvailable(tracy)
 
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/v1.17.0.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
 #[[                             CONFIGURE SDL                                ]]#
 # Look for a SDL3 package, 2. look for the SDL3 component and 3. fail if none can be found
 find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3)
@@ -190,14 +198,16 @@ endif ()
 ################################################################################
 #[[                             CONFIGURE TESTS                              ]]#
 ################################################################################
+#include(CTest)
 enable_testing()
+include(GoogleTest)
 if (CYD_UI_DEV_MODE AND CYD_UI_BUILD_TESTS)
-    target_configure_test_directory(cyd_ui ${CYD_UI_TEST_DIR})
-    reflect_target(TEST_test)
-    reflect_target(TEST_data_binding.test)
-    set_target_properties(TEST_test TEST_data_binding.test PROPERTIES FOLDER Tests)
+    include(cmake/ctest.cmake)
+    target_configure_test_directory(cyd_ui ${CYD_UI_TEST_DIR} TEST_TARGET_LIST)
+    foreach (TEST IN LISTS TEST_TARGET_LIST)
+        reflect_target(${TEST})
+    endforeach ()
 endif ()
-
 
 ################################################################################
 #[[                     CONFIGURE DOXYGEN DOCUMENTATION                      ]]#
