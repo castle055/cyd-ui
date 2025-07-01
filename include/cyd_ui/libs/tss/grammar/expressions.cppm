@@ -55,13 +55,15 @@ namespace syntax {
         } else if (d.unit == "px") {
           value = refl::any::make<cydui::dimensions::screen_measure>(d.value);
         }
+      } else if (not child->text.empty()) {
+        value = refl::any::make<std::string>(child->text);
       }
     });
 
     ARULE(tss_decl_expression_list) //
     (*(tss_decl_expression{}, !whitespace, !skip_wn{}),
      tss_decl_expression{},
-     !skip_wn{})(refl::any)({
+     ~!skip_wn{})(refl::any)({
       refl::any& value = $node->data;
 
       if ($node->children.size() == 1) {

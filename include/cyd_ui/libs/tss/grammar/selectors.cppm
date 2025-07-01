@@ -72,7 +72,7 @@ namespace syntax {
       tss::StyleRuleCombinedSelector selector{};
       std::string key_element{};
     };
-    ARULE(tss_combined_selector)       (tss_descendent_selector_item{}, !skip_wn{}, *((tss_children_selector_item{} | tss_descendent_selector_item{}), !skip_wn{}))
+    ARULE(tss_combined_selector)       (tss_descendent_selector_item{}, ~!skip_wn{}, *((tss_children_selector_item{} | tss_descendent_selector_item{}), ~!skip_wn{}))
     (combined_selector_data)({
       auto& selector = $node->data.selector;
       auto& key = $node->data.key_element;
@@ -105,7 +105,7 @@ namespace syntax {
       key = selector.selectors.back().second.component;
     });
 
-    TRULE(tss_grouping_selector)        (*(tss_combined_selector{}, !comma_separator{}), tss_combined_selector{}, !skip_wn{});
+    TRULE(tss_grouping_selector)        (*(tss_combined_selector{}, !comma_separator{}), tss_combined_selector{}, ~!skip_wn{});
 
     struct selector_list_data {
       std::vector<tss::StyleRuleCombinedSelector> selectors{};

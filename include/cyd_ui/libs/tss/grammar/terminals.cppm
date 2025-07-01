@@ -100,6 +100,7 @@ namespace syntax {
     TERMINAL_W_NAME('\r', return_);
     TERMINAL_W_NAME('\'', quote);
     TERMINAL_W_NAME('"', double_quote);
+    TERMINAL_W_NAME('!', exclamation);
 
     TERMINAL_W_NAME('[', left_brackets);
     TERMINAL_W_NAME(']', right_brackets);

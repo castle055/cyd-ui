@@ -25,7 +25,7 @@ namespace syntax {
   export GRAMMAR(tss_rules)
       : tss_expressions,
         tss_selectors {
-    ARULE(tss_rule)(!skip_wn{}, tss_selector{}, !braces_begin{}, tss_declaration_list{}, !braces_end{})(tss::
+    ARULE(tss_rule)(~!skip_wn{}, tss_selector{}, !braces_begin{}, tss_declaration_list{}, !braces_end{})(tss::
                                                                                                           StyleRule::
                                                                                                             sptr)({
       $node->data = std::make_shared<tss::StyleRule>();

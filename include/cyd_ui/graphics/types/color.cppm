@@ -16,13 +16,16 @@ export namespace color {
     double b = 0.0;
     double a = 1.0;
 
-    [[nodiscard("Don't call 'to_string()' if you don't need a string.")]]
+    [[nodiscard]]
     std::string to_string() const {
       std::ostringstream oss;
       oss << '#';
       oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(r * 255.0);
       oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(g * 255.0);
       oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(b * 255.0);
+      if (a != 1.0) {
+      oss << std::setfill('0') << std::setw(2) << std::hex << static_cast<int>(a * 255.0);
+      }
       return oss.str();
     }
 
