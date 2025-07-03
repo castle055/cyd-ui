@@ -8,11 +8,12 @@ export import reflect;
 
 export import cydui.styling.lang;
 export import cydui.styling.style_override;
+export import cydui.styling.sparse_style_map;
 
-export namespace cydui::components {
+export namespace cydui::style {
   class style_rule_map {
     std::vector<tss::StyleRuleInstance> applicable_rules_;
-    sparse_style_map               style_map_;
+    sparse_style_map                    style_map_;
 
   public:
     explicit style_rule_map(const refl::type_info& style_ti)
@@ -65,10 +66,10 @@ export namespace cydui::components {
         }
       }
       // if (style_map_ != new_map) {
-        style_map_ = std::move(new_map);
-        return true;
+      style_map_ = std::move(new_map);
+      return true;
       // } else {
-        // return false;
+      // return false;
       // }
     }
   };
@@ -163,4 +164,4 @@ export namespace cydui::components {
       return style_object_.get_base();
     }
   };
-} // namespace cydui::components
+} // namespace cydui::style

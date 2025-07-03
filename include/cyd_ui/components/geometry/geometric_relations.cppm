@@ -44,8 +44,8 @@ namespace cydui::geometry {
   }
 
   export void update_component_geometry(components::mounted_component_t& component) {
-    component_geometry&             geom  = component.get_geometry();
-    const components::style_base_t& style = component.get_style();
+    component_geometry&        geom  = component.get_geometry();
+    const style::style_base_t& style = component.get_style();
 
     //* Position
     geom.position[X_AXIS] = style.x;

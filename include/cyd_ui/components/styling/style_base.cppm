@@ -94,7 +94,7 @@ struct __static_init {
   }
 } __static_init{};
 
-export namespace cydui::components {
+export namespace cydui::style {
   template <typename T>
   struct four_sided_property {
     T top{}, right{}, bottom{}, left{};

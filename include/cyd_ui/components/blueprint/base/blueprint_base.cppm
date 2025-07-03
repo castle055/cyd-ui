@@ -59,8 +59,8 @@ export namespace cydui::components {
     tagset_type  tags_{};
 
   protected:
-    sparse_style_map style_map_;
-    content_type     content_{};
+    style::sparse_style_map style_map_;
+    content_type            content_{};
 
   public:
     using uptr = std::unique_ptr<blueprint_base_t>;
@@ -89,7 +89,7 @@ export namespace cydui::components {
     virtual std::unique_ptr<event_dispatcher_base_t>
     make_event_dispatcher(void* component) const = 0;
 
-    virtual style_object_t make_style_object() const = 0;
+    virtual style::style_object_t make_style_object() const = 0;
 
     virtual bool update_with(const blueprint_base_t& other) = 0;
 
@@ -117,7 +117,7 @@ export namespace cydui::components {
       return content_;
     }
 
-    const sparse_style_map& get_style_override() const {
+    const style::sparse_style_map& get_style_override() const {
       return style_map_;
     }
 

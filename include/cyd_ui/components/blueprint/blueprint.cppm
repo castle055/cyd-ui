@@ -58,8 +58,8 @@ namespace cydui::components {
       return state;
     }
 
-    style_object_t make_style_object() const final {
-      return style_object_t{std::make_shared<style_type<T>>()};
+    style::style_object_t make_style_object() const final {
+      return style::style_object_t{std::make_shared<style_type<T>>()};
     }
 
     bool update_with(const blueprint_base_t& other) final {

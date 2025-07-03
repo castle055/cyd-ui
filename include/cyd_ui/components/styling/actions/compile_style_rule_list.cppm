@@ -16,7 +16,7 @@ export import cydui.components.mounted;
 export import cydui.styling.lang;
 
 
-namespace cydui::styling {
+namespace cydui::style{
   bool check_style_selector(
     components::mounted_component_t& component,
     const tss::StyleRuleSelector&         selector,
@@ -95,7 +95,7 @@ namespace cydui::styling {
   }
 } // namespace cydui::styling
 
-export namespace cydui::styling {
+export namespace cydui::style {
   void compile_style_rule_list(
     components::mounted_component_t& component,
     tss::StyleArchive&                    style_archive

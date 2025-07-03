@@ -4,7 +4,9 @@
 module;
 
 #define STYLE_SETTER_RETURN_TYPE mounted_component_t&
-#define STYLE_SETTER_RETURN_EXPR this->get_style_stack().mark_dirty(); return *this;
+#define STYLE_SETTER_RETURN_EXPR                                                                   \
+  this->get_style_stack().mark_dirty();                                                            \
+  return *this;
 #define STYLE_SETTER_REF_CONSTRAINT
 #define STYLE_MAP_GETTER this->get_style_stack().get_internal_style_override()
 
@@ -43,7 +45,7 @@ export namespace cydui::components {
     backends::frame_base::sptr       window_;
 
     component_state_t::sptr                                        state_;
-    [[refl::ignore]] style_stack                                   style_stack_;
+    [[refl::ignore]] style::style_stack                            style_stack_;
     [[refl::ignore]] std::unique_ptr<geometry::component_geometry> geometry_;
     compositing::compositing_node_t::sptr                          compositing_node_;
     context_store_t                                                context_store_;
@@ -83,8 +85,7 @@ export namespace cydui::components {
             )
           ),
           context_store_({}),
-          event_dispatcher_(blueprint_->make_event_dispatcher(this)) {
-    }
+          event_dispatcher_(blueprint_->make_event_dispatcher(this)) {}
 
   public:
     static mounted_component_t* make(
@@ -357,11 +358,11 @@ export namespace cydui::components {
       return *compositing_node_;
     }
 
-    const style_base_t& get_style() const {
+    const style::style_base_t& get_style() const {
       return style_stack_.get_style_object();
     }
 
-    style_stack& get_style_stack() {
+    style::style_stack& get_style_stack() {
       return style_stack_;
     }
 

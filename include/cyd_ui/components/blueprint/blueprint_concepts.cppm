@@ -32,7 +32,7 @@ export namespace cydui::components {
   template <typename T>
   concept HasCustomStyleType = StaticBlueprint<T> and requires {
     typename event_handler_type<T>::style_type;
-  } and std::is_base_of_v<style_base_t, typename event_handler_type<T>::style_type>;
+  } and std::is_base_of_v<style::style_base_t, typename event_handler_type<T>::style_type>;
 
 
   template <typename B>
@@ -66,7 +66,7 @@ export namespace cydui::components {
   template <typename B>
     requires(not HasCustomStyleType<B>)
   struct style_type_t<B> {
-    using type = simple_style_t;
+    using type = style::simple_style_t;
   };
 
   template <typename T>

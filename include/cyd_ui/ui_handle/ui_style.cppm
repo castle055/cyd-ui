@@ -45,7 +45,7 @@ namespace cydui {
 
     void compile_rules(components::mounted_component_t& component) {
       PROF_SCOPE(compile_rules);
-      styling::compile_style_rule_list(component, *style_archive);
+      style::compile_style_rule_list(component, *style_archive);
     }
 
     bool update_style(components::mounted_component_t& root_component) {
@@ -58,7 +58,7 @@ namespace cydui {
       bool style_changed{false};
       {
         PROF_SCOPE(Update Component Style);
-        style_changed = styling::apply_style(component);
+        style_changed = style::apply_style(component);
 
         if (style_changed) {
           component.get_compositing_node().queue_graphics_update();

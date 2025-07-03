@@ -7,20 +7,18 @@
 #define STR(X) #X
 
 #define STYLE_BASE_FIELD(NAME)                                                                     \
-  refl::type_info::from<style_base_t>()                                                            \
-    .field_by_offset(__builtin_offsetof(cydui::components::style_base_t, NAME))                    \
+  refl::type_info::from<style::style_base_t>()                                                     \
+    .field_by_offset(__builtin_offsetof(cydui::style::style_base_t, NAME))                         \
     .value()
 
 #define FIELD_PATH(NAME)                                                                           \
   static const refl::field_path field_path = {                                                     \
-    refl::type_info::from<cydui::components::style_base_t>(), STYLE_BASE_FIELD(NAME)               \
+    refl::type_info::from<cydui::style::style_base_t>(), STYLE_BASE_FIELD(NAME)                    \
   }
 
 #define FIELD_PATH_STR(PATH_STR)                                                                   \
   static const refl::field_path field_path =                                                       \
-    refl::field_path::from_string(                                                                 \
-      refl::type_info::from<cydui::components::style_base_t>(), PATH_STR                           \
-    )                                                                                              \
+    refl::field_path::from_string(refl::type_info::from<cydui::style::style_base_t>(), PATH_STR)   \
       .value()
 
 #define STYLE_SETTER(NAME, TYPE, ...)                                                              \

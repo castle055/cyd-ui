@@ -19,7 +19,7 @@
   static constexpr bool has_custom_style_type = true;                                              \
   struct style_type;                                                                               \
   const style_type& style;                                                                         \
-  struct style_type: cydui::components::style_base_t
+  struct style_type: cydui::style::style_base_t
 
 #define EXTENDS(...) , __VA_ARGS__
 

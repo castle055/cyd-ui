@@ -155,7 +155,7 @@ export namespace cydui::components {
       const std::shared_ptr<component_state_t>& state_,
       const backends::frame_base::sptr&         window_,
       typename Component::props_t&              props_,
-      const style_base_t&                       style_
+      const style::style_base_t&                style_
     )
         : event_handler_t(component_handle_delegate::get_ref(component_)),
           component(component_),
@@ -171,7 +171,7 @@ export namespace cydui::components {
     component_state_t&            state;
     backends::frame_base&         window;
     typename Component::props_t&  props;
-    const style_base_t&           style;
+    const style::style_base_t&    style;
 
     using $self     = geometry::anchors::self_component;
     using $parent   = geometry::anchors::parent_component;
