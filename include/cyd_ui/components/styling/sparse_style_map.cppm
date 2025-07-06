@@ -95,7 +95,7 @@ export namespace cydui::style {
           for (const auto& [t_info, ptr]: path.back()->metadata) {
             if (t_info().id() == refl::type_id<const CustomConversion>) {
               const auto& cc = *static_cast<const CustomConversion*>(ptr);
-              if (cc.type_id == value.type().id()) {
+              if (cc.type_name == value.type().name()) {
                 return set_field_as_is(path, cc.converter(value));
               }
             }
@@ -103,15 +103,15 @@ export namespace cydui::style {
         }
 
         // Try type specific conversion
-        const refl::type_id_t from_t        = value.type().id();
-        const refl::type_id_t to_t          = path.back()->type().id();
+        const std::string from_t        = value.type().name();
+        const std::string to_t          = path.back()->type().name();
         auto                  rt_conversion = style::get_custom_type_conversion(from_t, to_t);
         if (rt_conversion.has_value()) {
           return set_field_as_is(path, rt_conversion.value().converter(value));
         }
 
         // Try reflecting into type
-        if (from_t == refl::type_id<std::vector<refl::any>>) {
+        if (from_t == refl::type_name<std::vector<refl::any>>) {
           const auto& expr_vector = value.as<std::vector<refl::any>>();
           const auto& ti          = path.back()->type();
           if (not ti.fields().empty()) {
@@ -132,7 +132,7 @@ export namespace cydui::style {
               path.to_string(),
               path.type().name());
           }
-        } else if (from_t == refl::type_id<refl::archive>) {
+        } else if (from_t == refl::type_name<refl::archive>) {
           const auto& archive = value.as<refl::archive>();
           bool        changed = false;
           for (const auto& [item_name, item_value]: archive) {

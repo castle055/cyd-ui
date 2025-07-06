@@ -18,54 +18,56 @@ import cydui.animations.complexity;
 
 export namespace cydui {
   struct CustomConversion {
-    refl::type_id_t type_id;
-    refl::any       (*converter)(const refl::any&);
+    std::string type_name;
+    refl::any   (*converter)(const refl::any&);
 
     template <typename T>
     static consteval CustomConversion from(refl::any (*converter_)(const refl::any&)) noexcept {
-      return CustomConversion{refl::type_id<T>, converter_};
+      return CustomConversion{std::string{refl::type_name<T>}, converter_};
     }
 
     static CustomConversion from(
-      refl::type_id_t type_id,
-      refl::any       (*converter_)(const refl::any&)
+      std::string type_name,
+      refl::any   (*converter_)(const refl::any&)
     ) noexcept {
-      return CustomConversion{type_id, converter_};
+      return CustomConversion{type_name, converter_};
     }
   };
 } // namespace cydui
 
 namespace cydui {
-  std::unordered_map<refl::type_id_t, std::unordered_map<refl::type_id_t, CustomConversion>>
+  std::unordered_map<std::string, std::unordered_map<std::string, CustomConversion>>
     runtime_custom_conversions{};
 }
 
 export namespace cydui::style {
   void set_custom_type_conversion(
-    refl::type_id_t from,
-    refl::type_id_t to,
-    refl::any       (*converter_)(const refl::any&)
+    std::string from_type,
+    std::string to_type,
+    refl::any   (*converter_)(const refl::any&)
   ) {
-    if (not runtime_custom_conversions.contains(from)) {
-      runtime_custom_conversions[from] = {};
+    if (not runtime_custom_conversions.contains(from_type)) {
+      runtime_custom_conversions[from_type] = {};
     }
-    runtime_custom_conversions[from][to] = CustomConversion::from(from, converter_);
+    runtime_custom_conversions[from_type][to_type] = CustomConversion::from(from_type, converter_);
   }
 
   template <
     typename From,
     typename To>
   void set_custom_type_conversion(refl::any (*converter_)(const refl::any&)) {
-    set_custom_type_conversion(refl::type_id<From>, refl::type_id<To>, converter_);
+    set_custom_type_conversion(
+      std::string{refl::type_name<From>}, std::string{refl::type_name<To>}, converter_
+    );
   }
 
   std::optional<CustomConversion> get_custom_type_conversion(
-    refl::type_id_t from,
-    refl::type_id_t to
+    std::string from_type,
+    std::string to_type
   ) {
-    if (runtime_custom_conversions.contains(from)
-        and runtime_custom_conversions.at(from).contains(to)) {
-      return runtime_custom_conversions.at(from).at(to);
+    if (runtime_custom_conversions.contains(from_type)
+        and runtime_custom_conversions.at(from_type).contains(to_type)) {
+      return runtime_custom_conversions.at(from_type).at(to_type);
     }
     return std::nullopt;
   }
@@ -74,7 +76,9 @@ export namespace cydui::style {
     typename From,
     typename To>
   std::optional<CustomConversion> get_custom_type_conversion() {
-    return get_custom_type_conversion(refl::type_id<From>, refl::type_id<To>);
+    return get_custom_type_conversion(
+      std::string{refl::type_name<From>}, std::string{refl::type_name<To>}
+    );
   }
 } // namespace cydui::style
 
@@ -194,4 +198,4 @@ export namespace cydui::style {
       reset_fun_(get_impl());
     }
   };
-} // namespace cydui::components
+} // namespace cydui::style
