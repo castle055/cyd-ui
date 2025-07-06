@@ -16,10 +16,10 @@ export import cydui.components.mounted;
 export import cydui.styling.lang;
 
 
-namespace cydui::style{
+namespace cydui::style {
   bool check_style_selector(
     components::mounted_component_t& component,
-    const tss::StyleRuleSelector&         selector,
+    const tss::StyleRuleSelector&    selector,
     bool                             check_tags,
     bool                             check_pseudo_states
   ) {
@@ -49,10 +49,10 @@ namespace cydui::style{
   }
 
   bool check_style_comb_selector(
-    components::mounted_component_t& component,
+    components::mounted_component_t&      component,
     const tss::StyleRuleCombinedSelector& selector,
-    bool                             check_tags = false,
-    bool check_pseudo_states                    = false
+    bool                                  check_tags = false,
+    bool check_pseudo_states                         = false
   ) {
     auto it = selector.selectors.rbegin();
     if (not check_style_selector(component, it->second, check_tags, check_pseudo_states)) {
@@ -93,12 +93,12 @@ namespace cydui::style{
 
     return true;
   }
-} // namespace cydui::styling
+} // namespace cydui::style
 
 export namespace cydui::style {
-  void compile_style_rule_list(
+  std::vector<tss::StyleRuleInstance> instantiate_rules(
     components::mounted_component_t& component,
-    tss::StyleArchive&                    style_archive
+    tss::StyleArchive&               style_archive
   ) {
     std::vector<tss::StyleRuleInstance> style_rules{};
 
@@ -119,14 +119,24 @@ export namespace cydui::style {
       }
     );
 
+    return style_rules;
+  }
+
+  void compile_style_rule_list(
+    components::mounted_component_t& component,
+    tss::StyleArchive&               style_archive
+  ) {
+    const std::vector<tss::StyleRuleInstance> style_rules{
+      instantiate_rules(component, style_archive)
+    };
     component.get_style_stack().update_rule_list(style_rules);
   }
 
   bool check_style_comb_selector_vector(
-    components::mounted_component_t&              component,
+    components::mounted_component_t&                   component,
     const std::vector<tss::StyleRuleCombinedSelector>& selectors,
-    bool                                          check_tags = false,
-    bool check_pseudo_states                                 = false
+    bool                                               check_tags = false,
+    bool check_pseudo_states                                      = false
   ) {
     ZoneScopedN("Check Selectors");
     for (const auto& selector: selectors) {
@@ -136,4 +146,4 @@ export namespace cydui::style {
     }
     return false;
   }
-} // namespace cydui::styling
+} // namespace cydui::style
