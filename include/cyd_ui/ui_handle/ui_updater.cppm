@@ -64,12 +64,13 @@ namespace cydui {
         PROF_SCOPE(Update Hover)
         hover_state_.update_hover();
       }
+      bool style_changed = style_.update_style(*tree_.root);
 
       if (not update_ui()) {
         FrameMarkEnd("Update");
         co_return;
       }
-      bool style_changed = style_.update_style(*tree_.root);
+      style_changed |= style_.update_style(*tree_.root);
       update_dimensions();
 
       {
