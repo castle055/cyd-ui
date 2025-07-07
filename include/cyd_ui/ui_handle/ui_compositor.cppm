@@ -42,7 +42,12 @@ namespace cydui {
 
     void compose() {
       PROF_SCOPE(Compose)
-      compose_recurse(*tree_.root);
+      std::list<compositing::compositing_node_t*> pending_nodes{};
+      compose_recurse(*tree_.root, pending_nodes);
+      const backends::renderer_base::sptr& renderer = frame_.get_renderer();
+      for (const auto& node: pending_nodes) {
+        node->compose_into(renderer, tree_.root->get_compositing_node().composite_texture);
+      }
       compose_frame();
     }
 
@@ -58,6 +63,7 @@ namespace cydui {
 
     void compose_recurse(
       components::mounted_component_t&                   component,
+      std::list<compositing::compositing_node_t*>&       pending_nodes,
       const std::optional<backends::texture_base::sptr>& target = std::nullopt
     ) {
       PROF_SCOPE(Compose Recurse)
@@ -66,15 +72,19 @@ namespace cydui {
       node.compose_own(frame_.get_frame());
       if (node.is_flattened_node()) {
         for (auto& child: component.get_children()) {
-          compose_recurse(*child, target);
+          compose_recurse(*child, pending_nodes, target);
         }
       } else {
         for (auto& child: component.get_children()) {
-          compose_recurse(*child, node.composite_texture);
+          compose_recurse(*child, pending_nodes, node.composite_texture);
         }
-        if (target.has_value()) {
-          const backends::renderer_base::sptr& renderer = frame_.get_renderer();
-          node.compose_into(renderer, target.value());
+        if (node.get_operation().position == cydui::position_e::RELATIVE) {
+          if (target.has_value()) {
+            const backends::renderer_base::sptr& renderer = frame_.get_renderer();
+            node.compose_into(renderer, target.value());
+          }
+        } else {
+          pending_nodes.emplace_back(&node);
         }
       }
     }

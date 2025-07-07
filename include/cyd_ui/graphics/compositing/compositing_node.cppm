@@ -56,6 +56,9 @@ export namespace cydui::compositing {
       update_placement();
     }
 
+    const compositing_operation_t& get_operation() const {
+      return op;
+    }
   public:
     void queue_graphics_update() {
       graphics_dirty_ = true;
