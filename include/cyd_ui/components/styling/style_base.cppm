@@ -82,22 +82,6 @@ export namespace cydui::style {
   }
 } // namespace cydui::style
 
-struct __static_init {
-  __static_init() {
-    cydui::style::set_custom_type_conversion<color::Color, vg::paint::type>(
-      [](const refl::any& it) {
-        return refl::any::make<vg::paint::type>(
-          vg::paint::type::make(vg::paint::solid(it.as<color::Color>()))
-        );
-      }
-    );
-    cydui::style::set_custom_type_conversion<double, int>([](const refl::any& it) {
-      int iti = static_cast<int>(it.as<double>());
-      return refl::any::make<int>(iti);
-    });
-  }
-} __static_init{};
-
 export namespace cydui::style {
   template <typename T>
   struct four_sided_property {
@@ -199,3 +183,44 @@ export namespace cydui::style {
     }
   };
 } // namespace cydui::style
+
+struct __static_init {
+  __static_init() {
+    cydui::style::set_custom_type_conversion<color::Color, vg::paint::type>(
+      [](const refl::any& it) {
+        return refl::any::make<vg::paint::type>(
+          vg::paint::type::make(vg::paint::solid(it.as<color::Color>()))
+        );
+      }
+    );
+    cydui::style::set_custom_type_conversion<
+      color::Color,
+      cydui::style::four_sided_property<vg::paint::type>>([](const refl::any& it) {
+      return refl::any::make<cydui::style::four_sided_property<vg::paint::type>>(
+        cydui::style::four_sided_property<vg::paint::type>{
+          vg::paint::type::make(vg::paint::solid(it.as<color::Color>())),
+          vg::paint::type::make(vg::paint::solid(it.as<color::Color>())),
+          vg::paint::type::make(vg::paint::solid(it.as<color::Color>())),
+          vg::paint::type::make(vg::paint::solid(it.as<color::Color>()))
+        }
+      );
+    });
+    cydui::style::set_custom_type_conversion<double, int>([](const refl::any& it) {
+      int iti = static_cast<int>(it.as<double>());
+      return refl::any::make<int>(iti);
+    });
+    cydui::style::set_custom_type_conversion<double, cydui::style::four_sided_property<int>>(
+      [](const refl::any& it) {
+        int iti = static_cast<int>(it.as<double>());
+        return refl::any::make<cydui::style::four_sided_property<int>>(
+          cydui::style::four_sided_property<int>{
+            iti,
+            iti,
+            iti,
+            iti,
+          }
+        );
+      }
+    );
+  }
+} __static_init{};
