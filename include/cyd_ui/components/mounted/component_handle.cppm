@@ -96,6 +96,22 @@ namespace cydui::components {
       return component->is_hovered();
     }
 
+    bool has_tag(const std::string& tag) const {
+      return component->get_blueprint()->has_tag(tag);
+    }
+
+    bool tag(const std::string& tag) const {
+      bool has_tag = component->get_blueprint()->has_tag(tag);
+      component->get_blueprint()->tag(tag);
+      return not has_tag;
+    }
+
+    bool untag(const std::string& tag) const {
+      bool has_tag = component->get_blueprint()->has_tag(tag);
+      component->get_blueprint()->untag(tag);
+      return has_tag;
+    }
+
     animation_handle animate(const animation& animation) {
       return cydui::animate(*component, animation);
     }
