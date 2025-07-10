@@ -19,13 +19,15 @@ export import cydui.backends;
 
 export namespace cydui {
   EVENT(StopApplicationEvent){};
+  
   class Application: public fabric::async::async_bus_t {
   private:
     Application()
         : stop_application_listener_(on_event([&](const StopApplicationEvent&) -> fabric::task<> {
-            if (this->window_map_.empty()) {
-              this->emit<fabric::async::StopBusEvent>();
+            for (const auto& [id, bus]: this->window_map_) {
+              bus->emit<fabric::async::StopBusEvent>();
             }
+            this->emit<fabric::async::StopBusEvent>();
             this->stop_application_flag_.test_and_set();
             this->stop_application_flag_.notify_all();
             co_return;
