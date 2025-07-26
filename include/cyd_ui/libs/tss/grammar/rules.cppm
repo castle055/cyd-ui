@@ -21,7 +21,7 @@ export import cydui.styling.lang.rules;
 export import cydui.graphics.types;
 
 
-namespace syntax {
+namespace tss::syntax {
   export GRAMMAR(tss_rules)
       : tss_expressions,
         tss_selectors {

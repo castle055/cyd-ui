@@ -5,6 +5,7 @@
 #include "gtest/gtest.h"
 
 import cydui.styling.sparse_field_map;
+import cydui.core.focus_state;
 
 using namespace cydui::style;
 

@@ -21,7 +21,7 @@ export import cydui.styling.lang.rules;
 export import cydui.graphics.types;
 
 
-namespace syntax {
+namespace tss::syntax {
   export GRAMMAR(tss_literals)
       : tss_tokens {
     ARULE(tss_decl_color_literal)
@@ -32,8 +32,8 @@ namespace syntax {
      hex_digit{},
      hex_digit{},
      hex_digit{},
-     ~(hex_digit{}, hex_digit{}))(color::Color)({
-      $node->data = color::Color::from_str($node->children[0]->text);
+     ~(hex_digit{}, hex_digit{}))(cydui::Color)({
+      $node->data = cydui::Color::from_str($node->children[0]->text);
     });
 
     struct number_literal_data {

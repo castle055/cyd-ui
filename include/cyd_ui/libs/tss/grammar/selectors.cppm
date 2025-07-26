@@ -21,7 +21,7 @@ export import cydui.graphics.types;
 
 
 
-namespace syntax {
+namespace tss::syntax {
   export GRAMMAR(tss_selectors): tss_tokens {
     RULE(tss_class_selector)            (dot, tss_identifier{});
 

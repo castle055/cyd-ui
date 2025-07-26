@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 module;
-#include <cyd_fabric_modules/headers/macros/async_events.h>
 #include <SDL3/SDL_events.h>
+#include <cyd_fabric_modules/headers/macros/async_events.h>
 
 export module cydui.events;
 
@@ -13,7 +13,7 @@ export import cydui.dimensions;
 
 using cydui::dimensions::screen_measure;
 
-export {
+export namespace cydui {
   EVENT(RedrawEvent) {
     unsigned long win       = 0;
     int           x         = 0;
@@ -40,13 +40,13 @@ export {
   };
 
   EVENT(MotionEvent) {
-    unsigned long        win      = 0;
-    const screen_measure x        = 0;
-    const screen_measure y        = 0;
-    bool                 enter    = false;
-    bool                 exit     = false;
+    unsigned long        win   = 0;
+    const screen_measure x     = 0;
+    const screen_measure y     = 0;
+    bool                 enter = false;
+    bool                 exit  = false;
 
-    bool                 dragging = false;
+    bool dragging = false;
   };
 
   EVENT(ResizeEvent) {
@@ -55,42 +55,40 @@ export {
     const screen_measure h   = 0;
   };
 
-  namespace cydui {
-    enum class Button {
-      PRIMARY   = 1,
-      SECONDARY = 3,
-      WHEEL     = 2,
-      BUTTON1   = PRIMARY,
-      BUTTON2   = WHEEL,
-      BUTTON3   = SECONDARY,
-    };
-  }
+  enum class Button {
+    PRIMARY   = 1,
+    SECONDARY = 3,
+    WHEEL     = 2,
+    BUTTON1   = PRIMARY,
+    BUTTON2   = WHEEL,
+    BUTTON3   = SECONDARY,
+  };
 
   using Scancode = SDL_Scancode;
-  using Keycode = SDL_Keycode;
-  using Keymod = Uint16;
+  using Keycode  = SDL_Keycode;
+  using Keymod   = Uint16;
 
   struct Keysym {
-    Scancode scancode;
+    Scancode    scancode;
     SDL_Keycode code;
-    Keymod mod;
+    Keymod      mod;
   };
 
   EVENT(KeyEvent) {
-    const Keysym        keysym;
-    const bool          pressed  = false;
-    const bool          released = false;
-    const bool          holding  = false;
+    const Keysym keysym;
+    const bool   pressed  = false;
+    const bool   released = false;
+    const bool   holding  = false;
   };
 
   EVENT(TextInputEvent) {
-    std::string text = "";
-    bool compositing_event = false;
+    std::string text              = "";
+    bool        compositing_event = false;
     struct {
       int cursor{0};
       int selection{0};
-    } compositing_state { };
+    } compositing_state{};
   };
 
-  EVENT(WindowClosed) {};
-}
+  EVENT(WindowClosed){};
+} // namespace cydui

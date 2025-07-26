@@ -20,7 +20,7 @@ export import cydui.styling.lang.rules;
 export import cydui.graphics.types;
 
 
-namespace syntax {
+namespace tss::syntax {
   export GRAMMAR(tss_tokens)
       : base_terminals {
     RULE(skip_wn)(*(whitespace | newline | return_));

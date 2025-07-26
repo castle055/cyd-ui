@@ -15,7 +15,7 @@ export import fabric.grammar;
 import fabric.grammar.operators;
 
 
-namespace syntax {
+namespace tss::syntax {
   export GRAMMAR(tss_document)
       : tss_rules {
     struct stylesheet_data {

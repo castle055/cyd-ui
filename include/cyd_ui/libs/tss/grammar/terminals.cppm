@@ -20,7 +20,7 @@ export import cydui.graphics.types;
 
 
 
-namespace syntax {
+namespace tss::syntax {
   export GRAMMAR(base_terminals) {
     TERMINAL_DIGIT(0);
     TERMINAL_DIGIT(1);

@@ -12,18 +12,19 @@ import cydui;
 
 namespace stdui::input {
   struct TextInputContext {};
-  export COMPONENT(
-    text, { std::string* text; };
+
+  export COMPONENT(text,
+    { std::string* text; };
     ATTRIBUTE(on_enter, std::function<void()>){[] {}};
     ATTRIBUTE(on_escape, std::function<void()>){[] {}};
   ) {
     STATE {
       int caret_pos = 0;
     };
-    cydui::provide_context<TextInputContext> text_input_ctx{};
+    cydui::core::provide_context<TextInputContext> text_input_ctx{};
 
     CHILDREN {
-      return {$content};
+      return { $content };
     }
 
     FRAGMENT {

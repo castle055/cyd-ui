@@ -14,7 +14,7 @@ import reflect.serialize;
 export import fabric.grammar;
 
 
-namespace syntax {
+namespace tss::syntax {
   export GRAMMAR(tss)
       : tss_document {
     START(tss_stylesheet);

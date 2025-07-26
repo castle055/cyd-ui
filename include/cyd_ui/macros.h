@@ -6,14 +6,14 @@
 
 #include <SDL3/SDL_keycode.h>
 #include <cyd_fabric_modules/headers/macros/async_events.h>
-#include "components/blueprint/events/component_event_macros.h"
-#include "components/blueprint/events/on_event_macro.h"
+#include "core/components/events/component_event_macros.h"
+#include "core/components/events/on_event_macro.h"
 
 #define STATE                                                                                      \
   static constexpr bool has_custom_state_type = true;                                              \
   struct state_type;                                                                               \
   state_type & state;                                                                              \
-  struct state_type: public cydui::components::component_state_t
+  struct state_type: public cydui::core::component_state_t
 
 #define STYLE                                                                                      \
   static constexpr bool has_custom_style_type = true;                                              \
@@ -24,7 +24,7 @@
 #define EXTENDS(...) , __VA_ARGS__
 
 #define COMPONENT_DECL(NAME, ...)                                                                  \
-  struct NAME: public cydui::components::blueprint_t<NAME> {                                       \
+  struct NAME: public cydui::core::blueprint_t<NAME> {                                       \
     struct event_handler_t;                                                                        \
     struct props_t __VA_ARGS__;                                                                    \
                                                                                                    \
@@ -36,23 +36,23 @@
       std::enable_if_t<                                                                            \
         std::is_default_constructible_v<P>,                                                        \
         props_t> props                           = {},                                             \
-      cydui::components::identifier_t identifier = {}                                              \
+      cydui::core::identifier_t identifier = {}                                              \
     )                                                                                              \
-        : cydui::components::blueprint_t<NAME>(identifier),                                        \
+        : cydui::core::blueprint_t<NAME>(identifier),                                        \
           props(std::move(props)) {}                                                               \
     explicit NAME(                                                                                 \
       props_t                         props,                                                       \
-      cydui::components::identifier_t identifier = {}                                              \
+      cydui::core::identifier_t identifier = {}                                              \
     )                                                                                              \
-        : cydui::components::blueprint_t<NAME>(identifier),                                        \
+        : cydui::core::blueprint_t<NAME>(identifier),                                        \
           props(std::move(props)) {}                                                               \
     ~NAME() override = default;                                                                    \
     friend struct event_handler_t;                                                                 \
-    friend struct cydui::components::event_handler_data_t<NAME>;                                   \
+    friend struct cydui::core::event_handler_data_t<NAME>;                                   \
   }
 
 #define COMPONENT_IMPL(NAME)                                                                       \
-  struct NAME::event_handler_t: public cydui::components::event_handler_data_t<NAME>
+  struct NAME::event_handler_t: public cydui::core::event_handler_data_t<NAME>
 
 #define COMPONENT(NAME, ...)                                                                       \
   COMPONENT_DECL(NAME, __VA_ARGS__);                                                               \
@@ -61,7 +61,7 @@
 
 #define TCOMPONENT(NAME, ...)                                                                      \
   template NAME##_TEMPLATE struct NAME                                                             \
-      : public cydui::components::blueprint_t<NAME NAME##_TEMPLATE_SHORT> {                        \
+      : public cydui::core::blueprint_t<NAME NAME##_TEMPLATE_SHORT> {                        \
     struct event_handler_t;                                                                        \
     struct props_t __VA_ARGS__;                                                                    \
                                                                                                    \
@@ -73,17 +73,17 @@
         std::is_default_constructible_v<P>,                                                        \
         props_t> props = {}                                                                        \
     )                                                                                              \
-        : cydui::components::blueprint_t<NAME NAME##_TEMPLATE_SHORT>(),                            \
+        : cydui::core::blueprint_t<NAME NAME##_TEMPLATE_SHORT>(),                            \
           props(std::move(props)) {}                                                               \
     explicit NAME(props_t props)                                                                   \
-        : cydui::components::blueprint_t<NAME NAME##_TEMPLATE_SHORT>(),                            \
+        : cydui::core::blueprint_t<NAME NAME##_TEMPLATE_SHORT>(),                            \
           props(std::move(props)) {}                                                               \
     ~NAME() override = default;                                                                    \
     friend struct event_handler_t;                                                                 \
-    friend struct cydui::components::event_handler_data_t<NAME NAME##_TEMPLATE_SHORT>;             \
+    friend struct cydui::core::event_handler_data_t<NAME NAME##_TEMPLATE_SHORT>;             \
   };                                                                                               \
   template NAME##_TEMPLATE struct NAME NAME##_TEMPLATE_SHORT::event_handler_t                      \
-      : public cydui::components::event_handler_data_t<NAME NAME##_TEMPLATE_SHORT>
+      : public cydui::core::event_handler_data_t<NAME NAME##_TEMPLATE_SHORT>
 
 
 #define CYDUI_INTERNAL_EV_HANDLER_IMPL(NAME) void on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS

@@ -22,12 +22,13 @@ void setup() {}
 
 
 struct test_context {
-  color::Color color{"#FF0000"_color};
+  cydui::Color color{"#FF0000"_color};
 };
 
 struct styletype {
-  color::Color bg{"#ff0000"_color};
+  cydui::Color bg{"#ff0000"_color};
 };
+
 COMPONENT(
   TestWithContext, //
   { std::string* text; };

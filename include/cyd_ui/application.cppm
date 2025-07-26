@@ -19,7 +19,7 @@ export import cydui.backends;
 
 export namespace cydui {
   EVENT(StopApplicationEvent){};
-  
+
   class Application: public fabric::async::async_bus_t {
   private:
     Application()

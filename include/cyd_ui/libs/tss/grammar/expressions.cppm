@@ -20,7 +20,7 @@ export import cydui.styling.lang.rules;
 export import cydui.graphics.types;
 
 
-namespace syntax {
+namespace tss::syntax {
   export GRAMMAR(tss_expressions)
       : tss_literals {
     struct tss_decl_expression_list;
@@ -42,7 +42,7 @@ namespace syntax {
       refl::any&  value = $node->data;
 
       if (child->is_type<tss_decl_color_literal>()) {
-        value = refl::any::make<color::Color>(child->as<tss_decl_color_literal>()->data);
+        value = refl::any::make<cydui::Color>(child->as<tss_decl_color_literal>()->data);
       } else if (child->is_type<tss_decl_function_call>()) {
       } else if (child->is_type<tss_obj_expression>()) {
         value = child->as<tss_obj_expression>()->data;
