@@ -8,8 +8,6 @@
 #                                                                    CYD-UI    #
 #                                                                              #
 #[[  AVAILABLE OPTIONS:                                                      ]]#
-#      - CYD_UI_BUILD_APPS .................. ON in DEV_MODE, OFF otherwise    #
-#            whether or not app executables should be built                    #
 #      - CYD_UI_BUILD_TESTS ............................. DEV_MODE only, ON    #
 #            whether or not tests should be built                              #
 #      - CYD_UI_BUILD_DOCS .............................. DEV_MODE only, ON    #
@@ -19,7 +17,6 @@
 #      - Project setup                                                         #
 #      - Configure dependencies                                                #
 #      - Configure CYD UI                                                      #
-#      - Configure CYD UI APPS                                                 #
 #      - Configure tests                                                       #
 #      - Configure Doxygen documentation                                       #
 #                                                                              #
@@ -43,11 +40,6 @@ endif ()
 #[[                           CONFIGURE OPTIONS                              ]]#
 option(CYD_UI_PROFILING "whether or not to enable Tracy profiler" OFF)
 #option(CYD_UI_PROFILING "whether or not to enable Tracy profiler" ON)
-if (CYD_UI_DEV_MODE)
-    option(CYD_UI_BUILD_APPS "whether or not app executables should be built" ON)
-else ()
-    option(CYD_UI_BUILD_APPS "whether or not app executables should be built" OFF)
-endif ()
 
 #[[                         DEVELOPER MODE OPTIONS                           ]]#
 if(CYD_UI_DEV_MODE)
@@ -66,7 +58,7 @@ set(CMAKE_EXPERIMENTAL_CXX_IMPORT_STD "d0edc3af-4c50-42ea-a356-e2862fe7a444")
 set(CMAKE_CXX_MODULE_STD ON)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libc++ -pthread -fexperimental-library")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -stdlib=libstdc++ -pthread -fexperimental-library")
 
 project(cyd_ui LANGUAGES CXX)
 
@@ -74,13 +66,19 @@ SET(CYD_UI_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 SET(CYD_UI_TEST_DIR ${CYD_UI_DIR}/test)
 SET(CYD_UI_INCLUDE_DIR ${CYD_UI_DIR}/include)
 SET(CYD_UI_SOURCE_DIR ${CYD_UI_DIR}/src)
-SET(CYD_UI_APPS_DIR ${CYD_UI_DIR}/apps)
+SET(CYD_UI_CMAKE_DIR ${CYD_UI_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CYD_UI_CMAKE_DIR}/Modules)
 
 
 ################################################################################
 #[[                          CONFIGURE DEPENDENCIES                          ]]#
 ################################################################################
+include(ExternalProject)
 include(FetchContent)
+find_package(PkgConfig)
+
+#[[                          CONFIGURE CAIROMM-1.16                          ]]#
+#find_package(CAIROMM)
 
 ##[[                          CONFIGURE CPP REFLECT                           ]]#
 #FetchContent_Declare(cpp_reflect
@@ -119,6 +117,7 @@ FetchContent_Declare (
 )
 FetchContent_MakeAvailable(tracy)
 
+#[[                         CONFIGURE GOOGLE TESTS                           ]]#
 FetchContent_Declare(
   googletest
   URL https://github.com/google/googletest/archive/v1.17.0.zip
@@ -131,28 +130,45 @@ FetchContent_MakeAvailable(googletest)
 # Look for a SDL3 package, 2. look for the SDL3 component and 3. fail if none can be found
 find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3)
 
+#[[                           CONFIGURE CAIROMM                              ]]#
+pkg_check_modules(cairomm REQUIRED IMPORTED_TARGET cairomm-1.16)
+#[[                           CONFIGURE PANGOMM                              ]]#
+pkg_check_modules(pangomm REQUIRED IMPORTED_TARGET pangomm-2.48)
+
+#[[                             CONFIGURE NFD                                ]]#
+FetchContent_Declare(nfd
+        GIT_REPOSITORY https://github.com/btzy/nativefiledialog-extended.git
+        GIT_TAG v1.2.1
+        FIND_PACKAGE_ARGS
+)
+FetchContent_MakeAvailable(nfd)
+#add_subdirectory(path/to/nativefiledialog-extended)
+
 ################################################################################
 #[[                             CONFIGURE CYD UI                             ]]#
 ################################################################################
 add_library(cyd_ui)
 reflect_target(cyd_ui)
 
-FILE(GLOB_RECURSE SRC_LIST CONFIGURE_DEPENDS
+FILE(GLOB_RECURSE EXPORT_HEADERS CONFIGURE_DEPENDS
         ${CYD_UI_INCLUDE_DIR}/*.h
         ${CYD_UI_INCLUDE_DIR}/*.hpp
         ${CYD_UI_INCLUDE_DIR}/*.inc
+)
+FILE(GLOB_RECURSE SOURCE_HEADERS CONFIGURE_DEPENDS
         ${CYD_UI_SOURCE_DIR}/*.h
         ${CYD_UI_SOURCE_DIR}/*.hpp
         ${CYD_UI_SOURCE_DIR}/*.inc
-        ${CYD_UI_SOURCE_DIR}/*.cpp
 )
-FILE(GLOB_RECURSE SRC_MOD_LIST CONFIGURE_DEPENDS
+
+FILE(GLOB_RECURSE EXPORT_MODULES CONFIGURE_DEPENDS
         ${CYD_UI_INCLUDE_DIR}/*.cppm
+)
+FILE(GLOB_RECURSE SOURCE_MODULES CONFIGURE_DEPENDS
         ${CYD_UI_SOURCE_DIR}/*.cppm
 )
-FILE(GLOB_RECURSE SRC_MODI_LIST CONFIGURE_DEPENDS
-        ${CYD_UI_INCLUDE_DIR}/*.cppi
-        ${CYD_UI_SOURCE_DIR}/*.cppi
+FILE(GLOB_RECURSE MODULE_IMPLS CONFIGURE_DEPENDS
+        ${CYD_UI_SOURCE_DIR}/*.cxx
 )
 
 target_include_directories(cyd_ui PUBLIC ${CYD_UI_INCLUDE_DIR})
@@ -160,14 +176,20 @@ target_include_directories(cyd_ui PUBLIC ${cyd_fabric_SOURCE_DIR}/include)
 target_compile_features(cyd_ui PUBLIC cxx_std_23)
 
 target_sources(cyd_ui
-        PUBLIC ${SRC_LIST}
-        PUBLIC ${SRC_MODI_LIST}
-        PUBLIC
-        FILE_SET cxx_modules
-        #        FILE_SET "${APP_NAME}_modfiles"
+        PUBLIC ${EXPORT_HEADERS}
+
+        PUBLIC FILE_SET cxx_modules
         TYPE CXX_MODULES
-        BASE_DIRS ${CYD_UI_SOURCE_DIR} ${CYD_UI_INCLUDE_DIR}
-        FILES ${SRC_MOD_LIST}
+        BASE_DIRS ${CYD_UI_INCLUDE_DIR}
+        FILES ${EXPORT_MODULES}
+
+        PRIVATE ${SOURCE_HEADERS}
+        PRIVATE ${MODULE_IMPLS}
+
+        PRIVATE FILE_SET cxx_module_impls
+        TYPE CXX_MODULES
+        BASE_DIRS ${CYD_UI_SOURCE_DIR}
+        FILES ${SOURCE_MODULES}
 )
 
 target_link_libraries(cyd_ui
@@ -176,24 +198,15 @@ target_link_libraries(cyd_ui
         quantify
         TracyClient
         SDL3::SDL3
+        PkgConfig::cairomm
+        PkgConfig::pangomm
+        PRIVATE
+        nfd
 )
 
-
-################################################################################
-#[[                          CONFIGURE CYD UI APPS                           ]]#
-################################################################################
-if (CYD_UI_BUILD_APPS)
-    FILE(GLOB APPS_LIST CONFIGURE_DEPENDS
-            ${CYD_UI_APPS_DIR}/**/CMakeLists.txt
-    )
-    if (NOT "${APPS_LIST}" STREQUAL "")
-        foreach (APP IN LISTS APPS_LIST)
-            message("Including app CMakeLists.txt: " ${APP})
-            include(${APP})
-        endforeach ()
-    endif ()
+if (${CYD_UI_PROFILING})
+    target_compile_definitions(cyd_ui PRIVATE CYD_UI_PROFILING)
 endif ()
-
 
 ################################################################################
 #[[                             CONFIGURE TESTS                              ]]#
@@ -218,3 +231,4 @@ if (CYD_UI_DEV_MODE AND CYD_UI_BUILD_DOCS)
             BASE_DIR ${CMAKE_CURRENT_SOURCE_DIR}
     )
 endif ()
+

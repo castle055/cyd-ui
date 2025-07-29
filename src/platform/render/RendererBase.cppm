@@ -9,7 +9,10 @@ export import std;
 export import reflect;
 
 export import fabric.async;
+export import fabric.services;
+export import cydui.core.Component.impl;
 export import cydui.platform.surface;
+export import cydui.service_scopes;
 
 namespace cydui::platform::render {
   export class FrameRendererBase {
@@ -18,16 +21,27 @@ namespace cydui::platform::render {
 
     virtual ~FrameRendererBase() = default;
 
-    virtual Surface finish() = 0;
+    virtual fabric::task<> render(detail::ComponentImpl& root_component) = 0;
+
+    virtual fabric::task<Surface> finish() = 0;
   };
 
-  export class RendererBase {
+  export class RendererBase: public fabric::services::ServiceBase {
   public:
-    using sptr = std::shared_ptr<RendererBase>;
+    using scope = services::WindowScope;
+    using sptr  = std::shared_ptr<RendererBase>;
 
-    virtual ~RendererBase() = default;
+    virtual fabric::task<FrameRendererBase::uptr> begin_frame(
+      int width,
+      int height) = 0;
 
-    virtual FrameRendererBase::uptr begin_frame() = 0;
+    virtual std::optional<refl::any> mount_component(detail::ComponentImpl& component) {
+      return std::nullopt;
+    }
+
+    virtual void unmount_component(detail::ComponentImpl& component) {
+      return;
+    }
   };
 
 

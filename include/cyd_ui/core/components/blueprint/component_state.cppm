@@ -7,35 +7,34 @@ import std;
 import fabric.logging;
 import fabric.async;
 
-export import cydui.events;
-export import cydui.backends.frame_base;
+export import cydui.event_types;
 
 
-namespace cydui::core {
+namespace cydui::detail {
   export class component_state_delegate_t;
-  export class component_state_t;
+  export class ComponentState;
 
-  class component_state_t {
+  class ComponentState {
   public:
-    using sptr = std::shared_ptr<component_state_t>;
+    using sptr = std::shared_ptr<ComponentState>;
 
   public:
     std::string                           component_name_;
-    component_state_t*                    parent_ = nullptr;
+    ComponentState*                    parent_ = nullptr;
     std::unordered_map<std::string, sptr> children_states{};
 
   public:
-    virtual ~component_state_t() = default;
+    virtual ~ComponentState() = default;
 
-    component_state_t() = default;
-    explicit component_state_t(void* props) {}
+    ComponentState() = default;
+    explicit ComponentState(void* props) {}
 
 
     std::string component_name() const {
       return component_name_;
     }
 
-    component_state_t* parent() {
+    ComponentState* parent() {
       return parent_;
     }
 
@@ -54,7 +53,7 @@ namespace cydui::core {
   class component_state_delegate_t {
   public:
     static void set_name(
-      component_state_t* it,
+      ComponentState* it,
       const std::string& name
     ) {
       it->component_name_ = name;

@@ -9,35 +9,36 @@ export import std;
 export import reflect;
 
 export import fabric.async;
+export import fabric.services;
 export import cydui.platform.surface;
+export import cydui.service_scopes;
 
 namespace cydui::platform::window {
-  export class WindowBase {
+  export class WindowBase: public fabric::services::ServiceBase {
   public:
+    using scope = services::WindowScope;
     using sptr    = std::shared_ptr<WindowBase>;
     using id_type = unsigned int;
 
-    virtual ~WindowBase() = default;
+    virtual fabric::task<> event_task(fabric::async::async_bus_t::sptr bus) = 0;
 
-    virtual fabric::task<> event_task() = 0;
-
-    virtual void present(const Surface& frame_buffer) = 0;
+    virtual fabric::task<> present(const Surface& frame_buffer) = 0;
 
     virtual id_type get_id() const = 0;
 
-    virtual void set_position(
+    virtual fabric::task<> set_position(
       int x,
       int y
     ) = 0;
 
-    virtual std::pair<
+    virtual fabric::task<std::pair<
       int,
-      int>
+      int>>
     get_size() = 0;
 
-    virtual void enable_text_input() = 0;
+    virtual fabric::task<> enable_text_input() = 0;
 
-    virtual void disable_text_input() = 0;
+    virtual fabric::task<> disable_text_input() = 0;
   };
 
 

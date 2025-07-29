@@ -11,27 +11,27 @@ FOUR_SIDED_DIMENSIONAL_OVERLOADS(margin)
 FOUR_SIDED_SETTER(padding, expression_t, { return value; })
 FOUR_SIDED_DIMENSIONAL_OVERLOADS(padding)
 
-FOUR_SIDED_SETTER_POLY(border, vg::paint::type, vg::paint::solid, {
-  return vg::paint::type::make<vg::paint::solid>(value);
+FOUR_SIDED_SETTER_POLY(border, cydui::Paint, cydui::paints::Solid, {
+  return cydui::Paint{value};
 })
-FOUR_SIDED_SETTER_POLY(border, vg::paint::type, vg::paint::gradient::linear, {
-  return vg::paint::type::make<vg::paint::gradient::linear>(value);
+FOUR_SIDED_SETTER_POLY(border, cydui::Paint, cydui::paints::LinearGradient, {
+  return cydui::Paint(value);
 })
-FOUR_SIDED_SETTER_POLY(border, vg::paint::type, vg::paint::gradient::radial, {
-  return vg::paint::type::make<vg::paint::gradient::radial>(value);
+FOUR_SIDED_SETTER_POLY(border, cydui::Paint, cydui::paints::RadialGradient, {
+  return cydui::Paint(value);
 })
 FOUR_SIDED_SETTER(border_width, int, { return value; })
 FOUR_CORNERED_SETTER(border_radius, int, { return value; })
 FOUR_SIDED_SETTER(border_dasharray, std::valarray<double>, { return value; })
 
-STYLE_SETTER(background, vg::paint::solid, {
-  return vg::paint::type::make<vg::paint::solid>(value);
+STYLE_SETTER(background, cydui::paints::Solid, {
+  return cydui::Paint{value};
 })
-STYLE_SETTER(background, vg::paint::gradient::linear, {
-  return vg::paint::type::make<vg::paint::gradient::linear>(value);
+STYLE_SETTER(background, cydui::paints::LinearGradient, {
+  return cydui::Paint(value);
 })
-STYLE_SETTER(background, vg::paint::gradient::radial, {
-  return vg::paint::type::make<vg::paint::gradient::radial>(value);
+STYLE_SETTER(background, cydui::paints::RadialGradient, {
+  return cydui::Paint(value);
 })
 
 STYLE_SETTER(position, cydui::position_e, { return value; })

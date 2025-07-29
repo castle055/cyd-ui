@@ -9,10 +9,10 @@ export import cydui.styling.style_base;
 export import cydui.core.blueprint.base;
 export import cydui.core.state;
 
-export namespace cydui::core {
+export namespace cydui::detail {
   template <typename T>
   concept StaticBlueprint =
-    std::is_base_of_v<blueprint_base_t, T> and requires { typename T::event_handler_t; };
+    std::is_base_of_v<Blueprint, T> and requires { typename T::event_handler_t; };
 
 
   template <StaticBlueprint B>
@@ -27,7 +27,7 @@ export namespace cydui::core {
   template <typename T>
   concept HasCustomStateType = StaticBlueprint<T> and requires {
     typename event_handler_type<T>::state_type;
-  } and std::is_base_of_v<component_state_t, typename event_handler_type<T>::state_type>;
+  } and std::is_base_of_v<ComponentState, typename event_handler_type<T>::state_type>;
 
   template <typename T>
   concept HasCustomStyleType = StaticBlueprint<T> and requires {
@@ -47,7 +47,7 @@ export namespace cydui::core {
   template <typename B>
     requires(not HasCustomStateType<B>)
   struct state_type_t<B> {
-    using type = component_state_t;
+    using type = ComponentState;
   };
 
   template <typename T>

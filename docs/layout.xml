@@ -5,7 +5,20 @@
   <navindex>
     <tab type="mainpage" visible="yes" title=""/>
 
+    <tab type="user" visible="yes" url="@ref getting_started" title="Getting Started" intro=""/>
+    <tab type="user" visible="yes" url="@ref application" title="Application Singleton" intro=""/>
+    <tab type="user" visible="yes" url="@ref window_mgmt" title="Window Management" intro=""/>
+    <tab type="user" visible="yes" url="@ref layout" title="Layout" intro=""/>
+    <tab type="usergroup" visible="yes" url="@ref ui_components" title="UI Components" intro="">
+      <tab type="user" visible="yes" url="@ref application" title="Application Singleton" intro=""/>
+      <tab type="user" visible="yes" url="@ref application" title="Application Singleton" intro=""/>
+    </tab>
     <tab type="user" visible="yes" url="@ref contexts_api" title="Contexts" intro=""/>
+    <tab type="user" visible="yes" url="@ref ui_dimensions" title="UI Dimensions" intro=""/>
+    <tab type="usergroup" visible="yes" url="@ref typed_stylsheets" title="Typed Stylesheets" intro="">
+      <tab type="user" visible="yes" url="@ref typed_stylsheets_syntax" title="Stylesheet Syntax" intro=""/>
+      <tab type="user" visible="yes" url="@ref typed_stylsheets_builtin" title="Builtin Properties" intro=""/>
+    </tab>
 
     <tab type="pages" visible="no" title=""/>
     <tab type="topics" visible="no" title=""/>

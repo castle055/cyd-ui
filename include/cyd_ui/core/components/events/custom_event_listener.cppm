@@ -6,23 +6,23 @@ export module cydui.core.custom_event_listener;
 import std;
 import reflect;
 
-export import cydui.backends.frame_base;
+export import fabric.async;
 
-export namespace cydui::core {
+export namespace cydui::detail {
   template <typename Event>
   class custom_event_listener {
-    backends::frame_base&                         window_;
+    fabric::async::async_bus_t&                   bus_;
     std::function<fabric::task<>(const Event&)>   callback_;
     std::function<fabric::task<>()>               post_;
     std::optional<fabric::async::listener<Event>> listener_{std::nullopt};
 
   public:
     custom_event_listener(
-      backends::frame_base&                       window,
+      fabric::async::async_bus_t&                 bus,
       std::function<fabric::task<>(const Event&)> callback,
       std::function<fabric::task<>()>             post
     )
-        : window_(window),
+        : bus_(bus),
           callback_(callback),
           post_(post) {
       start_listening();
@@ -33,7 +33,7 @@ export namespace cydui::core {
     }
 
     custom_event_listener(const custom_event_listener& other)
-        : window_(other.window_),
+        : bus_(other.bus_),
           callback_(other.callback_),
           post_(other.post_) {
       start_listening();
@@ -47,7 +47,7 @@ export namespace cydui::core {
     }
 
     custom_event_listener(custom_event_listener&& other) noexcept
-        : window_(other.window_),
+        : bus_(other.bus_),
           callback_(other.callback_),
           post_(other.post_) {
       other.stop_listening();
@@ -66,7 +66,7 @@ export namespace cydui::core {
     void start_listening() {
       stop_listening();
 
-      listener_ = window_.on_event([&](const Event& ev) -> fabric::task<> {
+      listener_ = bus_.on_event([&](const Event& ev) -> fabric::task<> {
         co_await callback_(ev);
         co_await post_();
         co_return;

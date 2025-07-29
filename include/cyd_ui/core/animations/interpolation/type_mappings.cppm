@@ -35,4 +35,7 @@ export template <>
 struct cydui::animations::interp_mapping<long>: static_cast_interp_mapping<long> {};
 
 export template <>
+struct cydui::animations::interp_mapping<float>: static_cast_interp_mapping<float> {};
+
+export template <>
 struct cydui::animations::interp_mapping<double>: static_cast_interp_mapping<double> {};

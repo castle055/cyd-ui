@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 module;
-#define STYLE_SETTER_RETURN_TYPE void
+#define STYLE_SETTER_RETURN_TYPE Blueprint&
+#define STYLE_SETTER_RETURN_EXPR return *this;
 #define STYLE_SETTER_REF_CONSTRAINT
-#define STYLE_SETTER_RETURN_EXPR
 #define STYLE_MAP_GETTER this->style_map_
 #include "../../../style/include/style_setters_detail.h"
 
@@ -15,40 +15,48 @@ export import :event_dispatcher;
 import std;
 export import reflect;
 import fabric.logging;
+import fabric.exception;
 
 export import cydui.core.identifier;
 export import cydui.core.state;
 export import cydui.styling.sparse_style_map;
+export import cydui.core.contexts.store;
 
 
-export namespace cydui::core {
+export namespace cydui::detail {
   using tag_type    = std::string;
   using tagset_type = std::unordered_set<tag_type>;
 
-  class blueprint_base_t {
-    identifier_t id_{};
-    std::string  name_{};
-    tagset_type  tags_{};
+  struct update_result {
+    bool needs_update {false};
+    bool needs_restyle {false};
+  };
+} // namespace cydui::detail
+
+export namespace cydui {
+  class Blueprint {
+    ComponentIdentifier id_ {};
+    std::string         name_ {};
 
   protected:
+    detail::tagset_type     tags_ {};
     style::sparse_style_map style_map_;
-    content_type            content_{};
+    BlueprintList           content_ {};
 
   public:
-    using uptr = std::unique_ptr<blueprint_base_t>;
+    using uptr = std::unique_ptr<Blueprint>;
 
-    blueprint_base_t(
-      identifier_t           id,
+    Blueprint(
+      ComponentIdentifier    id,
       std::string            name,
-      const refl::type_info& style_ti
-    )
+      const refl::type_info& style_ti)
         : id_(id),
           name_(name),
           style_map_(style_ti) {}
 
-    virtual ~blueprint_base_t() = default;
+    virtual ~Blueprint() = default;
 
-    blueprint_base_t(const blueprint_base_t& other)
+    Blueprint(const Blueprint& other)
         : id_(other.id_),
           name_(other.name_),
           tags_(other.tags_),
@@ -56,14 +64,18 @@ export namespace cydui::core {
           content_(other.content_) {}
 
   public:
-    virtual component_state_t::sptr make_state_object() const = 0;
+    virtual detail::ComponentState::sptr make_state_object() const = 0;
 
-    virtual std::unique_ptr<event_dispatcher_base_t>
-    make_event_dispatcher(void* component) const = 0;
+    virtual std::unique_ptr<detail::event_dispatcher_base_t> make_event_dispatcher(
+      fabric::async::async_bus_t&      bus,
+      detail::event_dispatcher_base_t* parent,
+      void*                            component,
+      detail::ComponentState&          state,
+      detail::context_store_t&         context_store) const = 0;
 
     virtual style::style_object_t make_style_object() const = 0;
 
-    virtual bool update_with(const blueprint_base_t& other) = 0;
+    virtual detail::update_result update_with(const Blueprint& other) = 0;
 
     virtual const refl::type_info& get_style_type_info() const = 0;
 
@@ -74,7 +86,7 @@ export namespace cydui::core {
     virtual uptr clone() const = 0;
 
   public:
-    const identifier_t& get_id() const {
+    const ComponentIdentifier& get_id() const {
       return id_;
     }
     void set_id(const std::string& id) {
@@ -85,7 +97,7 @@ export namespace cydui::core {
       return name_;
     }
 
-    const content_type& get_content() const {
+    const BlueprintList& get_content() const {
       return content_;
     }
 
@@ -93,36 +105,69 @@ export namespace cydui::core {
       return style_map_;
     }
 
+    template <typename T>
+    bool is_type() const {
+      return dynamic_cast<const T*>(this) != nullptr;
+    }
+
+    template <typename T>
+    const T& as() const {
+      const T* ptr = dynamic_cast<const T*>(this);
+      if (ptr == nullptr) {
+        throw fabric::exception{std::format("Bad cast: expected '{}', found '{}'", refl::type_name<T>, get_name())};
+      }
+      return *ptr;
+    }
+
+    template <typename T>
+    T& as() {
+      T* ptr = dynamic_cast<T*>(this);
+      if (ptr == nullptr) {
+        throw fabric::exception{std::format("Bad cast: expected '{}', found '{}'", refl::type_name<T>, get_name())};
+      }
+      return *ptr;
+    }
+
   public:
-    void tag(const tagset_type& tags) {
+    void tag(const detail::tagset_type& tags) {
       for (const auto& tag: tags) {
         tags_.insert(tag);
       }
     }
 
-    void tag(const tag_type& tag) {
+    void tag(const detail::tag_type& tag) {
       tags_.insert(tag);
     }
 
-    void untag(const tagset_type& tags) {
+    void tag(
+      const detail::tag_type& tag,
+      bool                    tagged) {
+      if (tagged) {
+        this->tag(tag);
+      } else {
+        untag(tag);
+      }
+    }
+
+    void untag(const detail::tagset_type& tags) {
       for (const auto& tag: tags) {
         tags_.erase(tag);
       }
     }
 
-    void untag(const tag_type& tag) {
+    void untag(const detail::tag_type& tag) {
       tags_.erase(tag);
     }
 
-    bool has_tag(const tag_type& tag) const {
+    bool has_tag(const detail::tag_type& tag) const {
       return tags_.contains(tag);
     }
 
-    tagset_type& get_tags() {
+    detail::tagset_type& get_tags() {
       return tags_;
     }
 
-    const tagset_type& get_tags() const {
+    const detail::tagset_type& get_tags() const {
       return tags_;
     }
 
@@ -130,15 +175,15 @@ export namespace cydui::core {
 #include "../../../style/include/style_setters.inc"
   };
 
-  content_type::~content_type() = default;
+  BlueprintList::~BlueprintList() = default;
 
-  content_type::content_type(const content_type& other) {
+  BlueprintList::BlueprintList(const BlueprintList& other) {
     for (const auto& blueprint: other) {
       this->emplace_back(std::move(blueprint->clone()));
     }
   }
 
-  content_type& content_type::operator=(const content_type& other) {
+  BlueprintList& BlueprintList::operator=(const BlueprintList& other) {
     this->clear();
     for (const auto& blueprint: other) {
       this->emplace_back(std::move(blueprint->clone()));
@@ -146,6 +191,32 @@ export namespace cydui::core {
     return (*this);
   }
 
+  void BlueprintList::add_element(const BlueprintList& arg) {
+    for (const auto& blueprint: arg) {
+      this->emplace_back(blueprint->clone());
+    }
+  }
+
+  void BlueprintList::add_element(const Blueprint& arg) {
+    this->emplace_back(arg.clone());
+  }
+
   template <typename T>
-  concept ComponentBlueprint = std::derived_from<T, blueprint_base_t>;
-} // namespace cydui::core
+  concept ComponentBlueprint = std::derived_from<T, Blueprint>;
+
+
+  // template <typename T>
+  // using match = fabric::match<T, BlueprintList>;
+
+  auto match(const auto& value) {
+    return fabric::match {value, BlueprintList {}};
+  }
+
+  auto when(const bool& condition) {
+    return match(condition).if_true();
+  }
+
+  auto unless(const bool& condition) {
+    return match(not condition).if_true();
+  }
+} // namespace cydui

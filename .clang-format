@@ -2,7 +2,13 @@
 ---
 Language: Cpp
 BasedOnStyle: LLVM
-AlignAfterOpenBracket: BlockIndent
+AlignAfterOpenBracket: AlwaysBreak
+AlignArrayOfStructures: Right
+AlignConsecutiveShortCaseStatements:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: true
+  AlignCaseColons: true
 AlignConsecutiveAssignments:
   Enabled: true
   AcrossEmptyLines: false
@@ -23,11 +29,21 @@ AlignConsecutiveMacros:
   AcrossComments: true
 AlignOperands: true
 AlignTrailingComments: true
+#AllowAllArgumentsOnNextLine: false
+#AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortCaseExpressionOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: AllIfsAndElse
+AllowShortCompoundRequirementOnASingleLine: true
+AlwaysBreakBeforeMultilineStrings: false
 #BinPackParameters: AlwaysOnePerLine
 BinPackArguments: false
 BinPackParameters: AlwaysOnePerLine
+BreakAfterAttributes: Always
 BreakBeforeBinaryOperators: NonAssignment
+Cpp11BracedListStyle: true
 PackConstructorInitializers: Never
+SpaceBeforeCpp11BracedList: true
 BraceWrapping:
   AfterCaseLabel: false
   AfterClass: false
@@ -42,16 +58,15 @@ BraceWrapping:
   BeforeElse: false
   BeforeLambdaBody: false
   BeforeWhile: false
-  SplitEmptyFunction: true
-  SplitEmptyRecord: true
-  SplitEmptyNamespace: true
+  SplitEmptyFunction: false
+  SplitEmptyRecord: false
+  SplitEmptyNamespace: false
 BreakBeforeBraces: Custom
 BreakConstructorInitializers: BeforeColon
-AlwaysBreakTemplateDeclarations: Yes
-#BreakFunctionDefinitionParameters: false
-ColumnLimit: 100
+BreakTemplateDeclarations: Yes
+#BreakFunctionDefinitionParameters: true
+ColumnLimit: 120
 CompactNamespaces: false
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ContinuationIndentWidth: 2
 IncludeCategories:
   - Regex: '^<.*'
@@ -60,12 +75,22 @@ IncludeCategories:
     Priority: 2
   - Regex: '.*'
     Priority: 3
+SortIncludes: CaseSensitive
+IncludeBlocks: Regroup
 IncludeIsMainRegex: '([-_](test|unittest))?$'
 IndentCaseLabels: true
 InsertNewlineAtEOF: true
 MacroBlockBegin: ''
 MacroBlockEnd: ''
+#ForEachMacros:
+#  - 'CHILDREN'
+#  - 'FRAGMENT'
+IfMacros:
+  - 'COMPONENT'
+  - 'TEST'
 MaxEmptyLinesToKeep: 2
+BreakAfterReturnType: ExceptShortType
+PenaltyReturnTypeOnItsOwnLine: 100
 NamespaceIndentation: All
 PointerAlignment: Left
 SpaceAfterTemplateKeyword: true

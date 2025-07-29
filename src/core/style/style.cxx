@@ -11,16 +11,14 @@ import reflect;
 import fabric.logging;
 import fabric.wiring.signals;
 
-import cydui.application;
-import cydui.core.mounted;
 import cydui.styling.lang;
 
 using namespace cydui::style;
-using namespace cydui::core;
+using namespace cydui::detail;
 using namespace cydui;
 
 bool check_style_selector(
-  mounted_component_t&          component,
+  ComponentImpl&                component,
   const tss::StyleRuleSelector& selector,
   bool                          check_tags,
   bool                          check_pseudo_states
@@ -32,7 +30,7 @@ bool check_style_selector(
 
   if (check_tags) {
     for (const auto& tag: selector.tags) {
-      if (not component.get_blueprint()->has_tag(tag)) {
+      if (not component.get_blueprint().has_tag(tag)) {
         return false;
       }
     }
@@ -51,7 +49,7 @@ bool check_style_selector(
 }
 
 bool check_style_comb_selector(
-  mounted_component_t&                  component,
+  ComponentImpl&                        component,
   const tss::StyleRuleCombinedSelector& selector,
   bool                                  check_tags = false,
   bool check_pseudo_states                         = false
@@ -63,10 +61,10 @@ bool check_style_comb_selector(
   tss::StyleRuleCombinedSelector::kind_e kind = it->first;
   ++it;
 
-  mounted_component_t* current = &component;
+  ComponentImpl* current = &component;
   while (it != selector.selectors.rend()) {
     if (kind == tss::StyleRuleCombinedSelector::CHILD_COMBINATOR) {
-      auto& parent = *current->get_parent();
+      auto& parent = *current->get_parent_impl();
       if (not current->is_root()
           and check_style_selector(parent, it->second, check_tags, check_pseudo_states)) {
         current = &parent;
@@ -76,7 +74,7 @@ bool check_style_comb_selector(
     } else if (kind == tss::StyleRuleCombinedSelector::DESCENDENT_COMBINATOR) {
       bool found = false;
       while (not current->is_root()) {
-        auto& parent = *current->get_parent();
+        auto& parent = *current->get_parent_impl();
         if (check_style_selector(parent, it->second, check_tags, check_pseudo_states)) {
           found = true;
           break;
@@ -97,8 +95,8 @@ bool check_style_comb_selector(
 }
 
 std::vector<tss::StyleRuleInstance> style::instantiate_rules(
-  mounted_component_t& component,
-  tss::StyleArchive&   style_archive
+  ComponentImpl&     component,
+  tss::StyleArchive& style_archive
 ) {
   std::vector<tss::StyleRuleInstance> style_rules{};
 
@@ -123,8 +121,8 @@ std::vector<tss::StyleRuleInstance> style::instantiate_rules(
 }
 
 void style::compile_style_rule_list(
-  mounted_component_t& component,
-  tss::StyleArchive&   style_archive
+  ComponentImpl&     component,
+  tss::StyleArchive& style_archive
 ) {
   const std::vector<tss::StyleRuleInstance> style_rules{instantiate_rules(component, style_archive)
   };
@@ -132,7 +130,7 @@ void style::compile_style_rule_list(
 }
 
 bool style::check_style_comb_selector_vector(
-  mounted_component_t&                               component,
+  ComponentImpl&                                     component,
   const std::vector<tss::StyleRuleCombinedSelector>& selectors,
   bool                                               check_tags,
   bool                                               check_pseudo_states
@@ -146,7 +144,7 @@ bool style::check_style_comb_selector_vector(
   return false;
 }
 
-bool style::apply_style(mounted_component_t& component) {
+bool style::apply_style(ComponentImpl& component) {
   auto& style = component.get_style_stack();
 
   style.manage_rules([&](const tss::StyleRuleInstance& rule) -> bool {

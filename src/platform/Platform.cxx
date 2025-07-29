@@ -5,58 +5,37 @@
 
 module cydui.platform;
 
-import std;
-import reflect;
-
-import fabric.async;
-
-import cydui.platform.window.window_base;
+import fabric.main;
+import cydui.platform.impl;
 import cydui.platform.render.renderer_base;
-
-import cydui.platform.window.window_factory;
 import cydui.platform.render.renderer_factory;
+import cydui.platform.window.window_base;
+import cydui.platform.window.window_factory;
 
-using namespace cydui::platform::render;
-using namespace cydui::platform::window;
+using namespace cydui;
+using namespace cydui::platform;
+using namespace window;
+using namespace render;
 
-namespace cydui::platform {
-  class PlatformImpl: public fabric::async::async_bus_t {
-    WindowBase::sptr   window;
-    RendererBase::sptr renderer;
+fabric::task<Platform::sptr> make_impl(
+  const WindowOptionsBase::sptr&   window_opts,
+  const RendererOptionsBase::sptr& renderer_opts
+) {
+  auto bus = std::make_shared<fabric::async::async_bus_t>();
+  co_await fabric::this_task::switch_executor(bus->get_executor());
 
-  public:
-    explicit PlatformImpl(
-      const WindowOptionsBase::sptr&   window_opts,
-      const RendererOptionsBase::sptr& renderer_opts
-    )
-        : window(make_window(window_opts)),
-          renderer(make_renderer(renderer_opts)) {
-      start_event_task();
-    }
+  auto ctx = co_await fabric::services::ServiceContext::make<services::WindowScope>(
+    fabric::runtime::get_global_service_context(), {"WindowContext"}
+  );
 
-    const WindowBase::sptr& get_window() {
-      return window;
-    }
+  co_await register_window_service(ctx, window_opts);
+  co_await register_render_service(ctx, renderer_opts);
+  co_await fabric::runtime::get_global_service_context()->await_ready();
+  co_await ctx->await_ready();
 
-  private:
-    void start_event_task() {
-      get_executor()->schedule([this] -> fabric::task<> {
-        co_await this->window->event_task();
-        co_return;
-      });
-    }
-  };
-} // namespace cydui::platform
+  auto& window = co_await ctx->require<WindowBase>();
 
-namespace cydui::platform {
-  Platform::Platform(
-    const WindowOptionsBase::sptr&   window_opts,
-    const RendererOptionsBase::sptr& renderer_opts
-  )
-      : impl_(
-          std::make_unique<PlatformImpl>(
-            window_opts,
-            renderer_opts
-          )
-        ) {}
-} // namespace cydui::platform
+  co_await fabric::launch(window.event_task(bus));
+
+  co_return std::make_shared<PlatformImpl>(bus, ctx);
+}

@@ -8,44 +8,51 @@ module;
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
 
-export module cydui.plaform.window.sdl3.window;
+#include "../../../../debug/profiling/macros.h"
+#define PROF_CURRENT_MODULE cydui::platform::window::sdl3::window
+
+export module cydui.platform.window.sdl3.window;
 
 import std;
 import reflect;
 
 export import cydui.platform.window.window_base;
+export import cydui.platform.window.sdl3;
+export import cydui.platform.window.sdl3.service;
+import cydui.debug.profiling;
 
 namespace cydui::platform::window {
   export class SDL3Window final: public WindowBase {
-    SDL_Window*   window_       = nullptr;
-    SDL_Renderer* sdl_renderer_ = nullptr;
-    SDL_Texture*  texture_      = nullptr;
+    SDL3Service&      sdl;
+    SDL3WindowHandle  window_;
+    SDL3WindowOptions options_;
+
+    SDL_Texture* device_buffer_ {nullptr};
+    int          old_w {0}, old_h {0};
+
+    explicit SDL3Window(
+      SDL3Service&             sdl,
+      const SDL3WindowHandle&  handle,
+      const SDL3WindowOptions& options)
+        : sdl(sdl),
+          window_(handle),
+          options_(options) {}
 
   public:
     using sptr = std::shared_ptr<SDL3Window>;
 
-    SDL3Window(
-      const std::string& title,
-      int                width,
-      int                height
-    ) {
-      // get_executor()->schedule([title] -> fabric::task<> {
-      //   tracy::SetThreadNameWithHint(std::format("window[{}]", title).c_str(), 1);
-      //   co_return;
-      // });
-      if (not SDL_CreateWindowAndRenderer(
-            title.c_str(),
-            width,
-            height,
-            SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL,
-            &window_,
-            &sdl_renderer_
-          )) {
-        SDL_Log("Couldn't create Window: %s", SDL_GetError());
-        LOG::print{ERROR}("Couldn't create Window: {}", SDL_GetError());
-      }
+    static fabric::task<sptr> start(
+      fabric::services::ServiceLocator& locator,
+      const SDL3WindowOptions&          options) {
+      auto& sdl = co_await locator.require<SDL3Service>();
 
-      // SDL_FlashWindow(win_ref->window, SDL_FLASH_UNTIL_FOCUSED);
+      SDL3WindowHandle window_handle = co_await sdl.create_window(options);
+
+      co_return sptr {new SDL3Window(sdl, window_handle, options)};
+    }
+
+    static fabric::task<> stop(SDL3Window& self) {
+      co_await self.sdl.destroy_window(self.window_);
     }
 
     SDL3Window(const SDL3Window&)            = delete;
@@ -53,68 +60,64 @@ namespace cydui::platform::window {
     SDL3Window(SDL3Window&&)                 = delete;
     SDL3Window& operator=(SDL3Window&&)      = delete;
 
-    ~SDL3Window() override {
-      SDL_DestroyWindow(window_);
-      SDL_DestroyRenderer(sdl_renderer_);
-    }
-
     id_type get_id() const override {
-      return SDL_GetWindowID(window_);
+      return window_.id;
     }
 
-    void set_position(
+    fabric::task<> set_position(
       int x,
-      int y
-    ) override {
-      SDL_SetWindowPosition(window_, x, y);
+      int y) override {
+      PROF_SCOPE(SDL3::set_position);
+      co_await sdl.move_window(window_, x, y);
     }
 
-    void enable_text_input() override {
-      SDL_StartTextInput(window_);
+    fabric::task<> enable_text_input() override {
+      PROF_SCOPE(SDL3::enable_text_input);
+      co_await sdl.set_window_text_input(window_, true);
     }
 
-    void disable_text_input() override {
-      SDL_StopTextInput(window_);
+    fabric::task<> disable_text_input() override {
+      PROF_SCOPE(SDL3::disable_text_input);
+      co_await sdl.set_window_text_input(window_, false);
     }
 
-    std::pair<
+    fabric::task<std::pair<
       int,
-      int>
+      int>>
     get_size() override {
-      int w, h;
-      SDL_GetCurrentRenderOutputSize(sdl_renderer_, &w, &h);
-      // SDL_GetWindowSize(window_, &w, &h);
-      return {w, h};
+      PROF_SCOPE(SDL3::get_size);
+      co_return co_await sdl.get_window_size(window_);
     }
 
-    void present(const Surface& surface) override {
-      SDL_Texture* texture = static_cast<SDL_Texture*>(surface.handle);
-      SDL_FRect    src{
-           .x = 0,
-           .y = 0,
-           .w = static_cast<float>(surface.size.first),
-           .h = static_cast<float>(surface.size.second)
-      };
-      // SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND_PREMULTIPLIED);
+    fabric::task<> present(const Surface& surface) override {
+      PROF_SCOPE(SDL3::present);
+      if (surface.type == SurfaceType::CPU) {
+        if (old_w != surface.size.first || old_h != surface.size.second) {
+          co_await sdl.destroy_texture(device_buffer_);
+          device_buffer_ = nullptr;
+        }
 
-      // SDL_SetRenderDrawColor(renderer_, 0xff, 0, 0xff, 0xff);
-      // SDL_RenderFillRect(renderer_, &src);
-      SDL_RenderTexture(sdl_renderer_, texture, &src, &src);
-      // SDL_FRect r{.x = 100, .y = 210, .w = 100, .h = 100};
-      // SDL_SetRenderDrawColor(renderer_, 0, 0xff, 0xff, 0xff);
-      // SDL_RenderFillRect(renderer_, &r);
+        if (device_buffer_ == nullptr) {
+          SDL_PixelFormat pixel_format = SDL_PIXELFORMAT_ARGB8888;
+          switch (surface.pixel_format) {
+            case PixelFormat::RGBA32: pixel_format = SDL_PIXELFORMAT_RGBA8888; break;
+            case PixelFormat::ARGB32: pixel_format = SDL_PIXELFORMAT_ARGB8888; break;
+          }
+          device_buffer_ = co_await sdl.create_texture(
+            window_.renderer, pixel_format, SDL_TEXTUREACCESS_STREAMING, surface.size.first, surface.size.second);
+        }
 
-      // SDL_Surface* thumbnail = read_texture_pixels(texture_ptr, 4);
-      // if (nullptr != thumbnail) {
-      //   FrameImage(thumbnail->pixels, thumbnail->w, thumbnail->h, 0, false);
-      //   SDL_DestroySurface(thumbnail);
-      // }
-      SDL_RenderPresent(sdl_renderer_);
+        co_await sdl.update_texture(device_buffer_, surface.handle, surface.pitch);
+
+        fabric::launch(
+          sdl.present_to_window(
+            window_, device_buffer_, static_cast<float>(surface.size.first), static_cast<float>(surface.size.second)))
+          .detach();
+      }
     }
 
-    fabric::task<> event_task() override {
-      // TODO - Implement
-      co_return;
+    fabric::task<> event_task(fabric::async::async_bus_t::sptr bus) override {
+      co_await sdl.register_window_bus(window_, bus);
     }
   };
 } // namespace cydui::platform::window

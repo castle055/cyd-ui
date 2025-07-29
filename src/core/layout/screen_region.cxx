@@ -11,7 +11,7 @@ import reflect;
 import cydui.geometry;
 
 using namespace cydui;
-using namespace cydui::geometry;
+using namespace cydui::layout;
 
 
 screen_region_t::screen_region_t(

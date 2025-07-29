@@ -1,5 +1,5 @@
 /*! \file  stylesheet.cppm
- *! \brief 
+ *! \brief
  *!
  */
 
@@ -16,8 +16,11 @@ export import cydui.styling.lang.rules;
 
 
 namespace tss {
-  template<typename O>
-  void print_ast_node(O &o, const fabric::node_t *node, int indent = 0) {
+  template <typename O>
+  void print_ast_node(
+    O&                    o,
+    const fabric::node_t* node,
+    int                   indent = 0) {
     for (int i = 0; i < indent; ++i) {
       o << ' ';
     }
@@ -41,7 +44,7 @@ namespace tss {
       }
 
       o << ">" << std::endl;
-      for (const auto &child: node->children) {
+      for (const auto& child: node->children) {
         print_ast_node(o, child.get(), indent + 1);
       }
 
@@ -60,6 +63,10 @@ namespace tss {
   };
 
   export class StyleSheet {
+    std::unordered_map<std::string, std::list<StyleRule::sptr>> rule_map_ {};
+    std::list<StyleRule::sptr>                                  any_rules_ {};
+    std::list<StyleRule::sptr>                                  empty_list_ {};
+
   public:
     using sptr = std::shared_ptr<StyleSheet>;
 
@@ -72,7 +79,7 @@ namespace tss {
 
       if (not ok) {
         LOG::print {ERROR}("Couldn't parse stylesheet");
-        for (const auto & line: log) {
+        for (const auto& line: log) {
           LOG::print {ERROR}("{}: {}", line.first, line.second);
         }
         return std::make_shared<StyleSheet>();
@@ -80,8 +87,8 @@ namespace tss {
       // print_ast_node(std::cout, ast.get(), 0);
 
       sptr ptr = std::make_shared<StyleSheet>();
-      for (const auto& rule : ast->data.rules) {
-        for (const auto& key : rule->relevant_components_) {
+      for (const auto& rule: ast->data.rules) {
+        for (const auto& key: rule->relevant_components_) {
           ptr->rule_map_[key].push_back(rule);
         }
       }
@@ -99,13 +106,11 @@ namespace tss {
     auto& any_rules() const {
       return any_rules_;
     }
-  private:
-    std::unordered_map<std::string, std::list<StyleRule::sptr>> rule_map_{};
-    std::list<StyleRule::sptr> any_rules_{};
-    std::list<StyleRule::sptr> empty_list_{};
   };
 
   export class StyleArchive {
+    std::vector<StyleSheet::sptr> style_sheets_ {};
+
   public:
     using sptr = std::shared_ptr<StyleArchive>;
 
@@ -117,8 +122,14 @@ namespace tss {
       style_sheets_.emplace_back(sheet);
     }
 
-    void for_each_rule(const std::string& component_name, auto&& func) const {
-      for (const auto & style_sheet : style_sheets_) {
+    void clear() {
+      style_sheets_.clear();
+    }
+
+    void for_each_rule(
+      const std::string& component_name,
+      auto&&             func) const {
+      for (const auto& style_sheet: style_sheets_) {
         for (const auto& rule: style_sheet->any_rules()) {
           func(rule);
         }
@@ -127,8 +138,5 @@ namespace tss {
         }
       }
     }
-
-  private:
-    std::vector<StyleSheet::sptr> style_sheets_{};
   };
-}
+} // namespace tss

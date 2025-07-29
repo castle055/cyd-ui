@@ -4,12 +4,12 @@
  */
 
 module;
-#define COMPUTE(DIM)                                                                               \
-  {                                                                                                \
-    auto compute_res = cydui::dimensions::compute_dimension(DIM);                                  \
-    if (not compute_res) {                                                                         \
-      return false;                                                                                \
-    }                                                                                              \
+#define COMPUTE(DIM)                                                                                                   \
+  {                                                                                                                    \
+    auto compute_res = cydui::dimensions::compute_dimension(DIM);                                                      \
+    if (not compute_res) {                                                                                             \
+      return false;                                                                                                    \
+    }                                                                                                                  \
   }
 
 module cydui.geometric_relations;
@@ -17,7 +17,7 @@ module cydui.geometric_relations;
 import std;
 import reflect;
 
-import cydui.components.mounted;
+import cydui.core.Component.impl;
 import cydui.geometry;
 import cydui.dimensions.functions;
 import cydui.screen_region;
@@ -26,27 +26,26 @@ using namespace cydui;
 using namespace cydui::layout;
 
 void layout::update_content_size_in_axis(
-  components::mounted_component_t& component,
-  axis                             axis
-) {
+  detail::ComponentImpl& component,
+  axis                   axis) {
   auto& geom = component.get_geometry();
 
-  std::vector<dimension_t> dims{};
+  std::vector<dimension_t> dims {};
   for (auto& child: component.get_children()) {
     auto& c_geom = child->get_geometry();
     if (c_geom.positioning[axis] == component_positioning::RELATIVE) {
-      dims.push_back(dimension_t{c_geom.position[axis] + c_geom.screen_size[axis]});
+      dims.push_back(dimension_t {c_geom.position[axis] + c_geom.screen_size[axis]});
     }
   }
   geom.content_size[axis] = dimensions::dimfn::max(dims);
 }
 
-void layout::update_content_size(components::mounted_component_t& component) {
+void layout::update_content_size(detail::ComponentImpl& component) {
   update_content_size_in_axis(component, X_AXIS);
   update_content_size_in_axis(component, Y_AXIS);
 }
 
-void layout::update_component_geometry(components::mounted_component_t& component) {
+void layout::update_component_geometry(detail::ComponentImpl& component) {
   component_geometry&        geom  = component.get_geometry();
   const style::style_base_t& style = component.get_style();
 
@@ -65,13 +64,11 @@ void layout::update_component_geometry(components::mounted_component_t& componen
   //* Max Size
   geom.max_size[X_AXIS] =
     style.max_width.empty()
-      ? dimensions::screen_measure{std::numeric_limits<dimensions::screen_measure::data_type>::max()
-        }
+      ? dimensions::screen_measure {std::numeric_limits<dimensions::screen_measure::data_type>::max()}
       : style.max_width;
   geom.max_size[Y_AXIS] =
     style.max_height.empty()
-      ? dimensions::screen_measure{std::numeric_limits<dimensions::screen_measure::data_type>::max()
-        }
+      ? dimensions::screen_measure {std::numeric_limits<dimensions::screen_measure::data_type>::max()}
       : style.max_height;
 
   //* Size
@@ -111,55 +108,65 @@ void layout::update_component_geometry(components::mounted_component_t& componen
   geom.get_border_width(edge::TOP)    = style.border_width.top;
 }
 
-components::mounted_component_t* find_by_coords(
-  components::mounted_component_t& component,
-  dimension_t::value_type          x,
-  dimension_t::value_type          y,
-  screen_region_t                  screen_region
-) {
+std::pair<
+  int,
+  detail::ComponentImpl*>
+find_by_coords(
+  detail::ComponentImpl&  component,
+  dimension_t::value_type x,
+  dimension_t::value_type y,
+  screen_region_t         screen_region,
+  int                     depth = 0) {
   using namespace dimensions;
 
-  components::mounted_component_t* found = nullptr;
-  for (auto c = component.get_children().rbegin(); c != component.get_children().rend(); ++c) {
+  int                    found_depth = depth;
+  detail::ComponentImpl* found       = nullptr;
+  for (auto c = component.get_children_impl().begin(); c != component.get_children_impl().end(); ++c) {
     auto&           style = (*c)->get_style();
     auto&           cgeom = (*c)->get_geometry();
-    screen_region_t sr{cgeom};
-    auto            cliped_region = sr.clip_with(screen_region);
+    screen_region_t sr {cgeom};
+    auto            clipped_region = sr.clip_with(screen_region);
     if (style.position == position_e::ABSOLUTE) {
-      found = find_by_coords(*(*c), x, y);
-    } else if (cliped_region.has_value()) {
-      // iterator to unique_ptr -> double trouble (dereferencing)
-      found = find_by_coords(*(*c), x, y, cliped_region.value());
+      auto [d, comp] = find_by_coords(*(*c), x, y, screen_region_t {cgeom}, depth + 1);
+      if (comp != nullptr and d > found_depth) {
+        found_depth = d;
+        found       = comp;
+      }
+    } else if (clipped_region.has_value()) {
+      auto [d, comp] = find_by_coords(*(*c), x, y, clipped_region.value(), depth);
+      if (comp != nullptr and d >= found_depth) {
+        found_depth = d;
+        found       = comp;
+      }
     }
-    if (nullptr != found) {
-      return found;
-    }
+  }
+  if (nullptr != found) {
+    return {found_depth, found};
   }
 
   if (not screen_region.contains_point(x, y)) {
-    return nullptr;
+    return {0, nullptr};
   }
-  return &component;
+  return {depth, &component};
 }
 
-components::mounted_component_t* layout::find_by_coords(
-  components::mounted_component_t& component,
-  dimension_t::value_type          x,
-  dimension_t::value_type          y
-) {
+detail::ComponentImpl* layout::find_by_coords(
+  detail::ComponentImpl&  component,
+  dimension_t::value_type x,
+  dimension_t::value_type y) {
   using namespace dimensions;
 
   const auto& geom = component.get_geometry();
-  return ::find_by_coords(component, x, y, screen_region_t{geom});
+  return ::find_by_coords(component, x, y, screen_region_t {geom}).second;
 }
 
-void layout::compute_geometry(components::mounted_component_t& component) {
+void layout::compute_geometry(detail::ComponentImpl& component) {
   bool changed = component.get_geometry().compute_dimensions();
   if (changed) {
-    component.get_compositing_node().queue_graphics_update();
+    component.get_layer().mark_dirty();
   }
 
-  for (auto& child: component.get_children()) {
+  for (auto& child: component.get_children_impl()) {
     compute_geometry(*child);
   }
 }

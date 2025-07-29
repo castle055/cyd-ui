@@ -5,9 +5,6 @@
 
 module;
 #include <tracy/Tracy.hpp>
-#define SDL_MAIN_HANDLED
-#include <SDL3/SDL.h>
-
 
 export module cydui.ui_handle;
 
@@ -16,58 +13,41 @@ import reflect;
 import fabric.logging;
 import fabric.profiling;
 
-export import cydui.application;
-export import cydui.dimensions;
 export import cydui.styling.lang;
 
 export import cydui.core.blueprint;
 export import cydui.ui_options;
+export import cydui.platform;
 
-import cydui.geometric_relations;
-
-export namespace cydui::core {
-  class UI_impl;
-} // namespace cydui::core
+import cydui.geometry;
 
 namespace cydui {
   export class UI {
-    std::shared_ptr<core::UI_impl> impl_;
-
   public:
-    template <core::ComponentBlueprint C>
-    UI(
-      const backends::frame_base::sptr& frame,
-      const C&                          root_component,
-      const UI_options&                 options
-    ) {
-      ZoneScopedN("UI::make");
-      std::unique_ptr<C>              root_blueprint = std::make_unique<C>(root_component);
-      core::mounted_component_t::uptr root =
-        core::mounted_component_t::make(frame, std::move(root_blueprint));
+    using sptr = std::shared_ptr<UI>;
 
-      impl_ = make_impl(frame, std::move(root), options);
-    }
+    virtual ~UI() = default;
 
-    void attach_stylesheet(const tss::StyleSheet::sptr& style_sheet) const;
-
-    void attach_stylesheet(const std::filesystem::path& style_sheet) const;
-
-    void add_style(const std::string& style_string) const;
-
-  private:
-    static std::shared_ptr<core::UI_impl> make_impl(
-      const backends::frame_base::sptr& frame,
-      core::mounted_component_t::uptr   root,
-      const UI_options&                 options
-    );
+    virtual fabric::task<> attach_stylesheet(const tss::StyleSheet::sptr& style_sheet) = 0;
+    virtual fabric::task<> attach_stylesheet(const std::filesystem::path& style_sheet) = 0;
+    virtual fabric::task<> add_style(const std::string& style_string)                  = 0;
+    virtual fabric::task<> clear_style()                                               = 0;
+    virtual fabric::task<> show()                                                      = 0;
+    virtual fabric::task<> until_closed()                                              = 0;
+    virtual fabric::async::async_bus_t& bus()                                          = 0;
   };
 
-  export template <core::ComponentBlueprint C>
-  UI make_ui(
-    const backends::frame_base::sptr& frame,
-    const C&                          root_component,
-    UI_options                        options = {}
-  ) {
-    return UI{frame, root_component, options};
+  fabric::task<UI::sptr> make_impl(
+    Platform::sptr   platform,
+    Blueprint::uptr  root,
+    const UIOptions& options);
+
+  export template <ComponentBlueprint C>
+  fabric::task<UI::sptr> make_ui(
+    Platform::sptr platform,
+    const C&       root_component,
+    UIOptions      options = {}) {
+    std::unique_ptr<C> root_blueprint = std::make_unique<C>(root_component);
+    co_return co_await make_impl(platform, std::move(root_blueprint), options);
   }
 } // namespace cydui

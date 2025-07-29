@@ -4,13 +4,10 @@
 export module cydui;
 
 export import std;
-
-export import cydui.application;
-export import cydui.events;
-
-export import cydui.ui_handle;
-
 export import reflect;
 export import quantify;
+
+export import cydui.event_types;
+export import cydui.ui_handle;
 
 // using cyd::fabric::async::async;

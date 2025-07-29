@@ -21,19 +21,18 @@ export import cydui.core.blueprint.base;
 export import cydui.core.event_dispatcher;
 export import cydui.core.blueprint.concepts;
 
-namespace cydui::core {
+namespace cydui::detail {
   export template <typename T>
-  class blueprint_t: public blueprint_base_t {
+  class BlueprintImpl: public Blueprint {
   public:
-    explicit blueprint_t(identifier_t identifier = {})
-        : blueprint_base_t(
+    explicit BlueprintImpl(ComponentIdentifier identifier = {})
+        : Blueprint(
             identifier,
-            std::string{refl::type_name<T>},
-            refl::type_info::from<style_type<T>>()
-          ) {}
+            std::string {refl::type_name<T>},
+            refl::type_info::from<style_type<T>>()) {}
 
-    blueprint_t(const blueprint_t& other)
-        : blueprint_base_t(other) {}
+    BlueprintImpl(const BlueprintImpl& other)
+        : Blueprint(other) {}
 
   public:
     const refl::type_info& get_style_type_info() const final {
@@ -41,18 +40,22 @@ namespace cydui::core {
       return ti;
     }
 
-    std::unique_ptr<event_dispatcher_base_t> make_event_dispatcher(void* component) const final {
+    std::unique_ptr<event_dispatcher_base_t> make_event_dispatcher(
+      fabric::async::async_bus_t& bus,
+      event_dispatcher_base_t*    parent,
+      void*                       component,
+      ComponentState&             state,
+      context_store_t&            context_store) const final {
       return std::make_unique<event_dispatcher_t<T, event_handler_type<T>>>(
-        static_cast<mounted_component_t*>(component)
-      );
+        bus, parent, static_cast<Component*>(component), state, context_store);
     }
 
-    component_state_t::sptr make_state_object() const final {
-      std::shared_ptr<component_state_t> state;
-      if constexpr (requires { new state_type<T>{props()}; }) {
-        state = std::shared_ptr<component_state_t>{new state_type<T>(props())};
+    ComponentState::sptr make_state_object() const final {
+      std::shared_ptr<ComponentState> state;
+      if constexpr (requires { new state_type<T> {props()}; }) {
+        state = std::shared_ptr<ComponentState> {new state_type<T>(props())};
       } else {
-        state = std::shared_ptr<component_state_t>{new state_type<T>()};
+        state = std::shared_ptr<ComponentState> {new state_type<T>()};
       }
       component_state_delegate_t::set_name(state.get(), get_name());
 
@@ -60,38 +63,46 @@ namespace cydui::core {
     }
 
     style::style_object_t make_style_object() const final {
-      return style::style_object_t{std::make_shared<style_type<T>>()};
+      return style::style_object_t {std::make_shared<style_type<T>>()};
     }
 
-    bool update_with(const blueprint_base_t& other) final {
+    update_result update_with(const Blueprint& other) final {
       ZoneScopedN("Update With");
-      const auto* other_component = dynamic_cast<const blueprint_t<T>*>(&other);
+      const auto* other_component = dynamic_cast<const BlueprintImpl<T>*>(&other);
       if (!other_component) {
-        LOG::print{FATAL} //
-        ("Attempted to update component of type ({}) with type ({})",
-         this->get_name(),
-         other.get_name());
-        return false;
+        LOG::print {FATAL} //
+        ("Attempted to update component of type ({}) with type ({})", this->get_name(), other.get_name());
+        return {false, false};
       }
 
       bool dirty = false;
+      bool restyle = false;
       if (not refl::deep_eq(props(), other_component->props())) {
         props() = other_component->props();
         dirty   = true;
       }
 
-      // TODO - Should diff content too
+      if (not content_.empty() or not other_component->content_.empty()) {
+        // TODO - Should diff content elements too?
+        content_ = other_component->content_;
+        dirty    = true;
+      }
 
       if (style_map_ != other_component->style_map_) {
         style_map_ = other_component->style_map_;
         dirty      = true;
       }
 
+      if (tags_ != other_component->tags_) {
+        tags_ = other_component->tags_;
+        restyle = true;
+      }
+
       if (update_fields(other_component)) {
         dirty = true;
       }
 
-      return dirty;
+      return {dirty, restyle};
     }
 
     bool handles_text_input() const final {
@@ -112,7 +123,7 @@ namespace cydui::core {
       return (dynamic_cast<const T*>(this)->props);
     }
 
-    bool update_fields(const blueprint_t<T>* other) {
+    bool update_fields(const BlueprintImpl<T>* other) {
       bool dirty = false;
       [&]<std::size_t... I>(std::index_sequence<I...>) {
         (update_field<I>(dirty, other), ...);
@@ -122,9 +133,8 @@ namespace cydui::core {
 
     template <std::size_t I>
     void update_field(
-      bool&                 dirty,
-      const blueprint_t<T>* other_
-    ) {
+      bool&                   dirty,
+      const BlueprintImpl<T>* other_) {
       const auto* other = dynamic_cast<const T*>(other_);
       using field       = refl::field<T, I>;
       using field_type  = typename field::type;
@@ -142,45 +152,56 @@ namespace cydui::core {
 
   public:
     refl::any_ref get_props() final {
-      return refl::any_ref{dynamic_cast<T*>(this)->props};
+      return refl::any_ref {dynamic_cast<T*>(this)->props};
     }
 
   public:
     T& tag(const std::unordered_set<std::string>& tags) {
-      blueprint_base_t::tag(tags);
+      Blueprint::tag(tags);
       return *dynamic_cast<T*>(this);
     }
 
     T& tag(const std::string& tag) {
-      blueprint_base_t::tag(tag);
+      Blueprint::tag(tag);
+      return *dynamic_cast<T*>(this);
+    }
+
+    T& tag(
+      const detail::tag_type& tag,
+      bool                    tagged) {
+      if (tagged) {
+        this->tag(tag);
+      } else {
+        untag(tag);
+      }
       return *dynamic_cast<T*>(this);
     }
 
     T& untag(const std::unordered_set<std::string>& tags) {
-      blueprint_base_t::untag(tags);
+      Blueprint::untag(tags);
       return *dynamic_cast<T*>(this);
     }
 
     T& untag(const std::string& tag) {
-      blueprint_base_t::untag(tag);
+      Blueprint::untag(tag);
       return *dynamic_cast<T*>(this);
     }
 
     T& set_id(const std::string& id) {
-      blueprint_base_t::set_id(id);
+      Blueprint::set_id(id);
       return *dynamic_cast<T*>(this);
     }
 
-    T& operator()(content_type&& _content_) {
+    T& operator()(BlueprintList&& _content_) {
       this->content_ = _content_;
       return *dynamic_cast<T*>(this);
     }
 
-    T& operator()(const content_type& _content_) {
+    T& operator()(const BlueprintList& _content_) {
       this->content_ = _content_;
       return *dynamic_cast<T*>(this);
     }
 
 #include "../../style/include/style_setters.inc"
   };
-} // namespace cydui::components
+} // namespace cydui::detail

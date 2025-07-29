@@ -8,33 +8,46 @@ export import reflect;
 
 import fabric.logging;
 
-export namespace cydui::core {
+export namespace cydui::detail {
   class context_store_t {
-  public:
-    context_store_t() = default;
+    context_store_t* parent_context_;
+    [[refl::ignore]]
+    std::unordered_map<refl::type_id_t, std::shared_ptr<void>> context_map_{};
 
-    template<typename T>
-    void add_context(const std::shared_ptr<T> &ptr) {
+  public:
+    explicit context_store_t(context_store_t* parent_context)
+        : parent_context_(parent_context) {}
+
+    template <typename T>
+    void add_context(const std::shared_ptr<T>& ptr) {
       static constexpr refl::type_id_t type_id = refl::type_id<T>;
-      std::shared_ptr<void> ptr_               = std::static_pointer_cast<void>(ptr);
+      std::shared_ptr<void>            ptr_    = std::static_pointer_cast<void>(ptr);
 
       context_map_[type_id] = ptr_;
     }
 
-    template<typename T>
-    std::optional<std::shared_ptr<T>> find_context() {
-      static constexpr refl::type_id_t type_id = refl::type_id<T>;
-      if (context_map_.contains(type_id)) {
-        return std::static_pointer_cast<T>(context_map_[type_id]);
+    template <typename ContextType>
+    std::optional<std::shared_ptr<ContextType>> find_context() {
+      static constexpr refl::type_id_t type_id = refl::type_id<ContextType>;
+      if (not empty()) {
+        auto context = context_map_.contains(type_id)
+                         ? std::static_pointer_cast<ContextType>(context_map_[type_id])
+                         : nullptr;
+        if (nullptr != context) {
+          return context;
+        }
       }
+
+      if (nullptr != parent_context_) {
+        return parent_context_->find_context<ContextType>();
+      }
+
       return std::nullopt;
     }
+
 
     bool empty() const {
       return context_map_.empty();
     }
-  private:
-    [[refl::ignore]]
-    std::unordered_map<refl::type_id_t, std::shared_ptr<void>> context_map_ { };
   };
-}
+} // namespace cydui::core

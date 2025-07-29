@@ -5,7 +5,7 @@ module cydui.geometry.configure_anchors;
 
 import std;
 
-import cydui.components.mounted;
+import cydui.core.Component.impl;
 import cydui.geometry.anchors;
 
 using namespace cydui;
@@ -25,29 +25,29 @@ using namespace cydui::layout;
 #define SELF_PARAM(NAME, ...)   DIMENSIONAL_PARAM(self, NAME, __VA_ARGS__ + 0_px)
 #define PREV_PARAM(NAME, ...)   DIMENSIONAL_PARAM(prev, NAME, __VA_ARGS__ + 0_px)
 
-void anchors::configure_self_anchors(components::mounted_component_t& child) {
+void configure_self_anchors(detail::ComponentImpl& child) {
   auto&            geom = child.get_geometry();
   dimension_ctx_t& ctx  = *geom.context;
 
-  ctx.set_parameter("self_x", geom.position[geometry::X_AXIS]);
-  ctx.set_parameter("self_y", geom.position[geometry::Y_AXIS]);
-  ctx.set_parameter("self_width", geom.screen_size[geometry::X_AXIS]);
-  ctx.set_parameter("self_height", geom.screen_size[geometry::Y_AXIS]);
-  ctx.set_parameter("self_screen_x", geom.box_position[geometry::X_AXIS]);
-  ctx.set_parameter("self_screen_y", geom.box_position[geometry::Y_AXIS]);
-  ctx.set_parameter("self_content_width", geom.viewport_size[geometry::X_AXIS]);
-  ctx.set_parameter("self_content_height", geom.viewport_size[geometry::Y_AXIS]);
+  ctx.set_parameter("self_x", geom.position[X_AXIS]);
+  ctx.set_parameter("self_y", geom.position[Y_AXIS]);
+  ctx.set_parameter("self_width", geom.screen_size[X_AXIS]);
+  ctx.set_parameter("self_height", geom.screen_size[Y_AXIS]);
+  ctx.set_parameter("self_screen_x", geom.box_position[X_AXIS]);
+  ctx.set_parameter("self_screen_y", geom.box_position[Y_AXIS]);
+  ctx.set_parameter("self_content_width", geom.viewport_size[X_AXIS]);
+  ctx.set_parameter("self_content_height", geom.viewport_size[Y_AXIS]);
 }
 
-void anchors::configure_parent_anchors(components::mounted_component_t& child) {
+void configure_parent_anchors(detail::ComponentImpl& child) {
   dimension_ctx_t& ctx = *child.get_geometry().context;
 
   if (not child.is_root()) {
     auto& geom = child.get_parent()->get_geometry();
-    auto& cx   = geom.content_origin[geometry::X_AXIS];
-    auto& cy   = geom.content_origin[geometry::Y_AXIS];
-    auto& cw   = geom.viewport_size[geometry::X_AXIS];
-    auto& ch   = geom.viewport_size[geometry::Y_AXIS];
+    auto& cx   = geom.content_origin[X_AXIS];
+    auto& cy   = geom.content_origin[Y_AXIS];
+    auto& cw   = geom.viewport_size[X_AXIS];
+    auto& ch   = geom.viewport_size[Y_AXIS];
 
     PARENT_PARAM(x, cx);
     PARENT_PARAM(y, cy);
@@ -99,18 +99,18 @@ void anchors::configure_parent_anchors(components::mounted_component_t& child) {
   }
 }
 
-void anchors::configure_prev_anchors(
-  components::mounted_component_t&                child,
-  std::optional<components::mounted_component_t*> prev
+void configure_prev_anchors(
+  detail::ComponentImpl&                child,
+  std::optional<detail::ComponentImpl*> prev
 ) {
   dimension_ctx_t& ctx = *child.get_geometry().context;
 
   if (prev.has_value()) {
     auto& geom = prev.value()->get_geometry();
-    auto& x    = geom.position[geometry::X_AXIS];
-    auto& y    = geom.position[geometry::Y_AXIS];
-    auto& w    = geom.screen_size[geometry::X_AXIS];
-    auto& h    = geom.screen_size[geometry::Y_AXIS];
+    auto& x    = geom.position[X_AXIS];
+    auto& y    = geom.position[Y_AXIS];
+    auto& w    = geom.screen_size[X_AXIS];
+    auto& h    = geom.screen_size[Y_AXIS];
 
     PREV_PARAM(x, x);
     PREV_PARAM(y, y);
@@ -163,8 +163,8 @@ void anchors::configure_prev_anchors(
 }
 
 void anchors::configure_anchors(
-  components::mounted_component_t&                child,
-  std::optional<components::mounted_component_t*> prev
+  detail::ComponentImpl&                child,
+  std::optional<detail::ComponentImpl*> prev
 ) {
   configure_self_anchors(child);
   configure_parent_anchors(child);

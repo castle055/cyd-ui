@@ -5,16 +5,15 @@
 #define CYD_UI_ON_EVENT_MACRO_H
 
 #define ON_EVENT(EVENT, ...)                                                                       \
-  cydui::core::custom_event_listener<EVENT> on_##EVENT{                                            \
-    this->window,                                                                                  \
+  cydui::detail::custom_event_listener<EVENT> on_##EVENT {                                         \
+    this->bus,                                                                                     \
     [&](const EVENT& event) -> fabric::task<> {                                                    \
       __VA_ARGS__;                                                                                 \
       co_return;                                                                                   \
     },                                                                                             \
     [&]() -> fabric::task<> {                                                                      \
-      this->component.force_update();                                                              \
+      this->component.mark_dirty();                                                                \
       co_return;                                                                                   \
-    }                                                                                              \
-  };
+    }};
 
 #endif // CYD_UI_ON_EVENT_MACRO_H

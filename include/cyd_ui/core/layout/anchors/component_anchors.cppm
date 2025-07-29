@@ -4,9 +4,9 @@
 module;
 #define TO_STRING(...) #__VA_ARGS__
 #define ANCHOR(PREFIX, NAME)                                                                       \
-  struct NAME {                                                                                    \
-    static constexpr dimension_parameter_t x{TO_STRING(PREFIX##_##NAME##_x)};                      \
-    static constexpr dimension_parameter_t y{TO_STRING(PREFIX##_##NAME##_y)};                      \
+  namespace NAME {                                                                                 \
+    const dimension_parameter_t x {TO_STRING(PREFIX##_##NAME##_x)};                               \
+    const dimension_parameter_t y {TO_STRING(PREFIX##_##NAME##_y)};                               \
   }
 
 
@@ -18,118 +18,100 @@ export import cydui.dimensions;
 
 export namespace cydui::layout::anchors {
   using dimension_parameter_t = dimensions::parameter<dimensions::screen_measure>;
-  struct self_component {
-    static constexpr dimension_parameter_t x{"self_x"};
-    static constexpr dimension_parameter_t y{"self_y"};
-    static constexpr dimension_parameter_t width{"self_width"};
-    static constexpr dimension_parameter_t height{"self_height"};
-    static constexpr dimension_parameter_t screen_x{"self_screen_x"};
-    static constexpr dimension_parameter_t screen_y{"self_screen_y"};
-    static constexpr dimension_parameter_t content_width{"self_content_width"};
-    static constexpr dimension_parameter_t content_height{"self_content_height"};
-  };
+  namespace self_component {
+    const dimension_parameter_t x {"self_x"};
+    const dimension_parameter_t y {"self_y"};
+    const dimension_parameter_t width {"self_width"};
+    const dimension_parameter_t height {"self_height"};
+    const dimension_parameter_t screen_x {"self_screen_x"};
+    const dimension_parameter_t screen_y {"self_screen_y"};
+    const dimension_parameter_t content_width {"self_content_width"};
+    const dimension_parameter_t content_height {"self_content_height"};
+  }; // namespace self_component
 
-  struct parent_component {
-    static constexpr dimension_parameter_t x{"parent_x"};
-    static constexpr dimension_parameter_t y{"parent_y"};
-    static constexpr dimension_parameter_t width{"parent_width"};
-    static constexpr dimension_parameter_t height{"parent_height"};
-
-    ANCHOR(
-      parent,
-      top_left
-    );
+  namespace parent_component {
+    const dimension_parameter_t x {"parent_x"};
+    const dimension_parameter_t y {"parent_y"};
+    const dimension_parameter_t width {"parent_width"};
+    const dimension_parameter_t height {"parent_height"};
 
     ANCHOR(
       parent,
-      top_center
-    );
+      top_left);
 
     ANCHOR(
       parent,
-      top_right
-    );
+      top_center);
 
     ANCHOR(
       parent,
-      middle_left
-    );
+      top_right);
 
     ANCHOR(
       parent,
-      center
-    );
+      middle_left);
 
     ANCHOR(
       parent,
-      middle_right
-    );
+      center);
 
     ANCHOR(
       parent,
-      bottom_left
-    );
+      middle_right);
 
     ANCHOR(
       parent,
-      bottom_center
-    );
+      bottom_left);
 
     ANCHOR(
       parent,
-      bottom_right
-    );
-  };
+      bottom_center);
 
-  struct previous_component {
-    static constexpr dimension_parameter_t x{"prev_x"};
-    static constexpr dimension_parameter_t y{"prev_y"};
-    static constexpr dimension_parameter_t width{"prev_width"};
-    static constexpr dimension_parameter_t height{"prev_height"};
+    ANCHOR(
+      parent,
+      bottom_right);
+  }; // namespace parent_component
+
+  namespace previous_component {
+    const dimension_parameter_t x {"prev_x"};
+    const dimension_parameter_t y {"prev_y"};
+    const dimension_parameter_t width {"prev_width"};
+    const dimension_parameter_t height {"prev_height"};
 
     ANCHOR(
       prev,
-      top_left
-    );
+      top_left);
 
     ANCHOR(
       prev,
-      top_center
-    );
+      top_center);
 
     ANCHOR(
       prev,
-      top_right
-    );
+      top_right);
 
     ANCHOR(
       prev,
-      middle_left
-    );
+      middle_left);
 
     ANCHOR(
       prev,
-      center
-    );
+      center);
 
     ANCHOR(
       prev,
-      middle_right
-    );
+      middle_right);
 
     ANCHOR(
       prev,
-      bottom_left
-    );
+      bottom_left);
 
     ANCHOR(
       prev,
-      bottom_center
-    );
+      bottom_center);
 
     ANCHOR(
       prev,
-      bottom_right
-    );
-  };
+      bottom_right);
+  }; // namespace previous_component
 } // namespace cydui::layout::anchors

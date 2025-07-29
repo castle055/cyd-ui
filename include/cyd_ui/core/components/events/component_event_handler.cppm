@@ -20,31 +20,26 @@ export module cydui.core.event_handler;
 
 export import std;
 
-export import cydui.core.mounted;
-export import cydui.core.handle;
+export import cydui.core.Component;
 export import cydui.geometry.anchors;
-export import cydui.backends.frame_base;
-export import cydui.events;
+export import cydui.event_types;
 
 
-export namespace cydui::core {
+export namespace cydui::detail {
 
 
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "OCUnusedMacroInspection"
 
-  //! EVENT HANDLER STRUCT
   struct event_handler_t {
   private:
-    mounted_component_t& component;
+    Component& component;
 
   public:
-    const std::list<mounted_component_t::uptr>& $children;
-    static constexpr bool                       handles_text_input = false;
+    static constexpr bool handles_text_input = false;
 
-    explicit event_handler_t(mounted_component_t& comp)
-        : component(comp),
-          $children(component.get_children()) {}
+    explicit event_handler_t(Component& comp)
+        : component(comp) {}
 
     // virtual ~event_handler_t() {}
 
@@ -60,21 +55,13 @@ export namespace cydui::core {
   $x, $y, $width, $height, $padding_top, $padding_bottom, $padding_left, $padding_right
 
     // ? MOUSE EVENTS
-#define CYDUI_INTERNAL_EV_button_PROPAGATE(NAME)                                                   \
-  if (not component.is_root())                                                                     \
-    component.get_parent()->get_event_dispatcher().dispatch_button_##NAME(button, x + $x, y + $y);
-
-#define CYDUI_INTERNAL_EV_mouse_PROPAGATE(NAME)                                                    \
-  if (not component.is_root())                                                                     \
-    component.get_parent()->get_event_dispatcher().dispatch_mouse_##NAME(x + $x, y + $y);
-
     // * button press
     CYDUI_INTERNAL_EV_HANDLER_DECL(button_press) {
-      CYDUI_INTERNAL_EV_button_PROPAGATE(press);
+      propagate = true;
     }
     // * button release
     CYDUI_INTERNAL_EV_HANDLER_DECL(button_release) {
-      CYDUI_INTERNAL_EV_button_PROPAGATE(release);
+      propagate = true;
     }
     // * mouse enter
     CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_enter) {}
@@ -82,7 +69,7 @@ export namespace cydui::core {
     CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_exit) {}
     // * mouse motion
     CYDUI_INTERNAL_EV_HANDLER_DECL(mouse_motion) {
-      CYDUI_INTERNAL_EV_mouse_PROPAGATE(motion);
+      propagate = true;
     }
     // * mouse scroll
     CYDUI_INTERNAL_EV_HANDLER_DECL(scroll) {
@@ -118,21 +105,18 @@ export namespace cydui::core {
         component.mark_dirty();
       } else {
         // Propagate event to parent
-        if (not component.is_root())
-          component.get_parent()->get_event_dispatcher().dispatch_scroll(dx, dy);
+        propagate = true;
       }
     }
 
     // ? KEYBOARD EVENTS
     // * key press
     CYDUI_INTERNAL_EV_HANDLER_DECL(key_press) {
-      if (not component.is_root())
-        component.get_parent()->get_event_dispatcher().dispatch_key_press(ev);
+      propagate = true;
     }
     // * key release
     CYDUI_INTERNAL_EV_HANDLER_DECL(key_release) {
-      if (not component.is_root())
-        component.get_parent()->get_event_dispatcher().dispatch_key_release(ev);
+      propagate = true;
     }
 
     // * text input
@@ -141,38 +125,40 @@ export namespace cydui::core {
     // * focus changed input
     CYDUI_INTERNAL_EV_HANDLER_DECL(focus_changed) {}
 
-    void draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS {}
+    ElementVector draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS {
+      return {};
+    }
   };
 
 #pragma clang diagnostic pop
 
-  template <typename Component>
+  template <typename ComponentBlueprint>
   struct event_handler_data_t: public event_handler_t {
     event_handler_data_t(
-      component_handle_t<Component>             component_,
-      const std::shared_ptr<component_state_t>& state_,
-      const backends::frame_base::sptr&         window_,
-      typename Component::props_t&              props_,
-      const style::style_base_t&                style_
+      TypedComponent<ComponentBlueprint>    component_,
+      ComponentState&                    state_,
+      fabric::async::async_bus_t&           bus_,
+      typename ComponentBlueprint::props_t& props_,
+      const style::style_base_t&            style_
     )
-        : event_handler_t(component_handle_delegate::get_ref(component_)),
+        : event_handler_t(*component_.get()),
           component(component_),
-          state(*state_),
-          window(*window_),
+          state(state_),
+          bus(bus_),
           props(props_),
           style(style_) {}
 
     static constexpr bool has_custom_state_type = false;
     static constexpr bool has_custom_style_type = false;
 
-    component_handle_t<Component> component;
-    component_state_t&            state;
-    backends::frame_base&         window;
-    typename Component::props_t&  props;
-    const style::style_base_t&    style;
-
-    using $self     = layout::anchors::self_component;
-    using $parent   = layout::anchors::parent_component;
-    using $previous = layout::anchors::previous_component;
+    TypedComponent<ComponentBlueprint>    component;
+    ComponentState&                    state;
+    fabric::async::async_bus_t&           bus;
+    typename ComponentBlueprint::props_t& props;
+    const style::style_base_t&            style;
   };
 } // namespace cydui::core
+
+export namespace $self     = cydui::layout::anchors::self_component;
+export namespace $parent   = cydui::layout::anchors::parent_component;
+export namespace $previous = cydui::layout::anchors::previous_component;

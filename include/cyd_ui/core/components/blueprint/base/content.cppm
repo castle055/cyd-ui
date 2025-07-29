@@ -5,46 +5,56 @@ export module cydui.core.blueprint.base:content;
 
 import std;
 import fabric.logging;
+import fabric.match;
 
+export namespace cydui {
+  class Blueprint;
+  class BlueprintList;
+} // namespace cydui
 
-export namespace cydui::core {
-  class blueprint_base_t;
-
-  class content_element final: public std::unique_ptr<blueprint_base_t> {
+export namespace cydui::detail {
+  class BlueprintListElement final: public std::unique_ptr<Blueprint> {
   public:
     //! @note We do NOT want this to be an explicit constructor.
     template <typename BlueprintType>
-    content_element(std::unique_ptr<BlueprintType> blueprint)
-        : std::unique_ptr<blueprint_base_t>(std::move(blueprint)) {}
+    BlueprintListElement(std::unique_ptr<BlueprintType> blueprint)
+        : std::unique_ptr<Blueprint>(std::move(blueprint)) {}
 
     //! @note We do NOT want this to be an explicit constructor.
     template <typename BlueprintType>
-    content_element(const BlueprintType& blueprint)
-        : std::unique_ptr<blueprint_base_t>(new BlueprintType{blueprint}) {}
+    BlueprintListElement(const BlueprintType& blueprint)
+        : std::unique_ptr<Blueprint>(new BlueprintType {blueprint}) {}
   };
 
-  class content_type: public std::vector<content_element> {
+  template <typename T>
+  concept ConstructsBlueprint =
+    std::same_as<std::remove_cvref_t<T>, BlueprintList> //
+    or std::derived_from<std::remove_cvref_t<T>, Blueprint>
+    or (//
+      fabric::is_match<std::remove_cvref_t<T>>//
+      and (//
+        std::same_as<typename std::remove_cvref_t<T>::result_type, BlueprintList>//
+        or std::same_as<typename std::remove_cvref_t<T>::result_type, Blueprint>));
+} // namespace cydui::detail
+
+export namespace cydui {
+  class BlueprintList: public std::list<detail::BlueprintListElement> {
   public:
-    template <typename... Args>
-    content_type(Args&&... args) {
-      (add_element(std::forward<Args>(args)), ...);
+    ~BlueprintList();
+
+    BlueprintList(const BlueprintList& other);
+    BlueprintList& operator=(const BlueprintList& other);
+
+    template <detail::ConstructsBlueprint... Args>
+    BlueprintList(const Args&... args) {
+      (add_element(args), ...);
     }
-
-    ~content_type();
-
-    content_type(const content_type& other);
-    content_type& operator=(const content_type& other);
 
   private:
-    template <typename Arg>
-    void add_element(Arg&& arg) {
-      if constexpr (std::is_same_v<Arg, content_type>) {
-        for (const auto& blueprint: arg) {
-          this->emplace_back(blueprint->clone());
-        }
-      } else {
-        this->emplace_back(arg.clone());
-      }
+    void add_element(const BlueprintList& arg);
+    void add_element(const Blueprint& arg);
+    void add_element(const fabric::is_match auto& arg) {
+      add_element(*arg);
     }
   };
-} // namespace cydui::components
+} // namespace cydui

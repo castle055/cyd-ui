@@ -27,17 +27,16 @@ namespace tss::syntax {
     struct tss_obj_expression;
 
     RULE(tss_decl_function_call)(
-      tss_identifier{},
+      tss_identifier {},
       left_parens,
-      *(fabric::recurse<tss_decl_expression_list>{}, !comma_separator{}),
-      ~fabric::recurse<tss_decl_expression_list>{},
-      right_parens
-    );
+      *(fabric::recurse<tss_decl_expression_list> {}, !comma_separator {}),
+      ~fabric::recurse<tss_decl_expression_list> {},
+      right_parens);
 
 
     ARULE(tss_decl_expression) //
-    (fabric::recurse<tss_obj_expression>{} | tss_decl_color_literal{} | tss_decl_function_call{}
-     | tss_identifier{} | tss_decl_number_literal{} | tss_decl_string_literal{})(refl::any)({
+    (fabric::recurse<tss_obj_expression> {} | tss_decl_color_literal {} | tss_decl_function_call {}
+     | tss_identifier {} | tss_decl_number_literal {} | tss_decl_string_literal {})(refl::any)({
       const auto& child = $node->children[0];
       refl::any&  value = $node->data;
 
@@ -54,6 +53,11 @@ namespace tss::syntax {
           value = refl::any::make<double>(d.value);
         } else if (d.unit == "px") {
           value = refl::any::make<cydui::dimensions::screen_measure>(d.value);
+        } else if (d.unit == "deg") {
+          value = refl::any::make<cydui::angle_type>(d.value);
+        } else if (d.unit == "rad") {
+          value =
+            refl::any::make<quantify::quantity<quantify::angle::radians, double>>(d.value);
         }
       } else if (not child->text.empty()) {
         value = refl::any::make<std::string>(child->text);
@@ -61,15 +65,14 @@ namespace tss::syntax {
     });
 
     ARULE(tss_decl_expression_list) //
-    (*(tss_decl_expression{}, !whitespace, !skip_wn{}),
-     tss_decl_expression{},
-     ~!skip_wn{})(refl::any)({
+    (*(tss_decl_expression {}, !whitespace, !skip_wn {}), tss_decl_expression {}, ~!skip_wn {})(
+      refl::any)({
       refl::any& value = $node->data;
 
       if ($node->children.size() == 1) {
         value = $node->children[0]->as<tss_decl_expression>()->data;
       } else {
-        std::vector<refl::any> values{};
+        std::vector<refl::any> values {};
         for (const auto& child: $node->children) {
           values.push_back(child->as<tss_decl_expression>()->data);
         }
@@ -77,22 +80,26 @@ namespace tss::syntax {
       }
     });
 
-    RULE(tss_declaration_name)(tss_identifier{}, *(dot, tss_identifier{}));
+    RULE(tss_declaration_name)(tss_identifier {}, *(dot, tss_identifier {}));
 
     struct declaration_data {
       std::string name;
       refl::any   value;
     };
-    ARULE(tss_declaration)(tss_declaration_name{}, !colon_asigner{}, tss_decl_expression_list{}, !end_of_declaration{})(declaration_data)({
+    ARULE(tss_declaration)(
+      tss_declaration_name {},
+      !colon_asigner {},
+      tss_decl_expression_list {},
+      !end_of_declaration {})(declaration_data)({
       auto& [name, value] = $node->data;
       name                = $node->children[0]->children[0]->text;
       value               = $node->children[1]->as<tss_decl_expression_list>()->data;
     });
 
     struct declaration_list_data {
-      refl::archive archive{};
+      refl::archive archive {};
     };
-    ARULE(tss_declaration_list) (*(tss_declaration{}))(declaration_list_data)({
+    ARULE(tss_declaration_list) (*(tss_declaration {}))(declaration_list_data)({
       refl::archive& archive = $node->data.archive;
       for (const auto& decl: $node->children) {
         const auto& [name, value] = decl->as<tss_declaration>()->data;
@@ -100,11 +107,12 @@ namespace tss::syntax {
       }
     });
 
-    ARULE(tss_obj_expression)(!braces_begin{}, tss_declaration_list{}, !braces_end{})(refl::any)({
+    ARULE(tss_obj_expression)(!braces_begin {}, tss_declaration_list {}, !braces_end {})(
+      refl::any)({
       if ($node->children[0]->is_type<tss_declaration_list>()) {
         const auto* list = $node->children[0]->as<tss_declaration_list>();
         $node->data      = list->data.archive;
       }
     });
   };
-} // namespace syntax
+} // namespace tss::syntax

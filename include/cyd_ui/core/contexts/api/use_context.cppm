@@ -4,16 +4,19 @@
 export module cydui.core.contexts.api:use_context;
 
 import std;
+import reflect;
 
 import fabric.logging;
 import fabric.async;
 
+import cydui.core.state;
 export import cydui.core.contexts.events;
-export import cydui.core.state;
 
-namespace cydui::core {
+namespace cydui::detail {
   export struct use_context_delegate;
+}
 
+namespace cydui {
   export template <typename ContextType>
   struct use_context {
     using ret_context_type            = ContextType;
@@ -22,14 +25,14 @@ namespace cydui::core {
 
   private:
     // This object will own the context if it couldn't be found and thus a default one was created
-    bool                       owns_context = false;
-    context_type*              ctx          = nullptr;
-    backends::frame_base::sptr window_      = nullptr;
+    bool                        owns_context = false;
+    context_type*               ctx          = nullptr;
+    fabric::async::async_bus_t* bus_         = nullptr;
 
-    std::optional<fabric::async::listener<ContextUpdate<context_type>>> listener{std::nullopt};
+    std::optional<fabric::async::listener<ContextUpdate<context_type>>> listener {std::nullopt};
 
   public:
-    friend struct core::use_context_delegate;
+    friend struct detail::use_context_delegate;
 
     use_context() = default;
 
@@ -39,7 +42,7 @@ namespace cydui::core {
 
     use_context(use_context&& other) noexcept
         : ctx(other.ctx),
-          window_(other.window_) {
+          bus_(other.bus_) {
       other.stop_listening();
       if (other.owns_context) {
         this->owns_context = true;
@@ -52,8 +55,8 @@ namespace cydui::core {
     use_context& operator=(use_context&& other) {
       other.stop_listening();
       stop_listening();
-      this->ctx     = other.ctx;
-      this->window_ = other.window_;
+      this->ctx  = other.ctx;
+      this->bus_ = other.bus_;
       if (other.owns_context) {
         this->owns_context = true;
         other.owns_context = false;
@@ -77,14 +80,19 @@ namespace cydui::core {
     }
 
     void notify() {
-      window_->emit<ContextUpdate<context_type>>({ctx});
+      bus_->emit<ContextUpdate<context_type>>({ctx});
+      bus_->emit<RedrawEvent>({});
+    }
+
+    bool is_provided() const {
+      return not owns_context;
     }
 
   private:
     void start_listening(auto&& callback) {
       stop_listening();
 
-      listener = window_->on_event([=, this](ContextUpdate<context_type> ev) -> fabric::task<> {
+      listener = bus_->on_event([=, this](ContextUpdate<context_type> ev) -> fabric::task<> {
         if (ev.ptr == ctx) {
           callback();
         }
@@ -98,43 +106,39 @@ namespace cydui::core {
       }
     }
   };
+} // namespace cydui
 
-
+namespace cydui::detail {
   struct use_context_delegate {
     template <typename ContextType>
-    static void set_window(
-      use_context<ContextType>*         it,
-      const backends::frame_base::sptr& window
-    ) {
-      it->window_ = window;
+    static void set_bus(
+      use_context<ContextType>*   it,
+      fabric::async::async_bus_t& bus) {
+      it->bus_ = &bus;
     }
     template <typename ContextType>
     static void set_context(
       use_context<ContextType>* it,
-      ContextType*              ctx
-    ) {
+      ContextType*              ctx) {
       it->ctx = ctx;
     }
     template <typename ContextType>
     static void set_context(
       use_context<const ContextType>* it,
-      ContextType*                    ctx
-    ) {
+      ContextType*                    ctx) {
       it->ctx = ctx;
     }
     template <typename ContextType>
     static void set_owns_context(
       use_context<ContextType>* it,
-      bool                      value
-    ) {
+      bool                      value) {
       it->owns_context = value;
     }
     template <typename ContextType>
     static void start_listening(
       use_context<ContextType>* it,
-      auto&&                    callback
-    ) {
+      auto&&                    callback) {
       it->start_listening(callback);
     }
   };
-} // namespace cydui::core
+} // namespace cydui::detail

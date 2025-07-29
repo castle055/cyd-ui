@@ -7,26 +7,22 @@ export module cydui.core.identifier;
 import std;
 import reflect;
 
-export namespace cydui::core {
-  class identifier_t {
-    const std::source_location loc_{};
+export namespace cydui {
+  class ComponentIdentifier {
+    const std::source_location loc_ {};
     std::string                computed_id_;
 
   public:
-    consteval identifier_t(std::source_location loc = std::source_location::current())
+    constexpr ComponentIdentifier(std::source_location loc = std::source_location::current())
         : loc_(loc) {}
 
-    identifier_t(
+    ComponentIdentifier(
       const std::string&   id,
-      std::source_location loc = std::source_location::current()
-    )
+      std::source_location loc = std::source_location::current())
         : loc_(loc),
           computed_id_(id) {}
 
-    identifier_t(
-      const char*          id,
-      std::source_location loc = std::source_location::current()
-    )
+    ComponentIdentifier(const char* id, std::source_location loc = std::source_location::current())
         : loc_(loc),
           computed_id_(id) {}
 
@@ -57,4 +53,4 @@ export namespace cydui::core {
       return std::format("{}:{}:{}", loc_.file_name(), loc_.line(), loc_.column());
     }
   };
-} // namespace cydui::core
+} // namespace cydui

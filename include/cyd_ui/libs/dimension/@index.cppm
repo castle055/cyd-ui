@@ -18,6 +18,6 @@ export namespace cydui {
   using dimension_parameter_t = dimensions::parameter<dimensions::screen_measure>;
   using dimension_ctx_t = dimensions::context<dimensions::screen_measure>;
 
-  using la = with_precision<float>;
+  using la = with_precision<double>;
   using angle_type = quantify::Q<quantify::angle::degrees, la::scalar>;
 }

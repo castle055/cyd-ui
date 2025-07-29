@@ -7,25 +7,26 @@ import :content;
 import std;
 import fabric.logging;
 
-export import cydui.events;
+export import cydui.event_types;
 export import cydui.styling.lang;
-export import cydui.graphics.vector;
+export import cydui.elements;
 
-export namespace cydui::core {
-  class blueprint_base_t;
-
+export namespace cydui {
+  class Blueprint;
+}
+export namespace cydui::detail {
   class event_dispatcher_base_t {
   public:
     virtual ~event_dispatcher_base_t() = default;
 
-    virtual content_type update(
+    virtual BlueprintList update(
       tss::StyleArchive&  style_archive,
-      const content_type& content_children_builder
+      const BlueprintList& content_children_builder
     ) = 0;
 
-    virtual void paint_fragment(vg::fragment_t& fragment) = 0;
+    virtual ElementVector paint_fragment() = 0;
 
-    virtual void dispatch_mount(const content_type& content_children_builder) = 0;
+    virtual void dispatch_mount(const BlueprintList& content_children_builder) = 0;
     virtual void dispatch_dismount()                                          = 0;
     virtual void dispatch_key_press(const KeyEvent& ev)                       = 0;
     virtual void dispatch_key_release(const KeyEvent& ev)                     = 0;
