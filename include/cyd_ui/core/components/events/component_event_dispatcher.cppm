@@ -16,7 +16,7 @@ export import fabric.wiring.signals;
 
 export import cydui.core.event_handler;
 export import cydui.core.custom_event_listener;
-export import cydui.core.contexts.api;
+export import cydui.core.aspects;
 
 namespace cydui::detail {
   export template <typename ComponentType, typename EventHandler>
@@ -69,12 +69,7 @@ namespace cydui::detail {
         event_handler_ = std::make_shared<EventHandler>(evh_data);
       }
 
-      if constexpr (refl::Reflected<EventHandler>) {
-        static constexpr std::size_t field_count = refl::field_count<EventHandler>;
-        if constexpr (field_count > 0) {
-          configure_event_handler_fields(std::make_index_sequence<field_count> {});
-        }
-      }
+      configure_fields();
     }
 
     void dispatch_mount(const BlueprintList& content_children_builder) override {
@@ -239,45 +234,55 @@ namespace cydui::detail {
     }
 
   private:
-    template <std::size_t... I>
-    void configure_event_handler_fields(std::index_sequence<I...>) {
-      ZoneScopedN("Configure Fields");
-      (configure_event_handler_field<I>(), ...);
+    void configure_fields() {
+      if constexpr (refl::Reflected<EventHandler>) {
+        static constexpr std::size_t field_count = refl::field_count<EventHandler>;
+        if constexpr (field_count > 0) {
+          [&]<std::size_t... I>(std::index_sequence<I...>) {
+            ZoneScopedN("Configure Fields");
+            (configure_field_impl<I>(), ...);
+          }(std::make_index_sequence<field_count> {});
+        }
+      }
     }
 
     template <std::size_t FieldI>
-    void configure_event_handler_field() {
+    void configure_field_impl() {
       using field      = refl::field<EventHandler, FieldI>;
       using field_type = typename field::type;
       ZoneScopedN(field::name);
       auto* eh = static_cast<EventHandler*>(event_handler_.get());
 
-      if constexpr (packtl::is_type<use_context, field_type>::value) {
-        using context_type     = typename field_type::context_type;
-        using ret_context_type = typename field_type::ret_context_type;
+      if constexpr (IsComponentAspect<field_type>) {
+        field_type&      ref         = field::from_instance(*eh);
+        ComponentAspect& aspect_base = get_aspect_base(ref);
+        aspect_base.mount(bus_, component_, context_store_);
+      }
+    }
 
-        use_context<ret_context_type>& ctx_ref = field::from_instance(*eh);
-
-        auto ctx = context_store_.find_context<context_type>();
-
-        if (ctx.has_value()) {
-          use_context_delegate::set_context(&ctx_ref, ctx.value().get());
-          use_context_delegate::set_owns_context(&ctx_ref, false);
-        } else {
-          use_context_delegate::set_context(&ctx_ref, new context_type {});
-          use_context_delegate::set_owns_context(&ctx_ref, true);
+    void update_fields() {
+      if constexpr (refl::Reflected<EventHandler>) {
+        static constexpr std::size_t field_count = refl::field_count<EventHandler>;
+        if constexpr (field_count > 0) {
+          [&]<std::size_t... I>(std::index_sequence<I...>) {
+            ZoneScopedN("Update Fields");
+            (update_field_impl<I>(), ...);
+          }(std::make_index_sequence<field_count> {});
         }
+      }
+    }
 
-        use_context_delegate::set_bus(&ctx_ref, bus_);
-        use_context_delegate::start_listening(&ctx_ref, [&] { component_->mark_dirty(); });
-      } else if constexpr (packtl::is_type<provide_context, field_type>::value) {
-        using context_type = typename field_type::context_type;
+    template <std::size_t FieldI>
+    void update_field_impl() {
+      using field      = refl::field<EventHandler, FieldI>;
+      using field_type = typename field::type;
+      ZoneScopedN(field::name);
+      auto* eh = static_cast<EventHandler*>(event_handler_.get());
 
-        provide_context<context_type>& ctx_ref = field::from_instance(*eh);
-        provide_context_delegate::set_bus(&ctx_ref, bus_);
-        provide_context_delegate::start_listening(&ctx_ref, [&] { component_->mark_dirty(); });
-
-        context_store_.add_context<context_type>(ctx_ref);
+      if constexpr (IsComponentAspect<field_type>) {
+        field_type&      ref         = field::from_instance(*eh);
+        ComponentAspect& aspect_base = get_aspect_base(ref);
+        aspect_base.update();
       }
     }
   };

@@ -11,7 +11,7 @@ import fabric.async;
 import fabric.templates.functor_arguments;
 
 import cydui.core.blueprint.base;
-import cydui.core.contexts.store;
+import cydui.core.aspects.contexts.store;
 
 import cydui.geometry;
 import cydui.styling.style_stack;

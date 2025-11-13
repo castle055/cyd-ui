@@ -21,7 +21,7 @@ import reflect;
 
 export import cydui.core.blueprint.base;
 export import cydui.core.blueprint.concepts;
-export import cydui.core.contexts.store;
+export import cydui.core.aspects.contexts.store;
 
 export import cydui.geometry;
 export import cydui.layer;
@@ -52,6 +52,13 @@ export namespace cydui {
     }
     const ComponentBlueprint& get_blueprint() const {
       return *static_cast<const ComponentBlueprint*>(&component->get_blueprint());
+    }
+
+    ComponentBlueprint* operator->() {
+      return static_cast<ComponentBlueprint*>(&component->get_blueprint());
+    }
+    const ComponentBlueprint* operator->() const {
+      return static_cast<const ComponentBlueprint*>(&component->get_blueprint());
     }
 
     std::optional<Component*> find_child(const std::string& id) {

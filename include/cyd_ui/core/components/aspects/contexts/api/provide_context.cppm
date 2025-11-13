@@ -1,7 +1,7 @@
 // Copyright (c) 2024, Víctor Castillo Agüero.
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-export module cydui.core.contexts.api:provide_context;
+export module cydui.core.aspects.contexts:provide_context;
 
 import std;
 import reflect;
@@ -10,33 +10,35 @@ import fabric.logging;
 import fabric.async;
 
 import cydui.event_types;
-export import cydui.core.contexts.events;
-
-namespace cydui::detail {
-  export struct provide_context_delegate;
-}
+export import cydui.core.aspects;
+export import cydui.core.aspects.contexts.events;
 
 namespace cydui {
   export template <typename ContextType>
-  struct provide_context {
+  struct provide_context: ComponentAspect {
     using context_type = ContextType;
 
   private:
-    fabric::async::async_bus_t*                                         bus_ {nullptr};
     std::shared_ptr<context_type>                                       context_;
     std::optional<fabric::async::listener<ContextUpdate<context_type>>> listener {std::nullopt};
 
-  public:
-    friend struct detail::provide_context_delegate;
+    void on_mount() override {
+      start_listening();
+      get_context_store().template add_context<context_type>(context_);
+    }
 
+  public:
     provide_context()
         : context_(std::make_shared<context_type>()) {}
 
     template <typename... Args>
+      requires std::constructible_from<
+        context_type,
+        Args...>
     explicit provide_context(Args&&... args)
         : context_(std::make_shared<context_type>(std::forward<Args>(args)...)) {}
 
-    ~provide_context() {
+    ~provide_context() override {
       stop_listening();
     }
 
@@ -62,8 +64,7 @@ namespace cydui {
     }
 
     void notify() {
-      bus_->emit<ContextUpdate<context_type>>({context_.get()});
-      bus_->emit<RedrawEvent>({});
+      get_bus().template emit<ContextUpdate<context_type>>({context_.get()});
     }
 
     operator std::shared_ptr<context_type>() {
@@ -71,12 +72,12 @@ namespace cydui {
     }
 
   private:
-    void start_listening(auto&& callback) {
+    void start_listening() {
       stop_listening();
 
-      listener = bus_->on_event([=, this](ContextUpdate<context_type> ev) -> fabric::task<> {
+      listener = get_bus().on_event([=, this](ContextUpdate<context_type> ev) -> fabric::task<> {
         if (ev.ptr == context_.get()) {
-          callback();
+          update_component();
         }
         co_return;
       });
@@ -89,26 +90,3 @@ namespace cydui {
     }
   };
 } // namespace cydui
-
-namespace cydui::detail {
-  struct provide_context_delegate {
-    template <typename ContextType>
-    static void set_bus(
-      provide_context<ContextType>* it,
-      fabric::async::async_bus_t&   bus) {
-      it->bus_ = &bus;
-    }
-    template <typename ContextType>
-    static void set_context(
-      provide_context<ContextType>*       it,
-      const std::shared_ptr<ContextType>& ctx) {
-      it->context_ = ctx;
-    }
-    template <typename ContextType>
-    static void start_listening(
-      provide_context<ContextType>* it,
-      auto&&                        callback) {
-      it->start_listening(callback);
-    }
-  };
-} // namespace cydui::detail

@@ -20,7 +20,7 @@ import fabric.exception;
 export import cydui.core.identifier;
 export import cydui.core.state;
 export import cydui.styling.sparse_style_map;
-export import cydui.core.contexts.store;
+export import cydui.core.aspects.contexts.store;
 
 
 export namespace cydui::detail {

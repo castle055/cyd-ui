@@ -175,6 +175,10 @@ target_include_directories(cyd_ui PUBLIC ${CYD_UI_INCLUDE_DIR})
 target_include_directories(cyd_ui PUBLIC ${cyd_fabric_SOURCE_DIR}/include)
 target_compile_features(cyd_ui PUBLIC cxx_std_23)
 
+# Yes, this is supposed to be bad because it's incompatible with member field initialization order.
+# However, if you see this line here, it's because that's not been a problem yet :)
+target_compile_options(cyd_ui PUBLIC -Wno-reorder-init-list)
+
 target_sources(cyd_ui
         PUBLIC ${EXPORT_HEADERS}
 

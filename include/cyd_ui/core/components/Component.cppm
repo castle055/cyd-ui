@@ -19,7 +19,7 @@ import reflect;
 
 export import cydui.core.blueprint.base;
 export import cydui.core.blueprint.concepts;
-export import cydui.core.contexts.store;
+export import cydui.core.aspects.contexts.store;
 
 export import cydui.geometry;
 export import cydui.layer;
