@@ -129,6 +129,8 @@ export namespace cydui::detail {
 
     void stop_all_animation();
 
+    void mount();
+
     update_result update_with(const Blueprint& other);
 
     std::optional<Component*> find_child(const std::string& id) override;

@@ -36,39 +36,29 @@ public:
     explicit node_t(operation op_)
         : op(op_) {
       switch (op) {
-        case DIMENSION:
-          dimension = nullptr;
-          break;
-        case ADDITION:
-        case SUBTRACTION:
+        case DIMENSION     : dimension = nullptr; break;
+        case ADDITION      :
+        case SUBTRACTION   :
         case MULTIPLICATION:
-        case DIVISION:
-          children = {};
-          break;
-        case CONSTANT:
-        case PARAMETER:
-        case FUNCTION:
-        default:
-          break;
+        case DIVISION      : children = {}; break;
+        case CONSTANT      :
+        case PARAMETER     :
+        case FUNCTION      :
+        default            : break;
       }
     }
 
     ~node_t() {
       switch (op) {
-        case DIMENSION:
-          dimension.reset();
-          break;
-        case ADDITION:
-        case SUBTRACTION:
+        case DIMENSION     : dimension.reset(); break;
+        case ADDITION      :
+        case SUBTRACTION   :
         case MULTIPLICATION:
-        case DIVISION:
-          children.clear();
-          break;
-        case CONSTANT:
-        case PARAMETER:
-        case FUNCTION:
-        default:
-          break;
+        case DIVISION      : children.clear(); break;
+        case CONSTANT      :
+        case PARAMETER     :
+        case FUNCTION      :
+        default            : break;
       }
     }
 
@@ -77,48 +67,44 @@ public:
     }
 
     bool operator==(const node_t& other) const {
-      if (op != other.op)
-        return false;
+      if (op != other.op) return false;
 
       switch (op) {
-        case CONSTANT:
-          return (const_value == other.const_value);
-        case DIMENSION:
-          return (dimension == other.dimension);
-        case PARAMETER:
-          return (parameter == other.parameter);
+        case CONSTANT : return (const_value == other.const_value);
+        case DIMENSION: return (dimension == other.dimension);
+        case PARAMETER: return (parameter == other.parameter);
         case ADDITION:
         case SUBTRACTION:
         case MULTIPLICATION:
         case DIVISION:
-          if (children.size() != other.children.size())
-            return false;
-          for (auto it1 = children.begin(), it2 = other.children.begin(); it1 != children.end();
-               ++it1, ++it2) {
-            if ((*it1 != *it2) or (*(*it1).get() != *(*it2).get()))
-              return false;
+          if (children.size() != other.children.size()) return false;
+          for (auto it1 = children.begin(), it2 = other.children.begin(); it1 != children.end(); ++it1, ++it2) {
+            if ((*it1 != *it2) or (*(*it1).get() != *(*it2).get())) return false;
           }
           return true;
-        case FUNCTION:
-          return false;
+        case FUNCTION: return false;
       }
     }
 
     std::string to_string() const {
-      std::stringstream sts{};
+      std::stringstream sts {};
+      std::size_t       i {0};
       switch (op) {
-        case CONSTANT:
-          sts << const_value;
-          break;
+        case CONSTANT: sts << const_value; break;
         case DIMENSION:
-          sts << std::format("[0x{:X}](", (unsigned long)dimension.get());
-          sts << dimension->value_ << ")";
+          sts << dimensions::to_string(dimension.get());
+          // sts << std::format("[0x{:X}](", (unsigned long)dimension.get());
+          // sts << dimension->value_ << ")";
           break;
-        case PARAMETER:
-          sts << std::format("[{}]", parameter.name);
-          break;
+        case PARAMETER: sts << std::format("[{}]", parameter.name); break;
         case FUNCTION:
-          sts << "fun()"; // std::format("[{}]", parameter.name);
+          sts << (fun.name.empty() ? "<fun>" : fun.name);
+          sts << "(";
+          for (const auto& d: fun.dependencies) {
+            sts << dimensions::to_string(d.get());
+            if (i++ < fun.dependencies.size() - 1) sts << ", ";
+          }
+          sts << ")"; // std::format("[{}]", parameter.name);
           break;
         case ADDITION:
         case SUBTRACTION:
@@ -133,20 +119,11 @@ public:
             ++it;
             for (; it != children.end(); ++it) {
               switch (op) {
-                case ADDITION:
-                  sts << " + ";
-                  break;
-                case SUBTRACTION:
-                  sts << " - ";
-                  break;
-                case MULTIPLICATION:
-                  sts << " * ";
-                  break;
-                case DIVISION:
-                  sts << " / ";
-                  break;
-                default:
-                  break;
+                case ADDITION      : sts << " + "; break;
+                case SUBTRACTION   : sts << " - "; break;
+                case MULTIPLICATION: sts << " * "; break;
+                case DIVISION      : sts << " / "; break;
+                default            : break;
               }
               sts << it->get()->to_string();
             }
@@ -157,11 +134,11 @@ public:
       return sts.str();
     }
 
-    Type                                  const_value{};
-    std::shared_ptr<dimension_impl<Type>> dimension{nullptr};
-    std::list<sptr>                       children{};
-    parameter                             parameter{};
-    function<Type>                        fun{[] { return 0_px; }, {}};
+    Type                                  const_value {};
+    std::shared_ptr<dimension_impl<Type>> dimension {nullptr};
+    std::list<sptr>                       children {};
+    parameter                             parameter {};
+    function<Type>                        fun {[] { return 0_px; }, {}};
   };
 
   expression() = default;
@@ -212,8 +189,7 @@ public:
   }
 
   bool operator==(const expression& other) const {
-    if (other.dependencies_ != dependencies_)
-      return false;
+    if (other.dependencies_ != dependencies_) return false;
 
     if (tree_ == other.tree_) {
       return true;
@@ -272,6 +248,6 @@ public:
 
 private:
   typename node_t::sptr                                     tree_ = nullptr;
-  std::unordered_set<std::shared_ptr<dimension_impl<Type>>> dependencies_{};
-  std::unordered_set<parameter>                             parameters_{};
+  std::unordered_set<std::shared_ptr<dimension_impl<Type>>> dependencies_ {};
+  std::unordered_set<parameter>                             parameters_ {};
 };

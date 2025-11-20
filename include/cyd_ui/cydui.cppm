@@ -13,5 +13,7 @@ export import cydui.ui_handle;
 export import cydui.core.aspects;
 export import cydui.core.aspects.contexts;
 export import cydui.core.aspects.process;
+export import cydui.core.aspects.reference;
+export import cydui.core.aspects.controller;
 
 // using cyd::fabric::async::async;

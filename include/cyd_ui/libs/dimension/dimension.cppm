@@ -176,7 +176,7 @@ namespace cydui::dimensions {
       return impl_->value_;
     }
 
-    typename dimension_impl<value_type>::sptr impl() const {
+    const typename dimension_impl<value_type>::sptr& impl() const {
       return impl_;
     }
 

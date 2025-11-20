@@ -19,6 +19,8 @@ export namespace cydui::detail {
   public:
     virtual ~event_dispatcher_base_t() = default;
 
+    virtual std::shared_ptr<void> get_event_handler() = 0;
+
     virtual BlueprintList update(
       tss::StyleArchive&  style_archive,
       const BlueprintList& content_children_builder

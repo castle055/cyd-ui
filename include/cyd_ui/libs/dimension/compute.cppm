@@ -17,13 +17,13 @@ export import :impl;
 namespace cydui::dimensions {
   export template <typename T>
   struct cycle_t {
-    std::deque<typename dimension_impl<T>::sptr> dimensions{};
+    std::deque<typename dimension_impl<T>::sptr> dimensions {};
   };
 
   export template <typename T>
   struct compute_result_t {
-    std::vector<cycle_t<T>> cycles{};
-    bool value_changed = false;
+    std::vector<cycle_t<T>> cycles {};
+    bool                    value_changed = false;
 
     operator bool() const {
       return cycles.empty();
@@ -37,9 +37,8 @@ namespace cydui::dimensions {
     typename dimension_impl<T>::sptr head,
     const std::unordered_map<
       std::string,
-      dimension<T>>& global_parameters
-  ) {
-    std::unordered_set<std::shared_ptr<dimension_impl<T>>> deps{};
+      dimension<T>>& global_parameters) {
+    std::unordered_set<std::shared_ptr<dimension_impl<T>>> deps {};
     for (const auto& dep: head->expr().dependencies()) {
       deps.insert(dep);
     }
@@ -51,7 +50,7 @@ namespace cydui::dimensions {
         auto& param_dim = global_parameters.at(param.name);
         deps.insert(param_dim.impl());
       } else {
-        LOG::print{FATAL}("Missing expression parameter: {}", param.name);
+        LOG::print {FATAL}("Missing expression parameter: {}", param.name);
       }
     }
 
@@ -74,16 +73,15 @@ namespace cydui::dimensions {
     typename dimension_impl<T>::sptr dim,
     const std::unordered_map<
       std::string,
-      dimension<T>>& parameters
-  ) {
+      dimension<T>>& parameters) {
     // LOG::print{DEBUG}("Evaluating expression: {} = {}", dim->name_, dim->expr_.to_string());
     using expression = expression<T>;
     expression& expr = dim->expr();
 
-    std::deque<typename expression::node_t::sptr>                           stack{};
-    std::stack<std::pair<typename expression::node_t::sptr, std::deque<T>>> result_stack{};
+    std::deque<typename expression::node_t::sptr>                           stack {};
+    std::stack<std::pair<typename expression::node_t::sptr, std::deque<T>>> result_stack {};
     stack.emplace_back(expr.tree());
-    result_stack.emplace(typename expression::node_t::sptr{nullptr}, std::deque<T>{});
+    result_stack.emplace(typename expression::node_t::sptr {nullptr}, std::deque<T> {});
 
     //  LOG::print{FATAL
     //  }("Something went wrong while evaluating an expression, result_stack invalid: {}",
@@ -91,7 +89,7 @@ namespace cydui::dimensions {
     while (!stack.empty()) {
       auto top = stack.back();
       if (top == nullptr) {
-        result_stack.top().second.push_back(T{});
+        result_stack.top().second.push_back(T {});
         stack.pop_back();
         continue;
       }
@@ -114,10 +112,8 @@ namespace cydui::dimensions {
             result_stack.top().second.push_back(parameters.at(top->parameter.name).value());
             stack.pop_back();
           } else {
-            LOG::print{FATAL
-            }("Missing parameter ({}) while evaluating expression: {}",
-              top->parameter.name,
-              expr.to_string());
+            LOG::print {FATAL}(
+              "Missing parameter ({}) while evaluating expression: {}", top->parameter.name, expr.to_string());
             return false;
           }
           break;
@@ -130,13 +126,13 @@ namespace cydui::dimensions {
         case expression::node_t::MULTIPLICATION:
         case expression::node_t::DIVISION:
           if (result_stack.top().first != top) {
-            result_stack.emplace(top, std::deque<T>{});
+            result_stack.emplace(top, std::deque<T> {});
             for (auto it = top->children.rbegin(); it != top->children.rend(); ++it) {
               stack.emplace_back(*it);
             }
           } else {
             auto res = result_stack.top().second;
-            T    accumulator{res.front()};
+            T    accumulator {res.front()};
             switch (top->op) {
               case expression::node_t::ADDITION:
                 for (auto it = std::next(res.begin()); it != res.end(); ++it) {
@@ -158,8 +154,7 @@ namespace cydui::dimensions {
                   accumulator.value /= (*it).template as<screen::pixel>().value;
                 }
                 break;
-              default:
-                break;
+              default: break;
             }
             result_stack.pop();
             result_stack.top().second.push_back(accumulator);
@@ -167,21 +162,19 @@ namespace cydui::dimensions {
           }
           break;
         default:
-          LOG::print{FATAL} //
+          LOG::print {FATAL} //
           ("Expression node has invalid operator {}", static_cast<std::size_t>(top->op));
           break;
       }
     }
 
-    if (result_stack.size() == 1 && result_stack.top().first == nullptr
-        && result_stack.top().second.size() == 1) {
+    if (result_stack.size() == 1 && result_stack.top().first == nullptr && result_stack.top().second.size() == 1) {
       dim->value_   = result_stack.top().second.front();
       dim->unknown_ = false;
       return true;
     }
-    LOG::print{FATAL
-    }("Something went wrong while evaluating an expression, result_stack invalid: {}",
-      expr.to_string());
+    LOG::print {FATAL}(
+      "Something went wrong while evaluating an expression, result_stack invalid: {}", expr.to_string());
     return false;
   }
 
@@ -190,13 +183,12 @@ namespace cydui::dimensions {
     dimension<T>& dim_,
     const std::unordered_map<
       std::string,
-      dimension<T>>& parameters = {}
-  ) {
+      dimension<T>>& parameters = {}) {
     typename dimension_impl<T>::sptr                     dim = dim_.impl();
-    std::unordered_set<typename dimension_impl<T>::sptr> visited{};
-    std::deque<typename dimension_impl<T>::sptr>         stack{};
-    std::vector<cycle_t<T>>                              cycles{};
-    bool something_changed = false;
+    std::unordered_set<typename dimension_impl<T>::sptr> visited {};
+    std::deque<typename dimension_impl<T>::sptr>         stack {};
+    std::vector<cycle_t<T>>                              cycles {};
+    bool                                                 something_changed = false;
     stack.emplace_back(dim);
 
     while (!stack.empty()) {
@@ -210,7 +202,7 @@ namespace cydui::dimensions {
 
       something_changed = true;
 
-      std::unordered_set<std::shared_ptr<dimension_impl<T>>> deps{};
+      std::unordered_set<std::shared_ptr<dimension_impl<T>>> deps {};
       visited.insert(top);
       for (const auto& dep: top->expr().dependencies()) {
         deps.insert(dep);
@@ -223,7 +215,7 @@ namespace cydui::dimensions {
           auto& param_dim = parameters.at(param.name);
           deps.insert(param_dim.impl());
         } else {
-          LOG::print{FATAL}("Missing expression parameter: {}", param.name);
+          LOG::print {FATAL}("Missing expression parameter: {}", param.name);
         }
       }
 
@@ -236,11 +228,10 @@ namespace cydui::dimensions {
 
         for (auto it = deps.begin(); it != deps.end(); ++it) {
           auto dep = *it;
-          if (not dep->is_unknown())
-            continue;
+          if (not dep->is_unknown()) continue;
           if (visited.contains(dep)) {
             //! Cycle detected
-            cycle_t<T>  cycle{};
+            cycle_t<T>  cycle {};
             std::size_t i = 0;
             // LOG::print{INFO}("Possible cycle detected:");
             // LOG::print{INFO}("START: [0x{:X}] {}::{} = {}", (unsigned long)(dim_.impl()->get()),
@@ -251,15 +242,15 @@ namespace cydui::dimensions {
             // }
 
             if (!find_cycle(cycle, dep, dep, parameters)) {
-              LOG::print{FATAL}("Cycle detection gave a false positive.");
+              LOG::print {FATAL}("Cycle detection gave a false positive.");
             } else {
-              LOG::print{ERROR}("Dependency cycle in dimensions:");
               i = 0;
+              std::stringstream ss {};
+              ss << "Dependency cycle in dimensions:" << std::endl;
               for (const auto& v: cycle.dimensions) {
-                LOG::print{ERROR
-                }("  {}: {}::{} = {}", i++, v->context_->get_name(), v->name_, v->expr().to_string()
-                );
+                ss << std::format("  {}: {} = {}", i++, to_string(v.get()), v->expr().to_string()) << std::endl;
               }
+              LOG::print {ERROR}("{}", ss.str());
             }
             cycles.emplace_back(cycle);
           } else {

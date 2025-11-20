@@ -21,6 +21,7 @@ export import cydui.core.identifier;
 export import cydui.core.state;
 export import cydui.styling.sparse_style_map;
 export import cydui.core.aspects.contexts.store;
+export import cydui.core.aspects.reference.iface;
 
 
 export namespace cydui::detail {
@@ -43,6 +44,8 @@ export namespace cydui {
     style::sparse_style_map style_map_;
     BlueprintList           content_ {};
 
+    detail::reference_set references_ {};
+
   public:
     using uptr = std::unique_ptr<Blueprint>;
 
@@ -61,7 +64,8 @@ export namespace cydui {
           name_(other.name_),
           tags_(other.tags_),
           style_map_(other.style_map_),
-          content_(other.content_) {}
+          content_(other.content_),
+          references_(other.references_) {}
 
   public:
     virtual detail::ComponentState::sptr make_state_object() const = 0;
@@ -84,6 +88,12 @@ export namespace cydui {
     virtual bool handles_text_input() const = 0;
 
     virtual uptr clone() const = 0;
+
+    void update_references(void* mounted_component) {
+      for (auto& ref: references_) {
+        ref->set_reference(mounted_component);
+      }
+    }
 
   public:
     const ComponentIdentifier& get_id() const {
@@ -114,7 +124,7 @@ export namespace cydui {
     const T& as() const {
       const T* ptr = dynamic_cast<const T*>(this);
       if (ptr == nullptr) {
-        throw fabric::exception{std::format("Bad cast: expected '{}', found '{}'", refl::type_name<T>, get_name())};
+        throw fabric::exception {std::format("Bad cast: expected '{}', found '{}'", refl::type_name<T>, get_name())};
       }
       return *ptr;
     }
@@ -123,7 +133,7 @@ export namespace cydui {
     T& as() {
       T* ptr = dynamic_cast<T*>(this);
       if (ptr == nullptr) {
-        throw fabric::exception{std::format("Bad cast: expected '{}', found '{}'", refl::type_name<T>, get_name())};
+        throw fabric::exception {std::format("Bad cast: expected '{}', found '{}'", refl::type_name<T>, get_name())};
       }
       return *ptr;
     }

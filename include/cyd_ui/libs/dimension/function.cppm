@@ -14,13 +14,15 @@ export namespace cydui::dimensions {
   template <typename Type>
   struct function: std::function<Type()> {
     using depset_type = std::unordered_set<std::shared_ptr<dimension_impl<Type>>>;
-    depset_type dependencies{};
+    depset_type       dependencies {};
+    std::string name {};
 
     function(
       auto&&      fn,
-      depset_type dependencies
-    )
+      depset_type dependencies,
+      std::string name = "")
         : std::function<Type()>(fn),
-          dependencies(dependencies) {}
+          dependencies(dependencies),
+          name(name) {}
   };
 } // namespace cydui::dimensions

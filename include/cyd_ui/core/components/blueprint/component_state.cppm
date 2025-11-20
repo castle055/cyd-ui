@@ -20,8 +20,8 @@ namespace cydui::detail {
 
   public:
     std::string                           component_name_;
-    ComponentState*                    parent_ = nullptr;
-    std::unordered_map<std::string, sptr> children_states{};
+    ComponentState*                       parent_ = nullptr;
+    std::unordered_map<std::string, sptr> children_states {};
 
   public:
     virtual ~ComponentState() = default;
@@ -40,8 +40,7 @@ namespace cydui::detail {
 
     void add_children_state(
       const std::string& id,
-      const sptr&        child
-    ) {
+      const sptr&        child) {
       children_states[id] = child;
       child->parent_      = this;
     }
@@ -53,10 +52,9 @@ namespace cydui::detail {
   class component_state_delegate_t {
   public:
     static void set_name(
-      ComponentState* it,
-      const std::string& name
-    ) {
+      ComponentState*    it,
+      const std::string& name) {
       it->component_name_ = name;
     }
   };
-} // namespace cydui::components
+} // namespace cydui::detail

@@ -50,18 +50,18 @@ namespace cydui::detail {
         component_->get_style()};
 
       if constexpr (EventHandler::has_custom_state_type and EventHandler::has_custom_style_type) {
-        event_handler_ = std::make_shared<EventHandler>(EventHandler {
+        event_handler_ = std::shared_ptr<EventHandler>(new EventHandler {
           evh_data,
           .state = *dynamic_cast<state_type<ComponentType>*>(&state_),
           .style = *static_cast<const style_type<ComponentType>*>(&component_->get_style()),
         });
       } else if constexpr (EventHandler::has_custom_state_type and not EventHandler::has_custom_style_type) {
-        event_handler_ = std::make_shared<EventHandler>(EventHandler {
+        event_handler_ = std::shared_ptr<EventHandler>(new EventHandler {
           evh_data,
           .state = *dynamic_cast<state_type<ComponentType>*>(&state_),
         });
       } else if constexpr (not EventHandler::has_custom_state_type and EventHandler::has_custom_style_type) {
-        event_handler_ = std::make_shared<EventHandler>(EventHandler {
+        event_handler_ = std::shared_ptr<EventHandler>(new EventHandler {
           evh_data,
           .style = *static_cast<const style_type<ComponentType>*>(&component_->get_style()),
         });
@@ -70,6 +70,10 @@ namespace cydui::detail {
       }
 
       configure_fields();
+    }
+
+    std::shared_ptr<void> get_event_handler() override {
+      return event_handler_;
     }
 
     void dispatch_mount(const BlueprintList& content_children_builder) override {
@@ -92,6 +96,7 @@ namespace cydui::detail {
       ZoneScopedN("Update - Component EV");
       auto  eh   = static_cast<EventHandler*>(event_handler_.get());
       auto& geom = component_->get_geometry();
+      update_fields();
       return eh->on_redraw(CYDUI_INTERNAL_EV_DIM_ARGS, content_children_builder);
     }
 

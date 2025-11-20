@@ -27,20 +27,18 @@ ComponentImpl::ComponentImpl(
   fabric::services::ServiceContext& internal_services,
   fabric::services::ServiceContext& ui_services,
   parent_reference_t                parent,
-  Blueprint::uptr            blueprint,
-  const ComponentState::sptr&    state
-)
+  Blueprint::uptr                   blueprint,
+  const ComponentState::sptr&       state)
     : internal_services_(internal_services),
       ui_services_(ui_services),
       blueprint_(std::move(blueprint)),
       id_(blueprint_->get_id()),
       parent_(parent),
-      children_{},
+      children_ {},
       state_(state == nullptr ? blueprint_->make_state_object() : state),
       style_stack_(
         blueprint_->get_style_type_info(),
-        blueprint_->make_style_object()
-      ),
+        blueprint_->make_style_object()),
       geometry_(layout::component_geometry::make(get_name())),
       context_store_(parent_.is_valid() ? &parent_->context_store_ : nullptr),
       event_dispatcher_(blueprint_->make_event_dispatcher(
@@ -48,23 +46,15 @@ ComponentImpl::ComponentImpl(
         parent_.is_valid() ? parent_->event_dispatcher_.get() : nullptr,
         this,
         *state_,
-        context_store_
-      )) {}
+        context_store_)) {}
 
 ComponentImpl* ComponentImpl::make(
-  fabric::async::async_bus_t&    bus,
-  ComponentImpl&                 parent,
-  Blueprint::uptr         blueprint,
-  const ComponentState::sptr& state
-) {
-  auto ptr = std::unique_ptr<ComponentImpl>(new ComponentImpl{
-    bus,
-    parent.internal_services_,
-    parent.ui_services_,
-    parent_reference_t{&parent},
-    std::move(blueprint),
-    state
-  });
+  fabric::async::async_bus_t& bus,
+  ComponentImpl&              parent,
+  Blueprint::uptr             blueprint,
+  const ComponentState::sptr& state) {
+  auto ptr = std::unique_ptr<ComponentImpl>(new ComponentImpl {
+    bus, parent.internal_services_, parent.ui_services_, parent_reference_t {&parent}, std::move(blueprint), state});
 
   auto* ret = ptr.get();
   parent.children_.emplace_back(std::move(ptr));
@@ -76,11 +66,9 @@ ComponentImpl::uptr ComponentImpl::make_root(
   fabric::async::async_bus_t&       bus,
   fabric::services::ServiceContext& internal_services,
   fabric::services::ServiceContext& ui_services,
-  Blueprint::uptr            blueprint
-) {
-  return std::unique_ptr<ComponentImpl>(new ComponentImpl{
-    bus, internal_services, ui_services, parent_reference_t{nullptr}, std::move(blueprint), nullptr
-  });
+  Blueprint::uptr                   blueprint) {
+  return std::unique_ptr<ComponentImpl>(new ComponentImpl {
+    bus, internal_services, ui_services, parent_reference_t {nullptr}, std::move(blueprint), nullptr});
 }
 
 ComponentImpl::~ComponentImpl() {
@@ -136,7 +124,7 @@ bool ComponentImpl::is_animated() const {
 animations::AnimationHandle ComponentImpl::start_animation(animations::AnimationHandle handle) {
   animations_.push_back(handle);
   const auto it = std::prev(animations_.end());
-  return animations::AnimationHandle{[=, this]() {
+  return animations::AnimationHandle {[=, this]() {
     it->stop();
     animations_.erase(it);
   }};
@@ -149,8 +137,17 @@ void ComponentImpl::stop_all_animation() {
   animations_.clear();
 }
 
+void ComponentImpl::mount() {
+  get_event_dispatcher().dispatch_mount(blueprint_->get_content());
+  Component* self = this;
+  blueprint_->update_references(self);
+}
+
 detail::update_result ComponentImpl::update_with(const Blueprint& other) {
-  return blueprint_->update_with(other);
+  auto res = blueprint_->update_with(other);
+  Component* self = this;
+  blueprint_->update_references(self);
+  return res;
 }
 
 std::optional<Component*> ComponentImpl::find_child(const std::string& id) {
@@ -172,7 +169,7 @@ std::optional<const Component*> ComponentImpl::find_child(const std::string& id)
 }
 
 std::list<Component*> ComponentImpl::find_children(const std::string& tag) {
-  std::list<Component*> result{};
+  std::list<Component*> result {};
   for (auto& child: children_) {
     if (child->get_blueprint().has_tag(tag)) {
       result.emplace_back(child.get());
@@ -182,7 +179,7 @@ std::list<Component*> ComponentImpl::find_children(const std::string& tag) {
 }
 
 std::list<const Component*> ComponentImpl::find_children(const std::string& tag) const {
-  std::list<const Component*> result{};
+  std::list<const Component*> result {};
   for (const auto& child: children_) {
     if (child->get_id().str() == tag) {
       result.emplace_back(child.get());
@@ -193,9 +190,8 @@ std::list<const Component*> ComponentImpl::find_children(const std::string& tag)
 
 std::list<Component*> ComponentImpl::find_descendents(
   const std::string& tag,
-  bool               skip_direct_children
-) {
-  std::list<Component*> result{};
+  bool               skip_direct_children) {
+  std::list<Component*> result {};
   if (not skip_direct_children) {
     for (auto& child: children_) {
       if (child->get_blueprint().has_tag(tag)) {
@@ -214,9 +210,8 @@ std::list<Component*> ComponentImpl::find_descendents(
 
 std::list<const Component*> ComponentImpl::find_descendents(
   const std::string& tag,
-  bool               skip_direct_children
-) const {
-  std::list<const Component*> result{};
+  bool               skip_direct_children) const {
+  std::list<const Component*> result {};
   if (not skip_direct_children) {
     for (const auto& child: children_) {
       if (child->get_blueprint().has_tag(tag)) {
@@ -252,7 +247,7 @@ std::optional<const ComponentImpl*> ComponentImpl::find_child_impl(const std::st
 }
 
 std::list<ComponentImpl*> ComponentImpl::find_children_impl(const std::string& tag) {
-  std::list<ComponentImpl*> result{};
+  std::list<ComponentImpl*> result {};
   for (auto& child: children_) {
     if (child->get_blueprint().has_tag(tag)) {
       result.emplace_back(child.get());
@@ -262,7 +257,7 @@ std::list<ComponentImpl*> ComponentImpl::find_children_impl(const std::string& t
 }
 
 std::list<const ComponentImpl*> ComponentImpl::find_children_impl(const std::string& tag) const {
-  std::list<const ComponentImpl*> result{};
+  std::list<const ComponentImpl*> result {};
   for (const auto& child: children_) {
     if (child->get_id().str() == tag) {
       result.emplace_back(child.get());
@@ -273,9 +268,8 @@ std::list<const ComponentImpl*> ComponentImpl::find_children_impl(const std::str
 
 std::list<ComponentImpl*> ComponentImpl::find_descendents_impl(
   const std::string& tag,
-  bool               skip_direct_children
-) {
-  std::list<ComponentImpl*> result{};
+  bool               skip_direct_children) {
+  std::list<ComponentImpl*> result {};
   if (not skip_direct_children) {
     for (auto& child: children_) {
       if (child->get_blueprint().has_tag(tag)) {
@@ -294,9 +288,8 @@ std::list<ComponentImpl*> ComponentImpl::find_descendents_impl(
 
 std::list<const ComponentImpl*> ComponentImpl::find_descendents_impl(
   const std::string& tag,
-  bool               skip_direct_children
-) const {
-  std::list<const ComponentImpl*> result{};
+  bool               skip_direct_children) const {
+  std::list<const ComponentImpl*> result {};
   if (not skip_direct_children) {
     for (const auto& child: children_) {
       if (child->get_blueprint().has_tag(tag)) {
@@ -338,7 +331,7 @@ const Blueprint& ComponentImpl::get_blueprint() const {
 }
 
 std::list<Component*> ComponentImpl::get_children() {
-  std::list<Component*> res{};
+  std::list<Component*> res {};
   for (const auto& component_impl: children_) {
     res.emplace_back(component_impl.get());
   }
@@ -346,7 +339,7 @@ std::list<Component*> ComponentImpl::get_children() {
 }
 
 std::list<const Component*> ComponentImpl::get_children() const {
-  std::list<const Component*> res{};
+  std::list<const Component*> res {};
   for (const auto& component_impl: children_) {
     res.emplace_back(component_impl.get());
   }

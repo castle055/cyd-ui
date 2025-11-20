@@ -194,12 +194,11 @@ namespace cydui::detail::ui::services {
 
         mounted_child->get_layer().render_data = platform_.get_renderer().mount_component(component);
 
-        PROF_MESSAGE("Component Mounted ({})", mounted_child->get_name());
-
         style_.compile_rules(*mounted_child);
         style_.update_style(*mounted_child);
 
-        mounted_child->get_event_dispatcher().dispatch_mount(mounted_child->get_blueprint().get_content());
+        mounted_child->mount();
+        PROF_MESSAGE("Component Mounted ({})", mounted_child->get_name());
 
         pending_redraw.push_back(mounted_child);
       }

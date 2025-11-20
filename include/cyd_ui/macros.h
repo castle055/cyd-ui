@@ -101,6 +101,8 @@
 
 #define FRAGMENT cydui::ElementVector draw_fragment CYDUI_INTERNAL_EV_fragment_ARGS
 
+#define CONTROLLER struct controller_t: cydui::ControllerBase<event_handler_t>
+
 #define SIGNAL(NAME, ...)                                                                          \
 private:                                                                                           \
   fabric::wiring::signal<__VA_ARGS__> NAME{};                                                      \

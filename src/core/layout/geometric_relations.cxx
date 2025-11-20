@@ -34,6 +34,9 @@ void layout::update_content_size_in_axis(
   for (auto& child: component.get_children()) {
     auto& c_geom = child->get_geometry();
     if (c_geom.positioning[axis] == component_positioning::RELATIVE) {
+      dimension_t max_extents {c_geom.position[axis] + c_geom.screen_size[axis]};
+      max_extents.set_context(c_geom.context, axis == X_AXIS ? "x_extents" : "y_extents");
+      dims.emplace_back(max_extents);
       dims.push_back(dimension_t {c_geom.position[axis] + c_geom.screen_size[axis]});
     }
   }

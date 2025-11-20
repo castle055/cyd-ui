@@ -5,7 +5,7 @@ module;
 #include <tracy/Tracy.hpp>
 
 #define STYLE_SETTER_RETURN_TYPE T&
-#define STYLE_SETTER_RETURN_EXPR return *static_cast<T*>(this);
+#define STYLE_SETTER_RETURN_EXPR return as_derived();
 #define STYLE_SETTER_REF_CONSTRAINT
 #define STYLE_MAP_GETTER this->style_map_
 #include "../../style/include/style_setters_detail.h"
@@ -20,6 +20,8 @@ import fabric.logging;
 export import cydui.core.blueprint.base;
 export import cydui.core.event_dispatcher;
 export import cydui.core.blueprint.concepts;
+
+export import cydui.core.aspects.reference;
 
 namespace cydui::detail {
   export template <typename T>
@@ -102,6 +104,8 @@ namespace cydui::detail {
         dirty = true;
       }
 
+      references_ = other_component->references_;
+
       return {dirty, restyle};
     }
 
@@ -111,16 +115,16 @@ namespace cydui::detail {
     }
 
     uptr clone() const override {
-      return std::make_unique<T>(*dynamic_cast<const T*>(this));
+      return std::make_unique<T>(as_derived());
     }
 
   private:
     auto& props() {
-      return (dynamic_cast<T*>(this)->props);
+      return (as_derived().props);
     }
 
     const auto& props() const {
-      return (dynamic_cast<const T*>(this)->props);
+      return (as_derived().props);
     }
 
     bool update_fields(const BlueprintImpl<T>* other) {
@@ -152,18 +156,18 @@ namespace cydui::detail {
 
   public:
     refl::any_ref get_props() final {
-      return refl::any_ref {dynamic_cast<T*>(this)->props};
+      return refl::any_ref {as_derived().props};
     }
 
   public:
     T& tag(const std::unordered_set<std::string>& tags) {
       Blueprint::tag(tags);
-      return *dynamic_cast<T*>(this);
+      return as_derived();
     }
 
     T& tag(const std::string& tag) {
       Blueprint::tag(tag);
-      return *dynamic_cast<T*>(this);
+      return as_derived();
     }
 
     T& tag(
@@ -174,34 +178,53 @@ namespace cydui::detail {
       } else {
         untag(tag);
       }
-      return *dynamic_cast<T*>(this);
+      return as_derived();
     }
 
     T& untag(const std::unordered_set<std::string>& tags) {
       Blueprint::untag(tags);
-      return *dynamic_cast<T*>(this);
+      return as_derived();
     }
 
     T& untag(const std::string& tag) {
       Blueprint::untag(tag);
-      return *dynamic_cast<T*>(this);
+      return as_derived();
     }
 
     T& set_id(const std::string& id) {
       Blueprint::set_id(id);
-      return *dynamic_cast<T*>(this);
+      return as_derived();
     }
 
     T& operator()(BlueprintList&& _content_) {
       this->content_ = _content_;
-      return *dynamic_cast<T*>(this);
+      return as_derived();
     }
 
     T& operator()(const BlueprintList& _content_) {
       this->content_ = _content_;
-      return *dynamic_cast<T*>(this);
+      return as_derived();
+    }
+
+    template <
+      template <typename> typename R,
+      std::same_as<T> S = T>
+      requires std::derived_from<
+        R<S>,
+        reference<S>>
+    S& ref(R<S>& reference_) {
+      references_.insert(&reference_);
+      return as_derived();
     }
 
 #include "../../style/include/style_setters.inc"
+  private:
+    T& as_derived() {
+      return *dynamic_cast<T*>(this);
+    }
+
+    const T& as_derived() const {
+      return *dynamic_cast<const T*>(this);
+    }
   };
 } // namespace cydui::detail

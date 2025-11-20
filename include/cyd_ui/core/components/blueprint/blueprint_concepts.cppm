@@ -11,8 +11,7 @@ export import cydui.core.state;
 
 export namespace cydui::detail {
   template <typename T>
-  concept StaticBlueprint =
-    std::is_base_of_v<Blueprint, T> and requires { typename T::event_handler_t; };
+  concept StaticBlueprint = std::is_base_of_v<Blueprint, T> and requires { typename T::event_handler_t; };
 
 
   template <StaticBlueprint B>
@@ -23,16 +22,20 @@ export namespace cydui::detail {
   template <typename T>
   using event_handler_type = typename event_handler_type_t<T>::type;
 
+  template <typename T>
+  concept EventHandlerHasCustomStateType =
+    requires { typename T::state_type; } and std::is_base_of_v<ComponentState, typename T::state_type>;
 
   template <typename T>
-  concept HasCustomStateType = StaticBlueprint<T> and requires {
-    typename event_handler_type<T>::state_type;
-  } and std::is_base_of_v<ComponentState, typename event_handler_type<T>::state_type>;
+  concept EventHandlerHasCustomStyleType =
+    requires { typename T::style_type; } and std::is_base_of_v<style::style_base_t, typename T::style_type>;
+
 
   template <typename T>
-  concept HasCustomStyleType = StaticBlueprint<T> and requires {
-    typename event_handler_type<T>::style_type;
-  } and std::is_base_of_v<style::style_base_t, typename event_handler_type<T>::style_type>;
+  concept HasCustomStateType = StaticBlueprint<T> and EventHandlerHasCustomStateType<event_handler_type<T>>;
+
+  template <typename T>
+  concept HasCustomStyleType = StaticBlueprint<T> and EventHandlerHasCustomStyleType<event_handler_type<T>>;
 
 
   template <typename B>
@@ -71,7 +74,7 @@ export namespace cydui::detail {
 
   template <typename T>
   using style_type = typename style_type_t<T>::type;
-} // namespace cydui::components
+} // namespace cydui::detail
 
 export template <typename, typename = void>
 constexpr bool is_type_complete_v = false;
