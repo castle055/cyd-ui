@@ -28,14 +28,14 @@ fabric::task<Platform::sptr> make_impl(
     fabric::runtime::get_global_service_context(), {"WindowContext"}
   );
 
-  co_await register_window_service(ctx, window_opts);
+  co_await register_window_service(ctx, WindowType::TOPLEVEL, nullptr, window_opts);
   co_await register_render_service(ctx, renderer_opts);
   co_await fabric::runtime::get_global_service_context()->await_ready();
   co_await ctx->await_ready();
 
   auto& window = co_await ctx->require<WindowBase>();
 
-  co_await fabric::launch(window.event_task(bus));
+  fabric::launch(window.event_task(bus)).detach();
 
   co_return std::make_shared<PlatformImpl>(bus, ctx);
 }

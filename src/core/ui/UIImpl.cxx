@@ -52,8 +52,8 @@ fabric::task<UIImpl::sptr> UIImpl::make(
   co_await service_context->register_service<FocusState>();
   co_await service_context->await_ready();
 
-  ComponentImpl::uptr root = ComponentImpl::make_root(
-    platform->get_bus(), *service_context, *ui_service_context, std::move(root_blueprint));
+  ComponentImpl::uptr root =
+    ComponentImpl::make_root(platform->get_bus(), *service_context, *ui_service_context, std::move(root_blueprint));
   root->mark_dirty();
 
   co_await service_context->register_service<ComponentTree>(&root); // gets moved out
@@ -84,6 +84,18 @@ fabric::task<UIImpl::sptr> UIImpl::make(
   co_return std::make_shared<UIImpl>(std::move(platform), service_context, ui_service_context);
 }
 
+fabric::task<UIImpl::sptr> UIImpl::make_as_child(
+  const UIImpl&                                      parent,
+  platform::window::WindowType                       type,
+  Blueprint::uptr                                    root_blueprint,
+  const platform::window::WindowOptionsBase::sptr&   window_options,
+  const platform::render::RendererOptionsBase::sptr& render_options,
+  const UIOptions&                                   options) {
+  auto platform = co_await parent.platform_->make_child_platform(type, window_options, render_options);
+  co_return co_await make(platform, std::move(root_blueprint), options);
+}
+
+
 UIImpl::UIImpl(
   platform::PlatformImpl::sptr                  platform,
   const fabric::services::ServiceContext::sptr& service_context,
@@ -103,10 +115,19 @@ UIImpl::UIImpl(
 
 UIImpl::~UIImpl() {
   auto exec = platform_->get_executor();
-  exec->schedule(ui_service_context_->stop_all());
-  exec->schedule(service_context_->stop_all());
+  exec->schedule(ui_service_context_->stop_all()).detach();
+  exec->schedule(service_context_->stop_all()).detach();
 }
 
+
+fabric::task<UI::sptr> UIImpl::make_child_ui_impl(
+  Blueprint::uptr                                    root,
+  platform::window::WindowType                       type,
+  const platform::window::WindowOptionsBase::sptr&   window_options,
+  const platform::render::RendererOptionsBase::sptr& render_options,
+  const UIOptions&                                   options) {
+  co_return co_await UIImpl::make_as_child(*this, type, std::move(root), window_options, render_options, options);
+}
 
 fabric::task<> UIImpl::show() {
   co_await fabric::this_task::switch_executor(platform_->get_executor());

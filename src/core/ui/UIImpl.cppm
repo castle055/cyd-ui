@@ -25,11 +25,11 @@ import cydui.geometry;
 
 namespace cydui {
   export class UIImpl final: public UI {
-    platform::PlatformImpl::sptr           platform_;
-    fabric::services::ServiceContext::sptr service_context_;
-    fabric::services::ServiceContext::sptr ui_service_context_;
-    bool                                   showing_ {false};
-    fabric::async::listener<WindowCloseRequested>  window_closed_listener_;
+    platform::PlatformImpl::sptr                  platform_;
+    fabric::services::ServiceContext::sptr        service_context_;
+    fabric::services::ServiceContext::sptr        ui_service_context_;
+    bool                                          showing_ {false};
+    fabric::async::listener<WindowCloseRequested> window_closed_listener_;
 
   public:
     using sptr = std::shared_ptr<UIImpl>;
@@ -39,12 +39,28 @@ namespace cydui {
       const fabric::services::ServiceContext::sptr& service_context,
       const fabric::services::ServiceContext::sptr& ui_service_context);
 
-    ~UIImpl();
+    ~UIImpl() override;
 
     static fabric::task<sptr> make(
       platform::PlatformImpl::sptr platform,
       Blueprint::uptr              root,
       const UIOptions&             options);
+
+    static fabric::task<sptr> make_as_child(
+      const UIImpl&                                      parent,
+      platform::window::WindowType                       type,
+      Blueprint::uptr                                    root,
+      const platform::window::WindowOptionsBase::sptr&   window_options,
+      const platform::render::RendererOptionsBase::sptr& render_options,
+      const UIOptions&                                   options);
+
+
+    fabric::task<UI::sptr> make_child_ui_impl(
+      Blueprint::uptr                                    root,
+      platform::window::WindowType                       type,
+      const platform::window::WindowOptionsBase::sptr&   window_options,
+      const platform::render::RendererOptionsBase::sptr& render_options,
+      const UIOptions&                                   options) override;
 
     fabric::task<> attach_stylesheet(const tss::StyleSheet::sptr& style_sheet) override;
 

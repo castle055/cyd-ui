@@ -10,18 +10,24 @@ import reflect;
 
 
 namespace cydui::platform::window {
+  export enum class WindowType {
+    TOPLEVEL,
+    MODAL,
+    POPUP,
+    TOOLTIP,
+  };
+
   export class WindowOptionsBase {
     const refl::type_id_t type_id_;
 
   public:
-    using sptr    = std::shared_ptr<WindowOptionsBase>;
+    using sptr = std::shared_ptr<WindowOptionsBase>;
 
     explicit WindowOptionsBase(const refl::type_id_t type_id)
-      : type_id_(type_id) {
-    }
+        : type_id_(type_id) {}
 
     WindowOptionsBase(const WindowOptionsBase& rhs) = default;
-    WindowOptionsBase(WindowOptionsBase&& rhs) = default;
+    WindowOptionsBase(WindowOptionsBase&& rhs)      = default;
 
     refl::type_id_t get_type_id() const {
       return type_id_;
@@ -31,12 +37,12 @@ namespace cydui::platform::window {
       return type_id == type_id_;
     }
 
-    template<typename T>
+    template <typename T>
     bool is_type() const {
       return is_type(refl::type_id<T>);
     }
 
-    template<typename T>
+    template <typename T>
     T& as() {
       if (is_type<T>()) {
         return *dynamic_cast<T*>(this);
@@ -53,4 +59,4 @@ namespace cydui::platform::window {
 
   export template <typename T>
   concept WindowOptionsSptrConcept = std::derived_from<typename T::element_type, WindowOptionsBase>;
-}
+} // namespace cydui::platform::window

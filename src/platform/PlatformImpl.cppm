@@ -27,8 +27,7 @@ namespace cydui::platform {
 
     PlatformImpl(
       const fabric::async::async_bus_t::sptr&       bus,
-      const fabric::services::ServiceContext::sptr& service_context
-    );
+      const fabric::services::ServiceContext::sptr& service_context);
 
     fabric::task<window::WindowBase&>   get_window();
     fabric::task<render::RendererBase&> get_renderer();
@@ -38,5 +37,10 @@ namespace cydui::platform {
     fabric::services::ServiceContext::sptr get_service_context();
 
     fabric::async::async_bus_t& get_bus() override;
+
+    fabric::task<sptr> make_child_platform(
+      window::WindowType                       window_type,
+      const window::WindowOptionsBase::sptr&   window_options,
+      const render::RendererOptionsBase::sptr& renderer_options);
   };
 } // namespace cydui::platform

@@ -23,32 +23,60 @@ import cydui.debug.profiling;
 
 namespace cydui::platform::window {
   export class SDL3Window final: public WindowBase {
-    SDL3Service&      sdl;
-    SDL3WindowHandle  window_;
-    SDL3WindowOptions options_;
+    SDL3Service&               sdl;
+    SDL3WindowHandle           window_;
+    SDL3WindowOptions          options_;
+    std::optional<SDL3Window*> parent_ {std::nullopt};
 
     SDL_Texture* device_buffer_ {nullptr};
     int          old_w {0}, old_h {0};
 
     explicit SDL3Window(
-      SDL3Service&             sdl,
-      const SDL3WindowHandle&  handle,
-      const SDL3WindowOptions& options)
+      SDL3Service&               sdl,
+      const SDL3WindowHandle&    handle,
+      std::optional<SDL3Window*> parent,
+      const SDL3WindowOptions&   options)
         : sdl(sdl),
           window_(handle),
-          options_(options) {}
+          options_(options),
+          parent_(parent) {}
 
   public:
     using sptr = std::shared_ptr<SDL3Window>;
 
     static fabric::task<sptr> start(
       fabric::services::ServiceLocator& locator,
+      WindowType                        type,
+      const WindowBase::sptr&           parent,
       const SDL3WindowOptions&          options) {
       auto& sdl = co_await locator.require<SDL3Service>();
 
-      SDL3WindowHandle window_handle = co_await sdl.create_window(options);
+      SDL3WindowHandle           window_handle;
+      std::optional<SDL3Window*> parent_opt {std::nullopt};
 
-      co_return sptr {new SDL3Window(sdl, window_handle, options)};
+      if (parent != nullptr) {
+        auto* p = std::dynamic_pointer_cast<SDL3Window>(parent).get();
+        if (p != nullptr) {
+          parent_opt = p;
+        }
+      }
+
+      switch (type) {
+        case WindowType::TOPLEVEL: //
+          window_handle = co_await sdl.create_window(options);
+          break;
+        case WindowType::MODAL:
+          window_handle = co_await sdl.create_modal_window(parent_opt.value()->window_, options);
+          break;
+        case WindowType::POPUP:
+          window_handle = co_await sdl.create_popup_window(parent_opt.value()->window_, options);
+          break;
+        case WindowType::TOOLTIP:
+          window_handle = co_await sdl.create_tooltip_window(parent_opt.value()->window_, options);
+          break;
+      }
+
+      co_return sptr {new SDL3Window(sdl, window_handle, parent_opt, options)};
     }
 
     static fabric::task<> stop(SDL3Window& self) {

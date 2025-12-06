@@ -8,6 +8,7 @@ module;
 #define SDL_MAIN_HANDLED
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
+
 #include "../../../../debug/profiling/macros.h"
 #define PROF_CURRENT_MODULE cydui::platform::window::sdl3::service
 
@@ -25,6 +26,7 @@ import cydui.debug.profiling;
 
 namespace cydui::platform::window {
   export struct SDL3WindowHandle {
+    WindowType          type;
     WindowBase::id_type id;
     SDL_Window*         window;
     SDL_Renderer*       renderer;
@@ -41,8 +43,7 @@ namespace cydui::platform::window {
     explicit SDL3Service(const fabric::tasks::executor::sptr& executor)
         : executor_(executor) {
       event_polling_task_ =
-        executor_->schedule(event_polling_task(stop_source_.get_token(), &registered_windows_))
-          .share();
+        executor_->schedule(event_polling_task(stop_source_.get_token(), &registered_windows_)).share();
       LOG::print {INFO}("SDL3 initialized.");
     }
 
@@ -92,8 +93,10 @@ namespace cydui::platform::window {
       PROF_SCOPE(SDL3::create_window);
 
       SDL3WindowHandle handle {};
+      handle.type = WindowType::TOPLEVEL;
 
       SDL_SetHint(SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT, options.x11_override_redirect ? "1" : "0");
+      SDL_SetHint(SDL_HINT_X11_WINDOW_TYPE, "_NET_WM_WINDOW_TYPE_NORMAL");
       if (not SDL_CreateWindowAndRenderer(
             options.title.c_str(),
             options.width,
@@ -101,8 +104,101 @@ namespace cydui::platform::window {
             SDL_WINDOW_RESIZABLE | SDL_WINDOW_TRANSPARENT,
             &handle.window,
             &handle.renderer)) {
-        SDL_Log("Couldn't create Window: %s", SDL_GetError());
-        LOG::print {ERROR}("Couldn't create Window: {}", SDL_GetError());
+        throw fabric::exception {std::format("Couldn't create SDL window: {}", SDL_GetError())};
+      }
+
+      handle.id = SDL_GetWindowID(handle.window);
+
+      co_return handle;
+    }
+
+    fabric::task<SDL3WindowHandle> create_modal_window(
+      const SDL3WindowHandle&  parent,
+      const SDL3WindowOptions& options) const {
+      co_await fabric::this_task::switch_executor(executor_);
+      PROF_SCOPE(SDL3::create_window);
+
+      SDL3WindowHandle handle {};
+      handle.type = WindowType::MODAL;
+
+      SDL_SetHint(SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT, options.x11_override_redirect ? "1" : "0");
+      SDL_SetHint(SDL_HINT_X11_WINDOW_TYPE, "_NET_WM_WINDOW_TYPE_DIALOG");
+      if (not SDL_CreateWindowAndRenderer(
+            options.title.c_str(),
+            options.width,
+            options.height,
+            SDL_WINDOW_RESIZABLE | SDL_WINDOW_TRANSPARENT,
+            &handle.window,
+            &handle.renderer)) {
+        throw fabric::exception {std::format("Couldn't create SDL window: {}", SDL_GetError())};
+      }
+      SDL_SetWindowParent(handle.window, parent.window);
+      SDL_SetWindowModal(handle.window, true);
+
+      handle.id = SDL_GetWindowID(handle.window);
+
+      co_return handle;
+    }
+
+    fabric::task<SDL3WindowHandle> create_popup_window(
+      const SDL3WindowHandle&  parent,
+      const SDL3WindowOptions& options) const {
+      co_await fabric::this_task::switch_executor(executor_);
+      PROF_SCOPE(SDL3::create_window);
+
+      SDL3WindowHandle handle {};
+      handle.type = WindowType::POPUP;
+
+      SDL_SetHint(SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT, options.x11_override_redirect ? "1" : "0");
+      SDL_SetHint(SDL_HINT_X11_WINDOW_TYPE, "_NET_WM_WINDOW_TYPE_POPUP_MENU");
+      handle.window = SDL_CreatePopupWindow(
+        parent.window,
+        options.x,
+        options.y,
+        options.width,
+        options.height,
+        SDL_WINDOW_ALWAYS_ON_TOP | SDL_WINDOW_POPUP_MENU);
+
+      if (handle.window == nullptr) {
+        throw fabric::exception {std::format("Couldn't create SDL window: {}", SDL_GetError())};
+      }
+
+      handle.renderer = SDL_CreateRenderer(handle.window, nullptr);
+      if (handle.renderer == nullptr) {
+        throw fabric::exception {std::format("Couldn't create SDL window renderer: {}", SDL_GetError())};
+      }
+
+      handle.id = SDL_GetWindowID(handle.window);
+
+      co_return handle;
+    }
+
+    fabric::task<SDL3WindowHandle> create_tooltip_window(
+      const SDL3WindowHandle&  parent,
+      const SDL3WindowOptions& options) const {
+      co_await fabric::this_task::switch_executor(executor_);
+      PROF_SCOPE(SDL3::create_window);
+
+      SDL3WindowHandle handle {};
+      handle.type = WindowType::POPUP;
+
+      SDL_SetHint(SDL_HINT_X11_FORCE_OVERRIDE_REDIRECT, options.x11_override_redirect ? "1" : "0");
+      SDL_SetHint(SDL_HINT_X11_WINDOW_TYPE, "_NET_WM_WINDOW_TYPE_TOOLTIP");
+      handle.window = SDL_CreatePopupWindow(
+        parent.window,
+        options.x,
+        options.y,
+        options.width,
+        options.height,
+        SDL_WINDOW_ALWAYS_ON_TOP | SDL_WINDOW_TOOLTIP);
+
+      if (handle.window == nullptr) {
+        throw fabric::exception {std::format("Couldn't create SDL window: {}", SDL_GetError())};
+      }
+
+      handle.renderer = SDL_CreateRenderer(handle.window, nullptr);
+      if (handle.renderer == nullptr) {
+        throw fabric::exception {std::format("Couldn't create SDL window renderer: {}", SDL_GetError())};
       }
 
       handle.id = SDL_GetWindowID(handle.window);
