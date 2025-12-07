@@ -108,9 +108,7 @@ UIImpl::UIImpl(
         co_await service_context_->stop_all();
         co_await platform_->get_service_context()->stop_all();
         platform_->get_bus().emit<WindowClosed>();
-        // co_await fabric::this_task::switch_executor(fabric::runtime::get_main_executor());
-        // platform_->get_bus()->request_stop();
-        // platform_->get_bus()->join();
+        platform_->get_bus().emit<fabric::async::StopBusEvent>();
       })) {}
 
 UIImpl::~UIImpl() {

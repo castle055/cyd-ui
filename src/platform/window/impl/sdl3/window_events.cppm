@@ -262,7 +262,7 @@ namespace cydui::platform::window {
     } else {
       switch (event.type) {
         case SDL_EVENT_QUIT:
-          // Application::get_instance().emit<StopApplicationEvent>();
+          bus(event.button.windowID, WindowCloseRequested {});
           break;
         case SDL_EVENT_RENDER_TARGETS_RESET:
         case SDL_EVENT_RENDER_DEVICE_RESET : break;
