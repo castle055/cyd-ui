@@ -14,7 +14,7 @@ namespace cydui::platform::window {
   export class SDL3WindowOptions final: public WindowOptionsBase {
   public:
     std::string title;
-    int         x, y;
+    int         x {}, y {};
     int         width, height;
     bool        x11_override_redirect {false};
 

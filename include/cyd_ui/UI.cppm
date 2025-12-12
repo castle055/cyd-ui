@@ -28,13 +28,14 @@ namespace cydui {
 
     virtual ~UI() = default;
 
-    virtual fabric::task<>              attach_stylesheet(const tss::StyleSheet::sptr& style_sheet) = 0;
-    virtual fabric::task<>              attach_stylesheet(const std::filesystem::path& style_sheet) = 0;
-    virtual fabric::task<>              add_style(const std::string& style_string)                  = 0;
-    virtual fabric::task<>              clear_style()                                               = 0;
-    virtual fabric::task<>              show()                                                      = 0;
-    virtual fabric::task<>              until_closed()                                              = 0;
-    virtual fabric::async::async_bus_t& bus()                                                       = 0;
+    virtual fabric::task<>                    attach_stylesheet(const tss::StyleSheet::sptr& style_sheet) = 0;
+    virtual fabric::task<>                    attach_stylesheet(const std::filesystem::path& style_sheet) = 0;
+    virtual fabric::task<>                    add_style(const std::string& style_string)                  = 0;
+    virtual fabric::task<>                    clear_style()                                               = 0;
+    virtual fabric::task<>                    show()                                                      = 0;
+    virtual fabric::task<>                    until_closed()                                              = 0;
+    virtual fabric::async::async_bus_t&       bus()                                                       = 0;
+    virtual fabric::services::ServiceContext& service_context()                                           = 0;
 
     template <ComponentBlueprint C>
     fabric::task<UI::sptr> make_child_ui(

@@ -12,6 +12,7 @@ import std;
 
 import fabric.logging;
 import fabric.async;
+export import fabric.services;
 export import fabric.wiring.signals;
 
 export import cydui.core.event_handler;
@@ -21,23 +22,26 @@ export import cydui.core.aspects;
 namespace cydui::detail {
   export template <typename ComponentType, typename EventHandler>
   class event_dispatcher_t final: public event_dispatcher_base_t {
-    event_dispatcher_base_t*         parent_;
-    Component*                       component_ {};
-    std::shared_ptr<event_handler_t> event_handler_ {};
-    fabric::async::async_bus_t&      bus_;
-    ComponentState&                  state_;
-    context_store_t&                 context_store_;
+    event_dispatcher_base_t*          parent_;
+    Component*                        component_ {};
+    std::shared_ptr<event_handler_t>  event_handler_ {};
+    fabric::async::async_bus_t&       bus_;
+    fabric::services::ServiceContext& service_context_;
+    ComponentState&                   state_;
+    context_store_t&                  context_store_;
 
   public:
     event_dispatcher_t(
-      fabric::async::async_bus_t& bus,
-      event_dispatcher_base_t*    parent,
-      Component*                  component,
-      ComponentState&             state,
-      context_store_t&            context_store)
+      fabric::async::async_bus_t&       bus,
+      fabric::services::ServiceContext& service_context,
+      event_dispatcher_base_t*          parent,
+      Component*                        component,
+      ComponentState&                   state,
+      context_store_t&                  context_store)
         : parent_(parent),
           component_(component),
           bus_(bus),
+          service_context_(service_context),
           state_(state),
           context_store_(context_store) {
       ZoneScopedN("event_dispatcher_t{}");
@@ -261,7 +265,7 @@ namespace cydui::detail {
       if constexpr (IsComponentAspect<field_type>) {
         field_type&      ref         = field::from_instance(*eh);
         ComponentAspect& aspect_base = get_aspect_base(ref);
-        aspect_base.mount(bus_, component_, context_store_);
+        aspect_base.mount(bus_, service_context_, component_, context_store_);
       }
     }
 

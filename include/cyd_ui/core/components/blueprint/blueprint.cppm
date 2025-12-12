@@ -43,13 +43,14 @@ namespace cydui::detail {
     }
 
     std::unique_ptr<event_dispatcher_base_t> make_event_dispatcher(
-      fabric::async::async_bus_t& bus,
-      event_dispatcher_base_t*    parent,
-      void*                       component,
-      ComponentState&             state,
-      context_store_t&            context_store) const final {
+      fabric::async::async_bus_t&       bus,
+      fabric::services::ServiceContext& service_context,
+      event_dispatcher_base_t*          parent,
+      void*                             component,
+      ComponentState&                   state,
+      context_store_t&                  context_store) const final {
       return std::make_unique<event_dispatcher_t<T, event_handler_type<T>>>(
-        bus, parent, static_cast<Component*>(component), state, context_store);
+        bus, service_context, parent, static_cast<Component*>(component), state, context_store);
     }
 
     ComponentState::sptr make_state_object() const final {
@@ -77,7 +78,7 @@ namespace cydui::detail {
         return {false, false};
       }
 
-      bool dirty = false;
+      bool dirty   = false;
       bool restyle = false;
       if (not refl::deep_eq(props(), other_component->props())) {
         props() = other_component->props();
@@ -96,7 +97,7 @@ namespace cydui::detail {
       }
 
       if (tags_ != other_component->tags_) {
-        tags_ = other_component->tags_;
+        tags_   = other_component->tags_;
         restyle = true;
       }
 

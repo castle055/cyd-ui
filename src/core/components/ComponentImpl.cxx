@@ -43,6 +43,7 @@ ComponentImpl::ComponentImpl(
       context_store_(parent_.is_valid() ? &parent_->context_store_ : nullptr),
       event_dispatcher_(blueprint_->make_event_dispatcher(
         bus,
+        ui_services,
         parent_.is_valid() ? parent_->event_dispatcher_.get() : nullptr,
         this,
         *state_,
@@ -144,7 +145,7 @@ void ComponentImpl::mount() {
 }
 
 detail::update_result ComponentImpl::update_with(const Blueprint& other) {
-  auto res = blueprint_->update_with(other);
+  auto       res  = blueprint_->update_with(other);
   Component* self = this;
   blueprint_->update_references(self);
   return res;

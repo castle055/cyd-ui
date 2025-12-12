@@ -16,6 +16,7 @@ import std;
 export import reflect;
 import fabric.logging;
 import fabric.exception;
+import fabric.services;
 
 export import cydui.core.identifier;
 export import cydui.core.state;
@@ -71,11 +72,12 @@ export namespace cydui {
     virtual detail::ComponentState::sptr make_state_object() const = 0;
 
     virtual std::unique_ptr<detail::event_dispatcher_base_t> make_event_dispatcher(
-      fabric::async::async_bus_t&      bus,
-      detail::event_dispatcher_base_t* parent,
-      void*                            component,
-      detail::ComponentState&          state,
-      detail::context_store_t&         context_store) const = 0;
+      fabric::async::async_bus_t&       bus,
+      fabric::services::ServiceContext& service_context,
+      detail::event_dispatcher_base_t*  parent,
+      void*                             component,
+      detail::ComponentState&           state,
+      detail::context_store_t&          context_store) const = 0;
 
     virtual style::style_object_t make_style_object() const = 0;
 

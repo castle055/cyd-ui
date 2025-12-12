@@ -75,5 +75,7 @@ namespace cydui {
     fabric::task<> until_closed() override;
 
     fabric::async::async_bus_t& bus() override;
+
+    fabric::services::ServiceContext& service_context() override;
   };
 } // namespace cydui

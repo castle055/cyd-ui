@@ -150,6 +150,11 @@ fabric::async::async_bus_t& UIImpl::bus() {
   return platform_->get_bus();
 }
 
+fabric::services::ServiceContext& UIImpl::service_context() {
+  return *ui_service_context_;
+}
+
+
 
 fabric::task<> UIImpl::attach_stylesheet(const tss::StyleSheet::sptr& style_sheet) {
   co_await fabric::this_task::switch_executor(platform_->get_executor());
