@@ -69,17 +69,11 @@ fabric::task<UIImpl::sptr> UIImpl::make(
   co_await service_context->register_service<AnimationService>();
   co_await service_context->await_ready();
 
-  auto& style   = co_await service_context->require<StyleStore>();
-  auto& tree    = co_await service_context->require<ComponentTree>();
-  auto& updater = co_await service_context->require<UIUpdater>();
+  auto& style = co_await service_context->require<StyleStore>();
 
   for (const auto& stylesheet: options.stylesheets) {
     co_await style.attach_stylesheet(stylesheet);
   }
-  tree.update_root_size();
-  tree.update_style();
-  updater.schedule_update();
-
 
   co_return std::make_shared<UIImpl>(std::move(platform), service_context, ui_service_context);
 }
@@ -137,7 +131,10 @@ fabric::task<> UIImpl::show() {
 
   auto& updater       = co_await service_context_->require<UIUpdater>();
   auto& event_handler = co_await service_context_->require<UIEventHandler>();
+  auto& tree          = co_await service_context_->require<ComponentTree>();
 
+  tree.update_root_size();
+  tree.update_style();
   updater.schedule_update();
   co_await event_handler.start_listeners();
 }
@@ -153,7 +150,6 @@ fabric::async::async_bus_t& UIImpl::bus() {
 fabric::services::ServiceContext& UIImpl::service_context() {
   return *ui_service_context_;
 }
-
 
 
 fabric::task<> UIImpl::attach_stylesheet(const tss::StyleSheet::sptr& style_sheet) {
