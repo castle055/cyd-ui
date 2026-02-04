@@ -73,6 +73,7 @@ ComponentImpl::uptr ComponentImpl::make_root(
 }
 
 ComponentImpl::~ComponentImpl() {
+  children_.clear();
   event_dispatcher_->dispatch_dismount();
 }
 
