@@ -183,6 +183,16 @@ export namespace cydui {
       return tags_;
     }
 
+    Blueprint& operator()(BlueprintList&& _content_) {
+      this->content_ = _content_;
+      return *this;
+    }
+
+    Blueprint& operator()(const BlueprintList& _content_) {
+      this->content_ = _content_;
+      return *this;
+    }
+
   public:
 #include "../../../style/include/style_setters.inc"
   };
