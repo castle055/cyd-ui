@@ -4,14 +4,15 @@
 module;
 
 #define STYLE_SETTER_RETURN_TYPE TypedComponent&
-#define STYLE_SETTER_RETURN_EXPR                                                                   \
-  this->component->get_style_stack().mark_dirty();                                                 \
+#define STYLE_SETTER_RETURN_EXPR                                                                                       \
+  this->component->get_style_stack().mark_dirty();                                                                     \
   return *this;
 #define STYLE_SETTER_REF_CONSTRAINT
 #define STYLE_MAP_GETTER this->component->get_style_stack().get_internal_style_override()
 
-#include "../style/include/style_setters_detail.h"
 #include <cyd_fabric_modules/headers/macros/async_events.h>
+
+#include "../style/include/style_setters_detail.h"
 
 export module cydui.core.Component;
 export import :interface;
@@ -61,6 +62,22 @@ export namespace cydui {
       return static_cast<const ComponentBlueprint*>(&component->get_blueprint());
     }
 
+    std::list<Component*> get_children() {
+      return component->get_children();
+    }
+
+    std::list<const Component*> get_children() const {
+      return std::as_const(*component).get_children();
+    }
+
+    layout::component_geometry& get_geometry() {
+      return component->get_geometry();
+    }
+
+    const layout::component_geometry& get_geometry() const {
+      return std::as_const(*component).get_geometry();
+    }
+
     std::optional<Component*> find_child(const std::string& id) {
       return component->find_child(id);
     }
@@ -80,15 +97,13 @@ export namespace cydui {
 
     std::list<Component*> find_descendent(
       const std::string& tag,
-      bool               skip_direct_children = false
-    ) {
+      bool               skip_direct_children = false) {
       return component->find_descendents(tag, skip_direct_children);
     }
 
     std::list<const Component*> find_descendent(
       const std::string& tag,
-      bool               skip_direct_children = false
-    ) const {
+      bool               skip_direct_children = false) const {
       const auto* c = component;
       return c->find_descendents(tag, skip_direct_children);
     }
