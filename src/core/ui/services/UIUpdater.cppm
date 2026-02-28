@@ -190,6 +190,8 @@ namespace cydui::detail::ui::services {
       std::list<ComponentImpl*> pending_redraw {};
       tree_.update_children(component, new_children, pending_redraw);
 
+      component.get_event_dispatcher().layout();
+
       layout::update_content_size(component);
 
       for (const auto& child: pending_redraw) {
