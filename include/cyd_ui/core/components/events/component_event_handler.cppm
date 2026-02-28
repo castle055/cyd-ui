@@ -5,15 +5,15 @@ module;
 #include "./component_event_macros.h"
 
 #define TO_STRING(...) #__VA_ARGS__
-#define ANCHOR(PREFIX, NAME)                                                                       \
-  struct NAME {                                                                                    \
-    static constexpr dimension_parameter_t x{TO_STRING(PREFIX##_##NAME##_x)};                      \
-    static constexpr dimension_parameter_t y{TO_STRING(PREFIX##_##NAME##_y)};                      \
+#define ANCHOR(PREFIX, NAME)                                                                                           \
+  struct NAME {                                                                                                        \
+    static constexpr dimension_parameter_t x {TO_STRING(PREFIX##_##NAME##_x)};                                         \
+    static constexpr dimension_parameter_t y {TO_STRING(PREFIX##_##NAME##_y)};                                         \
   }
 
 #define CYDUI_INTERNAL_EV_HANDLER_DECL(NAME) void on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
 
-#define CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(NAME)                                                 \
+#define CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(NAME)                                                                     \
   CYDUI_INTERNAL_EV_##NAME##_RETURN on_##NAME CYDUI_INTERNAL_EV_##NAME##_ARGS
 
 export module cydui.core.event_handler;
@@ -48,11 +48,12 @@ export namespace cydui::detail {
     CYDUI_INTERNAL_EV_HANDLER_DECL(dismount) {}
 
     CYDUI_INTERNAL_EV_HANDLER_DECL_W_RET(redraw) {
-      return {};
+      return {$content};
     }
 
-#define DIMENSIONAL_ARGS                                                                           \
-  $x, $y, $width, $height, $padding_top, $padding_bottom, $padding_left, $padding_right
+    CYDUI_INTERNAL_EV_HANDLER_DECL(layout) {}
+
+#define DIMENSIONAL_ARGS $x, $y, $width, $height, $padding_top, $padding_bottom, $padding_left, $padding_right
 
     // ? MOUSE EVENTS
     // * button press
@@ -80,10 +81,8 @@ export namespace cydui::detail {
         auto c_width = dimensions::get_value(geom.content_size[layout::X_AXIS]);
         if ($width < c_width) {
           auto new_scroll = dimensions::get_value(geom.scroll[layout::X_AXIS]) + dx;
-          if (new_scroll < 0_px)
-            new_scroll = 0_px;
-          if (new_scroll > (c_width - $width))
-            new_scroll = c_width - $width;
+          if (new_scroll < 0_px) new_scroll = 0_px;
+          if (new_scroll > (c_width - $width)) new_scroll = c_width - $width;
           component.scroll_x(new_scroll);
           processed = true;
         }
@@ -91,12 +90,9 @@ export namespace cydui::detail {
       if (style.overflow_y == overflow_e::SCROLL) {
         auto c_height = dimensions::get_value(geom.content_size[layout::Y_AXIS]);
         if ($height < c_height) {
-          auto new_scroll = dimensions::get_value(geom.scroll[layout::Y_AXIS])
-                            - dy; // vertical scroll must be flipped
-          if (new_scroll < 0_px)
-            new_scroll = 0_px;
-          if (new_scroll > (c_height - $height))
-            new_scroll = c_height - $height;
+          auto new_scroll = dimensions::get_value(geom.scroll[layout::Y_AXIS]) - dy; // vertical scroll must be flipped
+          if (new_scroll < 0_px) new_scroll = 0_px;
+          if (new_scroll > (c_height - $height)) new_scroll = c_height - $height;
           component.scroll_y(new_scroll);
           processed = true;
         }
@@ -136,11 +132,10 @@ export namespace cydui::detail {
   struct event_handler_data_t: public event_handler_t {
     event_handler_data_t(
       TypedComponent<ComponentBlueprint>    component_,
-      ComponentState&                    state_,
+      ComponentState&                       state_,
       fabric::async::async_bus_t&           bus_,
       typename ComponentBlueprint::props_t& props_,
-      const style::style_base_t&            style_
-    )
+      const style::style_base_t&            style_)
         : event_handler_t(*component_.get()),
           component(component_),
           state(state_),
@@ -152,12 +147,12 @@ export namespace cydui::detail {
     static constexpr bool has_custom_style_type = false;
 
     TypedComponent<ComponentBlueprint>    component;
-    ComponentState&                    state;
+    ComponentState&                       state;
     fabric::async::async_bus_t&           bus;
     typename ComponentBlueprint::props_t& props;
     const style::style_base_t&            style;
   };
-} // namespace cydui::core
+} // namespace cydui::detail
 
 export namespace $self     = cydui::layout::anchors::self_component;
 export namespace $parent   = cydui::layout::anchors::parent_component;

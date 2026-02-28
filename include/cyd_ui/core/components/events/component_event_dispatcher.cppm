@@ -104,6 +104,14 @@ namespace cydui::detail {
       return eh->on_redraw(CYDUI_INTERNAL_EV_DIM_ARGS, content_children_builder);
     }
 
+    void layout() override {
+      ZoneScopedN("Layout - Component EV");
+      auto  eh   = static_cast<EventHandler*>(event_handler_.get());
+      auto& geom = component_->get_geometry();
+      update_fields();
+      return eh->on_layout(CYDUI_INTERNAL_EV_DIM_ARGS, component_->get_children());
+    }
+
     ElementVector paint_fragment() override {
       ZoneScopedN("Paint Fragment - Component EV");
       auto  eh   = static_cast<EventHandler*>(event_handler_.get());

@@ -34,6 +34,8 @@
 #define CYDUI_INTERNAL_EV_redraw_RETURN        cydui::BlueprintList
 #define CYDUI_INTERNAL_EV_redraw_ARGS          (CYDUI_INTERNAL_EV_DIM_PARAMS, const cydui::BlueprintList& $content)
 
+#define CYDUI_INTERNAL_EV_layout_ARGS          (CYDUI_INTERNAL_EV_DIM_PARAMS, const std::list<cydui::Component*>& $content)
+
 #define CYDUI_INTERNAL_EV_button_ARGS                                                                                  \
   (cydui::Button                         button,                                                                       \
    const cydui::dimension_t::value_type& x,                                                                            \

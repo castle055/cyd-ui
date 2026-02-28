@@ -26,6 +26,8 @@ export namespace cydui::detail {
       const BlueprintList& content_children_builder
     ) = 0;
 
+    virtual void layout() = 0;
+
     virtual ElementVector paint_fragment() = 0;
 
     virtual void dispatch_mount(const BlueprintList& content_children_builder) = 0;
