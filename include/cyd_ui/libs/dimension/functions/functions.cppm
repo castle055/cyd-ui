@@ -90,4 +90,19 @@ export namespace cydui::dimensions::dimfn {
       "min",
     };
   }
+
+  template <typename T>
+  function<T> sum(std::vector<dimension<T>> dims) {
+    return {
+      [=] {
+        screen_measure acc {0};
+        for (auto d: dims) {
+          acc += dimensions::get_value(d);
+        }
+        return acc;
+      },
+      to_dependency_set(dims),
+      "sum",
+    };
+  }
 } // namespace cydui::dimensions::dimfn
