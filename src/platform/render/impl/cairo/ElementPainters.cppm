@@ -180,8 +180,8 @@ void set_source_to_fill(
 }
 
 double get_odd_offset(int thickness) {
-  return 0;
-  // return ((thickness % 2) != 0) ? 0.5 : 0.0;
+  // return 0;
+  return ((thickness % 2) != 0) ? 0.5 : 0.0;
 }
 
 export namespace cydui::platform::render {
@@ -202,8 +202,8 @@ export namespace cydui::platform::render {
     set_source_to_stroke(ctx, element);
 
     double odd_offset = get_odd_offset(element._stroke_width);
-    ctx->move_to(element.origin_x + element._x1 + 0.5, element.origin_y + element._y1 + odd_offset);
-    ctx->line_to(element.origin_x + element._x2 + 0.5, element.origin_y + element._y2 + odd_offset);
+    ctx->move_to(element.origin_x + element._x1 + odd_offset, element.origin_y + element._y1 + odd_offset);
+    ctx->line_to(element.origin_x + element._x2 + odd_offset, element.origin_y + element._y2 + odd_offset);
 
     ctx->stroke();
   }
@@ -383,6 +383,8 @@ export namespace cydui::platform::render {
       ctx->scale(element._border_radius_top_left.rx, element._border_radius_top_left.ry);
       ctx->arc(0, 0, 1, 5 * M_PI / 4, 3 * M_PI / 2);
       ctx->restore();
+    } else {
+      ctx->move_to(x + odd_offset, y + odd_offset);
     }
     ctx->line_to(x + element._w - element._border_radius_top_right.rx + odd_offset, y + odd_offset);
     if (element._border_radius_top_right.rx > 0 and element._border_radius_top_right.ry > 0) {
@@ -407,6 +409,8 @@ export namespace cydui::platform::render {
       ctx->scale(element._border_radius_top_right.rx, element._border_radius_top_right.ry);
       ctx->arc(0, 0, 1, 7 * M_PI / 4, 2 * M_PI);
       ctx->restore();
+    } else {
+      ctx->move_to(x + element._w + odd_offset, y + odd_offset);
     }
     ctx->line_to(x + element._w + odd_offset, y + element._h - element._border_radius_bottom_right.ry + odd_offset);
     if (element._border_radius_bottom_right.rx > 0 and element._border_radius_bottom_right.ry > 0) {
@@ -431,6 +435,8 @@ export namespace cydui::platform::render {
       ctx->scale(element._border_radius_bottom_right.rx, element._border_radius_bottom_right.ry);
       ctx->arc(0, 0, 1, M_PI / 4, M_PI / 2);
       ctx->restore();
+    } else {
+      ctx->move_to(x + element._w + odd_offset, y + element._h + odd_offset);
     }
     ctx->line_to(x + element._border_radius_bottom_left.rx + odd_offset, y + element._h + odd_offset);
     if (element._border_radius_bottom_left.rx > 0 and element._border_radius_bottom_left.ry > 0) {
@@ -455,6 +461,8 @@ export namespace cydui::platform::render {
       ctx->scale(element._border_radius_bottom_left.rx, element._border_radius_bottom_left.ry);
       ctx->arc(0, 0, 1, 3 * M_PI / 4, M_PI);
       ctx->restore();
+    } else {
+      ctx->move_to(x + odd_offset, y + element._h + odd_offset);
     }
     ctx->line_to(x + odd_offset, y + element._border_radius_top_left.ry + odd_offset);
     if (element._border_radius_top_left.rx > 0 and element._border_radius_top_left.ry > 0) {
