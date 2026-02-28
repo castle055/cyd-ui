@@ -20,15 +20,13 @@ namespace cydui::dimensions {
     dimension<S>& dim_,
     const std::unordered_map<
       std::string,
-      dimension<S>>& parameters
-  );
+      dimension<S>>& parameters);
   export template <typename S>
   bool evaluate_expression(
     typename dimension_impl<S>::sptr dim,
     const std::unordered_map<
       std::string,
-      dimension<S>>& parameters
-  );
+      dimension<S>>& parameters);
   export template <typename S>
   const S& get_value(const dimension<S>& dimension);
   export template <typename S>
@@ -38,8 +36,7 @@ namespace cydui::dimensions {
     typename dimension_impl<S>::sptr head,
     const std::unordered_map<
       std::string,
-      dimension<S>>& global_parameters
-  );
+      dimension<S>>& global_parameters);
 
   export template <typename Type>
   class dimension {
@@ -71,8 +68,7 @@ namespace cydui::dimensions {
 
     explicit dimension(
       const std::shared_ptr<context>& ctx,
-      expression&&                    expr
-    )
+      expression&&                    expr)
         : impl_(make_dimension_impl<value_type>()) {
       impl_->set_context(ctx);
       impl_->set_expression(expr);
@@ -80,11 +76,10 @@ namespace cydui::dimensions {
     }
 
     dimension(const dimension& other)
-        : impl_(other.impl_) {
-    }
+        : impl_(other.impl_) {}
 
     dimension& operator=(const dimension& other) {
-      return this->operator=(expression{other.impl_});
+      return this->operator=(expression {other.impl_});
     }
 
     dimension& operator=(expression&& expr) {
@@ -128,8 +123,7 @@ namespace cydui::dimensions {
     }
     void set_context(
       const std::shared_ptr<context>& ctx,
-      const std::string&              name = ""
-    ) {
+      const std::string&              name = "") {
       impl_->set_context(ctx, name);
     }
 
@@ -150,15 +144,13 @@ namespace cydui::dimensions {
       dimension<S>& dim_,
       const std::unordered_map<
         std::string,
-        dimension<S>>& parameters
-    );
+        dimension<S>>& parameters);
     template <typename S>
     friend bool evaluate_expression(
       typename dimension_impl<S>::sptr dim,
       const std::unordered_map<
         std::string,
-        dimension<S>>& parameters
-    );
+        dimension<S>>& parameters);
     template <typename S>
     friend const S& get_value(const dimension<S>& dimension);
     template <typename S>
@@ -168,8 +160,7 @@ namespace cydui::dimensions {
       typename dimension_impl<S>::sptr head,
       const std::unordered_map<
         std::string,
-        dimension<S>>& global_parameters
-    );
+        dimension<S>>& global_parameters);
 
   private:
     const value_type& value() const {

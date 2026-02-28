@@ -248,7 +248,11 @@ namespace cydui::dimensions {
               std::stringstream ss {};
               ss << "Dependency cycle in dimensions:" << std::endl;
               for (const auto& v: cycle.dimensions) {
-                ss << std::format("  {}: {} = {}", i++, to_string(v.get()), v->expr().to_string()) << std::endl;
+                std::source_location loc = v->expr().location();
+                std::string          loc_str =
+                  std::format("{}:{}:{} ({})", loc.file_name(), loc.line(), loc.column(), loc.function_name());
+                ss << std::format("  {}: {} = {} @ {}", i++, to_string(v.get()), v->expr().to_string(), loc_str)
+                   << std::endl;
               }
               LOG::print {ERROR}("{}", ss.str());
             }

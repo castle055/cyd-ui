@@ -141,22 +141,32 @@ public:
     function<Type>                        fun {[] { return 0_px; }, {}};
   };
 
-  expression() = default;
+  expression(std::source_location loc = std::source_location::current())
+      : location_(loc) {}
 
-  expression(const Type& value) {
+  expression(
+    const Type&          value,
+    std::source_location loc = std::source_location::current())
+      : location_(loc) {
     auto node         = make_node(node_t::CONSTANT);
     node->const_value = value;
     tree_             = node;
   }
 
-  expression(const std::shared_ptr<dimension_impl<Type>>& dim) {
+  expression(
+    const std::shared_ptr<dimension_impl<Type>>& dim,
+    std::source_location                         loc = std::source_location::current())
+      : location_(loc) {
     auto node       = make_node(node_t::DIMENSION);
     node->dimension = dim;
     tree_           = node;
     add_dependency(dim);
   }
 
-  expression(const function<Type>& fun_) {
+  expression(
+    const function<Type>& fun_,
+    std::source_location  loc = std::source_location::current())
+      : location_(loc) {
     auto node = make_node(node_t::FUNCTION);
     node->fun = fun_;
     tree_     = node;
@@ -166,9 +176,11 @@ public:
     }
   }
 
-  expression& operator=(const function<Type>& fun_) {
+  expression& operator=(
+    const function<Type>& fun_) {
     this->clear();
 
+    location_ = std::source_location::current();
     auto node = make_node(node_t::FUNCTION);
     node->fun = fun_;
     tree_     = node;
@@ -206,6 +218,10 @@ public:
     } else {
       return tree_->to_string();
     }
+  }
+
+  const std::source_location& location() const {
+    return location_;
   }
 
   bool empty() const {
@@ -250,4 +266,5 @@ private:
   typename node_t::sptr                                     tree_ = nullptr;
   std::unordered_set<std::shared_ptr<dimension_impl<Type>>> dependencies_ {};
   std::unordered_set<parameter>                             parameters_ {};
+  std::source_location                                      location_;
 };
