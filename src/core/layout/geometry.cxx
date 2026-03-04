@@ -175,7 +175,7 @@ void component_geometry::set_sizing_relations(axis axis) {
   switch (sizing[axis]) {
     case component_sizing::FIXED:
       box_size[axis]        = size[axis];
-      background_size[axis] = box_size[axis] - (border_width[axis][0] + border_width[axis][1]) / 2;
+      background_size[axis] = box_size[axis] - border_width[axis][0] - border_width[axis][1];
       viewport_size[axis]   = background_size[axis] - padding[axis][0] - padding[axis][1];
       margin_box_size[axis] = box_size[axis] + margin[axis][0] + margin[axis][1];
       screen_size[axis]     = margin_box_size[axis];
@@ -185,7 +185,7 @@ void component_geometry::set_sizing_relations(axis axis) {
       computed_size.set_context(context, axis == X_AXIS ? "computed_width" : "computed_height");
       viewport_size[axis]   = dimfn::max(std::vector {size[axis], computed_size});
       background_size[axis] = viewport_size[axis] + padding[axis][0] + padding[axis][1];
-      box_size[axis]        = background_size[axis] + (border_width[axis][0] + border_width[axis][1]) / 2;
+      box_size[axis]        = background_size[axis] + border_width[axis][0] + border_width[axis][1];
       margin_box_size[axis] = box_size[axis] + margin[axis][0] + margin[axis][1];
       screen_size[axis]     = margin_box_size[axis];
     } break;
@@ -195,7 +195,7 @@ void component_geometry::set_sizing_relations(axis axis) {
 
 void component_geometry::set_position_relations(axis axis) {
   box_position[axis]        = screen_position[axis] + margin[axis][0];
-  background_position[axis] = border_width[axis][0] / 2;
+  background_position[axis] = border_width[axis][0];
   viewport_position[axis]   = background_position[axis] + padding[axis][0];
   content_origin[axis]      = viewport_position[axis] - scroll[axis];
 }

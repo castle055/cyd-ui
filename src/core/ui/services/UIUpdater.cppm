@@ -255,10 +255,20 @@ namespace cydui::detail::ui::services {
 
       auto& background = layer.style.background;
       background.fill(style.background);
-      background.x(dimensions::get_value(geom.background_position[layout::X_AXIS]));
-      background.y(dimensions::get_value(geom.background_position[layout::Y_AXIS]));
-      background.w(dimensions::get_value(geom.background_size[layout::X_AXIS]));
-      background.h(dimensions::get_value(geom.background_size[layout::Y_AXIS]));
+      background.x(
+        dimensions::get_value(geom.background_position[layout::X_AXIS])
+        - dimensions::get_value(geom.border_width[layout::X_AXIS][0]) / 2);
+      background.y(
+        dimensions::get_value(geom.background_position[layout::Y_AXIS])
+        - dimensions::get_value(geom.border_width[layout::Y_AXIS][0]) / 2);
+      background.w(
+        dimensions::get_value(geom.background_size[layout::X_AXIS])
+        + dimensions::get_value(geom.border_width[layout::X_AXIS][0]) / 2
+        + dimensions::get_value(geom.border_width[layout::X_AXIS][1]) / 2);
+      background.h(
+        dimensions::get_value(geom.background_size[layout::Y_AXIS])
+        + dimensions::get_value(geom.border_width[layout::Y_AXIS][0]) / 2
+        + dimensions::get_value(geom.border_width[layout::Y_AXIS][1]) / 2);
       background.border_top(style.border.top);
       background.border_right(style.border.right);
       background.border_bottom(style.border.bottom);
