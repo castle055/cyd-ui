@@ -18,25 +18,25 @@ export import cydui.core.aspects.contexts.events;
 namespace cydui {
   export template <typename ContextType>
   struct use_context: private ComponentAspect {
-    using ret_context_type            = ContextType;
-    using context_type                = std::remove_const_t<ContextType>;
-    static constexpr bool is_readonly = std::is_const_v<ContextType>;
+    static constexpr bool is_reference = std::is_lvalue_reference_v<ContextType>;
+    using stored_type  = std::conditional_t<is_reference, std::remove_reference_t<ContextType>*, ContextType>;
+    using context_type = ContextType;
 
   private:
     // This object will own the context if it couldn't be found and thus a default one was created
-    bool          owns_context = false;
-    context_type* ctx          = nullptr;
+    bool         owns_context = false;
+    stored_type* ctx          = nullptr;
 
-    std::optional<fabric::async::listener<ContextUpdate<context_type>>> listener {std::nullopt};
+    std::optional<fabric::async::listener<ContextUpdate<stored_type>>> listener {std::nullopt};
 
     void on_mount() override {
-      auto ctx_opt = get_context_store().template find_context<context_type>();
+      auto ctx_opt = get_context_store().template find_context<stored_type>();
 
       if (ctx_opt.has_value()) {
         ctx          = ctx_opt.value().get();
         owns_context = false;
       } else {
-        ctx          = new context_type {};
+        ctx          = new stored_type {};
         owns_context = true;
       }
 
@@ -79,16 +79,33 @@ namespace cydui {
       }
     }
 
-    ret_context_type* operator->() {
-      return ctx;
+    std::conditional_t<
+      is_reference,
+      std::remove_reference_t<context_type>,
+      context_type>*
+    operator->() {
+      if constexpr (is_reference) {
+        return *ctx;
+      } else {
+        return ctx;
+      }
     }
 
-    ret_context_type& operator*() {
-      return *ctx;
+    std::conditional_t<
+      is_reference,
+      std::remove_reference_t<context_type>,
+      context_type>&
+    operator*() {
+      if constexpr (is_reference) {
+        return **ctx;
+      } else {
+        return *ctx;
+      }
     }
+
 
     void notify() {
-      get_bus().template emit<ContextUpdate<context_type>>({ctx});
+      get_bus().template emit<ContextUpdate<stored_type>>({ctx});
     }
 
     bool is_provided() const {
@@ -99,7 +116,7 @@ namespace cydui {
     void start_listening() {
       stop_listening();
 
-      listener = get_bus().on_event([=, this](ContextUpdate<context_type> ev) -> fabric::task<> {
+      listener = get_bus().on_event([=, this](ContextUpdate<stored_type> ev) -> fabric::task<> {
         if (ev.ptr == ctx) {
           update_component();
         }

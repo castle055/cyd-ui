@@ -16,27 +16,36 @@ export import cydui.core.aspects.contexts.events;
 namespace cydui {
   export template <typename ContextType>
   struct provide_context: ComponentAspect {
-    using context_type = ContextType;
+    static constexpr bool is_reference = std::is_lvalue_reference_v<ContextType>;
+    using context_type                 = ContextType;
+    using stored_type = std::conditional_t<is_reference, std::remove_reference_t<ContextType>*, ContextType>;
 
   private:
-    std::shared_ptr<context_type>                                       context_;
-    std::optional<fabric::async::listener<ContextUpdate<context_type>>> listener {std::nullopt};
+    std::shared_ptr<stored_type>                                       context_;
+    std::optional<fabric::async::listener<ContextUpdate<stored_type>>> listener {std::nullopt};
 
     void on_mount() override {
       start_listening();
-      get_context_store().template add_context<context_type>(context_);
+      get_context_store().template add_context<stored_type>(context_);
     }
 
   public:
     provide_context()
-        : context_(std::make_shared<context_type>()) {}
+      requires(not is_reference)
+        : context_(std::make_shared<stored_type>()) {}
 
     template <typename... Args>
-      requires std::constructible_from<
-        context_type,
-        Args...>
+      requires(
+        not is_reference
+        and std::constructible_from<
+          stored_type,
+          Args...>)
     explicit provide_context(Args&&... args)
-        : context_(std::make_shared<context_type>(std::forward<Args>(args)...)) {}
+        : context_(std::make_shared<stored_type>(std::forward<Args>(args)...)) {}
+
+    explicit provide_context(context_type ref)
+      requires is_reference
+        : context_(std::make_shared<stored_type>(&ref)) {}
 
     ~provide_context() override {
       stop_listening();
@@ -55,19 +64,35 @@ namespace cydui {
 
     provide_context& operator=(provide_context&& other) = default;
 
-    context_type* operator->() {
-      return context_.get();
+    std::conditional_t<
+      is_reference,
+      std::remove_reference_t<context_type>,
+      context_type>*
+    operator->() {
+      if constexpr (is_reference) {
+        return *context_;
+      } else {
+        return context_.get();
+      }
     }
 
-    context_type& operator*() {
-      return *context_;
+    std::conditional_t<
+      is_reference,
+      std::remove_reference_t<context_type>,
+      context_type>&
+    operator*() {
+      if constexpr (is_reference) {
+        return **context_;
+      } else {
+        return *context_;
+      }
     }
 
     void notify() {
-      get_bus().template emit<ContextUpdate<context_type>>({context_.get()});
+      get_bus().template emit<ContextUpdate<stored_type>>({context_.get()});
     }
 
-    operator std::shared_ptr<context_type>() {
+    operator std::shared_ptr<stored_type>() {
       return context_;
     }
 
@@ -75,7 +100,7 @@ namespace cydui {
     void start_listening() {
       stop_listening();
 
-      listener = get_bus().on_event([=, this](ContextUpdate<context_type> ev) -> fabric::task<> {
+      listener = get_bus().on_event([=, this](ContextUpdate<stored_type> ev) -> fabric::task<> {
         if (ev.ptr == context_.get()) {
           update_component();
         }
